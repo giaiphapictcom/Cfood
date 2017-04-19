@@ -51,8 +51,11 @@ namespace V308CMS.Common
                     {
                         CropImage(width, height, imgRealPath, thumbPath + filenameEncode);
                     }
+
+                    if (!System.IO.File.Exists(thumbPath + filenameEncode)) {
+                        imgPath = imgThumbUrl + width + "x" + height + "/" + filenameEncode;
+                    }
                     
-                    imgPath = imgThumbUrl + width + "x" + height + "/" + filenameEncode;
                 }
             }
             return imgPath;

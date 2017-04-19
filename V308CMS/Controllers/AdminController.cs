@@ -1100,7 +1100,8 @@ namespace V308CMS.Controllers
                 {
                     return Json(new { code = 0, message = "Không tìm thấy tin cần xóa." });
                 }
-                return Json(new { code = 0, message = "Có lỗi xảy ra. Vui lòng thử lại." });
+                //return 
+                //    Json(new { code = 0, message = "Có lỗi xảy ra. Vui lòng thử lại." });
             }
             catch (Exception ex)
             {
