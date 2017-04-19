@@ -1455,7 +1455,6 @@
     <Content Include="Content\themes\mpstart\scss\style.scss" />
     <Content Include="Content\themes\mpstart\scss\_variables.scss" />
     <Content Include="Content\themes\mpstart\scss\block\_video.scss" />
-    <None Include="Properties\PublishProfiles\aaa.pubxml" />
     <Content Include="Views\Admin\HoTroLoaiHoTro.cshtml" />
     <Content Include="Views\Admin\HoTroLoaiHoTroThemMoi.cshtml" />
     <Content Include="Views\Admin\HoTroLoaiHoTroSua.cshtml" />
@@ -1463,7 +1462,6 @@
     <Content Include="Views\Admin\HoTroThemMoi.cshtml" />
     <Content Include="Views\Admin\HoTroSua.cshtml" />
     <Content Include="Views\Layout\View1.cshtml" />
-    <None Include="Properties\PublishProfiles\dongly.pubxml" />
     <Content Include="Views\Layout\_CategoryLayout.cshtml" />
     <Content Include="Views\Admin\TheLoaiFile.cshtml" />
     <Content Include="Views\Admin\TheLoaiFileThemMoi.cshtml" />
@@ -1493,9 +1491,7 @@
     <Content Include="Views\Widget\Right.cshtml" />
     <Content Include="Views\Widget\TinHot.cshtml" />
     <Content Include="Views\Widget\TinNhanh.cshtml" />
-    <None Include="Properties\PublishProfiles\DONGXUAN.pubxml" />
-    <None Include="Properties\PublishProfiles\SINHVIEN.pubxml" />
-    <None Include="Properties\PublishProfiles\sinhviens.pubxml" />
+    <None Include="Properties\PublishProfiles\MPStart.pubxml" />
     <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Views\Widget\Search.cshtml" />
     <Content Include="Views\Widget\LienHe.cshtml" />

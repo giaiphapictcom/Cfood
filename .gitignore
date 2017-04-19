@@ -3,3 +3,11 @@ V308CMS.Common/obj/Debug/
 V308CMS.Revenue/obj/Debug/
 V308CMS.Sale/obj/Debug/
 V308CMS/obj/Debug/
+V308CMS.Common/obj/Release/
+V308CMS/obj/Release/Package/PackageTmp/Content/Admin/Plugins/ckfinder/*.xml
+V308CMS/obj/Release/Package/PackageTmp/Content/Admin/Plugins/ckfinder/*.html
+V308CMS/obj/Release/Package/PackageTmp/Content/Admin/Plugins/ckfinder/help/
+V308CMS/obj/Release/
+V308CMS.Sale/obj/Release/
+V308CMS.Revenue/obj/Release
+V308CMS.Data/obj/Release/
