@@ -1,0 +1,40 @@
+﻿@{
+    Layout = null;
+}
+
+<div class="sj-booking" id="sj-booking1411360346193585401">
+    <!--<![endif]-->
+    <div class="header">
+        Gửi Thông Tin Liên Hệ	
+    </div>
+    <p>Cách tốt nhất để giúp bạn và tôi tiếp cận</p>
+
+
+    <form class="sj_ajax_booking" id="IdLienHe" method="post" action="/">
+        <div class="el-control">
+
+            <input type="text" autocomplete="off" name="pfirstname" class="bkinput_firstname" placeholder="Họ">
+        </div>
+        <div class="el-control ">
+
+            <input autocomplete="off" type="text" name="plastname" class="bkinput_lastname" placeholder="Tên">
+        </div>
+        <div class="el-control ">
+
+            <input autocomplete="off" type="text" name="pemail" class="bkinput_email" placeholder="Email">
+        </div>
+        <div class="el-control ">
+
+            <input autocomplete="off" type="text" name="pphone" class="bkinput_phone" placeholder="Điện Thoại">
+        </div>
+         <div class="el-control ">
+
+            <textarea style="width: 320px; height: 112px;" name="pcontent" placeholder="Nội dung"></textarea>
+        </div>
+        <div class="el-control">
+            <input type="button" class="request-infor" onclick="GuiThongTinLienHe();" value="Gửi Yêu Cầu">
+
+            <div class="el-bkajax-loadding"></div>
+        </div>
+    </form>
+</div>

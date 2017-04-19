@@ -1,0 +1,21 @@
+﻿@model V308CMS.Data.NewsPage
+@{
+    Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
+}
+
+@section header {
+    <title>Sản Phẩm - @Model.pNews.Title</title>
+    <meta name="keywords" content="@Model.pNews.Title">
+    <meta property="og:url" content="@V308CMS.Common.Ultility.ImgUrl("")">
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="@Model.pNews.Title">
+    <meta property="og:image" content="">
+    <meta property="og:description" content="@Model.pNews.Summary">
+}
+<div class="box-detail box-shadow p-3 pb-4">
+    <h1 class="m-3">@Model.pNews.Title</h1>
+    <div class="container">
+        <div class="col-12">@Html.Raw(Model.pNews.Summary)</div>
+        <div class="col-12">@Html.Raw(Model.pNews.Detail)</div>
+    </div>
+</div>

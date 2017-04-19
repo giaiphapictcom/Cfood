@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+ 
+    <title>@ViewBag.Title</title>
+    <meta name="viewport" content="minimal-ui, width=1024px, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="apple-touch-icon" sizes="57x57" href="/Content/Images/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/Content/Images/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/Content/Images/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/Content/Images/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/Content/Images/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/Content/Images/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/Content/Images/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/Content/Images/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/Content/Images/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/Content/Images/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/Content/Images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/Content/Images/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/Content/Images/favicon-16x16.png">
+    <link rel="manifest" href="/Content/Images/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/Content/Images/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <meta property="og:site_name" content="Kênh mua sắm sản phẩm tiêu dùng hằng ngày đầu tiên tại Việt Nam">
+    <meta property="og:title" content="Đại Siêu Thị Thực Phẩm Online - Kênh mua sắm đi chợ giúp bạn Hà Nội">
+    <meta name="keywords" content="đi siêu thị, đi chợ thuê, kênh mua sắm hằng tiêu dùng, thực phẩm tươi, đồ gia vị, đồ khô, đồ hộp, bơ sữa, trứng đường, thực phẩm đông lạnh, bánh kẹo, thức ăn làm sẵn, đồ uống, đồ dùng gia đình, hóa mỹ phẩm.">
+    <meta name="description" content="Kênh mua sắm sản phẩm tiêu dùng hằng ngày đầu tiên tại Việt Nam. Nơi hội tụ các nhà cung cấp uy tín. Sản phẩm phong phú, chất lượng tốt, niêm yết đúng giá, giao hàng tận nhà.">
+    <meta http-equiv="content-type" content="text/html; charset=vi">
+    <meta http-equiv="Content-Language" content="vi">
+    <meta property="og:title" content="Đại Siêu Thị Thực Phẩm Online - Kênh mua sắm đi chợ giúp bạn Hà Nội">
+    <meta property="og:image" content="http://cleanfoodvn.vn/Content/Images/cfood.jpg">
+    <meta content="4038" name="template">
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script src="/lib/jquery.bxslider.min.js"></script>
+    <link href="/lib/jquery.bxslider.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="/Content/Scripts/jquery.cookie.min.js"></script>
+    <script type="text/javascript" src="/Content/Scripts/v308.js?v=@V308CMS.Common.AppSetting.Version"></script>
+    <link href="/Content/Css/3b4f1992516090ea88d01111a6e9d887.css?v=@V308CMS.Common.AppSetting.Version" rel="stylesheet" type="text/css">
+    <link href="/Content/Css/89c2a60da88957a8747cf3dcf8f70317.css?v=@V308CMS.Common.AppSetting.Version" rel="stylesheet" type="text/css">
+    <link href="/Content/Css/de41aebe8b7430e0fba5c37a38817101.css?v=@V308CMS.Common.AppSetting.Version" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/Content/Css/select2.min.css?v=@V308CMS.Common.AppSetting.Version">
+    <link rel="stylesheet" href="/Content/Css/landing.css?v=@V308CMS.Common.AppSetting.Version">
+    <link rel="stylesheet" href="/Content/Css/extention.css?v=@V308CMS.Common.AppSetting.Version">
+    <link rel="stylesheet" href="/Content/Css/vthree.css?v=@V308CMS.Common.AppSetting.Version">
+    <!-- site header -->
+    <style type="text/css">
+        .fancybox-margin {
+            margin-right: 22px;
+        }
+    </style>
+  
+    <script type="text/javascript">var switchTo5x = true;</script>
+<script type="text/javascript" id="st_insights_js" src="http://w.sharethis.com/button/buttons.js?publisher=1229bdea-0e0f-43fd-8aef-28f13cad6585"></script>
+<script type="text/javascript">stLight.options({ publisher: "1229bdea-0e0f-43fd-8aef-28f13cad6585", doNotHash: false, doNotCopy: false, hashAddressBar: false });</script>
+
+    
+</head>
+<body class="  home-page small-page">
+    <div class="root-pnl">
+        <header>
+            @Html.Action("Header", "Widget")
+        </header>
+        <nav id="Nav">
+            @Html.Action("HeadMenu", "Widget")
+        </nav>
+        <section class="fx-top wrap">
+            @Html.Action("Menu", "Widget")
+        </section>
+        <section id="container">
+            @RenderBody()
+        </section>
+        <footer>
+            @*<div class="rcv-mail wrap" id="emailpanel">
+                @Html.Action("Email", "Widget")
+            </div>*@
+            <div class="cnt-fter is-footer-scroll">
+                @Html.Action("Footer", "Widget")
+            </div>
+            <!-- cnt-fter -->
+            <div id="promotionapp">
+                @Html.Action("Footer2", "Widget",new { FooterCompanyContact = @ViewBag.FooterCompanyContact })
+            </div>
+        </footer>
+    </div>
+    @* @Html.Action("SlideSide", "Widget")*@
+    @Html.Action("ChooseDistrict", "Widget")
+    <div id="fb-root"></div>
+    <script>(function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.8&appId=1558071777855959";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+    <div id="wait">
+        <div class="innerWait">
+        </div>
+    </div>
+</body>
+</html>

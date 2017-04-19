@@ -1,0 +1,108 @@
+﻿@model V308CMS.Data.IndexPageContainer
+@{
+    ViewBag.Title = "C-FOOD";
+    Layout = "~/Views/Layout/_MobileLayout.cshtml";
+    ViewBag.Description = "";
+    int mcount = 0;
+}
+<section id="l-home" class="container">
+    <div class="" id="js-view-products">
+        <div class="js-block">
+            <div class="dr-block-sale js-block-tab" id="js-top-product-home">
+                <div class="sale-header"><span data-id="1" class="sale-button js-tab-header  active">Sản phẩm bán chạy</span>                                        </div>
+                <div data-id="1" class="sale-container js-tab-container  active">
+                    <div class="item-sale-product-container">
+                        @foreach (V308CMS.Data.Product ht in Model.BestBuyList)
+                        {
+                            <div dr-item-product="" class="dr-item-product normal-item-product">
+                                <div class="main-image-container">
+                                    <a href="/@V308CMS.Common.Ultility.LocDau(@ht.Name)-d@(@ht.ID).html" class="image-container">
+                                        <img src="http://cleanfoodvn.vn/@ht.Image" alt="@ht.Name">
+                                    </a><span class="ribbon-tile sale">-@ht.SaleOff %                        </span>
+                                </div>
+                                <div class="main-info">
+                                    <a href="/@V308CMS.Common.Ultility.LocDau(@ht.Name)-d@(@ht.ID).html" class="name-product">@ht.Name</a><span class="quantity">@ht.Size Kilogam</span>
+                                    <span class="price">@String.Format("{0: 0,0}", (ht.Price - ((ht.Price / 100) * ht.SaleOff))) đ</span>
+                                    <span class="market-price">@String.Format("{0: 0,0}", (ht.Price)) đ</span>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="js-block">
+            <div dr-block-product="" class="dr-block-product green">
+                <div class="product-header block">
+                    <span class="block-button active" style="background: transparent url('/Content/Images/marketlogo.png') no-repeat center center; background-size: 95%" onclick="window.location='/so-che-t147.html'"></span>
+                    <span class="name-block-product pointer" onclick="window.location='/so-che-t147.html'">Đi chợ theo Menu</span>
+                    <a href="/so-che-t147.html" class="link-block">Xem tất cả<i class="fa fa-angle-right"></i></a>
+                </div>
+                <div class="product-container home-page-sld is-lazy-horizontal">
+                    <div class="item-product-container ">
+                        @foreach (V308CMS.Data.Product ht in Model.BestSoCheList)
+                        {
+                            <div dr-item-product="" class="dr-item-product normal-item-product">
+                                <div class="main-image-container">
+                                    <a href="/@V308CMS.Common.Ultility.LocDau(@ht.Name)-d@(@ht.ID).html" class="image-container" title="@ht.Name">
+                                        <img class="lazy" data-original="http://cleanfoodvn.vn/@ht.Image" alt="@ht.Name" src="http://cleanfoodvn.vn/@ht.Image" style="display: block;">
+                                    </a>
+                                </div>
+                                <div class="main-info">
+                                    <a href="/@V308CMS.Common.Ultility.LocDau(@ht.Name)-d@(@ht.ID).html" class="name-product" title="@ht.Name">@ht.Name</a>
+                                    <span class="quantity">kg</span>
+                                    <span class="price">@String.Format("{0: 0,0}", (ht.Price - ((ht.Price / 100) * ht.SaleOff))) đ</span>
+                                    <span class="market-price">@String.Format("{0: 0,0}", (ht.Price)) đ</span>
+
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="js-block">
+            @foreach (V308CMS.Data.IndexPage it in Model.IndexPageList)
+            {
+                <div dr-block-product="" class="dr-block-product green">
+                    <div class="product-header block">
+                        <span class="block-button active" style="background: transparent url('/Content/Images/marketlogo.png') no-repeat center center; background-size: 95%" onclick="window.location='/@V308CMS.Common.Ultility.LocDau(@it.Name)-t@(@it.Id).html'"></span>
+                        <span class="name-block-product pointer" onclick="window.location='/@V308CMS.Common.Ultility.LocDau(@it.Name)-t@(@it.Id).html'">@it.Name</span>
+                        <a href="/@V308CMS.Common.Ultility.LocDau(@it.Name)-t@(@it.Id).html" class="link-block">Xem tất cả<i class="fa fa-angle-right"></i></a>
+                    </div>
+                    <div class="product-container home-page-sld is-lazy-horizontal">
+                        <div class="item-product-container ">
+                            @foreach (V308CMS.Data.Product ht in it.ProductList)
+                            {
+                                <div dr-item-product="" class="dr-item-product normal-item-product">
+                                    <div class="main-image-container">
+                                        <a href="/@V308CMS.Common.Ultility.LocDau(@ht.Name)-d@(@ht.ID).html" class="image-container" title="@ht.Name">
+                                            <img class="lazy" data-original="http://cleanfoodvn.vn/@ht.Image" alt="@ht.Name" src="http://cleanfoodvn.vn/@ht.Image" style="display: block;">
+                                        </a>
+                                    </div>
+                                    <div class="main-info">
+                                        <a href="/@V308CMS.Common.Ultility.LocDau(@ht.Name)-d@(@ht.ID).html" class="name-product" title="@ht.Name">@ht.Name</a>
+                                        <span class="quantity">kg</span>
+                                        <span class="price">@String.Format("{0: 0,0}", (ht.Price - ((ht.Price / 100) * ht.SaleOff))) đ</span>
+                                        <span class="market-price">@String.Format("{0: 0,0}", (ht.Price)) đ</span>
+
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="none" id="js-view-carts"></div>
+    <div class="js-block">
+        <div dr-download-app="" class="dr-download-app">
+            <div class="download-app-container" style="background: transparent url('//img.disieuthi.vn/styles/mobile/4038/image/download-app-bg.jpg') no-repeat scroll center center /cover">
+                <div class="download-app-top">Download ứng dụng CFOOD ngay        </div>
+                <div class="download-app-bottom"><a href="javascript:void(0)" class="app-store" style="background: transparent url('//img.disieuthi.vn/styles/mobile/4038/image/app-store.png') no-repeat scroll center center / contain;"></a><a href="javascript:void(0)" style="background: transparent url('//img.disieuthi.vn/styles/mobile/4038/image/google-play.png') no-repeat scroll center center / contain;"></a></div>
+            </div>
+        </div>
+    </div>
+</section>

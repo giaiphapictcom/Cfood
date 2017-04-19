@@ -1,0 +1,41 @@
+﻿@model V308CMS.Data.ProductTypePageContainer
+@{
+    Layout = null;
+}
+<div class="menu-overlay js-toggle-menu"></div>
+<div class="m-container-header">
+    <div class="main-container">
+        <div class="header-menu" style="background: transparent url('//img.disieuthi.vn/styles/mobile/4038/image/menu-bg.jpg') no-repeat scroll left center / 100% auto">
+            <div class="user-container" id="js-toggle-info-menu">
+                <img src="//img.disieuthi.vn/styles/mobile/4038/image/user-unlogin.jpg" alt="" id="js-avatar-user">
+                <div class="info" id="js-info-user">
+                    <div class="info-top">
+                        <a href="/dang_nhap.html" class="username">Đăng nhập tài khoản</a>
+                        <!--<i class="fa fa-angle-down js-info-menu-rotate"></i>-->
+                    </div>
+                    <div class="select-location"><span class="fa fa-map-marker js-change-location"></span><span class="address-username js-change-location">Hà Nội</span>            <span class="des-location js-change-location">Đổi địa điểm</span>        </div>
+                </div>
+                <!--<div class="info">        <span class="username">nguyễn thị hoa</span>        <span class="address-username">hà nội</span>    </div>-->
+            </div>
+            <div class="list-user-option hide" id="js-info-menu-content">
+                <!--<a href="">tài khoản & đơn hàng</a>    <a href="" style="background: transparent url('//img.disieuthi.vn/styles/mobile/4038/image/nav-menu-icon.png') no-repeat 0px 8px">lịch sử đơn hàng</a>    <a href="" style="background: transparent url('//img.disieuthi.vn/styles/mobile/4038/image/nav-menu-icon.png') no-repeat 0px -33px">lịch sử giao dịch</a>    <a href="" style="background: transparent url('//img.disieuthi.vn/styles/mobile/4038/image/nav-menu-icon.png') no-repeat 0px -76px">nạp tiền vào tài khoản</a>    <a href="" style="background: transparent url('//img.disieuthi.vn/styles/mobile/4038/image/nav-menu-icon.png') no-repeat 0px -116px">danh sách yêu thích</a>    <a href="" style="background: transparent url('//img.disieuthi.vn/styles/mobile/4038/image/nav-menu-icon.png') no-repeat 0px -162px">hỏi đáp</a>    <a href="" style="background: transparent url('//img.disieuthi.vn/styles/mobile/4038/image/nav-menu-icon.png') no-repeat 0px -202px">đăng xuất</a>-->
+            </div>
+        </div>
+        <div class="body-menu js-menu">
+            <a href="/" class="menu-item" title="Trang chủ">trang chủ</a>
+            @foreach (V308CMS.Data.ProductTypePage it in Model.List)
+            {
+                <a href="/@V308CMS.Common.Ultility.LocDau(@it.Name)-t@(@it.Id).html" class="menu-item">@it.Name<i class="fa fa-angle-down" data-id="1"></i></a>
+                <div class="menu-item-container" data-id="1">
+                    @foreach (V308CMS.Data.ProductType ut in it.List)
+                    { 
+                        <a href="/@V308CMS.Common.Ultility.LocDau(@ut.Name)-t@(@ut.ID).html" class="sub-menu-item">@ut.Name</a> 
+                    }
+                </div>
+            }
+
+        </div>
+        <a href="javascript:void(0);" class="footer-menu"><span style="background: transparent url('/Content/Images/logo.png') no-repeat center / cover"></span></a>
+    </div>
+    <div class="toggle-menu-container js-toggle-menu"><i class="fa fa-align-left button-toggle-menu"></i></div>
+</div>

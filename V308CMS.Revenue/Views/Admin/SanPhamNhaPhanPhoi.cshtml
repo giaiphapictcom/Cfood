@@ -1,0 +1,28 @@
+﻿@model V308CMS.Data.ProductPage
+@{
+    ViewBag.Title = "Nhà phân phối";
+    ViewBag.LinkBack = "<li><a href=\"/Admin/SanPhamNhaPhanPhoi/\">Nhà Phân Phối</a> </li>";
+    ViewBag.MenuValue = 1;
+    Layout = "~/Views/Admin/Layout.cshtml";
+}
+<div>
+    <div>
+        <div id="close" class="mheader">
+            <a href="/Admin/SanPhamNhaPhanPhoiThemMoi/">
+             <img src="/Content/Admin/Images/them-moi.png" />
+            </a>
+        </div>
+        <hr />
+        <div style="width: 100%;">
+            <div class="RadGrid RadGrid_MetroTouch table table-striped table-bordered table-hover dataTable" tabindex="0">
+               @Html.Raw(@Model.Html)
+            </div>
+        </div>
+        <div class="wpmn_page_navi"><a href="/Admin/SanPhamNhaPhanPhoi?pPage=@Model.BackPage">Back</a><span class="current">@Model.Page</span><a href="/Admin/SanPhamNhaPhanPhoi?pPage=@Model.NextPage">Next</a></div>
+        <hr />
+    </div>
+    <div style="display: none;" role="status" aria-hidden="true">
+        <div class="area"></div>
+        <div class="form-loading"></div>
+    </div>
+</div>

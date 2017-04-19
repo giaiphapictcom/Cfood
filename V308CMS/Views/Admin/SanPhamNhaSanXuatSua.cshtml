@@ -1,0 +1,66 @@
+﻿@model V308CMS.Data.ProductPage
+@{
+    ViewBag.Title = "Nhà Sản Xuất";
+    ViewBag.LinkBack = "<li><a href=\"/Admin/SanPhamNhaSanXuat/\">Nhà Sản Xuất</a> </li>";
+    ViewBag.MenuValue = 1;
+    Layout = "~/Views/Admin/Layout.cshtml";
+}
+@section Header {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btnSelectImg").click(function () {
+                var finder = new CKFinder();
+                finder.selectActionFunction = function (fileUrl) {
+                    $("#anhdaidien").html('<img style="width:100px;height:60px;margin-left:10px;" src="' + fileUrl + '" />');
+                    $('#ImageUrl').val(fileUrl);
+                };
+                finder.popup();
+            });
+        });
+
+        function SetFileField(fileUrl) {
+            $('#ImageUrl').val(fileUrl);
+        }
+
+    </script>
+}
+<div>
+    <div>
+        <h3>Sửa thông tin nhà sản xuất</h3>
+        <hr />
+        <div style="width: 100%;">
+            <input type="hidden" id="pId" value="@Model.pProductManufacturer.ID" />
+            <div id="v308inputContent" class="RadGrid RadGrid_MetroTouch table table-striped table-bordered table-hover dataTable" tabindex="0">
+                <table>
+                    <tr>
+                        <td>Tên</td>
+                        <td>
+                            <input type="text" id="pTitleId" name="pTitle" value="@Model.pProductManufacturer.Name" /></td>
+                    </tr>
+                    <tr>
+                        <td>Hình Ảnh</td>
+                        <td>
+                             <div id="anhdaidien"><img style="width:100px;height:60px;margin-left:10px;" src="@Model.pProductManufacturer.Image" /></div>
+                            <input id="ImageUrl"  type="text" name="pImage" value="@Model.pProductManufacturer.Image" /><a id="btnSelectImg" class="mbutton" href="javascript:void(0);">Chọn ảnh</a></td>
+                    </tr>
+                    <tr>
+                        <td>Mô Tả</td>
+                        <td>
+                            <textarea cols="80" id="pSummaryId"  name="pSummary" rows="6">@Model.pProductManufacturer.Detail</textarea></td>
+                    </tr>
+                    <tr>
+                        <td>Thứ Tự</td>
+                        <td>
+                            <input type="text" id="pOrderId"  name="pOrder" value="0" /></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                         <a  class="mbutton" href="javascript:Admin_ProductManufacturer_ThucHienLuuSua();">Lưu Sửa</a></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <hr />
+    </div>
+</div>

@@ -1,0 +1,27 @@
+﻿@model V308CMS.Data.ProductSlideShow
+@if (Model.Images != null && Model.Images.Count() > 0)
+{
+        <div class="regular slider">
+              @foreach (V308CMS.Data.ProductImage img in Model.Images)
+              {
+                <div><img src="@V308CMS.Common.ImageHelper.Crop(img.Name,70)" srcbig="@V308CMS.Common.ImageHelper.Crop(img.Name,240)" /></div>
+              }
+        </div>
+
+ <script type="text/javascript">
+    $(document).on('ready', function() {
+      $(".regular").slick({
+          infinite: true,
+          autoplay: true,
+          autoplaySpeed: 2000,
+        slidesToShow: 3,
+        slidesToScroll: 1
+      });
+      jQuery(".regular img").click(function () {
+          jQuery("#product-thumb").attr("src", jQuery(this).attr("srcbig"));
+      });
+      
+      
+    });
+  </script>
+}

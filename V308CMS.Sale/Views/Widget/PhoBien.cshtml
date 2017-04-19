@@ -1,0 +1,45 @@
+﻿@model V308CMS.Data.CommonModel
+@{
+    Layout = null;
+}
+<style type="text/css">
+    .bulletin {
+    }
+
+        .bulletin ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .bulletin .close {
+            float: right;
+            margin-right: 5px;
+            z-index: 1001;
+        }
+
+        .bulletin a {
+        }
+
+        .bulletin li {
+            overflow: hidden;
+            display: inline;
+            float: left;
+            height: 60px;
+            width: 190px;
+        }
+
+            .bulletin li img {
+                overflow: hidden;
+                height: 55px;
+                width: 180px;
+                border: solid 2px silver;
+                background-color: white;
+            }
+</style>
+<div id="bulletin" class="bulletin">
+    <ul>
+       @*@Html.Raw(@Model.Html)*@ 
+    </ul>
+    <div class="close"><a href="javascript:void(0)">×</a></div>
+</div>

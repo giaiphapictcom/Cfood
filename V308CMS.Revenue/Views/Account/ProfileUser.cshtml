@@ -1,0 +1,275 @@
+﻿@model V308CMS.Data.HeaderPage
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Layout/_ProfileLayout.cshtml";
+}
+<section class="wrap info-page">    <div class="ctnr">        <section class="cbo-brc">            <div class="brc-lst">                <a class="next" href="/" title="title">                    Trang chủ                </a>            </div>            <a class="atc-nm" href="/trang_ca_nhan.html" title="title">                Trang cá nhân            </a>        </section> <!-- cbo-brc -->        <div class="main-info-page mxClrAft" id="information">            <div class="left-info-page"><div id="product">
+    <section class="combo-product is-tab" data-call-back="tabComboProduct">
+    <div class="d1 mxClrAft">
+        <div class="d2">
+            <div class="d4 is-nav-tab atv" data-id="cp01">
+                Sản phẩm đã mua
+            </div>
+            <div class="d4 is-nav-tab" data-id="cp02">
+                Sản phẩm đã xem
+            </div>
+            <div class="d4 is-nav-tab" data-id="cp03">
+                Sản phẩm đã thích
+            </div>
+        </div> <!-- d2 -->
+        <!--a class="d3">
+            Xem tất cả
+            <span class="fa fa-caret-right"></span>
+        </a-->
+    </div> <!-- d1 -->
+    <div class="d5">
+        <div class="is-iosld is-wait-hover d6 is-cnt-tab atv has-init" data-id="cp01">
+                            <div class="empty-content">
+                    Chưa có thông tin sản phẩm nào.
+                </div>
+                    </div> <!-- d6 -->
+        <div class="is-iosld is-wait-hover d6 is-cnt-tab none wait-load-image has-init" data-id="cp02">
+                            <div class="empty-content">
+                    Chưa có thông tin sản phẩm nào.
+                </div>
+                    </div> <!-- d6 -->
+        <div class="is-iosld is-wait-hover d6 is-cnt-tab none wait-load-image has-init" data-id="cp03">
+                            <div class="empty-content">
+                    Chưa có thông tin sản phẩm nào.
+                </div>
+                    </div> <!-- d6 -->
+    </div>
+</section> <!-- combo-product --></div>
+<div id="order">
+        <section class="list-order is-tab group-slide-cart">
+    <div class="d1 mxClrAft">
+        <div class="d2 mxClrAft">
+            <div class="d4 is-nav-tab atv" data-id="cp01">
+                Giỏ hàng đã mua
+            </div>
+            <div class="d4 is-nav-tab" data-id="cp02">
+                Giỏ hàng đã xem
+            </div>
+            <div class="d4 is-nav-tab" data-id="cp03">
+                Giỏ hàng đã lưu
+            </div>
+        </div> <!-- d2 -->
+        <!--a href="javascript:void()" class="d3">
+            Xem tất cả
+            <span class="fa fa-caret-right"></span>
+        </a-->
+    </div>
+    <div class="is-iosld is-wait-hover cbo-hp-cnt mxClrAft is-cnt-tab atv has-init" data-id="cp01">
+                    <div class="empty-content">
+            Không có giỏ hàng nào!
+        </div>
+        </div> <!-- cbo-hp-cnt -->
+    <div class="is-iosld is-wait-hover cbo-hp-cnt mxClrAft none is-cnt-tab has-init" data-id="cp02">
+                    <div class="empty-content">
+            Không có giỏ hàng nào!
+        </div>
+        </div> <!-- cbo-hp-cnt -->
+    <div class="is-iosld is-wait-hover cbo-hp-cnt mxClrAft none is-cnt-tab has-init" data-id="cp03">
+                    <div class="empty-content">            Không có giỏ hàng nào!        </div>        </div> <!-- cbo-hp-cnt -->
+</section></div>
+<div id="profile">
+    <section class="info-acc">
+    <div class="dc">
+        Thông tin tài khoản
+    </div> <!-- dc -->
+    <div class="dd">
+        <div class="dz">
+            <div class="dg">
+                <div class="dh">
+                    <div class="di">
+                        Thông tin liên hệ
+                    </div>
+                    <div class="dj js-edit-info" data-id="ed01">
+                        Chỉnh sửa
+                    </div>
+                </div> <!-- dh -->
+                <div class="dk is-edited" data-id="ed01">
+                    <div class="dr">
+                        <div class="dl">
+                            Số điện thoại
+                        </div>
+                        <input type="text" class="dm" value="@Model.Account.Phone">
+                    </div> <!-- dr -->
+                    <div class="dr">
+                        <div class="dl">
+                            Tên đăng nhập:
+                        </div>
+                        <input type="text" class="dm" value="@Model.Account.UserName">
+                    </div> <!-- dr -->
+                    <div class="dr">
+                        <div class="dl">
+                            Tên hiển thị:
+                        </div>
+                        <input type="text" class="dm" value="@Model.Account.FullName">
+                    </div>
+                    <div class="dr">
+                        <div class="dl">
+                            Email:
+                        </div>
+                        <input type="text" class="dm" value="@Model.Account.Email">
+                    </div> <!-- dr -->
+                    <div class="dn" id="js-change-pwd">
+                        Thay đổi mật khẩu
+                    </div> <!-- dn -->
+                </div> <!-- dk -->
+            </div> <!-- dg -->
+            <div class="dg">
+                <div class="dh">
+                    <div class="di">
+                        Địa chỉ giao hàng
+                    </div>
+                    <div class="dj js-add-address" data-id="ed02">
+                        Thêm địa chỉ khác
+                    </div>
+                </div> <!-- dh -->
+                <div class="dk is-edited" id="js-list-address" data-id="ed02">
+                                                                                                </div> <!-- dk -->
+            </div> <!-- dg -->
+            <div class="dg">
+                <div class="dh">
+                    <div class="di">
+                        Thông báo từ cfood.vn
+                    </div>
+                    <div class="dj" id="js-set-reg-news" data-status="1">
+                                                Hủy
+                                            </div>
+                </div> <!-- dh -->
+                <div class="dk" id="js-notice-content">
+                                                                    <div class="empty-content">
+                            Chưa nhận tin tức nào từ cfood.vn
+                        </div>
+                                                            </div> <!-- dk -->
+            </div> <!-- dg -->
+        </div> <!-- de -->
+        <div class="dy">
+            <div class="pr">
+                                <div class="pr-x">
+                    <div class="pr-cnt">
+                        Tài khoản VNĐ                     </div>
+                    <div class="pr-pr">
+                        0 
+                        <sup itemprop="priceCurrency" content="">
+                            <u>
+                                VNĐ                            </u>
+                        </sup>
+                    </div>
+                    <div class="clr"></div>
+                </div>
+                                <div class="pr-x">
+                    <div class="pr-cnt">
+                         Tài khoản Xu                     </div>
+                    <div class="pr-pr">
+                        0 
+                        <sup itemprop="priceCurrency" content="">
+                            <u>
+                                Xu                            </u>
+                        </sup>
+                    </div>
+                    <div class="clr"></div>
+                </div>
+                                <div class="pr-x">
+                    <div class="pr-cnt">
+                         Điểm thưởng                     </div>
+                    <div class="pr-pr">
+                        0 
+                        <sup itemprop="priceCurrency" content="">
+                            <u>
+                                Điểm                            </u>
+                        </sup>
+                    </div>
+                    <div class="clr"></div>
+                </div>
+                                <div class="clr"></div>
+            </div>
+            <div class="dg">
+                <div class="dh">
+                    <div class="di">
+                        Hoạt động bạn bè
+                    </div>
+                    <div class="dj">
+                        Xem tất cả
+                    </div>
+                </div> <!-- dh -->
+                <div class="dk">
+                    <div class="ds is-mn mCustomScrollbar _mCS_1 mCS-autoHide mCS_no_scrollbar done" style="position: relative; overflow: visible;"><div id="mCSB_1" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical mCSB_outside" tabindex="0"><div id="mCSB_1_container" class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y" style="position:relative; top:0; left:0;" dir="ltr">
+                                            <div class="empty-content">
+                            Hiện chưa có hoạt động nào.
+                        </div>
+                                        </div></div><div id="mCSB_1_scrollbar_vertical" class="mCSB_scrollTools mCSB_1_scrollbar mCS-minimal-dark mCSB_scrollTools_vertical" style="display: none;"><div class="mCSB_draggerContainer"><div id="mCSB_1_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 50px; height: 0px; top: 0px;" oncontextmenu="return false;"><div class="mCSB_dragger_bar" style="line-height: 50px;"></div></div><div class="mCSB_draggerRail"></div></div></div></div>
+                </div> <!-- dk -->
+            </div> <!-- dg -->
+        </div> <!-- df -->
+    </div> <!-- dd -->
+</section> <!-- info-acc -->
+</div></div>            <div class="right-info-page">                <div id="personal"><section class="info-user-table">
+    <div class="f1" id="js-user-personal" data-id="2746">
+        <a href="/trang_ca_nhan.html" class="f2">
+                        <img src="/Content/Images/male.png" alt=" @Model.Account.FullName">
+                    </a>
+        <div class="f3">
+            <!--a class="f4" href="#">
+                Ha Viet Hoang            </a>
+            <a class="f41 is-quick-charge" href="javascript:void(0);">
+                <span class="fa fa-dollar"></span>
+                Nạp xu ngay!
+            </a>
+            <div id="friend">
+                            </div-->
+            <div class="inf">
+                <a href="/trang_ca_nhan.html" class="n">
+                    @Model.Account.FullName                </a>
+                <div id="js-friend">
+                                    </div>
+            </div>
+        </div> <!-- f3 -->
+    </div> <!-- f1 -->
+    <div class="f6">
+        <a href="javascript:void(0);" class="f7 feed" id="js-get-follower">
+                <span class="fa fa-user"></span>
+                Follower
+                <span id="js-total-follower" class="num">0</span>
+        </a>
+        <a href="javascript:void(0);" class="f7 feed mxClrAft" id="js-get-follow">
+                <span class="fa fa-send"></span>
+                follow
+                <span id="js-total-follow" class="num">0</span>
+        </a>
+        <a href="javascript:void(0);" class="f7 feed mxClrAft">
+                <span class="fa fa-heart"></span>
+                Thích
+                <span id="js-total-like" class="num">0</span>
+        </a>
+    </div> <!-- f6 -->
+    <div class="f8 js-profile-menu">
+        <a href="javascript:void(0);" class="f9" data-id="info">
+            Thông tin chung tài khoản
+        </a>
+        <!--<a href="javascript:void(0);" class="f9" data-id="gateway">
+            Nạp tiền vào tài khoản
+        </a>-->
+        <a href="javascript:void(0);" class="f9" data-id="history">
+            Lịch sử giao dịch
+        </a>
+        <a href="javascript:void(0);" class="f9" data-id="order_buy">
+            Lịch sử mua hàng
+        </a>
+        <a href="javascript:void(0);" class="f9" data-id="cart_buy">
+            Giỏ hàng đã mua
+        </a>
+        <!--<a href="javascript:void(0);" class="f9" data-id="favorite_product">
+            Danh sách yêu thích
+        </a>-->
+        <!--<a href="javascript:void(0);" class="f9" data-id="notification">
+            Thông báo của tôi
+        </a>
+        <a href="javascript:void(0);" class="f9" data-id="ask">
+            Hỏi đáp
+        </a>-->
+    </div> <!-- f8 -->
+</section> <!-- info-user-table -->
+</div>                <div id="cart">                                    </div>            </div>        </div>    </div></section>

@@ -1,0 +1,177 @@
+﻿@model V308CMS.Data.HeaderPage
+@{
+    Layout = null;
+    //int mcount = 0;
+    //int mvalue = 0;
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        GetShopCartSilent();
+    });
+</script>
+<script type="text/javascript">
+    function openpanel() {
+        $('#mkpanel').css({
+            visibility: 'visible',
+            opacity: '1',
+            top: '60px',
+            height: '575px'
+        });
+    }
+    function closepanel() {
+        //$('#mkpanel').css('visibility', 'hidden');
+        $('#mkpanel').css({
+            visibility: 'hidden',
+            opacity: '0',
+            top: '0px',
+        });
+    }
+    function openselectlocation() {
+        $('.full-site').css('display', 'block');
+        $('.overlay-popup').css('display', 'block');
+    }
+    function choosesearch(pvalue) {
+        if (pvalue == 2) {
+            $("#mk-nm-id").html("SẢN PHẨM"); 
+            $("#id-search").val(2);
+        }
+        else {
+            $("#mk-nm-id").html("CỬA HÀNG");
+            $("#id-search").val(1);
+        }
+        closepanel();
+    }
+</script>
+<div class="wrap">
+    <div class="ctnr ctnr-header">
+        <section class="cbo-logo">
+            <a class="logo-header-img" href="/">
+                <img alt="@TempData["BaseUrl"]" src="@TempData["Logo"]">
+            </a>
+            <div class="beta-toolstip none">đang nâng cấp thử nghiệm website version 3.0 nhằm nâng cao tiện ích phục vụ quý khách. Trong thời gian này nếu có bất kỳ bất cập nào đối với quý khách xin thông báo cho chúng tôi để chúng tôi hoàn thiện. Chân thành cảm ơn sự ủng hộ của quý khách! </div>
+            <div class="sl-lc js-select-location">
+                <div class="sl-lc-head trs_ln">
+                    <span class="ico-map-marker"></span><span onclick="javascript:openselectlocation();" id="txtlocation" class="vl" style="width: 200px; display: block; float: left; position: relative; left: -20px;">@ViewBag.locationname</span>
+                    <div class="log-tooltip none">Đổi địa điểm nhận hàng </div>
+                </div>
+            </div>
+        </section>
+
+        <div id="BlockSearch">
+            <section class="cbo-mk">
+                <div class="cbo-mk-head" onclick="javascript:openpanel();">
+                    <div class="mk-nm" id="mk-nm-id">SẢN PHẨM</div>
+                    <div class="mk-ico fa fa-caret-down"></div>
+                </div>
+                <!-- cbo-mk-head -->
+                <div class="pnl-mk" id="mkpanel">
+                    <div class="iconsearchchoose"><a   onclick="javascript:choosesearch(1);" ><img src="/Content/Images/iconmarket.png" /></a><a style="margin-left:20px;" onclick="javascript:choosesearch(2);"><img src="/Content/Images/iconproduct.png" /></a></div>
+                    <div class="cl fa fa-close js-close-slmk" onclick="javascript:closepanel();">Đóng tìm kiếm </div>
+                  
+                </div>
+                <!-- pnl-mk -->
+            </section>
+            <!-- cbo-mk -->
+            <section class="cbo-srch is-hs-hdl is-wt-out" data-hs="cbo-srh" data-valueenter="60" data-valueleave="60" data-typeattr="top">
+                <form action="tim-kiem.html" class="frm-srch" name="frm-srch">
+                    <input id="id-search" type="hidden" name="pVendor" value="2">
+                    <input class="ip-srch" autocomplete="off" type="text" name="pKey">
+                    <button class="smt-srch fa fa-search" type="submit"></button>
+                </form>
+                <div class="sgst-srch is-hs-obj" data-hs="cbo-srh" style="display: block; opacity: 1; top: 60px;">
+                    <!-- content suggest -->
+                </div>
+            </section>
+        </div>
+
+        @if (Model.IsAuthenticated == true)
+        {
+            <section class="cbo-usr-ifo">
+                <div class="usr-ifo-head">
+                    <div class="usr-ifo-ttl">@Model.Account.FullName</div>
+                    <div class="usr-ifo-sub">Thông tin tài khoản        </div>
+                    <div class="usr-ifo-ico fa fa-user"></div>
+                    <div class="usr-ifo-caret fa fa-caret-down"></div>
+                </div>
+                <!-- usr-ifo-head -->
+                <div class="usr-ifo-lst"><a href="/profile.html" class="pa">Trang cá nhân</a><a href="dang-xuat.html" class="js_logout pa">Đăng xuất</a></div>
+                <!-- <div class="usr-ifo-lst">        <a href="/dang_nhap.html" class="pa">            Đăng nhập        </a>        <a href="/dang_ky.html" class="pa">            Đăng ký        </a>    </div> usr-ifo-lst -->
+            </section>
+        }
+        else
+        {
+            <section class="cbo-usr-ifo">
+                <div class="usr-ifo-head">
+                    <div class="usr-ifo-ttl">
+                        Đăng nhập
+                                <!-- Sau khi đăng nhập thì đổi thành tên user -->
+                    </div>
+                    <div class="usr-ifo-sub">Tài khoản &amp; Đăng ký </div>
+                    <div class="usr-ifo-ico fa fa-user"></div>
+                    <div class="usr-ifo-caret fa fa-caret-down"></div>
+                </div>
+                <!-- usr-ifo-head -->
+                <div class="usr-ifo-lst new-menu-acc">
+                    <a href="/dang-nhap.html" class="new-button-m button-login orange small-padding"><span class="fa fa-sign-in"></span>Đăng nhập </a>
+                    <a href="javascript:void(0);" class="new-button-m button-login-facebook dark-blue small-padding"><span class="fa fa-facebook-square"></span>Đăng nhập bằng Facebook </a>
+                    <a href="javascript:void(0);" class="new-button-m button-login-google dark-brown small-padding"><span class="fa fa-google-plus"></span>Đăng nhập bằng Google </a>
+                    <div class="row-text-register">Khách hàng mới? <a href="/dang-ky.html" class="new-link">Đăng ký tài khoản</a> </div>
+                    <a href="javascript:void(0);" class="new-link gray link-check-order"><span class="fa fa-map-marker"></span>Kiểm tra đơn hàng </a>
+                </div>
+            </section>
+        }
+        <!-- cbo-usr-ifo -->
+        <section class="cbo-shp is-shop-header">
+            <div class="cbo-shp-head">
+                <div class="cbo-shp-ico fa fa-shopping-cart"></div>
+                <div class="cnt-shp js-notify-cart">0</div>
+                <div class="shp-head">Giỏ hàng </div>
+            </div>
+            <div class="shp-lst js-shop-list">
+                <div class="t5 is-content-cart is-mn mCustomScrollbar _mCS_3 mCS-autoHide mCS_no_scrollbar done" style="position: relative; overflow: visible;">
+                    <div id="mCSB_3" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical mCSB_outside" style="max-height: 250px;" tabindex="0">
+                        <div id="mCSB_3_container" class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y" style="position: relative; top: 0; left: 0;" dir="ltr">
+                            <div class="t5d">
+                                <div class="t5c">
+                                    <span class="fa fa-shopping-cart"></span><span class="t5cd">Giỏ Mặc Định</span>
+                                </div>
+                                <div class="t5a" id="f-list">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="mCSB_3_scrollbar_vertical" class="mCSB_scrollTools mCSB_3_scrollbar mCS-minimal-dark mCSB_scrollTools_vertical" style="display: none;">
+                        <div class="mCSB_draggerContainer">
+                            <div id="mCSB_3_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 50px; height: 0px; top: 0px;" oncontextmenu="return false;">
+                                <div class="mCSB_dragger_bar" style="line-height: 50px;"></div>
+                            </div>
+                            <div class="mCSB_draggerRail"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tb">
+                    <div>
+                        <input type="hidden" id="js_change_value" value="0">
+                    </div>
+                    <div class="tc">Tổng tiền:<span><span class="is-total-money-pop" id="div_gio_hang_tong_tien">0</span><sup itemprop="priceCurrency" content=""><u></u></sup></span></div>
+                    <div class="td"><a class="te atv" id="js-save-cart" href="javascript:void(0);"><span class="fa fa-download js-icon"></span><a class="tf js-purchase" href="/chi-tiet-don-hang.html"><span class="fa fa-check-square-o"></span>Đặt hàng</a></div>
+                    <!-- td -->
+                </div>
+                <!-- tb -->
+                <div class="tg"><a href="javascript:void(0);" class="th"></a><a href="javascript:void(0);" class="th"></a><a href="javascript:void(0);" class="th"></a></div>
+            </div>
+            <!-- shp-lst -->
+        </section>
+        <!-- cbo-shp -->
+        <div class="notify_card">
+            <div class="container-cart">
+                <div class="main">
+                    <div class="bg"></div>
+                    <span class="text">Đặt hàng ngay</span>
+                </div>
+                <i class="fa fa-caret-up"></i><i class="fa fa-shopping-cart"></i>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- wrap -->

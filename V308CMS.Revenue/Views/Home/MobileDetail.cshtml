@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = Model.Product.Name;
+    Layout = "~/Views/Layout/_MobileDetailLayout.cshtml";
+}
+
+<section id="l-article-product" class="container">
+    <div class="dr-info-product">
+        <!-- <div class="main-container"></div> -->
+        <div class="slider-container is-iosld has-init">
+            <div class="item-slider-container">
+                <div class="image-slider sld" style="position: relative; top: 0px; left: 0px; overflow: hidden; z-index: 1; perspective: 1000px; backface-visibility: hidden; width: 371px; height: 380px;">
+                    <div style="position: relative; cursor: -webkit-grab; backface-visibility: hidden; transform: matrix(1, 0, 0, 1, -371, 0); width: 371px;">
+                        <div class="image-slider-item is-item-sld" style="backface-visibility: hidden; overflow: hidden; position: absolute; transform: matrix(1, 0, 0, 1, 371, 0); width: 371px;">
+                            <img src="http://cleanfoodvn.vn/@Model.Product.Image" alt="image">
+                        </div>
+                    </div>
+                    <div class="pagi-sld">
+                        <div class="item-pagi-sld atv"></div>
+                    </div>
+                </div>
+                <span class="sale">- @Model.Product.SaleOff<span class="small">%</span></span>
+            </div>
+            <i class="fa fa-angle-left prv-sld" style="cursor: pointer;"></i><i class="fa fa-angle-right nxt-sld" style="cursor: pointer;"></i>
+        </div>
+        <div class="main-info-product" id="js-shop-info">
+            <input type="hidden" value="5916" id="product_id">
+            <a href="" class="name-article-product" title="@Model.Product.Name">@Model.Product.Name</a>
+            <div class="table">
+                <div class="row">
+                    <div class="col-left">quy cách đóng gói</div>
+                    <div class="col-right">1 kg</div>
+                </div>
+            </div>
+            <span class="price-product">@String.Format("{0: 0,0}", (Model.Product.Price - ((Model.Product.Price / 100) * Model.Product.SaleOff))) đ</span>
+            <span class="market-price-product">@String.Format("{0: 0,0}", (Model.Product.Price)) đ</span>
+            <div>
+                <div class="button-container">
+                    <a href="javascript:void(0)"  onclick="javascript:MuaHangHome(@Model.Product.ID);"  class="button add-cart-button button-hover-black" id="js_add_to_cart"><i class="fa fa-shopping-cart"></i>thêm vào giỏ</a>
+                    <a href="/" class="button continue-buy button-hover-black"><i class="fa fa-angle-double-right"></i>mua tiếp</a></div>
+            </div>
+            <div class="describe-product">
+                <div class="describe-header">Mô tả sản phẩm            <i class="fa fa-angle-up is-expand-btn" data-obj="describe"></i></div>
+                <div class="describe-body is-expand-content" data-obj="describe">
+                    <div class="atc-fcs" id="atc-des">
+                        @Html.Raw(@Model.Product.Detail)
+                    </div>
+                    <div class="describe-footer"></div>
+                </div>
+            </div>
+            <div class="js-block">
+                <div dr-estimate="" class="dr-estimate">
+                </div>
+            </div>
+            <div class="js-block"></div>
+            <div class="js-block"></div>
+            <div class="js-block"></div>
+        </div>
+</section>

@@ -1,0 +1,42 @@
+﻿@{
+    Layout = null;
+}
+<script type="text/javascript">
+    function AddEmail() {
+        var mEmail = $("#js-register-email").val();
+        $("#wait").css("display", "block");
+        //gui thong tin dang ky len may chu
+        $.ajax({
+            type: 'POST',
+            data: { 'pEmail': mEmail },
+            dataType: 'json',
+            url: "/Home/addEmail",
+            timeout: 60000,
+            success: function (data) {
+                if (data.code == 1) {
+                    alert(data.message);
+                    $("#wait").css("display", "none");
+                }
+                else {
+                    alert(data.message);
+                    $("#wait").css("display", "none");
+                }
+            },
+            error: function (x, t, m) {
+                //$("#cError").html('Lỗi kết nối tới máy chủ !');
+                $("#wait").css("display", "none");
+            }
+        });
+    }
+</script>
+<div class="ctnr" id="emailpanel">
+    <div class="rcv-ml-head">
+        <div class="rcv-mail-tx">
+            <img id="iconemail-id" src="/Content/Images/emailicon.png" class="" />ĐĂNG KÝ NHẬN VOUCHER C-FOOD</div>
+    </div>
+    <div id="js-register-news" class="rcv-ml-frm">
+        <input id="js-register-email" type="text" placeholder="NHẬP EMAIL">
+        <button type="submit" onclick="javascript:AddEmail();">Đăng ký ngay</button>
+    </div>
+    <div class="scroll-top" title="về đầu trang"><span class="fa fa-angle-double-up"></span></div>
+</div>

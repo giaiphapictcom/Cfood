@@ -1,0 +1,434 @@
+﻿#promotionapp {
+    width: 100%;
+    height: 65px;
+    clear: both;
+    float: none;
+    margin-bottom: 1px;
+    border-bottom: 3px solid #1aa331;
+    background: #1aa331;
+    /* line-height: 47px; */
+    overflow: hidden;
+    color: #fff;
+    text-align: center;
+    /* align-items: baseline; */
+    font-size: 25px;
+}
+
+#promotionapp-ul {
+    width: 100%;
+    display: block;
+    margin: auto;
+    padding-top: 5px;
+}
+
+#promotionapp li {
+    float: left;
+}
+
+#promotionapp img {
+    margin-left: 20px;
+}
+
+#lkpanel ul {
+    width: 300px;
+    display: block;
+    /*margin: auto;*/
+}
+
+#lkpanel li {
+    float: left;
+}
+
+#lkpanel img {
+    margin-left: 15px;
+}
+
+#emailpanel {
+    width: 100%;
+    height: 80px;
+    background: #ede020;
+    margin-top: 20px;
+}
+
+#iconemail-id {
+    margin-right: 10px;
+    line-height: 50px;
+    position: relative;
+    top: 11px;
+}
+
+#cateicon {
+    background: url(/content/images/cateicon.png);
+    background-size: 25px 25px;
+    height: 25px;
+    width: 25px;
+    display: inline-block;
+    position: relative;
+    top: 5px;
+    margin-right: 10px;
+}
+
+#newsexpress {
+    height: 46px;
+    line-height: 60px;
+    display: inline;
+}
+
+    #newsexpress .newshead {
+        color: #1aa331;
+        font-size: 20px;
+    }
+
+    #newsexpress .newshead2 a {
+        font-size: 15px;
+    }
+
+    #newsexpress .newshead3 a {
+        color: #fd9b0b;
+        margin-left: 10px;
+        font-size: 14px;
+    }
+
+#hotnews {
+    width: 300px;
+    height: 468px;
+    float: right;
+    overflow: hidden;
+}
+
+    #hotnews li {
+        position: relative;
+        border-bottom: 1px solid #e1e1e1;
+        margin-bottom: -3px;
+    }
+
+    #hotnews .hotnewsdiv1 {
+        display: inline;
+        width: 169px;
+        height: 90px;
+        left: 0px;
+    }
+
+        #hotnews .hotnewsdiv1 img {
+            width: 150px;
+            height: 80px;
+            margin: 10px;
+        }
+
+    #hotnews .hotnewsdiv2 {
+        position: absolute;
+        display: inline;
+        width: 115px;
+        height: 90px;
+        right: 0px;
+        padding-top: 6px;
+    }
+
+        #hotnews .hotnewsdiv2 a {
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        #hotnews .hotnewsdiv2 div {
+            font-size: 11px;
+            margin-top: 5px;
+        }
+
+#panelyoutube {
+    float: right;
+    width: 514px;
+    height: 100px;
+}
+
+#panelfunction {
+}
+
+    #panelfunction ul {
+        width: 812px;
+        display: block;
+        margin: auto;
+        overflow: hidden;
+    }
+
+    #panelfunction li {
+        position: relative;
+        float: left;
+        display: inline-block;
+        width: 264px;
+        height: 82px;
+        background-color: #e36a18;
+    }
+
+    #panelfunction .lichild {
+        margin-left: 10px;
+    }
+
+    #panelfunction li img {
+        position: absolute;
+        top: 20px;
+        left: 36px;
+    }
+
+    #panelfunction li a {
+        position: absolute;
+        top: 11px;
+        font-size: 16px;
+        left: 62px;
+    }
+
+.b5 {
+    color: #b80300;
+    font-size: 15px !important;
+    font-weight: bold;
+}
+
+#wait {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100000;
+    display: none;
+    background: rgba(0,0,0,0.8);
+}
+
+    #wait .innerWait {
+        position: relative;
+        top: 30px;
+        display: block;
+        height: 320px;
+        width: 320px;
+        background: url(/Content/Images/loading.gif) no-repeat center center;
+        margin: 0px auto;
+    }
+
+.iconsearchchoose {
+    width: 500px;
+    height: 110px;
+    overflow: hidden;
+    margin: 60px auto;
+}
+
+    .iconsearchchoose a {
+        cursor: pointer;
+    }
+
+.grouplist ul {
+    width: 1024px;
+    height: 120px;
+}
+
+.grouplist li {
+    width: 167px;
+    height: 120px;
+    display: inline-block;
+    text-align: center;
+}
+
+    .grouplist li img {
+        width: 96%;
+        height: 100px;
+    }
+
+#cbo-hp-head-id:before {
+    background: transparent !important;
+}
+
+.v308-header {
+    width: 1024px;
+    background-color: #1aa331;
+    height: 50px;
+    margin: 3px auto;
+    display: block;
+    position: relative;
+    color: #ffffff;
+    font-family: Arial;
+}
+
+    .v308-header .hdicon {
+        height: 50px;
+        display: inline-block;
+        width: 100px;
+    }
+
+        .v308-header .hdicon img {
+            height: 36px;
+            line-height: 36px;
+            margin: 8px 1px;
+        }
+
+    .v308-header .hdicon2 {
+        width: 36px;
+        height: 36px;
+        display: inline-block;
+        float: right;
+        position: absolute;
+        right: 6px;
+        top: 10px;
+    }
+
+        .v308-header .hdicon2 img {
+            height: 30px;
+            line-height: 30px;
+        }
+
+    .v308-header .vtxt1 {
+        height: 50px;
+        position: absolute;
+        top: 4px;
+        left: 110px;
+    }
+
+    .v308-header .vtxt2 {
+        height: 50px;
+        position: absolute;
+        top: 4px;
+        left: 620px;
+    }
+
+    .v308-header .txt1 {
+        font-size: 18px;
+        font-weight: 100;
+    }
+
+    .v308-header .txt2 {
+        font-style: italic;
+        font-size: 14px;
+    }
+
+.divleft1 {
+    width: 220px;
+    height: 110px;
+    display: block;
+    clear: both;
+    border-bottom: 5px solid #1aa331;
+}
+
+    .divleft1 img {
+        width: 220px;
+        height: 95px;
+        display: block;
+        clear: both;
+    }
+
+.divleft2-list {
+    width: 220px;
+    height: 210px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+    .divleft2-list ul {
+        margin-left: 20px;
+    }
+
+    .divleft2-list li {
+        width: 185px;
+        height: 30.8px;
+        display: block;
+        cursor: pointer;
+        padding-left: 30px;
+        background: #ffffff url("/Content/Images/icadd.png") no-repeat left center;
+    }
+
+        .divleft2-list li a {
+            display: inline-block;
+            font-family: Arial;
+            font-size: 14px;
+            line-height: 30.5px;
+            max-width: 150px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            -webkit-transition: all 500ms ease 0s;
+            -o-transition: all 500ms ease 0s;
+            transition: all 500ms ease 0s;
+        }
+
+.divleft2-head {
+    font-size: 14px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+
+
+.divleft4 {
+    width: 220px;
+    height: 238px;
+    display: block;
+    clear: both;
+    border-bottom: 5px solid #1aa331;
+    margin-bottom: 10px;
+    margin-top: 111px;
+}
+
+    .divleft4 img {
+        width: 220px;
+        height: 220px;
+    }
+
+.divleft3-list {
+    width: 220px;
+    height: 400px;
+    overflow-y: scroll;
+}
+
+.det-nav {
+    width: 1024px;
+    background-color: #1aa331;
+    height: 45px;
+    margin: 3px auto;
+    display: block;
+    position: relative;
+    color: #ffffff;
+    font-family: Arial;
+    border: 1px solid #ccc;
+    margin-bottom: 30px;
+}
+
+.det-nav-head {
+    height: 45px;
+    display: inline-block;
+    float: left;
+    cursor: pointer;
+    line-height: 45px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-right: 67px;
+}
+
+.det-nav .active {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.lst-ss {
+    width: 280px;
+    height: 38px;
+    line-height: 38px;
+}
+
+.atc-ifo * {
+    font-family: arial !important;
+    font-size: 15px;
+}
+
+.atc-ifo .info-sec1 {
+    margin: 20px 0px;
+    padding-right: 20px;
+}
+
+    .atc-ifo .info-sec1 span {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+.atc-ifo .info-sec2 {
+    font-size: 18px;
+}
+
+.info-sec {
+    margin-bottom:16px;
+}

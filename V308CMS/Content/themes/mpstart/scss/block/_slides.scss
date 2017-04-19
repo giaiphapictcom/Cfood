@@ -1,0 +1,27 @@
+.slides {
+	.item {
+		.detail {
+			background-color: $text_red;
+			padding: 20px;
+			color: $white;
+			position: relative;
+			h4 {
+				font-size: 15px;
+				font-weight: bold;
+			}
+			p {
+				line-height: 25px;
+				margin-bottom: 0;
+			}
+			h4 , p {
+				max-width: 80%;
+			}
+			.btn {
+				position: absolute;
+				bottom: 15px;
+				right: 15px;
+				text-transform: uppercase;
+			}
+		}
+	}
+}

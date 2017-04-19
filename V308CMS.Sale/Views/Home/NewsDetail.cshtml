@@ -1,0 +1,28 @@
+﻿@model V308CMS.Data.NewsPage
+@{
+    ViewBag.Title = "ChiTietTin";
+    Layout = "~/Views/Layout/_NewsLayout.cshtml";
+}
+<section class="wrap category no-select">
+    <div class="ctnr">
+        <section class="cbo-brc">
+            <div class="brc-lst"><a class="next" href="/" title="Trang Chủ">Trang Chủ                </a><a class="next" href="javascript:void(0)" title="Thông tin chung">Thông tin chung                </a></div>
+            <a class="atc-nm" href="/ve-chung-toi.html" title="Về chúng tôi">Về chúng tôi</a>
+        </section>
+        <!-- cbo-lst-mrt -->
+        <div class="list-category mxClrAft">
+            <div class="left-category">
+                <section class="right-cmt-page">
+                    <div class="title-cmt-page" style="color: #00a651; font-size: 24px; font-family: Roboto-Medium; line-height: 40px; border-bottom: 1px solid #efefef; margin-bottom: 20px; padding-bottom: 15px;">@Model.pNews.Title</div>
+                    <section class="page-cmt-content">
+                       @Html.Raw(@Model.pNews.Detail)
+                    </section>
+                </section>
+            </div>
+           @* <div class="right-category">
+                @Html.Action("Right", "Widget")
+            </div>*@
+        </div>
+    </div>
+    <div class="clr"></div>
+</section>

@@ -1,0 +1,31 @@
+﻿@model V308CMS.Data.ImagesPage
+@{
+    ViewBag.Title = "Ảnh";
+    ViewBag.LinkBack = "<li><a href=\"/Admin/Anh/\">Ảnh</a> </li>";
+    ViewBag.MenuValue = 4;
+    Layout = "~/Views/Admin/Layout.cshtml";
+}
+<div>
+    <div>
+        <div id="close" class="mheader">
+            <a href="/Admin/AnhThemMoi/">
+             <img src="/Content/Admin/Images/them-moi.png" />
+            </a>
+        </div>
+         <div style="margin-top: 16px;">
+            @Html.Raw(@Model.HtmlNhom)
+        </div>
+        <hr />
+        <div style="width: 100%;">
+            <div class="RadGrid RadGrid_MetroTouch table table-striped table-bordered table-hover dataTable" tabindex="0">
+               @Html.Raw(@Model.Html)
+            </div>
+        </div>
+        <div class="wpmn_page_navi"><a href="/Admin/Anh?pPage=@Model.BackPage&pType=@Model.TypeId">Back</a><span class="current">@Model.Page</span><a href="/Admin/Anh?pPage=@Model.NextPage&pType=@Model.TypeId">Next</a></div>
+        <hr />
+    </div>
+    <div style="display: none;" role="status" aria-hidden="true">
+        <div class="area"></div>
+        <div class="form-loading"></div>
+    </div>
+</div>

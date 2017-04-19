@@ -1,0 +1,33 @@
+.categorys {
+	background-color: #fff;
+	.title {
+		font-size: 16px;
+		font-weight: bold;
+		border: 1px solid $yellow_act; 
+	}
+	.nav-item {
+		padding: 5px 15px 5px 5px;
+		border-top: 1px solid #e1e1e1;
+		.nav-link { padding-right: 0; }
+		&:first-child {
+			border-top: 0;
+			.nav-link {
+				padding-left: 0.7em;
+				> i {
+					margin-right: 8px;
+				}
+			}
+		}
+
+		
+		a {
+			color: $text_color;
+			> [class^="icon-"]{
+				padding-right: 10px;
+			}
+			&:HOVER {
+				color : $text_blue;
+			}
+		}
+	}
+}

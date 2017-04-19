@@ -1,0 +1,16 @@
+.wrap_register {
+  width: 1024px;
+  margin: 0 auto;
+}
+.qa1 .tt {
+  color: #00a651;
+  float: left;
+  font-family: "Roboto-Bold";
+  font-size: 22px;
+  line-height: 40px;
+  padding-left: 11px;
+  padding-top: 10px;
+}
+.login_form .dk {
+    float: right;
+}

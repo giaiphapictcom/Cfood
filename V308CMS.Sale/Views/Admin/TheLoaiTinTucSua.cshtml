@@ -1,0 +1,50 @@
+﻿@model V308CMS.Data.NewsGroupPage
+@{
+    ViewBag.Title = "Thể Loại Tin Tức";
+    ViewBag.LinkBack = "<li><a href=\"/Admin/TheLoaiTinTuc/\">Thể Loại tin tức</a> </li>";
+    ViewBag.MenuValue = 2;
+    Layout = "~/Views/Admin/Layout.cshtml";
+}
+<div>
+    <div>
+        <h3>Thêm loại tin tức mới</h3>
+        <hr />
+        <div style="width: 100%;">
+            <input type="hidden" id="pId" value="@Model.pNewsGroups.ID" />
+            <div id="v308inputContent" class="RadGrid RadGrid_MetroTouch table table-striped table-bordered table-hover dataTable" tabindex="0">
+                <table>
+                    <tr>
+                        <td>Tên</td>
+                        <td>
+                            <input type="text" id="pTitleId" value="@Model.pNewsGroups.Name" name="pTitle" /></td>
+                    </tr>
+                    <tr>
+                        <td>Nhóm Tin</td>
+                        <td>@Html.Raw(@Model.HtmlNhomTin)</td>
+                    </tr>
+                    <tr>
+                        <td>Thứ Tự</td>
+                        <td>
+                            <input type="text" id="pOrderId"  name="pOrder" value="@Model.pNewsGroups.Number" /></td>
+                    </tr>
+                      <tr>
+                        <td>Link cứng</td>
+                        <td>
+                            <input type="text" id="pLinkId"  name="pLink" value="@Model.pNewsGroups.Link" /></td>
+                    </tr>
+                    <tr>
+                        <td>Kích Hoạt</td>
+                        <td>
+                            <input type="checkbox" id="pActiveId"  name="pActive" checked="checked" style="width:40px !important;"/></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                         <a  class="mbutton" href="javascript:Admin_NewsGroup_ThucHienLuuSua();">Lưu sửa</a></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <hr />
+    </div>
+</div>

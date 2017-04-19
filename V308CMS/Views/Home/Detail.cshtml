@@ -1,0 +1,320 @@
+﻿@model V308CMS.Data.ProductDetailPage
+@{
+    Layout = "~/Views/Layout/_DetailLayout.cshtml";
+    ViewBag.Title = Model.Product.Name;
+}
+@section header {
+    <meta name="keywords" content="@Model.Product.Name">
+    <meta property="og:site_name" content="@V308CMS.Common.AppSetting.URL">
+    <meta property="og:title" content="@Model.Product.Name">
+    <meta property="og:image" content="@Model.Product.Image">
+    <meta name="description" content="@Model.Product.Summary">
+    <meta property="og:title" content="@Model.Product.Name">
+
+}
+<style type="text/css">
+   #UnitSec table {
+    border-collapse: collapse;
+}
+
+#UnitSec table, #UnitSec th, #UnitSec td {
+    border: 1px solid black;
+}
+</style>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#list-slide-zoom').bxSlider({
+            minSlides: 4,
+            maxSlides: 4,
+            slideWidth: 100,
+            slideHeight: 60,
+            pager: false
+        });
+    });
+</script>
+<script type="text/javascript">
+    function v308UpNumber(pElement) {
+        var mvalue = $("#" + pElement + "").val();
+        mvalue = (parseInt(mvalue) + 1);
+        $("#" + pElement + "").val(mvalue);
+    }
+    function v308DownNumber(pElement) {
+        var mvalue = $("#" + pElement + "").val();
+        if (parseInt(mvalue) > 1) {
+            mvalue = (parseInt(mvalue) - 1);
+            $("#" + pElement + "").val(mvalue);
+        }
+    }
+</script>
+<section class="wrap article">
+    <div class="ctnr">
+        <section class="v308-header">
+            <div class="hdicon">
+                <img src="/Content/Images/shopcart.png" />
+            </div>
+            <div class="vtxt1">
+                <div class="txt1">Sản phẩm đến từ siêu thị @Model.Market.UserName</div>
+                <div class="txt2">Địa chỉ: @Model.Market.Address @Model.Market.Phone</div>
+            </div>
+            <div class="vtxt2">
+                <div class="txt1">Giới thiệu về shop</div>
+                <div class="txt2">Điểm uy tín: 5 - 100% đơn hàng tốt</div>
+            </div>
+            <div class="hdicon2">
+                <img src="/Content/Images/icclose.png" />
+            </div>
+        </section>
+        <!-- cbo-brc -->
+        <section class="atc-main mxClrAft">
+            <div class="atc-lft">
+                <div class="atc-head mxClrAft">
+                    <section class="atc-img">
+                        <div class="atc-img-mn">
+                            <div style="height: 280px; width: 280px;" class="zoomWrapper">
+                                <img id="is-img-slide-main" src="@Model.Product.Image" alt="@Model.Product.Name" data-zoom-image="@Model.Product.Image" style="position: absolute;">
+                            </div>
+                        </div>
+                        <div class="slide-article small-list" data-min-slide="4">
+                            <div class="atc-img-list sld">
+                                <div class="in-img-list slider" id="list-slide-zoom">
+                                    <a href="javascripr: void()" class="atc-img-itm is-item-sld slide" data-image="@Model.Product.Image" data-image-zoom="@Model.Product.Image" style="background-image: url(@Model.Product.Image)"></a>
+                                    <a href="javascripr: void()" class="atc-img-itm is-item-sld slide" data-image="@Model.Product.Image" data-image-zoom="@Model.Product.Image" style="background-image: url(@Model.Product.Image)"></a>
+                                    <a href="javascripr: void()" class="atc-img-itm is-item-sld slide" data-image="@Model.Product.Image" data-image-zoom="@Model.Product.Image" style="background-image: url(@Model.Product.Image)"></a>
+                                    <a href="javascripr: void()" class="atc-img-itm is-item-sld slide" data-image="@Model.Product.Image" data-image-zoom="@Model.Product.Image" style="background-image: url(@Model.Product.Image)"></a>
+                                    <a href="javascripr: void()" class="atc-img-itm is-item-sld slide" data-image="@Model.Product.Image" data-image-zoom="@Model.Product.Image" style="background-image: url(@Model.Product.Image)"></a>
+                                </div>
+                            </div>
+                            <!-- atc-img-list -->
+                        </div>
+                        <div class="lst-ss">
+                            <div class="fb-like" data-href="https://www.facebook.com/cleanfood.vn/" data-layout="button_count" data-action="like" data-size="small" data-show-faces="false" data-share="true"></div>
+                            <div style="display: inline-block; float: right; margin-top: 6px; width: 38px; height: 24px; margin-right: 65px;">
+                                <script src="https://apis.google.com/js/platform.js" async defer>{lang: 'vi'}</script>
+                                <div class="g-plusone" data-annotation="none" style="display: inline-block; float: right; margin-top: 6px; float: right;"></div>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="atc-ifo">
+                        <div class="info-sec1"><a href="/">C-FOOD</a><span>></span><a href="/">@Model.Market.UserName</a><span>></span><a href="/">@Model.ProductType.Name</a><span></span></div>
+                        <div class="info-sec">@Model.Product.Name</div>
+                        <div class="info-sec">Thương hiệu: @Model.Market.UserName : <span class="rating is-rating only-display" data-value="@Model.Product.getReview()"><span></span><span></span><span></span><span></span><span></span></span><span style="display: inline; font-size: 15px; margin-left: 3px;">(@Model.Product.getReview())</span></div>
+                        <div class="info-sec">
+                            <ul>
+                                <li>@Model.Product.Summary</li>
+                                @* <li>+ Hương vị tự nhiên, an toàn cho người sử dụng</li>
+                                <li>+ Tiết kiệm chi phí, thời gian cho người nội trợ</li>*@
+                            </ul>
+                            <div style="margin-top: 20px;">MÃ SẢN PHẨM:<span style="color: red; font-size: 16px; font-weight: bold;">CF-@V308CMS.Common.ConverterUlti.GetIdProductByDateTime(Model.Product.Date.Value)-@Model.Product.ID</span></div>
+                        </div>
+                        <div class="info-sec">
+                            @if (@Model.ProductType.Level.Substring(0, 5) == "10030")
+                            {
+                                <div style="display:none;" id="slunitprice1">
+                                    <div style="color: red; font-size: 25px; font-weight: bold;">@String.Format("{0: 0,0}", (Model.Product.Price - ((Model.Product.Price / 100) * Model.Product.SaleOff))) đ</div>
+                                    <span style="text-decoration: line-through; font-size: 14px; margin: 0 6px;">@String.Format("{0: 0,0}", (Model.Product.Price)) đ/@V308CMS.Common.ConverterUlti.ConverUnitWeight(Model.Product.Group)</span>
+                                </div>
+                                 <div style="display:none;" id="slunitprice2">
+                                    <div style="color: red; font-size: 25px; font-weight: bold;">@String.Format("{0: 0,0}", (Model.Product.Price2 - ((Model.Product.Price2 / 100) * Model.Product.SaleOff))) đ</div>
+                                    <span style="text-decoration: line-through; font-size: 14px; margin: 0 6px;">@String.Format("{0: 0,0}", (Model.Product.Price2)) đ/@V308CMS.Common.ConverterUlti.ConverUnitWeight(Model.Product.Group)</span>
+                                </div>
+                                 <div style="display:none;" id="slunitprice3">
+                                    <div style="color: red; font-size: 25px; font-weight: bold;">@String.Format("{0: 0,0}", (Model.Product.Price3 - ((Model.Product.Price3 / 100) * Model.Product.SaleOff))) đ</div>
+                                    <span style="text-decoration: line-through; font-size: 14px; margin: 0 6px;">@String.Format("{0: 0,0}", (Model.Product.Price3)) đ/@V308CMS.Common.ConverterUlti.ConverUnitWeight(Model.Product.Group)</span>
+                                </div>
+                            }
+                            else
+                            { 
+                                <div style="color: red; font-size: 25px; font-weight: bold;">@String.Format("{0: 0,0}", (Model.Product.Price - ((Model.Product.Price / 100) * Model.Product.SaleOff))) đ</div>
+                                <span style="text-decoration: line-through; font-size: 14px; margin: 0 6px;">@String.Format("{0: 0,0}", (Model.Product.Price)) đ/@V308CMS.Common.ConverterUlti.ConverUnitWeight(Model.Product.Group)</span>
+                                
+                            }
+                            <span style="color: #fff; background: #e61010; display: inline-block; padding: 0px 7px 4px; border-radius: 22px; height: 15px; margin-left: 2px; line-height: 22px;">-@Model.Product.SaleOff%</span>
+                        </div>
+                        <div class="info-sec">
+                            @*<div>Giao hàng: Giao hàng trước @(Model.Product.Transport1)H00 ngày hôm nay</div>
+                            <div>Áp dụng cho các đơn hàng trước  @(Model.Product.Transport1)H00 ngày hôm nay</div>*@
+                            <div>Giao hàng:Vui lòng đặt trước 9h30 cho bữa sáng và trước 16h00 cho bữa chiều</div>
+                        </div>
+                        <div class="cbo-buy">
+                            <div style="display: inline-block; width: 500px; margin-bottom: 20px;">
+                                <div style="display: inline-block;">Số lượng</div>
+                                <div style="display: inline-block; height: 26px;">
+                                    <input type="hidden" id="slunit-id" value="1">
+                                    <input type="number" class="ip-sl" value="1" id="amount2">
+                                    <div class="btn-ip-sl">
+                                        <div class="btn-slu fa fa-angle-up" onclick="javascript:v308UpNumber('amount2');"></div>
+                                        <div class="btn-slu fa fa-angle-down" onclick="javascript:v308DownNumber('amount2');"></div>
+                                    </div>
+                                </div>
+                                @*    <div style="display: inline-block;">Hoặc số tiền</div>
+                                <div class="cbo-buy" style="display: inline-block;">
+                                    <input type="text" style="width: 120px; height: 30px; background-color: #f0f0f0;" />
+                                </div>*@
+                            </div>
+                        </div>
+                        <div class="cbo-buy">
+                            <button class="sbm-but" id="js_add_to_cart" onclick="javascript:MuaHangHome(@Model.Product.ID);"><span class="fa fa-shopping-cart"></span>Thêm vào giỏ</button>
+                            <a href="/nong-san-ngon">
+                                <div class="ctn-but"><span class="txt-btn">Mua tiếp tại nông sản ngon</span><span class="fa fa-angle-double-right"></span></div>
+                            </a>
+                        </div>
+                    </section>
+                </div>
+                <!-- atc-head -->
+                <div class="atc-cnt">
+                    <div class="det-nav">
+                        <div class="det-nav-head active" id="det-nav-head1">CHI TIẾT SẢN PHẨM</div>
+                        <div class="det-nav-head" id="det-nav-head2">ĐÁNH GIÁ PHẢN HỒI(8)</div>
+                        <div class="det-nav-head" id="det-nav-head3">HỎI ĐÁP(10)</div>
+                    </div>
+                    <!-- atc-nav -->
+                    <div class="atc-dtl">
+                        <article class="atc-fcs" id="atc-cmt">
+                            <section>
+                                <div class="comment" id="UnitSec" style="display: inline-block; width: 100%;">
+                                    <div style="width: 100%; display: none;" id="secuniit1">@Html.Raw(@Model.Product.Unit1)</div>
+                                    <div style="width: 100%; display: none;" id="secuniit2">@Html.Raw(@Model.Product.Unit2)</div>
+                                    <div style="width: 100%; display: none;" id="secuniit3">@Html.Raw(@Model.Product.Unit3)</div>
+                                    <div style="width: 100%;">@Html.Raw(@Model.Product.Detail)</div>
+                                    @if (@Model.ProductType.Level.Substring(0, 5) == "10030")
+                                    { 
+                                         <div style="width: 100%;"><img src="/Content/Images/notes.jpg" /></div>
+                                    }
+                                </div>
+                                <div class="gnr-tl js-panel-write-comment">Khách hàng nhận xét</div>
+                                <div class="comment" style="display: inline-block; width: 100%;">
+                                    <div class="fb-comments" data-href="@V308CMS.Common.Ultility.LocDau(@Model.Product.Name)-d@(Model.Product.ID).html" data-width="500" data-numposts="5" data-colorscheme="light"></div>
+                                </div>
+                            </section>
+                            <!-- atc-cmt -->
+                        </article>
+                    </div>
+                </div>
+            </div>
+            <!-- atc-lft -->
+            <aside class="atc-rht">
+                <section class="ifo-mrt">
+                    <div class="divleft1">
+                        <a class="">
+                            <img src="/Content/Images/trademark2.png" /></a>
+                    </div>
+                    <div class="divleft2">
+                        <div class="divleft2-head">DANH MỤC SẢN PHẨM CỦA SHOP</div>
+                        <div class="divleft2-list">
+                            <ul>
+                                @foreach (V308CMS.Data.ProductType ht in Model.ProductTypeList)
+                                {
+                                    <li><a href="/@V308CMS.Common.Ultility.LocDau(@ht.Name)-t@(@ht.ID).html">@ht.Name</a></li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="divleft4">
+                        <div style="position: relative;">
+                            <span style="position: absolute; color: red; top: 83px; right: 5px; font-weight: bold;">@Model.Market.Phone</span>
+                            <span style="position: absolute; color: red; top: 156px; right: 50px; font-weight: bold;">Qua @Model.Market.UserName</span>
+                            <img src="/Content/Images/iconsupport3.png">
+                        </div>
+                    </div>
+                    <div class="divleft3">
+                        <div>SẢN PHẨM BÁN CHẠY</div>
+                        <div class="divleft3-list">
+                            @foreach (V308CMS.Data.Product ht in Model.DiscountList)
+                            {
+                                <div class="b2 cq" style="height: 300px; width: 175px; margin: 6px auto; display: block; overflow: hidden; clear: both; border: 1px solid #cccccc; padding: 6px 6px; text-align: center;">
+                                    <a href="/@V308CMS.Common.Ultility.LocDau(@ht.Name)-d@(@ht.ID).html" class="b3" style="" title="Rau muống goodlife greens">
+                                        <img class="lazy-loaded" data-src="@ht.Image" alt="Rau muống goodlife greens" src="@(@ht.Image)" style="width:95%;">
+                                    </a>
+                                    <div class="b4">
+                                        <a class="b5" href="/@V308CMS.Common.Ultility.LocDau(@ht.Name)-d@(@ht.ID).html" title="@ht.Name">@ht.Name</a>
+                                        <div class="b6" style="display: inline-block; margin: auto; overflow: inherit;">
+                                            <span style="color: #be1a19; font-size: 13px; line-height: 36px;">@String.Format("{0: 0,0}", (ht.Price - ((ht.Price / 100) * ht.SaleOff)))đ</span>
+                                            @if (ht.SaleOff > 0)
+                                            { 
+                                                <span style="text-decoration: line-through; font-size: 14px; margin: 0 6px;">@String.Format("{0: 0.0}", (ht.Price))đ</span>
+                                                <span style="color: #fff; background: #e61010; display: inline-block; padding: 0px 7px 4px; border-radius: 22px; height: 15px; margin-left: 2px; line-height: 22px;">-@ht.SaleOff%</span>
+                                            }
+                                        </div>
+                                        <div class="b6">
+                                            @String.Format("{0: 0,0}", (ht.Price - ((ht.Price / 100) * ht.SaleOff)))đ/kg
+                                        </div>
+                                        <div class="b7" style="margin-top: -4px;"><span class="rating is-rating only-display" data-value="@ht.getReview()"><span></span><span></span><span></span><span></span><span></span></span><span style="display: inline; font-size: 15px; margin-left: 3px;">(@ht.getReview())</span></div>
+                                    </div>
+                                    <div class="b4">
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </section>
+            </aside>
+            <!-- atc-rht -->
+            <div class="clr"></div>
+            <section class="cbo-hp">
+                <div class="cbo-hp-head mxClrAft" id="cbo-hp-head-id" style="height: 48px; /* margin-bottom: 22px; */ position: relative; background: url(/content/images/bgheader.png) no-repeat; background-size: 1024px 50px;">
+                    <a href="" class="hp-img">
+                        <img class="lazy-loaded" data-src="/Content/Images/marketlogo.png" alt="" src="/Content/Images/marketlogo.png"></a>
+                    <a class="hp-ttl" href="" style="background-color: transparent; color: #ffffff; margin-left: 20px;">Sản phẩm liên quan</a>
+                    <ul class="is-mn-nav-cat"></ul>
+                </div>
+                <!-- cbo-hp-head -->
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $('#sliderrelative').bxSlider({
+                            minSlides: 4,
+                            maxSlides: 4,
+                            slideWidth: 353,
+                            slideHeight: 353,
+                            pager: false
+                        });
+                    });
+                </script>
+                <div class="cbo-hp-cnt mxClrAft cat-hp">
+                    <div class="rht-cat-hp" style="width: 1024px;">
+                        <div class="b1" style="width: 1024px;" id="sliderrelative">
+                            @foreach (V308CMS.Data.Product ht in Model.MarketList)
+                            {
+                                <div class="b2 cq" data-id="13015" style="height: 330px;">
+                                    @if (ht.SaleOff > 0)
+                                    {
+                                        <div class="tag-icon sale"><span>-@ht.SaleOff%</span></div>
+                                    }
+                                    <a href="/@V308CMS.Common.Ultility.LocDau(@ht.Name)-d@(@ht.ID).html" class="b3" style="margin:0px;" title="Rau muống goodlife greens">
+                                        <img class="lazy-loaded" data-src="@ht.Image" alt="Rau muống goodlife greens" src="@(@ht.Image)">
+                                    </a>
+                                    <div class="b4">
+                                        <a class="b5" href="/@V308CMS.Common.Ultility.LocDau(@ht.Name)-d@(@ht.ID).html" title="@ht.Name">@ht.Name</a>
+                                        <div class="b6" style="display: inline-block; margin: auto; overflow: inherit;">
+                                            <span style="color: #be1a19; font-size: 22px; line-height: 36px;">@String.Format("{0: 0,0}", (ht.Price - ((ht.Price / 100) * ht.SaleOff)))đ</span>
+                                            @if (ht.SaleOff > 0)
+                                            { 
+                                                <span style="text-decoration: line-through; font-size: 14px; margin: 0 6px;">@String.Format("{0: 0.0}", (ht.Price))đ</span>
+                                                <span style="color: #fff; background: #e61010; display: inline-block; padding: 0px 7px 4px; border-radius: 22px; height: 15px; margin-left: 2px; line-height: 22px;">-@ht.SaleOff%</span>
+                                            }
+
+                                        </div>
+                                        <div class="b6">
+                                            @String.Format("{0: 0,0}", (ht.Price - ((ht.Price / 100) * ht.SaleOff)))đ/kg
+                                        </div>
+                                        <div class="b7"><span class="rating is-rating only-display" data-value="@ht.getReview()"><span></span><span></span><span></span><span></span><span></span></span><span style="display: inline; font-size: 15px; margin-left: 3px;">(@ht.getReview())</span></div>
+                                    </div>
+                                    <div class="b4">
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </section>
+        <!-- atc-main -->
+    </div>
+    <!-- ctnr -->
+</section>
+@section ChooseUnit{
+    @if (@Model.ProductType.Level.Substring(0, 5) == "10030")
+    {
+        @Html.Action("ChooseUnit", "Widget")
+    }
+}

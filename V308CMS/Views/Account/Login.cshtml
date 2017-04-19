@@ -1,0 +1,72 @@
+﻿@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Layout/_AccountLayout.cshtml";
+}
+<div class="wrap">
+    <section class="newregister normal_login ctnr">
+        <div class="cm mxClrAft"><a href="javascript:void(0);" class="cn">Đăng nhập            </a></div>
+        <div class="bdrg mxClrAft">
+            <div class="err_list_login hide">
+                <div class="err_list_login">
+                    <div class="content_err" id="err_list_login_id"></div>
+                    <div class="close_err_login"></div>
+                </div>
+                <div class="close_err_login"></div>
+            </div>
+            <div class="login_form rf">
+                <form method="post" action="" id="jForm" class="dang_nhap form_user qc2">
+                    <table class="">
+                        <tbody>
+                            <tr>
+                                <td style="padding: 0" colspan="2">
+                                    <div id="tai_khoan_dang_nhap">
+                                        <div class="login_account">
+                                            <div class="row_login_acc">
+                                                <div class="t2">Tên tài khoản                                                </div>
+                                                <input type="text" autocomplete="on" class="inputbox qti input_log" id="pUserName" name="UserName" placeholder="Tài khoản">
+                                            </div>
+                                            <div class="row_login_acc">
+                                                <div class="t2">Mật khẩu                                                </div>
+                                                <input type="password" class="inputbox qti input_log" value="" id="pPassWord" name="PassWord" placeholder="Mật khẩu">
+                                            </div>
+                                            <div class="capr none mxClrAft">
+                                                <div class="cb">
+                                                    <div class="t">
+                                                        <span id="hinh_anh">
+                                                            <img></span>
+                                                    </div>
+                                                </div>
+                                                <a href="javascript:void(0);" onclick="lay_hinh_moi('login')" class="li">[Ảnh khác]                                                </a>
+                                                <input type="text" placeholder="Nhập mã captcha" class="ip">
+                                            </div>
+                                            <div class="tr"><span data-id="check-remember-pass" class="fa fa-check-square-o is-check-box"></span><span data-id="check-remember-pass" class="is-label-check-box">Nhớ mật khẩu. Tự động đăng nhập vào lần sau                                                </span></div>
+                                            <a class="tf" href="/quen-mat-khau.html">Quên mật khẩu                                            </a>
+                                            <div class="row_login_acc last mxClrAft">
+                                                 <a class="button_submit_log bt2" onclick="javascript:DangNhapHome();" style="text-align:center;width: 92%;">Đăng nhập                                                </a>
+                                                <a id="js_call_register_page" class="button_submit_log bt2 dk" style="text-align:center;width: 92%;" href="dang-ky.html">Đăng ký tài khoản mới                                                </a>
+                                            </div>
+                                            <div class="login-with-social row_login_acc">
+                                                <div class="login-social-title">Hoặc đăng nhập qua                                                </div>
+                                                <div class="login-social-element">
+                                                    <div class="element_item">
+                                                        <div class="new-button-m dark-blue button-login-fb small-padding" id="js-lp-fb"><span class="fa fa-facebook-square"></span>Facebook                                                        </div>
+                                                    </div>
+                                                    <div class="element_item">
+                                                        <div class="new-button-m dark-brown button-login-gg small-padding" id="js-lp-gg"><span class="fa fa-google-plus"></span>Google                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="clear"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <input type="hidden" value="dang_nhap" name="type">
+                    <input type="hidden" value="" name="refer">
+                </form>
+            </div>
+        </div>
+    </section>
+</div>

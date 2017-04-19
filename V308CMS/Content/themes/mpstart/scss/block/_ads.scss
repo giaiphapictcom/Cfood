@@ -1,0 +1,15 @@
+.product-ads {
+	margin-top: 30px;
+	[class^="col"] {
+		height: 210px;
+		overflow: hidden;
+		> a {
+			display: block;
+			overflow: hidden;
+			> img {
+				height: 100%;
+				width: auto;
+			}
+		}
+	}
+}

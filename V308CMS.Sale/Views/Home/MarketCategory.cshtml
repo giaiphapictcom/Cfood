@@ -1,0 +1,111 @@
+﻿@model  V308CMS.Data.ProductCategoryPage
+@{
+    ViewBag.Title = "C-FOOD";
+    Layout = "~/Views/Layout/_CategoryLayout.cshtml";
+    ViewBag.Description = "";
+}
+<style type="text/css">
+    .b1 .b2 .b3 img {
+        -webkit-transition: all 500ms ease 0s;
+        -o-transition: all 500ms ease 0s;
+        transition: all 500ms ease 0s;
+        width: 230px;
+        height: 200px;
+        display: block;
+        padding: 12px;
+    }
+
+    .b1 .b2 .b3 {
+        height: 213px;
+    }
+
+    .b1 .b2 .b4 .b5 {
+        margin-top: 5px;
+        font-size: 16px !important;
+        font-weight: normal;
+        color: #131313;
+    }
+</style>
+<section class="wrap category no-select">
+    <div class="ctnr">
+        <section class="cbo-brc">
+            <div class="brc-lst"><a class="next" href="/@V308CMS.Common.Ultility.LocDau(@Model.Market.UserName)" title="Trang Chủ">@Model.Market.UserName                    </a></div>
+            <div class="atc-nm">
+                <a href="/@V308CMS.Common.Ultility.LocDau(@Model.Market.UserName)-m@(@Model.Id).html" title="@Model.Name">@Model.Name </a>
+                <div class="sub-bread is-mn mCustomScrollbar _mCS_1 mCS-autoHide done" style="overflow: visible;">
+                    <div id="mCSB_1" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical mCSB_outside" tabindex="0" style="max-height: 200px;">
+                    </div>
+                    <div id="mCSB_1_scrollbar_vertical" class="mCSB_scrollTools mCSB_1_scrollbar mCS-minimal-dark mCSB_scrollTools_vertical" style="display: block;">
+                        <div class="mCSB_draggerContainer">
+                            <div id="mCSB_1_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 50px; display: block; height: 67px; max-height: 166px;" oncontextmenu="return false;">
+                                <div class="mCSB_dragger_bar" style="line-height: 50px;"></div>
+                            </div>
+                            <div class="mCSB_draggerRail"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- cbo-lst-mrt -->
+        <div class="list-category mxClrAft">
+            <div class="left-category">
+                <div class="slide-category" id="js-vendor-slide1">
+                    <ul id="accord-slide-1" class="js-accord-sld" style="display: block; height: 350px; width: 808px; padding: 0px; position: relative; overflow: hidden; list-style: none;">
+                        <li class="slider slider-closed" style="top: 0px; z-index: 0; margin: 0px; padding: 0px; float: left; display: block; position: absolute; overflow: hidden; width: 600px; height: 350px; text-indent: 0px; left: 0px; cursor: pointer;"><a href="javascript:;">
+                            <img src="//img.disieuthi.vn/quangcao/img05.jpg">
+                            <span class="info-slide"><span class="title-slide"></span>
+                            </span></a></li>
+                    </ul>
+                </div>
+                <section class="cbo-hp vd">
+                    <div class="cbo-hp-head mxClrAft"><a class="hp-ttl" href="javascript:void();">Danh sách sản phẩm        </a></div>
+                    <!-- cbo-hp-head -->
+                    <div class="cbo-hp-cnt mxClrAft cat-hp">
+                        <div class="rht-cat-hp" id="list_product_57">
+                            <div class="b1">
+                                @foreach (V308CMS.Data.Product ht in Model.List)
+                                {
+                                    <div class="b2 cq" data-id="13015" style="height: 330px;">
+
+                                        <a href="/@V308CMS.Common.Ultility.LocDau(@ht.Name)-d@(@ht.ID).html" class="b3" style="margin:0px;" title="Rau muống goodlife greens">
+                                            <img class="lazy-loaded" data-src="@ht.Image" alt="Rau muống goodlife greens" src="http://cleanfoodvn.vn@(@ht.Image)">
+                                        </a>
+                                        <div class="b4">
+                                            <a class="b5" href="/@V308CMS.Common.Ultility.LocDau(@ht.Name)-d@(@ht.ID).html" title="@ht.Name">@ht.Name</a>
+                                            <div class="b6" style="display: inline-block; margin: auto; overflow: inherit;">
+                                                <span style="color: #be1a19; font-size: 22px; line-height: 36px;">@String.Format("{0: 0,0}", (ht.Price - ((ht.Price / 100) * ht.SaleOff)))đ</span>
+                                                @if (ht.SaleOff > 0)
+                                                { 
+                                                    <span style="text-decoration: line-through; font-size: 14px; margin: 0 6px;">@String.Format("{0: 0.0}", (ht.Price))đ</span>
+                                                    <span style="color: #fff; background: #e61010; display: inline-block; padding: 0px 7px 4px; border-radius: 22px; height: 15px; margin-left: 2px; line-height: 22px;">-@ht.SaleOff%</span>
+                                                }
+
+                                            </div>
+                                            <div class="b6">
+                                                @String.Format("{0: 0,0}", (ht.Price - ((ht.Price / 100) * ht.SaleOff)))đ/@V308CMS.Common.ConverterUlti.ConverUnitWeight(ht.Group)
+                                            </div>
+                                            <div class="b7"><span class="rating is-rating only-display" data-value="@ht.getReview()"><span></span><span></span><span></span><span></span><span></span></span><span style="display: inline; font-size: 15px; margin-left: 3px;">(@ht.getReview())</span></div>
+                                        </div>
+                                        <div class="b4">
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="page-nav">
+                            <div class="pg mxClrAft nav-sld">
+                                <div class="n item-pagi-sld" title=""><a href="/@V308CMS.Common.Ultility.LocDau(@Model.Market.UserName)-m@(@Model.Id).html?pPage=@Model.BackPage">Back</a></div>
+                                <div class="n item-pagi-sld atv" title=""><a href="/@V308CMS.Common.Ultility.LocDau(@Model.Market.UserName)-m@(@Model.Id).html?pPage=@Model.Page">@Model.Page</a></div>
+                                <div class="n item-pagi-sld" title=""><a href="/@V308CMS.Common.Ultility.LocDau(@Model.Market.UserName)-m@(@Model.Id).html?pPage=@Model.NextPage">Next</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+          @*  <div class="right-category">
+                @Html.Action("Right", "Widget")
+            </div>*@
+        </div>
+    </div>
+    <div class="clr"></div>
+</section>

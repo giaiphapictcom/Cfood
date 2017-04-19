@@ -1,0 +1,166 @@
+﻿@{
+    Layout = null;
+}
+<div id="position-1" class="span4">
+    <!--<div class="yt-position-inner">-->
+    <div class="module  blank login-teen" style="min-width: 370px; min-height: 40px;">
+        <div class="modcontent clearfix">
+            <ul class="mobi-sj-login-regis" style="display: none">
+                <li class="sj-login"><a class="login-switch text-font" href="javascript:void(0);"
+                    title="">Đăng Nhập </a></li>
+                <li class="sj-register"><a class="register-switch text-font" href="javascript:void(0);">Đăng Ký </a></li>
+            </ul>
+            <ul class="sj-login-regis">
+                <li class="sj-login" style="min-width:100px;"><a href="#mod-login" role="button" class="login-switch text-font"
+                    title="" data-toggle="modal"><i class="icon-lock"></i><span class="title-link">@*Đăng Nhập*@</span>
+                </a>
+                    <div id="mod-login" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                x</button>
+                        </div>
+                        <div id="sj_login_box" class="show-box">
+                            <div class="sj_box_inner">
+                                <div class="sj_box_title google-font">
+                                    <h3>Đăng Nhập</h3>
+                                </div>
+                                <div class="sj_box_content">
+                                    <form id="login_form" action="/"
+                                        method="post">
+                                        <div class="pretext">
+                                            <p>
+                                            </p>
+                                        </div>
+                                        <fieldset class="userdata">
+                                            <div class="login_input">
+                                                <p>
+                                                    <label for="modlgn-username" class="sj-login-user">
+                                                        <span class="lbl_icon"><i class="icon-user"></i></span>
+                                                        <input id="modlgn-username" type="text" name="username" class="inputbox" size="25"
+                                                            placeholder="User Name">
+                                                    </label>
+                                                </p>
+                                                <p>
+                                                    <label for="modlgn-passwd" class="sj-login-password">
+                                                        <span class="lbl_icon"><i class="icon-key"></i></span>
+                                                        <input id="modlgn-passwd" type="password" name="password" class="inputbox" size="25"
+                                                            placeholder="Password">
+                                                    </label>
+                                                </p>
+                                            </div>
+                                            <div class="login_button">
+                                                <p id="form_login_remember">
+                                                    <input id="modlgn-remember" type="checkbox" name="remember" class="checkbox" value="yes">
+                                                    <label for="modlgn-remember">
+                                                        Ghi nhớ</label>
+                                                </p>
+                                                <div class="button2">
+                                                    <input type="submit" name="Submit" class="font-special button google-font" value="Log in">
+                                                </div>
+                                            </div>
+                                            <input type="hidden" name="option" value="com_users">
+                                            <input type="hidden" name="task" value="user.login">
+                                            <input type="hidden" name="return" value="aW5kZXgucGhwP0l0ZW1pZD00MzU=">
+                                            <input type="hidden" name="b53f270ce7acbcefdf157003b418d862" value="1">
+                                        </fieldset>
+                                        <div class="more_login sj-login-links clearfix">
+                                            <ul>
+                                                <li><a href="javascript:void(0);"
+                                                    title="Quên tài khoản?"><i class="icon-search"></i><span>Quên tài khoản?</span></a>
+                                                </li>
+                                                <li><a href="javascript:void(0);"
+                                                    title="Quên mật khẩu?"><i class="icon-user"></i><span>Quên mật khẩu?</span></a>
+                                                </li>
+                                                <li>
+                                                    <!--Popup creat register-->
+                                                    <a aria-hidden="true" data-dismiss="modal" data-toggle="modal" class="text-font"
+                                                        href="#register-modal"><i class="icon-pencil"></i><span class="title-link">Tạo tài khoản</span></a> </li>
+                                                <!--End creat ancount-->
+                                            </ul>
+                                        </div>
+                                        <div class="posttext">
+                                            <p>
+                                            </p>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="sj-register" style="min-width: 100px;"><a data-toggle="modal" class="register-switch text-font"
+                    onclick="return false;" href="#register-modal"><i class="icon-cog"></i><span class="title-link">
+                        @*Tạo tài khoản*@</span> </a>
+                    <div id="register-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                x</button>
+                        </div>
+                        <div id="sj_register_box" class="show-box">
+                            <div class="inner">
+                                <div class="sj_box_inner">
+                                    <div class="sj_box_title font-special">
+                                        <h3 class="google-font">Tạo tài khoản</h3>
+                                    </div>
+                                    <div class="sj_box_content">
+
+                                        <form id="member_registration" class="form-validate" action="/"
+                                            method="post">
+                                            <label class="required sj-field-regis" for="jform_name" id="namemsg" title="Họ Tên">
+                                                <span class="lbl_icon"><i class="icon-user"></i></span>
+                                                <input type="text" size="25" class="inputbox required" value="" id="jform_name" name="jform[name]"
+                                                    placeholder="Name:" aria-required="true" required="required">
+                                            </label>
+                                            <label title="" class="required sj-field-regis" for="jform_username" id="usernamemsg">
+                                                <span class="lbl_icon"><i class="icon-user"></i></span>
+                                                <input type="text" size="25" class="inputbox validate-username required" value=""
+                                                    id="jform_username" name="jform[username]" placeholder="Username:" aria-required="true"
+                                                    required="required">
+                                            </label>
+                                            <label title="" class="required sj-field-regis" for="jform_password1" id="pwmsg">
+                                                <span class="lbl_icon"><i class="icon-key"></i></span>
+                                                <input type="password" size="25" class="inputbox validate-password required" value=""
+                                                    id="jform_password1" name="jform[password1]" placeholder="Password:" aria-required="true"
+                                                    required="required">
+                                            </label>
+                                            <label title="" class="required sj-field-regis" for="jform_password2" id="pw2msg">
+                                                <span class="lbl_icon"><i class="icon-key"></i></span>
+                                                <input type="password" size="25" class="inputbox validate-password required" value=""
+                                                    id="jform_password2" name="jform[password2]" placeholder="Confirm Password:"
+                                                    aria-required="true" required="required">
+                                            </label>
+                                            <label title="" class="required sj-field-regis" for="jform_email1" id="emailmsg">
+                                                <span class="lbl_icon"><i class="icon-envelope"></i></span>
+                                                <input type="email" size="25" class="inputbox validate-email required" value="" id="jform_email1"
+                                                    name="jform[email1]" placeholder="Email Address:" aria-required="true" required="required">
+                                            </label>
+                                            <label title="" class="required sj-field-regis" for="jform_email2" id="email2msg">
+                                                <span class="lbl_icon"><i class="icon-envelope"></i></span>
+                                                <input type="email" size="25" class="inputbox validate-email required" value="" id="jform_email2"
+                                                    name="jform[email2]" placeholder="Confirm email Address:" aria-required="true"
+                                                    required="required">
+                                            </label>
+                                            <div class="button2">
+                                                <input type="submit" class="validate button font-special google-font" value="Register">
+                                            </div>
+                                            <div class="button2">
+                                                <a id="pop_login" href="#mod-login" role="button" class="button text-font google-font"
+                                                    title="" data-toggle="modal" aria-hidden="true" data-dismiss="modal"><span class="title-link">Đăng Nhập</span></a>
+                                            </div>
+                                            <input type="hidden" name="option" value="com_users">
+                                            <input type="hidden" name="task" value="registration.register">
+                                            <input type="hidden" name="b53f270ce7acbcefdf157003b418d862" value="1">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--</div>-->
+</div>

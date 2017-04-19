@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "Loại Hỗ trợ";
+    ViewBag.LinkBack = "<li><a href=\"/Admin/HoTroLoaiHoTro/\">Loại Hỗ Trợ</a> </li>";
+    ViewBag.MenuValue = 7;
+    Layout = "~/Views/Admin/Layout.cshtml";
+}
+
+<div>
+    <div>
+        <h3>Thêm loại hỗ trợ mới</h3>
+        <hr />
+        <div style="width: 100%;">
+            <div id="v308inputContent" class="RadGrid RadGrid_MetroTouch table table-striped table-bordered table-hover dataTable" tabindex="0">
+                <table>
+                    <tr>
+                        <td>Tên</td>
+                        <td>
+                            <input type="text" id="pTitleId" name="pTitle" /></td>
+                    </tr>
+                    <tr>
+                        <td>Thứ Tự</td>
+                        <td>
+                            <input type="text" id="pOrderId"  name="pOrder" value="0" /></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                         <a  class="mbutton" href="javascript:Admin_SupportType_ThucHienLuuMoi();">Lưu mới</a></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <hr />
+    </div>
+</div>

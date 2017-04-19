@@ -1,0 +1,13 @@
+﻿@model V308CMS.Models.Captcha
+@*<div class="editor-label">
+    @Html.LabelFor(model => model.CaptchaValue)<span class="red"> *</span><br>
+</div>
+<div class="editor-field">
+  @Html.TextBoxFor(m => m.CaptchaValue, new { @class = "textbox" })
+    @Html.ValidationMessageFor(model => model.CaptchaValue)<br />
+   
+    <br class="clear" />
+</div>*@
+<div style="">
+    <img src='@Url.Content("~/Captcha/Show")' alt="" class="captcha_img" />
+</div>

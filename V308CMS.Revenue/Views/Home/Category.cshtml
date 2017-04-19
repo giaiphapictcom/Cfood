@@ -1,0 +1,216 @@
+﻿@model  V308CMS.Data.ProductCategoryPageContainer
+@{
+    ViewBag.Title = "C-FOOD";
+    Layout = "~/Views/Layout/_CategoryLayout.cshtml";
+    ViewBag.Description = "";
+}
+
+<style type="text/css">
+    .b1 .b2 .b3 img {
+        -webkit-transition: all 500ms ease 0s;
+        -o-transition: all 500ms ease 0s;
+        transition: all 500ms ease 0s;
+        width: 230px;
+        height: 200px;
+        display: block;
+        padding: 12px;
+    }
+
+    .b1 .b2 .b3 {
+        height: 213px;
+    }
+
+    .b1 .b2 .b4 .b5 {
+        margin-top: 5px;
+        font-size: 16px !important;
+        font-weight: normal;
+        color: #131313;
+    }
+</style>
+<section class="wrap category no-select">
+    <div class="ctnr">
+        <section class="cbo-brc">
+            <div class="brc-lst"><a class="next" href="/" title="Trang Chủ">Trang Chủ                    </a></div>
+            <div class="atc-nm">
+                <a href="/@V308CMS.Common.Ultility.LocDau(@ViewBag.Name)-t@(@ViewBag.Id).html" title="@ViewBag.Name">@ViewBag.Name                </a>
+                <div class="sub-bread is-mn mCustomScrollbar _mCS_1 mCS-autoHide done" style="overflow: visible;">
+                    <div id="mCSB_1" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical mCSB_outside" tabindex="0" style="max-height: 200px;">
+                    </div>
+                    <div id="mCSB_1_scrollbar_vertical" class="mCSB_scrollTools mCSB_1_scrollbar mCS-minimal-dark mCSB_scrollTools_vertical" style="display: block;">
+                        <div class="mCSB_draggerContainer">
+                            <div id="mCSB_1_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 50px; display: block; height: 67px; max-height: 166px;" oncontextmenu="return false;">
+                                <div class="mCSB_dragger_bar" style="line-height: 50px;"></div>
+                            </div>
+                            <div class="mCSB_draggerRail"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- cbo-lst-mrt -->
+        <div class="list-category mxClrAft">
+            @if (@ViewBag.Level.Substring(0, 5) == "10030")
+            {
+                <div class="bannerimage">
+                    <img src="@ViewBag.TypeBanner" />
+                </div>
+                <div class="grouplist" id="slidercatecon">
+                    <script type="text/javascript">
+                        $(document).ready(function () {
+                            $('#slider').bxSlider({
+                                minSlides: 5,
+                                maxSlides: 5,
+                                slideWidth: 353,
+                                slideHeight: 333,
+                                pager: false
+                            });
+                        });
+                    </script>
+                    <style type="text/css">
+                        #slidercatecon .bx-wrapper .bx-next {
+                            right: -45px !important;
+                        }
+
+                        #slidercatecon .bx-wrapper .bx-prev {
+                            left: -45px !important;
+                        }
+                    </style>
+                    <script type="text/javascript">
+                        $(document).ready(function () {
+                            $('#slidercate').bxSlider({
+                                minSlides: 5,
+                                maxSlides: 5,
+                                slideWidth: 167,
+                                slideHeight: 120,
+                                pager: false,
+                                controls: true
+                            });
+                        });
+                    </script>
+                    <ul id="slidercate">
+                        @foreach (V308CMS.Data.ProductType ht in Model.ProductTypeList)
+                        {
+                            <li>
+                                <span>@ht.Name</span>
+                                <a href="/@V308CMS.Common.Ultility.LocDau(@ht.Name)-t@(@ht.ID).html" title="@ht.Name">
+                                    <img data-src="@ht.Image" alt="@ht.Name" src="http://cleanfoodvn.vn@(@ht.Image)">
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            }
+
+            <div class="left-category">
+                @foreach (V308CMS.Data.ProductCategoryPage it in Model.List)
+                {
+                    if (it.List.Count > 0)
+                    {
+                    <section class="cbo-hp vd">
+                        <div class="cbo-hp-head mxClrAft"><a class="hp-ttl" href="/@V308CMS.Common.Ultility.LocDau(@it.Name)-t@(@it.Id).html">@it.Name        </a><a href="/@V308CMS.Common.Ultility.LocDau(@it.Name)-t@(@it.Id).html" class="hp-mre">Xem tất cả            <span class="fa fa-angle-right"></span></a></div>
+                        <!-- cbo-hp-head -->
+                        <div class="cbo-hp-cnt mxClrAft cat-hp">
+                            <div class="rht-cat-hp" id="list_product_1">
+                                <div class="b1">
+                                    @foreach (V308CMS.Data.Product ht in it.List)
+                                    {
+                                        <div class="b2 cq" data-id="13015" style="height: 330px;">
+                                            @if (ht.SaleOff > 0)
+                                            {
+                                                <div class="tag-icon sale"><span>-@ht.SaleOff%</span></div>
+                                            }
+                                            <a href="/@V308CMS.Common.Ultility.LocDau(@ht.Name)-d@(@ht.ID).html" class="b3" style="margin:0px;" title="Rau muống goodlife greens">
+                                                <img class="lazy-loaded" data-src="@ht.Image" alt="Rau muống goodlife greens" src="http://cleanfoodvn.vn@(@ht.Image)">
+                                            </a>
+                                            <div class="b4">
+                                                <a class="b5" href="/@V308CMS.Common.Ultility.LocDau(@ht.Name)-d@(@ht.ID).html" title="@ht.Name">@ht.Name</a>
+                                                <div class="b6" style="display: inline-block; margin: auto; overflow: inherit;">
+                                                    <span style="color: #be1a19; font-size: 22px; line-height: 36px;">@String.Format("{0: 0,0}", (ht.Price - ((ht.Price / 100) * ht.SaleOff)))đ</span>
+                                                    @if (ht.SaleOff > 0)
+                                                    { 
+                                                        <span style="text-decoration: line-through; font-size: 14px; margin: 0 6px;">@String.Format("{0: 0.0}", (ht.Price))đ</span>
+                                                        <span style="color: #fff; background: #e61010; display: inline-block; padding: 0px 7px 4px; border-radius: 22px; height: 15px; margin-left: 2px; line-height: 22px;">-@ht.SaleOff%</span>
+                                                    }
+
+                                                </div>
+                                                <div class="b6">
+                                                    @String.Format("{0: 0,0}", (ht.Price - ((ht.Price / 100) * ht.SaleOff)))đ/@V308CMS.Common.ConverterUlti.ConverUnitWeight(ht.Group)
+                                                </div>
+                                                <div class="b7"><span class="rating is-rating only-display" data-value="@ht.getReview()"><span></span><span></span><span></span><span></span><span></span></span><span style="display: inline; font-size: 15px; margin-left: 3px;">(@ht.getReview())</span></div>
+                                            </div>
+                                            <div class="b4">
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                        </div>
+                    </section>
+                    }
+                }
+                @if (@ViewBag.Level.Substring(0, 5) == "10030")
+                { 
+                    <section class="cbo-hp">
+                        <div class="cbo-hp-head mxClrAft" id="cbo-hp-head-id" style="height: 48px; /* margin-bottom: 22px; */ position: relative; background: url(/content/images/bgheader.png) no-repeat; background-size: 1024px 50px;">
+                            <a href="" class="hp-img">
+                                <img class="lazy-loaded" data-src="/Content/Images/marketlogo.png" alt="" src="/Content/Images/marketlogo.png"></a>
+                            <a class="hp-ttl" href="" style="background-color: transparent; color: #ffffff; margin-left: 20px;">Món ăn được đặt nhiều nhất</a>
+                            <ul class="is-mn-nav-cat"></ul>
+                        </div>
+                        <!-- cbo-hp-head -->
+                        <div class="cbo-hp-cnt mxClrAft cat-hp">
+                            <div class="rht-cat-hp" id="list_product_1">
+                                <div class="b1" id="slider">
+                                    @foreach (V308CMS.Data.Product ht in Model.ProductList)
+                                    {
+                                        <div class="b2 cq" style="height: 250px; width: 200px;">
+                                            @if (ht.SaleOff > 0)
+                                            {
+                                                <div class="tag-icon sale"><span>-@ht.SaleOff%</span></div>
+                                            }
+                                            <a href="/@V308CMS.Common.Ultility.LocDau(@ht.Name)-d@(@ht.ID).html" class="b3" style="margin:0px;height: 150px;width:190px;" title="Rau muống goodlife greens">
+                                                <img class="lazy-loaded" data-src="@ht.Image" alt="Rau muống goodlife greens" src="http://cleanfoodvn.vn@(@ht.Image)" style="width:95%;height:80%;">
+                                            </a>
+                                            <div class="b4">
+                                                <a class="b5" href="/@V308CMS.Common.Ultility.LocDau(@ht.Name)-d@(@ht.ID).html" title="@ht.Name">@ht.Name</a>
+                                                <div class="b6" style="display: inline-block; margin: auto; overflow: inherit;">
+                                                    <span style="color: #be1a19; font-size: 13px; line-height: 36px;">@String.Format("{0: 0,0}", (ht.Price - ((ht.Price / 100) * ht.SaleOff)))đ</span>
+                                                    @if (ht.SaleOff > 0)
+                                                    { 
+                                                        <span style="text-decoration: line-through; font-size: 14px; margin: 0 6px;">@String.Format("{0: 0.0}", (ht.Price))đ</span>
+                                                        <span style="color: #fff; background: #e61010; display: inline-block; padding: 0px 7px 4px; border-radius: 22px; height: 15px; margin-left: 2px; line-height: 22px;">-@ht.SaleOff%</span>
+                                                    }
+                                                </div>
+                                                <div class="b6">
+                                                    @String.Format("{0: 0,0}", (ht.Price - ((ht.Price / 100) * ht.SaleOff)))đ/@V308CMS.Common.ConverterUlti.ConverUnitWeight(ht.Group)
+                                                </div>
+                                                <div class="b7" style="margin-top: -4px;">
+                                                    <span class="rating is-rating only-display" data-value="@ht.getReview()"><span></span><span></span><span></span><span></span><span></span></span><span style="display: inline; font-size: 15px; margin-left: 3px;">(@ht.getReview())</span>
+                                                </div>
+                                            </div>
+                                            <div class="b4">
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                        </div>
+                    </section>
+                }
+            </div>
+            @if (Model.ProductType.Parent > 0)
+            { 
+                <div class="page-nav">
+                    <div class="pg mxClrAft nav-sld">
+                        <div class="n item-pagi-sld" title=""><a href="/@V308CMS.Common.Ultility.LocDau(Model.ProductType.Name)-t@(Model.ProductType.ID).html?pPage=@Model.BackPage">Back</a></div>
+                        <div class="n item-pagi-sld atv" title=""><a href="/@V308CMS.Common.Ultility.LocDau(Model.ProductType.Name)-t@(Model.ProductType.ID).html?pPage=@Model.Page">@Model.Page</a></div>
+                        <div class="n item-pagi-sld" title=""><a href="/@V308CMS.Common.Ultility.LocDau(Model.ProductType.Name)-t@(Model.ProductType.ID).html?pPage=@Model.NextPage">Next</a></div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="clr"></div>
+</section>

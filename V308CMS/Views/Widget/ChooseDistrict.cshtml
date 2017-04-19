@@ -1,0 +1,72 @@
+﻿@{
+    Layout = null;
+}
+<script type="text/javascript">
+    function ConfirmLocation() {
+        var mlocation = $("#pDistrict").val();
+        var mlocationname = $("#pDistrict option:selected").text();
+        $.cookie("location", mlocation, { expires: 30 });
+        $.cookie("locationname", mlocationname, { expires: 30 });
+        $('.full-site').css('display', 'none');
+        $('.overlay-popup').css('display', 'none');
+        if (mlocation > 0)
+            $('#txtlocation').html(mlocationname);
+        // else
+        //$('#txtlocation').html('TP Hồ Chí Minh');
+    }
+</script>
+<div class="full-site" @if (ViewBag.location > 0)
+                       { <text>style="display:none;"</text>}>
+</div>
+<div class="overlay-popup"  @if (ViewBag.location > 0)
+                            { <text>style="display:none;"</text>}>
+    <div class="new-popup" style="width: 515px">
+        <div class="header-popup background-green">
+            <div class="title">Chọn địa điểm nhận hàng</div>
+            <div class="sub-title">C-FOOD.VN chỉ cung cấp dịch vụ tại nội thành Hà Nội</div>
+        </div>
+        <div class="content-popup">
+            <div class="inner-conntent smart-alert">
+                <div class="location-box">
+                    <div class="selectlocation">
+                        <select id="pDistrict" class="fl" style="width: 150px;">
+                            <option value="-1">Chọn Quận/Huyện</option>
+                            <option value="19">Quận Ba Đình</option>
+                            <option value="20">Quận Cầu Giấy</option>
+                            <option value="21">Quận Đống Đa</option>
+                            <option value="22">Quận Hai Bà Trưng</option>
+                            <option value="23">Quận Hoàn Kiếm</option>
+                            <option value="24">Quận Hoàng Mai</option>
+                            <option value="25">Quận Long Biên</option>
+                            <option value="26">Quận Tây Hồ</option>
+                            <option value="27">Quận Thanh Xuân</option>
+                            <option value="28">Quận Hà Đông</option>
+                            <option value="29">Thị xã Sơn Tây</option>
+                            <option value="1">Huyện Ba Vì</option>
+                            <option value="2">Huyện Chương Mỹ</option>
+                            <option value="3">Huyện Đan Phượng</option>
+                            <option value="4">Huyện Đông Anh</option>
+                            <option value="5">Huyện Gia Lâm</option>
+                            <option value="6">Huyện Hoài Đức</option>
+                            <option value="7">Huyện Mê Linh</option>
+                            <option value="8">Huyện Mỹ Đức</option>
+                            <option value="9">Huyện Phú Xuyên</option>
+                            <option value="10">Huyện Phúc Thọ</option>
+                            <option value="11">Huyện Quốc Oai</option>
+                            <option value="12">Huyện Sóc Sơn</option>
+                            <option value="13">Huyện Thạch Thất</option>
+                            <option value="14">Huyện Thanh Oai</option>
+                            <option value="15">Huyện Thanh Trì</option>
+                            <option value="16">Huyện Thường Tín</option>
+                            <option value="17">Huyện Từ Liêm</option>
+                            <option value="18">Huyện Ứng Hòa</option>
+                        </select>
+                        <button class="" style="margin-left: 30px; webkit-transition: all 500ms ease 0s; -o-transition: all 500ms ease 0s; transition: all 500ms ease 0s; background-color: #ede020; color: #fff; font-size: 13px; height: 34px; text-align: center; position: relative; line-height: 34px; padding: 0 15px; border-radius: 25px;" onclick="javascript:javscript:ConfirmLocation();">Xác nhận</button>
+
+                    </div>
+                    <div class="contact">*Quý khách cần hỗ trợ thêm vui lòng gọi 1900 2075</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

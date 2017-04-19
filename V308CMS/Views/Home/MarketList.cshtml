@@ -1,0 +1,51 @@
+﻿@model List<V308CMS.Data.Market>
+@{
+    ViewBag.Title = "MarketList";
+    Layout = "~/Views/Layout/_LayoutMarketList.cshtml";
+}
+
+<section class="partner-list wrap">
+    <div class="ctnr">
+        <div class="cm">
+            @if (ViewBag.MkType == 1)
+            {
+                <a href="#" class="cn">Danh sách hệ thống siêu thị</a>
+            }
+            else if (ViewBag.MkType == 2)
+            {
+                <a href="#" class="cn">Danh sách chuỗi cửa hàng</a>
+            }
+            else
+            {
+                <a href="#" class="cn">Danh sách chợ truyền thống</a>
+            }
+        </div>
+        <div class="bdl mxClrAft">
+            @foreach (V308CMS.Data.Market it in Model)
+            {
+                <div class="itm">
+                    <div class="tb">
+                        <div data-id="56" class="log js-show-vendor" data-name="@it.UserName">
+                            <a href="/@V308CMS.Common.Ultility.LocDau(@it.UserName)">
+                                <img class="lazy-loaded" alt="logo" src="@it.Avata"></a>
+                        </div>
+                    </div>
+                    <div class="bb">
+                        <div data-id="56" class="smk is-2row-real js-show-vendor" data-name="@it.UserName">@it.UserName</div>
+                        <span class="rating is-rating only-display rating-vendor" data-value="3"><span></span><span></span><span></span><span></span><span></span></span><a href="/@V308CMS.Common.Ultility.LocDau(@it.UserName)" class="m">Mua hàng</a>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="page-nav">
+            <div class="pg mxClrAft nav-sld">
+                @* <div class="n item-pagi-sld none" title=""><a href="/vendor/?">&lt;&lt;</a></div>
+                <div class="n item-pagi-sld none"><a>&lt;</a></div>
+                <div class="n item-pagi-sld atv" title=""><a href="/vendor/?">1</a></div>
+                <div class="n item-pagi-sld" title=""><a href="/vendor/?&amp;page=2">2</a></div>
+                <div class="n item-pagi-sld" title=""><a href="/vendor/?&amp;page=2">&gt;</a></div>
+                <div class="n item-pagi-sld none" title=""><a href="/vendor/?&amp;page=2">&gt;&gt;</a></div>*@
+            </div>
+        </div>
+    </div>
+</section>

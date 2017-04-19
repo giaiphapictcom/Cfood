@@ -1,0 +1,51 @@
+﻿@model V308CMS.Data.NewsPage
+@{
+    Layout = null;
+}
+
+<h3 class="modtitle">Game News</h3>
+<div class="modcontent clearfix">
+
+    <div id="mgi_wrap_19415337471411360346" class="mgi-wrap preset01-3 preset02-3 preset03-2 preset04-1 preset05-1">
+        <!--[if IE 8]> <div class="ie8 presets"> <![endif]-->
+        <!--[!IE | if gt IE 8]><!-->
+        <!-- >div class="presets"-->
+        <!--<![endif]-->
+
+
+
+        <div class="mgi-box" style="width: 48%; float: left;">
+            <div class="mgi-box-inner">
+
+                <div class="box-wrapper">
+
+                    <div class="item-wrap">
+                      @Html.Raw(@Model.HtmlNhomTin)
+                    </div>
+
+
+                    <div class="title-link-wrap">
+                        <div class="more-label">MORE :</div>
+                        <ul class="other-links">
+                           @Html.Raw(@Model.Html)
+                        </ul>
+
+                        <div class="view-all">
+                            <a href="javascript:void(0);">View New events</a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--end mgi-box-->
+        <div class="clr1"></div>
+
+        <!--[if IE 8]></div> <![endif]-->
+        <!-- end test ie -->
+    </div>
+    <!--end mgi_wrap-->
+
+</div>

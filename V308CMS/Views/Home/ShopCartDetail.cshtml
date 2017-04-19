@@ -1,0 +1,263 @@
+﻿@model V308CMS.Data.ShopCartPage
+@{
+    ViewBag.Title = "ShopCartDetail";
+    Layout = "~/Views/Layout/_ShopCartLayout.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#js-select-day-delivery").datepicker();
+        $('#js-select-time-delivery').timepicker();
+    });
+</script>
+<script type="text/javascript">
+    function v308UpNumber(pElement) {
+        var mvalue = $("#" + pElement + "").val();
+        mvalue = (parseInt(mvalue) + 1);
+        $("#" + pElement + "").val(mvalue);
+    }
+    function v308DownNumber(pElement) {
+        var mvalue = $("#" + pElement + "").val();
+        if (parseInt(mvalue) > 1) {
+            mvalue = (parseInt(mvalue) - 1);
+            $("#" + pElement + "").val(mvalue);
+        }
+    }
+    function GiamSoLuong(pvalue) {
+        v308DownNumber("pdshopcart" + pvalue);
+        //Gui thong tin lên server
+        var mvalue = $("#pdshopcart" + pvalue + "").val();
+        UpdateShopCart(pvalue, mvalue, "", 0);
+
+    }
+    function TangSoLuong(pvalue) {
+        v308UpNumber("pdshopcart" + pvalue);
+        var mvalue = $("#pdshopcart" + pvalue + "").val();
+        UpdateShopCart(pvalue, mvalue, "", 0);
+    }
+    function UpdateVocher() {
+        var mvalue = $("#discount").val();
+        UpdateShopCart(0, 0, mvalue, 1);
+    }
+    function UpdateShopCart(pId, pCount, pVoucher, pType) {
+        $("#wait").css("display", "block");
+        //gui thong tin dang ky len may chu
+        $.ajax({
+            type: 'POST',
+            data: { 'pId': pId, 'pCount': pCount, 'pVoucher': pVoucher, 'pType': pType },
+            dataType: 'json',
+            url: "/Home/updateShopCart",
+            timeout: 60000,
+            success: function (data) {
+                if (data.code == 1) {
+                    console.log(data.code);
+                    //goi ham load lai
+                }
+                //$("#wait").css("display", "none");
+                window.location = "/chi-tiet-don-hang.html";
+            },
+            error: function (x, t, m) {
+                //$("#cError").html('Lỗi kết nối tới máy chủ !');
+                $("#wait").css("display", "none");
+            }
+        });
+    }
+</script>
+<section class="wrap checkout-page">
+    <div class="ctnr">
+        <section class="nav-check-out">
+            <div class="item-nav-check-out atv"><span class="nav-icon">1</span>                <span class="nav-name">Thông tin giao nhận</span>            </div>
+            <div class="item-nav-check-out"><span class="nav-icon2">@*2*@</span>                <span class="nav-name">@*Thông tin thanh toán*@</span>            </div>
+            <div class="item-nav-check-out"><span class="nav-icon2">@*3*@</span>                <span class="nav-name">@*Hoàn thành*@</span>            </div>
+        </section>
+        <section class="checkout">
+            <form id="frm_payment" method="post" name="frm_payment">
+                <div class="j1">Trang đặt hàng                </div>
+                <div class="err_list_login hide">
+                    <div class="content_err"></div>
+                    <div class="close_err_login"></div>
+                </div>
+                <div class="j2 js-panel-check-out">
+                    <div class="jx js-delivery-info">
+                        <div class="j3">
+                            <div class="j4">
+                                Thông tin giao nhận
+                            </div>
+                            <div class="j5 new-checkout-delivery">
+                                <div class="jh">
+                                    <div class="jk">
+                                        <div class="row-cd r">
+                                            <div class="row-cd-title">Ngày giao</div>
+                                            <span class="select2 select2-container select2-container--default" dir="ltr" style="width: 220px;">
+                                                <input type="text" name="val[deliver_time][date]" id="js-select-day-delivery" class="select-new js-select-2" placeholder="Click để chọn ngày giao" tabindex="-1" aria-hidden="true" />
+                                            </span>
+                                        </div>
+                                        <div class="row-cd r">
+                                            <div class="row-cd-title">Giờ giao</div>
+                                            <span class="select2 select2-container select2-container--default" dir="ltr" style="width: 220px;">
+                                                <input type="text" id="js-select-time-delivery" class="select-new js-select-2 is-time-begin" placeholder="Click để chọn giờ giao" tabindex="-1" aria-hidden="true" />
+                                            </span>
+
+                                        </div>
+                                        <div class="row-cd r">
+                                            <div class="row-cd-title">Người nhận</div>
+                                            <input type="text" autocomplete="on" value="@Model.ShopCart.Account.FullName" class="form-input" id="pFullName">
+                                        </div>
+                                        <div class="row-cd r">
+                                            <div class="row-cd-title">Số điện thoại</div>
+                                            <input type="text" autocomplete="on" class="form-input" value="@Model.ShopCart.Account.Phone" id="pMobile">
+                                        </div>
+                                        <div class="row-cd r">
+                                            <div class="row-cd-title">Email</div>
+                                            <input type="text" autocomplete="on" class="form-input" value="@Model.ShopCart.Account.Email " id="pEmail">
+                                        </div>
+                                        <div class="row-cd r">
+                                            <div class="row-cd-title">Thành phố</div>
+                                            <span class="select2 select2-container select2-container--default" dir="ltr" style="width: 220px;">
+                                                <select id="select-city" name="val[deliver_person][city]" class="select-new js-select-2" placeholder="Chọn Tỉnh/Thành phố" tabindex="-1" aria-hidden="true">
+                                                    <option value="1" selected="">Hà Nội</option>
+                                                </select>
+                                            </span>
+                                        </div>
+                                        <div class="row-cd r">
+                                            <div class="row-cd-title">Quận/Huyện</div>
+                                            <span class="select2 select2-container select2-container--default" dir="ltr" style="width: 220px;">
+                                                <select id="select-district" name="val[deliver_person][district]" class="select-new js-select-2 js-district-from" placeholder="Chọn Chọn Quận/Huyện" tabindex="-1" aria-hidden="true">
+                                                    <option value="-1">Chọn Quận/Huyện</option>
+                                                    <option value="19">Quận Ba Đình</option>
+                                                    <option value="20">Quận Cầu Giấy</option>
+                                                    <option value="21">Quận Đống Đa</option>
+                                                    <option value="22">Quận Hai Bà Trưng</option>
+                                                    <option value="23">Quận Hoàn Kiếm</option>
+                                                    <option value="24">Quận Hoàng Mai</option>
+                                                    <option value="25">Quận Long Biên</option>
+                                                    <option value="26">Quận Tây Hồ</option>
+                                                    <option value="27">Quận Thanh Xuân</option>
+                                                    <option value="28">Quận Hà Đông</option>
+                                                    <option value="29">Thị xã Sơn Tây</option>
+                                                    <option value="1">Huyện Ba Vì</option>
+                                                    <option value="2">Huyện Chương Mỹ</option>
+                                                    <option value="3">Huyện Đan Phượng</option>
+                                                    <option value="4">Huyện Đông Anh</option>
+                                                    <option value="5">Huyện Gia Lâm</option>
+                                                    <option value="6">Huyện Hoài Đức</option>
+                                                    <option value="7">Huyện Mê Linh</option>
+                                                    <option value="8">Huyện Mỹ Đức</option>
+                                                    <option value="9">Huyện Phú Xuyên</option>
+                                                    <option value="10">Huyện Phúc Thọ</option>
+                                                    <option value="11">Huyện Quốc Oai</option>
+                                                    <option value="12">Huyện Sóc Sơn</option>
+                                                    <option value="13">Huyện Thạch Thất</option>
+                                                    <option value="14">Huyện Thanh Oai</option>
+                                                    <option value="15">Huyện Thanh Trì</option>
+                                                    <option value="16">Huyện Thường Tín</option>
+                                                    <option value="17">Huyện Từ Liêm</option>
+                                                    <option value="18">Huyện Ứng Hòa</option>
+                                                </select>
+                                            </span>
+                                        </div>
+                                        <div class="row-cd r">
+                                            <div class="row-cd-title">Số nhà &amp; Tên đường</div>
+                                            <input type="text" autocomplete="on" class="form-input" value="@Model.ShopCart.Account.Address" id="pAddress">
+                                        </div>
+                                        <div class="row-cd">
+                                            <div class="row-cd-title">Thông tin thêm</div>
+                                            <textarea class=" new-textarea form-input" id="pAddressDelivery"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="jf jx1 jf0 js-group-button-step-1">
+                                        <a class="new-button-m green right button-submit-step-1" id="js_submit_cart" onclick="javascript:HoanThanhMuaHangHome();">Hoàn Thành</a>
+                                        <div class="right notice-buy none">
+                                            <span class="fa fa-exclamation-triangle"></span>
+                                            Lưu ý: Bạn nên mua sản phẩm trên cùng 1 siêu thị để tiết kiệm chi phí giao hàng!
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="jxx js-payment-info none"></div>
+                    <div class="j3 js-order-info">
+                        <div class="j4">
+                            Thông tin đơn hàng                           
+                            <div class="right" id="js-continue-buy"><span class="fa fa-shopping-cart"></span></div>
+                        </div>
+                        <div class="j5">
+                            <div class="j6">
+                                <input type="hidden" value="" id="listProductCheck" name="val[list]">
+                                <div id="js_list_cart" style="opacity: 1;">
+                                    <div class="j8 is-expand-group" data-id="group-cart--1">
+                                        <div class="x1"><span class="fa fa-check-square-o is-check-box" data-id="cart--1" data-call-back="checkGroupMart"></span><span class="x2 is-label-check-box" data-id="cart-1"></span><span class="x20 fa fa-angle-down is-expand-nav" data-id="group-cart--1"></span></div>
+                                        <div class="x3g is-expand-panel" data-id="group-cart--1" height-expand="272">
+                                            <div class="x30 is-expand-group" data-id="group-mart-157">
+                                                <div class="x31"><span class="fa fa-minus-circle is-expand-nav" data-id="group-mart-157"></span><span class="fa fa-check-square-o is-check-box" data-id="mart-157" data-call-back="checkGroupCart"></span><span class="x32 is-label-check-box" data-id="mart-157">Giỏ hàng</span><span class="x3z js-remove-vendor" data-id="157"><span class="fa fa-close"></span>Bỏ giỏ hàng</span></div>
+                                                <div class="x3 is-expand-panel" data-id="group-mart-157" height-expand="231">
+                                                    <div class="x3-scroll is-mn mCustomScrollbar _mCS_2 mCS-autoHide mCS_no_scrollbar done" style="position: relative; overflow: visible;">
+                                                        <div id="mCSB_2" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical mCSB_outside" style="max-height: 270px;" tabindex="0">
+                                                            <div id="mCSB_2_container" class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y" style="position: relative; top: 0; left: 0;" dir="ltr">
+                                                                @foreach (V308CMS.Data.Product it in @Model.ShopCart.List)
+                                                                {
+                                                                    <div class="j9 is-row-product" data-source="19649" data-id="product-19649" data-vendor="157" data-sku="O9VC4cgxDA1PdAj">
+                                                                        <div class="j70"><span class="fa fa-check-square-o is-check-box" data-id="product-19649" data-call-back="checkRowMart"></span></div>
+                                                                        <div class="j71">
+                                                                            <a href="/@V308CMS.Common.Ultility.LocDau(@it.Name)-d@(@it.ID).html">
+                                                                                <img src="http://cleanfoodvn.vn/@it.Image" alt="" class="mCS_img_loaded"></a>
+                                                                        </div>
+                                                                        <div class="j72">
+                                                                            <a href="/@V308CMS.Common.Ultility.LocDau(@it.Name)-d@(@it.ID).html" class="j0">@it.Name</a><div class="ja">@String.Format("{0: 0,0}", (it.Price - ((it.Price / 100) * it.SaleOff)))đ/@V308CMS.Common.ConverterUlti.ConverUnitWeight(it.Group)</div>
+                                                                            <span class="j77 fa fa-close is-remove-product"><span onclick="javascript:UpdateShopCart(@it.ID,0,0,2);">Bỏ sản phẩm</span></span>
+                                                                        </div>
+                                                                        <div class="j74 jb">
+                                                                            <div class="jd fa fa-minus is-change-quanlity" onclick="javascript:GiamSoLuong(@it.ID);"></div>
+                                                                            <input type="number" id="pdshopcart@(it.ID)" class="quanlity" value="@it.Number">
+                                                                            <div class="jd fa fa-plus is-change-quanlity"  onclick="javascript:TangSoLuong(@it.ID);"></div>
+                                                                        </div>
+                                                                        <div class="j76"><span class="vl is-sum-money is-money is-money-ajax wait" id="shop-19649" data-quantity="1" data-id="19649" data-vendor="157" data-sku="O9VC4cgxDA1PdAj" data-money="179000" data-coin="0">@String.Format("{0: 0,0}", (it.Number * (it.Price - ((it.Price / 100) * it.SaleOff))))</span><sup itemprop="priceCurrency" content=""><u>đ</u></sup></div>
+                                                                    </div>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="j9x j9x1">Tổng tiền<span>đ</span><span class="is-money-sum">@String.Format("{0: 0,0}", (@Model.ShopCart.getTotalPrice()))đ</span></div>
+                                                    <div class="j9x">Phí dịch vụ<span>@String.Format("{0: 0,0}", (@Model.ShopCart.ServicePrice))đ</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="jz js-voucher">
+                                    <div class="jx1">
+                                        <input type="text" id="discount" value="@Model.ShopCart.VoucherName" placeholder="Nhập mã Voucher">
+                                        <div class="jx2" onclick="javascript:UpdateVocher();">Áp dụng</div>
+                                    </div>
+                                    <div class="js-discount-warning none"><span style="font-size: 11px; color: red;">Quý khách vui lòng đăng nhập tài khoản để sử dụng voucher.</span>                                    </div>
+                                </div>
+                                <div class="je js-purchase-info">
+                                    <div class="jf">
+                                        <div class="j75">Tổng tiền                                        </div>
+                                        <div class="j76 jj7 is-all-money"><span class="vl">@String.Format("{0: 0,0}", (@Model.ShopCart.getTotalPrice()))đ</span>                                            <sup itemprop="priceCurrency" content=""><u></u></sup></div>
+                                    </div>
+                                    <div class="jf">
+                                        <div class="j75">Phí dịch vụ                                        </div>
+                                        <div class="j76 jj7 is-serice-money" data-money="0"><span class="vl">@String.Format("{0: 0,0}", (@Model.ShopCart.ServicePrice))</span>                                            <sup itemprop="priceCurrency" content=""><u></u></sup></div>
+                                    </div>
+                                    <div class="jf">
+                                        <div class="j75">Giảm giá (Discount/Voucher)                                        </div>
+                                        <div class="j76 jj7 jj72 is-discount-money" data-money="0"><span class="vl">@Model.ShopCart.Voucher %</span><sup itemprop="priceCurrency" content=""><u></u></sup></div>
+                                    </div>
+                                    <div class="js-martketing"></div>
+                                    <div class="jf">
+                                        <div class="j75">Tổng thanh toán                                        </div>
+                                        <div class="j76 jj7 jj71"><span class="vl is-total-money">@String.Format("{0: 0,0}", (@Model.ShopCart.getTotalPrice()))đ</span>                                            <sup itemprop="priceCurrency" content=""><u></u></sup></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </div>
+</section>

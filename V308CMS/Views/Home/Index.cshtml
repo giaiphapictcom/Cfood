@@ -1,0 +1,428 @@
+﻿@model V308CMS.Data.IndexPageContainer
+@{
+    //ViewBag.Title = "C-FOOD";
+    Layout = "~/Views/Layout/_Layout.cshtml";
+    ViewBag.Description = "";
+                //int mcount = 0;
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#slider').bxSlider({
+            minSlides: 5,
+            maxSlides: 5,
+            slideWidth: 353,
+            slideHeight: 333,
+            auto: true,
+            pager: false
+        });
+    });
+</script>
+
+<style type="text/css">
+    .b1 .b2 .b3 img {
+        -webkit-transition: all 500ms ease 0s;
+        -o-transition: all 500ms ease 0s;
+        transition: all 500ms ease 0s;
+        width: 230px;
+        height: 200px;
+        display: block;
+        padding: 12px;
+    }
+
+    .b1 .b2 .b3 {
+        height: 213px;
+    }
+
+    .b1 .b2 .b4 .b5 {
+        margin-top: 5px;
+        font-size: 16px !important;
+        font-weight: normal;
+        color: #131313;
+    }
+</style>
+<section class="wrap home no-select">
+    <div class="ctnr">
+        <section class="cbo-sld">
+            @Html.Action("Banner", "Widget")
+        </section>
+        <!-- cbo-sld -->
+
+        @*<section class="cbo-lst-mrt mxClrAft" style="float: right; width: 1024px;">
+            @Html.Action("MarketList", "Widget")
+        </section>
+        *@
+        <!-- cbo-lst-mrt -->
+        <section class="atc-main mxClrAft is-panel-snap" style="width: 1024px; overflow: hidden;">
+            <div class="atc-lft is-left-snap">
+                <!-- CONTENT CHINH -->
+               
+                  
+                    <!-- SAN PHAM BAN CHAY -->
+                @if (Model.BestBuyList != null && Model.BestBuyList.Count > 0)
+                {
+                    <section class="cbo-hp">
+                        <div class="cbo-hp-head mxClrAft">
+                            <a href="" class="hp-img">
+                                <img class="lazy-loaded" data-src="/Content/Images/marketlogo.png" alt="" src="/Content/Images/marketlogo.png"></a>
+                            <a class="hp-ttl" href="">Sản Phẩm Bán Chạy</a>
+                            <ul class="is-mn-nav-cat"></ul>
+                        </div>
+                        <!-- cbo-hp-head -->
+                        <div class="cbo-hp-cnt mxClrAft cat-hp">
+                            <div class="rht-cat-hp" style="display: block;">
+                                <div class="b1 ed" id="slider" style="overflow: hidden;">
+                                    
+                                    @foreach (V308CMS.Data.Product ht in Model.BestBuyList)
+                                    {
+                                        <div class="b2 cq" style="height: 250px; width: 200px;">
+
+                                            <a href="/@V308CMS.Common.Ultility.LocDau(@ht.Name)-d@(@ht.ID).html" class="b3" style="margin:0px;height: 150px;width:190px;" title="Rau muống goodlife greens">
+                                                <img class="lazy-loaded" data-src="@ht.Image" alt="Rau muống goodlife greens" src="http://cleanfoodvn.vn@(@ht.Image)" style="width:95%;height:80%;">
+                                            </a>
+                                            <div class="b4">
+                                                <a class="b5" href="/@V308CMS.Common.Ultility.LocDau(@ht.Name)-d@(@ht.ID).html" title="@ht.Name">@ht.Name</a>
+                                                <div class="b6" style="display: inline-block; margin: auto; overflow: inherit;">
+                                                    <span style="color: #be1a19; font-size: 13px; line-height: 36px;">@String.Format("{0: 0,0}", (ht.Price - ((ht.Price / 100) * ht.SaleOff)))đ</span>
+                                                    @if (ht.SaleOff > 0)
+                                                    { 
+                                                        <span style="text-decoration: line-through; font-size: 14px; margin: 0 6px;">@String.Format("{0: 0.0}", (ht.Price))đ</span>
+                                                        <span style="color: #fff; background: #e61010; display: inline-block; padding: 0px 7px 4px; border-radius: 22px; height: 15px; margin-left: 2px; line-height: 22px;">-@ht.SaleOff%</span>
+                                                    }
+                                                </div>
+                                                <div class="b6">
+                                                    @String.Format("{0: 0,0}", (ht.Price - ((ht.Price / 100) * ht.SaleOff)))đ/@V308CMS.Common.ConverterUlti.ConverUnitWeight(ht.Group)
+                                                </div>
+                                                <div class="b7" style="margin-top: -4px;"><span class="rating is-rating only-display" data-value="@ht.getReview()"><span></span><span></span><span></span><span></span><span></span></span><span style="display: inline; font-size: 15px; margin-left: 3px;">(@ht.getReview())</span></div>
+                                            </div>
+                                            <div class="b4">
+                                            </div>
+                                        </div>
+                                    }
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                }
+                <style type="text/css">
+                    .box-3 {
+                        padding: 15px 0 20px;
+                        height: 255px;
+                        display: block;
+                        overflow: hidden;
+                    }
+
+                        .box-3 .item-title {
+                            font-size: 13px;
+                            text-align: center;
+                            color: #808080;
+                            line-height: 18px;
+                            display: block;
+                        }
+
+                        .box-3 .item-1 {
+                            width: 180px;
+                            float: left;
+                            margin-right: 8px;
+                            overflow: hidden;
+                            height: 272px;
+                        }
+
+                        .box-3 .item-block {
+                            overflow: hidden;
+                            display: inline-block;
+                        }
+
+                        .box-3 .item-1 .item-block {
+                            width: 86px;
+                            /*float: left;*/
+                            max-height: 100px;
+                            height: 86px;
+                        }
+
+                            .box-3 .item-1 .item-block .item-image img {
+                                margin: 3px 4px;
+                                display: block;
+                                width: 95%;
+                                height: 90%;
+                            }
+
+                            .box-3 .item-1 .item-block .item-title {
+                            }
+
+                        .box-3 .item-2 {
+                            width: 294px;
+                            float: left;
+                            border: 2px solid #3c6500;
+                            padding: 5px;
+                            margin-top: 0px;
+                            height: 256px;
+                        }
+
+                            .box-3 .item-2 .item-block {
+                            }
+
+                                .box-3 .item-2 .item-block .item-image img {
+                                    width: 100%;
+                                    height: 96%;
+                                }
+
+                                .box-3 .item-2 .item-block .item-title {
+                                }
+
+                        .box-3 .item-3 {
+                            width: 517px;
+                            float: left;
+                            padding: 0;
+                            border-left: 1px solid #CCC;
+                            margin: 0px 0 0 10px;
+                            border-bottom: 1px solid #CCC;
+                            height: 268px;
+                        }
+
+                            .box-3 .item-3 .item-block {
+                                width: 120px;
+                                float: left;
+                                height: 120px;
+                                border: 1px solid #cccccc;
+                                padding: 4px;
+                                border-left: none;
+                                border-bottom: none;
+                            }
+
+                                .box-3 .item-3 .item-block .item-image img {
+                                    width: 100%;
+                                    height: 90%;
+                                }
+
+                                .box-3 .item-3 .item-block .item-title {
+                                }
+
+                    .item-image {
+                        height: 72%;
+                    }
+                </style>
+                <!-- END SAN PHAM BAN CHAY-->
+                <!-- DI CHO THEO MENU -->
+                <section class="cbo-hp">
+                    <div class="cbo-hp-head mxClrAft">
+                        <a href="/thuc-pham-kho-t49.html" class="hp-img">
+                            <img class="lazy-loaded" data-src="/Content/Images/marketlogo.png" alt="" src="/Content/Images/marketlogo.png">
+                        </a>
+                        <a class="hp-ttl" href="/so-che-t147.html">Đi chợ theo MENU</a>
+
+                    </div>
+                    <!-- cbo-hp-head -->
+                    <div class="cbo-hp-cnt mxClrAft cat-hp">
+                        <div class="box-3">
+                            <div class="item-1 block">
+                                @if (@Model.ProductTypeList != null && @Model.ProductTypeList.Count > 1)
+                                { 
+                                <div class="item-block">
+                                    <div class="item-image">
+                                        <a href="/@V308CMS.Common.Ultility.LocDau(@Model.ProductTypeList[0].Name)-t@(@Model.ProductTypeList[0].ID).html">
+                                            <img src="@V308CMS.Common.Ultility.ImgUrl(@Model.ProductTypeList[0].Image) " /></a>
+                                    </div>
+                                    <a href="/@V308CMS.Common.Ultility.LocDau(@Model.ProductTypeList[0].Name)-t@(@Model.ProductTypeList[0].ID).html" class="item-title">@Model.ProductTypeList[0].Name</a>
+                                </div>
+                                }
+                                @if (@Model.ProductTypeList != null && @Model.ProductTypeList.Count > 2)
+                                { 
+                                <div class="item-block">
+                                    <div class="item-image">
+                                        <a href="/@V308CMS.Common.Ultility.LocDau(@Model.ProductTypeList[1].Name)-t@(@Model.ProductTypeList[1].ID).html">
+                                            <img src="@Model.ProductTypeList[1].Image" /></a>
+                                    </div>
+                                    <a href="/@V308CMS.Common.Ultility.LocDau(@Model.ProductTypeList[1].Name)-t@(@Model.ProductTypeList[1].ID).html" class="item-title">@Model.ProductTypeList[1].Name</a>
+                                </div>
+                                }
+                                @if (@Model.ProductTypeList != null && @Model.ProductTypeList.Count > 3)
+                                { 
+                                <div class="item-block">
+                                    <div class="item-image">
+                                        <a href="/@V308CMS.Common.Ultility.LocDau(@Model.ProductTypeList[2].Name)-t@(@Model.ProductTypeList[2].ID).html">
+                                            <img src="@Model.ProductTypeList[2].Image" /></a>
+                                    </div>
+                                    <a href="/@V308CMS.Common.Ultility.LocDau(@Model.ProductTypeList[2].Name)-t@(@Model.ProductTypeList[2].ID).html" class="item-title">@Model.ProductTypeList[2].Name</a>
+                                </div>
+                                }
+                                @if (@Model.ProductTypeList != null && @Model.ProductTypeList.Count > 4)
+                                { 
+                                <div class="item-block">
+                                    <div class="item-image">
+                                        <a href="/@V308CMS.Common.Ultility.LocDau(@Model.ProductTypeList[3].Name)-t@(@Model.ProductTypeList[3].ID).html">
+                                            <img src="@Model.ProductTypeList[0].Image" /></a>
+                                    </div>
+                                    <a href="/@V308CMS.Common.Ultility.LocDau(@Model.ProductTypeList[3].Name)-t@(@Model.ProductTypeList[3].ID).html" class="item-title">@Model.ProductTypeList[3].Name</a>
+                                </div>
+                                }
+                                @if (@Model.ProductTypeList != null && @Model.ProductTypeList.Count > 5)
+                                { 
+                                <div class="item-block">
+                                    <div class="item-image">
+                                        <a href="/@V308CMS.Common.Ultility.LocDau(@Model.ProductTypeList[4].Name)-t@(@Model.ProductTypeList[4].ID).html">
+                                            <img src="@Model.ProductTypeList[4].Image" /></a>
+                                    </div>
+                                    <a href="/@V308CMS.Common.Ultility.LocDau(@Model.ProductTypeList[4].Name)-t@(@Model.ProductTypeList[4].ID).html" class="item-title">@Model.ProductTypeList[4].Name</a>
+                                </div>
+                                }
+                                @if (@Model.ProductTypeList != null && @Model.ProductTypeList.Count > 6)
+                                { 
+                                <div class="item-block">
+                                    <div class="item-image">
+                                        <a href="/@V308CMS.Common.Ultility.LocDau(@Model.ProductTypeList[5].Name)-t@(@Model.ProductTypeList[5].ID).html">
+                                            <img src="@Model.ProductTypeList[5].Image" /></a>
+                                    </div>
+                                    <a href="/@V308CMS.Common.Ultility.LocDau(@Model.ProductTypeList[5].Name)-t@(@Model.ProductTypeList[5].ID).html" class="item-title">@Model.ProductTypeList[5].Name</a>
+                                </div>
+                                }
+                            </div>
+                            <div class="item-2 block">
+                                @if (Model.BestSoCheList != null && Model.BestSoCheList.Count >= 1)
+                                {
+                                    <div class="item-block">
+                                        <div class="item-image">
+                                            <a href="/@V308CMS.Common.Ultility.LocDau(@Model.BestSoCheList[0].Name)-d@(@Model.BestSoCheList[0].ID).html">
+                                                <img src="@Model.BestSoCheList[0].Image" /></a>
+                                        </div>
+                                        <a href="/@V308CMS.Common.Ultility.LocDau(@Model.BestSoCheList[0].Name)-d@(@Model.BestSoCheList[0].ID).html" class="item-title">@Model.BestSoCheList[0].Name</a>
+                                    </div>
+                                }
+                            </div>
+                            <div class="item-3 block">
+                                @if (Model.BestSoCheList != null && Model.BestSoCheList.Count >= 3)
+                                {
+                                <div class="item-block">
+                                    <div class="item-image">
+                                        <a href="/@V308CMS.Common.Ultility.LocDau(@Model.BestSoCheList[1].Name)-d@(@Model.BestSoCheList[1].ID).html">
+                                            <img src="@Model.BestSoCheList[1].Image" /></a>
+                                    </div>
+                                    <a href="/@V308CMS.Common.Ultility.LocDau(@Model.BestSoCheList[1].Name)-d@(@Model.BestSoCheList[1].ID).html" class="item-title">@Model.BestSoCheList[1].Name</a>
+                                </div>
+                                <div class="item-block">
+                                    <div class="item-image">
+                                        <a href="/@V308CMS.Common.Ultility.LocDau(@Model.BestSoCheList[2].Name)-d@(@Model.BestSoCheList[2].ID).html">
+                                            <img src="@Model.BestSoCheList[2].Image" /></a>
+                                    </div>
+                                    <a href="/@V308CMS.Common.Ultility.LocDau(@Model.BestSoCheList[2].Name)-d@(@Model.BestSoCheList[2].ID).html" class="item-title">@Model.BestSoCheList[2].Name</a>
+                                </div>
+                                }
+                               @* <div class="item-block">
+                                    <div class="item-image">
+                                        <a href="/@V308CMS.Common.Ultility.LocDau(@Model.BestSoCheList[3].Name)-d@(@Model.BestSoCheList[3].ID).html">
+                                            <img src="http://cleanfoodvn.vn/@Model.BestSoCheList[3].Image" /></a>
+                                    </div>
+                                    <a href="/@V308CMS.Common.Ultility.LocDau(@Model.BestSoCheList[3].Name)-d@(@Model.BestSoCheList[3].ID).html" class="item-title">@Model.BestSoCheList[3].Name</a>
+                                </div>
+                                <div class="item-block">
+                                    <div class="item-image">
+                                        <a href="/@V308CMS.Common.Ultility.LocDau(@Model.BestSoCheList[4].Name)-d@(@Model.BestSoCheList[4].ID).html">
+                                            <img src="http://cleanfoodvn.vn/@Model.BestSoCheList[4].Image" /></a>
+                                    </div>
+                                    <a href="/@V308CMS.Common.Ultility.LocDau(@Model.BestSoCheList[4].Name)-d@(@Model.BestSoCheList[4].ID).html" class="item-title">@Model.BestSoCheList[4].Name</a>
+                                </div>
+                                <div class="item-block">
+                                    <div class="item-image">
+                                        <a href="/@V308CMS.Common.Ultility.LocDau(@Model.BestSoCheList[5].Name)-d@(@Model.BestSoCheList[5].ID).html">
+                                            <img src="http://cleanfoodvn.vn/@Model.BestSoCheList[5].Image" /></a>
+                                    </div>
+                                    <a href="/@V308CMS.Common.Ultility.LocDau(@Model.BestSoCheList[5].Name)-d@(@Model.BestSoCheList[5].ID).html" class="item-title">@Model.BestSoCheList[5].Name</a>
+                                </div>
+                                <div class="item-block">
+                                    <div class="item-image">
+                                        <a href="/@V308CMS.Common.Ultility.LocDau(@Model.BestSoCheList[6].Name)-d@(@Model.BestSoCheList[6].ID).html">
+                                            <img src="http://cleanfoodvn.vn/@Model.BestSoCheList[6].Image" /></a>
+                                    </div>
+                                    <a href="/@V308CMS.Common.Ultility.LocDau(@Model.BestSoCheList[6].Name)-d@(@Model.BestSoCheList[6].ID).html" class="item-title">@Model.BestSoCheList[6].Name</a>
+                                </div>
+                                <div class="item-block">
+                                    <div class="item-image">
+                                        <a href="/@V308CMS.Common.Ultility.LocDau(@Model.BestSoCheList[7].Name)-d@(@Model.BestSoCheList[7].ID).html">
+                                            <img src="http://cleanfoodvn.vn/@Model.BestSoCheList[7].Image" /></a>
+                                    </div>
+                                    <a href="/@V308CMS.Common.Ultility.LocDau(@Model.BestSoCheList[7].Name)-d@(@Model.BestSoCheList[7].ID).html" class="item-title">@Model.BestSoCheList[7].Name</a>
+                                </div>
+                                <div class="item-block">
+                                    <div class="item-image">
+                                        <a href="/@V308CMS.Common.Ultility.LocDau(@Model.BestSoCheList[8].Name)-d@(@Model.BestSoCheList[8].ID).html">
+                                            <img src="http://cleanfoodvn.vn/@Model.BestSoCheList[8].Image" /></a>
+                                    </div>
+                                    <a href="/@V308CMS.Common.Ultility.LocDau(@Model.BestSoCheList[8].Name)-d@(@Model.BestSoCheList[8].ID).html" class="item-title">@Model.BestSoCheList[8].Name</a>
+                                </div>*@
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- DI CHO THEO MENU-->
+
+                @foreach (V308CMS.Data.IndexPage it in Model.IndexPageList)
+                {
+                    if (it.ProductList.Count > 0 && it.Id != 147)
+                    {
+                    <section class="cbo-hp">
+                        <div class="cbo-hp-head mxClrAft">
+                            <a href="/@V308CMS.Common.Ultility.LocDau(@it.Name)-t@(@it.Id).html" class="hp-img">
+                                <img class="lazy-loaded" data-src="/Content/Images/marketlogo.png" alt="" src="/Content/Images/marketlogo.png"></a>
+                            <a class="hp-ttl" href="/@V308CMS.Common.Ultility.LocDau(@it.Name)-t@(@it.Id).html">@it.Name</a>
+                            <a href="/@V308CMS.Common.Ultility.LocDau(@it.Name)-t@(@it.Id).html" class="hp-mre">Xem tất cả<span class="fa fa-angle-right"></span></a>
+                            <ul class="is-mn-nav-cat">
+                                @foreach (V308CMS.Data.ProductType ut in it.ProductTypeList)
+                                {
+                                    <li class="nav-cat-item"><a class="" href="/@V308CMS.Common.Ultility.LocDau(@ut.Name)-t@(@ut.ID).html" data-id="167_1_184"><span class="" style="color: #ffffff;">@ut.Name</span></a></li>
+                                }
+                                <li></li>
+                            </ul>
+
+                        </div>
+                        <!-- cbo-hp-head -->
+                        <div class="cbo-hp-cnt mxClrAft cat-hp">
+                            <div class="rht-cat-hp" id="list_product_167_1_184" style="display: block;">
+                                <div class="b1 ed">
+                                    @foreach (V308CMS.Data.Product ht in it.ProductList)
+                                    {
+                                        <div class="b2 cq" data-id="13015" style="height: 330px;">
+
+                                            <a href="/@V308CMS.Common.Ultility.LocDau(@ht.Name)-d@(@ht.ID).html" class="b3" style="margin:0px;" title="Rau muống goodlife greens">
+                                                <img class="lazy-loaded" data-src="@ht.Image" alt="Rau muống goodlife greens" src="@(@ht.Image)">
+                                            </a>
+                                            <div class="b4">
+                                                <a class="b5" href="/@V308CMS.Common.Ultility.LocDau(@ht.Name)-d@(@ht.ID).html" title="@ht.Name">@ht.Name</a>
+                                                <div class="b6" style="display: inline-block; margin: auto; overflow: inherit;">
+                                                    <span style="color: #be1a19; font-size: 22px; line-height: 36px;">@String.Format("{0: 0,0}", (ht.Price - ((ht.Price / 100) * ht.SaleOff)))đ</span>
+                                                    @if (ht.SaleOff > 0)
+                                                    { 
+                                                        <span style="text-decoration: line-through; font-size: 14px; margin: 0 6px;">@String.Format("{0: 0.0}", (ht.Price))đ</span>
+                                                        <span style="color: #fff; background: #e61010; display: inline-block; padding: 0px 7px 4px; border-radius: 22px; height: 15px; margin-left: 2px; line-height: 22px;">-@ht.SaleOff%</span>
+                                                    }
+
+                                                </div>
+                                                <div class="b6">
+                                                    @String.Format("{0: 0,0}", (ht.Price - ((ht.Price / 100) * ht.SaleOff)))đ/@V308CMS.Common.ConverterUlti.ConverUnitWeight(ht.Group)
+                                                </div>
+                                                <div class="b7"><span class="rating is-rating only-display" data-value="@ht.getReview()"><span></span><span></span><span></span><span></span><span></span></span><span style="display: inline; font-size: 15px; margin-left: 3px;">(@ht.getReview())</span></div>
+                                            </div>
+                                            <div class="b4">
+                                            </div>
+                                        </div>
+                                    }
+
+
+                                </div>
+                            </div>
+                        </div>
+                        @*   <div style="width: 100%;">
+                            <a href="/">
+                                <img style="margin:2px auto;display: block;"  src="@it.ImageBanner"/></a>
+                        </div>*@
+                    </section>
+                    }
+                }
+                <!-- END CONTENT CHINH -->
+            </div>
+            @*     <aside class="atc-rht is-right-snap">
+                @Html.Action("Right", "Widget")
+            </aside>*@
+        </section>
+    </div>
+    <div class="clr"></div>
+</section>

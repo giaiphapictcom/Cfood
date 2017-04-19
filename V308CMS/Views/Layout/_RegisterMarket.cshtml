@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Đăng nhập</title>
+    <meta name="viewport" content="minimal-ui, width=1024px, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="apple-touch-icon" sizes="57x57" href="/Content/Images/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/Content/Images/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/Content/Images/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/Content/Images/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/Content/Images/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/Content/Images/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/Content/Images/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/Content/Images/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/Content/Images/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/Content/Images/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/Content/Images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/Content/Images/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/Content/Images/favicon-16x16.png">
+    <link rel="manifest" href="/Content/Images/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/Content/Images/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <meta property="og:site_name" content="Kênh mua sắm sản phẩm tiêu dùng hằng ngày đầu tiên tại Việt Nam">
+    <meta property="og:title" content="Đăng nhập">
+    <meta name="keywords" content="đi siêu thị, đi chợ thuê, kênh mua sắm hằng tiêu dùng, thực phẩm tươi, đồ gia vị, đồ khô, đồ hộp, bơ sữa, trứng đường, thực phẩm đông lạnh, bánh kẹo, thức ăn làm sẵn, đồ uống, đồ dùng gia đình, hóa mỹ phẩm.">
+    <meta name="description" content="Kênh mua sắm sản phẩm tiêu dùng hằng ngày đầu tiên tại Việt Nam. Nơi hội tụ các nhà cung cấp uy tín. Sản phẩm phong phú, chất lượng tốt, niêm yết đúng giá, giao hàng tận nhà.">
+    <meta http-equiv="content-type" content="text/html; charset=vi">
+    <meta http-equiv="Content-Language" content="vi">
+    <meta property="og:title" content="Đăng nhập">
+    <meta content="4038" name="template">
+    
+
+   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script src="/lib/jquery.bxslider.min.js"></script>
+    <link href="/lib/jquery.bxslider.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="/Content/Scripts/jquery.cookie.min.js"></script>
+    <script type="text/javascript" src="/Content/Scripts/v308.js"></script>
+     <link rel="stylesheet" type="text/css" href="/Content/Css/home.css?v=@V308CMS.Common.AppSetting.Version">
+    <link rel="stylesheet" type="text/css" href="/Content/Css/new_login.css?v=@V308CMS.Common.AppSetting.Version">
+    <link rel="stylesheet" type="text/css" href="/Content/Css/login.css?v=@V308CMS.Common.AppSetting.Version">
+    <link rel="stylesheet" type="text/css" href="/Content/Css/register.css?v=@V308CMS.Common.AppSetting.Version">
+    <link href="/Content/Css/3b4f1992516090ea88d01111a6e9d887.css?v=@V308CMS.Common.AppSetting.Version" rel="stylesheet" type="text/css">
+    <link href="/Content/Css/89c2a60da88957a8747cf3dcf8f70317.css?v=@V308CMS.Common.AppSetting.Version" rel="stylesheet" type="text/css">
+    <link href="/Content/Css/665d2e522a72f16cea01d53500f911cf.css?v=@V308CMS.Common.AppSetting.Version" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/Content/Css/select2.min.css?v=@V308CMS.Common.AppSetting.Version">
+    <link rel="stylesheet" href="/Content/Css/landing.css?v=@V308CMS.Common.AppSetting.Version">
+     <link rel="stylesheet" href="/Content/Css/extention.css?v=@V308CMS.Common.AppSetting.Version">
+    <link rel="stylesheet" href="/Content/Css/vthree.css?v=@V308CMS.Common.AppSetting.Version">
+    <style type="text/css">
+        .fancybox-margin {
+            margin-right: 19px;
+        }
+        #wait {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100000;
+    display: none;
+    background: rgba(0,0,0,0.8);
+}
+
+    #wait .innerWait {
+        position: relative;
+        top: 30px;
+        display: block;
+        height: 320px;
+        width: 320px;
+        background: url(/Content/Images/loading.gif) no-repeat center center;
+        margin: 0px auto;
+    }
+    </style>
+</head>
+<body class="  home-page small-page">
+    <div class="root-pnl">
+        <header>
+            @Html.Action("Header", "Widget")
+        </header>
+         <nav id="Nav">
+             @Html.Action("HeadMenu", "Widget")
+        </nav>
+        <section class="fx-top wrap">
+            @Html.Action("Menu2", "Widget")
+        </section>
+        <section id="container">
+            @RenderBody()
+        </section>
+        <footer>
+            <div class="cnt-fter is-footer-scroll">
+                @Html.Action("Footer", "Widget")
+            </div>
+            <!-- cnt-fter -->
+            <div id="promotionapp">
+               @Html.Action("Footer2", "Widget")
+            </div>
+        </footer>
+    </div>
+    <div id="wait">
+        <div class="innerWait">
+        </div>
+    </div>
+</body>
+</html>

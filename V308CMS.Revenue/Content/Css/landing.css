@@ -1,0 +1,181 @@
+/* Landing page */
+.landing::before {
+    display: block;
+    content: " ";
+    background: url(/styles/web/4038/images/landing-left.png);
+    width: 371px;
+    height: 823px;
+    position: fixed;
+    top: 60px;
+    left: 50%;
+    right: auto;
+    margin-left: -888px;
+}
+.landing::after {
+    display: block;
+    content: " ";
+    position: fixed;
+    top: 60px;
+    width: 371px;
+    height: 823px;
+    background: url(/styles/web/4038/images/landing-right.png);
+    left: 50%;
+    margin-left: 520px;
+}
+.landing header{
+    height: 115px;
+}
+.landing-top {
+    width: 100%;
+    height: 55px;
+}
+.landing-top .landing-top-img {
+    background-image: url(/styles/web/4038/images/theme/landingtop.png);
+    background-color: #B3151B;
+    background-position: 50% 0px; 
+    background-repeat: no-repeat;
+    max-width: 100%;
+    height: 55px;
+    display: block;
+}
+.landing .fx-top {
+    padding-top: 115px;
+}
+.fa.fa-land {
+    border: none !important;
+}
+.fa-land {
+    background: url(/styles/web/4038/images/land-icon.png) no-repeat;
+    height: 25px;
+    vertical-align: middle;
+    width: 25px;
+}
+.fa.fa-trungthu {
+    border: none !important;
+}
+.fa-trungthu{
+ background: url(/styles/web/4038/images/icon-trung-thu.png) no-repeat;
+    height: 25px;
+    vertical-align: middle;
+    width: 25px;
+}
+.landing-page .slide-category {
+    width: 100%;
+    height: 450px;
+}
+.landing-vendor {
+    height: 180px;
+    width: 1022px;
+}
+.landing-page .d4 {
+    font-size: 15px !important;
+}
+.landing-page .cbo-lst-mrt {
+    margin: 0;
+    border: none;
+}
+.landing-page .cbo-lst-mrt .rw-lst-mrt {
+    height: auto;
+    float: left;
+    width: 146px;
+    border-bottom: none;
+    border-top: 1px solid #dfdfdf; 
+}
+.landing-page .cbo-lst-mrt .rw-lst-mrt:first-child {
+    border-left: 1px solid #dfdfdf; 
+}
+.landing-page .cbo-lst-mrt .rw-lst-mrt .itm-lst-mrt {
+    width: 146px;
+    height: 75px;
+    background-color: rgb(254, 250, 251);
+    border-bottom: 1px solid #dfdfdf;
+    border-right: 1px solid #dfdfdf;
+}
+.landing-page .cbo-lst-mrt .rw-lst-mrt .itm-lst-mrt.atv {
+    background-color: #00a651;
+}
+.landing-page .cbo-lst-mrt .rw-lst-mrt .itm-lst-mrt img{
+    max-height: 40px;
+    top: 40%;
+    filter: grayscale(0%);
+    -webkit-filter: grayscale(0%);  /* For Webkit browsers */
+    filter: none;  /* For IE 6 - 9 */
+    -webkit-transition: all .6s ease;
+    opacity: 1;
+}
+.landing-page .cbo-lst-mrt .rw-lst-mrt .atv.itm-lst-mrt img.itm-lst-mrt-acti {
+    display: none;
+}
+.landing-page .cbo-lst-mrt .rw-lst-mrt .atv.itm-lst-mrt img.itm-lst-mrt-none-acti {
+    display: block;
+    opacity: 1;
+}
+.landing-page .cbo-lst-mrt .rw-lst-mrt .itm-lst-mrt img.itm-lst-mrt-none-acti{
+    display: none;
+}
+.landing-page .item-lst-name {
+    font-size: 13px;
+    display: block;
+    position: absolute;
+    text-align: center;
+    width: 93%;
+    bottom: 5%;
+    color: #666;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow:hidden;
+}
+.landing-page .atv .item-lst-name {
+    color: #FFF;
+}
+.landing-page .b1 .b2 {
+    width: 167px;
+}
+.landing-page .cid .d1 .d2 .d4 {
+    padding: 0 12px;
+}
+.landing-page .b1 .b2 .b4 .b7 {
+    height: 25px;
+}
+.landing-page .b1 .b2 .b4 .old {
+    font-size: 13px;
+    line-height: 20px;
+    height: 20px;
+}
+.landing-page .button-view-more {
+    margin: 10px auto;
+    width: 165px;
+}
+.landing-page [class^="new-button-"] {
+    padding: 0 25px;   
+}
+.landing-page [class^="new-button-"].gray .fa {
+    margin-right: 5px;
+    margin-left: 0;
+}
+.landing-page .is-button-wait span.fa{
+    display: none;
+}
+.landing-page .fa.slide-icon {
+    position: absolute;
+    top:50%;
+    background: #fefefe none repeat scroll 0 0;
+    border: 1px solid #dfdfdf;
+    border-radius: 50%;
+    color: #dfdfdf;
+    font-size: 32px;
+    line-height: 30px;
+    font-weight: normal;
+    height: 35px;
+    top: 32%;
+    width: 35px;
+    text-align: center;
+    vertical-align: middle;
+    opacity: 0.8;
+}
+.landing-page .fa.fa-angle-left{
+    left: 0;
+}
+.landing-page .fa.fa-angle-right{
+    right: 0;
+}

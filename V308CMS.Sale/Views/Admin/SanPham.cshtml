@@ -1,0 +1,155 @@
+﻿@model V308CMS.Data.ProductPage
+@{
+    ViewBag.Title = "Câu hỏi";
+    ViewBag.LinkBack = "<li><a href=\"/Admin/SanPham/\">Câu hỏi</a> </li>";
+    ViewBag.MenuValue = 1;
+    Layout = "~/Views/Admin/Layout.cshtml";
+}
+<style type="text/css">
+    .divfiter {
+        display: inline-block;
+        height: 30px;
+    }
+
+        .divfiter .inputtxt {
+            width: 250px;
+        }
+
+        .divfiter .btsubmit {
+            width: 120px;
+            height: 38px;
+            display: inline-block;
+            overflow: hidden;
+            background-color: #47abd1;
+            color: white;
+            text-align: center;
+            position: absolute;
+        }
+
+    .cbsp {
+        width: 30px;
+    }
+
+    .cbhead {
+        margin-right: 10px !important;
+        display: block;
+        clear: both;
+        position: relative !important;
+        margin-left: 5px !important;
+    }
+</style>
+<script type="text/javascript">
+    function GoToPage() {
+        var pPage = $("#pagegoId").val();
+        if (parseInt(pPage) <= 0) {
+            pPage = 0;
+        }
+        $("#wait").css("display", "block");
+        window.location = "/Admin/SanPham?pPage=" + pPage;
+    }
+    function UpdateProductList() {
+        $("#wait").css("display", "block");
+        $('#SanPhamUpdateForm').find('input[type="checkbox"]').each(function () {
+            var checkbox_this = $(this);
+            if (checkbox_this.is(":checked") == true) {
+                checkbox_this.attr('value', 'true');
+            } else {
+                checkbox_this.prop('checked', true);
+                //DONT' ITS JUST CHECK THE CHECKBOX TO SUBMIT FORM DATA    
+                checkbox_this.attr('value', 'false');
+            }
+        });
+        var formData = $('#SanPhamUpdateForm').serialize();
+        //gui thong tin dang ky len may chu
+        $.ajax({
+            type: 'POST',
+            data: formData,
+            dataType: 'json',
+            url: "/Admin/SanPhamUpdate/",
+            timeout: 60000,
+            success: function (data) {
+                //$("#wait").css("display", "none");
+                if (data.code == 1) {
+                    alert(data.message);
+                    window.location = "/Admin/SanPham";
+                }
+                else {
+                    HienThiPopUp(data.message);
+                    scrollWindow(10);
+                }
+            },
+            error: function (x, t, m) {
+                $("#wait").css("display", "none");
+            }
+        });
+    }
+</script>
+<div>
+    <div>
+        <div id="close" class="mheader">
+            <a href="/Admin/SanPhamThemMoi/">
+                <img src="/Content/Admin/Images/them-moi.png" /></a>
+        </div>
+        <div style="margin-top: 16px;">
+            <form action="/Admin/SanPham">
+                <input type="hidden" name="pPage" />
+                <div class="divfiter">Tìm kiếm</div>
+                <div class="divfiter">
+                    <input class="inputtxt" name="pKey" placeholder="Nhập từ khóa tìm kiếm" value="@Model.Key" type="text" />
+                </div>
+                <div class="divfiter">@Html.Raw(@Model.HtmlNhom)</div>
+                <div class="divfiter">
+                    <select style="width: 250px;" name="pMarket">
+                        <option value="0" selected="selected">Tất cả các siêu thị</option>
+                        @foreach (V308CMS.Data.Market it in @Model.MarketList)
+                        { 
+                            <option  @Html.Raw(@V308CMS.Common.Ultility.CheckSeclectSelected(@it.ID, @Model.Market))  value="@it.ID">@it.UserName</option>
+                        }
+                    </select>
+                </div>
+                <div class="divfiter">
+                    <input type="submit" class="btsubmit" value="Tìm Kiếm">
+                </div>
+                <div class="divfiter">
+                    <input type="button" class="btsubmit" onclick="javascript:UpdateProductList();" style="right: 45px;" value="Cập nhật">
+                </div>
+            </form>
+        </div>
+        @*    <div>
+            <a href="/Admin/SanPham?pPage=@Model.BackPage&pType=@Model.pProductType.Parent" class="btcate0"><span class="fa fa-shopping-cart"></span>Tất cả</a>
+            @foreach (V308CMS.Data.ProductType it in @Model.ProductTypeLt) { 
+            <a href="/Admin/SanPham?pPage=1&pType=@it.ID" class="btcate"><span class="fa fa-shopping-cart"></span>@it.Name</a>
+            }
+        </div>*@
+        <hr />
+        <div style="width: 100%;">
+            <form action="Admin/SanPhamUpdate" id="SanPhamUpdateForm">
+                <div class="RadGrid RadGrid_MetroTouch table table-striped table-bordered table-hover dataTable" tabindex="0">
+                    @Html.Raw(@Model.Html)
+                </div>
+            </form>
+        </div>
+        <div class="wpmn_page_navi" style="margin-bottom: 60px;">
+            <a href="/Admin/SanPham?pPage=@Model.BackPage&pType=@Model.TypeId&pMarket=@Model.Market&pKey=@Model.Key">Back</a>
+            <a class="current" href="/Admin/SanPham?pPage=1&pType=@Model.TypeId&pMarket=@Model.Market&pKey=@Model.Key">1</a>
+            <a class="current" href="/Admin/SanPham?pPage=2&pType=@Model.TypeId&pMarket=@Model.Market&pKey=@Model.Key">2</a>
+            <a class="current" href="/Admin/SanPham?pPage=3&pType=@Model.TypeId&pMarket=@Model.Market&pKey=@Model.Key">3</a>
+            <a class="current" href="/Admin/SanPham?pPage=4&pType=@Model.TypeId&pMarket=@Model.Market&pKey=@Model.Key">4</a>
+            <a class="current" href="/Admin/SanPham?pPage=5&pType=@Model.TypeId&pMarket=@Model.Market&pKey=@Model.Key">5</a>
+            <a class="current" href="/Admin/SanPham?pPage=6&pType=@Model.TypeId&pMarket=@Model.Market&pKey=@Model.Key">6</a>
+            <a class="current" href="/Admin/SanPham?pPage=7&pType=@Model.TypeId&pMarket=@Model.Market&pKey=@Model.Key">7</a>
+            <a class="current" href="/Admin/SanPham?pPage=8&pType=@Model.TypeId&pMarket=@Model.Market&pKey=@Model.Key">8</a>
+            <a class="current" href="/Admin/SanPham?pPage=9&pType=@Model.TypeId&pMarket=@Model.Market&pKey=@Model.Key">9</a>
+            <a class="current" href="/Admin/SanPham?pPage=10&pType=@Model.TypeId&pMarket=@Model.Market&pKey=@Model.Key">10</a>
+            <a class="current" href="/Admin/SanPham?pPage=@Model.BackPage&pType=@Model.TypeId&pMarket=@Model.Market&pKey=@Model.Key">@Model.Page</a>
+            <a href="/Admin/SanPham?pPage=@Model.NextPage&pType=@Model.TypeId&pMarket=@Model.Market&pKey=@Model.Key">Next</a>
+            <input type="button" class="btsubmit" onclick="javascript: GoToPage();" style="float: right; margin-left: 20px; background-color: #47abd1;" value="Chuyển tới">
+            <input type="text" id="pagegoId" placeholder="Nhập trang bạn cần tới" style="width: 250px; float: right; margin-bottom: 6px;" />
+        </div>
+        <hr />
+    </div>
+    <div style="display: none;" role="status" aria-hidden="true">
+        <div class="area"></div>
+        <div class="form-loading"></div>
+    </div>
+</div>

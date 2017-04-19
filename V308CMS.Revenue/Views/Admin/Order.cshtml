@@ -1,0 +1,104 @@
+﻿@model V308CMS.Data.ProductPage
+@{
+    ViewBag.Title = "Hóa Đơn Mua Hàng";
+    ViewBag.LinkBack = "<li><a href=\"/Admin/Order/\">Hóa Đơn Mua Hàng</a> </li>";
+    ViewBag.MenuValue = 3;
+    Layout = "~/Views/Admin/Layout.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#js-select-day-delivery1").datepicker();
+        $("#js-select-day-delivery2").datepicker();
+    });
+</script>
+<style type="text/css">
+    .divfiter {
+        display: inline-block;
+        height: 30px;
+    }
+
+        .divfiter .inputtxt {
+            width: 250px;
+        }
+
+        .divfiter .btsubmit {
+            width: 120px;
+            height: 38px;
+            display: inline-block;
+            overflow: hidden;
+            background-color: #47abd1;
+            color: white;
+            text-align: center;
+            position: absolute;
+        }
+
+    .cbsp {
+        width: 30px;
+    }
+
+    .cbhead {
+        margin-right: 10px !important;
+        display: block;
+        clear: both;
+        position: relative !important;
+        margin-left: 5px !important;
+    }
+
+    .mheader table {
+        border-collapse: collapse;
+    }
+
+    .mheader table, .mheader th, .mheader td {
+        border: 1px solid black;
+    }
+</style>
+<div>
+    <div>
+        <div id="close" class="mheader">
+            <table class="rgMasterTable" style="width: 500px; text-align: center; margin: 10px auto;">
+                <tr>
+                    <td colspan="2" style="background-color: #DDD;">THỐNG KÊ DOANH SỐ BÁN HÀNG</td>
+                </tr>
+                <tr>
+                    <td class="rgHeader">Số đơn hàng khách đã đặt</td>
+                    <td>@(Model.CountOrder1 + Model.CountOrder2)</td>
+                </tr>
+                <tr>
+                    <td class="rgHeader">Số đơn hàng khách đã giao</td>
+                    <td> @Model.CountOrder2</td>
+                </tr>
+                <tr>
+                    <td class="rgHeader">Tổng doanh thu</td>
+                    <td>@String.Format("{0: 0,0}", (@Model.Money)) VNĐ</td>
+                </tr>
+            </table>
+        </div>
+        <div style="margin-top: 16px;">
+            <form action="/Admin/Order" method="get">
+                <div class="divfiter">Thời gian bắt đầu</div>
+                <div class="divfiter">
+                    <input class="inputtxt" name="pDate1" placeholder="@ViewBag.Date1" type="text" id="js-select-day-delivery1" />
+                </div>
+                <div class="divfiter">Thời gian kết thúc</div>
+                <div class="divfiter">
+                    <input class="inputtxt" name="pDate2" placeholder="@ViewBag.Date2" type="text" id="js-select-day-delivery2" />
+                </div>
+                <div class="divfiter">
+                    <input type="submit" class="btsubmit" onclick="javascript: void (0);" style="right: 200px;" value="Xác Nhận">
+                </div>
+            </form>
+        </div>
+        <hr />
+        <div style="width: 100%;">
+            <div class="RadGrid RadGrid_MetroTouch table table-striped table-bordered table-hover dataTable" tabindex="0">
+                @Html.Raw(@Model.Html)
+            </div>
+        </div>
+        <div class="wpmn_page_navi"><a href="/Admin/Order?pPage=@Model.BackPage&pType=@Model.TypeId">Back</a><span class="current">@Model.Page</span><a href="/Admin/Order?pPage=@Model.NextPage&pType=@Model.TypeId">Next</a></div>
+        <hr />
+    </div>
+    <div style="display: none;" role="status" aria-hidden="true">
+        <div class="area"></div>
+        <div class="form-loading"></div>
+    </div>
+</div>

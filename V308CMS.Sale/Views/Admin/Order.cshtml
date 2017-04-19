@@ -1,0 +1,33 @@
+﻿@model V308CMS.Data.ProductPage
+@{
+    ViewBag.Title = "Hóa Đơn Mua Hàng";
+    ViewBag.LinkBack = "<li><a href=\"/Admin/Order/\">Hóa Đơn Mua Hàng</a> </li>";
+    ViewBag.MenuValue = 3;
+    Layout = "~/Views/Admin/Layout.cshtml";
+}
+<div>
+    <div>
+        <div id="close" class="mheader">
+            <a href="javascript:void(0);"><img src="/Content/Admin/Images/them-moi.png" /></a>
+        </div>
+        <div style="margin-top:16px;">
+       <select name="pGroup" id="pGroupId" onchange="ThayDoiKieuHoaDon(@Model.Page);">
+           <option @V308CMS.Common.Ultility.CheckSeclectSelected(0,@Model.TypeId) value="0">Chưa xử lý</option>
+           <option @V308CMS.Common.Ultility.CheckSeclectSelected(1,@Model.TypeId)  value="1">Đã xử lý</option>
+           <option @V308CMS.Common.Ultility.CheckSeclectSelected(2,@Model.TypeId)  value="2">Tất cả</option>
+       </select>
+        </div>
+        <hr />
+        <div style="width: 100%;">
+            <div class="RadGrid RadGrid_MetroTouch table table-striped table-bordered table-hover dataTable" tabindex="0">
+               @Html.Raw(@Model.Html)
+            </div>
+        </div>
+        <div class="wpmn_page_navi"><a href="/Admin/Order?pPage=@Model.BackPage&pType=@Model.TypeId">Back</a><span class="current">@Model.Page</span><a href="/Admin/Order?pPage=@Model.NextPage&pType=@Model.TypeId">Next</a></div>
+        <hr />
+    </div>
+    <div style="display: none;" role="status" aria-hidden="true">
+        <div class="area"></div>
+        <div class="form-loading"></div>
+    </div>
+</div>

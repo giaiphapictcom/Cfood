@@ -1,0 +1,35 @@
+﻿@model V308CMS.Data.NewsPage
+@{
+    ViewBag.Title = "News";
+    Layout = "~/Views/Layout/_NewsLayout.cshtml";
+}
+<link rel="stylesheet" href="/Content/Css/style.css?v=0.0.5">
+<section class="wrap category no-select">
+    <div class="ctnr">
+        <section class="cbo-brc">
+            <div class="brc-lst"><a class="next" href="/" title="Trang Chủ">Trang Chủ</a></div>
+        </section>
+        <!-- cbo-lst-mrt -->
+        <div class="list-category mxClrAft">
+            <div class="left-category">
+                <section class="right-cmt-page">
+                    <div class="title-cmt-page" style="color: #00a651; font-size: 24px; font-family: Roboto-Medium; line-height: 40px; border-bottom: 1px solid #efefef; margin-bottom: 20px; padding-bottom: 15px;">@Model.NewsGroups.Name</div>
+                    <section class="grounpStoryList page-cmt-content">
+                     @Html.Raw(Model.Html)
+                    </section>
+                </section>
+                 <div class="page-nav">
+                            <div class="pg mxClrAft nav-sld">
+                                <div class="n item-pagi-sld" title=""><a href="/@V308CMS.Common.Ultility.LocDau(@Model.NewsGroups.Name)-group@(@Model.NewsGroups.ID).html?pPage=@Model.BackPage">Back</a></div>
+                                <div class="n item-pagi-sld atv" title=""><a href="/@V308CMS.Common.Ultility.LocDau(@Model.NewsGroups.Name)-group@(@Model.NewsGroups.ID).html?pPage=@Model.Page">@Model.Page</a></div>
+                                <div class="n item-pagi-sld" title=""><a href="/@V308CMS.Common.Ultility.LocDau(@Model.NewsGroups.Name)-group@(@Model.NewsGroups.ID).html?pPage=@Model.NextPage">Next</a></div>
+                            </div>
+                        </div>
+            </div>
+          @*  <div class="right-category">
+                @Html.Action("Right", "Widget")
+            </div>*@
+        </div>
+    </div>
+    <div class="clr"></div>
+</section>

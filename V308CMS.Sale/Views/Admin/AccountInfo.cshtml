@@ -1,0 +1,67 @@
+﻿@model V308CMS.Data.AccountPage
+@{
+    ViewBag.Title = "Thông tin tài khoản";
+    ViewBag.LinkBack = "<li><a href=\"/Admin/AccountInfo/\">Thông tin tài khoản</a> </li>";
+    ViewBag.MenuValue = 6;
+    Layout = "~/Views/Admin/Layout.cshtml";
+}
+<form id="formtaomoi">
+    <div>
+        <div>
+            <h3>Thông tin chi tiết</h3>
+            <hr />
+            <div style="width: 100%;">
+                <div id="v308inputContent" class="RadGrid RadGrid_MetroTouch table table-striped table-bordered table-hover dataTable" tabindex="0">
+                    <input type="hidden" value="@Model.pAdmin.ID" id="pId" />
+                    <table style="min-width: 400px;">
+                        <tr>
+                            <td>Full Name</td>
+                            <td>
+                                @Model.pAdmin.FullName</td>
+                        </tr>
+                        <tr>
+                            <td>Tài khoản</td>
+                            <td>@Html.Raw(@Model.pAdmin.UserName)</td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td>
+                                @Model.pAdmin.Email</td>
+                        </tr>
+                        <tr>
+                            <td>Quyền quản trị</td>
+                            <td>
+                                <select>
+                                    <option  @V308CMS.Common.Ultility.CheckSeclectSelected(0, @Model.pAdmin.Role)  value="0">Chọn Quyền cho tài khoản</option>
+                                    <option @V308CMS.Common.Ultility.CheckSeclectSelected(1, @Model.pAdmin.Role)  value="1">Administrator</option>
+                                    <option @V308CMS.Common.Ultility.CheckSeclectSelected(2, @Model.pAdmin.Role)  value="2">Member</option>
+                                    <option @V308CMS.Common.Ultility.CheckSeclectSelected(3, @Model.pAdmin.Role)  value="3">Guest</option>
+                                </select></td>
+                        </tr>
+                        <tr>
+                            <td>Mật khẩu cũ</td>
+                            <td>
+                                <input type="password" name="pPassword1" id="pPassword1Id" /></td>
+                        </tr>
+                        <tr>
+                            <td>Mật khẩu mới</td>
+                            <td>
+                                <input type="password" name="pPassword2" id="pPassword2Id" /></td>
+                        </tr>
+                        <tr>
+                            <td>Gõ lại mật khẩu mới</td>
+                            <td>
+                                <input type="password" name="pPassword3" id="pPassword3Id" /></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <a class="mbutton" href="javascript:Admin_Product_ThayDoiPassWord(@Model.pAdmin.ID);">Thay Đổi Mật Khẩu</a></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <hr />
+        </div>
+    </div>
+</form>

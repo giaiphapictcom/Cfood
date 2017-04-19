@@ -1,0 +1,169 @@
+﻿@model List<V308CMS.Data.NewsGroupPage>
+@{
+    Layout = null;
+}
+<script type="text/javascript">
+    function onchangeFooterNews(pvalue) {
+        //get value selectfooter
+        var flink = $("#" + pvalue).val();
+        window.location = flink;
+    }
+    function AddEmail() {
+        var mEmail = $("#js-register-email").val();
+        $("#wait").css("display", "block");
+        //gui thong tin dang ky len may chu
+        $.ajax({
+            type: 'POST',
+            data: { 'pEmail': mEmail },
+            dataType: 'json',
+            url: "/Home/addEmail",
+            timeout: 60000,
+            success: function (data) {
+                if (data.code == 1) {
+                    alert(data.message);
+                    $("#wait").css("display", "none");
+                }
+                else {
+                    alert(data.message);
+                    $("#wait").css("display", "none");
+                }
+            },
+            error: function (x, t, m) {
+                //$("#cError").html('Lỗi kết nối tới máy chủ !');
+                $("#wait").css("display", "none");
+            }
+        });
+    }
+</script>
+<section class="cbo-lst-mrt mxClrAft" style="display: block; width: 1024px; margin: 10px auto; clear: both;">
+    @Html.Action("MarketList", "Widget")
+</section>
+<style type="text/css">
+    .cnt-fter {
+        background: #fff;
+    }
+
+    .box-1 {
+        float: left;
+        width: 25%;
+    }
+
+    .clr {
+        clear: both;
+    }
+
+    .box-1 .box-title {
+        font-size: 20px;
+        padding-bottom: 10px;
+        padding-left: 5px;
+        color: #5a5959;
+    }
+
+    .box-1 .box-item {
+        padding-bottom: 10px;
+    }
+
+    .box-1 input[type=text] {
+        height: 30px;
+        width: 85%;
+        padding: 2px 5px;
+        font-size: 14px;
+        font-style: italic;
+        color: #5a5959;
+    }
+
+    .box-1 select {
+        height: 30px;
+        width: 82%;
+        padding: 2px 5px;
+        font-size: 14px;
+        color: #5a5959;
+    }
+
+    .small-page .cnt-fter .lft-ft {
+        width: 1024px !important;
+    }
+
+    .box-1 p {
+        line-height: 32px;
+        padding-bottom: 0px;
+        font-size: 14px;
+        color: #5a5959;
+    }
+
+    .box-1 input[type=submit] {
+        border: 0px;
+        padding: 7px 35px;
+        background: #1aa331;
+        color: #fff;
+    }
+</style>
+<div class="wrap">
+    <div class="ctnr">
+        <div class="lft-ft">
+            <div class="box box-1">
+                <div class="box-title">
+                    Về @TempData["CompanyName"].ToString()
+                </div>
+                <div class="box-content box-lst">
+                    @foreach (V308CMS.Data.NewsGroupPage it in Model)
+                    {
+                        <div class="box-item">
+                            <select id="selectfooter@(it.TypeId)" onchange="javascript:onchangeFooterNews('selectfooter@(it.TypeId)');">
+                                @foreach (V308CMS.Data.News ht in it.NewsList)
+                                {
+                                    <option value="/@V308CMS.Common.Ultility.LocDau(ht.Title)-n@(ht.ID).html">@ht.Title</option>
+                                }
+                            </select>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="box box-1">
+                <div class="box-title">
+                    Đăng ký nhận Voucher
+                </div>
+                <div class="box-content box-lst">
+                    <div class="box-item">
+                        <p>Đăng ký để nhận Voucher mới nhất</p>
+                    </div>
+                    <div class="box-item">
+                        <input type="text" id="js-register-email" value="" placeholder="Nhập email để " />
+                    </div>
+                    <div class="box-item">
+                        <input type="submit" onclick="javascript: AddEmail();" value="GỬI" style="cursor: pointer;" />
+                    </div>
+                </div>
+            </div>
+            <div class="box box-1">
+                <div class="box-title">
+                    Hợp tác @TempData["CompanyName"].ToString()
+                </div>
+                <div class="box-content box-lst">
+                    <div class="box-item">
+                        <a href="//seo.cleanfoodvn.vn" target="_blank"><img src="~/Content/Images/hoptac.jpg" /></a>
+                    </div>
+                    <div class="box-item">
+                        <a href="#"><img src="~/Content/Images/congthuong.jpg" /></a>
+                    </div>
+                </div>
+            </div>
+            <div class="box box-1">
+                <div class="box-title">
+                    Kết nối với @TempData["CompanyName"].ToString()
+                </div>
+                <div class="box-content box-lst">
+                    @if (@TempData["FaceBookPage"].ToString().Length > 0)
+                    {
+                        @Html.Raw("<iframe src=\"http://www.facebook.com/plugins/likebox.php?profile=1&width=300&height=170&connections=10&stream=true&header=true&id="+TempData["FaceBookPage"].ToString()+"\" scrolling='no' frameborder='0' allowtransparency='true' style='border: none; overflow: hidden; width: 256px; height: 120px'></iframe>")
+                    }
+                    
+                </div>
+            </div>
+            <div class="clr"></div>
+        </div>
+        <!-- lft-ft -->
+    </div>
+    <!-- ctnr -->
+</div>
+<!-- wrap -->

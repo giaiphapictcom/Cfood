@@ -1,0 +1,67 @@
+﻿@{
+    Layout = null;
+}
+<script type="text/javascript">
+    function ConfirmUnit() {
+        var myRadio = $('input[name=pslunit]');
+        var checkedValue = myRadio.filter(':checked').val();
+        console.log(checkedValue);
+        //tai day ta lay duoc gia tri
+        //1- set bien hide cho khau phan
+        //2- hien thi khau phan
+        $('#slunit-id').val(checkedValue);
+        console.log($('#slunit-id').val());
+        //
+        $('#secuniit' + checkedValue).css('display', 'block');
+        //
+        $('#slunitprice' + checkedValue).css('display', 'block');
+        $('.full-site').css('display', 'none');
+        $('.overlay-popup').css('display', 'none');
+    }
+</script>
+<style type="text/css">
+    .slcontainer {
+        display: block;
+        width: 300px;
+        margin: 14px auto;
+    }
+
+        .slcontainer input {
+            cursor: pointer;
+        }
+</style>
+<div class="full-site">
+</div>
+<div class="overlay-popup">
+    <div class="new-popup" style="width: 515px">
+        <div class="header-popup background-green">
+            <div class="title">Chọn khẩu phần ăn</div>
+            <div class="sub-title">Quý khách vui lòng chọn đủ thức ăn để tránh lãng phí tiền bạc</div>
+        </div>
+        <div class="content-popup">
+            <div class="inner-conntent smart-alert">
+                <div class="location-box">
+                    <div class="select">
+                        <div class="slcontainer">
+                            <input type="radio" name="pslunit" value="1" />
+                            <span>Xuất ăn dành cho từ 2-3 người ăn trở lại</span>
+                        </div>
+                        <div class="slcontainer">
+                            <input type="radio" name="pslunit" value="2" />
+                            <span>Xuất ăn dành cho từ 4-6 người ăn trở lại</span>
+                        </div>
+                        <div class="slcontainer">
+                            <input type="radio" name="pslunit" value="3" />
+                            <span>Xuất ăn dành cho từ 8-10 người ăn trở lại</span>
+                        </div>
+                        <div class="slcontainer">
+                            <button class="" style="margin: 10px auto; display: block; webkit-transition: all 500ms ease 0s; -o-transition: all 500ms ease 0s; transition: all 500ms ease 0s; background-color: #ede020; color: #fff; font-size: 13px; height: 34px; text-align: center; position: relative; line-height: 34px; padding: 0 15px; border-radius: 25px;" onclick="javascript:javscript:ConfirmUnit();">Xác nhận</button>
+                        </div>
+
+                    </div>
+                    <div class="contact">*Quý khách cần hỗ trợ thêm vui lòng gọi 093.94.88.883</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

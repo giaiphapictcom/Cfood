@@ -1,0 +1,466 @@
+.register {
+  width: 1024px;
+  float: right;
+}
+.register .qa1 {
+  border-bottom: 1px solid #e1e1e1;
+  height: 50px;
+}
+.register .qa1:after {
+  display: block;
+  width: 0;
+  height: 0;
+  visibility: hide;
+  clear: both;
+  content: " ";
+}
+.register .qa1 .tt {
+  color: #00a651;
+  float: left;
+  font-family: "Roboto-Bold";
+  font-size: 22px;
+  line-height: 40px;
+  padding-left: 21px;
+  padding-top: 10px;
+}
+.register .qa2 {
+  box-sizing: border-box;
+}
+.register .qa2:after {
+  display: block;
+  width: 0;
+  height: 0;
+  visibility: hide;
+  clear: both;
+  content: " ";
+}
+.register .qa2 .qb1 {
+  float: left;
+  width: 497px;
+  margin-right: 30px;
+}
+.register .qa2 .qb1:last-child {
+  margin-right: 0;
+}
+.register .qa2 .qb1 .qc1 {
+  border-bottom: 1px solid #e1e1e1;
+  box-sizing: border-box;
+  width: 497px;
+  height: 49px;
+}
+.register .qa2 .qb1 .qc1 .tt {
+  border-bottom: 1px solid #00a651;
+  float: left;
+  font-family: "Roboto-Regular";
+  font-size: 15px;
+  line-height: 34px;
+  margin-left: 11px;
+  padding: 14px 15px 0 9px;
+  text-transform: uppercase;
+}
+.register .qa2 .qb1 .qc2 .t1 {
+  padding-left: 19px;
+  width: 365px;
+  font-size: 13px;
+  line-height: 20px;
+  padding-top: 10px;
+}
+.register .qa2 .qb1 .qc2 .bt1 {
+  -webkit-transition: all 500ms ease 0s;
+  -o-transition: all 500ms ease 0s;
+  transition: all 500ms ease 0s;
+  display: inline-block;
+  text-transform: uppercase;
+  background-color: #00a651;
+  color: #fff;
+  line-height: 34px;
+  padding: 0 22px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-left: 20px;
+  margin-top: 143px;
+}
+.register .qa2 .qb1 .qc2 .bt1:hover {
+  background-color: #f7941d;
+}
+.register .qa2 .qb1 .qc2 .login_account {
+  padding-top: 11px;
+}
+.register .qa2 .qb1 .qc2 .row_login_acc {
+  padding-left: 20px;
+  padding-bottom: 17px;
+}
+.register .qa2 .qb1 .qc2 .row_login_acc.last {
+  padding-bottom: 9px;
+}
+.register .qa2 .qb1 .qc2 .row_login_acc .t2 {
+  font-family: 'Roboto-Medium';
+  font-size: 13px;
+  padding-bottom: 5px;
+}
+.register .qa2 .qb1 .qc2 .row_login_acc .qti {
+  display: block;
+  font-family: "Roboto-Regular";
+  font-size: 13px;
+  height: 34px;
+  padding: 0 12px;
+  width: 390px;
+}
+.register .qa2 .qb1 .qc2 .tr {
+  padding-left: 20px;
+  font-size: 13px;
+  line-height: 16px;
+}
+.register .qa2 .qb1 .qc2 .tf {
+  -webkit-transition: all 500ms ease 0s;
+  -o-transition: all 500ms ease 0s;
+  transition: all 500ms ease 0s;
+  color: #00a651;
+  font-size: 13px;
+  line-height: 18px;
+  padding-left: 20px;
+}
+.register .qa2 .qb1 .qc2 .tf:hover {
+  color: #f7941d;
+}
+.register .qa2 .qb1 .qc2 .bt2 {
+  -webkit-transition: all 500ms ease 0s;
+  -o-transition: all 500ms ease 0s;
+  transition: all 500ms ease 0s;
+  display: inline-block;
+  text-transform: uppercase;
+  background-color: #00a651;
+  color: #fff;
+  line-height: 34px;
+  padding: 0 16px;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: normal;
+  margin-top: 19px;
+}
+.register .qa2 .qb1 .qc2 .bt2:hover {
+  background-color: #f7941d;
+}
+.register .qa2 .qb1 .qc2 .login_social {
+  padding-left: 20px;
+}
+.register .qa2 .qb1 .qc2 .login_social:after {
+  display: block;
+  width: 0;
+  height: 0;
+  visibility: hide;
+  clear: both;
+  content: " ";
+}
+.register .qa2 .qb1 .qc2 .login_social .bg {
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+  filter: gray;
+  filter: url("data:image/svg+xml;utf8,<svg version='1.1' xmlns='http://www.w3.org/2000/svg' height='0'><filter id='greyscale'><feColorMatrix type='matrix' values='0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0' /></filter></svg>#greyscale");
+  -webkit-transition: all 500ms ease 0s;
+  -o-transition: all 500ms ease 0s;
+  transition: all 500ms ease 0s;
+  display: block;
+  background-image: url(/styles/web/4038/images/theme/main.png);
+  background-size: 500px 500px;
+  height: 28px;
+  width: 28px;
+  float: left;
+  margin-right: 5px;
+}
+.register .qa2 .qb1 .qc2 .login_social .bg:hover {
+  -webkit-filter: grayscale(0);
+  filter: grayscale(0);
+  filter: none;
+}
+.register .qa2 .qb1 .qc2 .login_social .bg.fb {
+  background-position: -10px -70px;
+}
+.register .qa2 .qb1 .qc2 .login_social .bg.tw {
+  background-position: -50px -70px;
+}
+.register .qa2 .qb1 .qc2 .login_social .bg.gg {
+  background-position: -90px -70px;
+}
+.register .qa2 .qb1 .qc2 .login_social .bg.yh {
+  background-position: -170px -70px;
+}
+
+.text_chuyen_trang, .text_nhap_vao {
+    color: #454545;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    width: 100%;
+    font-size: 12px;
+}
+.text_nhap_vao a{
+    color: #454545;
+    display: block;
+    margin-bottom: 20px;
+}
+.combo_progress{
+    margin: 20px auto;
+    width: 640px;
+}
+.combo_progress {
+    box-sizing: content-box;
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.02);
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border: 1px solid rgba(0,0,0,0.15);
+    margin: 0 auto;
+    padding: 20px;
+    width: 424px;
+    height: 80px;
+}
+.tieu_de_quen_mat_khau{
+    color: #262626;
+    font-family: HelveticaNeue;
+    font-size: 24px;
+    text-align: center;
+    display: block;
+    margin-bottom: 30px;
+}
+.bg_qmk{
+    width: 300px;
+}
+.progress_bar {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.075);
+    border-radius: 12px;
+    -moz-border-radius: 12px;
+    -webkit-border-radius: 12px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) inset;
+    height: 24px;
+    position: relative;
+    width: 424px;
+    float: left;
+}
+.propress_bar_bg {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.25);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.55);
+    height: 1px;
+    left: 12px;
+    position: absolute;
+    top: 12px;
+    width: 400px;
+}
+.progress_bar_value {
+    background: none repeat scroll 0 0 #1ca0e8;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    height: 10px;
+    left: 12px;
+    position: absolute;
+    top: 7px;
+    width: 0;
+}
+.percent_progress {
+    border-radius: 19px;
+    -moz-border-radius: 19px;
+    -webkit-border-radius: 19px;
+    color: #454545;
+    float: right;
+    font-size: 14px;
+    font-weight: bold;
+    height: 24px;
+    line-height: 24px;
+    margin: 0 auto;
+    text-align: center;
+    width: 40px;
+    float: right;
+}
+.err_list_login_popup{
+    display: none;
+}
+#popup_dang_nhap .err_list_login_popup.show{
+    display: block;
+}
+
+.info_user_form .button_submit_log {
+    margin: 30px auto 43px;
+    width: 300px;
+}
+.button_submit_log {
+    background: none repeat scroll 0 0 #34bf49;
+    border: medium none;
+    color: #fff;
+    display: block;
+    font-size: 20px;
+    height: 50px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    padding: 0;
+    width: 270px;
+    -moz-transition: 0.5s all ease 0s;
+    -o-transition: 0.5s all ease 0s;
+    -webkit-transition: 0.5s all ease 0s;
+    transition: 0.5s all ease 0s;;
+}
+.button_submit_log:hover{
+    color: #FFF;
+}
+/*-----REGISTER-CAPCHA-----*/
+
+.newregister {
+  width: 1020px;
+  margin: 0 auto;
+}
+.newregister .cm {
+  height: 45px;
+  padding-top: 20px;
+  width: 100%;
+  border-bottom: 1px solid #e1e1e1;
+}
+.newregister .cm .cn {
+  height: 45px;
+  line-height: 45px;
+  font-size: 22px;
+  font-family: Roboto-Bold;
+  color: #00a651;
+  float: left;
+  margin-left: 22px;
+}
+.newregister .bdrg .rf {
+  width: 495px;
+  float: left;
+  margin-right: 30px;
+}
+.newregister .bdrg .rf:last-child {
+  margin-right: 0;
+}
+.newregister .bdrg .rf .qc1 {
+  border-bottom: 1px solid #e1e1e1;
+  box-sizing: border-box;
+  height: 49px;
+  width: 497px;
+}
+.newregister .bdrg .rf .qc1 .tt {
+  border-bottom: 1px solid #00a651;
+  float: left;
+  font-family: "Roboto-Regular";
+  font-size: 15px;
+  line-height: 34px;
+  margin-left: 11px;
+  padding: 14px 15px 0 9px;
+  text-transform: uppercase;
+}
+.newregister .bdrg .rf .qc2 .login_account {
+  padding-top: 11px;
+}
+.newregister .bdrg .rf .qc2 .login_account .row_login_acc {
+  padding-bottom: 17px;
+  padding-left: 20px;
+}
+.newregister .bdrg .rf .qc2 .login_account .row_login_acc .t2 {
+  font-family: "Roboto-Medium";
+  font-size: 13px;
+  padding-bottom: 5px;
+  position: relative;
+  display: inline-block;
+}
+.newregister .bdrg .rf .qc2 .login_account .row_login_acc .t2 span {
+  color: #f7941d;
+  position: absolute;
+  right: -8px;
+  top: 0;
+}
+.newregister .bdrg .rf .qc2 .login_account .row_login_acc .qti {
+  display: block;
+  font-family: "Roboto-Regular";
+  font-size: 13px;
+  height: 34px;
+  padding: 0 12px;
+  width: 390px;
+  border: 1px solid #cdcdcd;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+}
+.newregister .bdrg .rf .qc2 .login_account .row_login_acc.last {
+  padding-bottom: 9px;
+}
+.newregister .bdrg .rf .qc2 .login_account .tr {
+  font-size: 13px;
+  line-height: 16px;
+  padding-left: 20px;
+}
+.newregister .bdrg .rf .qc2 .login_account .tr .fa{
+  cursor: pointer;
+}
+.newregister .bdrg .rf .qc2 .login_account .tf {
+  -webkit-transition: all 500ms ease 0s;
+  -o-transition: all 500ms ease 0s;
+  transition: all 500ms ease 0s;
+  color: #00a651;
+  font-size: 13px;
+  line-height: 18px;
+  padding-left: 20px;
+  display: block;
+  margin-bottom: 19px;
+}
+.newregister .bdrg .rf .qc2 .login_account .tf:hover {
+  color: #f7941d;
+}
+.newregister .bdrg .rf .qc2 .login_account .bt2 {
+  -webkit-transition: all 500ms ease 0s;
+  -o-transition: all 500ms ease 0s;
+  transition: all 500ms ease 0s;
+  /*
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  box-shadow: 0px -2px 0px rgba(0,0,0,0.25) inset;
+  */
+  background-color: #00a651;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block !important;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 34px !important;
+  padding: 0 16px !important;
+  height: 34px !important;
+  width: 100%;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.newregister .bdrg .rf .qc2 .login_account .bt2.dk {
+  background-color: #f7941d;
+}
+.newregister .bdrg .rf .qc2 .login_account .login_social {
+  padding-left: 20px;
+}
+.newregister .bdrg .rf .qc2 .login_account .login_social .bg {
+  background-image: url("/styles/web/4038/images/theme/main.png");
+  background-size: 500px 500px;
+  display: block;
+  filter: url("data:image/svg+xml;utf8,<svg version=\'1.1\' xmlns=\'http://www.w3.org/2000/svg\' height=\'0\'><filter id=\'greyscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\' /></filter></svg>#greyscale");
+  float: left;
+  height: 28px;
+  margin-right: 5px;
+  transition: all 500ms ease 0s;
+  width: 28px;
+}
+.newregister .bdrg .rf .qc2 .login_account .login_social .bg.fb {
+  background-position: -10px -70px;
+}
+.newregister .bdrg .rf .qc2 .login_account .login_social .bg.tw {
+  background-position: -50px -70px;
+}
+.newregister .bdrg .rf .qc2 .login_account .login_social .bg.gg {
+  background-position: -90px -70px;
+}
+.newregister .bdrg .rf .qc2 .login_account .login_social .bg .yh {
+  background-position: -170px -70px;
+}
+.dang_nhap.form_user > table, #js-ql-form > table{
+    clear: both;
+}
+.login_form .login-with-social {
+    margin-top: 0;
+}

@@ -1,0 +1,86 @@
+﻿@model V308CMS.Data.PageFooterControl
+@{int footerGroup = 0;}
+<footer id="pFooter">
+	<div class="about">
+		<div class="container">
+			<div class="row">
+                @if (Model.NewsCategorys != null && Model.NewsCategorys.Count() > 0)
+                {
+                    foreach (V308CMS.Data.NewsGroupPage group in Model.NewsCategorys)
+                    {
+                        footerGroup++;
+                        if (footerGroup > 3) {
+                            break;
+                        }
+                            
+                        <div class="col-3">
+					        <h5>@group.Name</h5>
+                            @if( group.NewsList !=null && group.NewsList.Count() > 0 ){
+                                foreach( V308CMS.Data.News news in group.NewsList ){
+                                     <p>@Html.Raw(V308CMS.Common.url.article(news.Title,news.ID))</p>
+                                }
+                            }
+				        </div>
+                        
+                    }
+                }
+				
+                @if (Model.ArticleLink != null) { 
+                    <div class="col-3">@Html.Raw(V308CMS.Common.url.imgArticle(Model.ArticleLink.Image,Model.ArticleLink.Title,Model.ArticleLink.ID))</div>    
+                } else {
+                    <div class="col-3"><img src="@ViewBag.ThemesPath/images/daily-footer.jpg" ></div>
+                }
+				
+			</div>
+		</div>
+	</div>
+	<div class="company">
+		<div class="container">
+			<div class="row">
+				<div class="col-12 text-center"><h5>@ViewBag.CompanyFullname</h5></div>
+				<div class="col-3">
+					<h5>TRỤ SỞ CHÍNH</h5>
+					<p>@ViewBag.CompanyHeaderAddress</p>
+					<h5>Điện thoại</h5>
+                    <p>@Html.Raw(ViewBag.FooterCompanyContact)</p>
+				</div>
+				<div class="col-5">
+                    @if (Model.CategoryWhoSale != null) {
+                        <h5>@Model.CategoryWhoSale.Name</h5> 
+                        if (Model.CategoryWhoSale.NewsList != null && Model.CategoryWhoSale.NewsList.Count() > 0)
+                        {
+                            foreach (V308CMS.Data.News news in Model.CategoryWhoSale.NewsList)
+                            {
+                            <p>
+                                @news.Title <br />
+                                @Html.Raw(news.Summary);
+                            </p>
+                            }
+                        }
+                    }
+					
+
+				</div>
+				<div class="col-4">
+					<img src="@ViewBag.ThemesPath/images/dang-ky-bo-cong-thuong.png" style="height: 66px; margin-top: 20px;">
+					<div class="subscribe">
+						<h5>Đăng ký nhận bản tin của @ViewBag.SiteName</h5>
+						<p>Cập nhật thông tin khuyến mãi nhanh nhất. Hưởng quyền lợi giảm giá </p>
+						<div class="input-group search">
+						  <input type="text" class="form-control border-right-0 text-center" placeholder="Username"  />
+						  <span class="input-group-addon bg-yellow"><i class="icon-search"></i></span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.8&appId=1657297111243555";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>

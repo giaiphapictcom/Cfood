@@ -1,0 +1,28 @@
+﻿@model List<V308CMS.Data.Market>
+@{
+    Layout = null;
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.mklistslider').bxSlider({
+            minSlides: 9,
+            maxSlides: 9,
+            slideWidth: 114,
+            slideHeight: 62,
+            auto:true,
+            pager: false
+        });
+    });
+</script>
+<div class="rw-lst-mrt mxClrAft mklistslider" style="overflow:hidden;">
+    @foreach (V308CMS.Data.Market it in Model)
+    {
+        <a href="/@V308CMS.Common.Ultility.LocDau(@it.UserName)" class="itm-lst-mrt" title="@it.UserName">
+            <img class="itm-lst-mrt-acti" src="@it.Avata">
+            <span class="ab"><span>@it.UserName                    </span>
+                <!--<span>                         Thành lập năm 2009                    </span>-->
+                <span>Tổng sản phẩm @it.Number                    </span><span></span></span>
+        </a>
+    }
+    <a href="/danh-sach-sieu-thi.html" class="itm-lst-mrt">Xem thêm<span class="fa fa-caret-right"></span></a>
+</div>

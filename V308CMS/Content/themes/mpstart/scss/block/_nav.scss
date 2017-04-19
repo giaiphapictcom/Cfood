@@ -1,0 +1,23 @@
+.bg-mpstart {
+	background-color: $green;
+	border-top: 4px solid $yellow;
+	margin-bottom: 30px;
+}
+
+
+.navbar-nav {
+
+	.nav-item {
+		.nav-link {
+			padding: 1.2em 33px;
+			color: $white;
+			text-transform: uppercase;
+
+		}
+
+
+		&:HOVER, &.active {
+			background-color: $green_act;
+		}
+	}
+}

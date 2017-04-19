@@ -1,0 +1,38 @@
+@import "variables";
+
+
+body {
+	font-family: 'Open Sans', sans-serif;
+	color: $text_color;
+	font-size: 14px;
+	background-color: #f3f3f3;
+	line-height: 15px;
+}
+a {
+	color: #000;
+	&:HOVER,
+	&.acitve {
+		color: $green;
+		text-decoration: none;
+	}
+}
+h5 {
+
+	font-size: 15px;
+	color: #1e1e1f;
+	font-weight: bold;
+}
+@import "block/text";
+
+@import "block/header";
+@import "block/nav";
+@import "block/input";
+@import "block/menu";
+
+@import "block/box";
+@import "block/product";
+@import "block/product_detail";
+@import "block/rebbon";
+@import "block/btn";
+@import "block/slides";
+@import "block/ads";

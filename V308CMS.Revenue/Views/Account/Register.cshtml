@@ -1,0 +1,53 @@
+﻿@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Layout/_AccountLayout.cshtml";
+}
+
+<div class="wrap">
+    <section class="new-reg reg ctnr">
+        <div class="cm mxClrAft"><a href="javascript:void(0);" class="cn">Thông tin đăng ký</a></div>
+        <div class="err_list_login hide">
+            <div class="err_list_login">
+                <div class="content_err" id="err_list_login_id"></div>
+                <div class="close_err_login"></div>
+            </div>
+            <div class="close_err_login"></div>
+        </div>
+        <form method="post" action="" id="js-register-form" class=" form_user qc2">
+            <div class="login_form rf col-reg-info">
+                <div class="qc1">
+                    <div class="tieu_de_dang_nhap tt">Thông tin tin người dùng</div>
+                </div>
+                <div class="dang_nhap form_user qc2 tr">
+                     <div class="form-title">Tên tài khoản                        <span>*</span>                    </div>
+                    <input type="text" autocomplete="on" class="form-input" id="pUserName" name="val[pUserName]">
+                    <div class="form-title">Họ tên                        <span>*</span>                    </div>
+                    <input type="text" autocomplete="on" class="form-input" id="pFullName" name="val[pFullName]">
+                    <div class="form-title">Số điện thoại                        <span>*</span>                    </div>
+                    <input type="number" class="has-desc form-input" value="" id="pMobile" name="val[pMobile]" placeholder="Có dạng 09x, 01xx">
+                    <div class="form-desc">Sử dụng đăng nhập tài khoản và liên hệ                    </div>
+                    <div class="form-title">Email                        <span>*</span>                    </div>
+                    <input type="text" class="form-input" value="" id="pEmail" name="val[pEmail]">
+                    <div class="form-title">Mật khẩu                        <span>*</span>                    </div>
+                    <input type="password" class="form-input" value="" id="pPassWord" name="val[pPassWord]">
+                    <div class="form-title">Xác nhận lại mật khẩu                        <span>*</span>                    </div>
+                    <input type="password" class="form-input" value="" id="pPassWord2" name="val[pPassWord2]">
+                    <div class="form-title">Mã bảo vệ                        <span>*</span>                    </div>
+                    <div class="capr mxClrAft">
+                        <div class="cb">
+                            <div class="t">
+                                <span id="js-ql-captcha">
+                                    <img src="https://www.disieuthi.vn/tools/image.php?id=register&amp;_=0.029493391837516203&amp;code=null"></span>
+                            </div>
+                        </div>
+                        <a href="javascript:void(0);" onclick="lay_hinh_moi('register', '#js-ql-captcha')" class="li button-refresh"></a>
+                        <input type="text" name="val[captcha]" id="js-captcha" placeholder="Nhập mã bảo vệ" class="ip">
+                        <div class="clear"></div>
+                    </div>
+                    <div class=""><span data-id="check-remember-pass" class="fa fa-check-square-o is-check-box"></span><span data-id="check-remember-pass" class="is-label-check-box">Tôi đồng ý với                            <a href="javascript:void(0);">điều khoản sử dụng của c-food.vn                            </a></span></div>
+                    <div class="btend js-submit-register" onclick="javascript:DangKyHome();">Đăng ký                    </div>
+                </div>
+            </div>
+        </form>
+    </section>
+</div>

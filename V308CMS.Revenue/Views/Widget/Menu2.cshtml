@@ -1,0 +1,78 @@
+﻿@model V308CMS.Data.ProductTypePageContainer
+@{
+    Layout = null;
+}
+<style type="text/css">
+    #newsexpress .bx-wrapper {
+        position: absolute !important;
+        display: inline-block !important;
+        margin: 20px 10px !important;
+    }
+
+    #newsexpress .bx-viewport {
+        moz-box-shadow: none !important;
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+        border: none !important;
+    }
+</style>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#hotnewsslider').bxSlider({
+            minSlides: 1,
+            maxSlides: 1,
+            slideWidth: 500,
+            slideHeight: 20,
+            auto: true,
+            pager: false,
+            controls: false,
+            useCSS: false
+        });
+    });
+</script>
+<style type="text/css">
+    #mn-nav-id:hover #submenu {
+     display:block !important;
+    }
+</style>
+<div class="ctnr">
+    <div class="cbo-sld-head">
+        <nav class="mn-nav" id="mn-nav-id">
+            <div class="nav-head" ><span id="cateicon"></span>DANH MỤC</div>
+            <div class="nav-ctnt" id="submenu" style="display:none;">
+                <ul class="mn-lv-1">
+                    @foreach (V308CMS.Data.ProductTypePage it in Model.List)
+                    {
+                        <li class="li-lv-1" id="menu-1">
+                            <a href="/@V308CMS.Common.Ultility.LocDau(@it.Name)-t@(@it.Id).html" title="@it.Name"><span class="vl">@it.Name</span> <span class="fa fa-angle-right exp"></span></a>
+                            <div class="sub-main-nav" style="background-image: url(@it.Image);">
+                                <a href="/@V308CMS.Common.Ultility.LocDau(@it.Name)-t@(@it.Id).html" class="z1" style="font-weight:bold;">@it.Name</a>
+                                <div class="z2" id="menu-135">
+                                    <ul class="z4">
+                                         @foreach (V308CMS.Data.ProductType ut in it.List)
+                                         { 
+                                          <li class="li" id="menu-4"><a href="/@V308CMS.Common.Ultility.LocDau(@ut.Name)-t@(@ut.ID).html">@ut.Name</a></li>
+                                         }
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </nav>
+       <div id="newsexpress" style="overflow: hidden; display: inline-block; position: relative; width: 550px; height: 45px;">
+            <span class="newshead">TIN NHANH |</span>
+            <ul id="hotnewsslider">
+                @foreach (V308CMS.Data.Image it in Model.ImageList)
+                {
+                    <li><span class="newshead2"><a href="@it.Link">@it.Name</a></span></li>
+                }
+            </ul>
+        </div>
+        <div class="rht clr-aft">
+            <img style="position: relative; left: -207px; top: 16px;" src="/Content/Images/phoneicon.png" /><a class="sldh-txt hl" style="color: #b10000; font-size: 16px; font-weight: bold;" title="Hotline" href="#">Hotline: 093.94.88.883 </a> 
+        </div>
+    </div>
+</div>
+<div class="clr"></div>

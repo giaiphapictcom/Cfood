@@ -1,0 +1,151 @@
+﻿.uc_menu a
+{
+    text-decoration: none;
+}
+
+.uc_menu
+{
+    background: url("Images/bg-menu-top.png") repeat-x top left;
+    position: absolute;
+    z-index: 9999;
+    font-size: 1em;
+    white-space: nowrap;
+    top: 0px;
+    margin: 0 auto;
+    height: 38px;
+    width: 100%;
+}
+
+    .uc_menu ul:first
+    {
+        position: absolute;
+        list-style: none;
+        top: 0px;
+    }
+
+    .uc_menu li
+    {
+        list-style: none;
+    }
+
+    .uc_menu .hide
+    {
+        /*left:9999px;
+    top:9999px;*/
+        visibility: hidden;
+    }
+
+.home .atang1 .ps img
+{
+    margin-top: 10px;
+}
+
+.uc_menu .tang1
+{
+    position: absolute;
+    height: 38px;
+    top: 0px;
+    left: 0px;
+    margin-top: 0px;
+    width: 100%;
+}
+
+.uc_menu .litang1
+{
+    display: inline-block;
+    margin-top: 0px;
+    height: 38px;
+    margin-right: 14px;
+    padding-right: 20px;
+}
+
+    .uc_menu .litang1 .atang1
+    {
+        margin-top: 0px;
+        width: 100%;
+        display: block;
+        float: left;
+        height: 100%;
+        background: url("Images/bg-menu-top.png") repeat-x top left;
+        border-right: 1px solid #FFFFFF;
+    }
+
+.uc_menu .tang1 .atang1:hover
+{
+    background: url("Images/bg-menu-top.png") repeat-x top left;
+}
+
+.ps
+{
+    height: 38px;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 3px;
+    font-size: 13px;
+    font-family: Arial;
+    padding-right: 24px;
+    padding-left: 18px;
+    padding-top: 5px;
+    color: white;
+    vertical-align: -12px;
+}
+
+.uc_menu .tang2
+{
+    background-color: #d60f26;
+    position: absolute;
+    top: 100%;
+    padding-left: 0px;
+}
+
+.ps2
+{
+    color: white;
+    display: block;
+    text-align: left;
+    padding-right: 30px;
+    font-size: 11px;
+    font-family: Arial;
+}
+
+
+.uc_menu .tang2 li
+{
+    display: block;
+    clear: both;
+}
+
+.uc_menu .litang2
+{
+    display: block;
+    border-bottom: 1px solid #FFFFFF;
+    width: 100%;
+}
+
+
+
+    .uc_menu .litang2:hover
+    {
+        background: url("Images/bg-menu-top.png") repeat-x top right;
+    }
+
+.uc_menu .atang2
+{
+    width: 100%;
+    display: block;
+    padding: 8px;
+}
+
+.uc_menu .litang1
+{
+    padding-right: 1px;
+}
+
+.uc_menu .tang3
+{
+    background-color: #d60f26;
+    position: absolute;
+    left: 100%;
+    margin-top: -35px;
+    padding-left: 0px;
+}

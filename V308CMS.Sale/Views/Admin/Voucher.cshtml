@@ -1,0 +1,36 @@
+﻿@model V308CMS.Data.ProductPage
+@{
+    ViewBag.Title = "Voucher";
+    ViewBag.LinkBack = "<li><a href=\"/Admin/Index/\">Bảng điều khiển</a> </li>";
+    ViewBag.MenuValue = 3;
+    Layout = "~/Views/Admin/Layout.cshtml";
+}
+<div>
+    <div>
+        
+ 
+        <hr />
+        <div id="close" class="mheader">
+            <table class="rgMasterTable" style="width: 100%; text-align: center; margin: 10px auto;">
+                <tr>
+                    <td colspan="2" style="background-color: #DDD;">THỐNG KÊ DOANH SỐ BÁN HÀNG</td>
+                </tr>
+                <tr>
+                    <td class="rgHeader">Tổng doanh thu</td>
+                    <td>@String.Format("{0: 0,0}", (@Model.Money)) VNĐ</td>
+                </tr>
+            </table>
+        </div>
+        <div style="width: 100%;">
+            <div class="RadGrid RadGrid_MetroTouch table table-striped table-bordered table-hover dataTable" tabindex="0">
+@*                @Html.Raw(@Model.Html)*@
+            </div>
+        </div>
+@*        <div class="wpmn_page_navi"><a href="/Admin/DoanhSoNgay?pPage=@Model.BackPage&pType=@Model.TypeId">Back</a><span class="current">@Model.Page</span><a href="/Admin/DoanhSoNgay?pPage=@Model.NextPage&pType=@Model.TypeId">Next</a></div>*@
+        <hr />
+    </div>
+    <div style="display: none;" role="status" aria-hidden="true">
+        <div class="area"></div>
+        <div class="form-loading"></div>
+    </div>
+</div>

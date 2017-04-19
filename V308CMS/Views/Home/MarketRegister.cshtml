@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "MarketRegister";
+    Layout = "~/Views/Layout/_RegisterMarket.cshtml";
+}
+<div class="wrap">
+    <section class="new-reg reg ctnr">
+        <div class="cm mxClrAft"><a href="javascript:void(0);" class="cn">Mở Shop C-FOOD</a></div>
+        <div class="err_list_login hide">
+            <div class="err_list_login">
+                <div class="content_err" id="err_list_login_id"></div>
+                <div class="close_err_login"></div>
+            </div>
+            <div class="close_err_login"></div>
+        </div>
+        <form method="post" action="" id="js-register-form" class=" form_user qc2">
+            <div class="login_form rf col-reg-info">
+                <div class="qc1">
+                    <div class="tieu_de_dang_nhap tt">Thông tin tin Shop</div>
+                </div>
+                <div class="dang_nhap form_user qc2 tr">
+                    <div class="form-title">Email                        <span>*</span>                    </div>
+                    <input type="text" class="form-input" value="" id="pEmail" name="val[pEmail]">
+                    <div class="form-title">Tên shop                        <span>*</span>                    </div>
+                    <input type="text" autocomplete="on" class="form-input" id="pUserName" name="val[pUserName]">
+                    <div class="form-title">Mô tả Shop<span>*</span>                    </div>
+                    <input type="text" autocomplete="on" class="form-input" id="pSummary" name="val[pSummary]">
+                    <div class="form-title">Loại Shop<span>*</span>                    </div>
+                    <select name="pMarketType" id="pMarketTypeId" class="form-input" style="width: 355px;">
+                        <option value="0">Chọn kiểu</option>
+                        <option value="1">Hệ  thống siêu thị</option>
+                        <option value="2">Chuỗi cửa hàng</option>
+                        <option value="3">Chợ truyền thống</option>
+                    </select>
+                    <div class="form-title">Số điện thoại                        <span>*</span>                    </div>
+                    <input type="number" class="has-desc form-input" value="" id="pMobile" name="val[pMobile]" placeholder="Có dạng 09x, 01xx">
+                    <div class="form-desc">Sử dụng đăng nhập tài khoản và liên hệ                    </div>
+                    <div class="form-title">Mật khẩu                        <span>*</span>                    </div>
+                    <input type="password" class="form-input" value="" id="pPassWord" name="val[pPassWord]">
+                    <div class="form-title">Xác nhận lại mật khẩu                        <span>*</span>                    </div>
+                    <input type="password" class="form-input" value="" id="pPassWord2" name="val[pPassWord2]">
+                    <div class="form-title">Ảnh đại diện                        <span>*</span>                    </div>
+                    <input type="file" class="form-input" id="pImage" name="val[pImage]">
+                    <div class="form-title">Mã bảo vệ                        <span>*</span>                    </div>
+                    <div class="capr mxClrAft">
+                        <div class="cb">
+                            <div class="t">
+                                <span id="js-ql-captcha">
+                                    @Html.Partial("~/Views/Account/_Captcha.cshtml", new V308CMS.Models.Captcha())
+                                    @Html.Partial("~/Views/Account/_InvisibleCaptcha.cshtml", new V308CMS.Models.InvisibleCaptcha())
+                                </span>
+                            </div>
+                        </div>
+                        <a href="javascript:void(0);" onclick="lay_hinh_moi('register', '#js-ql-captcha')" class="li button-refresh"></a>
+                        <input type="text" name="Captcha" id="Captcha" placeholder="Nhập mã bảo vệ" class="ip">
+                        <div class="clear"></div>
+                    </div>
+                    <div class="">
+                         <input type="checkbox" id="rbtAgree" name="rbtAgree" checked="" class="fa">
+                        <span data-id="check-remember-pass" class="is-label-check-box">Tôi đồng ý với                            <a href="javascript:void(0);">điều khoản sử dụng của c-food.vn                            </a></span></div>
+                    <div class="btend js-submit-register" onclick="javascript:DangKyHome();">Đăng ký                    </div>
+                </div>
+            </div>
+        </form>
+    </section>
+</div>
+

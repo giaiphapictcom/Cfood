@@ -1,0 +1,57 @@
+.close-ribbon{
+  position: absolute;
+top: 0;
+right: 1em;
+z-index: 1;
+color: #fff;
+font-weight: bold;
+cursor: pointer;
+width: 2em;
+line-height: 0.5em;
+-webkit-transition: line-height 0.5s;
+transition: line-height 0.5s;
+text-align: center;
+
+line-height: 16px;
+padding-top: 10px;
+}
+.close-ribbon:after {
+  content: "";
+font-size: .7em;
+position: absolute;
+height: 8.2em;
+border: 1.5em solid #F44336;
+z-index: -1;
+top: 0px;
+border-top-width: 1.5em;
+border-bottom-color: transparent;
+right: 0;
+-webkit-transition: height 0.5s;
+transition: height 0.5s;
+}
+/*
+.close-ribbon:before {
+  content: "";
+  font-size: 0.5em;
+  position: absolute;
+  border-style: solid;
+  border-color: transparent transparent #B71C1C transparent;
+  top: -1em;
+  right: 3em;
+  border-width: 0 0 1em 0.7em;
+  z-index: -1;
+}
+*/
+.close-ribbon:hover:after{
+  border: 1.5em solid #EF5350;
+  border-bottom-color: transparent;
+  height: 1.6em;
+  -webkit-transition: height 0.5s;
+  transition: height 0.5s;
+}
+.close-ribbon:hover{
+  line-height: 0.9em;
+  color: #333;
+  -webkit-transition: line-height 0.5s;
+  transition: line-height 0.5s;
+}

@@ -1,0 +1,93 @@
+﻿@model V308CMS.Data.BannerPage
+@{
+    Layout = null;
+}
+<style type="text/css">
+    #btshare_social {
+        display: none;
+    }
+
+        #btshare_social:hover {
+            display: block;
+        }
+
+    .btimg {
+        cursor: pointer;
+    }
+
+    #btshare_container:hover #btshare_social {
+        display: block !important;
+        position: relative;
+    }
+
+    #btshare_social {
+        position: absolute;
+        width: 320px;
+        top: -40px;
+        left: -250px;
+    }
+</style>
+<div class="cbo-sld-mn">
+    <div class="cbo-bnr rht" id="js-index-banner1">
+        <div class="is-iosld has-init">
+            <div class="sld" style="position: relative; top: 0px; left: 0px; overflow: hidden; z-index: 1; perspective: 1000px; backface-visibility: hidden; width: 510px; height: 373px;">
+                <iframe width="510" height="373" src="https://www.youtube.com/embed/@Model.List[0].Summary?controls=1&showinfo=1" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+    <div id="hotnews" style="overflow-x: hidden; overflow-y: scroll;">
+        <ul>
+            @for (int i = 1; i < 8; i++)
+            {
+                <li>
+                    <div class="hotnewsdiv1">
+                        <a href="/@V308CMS.Common.Ultility.LocDau(@Model.List[i].Title)-youtube@(@Model.List[i].ID).html" style="width: 43px; height: 30px; position: absolute; top: 23px; display: inline-block; left: 48px;">
+                            <img style="width: 43px; height: 30px;" src="/Content/Images/playbt.png"></a>
+                        <a href="/@V308CMS.Common.Ultility.LocDau(@Model.List[i].Title)-youtube@(@Model.List[i].ID).html">
+                            <img src="https://i.ytimg.com/vi/@Model.List[i].Summary/hqdefault.jpg?custom=true&w=250&h=141&stc=true&jpg444=true&jpgq=90&sp=68" /></a>
+                    </div>
+                    <div class="hotnewsdiv2">
+                        <a href="/@V308CMS.Common.Ultility.LocDau(@Model.List[i].Title)-youtube@(@Model.List[i].ID).html">@Model.List[i].Title</a>
+                        <div>CFood | @Model.List[i].Views lượt xem</div>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+    <div id="panelyoutube">
+        <div style="margin-top: 6px; margin-bottom: 5px; font-size: 21px;">@Model.List[0].Title</div>
+        <div>
+            <script src="https://apis.google.com/js/platform.js"></script>
+            <div class="g-ytsubscribe" data-channelid="UCk_tjguCCBsVqt4apOylvrQ" data-layout="full" data-count="default"></div>
+        </div>
+        <div style="float: right; margin-top: -26px;">
+            @*<div class="fb-share-button" data-href="/@V308CMS.Common.Ultility.LocDau(@Model.List[0].Title)-youtube@(@Model.List[0].ID).html" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=@V308CMS.Common.Ultility.LocDau(@Model.List[0].Title)-youtube@(@Model.List[0].ID).html;src=sdkpreparse">Chia sẻ</a></div>*@
+            <div id="btshare_container" style="margin-top: -12px; width: 60px; height: 60px;">
+                <div class="btimg">
+                    <img src="/Content/Images/btshare.png" style="width: 100%; height: 100%;" />
+                </div>
+                <div id="btshare_social">
+                    <span class='st_sharethis_large' displaytext='ShareThis'></span>
+                    <span class='st_facebook_large' displaytext='Facebook'></span>
+                    <span class='st_twitter_large' displaytext='Tweet'></span>
+                    <span class='st_linkedin_large' displaytext='LinkedIn'></span>
+                    <span class='st_pinterest_large' displaytext='Pinterest'></span>
+                    <span class='st_email_large' displaytext='Email'></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="promo-banner" id="panelfunction">
+        <ul>
+            <li>
+                <a href="/danh-sach-sieu-thi.html?ptype=1">
+                    <img src="/Content/Images/mk1.png" /></a></li>
+            <li class="lichild">
+                <a href="/danh-sach-sieu-thi.html?ptype=2">
+                    <img src="/Content/Images/mk2.png" /></a></li>
+            <li class="lichild">
+                <a href="/danh-sach-sieu-thi.html?ptype=3">
+                    <img src="/Content/Images/mk3.png" /></a></li>
+        </ul>
+    </div>
+</div>
