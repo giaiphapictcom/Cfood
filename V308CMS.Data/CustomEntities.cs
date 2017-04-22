@@ -1030,6 +1030,7 @@ namespace V308CMS.Data
         private int _ID;
         private string _Name;
         private string _Icon;
+        private string _ColorTheme;
         private string _Detail;
         private string _Description;
         private string _Image;
@@ -1058,6 +1059,7 @@ namespace V308CMS.Data
         public string ImageBanner { get { if (String.IsNullOrEmpty(_ImageBanner)) return ""; else return _ImageBanner; } set { _ImageBanner = value; } }
         public string TypeBanner { get { if (String.IsNullOrEmpty(_TypeBanner)) return ""; else return _TypeBanner; } set { _TypeBanner = value; } }
         public string Icon { get { if (String.IsNullOrEmpty(_Icon)) return ""; else return _Icon; } set { _Icon = value; } }
+        public string ColorTheme { get { if (String.IsNullOrEmpty(_ColorTheme)) return ""; else return _ColorTheme; } set { _ColorTheme = value; } }
 
         #endregion
 

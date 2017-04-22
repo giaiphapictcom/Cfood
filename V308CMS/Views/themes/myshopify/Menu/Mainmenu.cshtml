@@ -1,0 +1,26 @@
+﻿@model  List<V308CMS.Data.NewsGroups>
+<ul class="navbar-nav site-nav">
+
+    <li class="menu-dropdown  level-top   active">
+        <a class="dropdown-toggle has-category" href="/" title="@ViewBag.SiteName">
+            <span>Trang Chủ</span>
+        </a>
+    </li>
+    @if (Model != null && Model.Count > 0)
+    {
+        foreach (V308CMS.Data.NewsGroups menu in Model)
+        {
+            if (!menu.Name.ToLower().Equals("footer"))
+            {
+        <li class="menu-dropdown  level-top   active">
+            <a class="dropdown-toggle has-category" href="@menu.Link" title="@menu.Name">
+                <span class="">@menu.Name</span>
+            </a>
+        </li>
+
+            }
+
+        }
+    }
+
+</ul>

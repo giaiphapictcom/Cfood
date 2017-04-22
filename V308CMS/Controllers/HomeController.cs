@@ -13,26 +13,47 @@ namespace V308CMS.Controllers
 {
     public class HomeController : Controller
     {
-
-        static V308CMSEntities mEntities = new V308CMSEntities();
-        ProductRepository productRepos = new ProductRepository(mEntities);
-        SiteRepository siteRepo = new SiteRepository(mEntities);
-        MarketRepository marketRepo = new MarketRepository(mEntities);
-        AccountRepository accountRepos = new AccountRepository(mEntities);
-        MarketRepository marketRepos = new MarketRepository(mEntities);
-
+        #region Repository
+        static V308CMSEntities mEntities;
+        ProductRepository productRepos;
+        SiteRepository siteRepo;
+        MarketRepository marketRepo;
+        AccountRepository accountRepos;
+        MarketRepository marketRepos;
+        NewsRepository newsRepos;
+        private void CreateRepos()
+        {
+            mEntities = new V308CMSEntities();
+            productRepos = new ProductRepository(mEntities);
+            siteRepo = new SiteRepository(mEntities);
+            marketRepo = new MarketRepository(mEntities);
+            accountRepos = new AccountRepository(mEntities);
+            marketRepos = new MarketRepository(mEntities);
+            newsRepos = new NewsRepository(mEntities);
+        }
+        private void DisposeRepos()
+        {
+            mEntities.Dispose();
+            productRepos.Dispose();
+            siteRepo.Dispose();
+            marketRepo.Dispose();
+            accountRepos.Dispose();
+            marketRepos.Dispose();
+        }
+        #endregion
+        
 
         public ActionResult Index()
         {
-            
+            CreateRepos();
             IndexPageContainer mIndexPageContainer = new IndexPageContainer();
             List<IndexPage> mIndexPageList = new List<IndexPage>();
             StringBuilder str = new StringBuilder();
             List<Market> mMarketList = new List<Market>();
             List<Product> mBestBuyList;
             List<ProductType> mTypeList;
-            List<ProductType> mSoCheList;
-            List<Product> mBestSoCheList;
+            //List<ProductType> mSoCheList;
+            //List<Product> mBestSoCheList;
             List<Product> mList;
             List<ProductType> mListParent;
             try
@@ -71,20 +92,27 @@ namespace V308CMS.Controllers
 
 
                 //lay danh sach cac nhom cua SO CHE
-                mSoCheList = productRepos.LayProductTypeTheoParentId(147);
+                //mSoCheList = productRepos.LayProductTypeTheoParentId(147);
                 //lay cac san pham so che
-                if (!Request.Browser.IsMobileDevice)
-                    mBestSoCheList = productRepos.LayTheoTrangAndType(1, 9, 147, "10030");
-                else
-                    mBestSoCheList = productRepos.LayTheoTrangAndType(1, 50, 147, "10030");
-                mIndexPageContainer.BestSoCheList = mBestSoCheList;
-                mIndexPageContainer.ProductTypeList = mSoCheList;
+                //if (!Request.Browser.IsMobileDevice)
+                //    mBestSoCheList = productRepos.LayTheoTrangAndType(1, 9, 147, "10030");
+                //else
+                //    mBestSoCheList = productRepos.LayTheoTrangAndType(1, 50, 147, "10030");
+                //mIndexPageContainer.BestSoCheList = mBestSoCheList;
+                //mIndexPageContainer.ProductTypeList = mSoCheList;
 
                 mIndexPageContainer.ProductLastest = productRepos.getProductsLastest(10);
                 if (mIndexPageContainer.ProductLastest.Count() < 1)
                 {
                     mIndexPageContainer.ProductLastest = productRepos.getProductsRandom(9);
                 }
+
+                List<ProductType> HomeCategorys = new List<ProductType>();
+                HomeCategorys.Add(productRepos.LayLoaiSanPhamTheoId(179));
+                HomeCategorys.Add(productRepos.LayLoaiSanPhamTheoId(175));
+                HomeCategorys.Add(productRepos.LayLoaiSanPhamTheoId(176));
+
+                mIndexPageContainer.ProductTypeList = HomeCategorys;
 
                 string view = Theme.viewPage("home");
                 if (view.Length > 0) {
@@ -103,12 +131,13 @@ namespace V308CMS.Controllers
             }
             finally
             {
-                //mEntities.Dispose();
-                //productRepository.Dispose();
+                DisposeRepos();
             }
         }
         public ActionResult Category(int pGroupId = 0)
         {
+            CreateRepos();
+
             ProductCategoryPageContainer Model = new ProductCategoryPageContainer();
 
             int nPage = Convert.ToInt32(Request.QueryString["p"]);
@@ -117,9 +146,6 @@ namespace V308CMS.Controllers
                 nPage = 1;
             }
 
-            //int pPage = 1;
-            //List<ProductType> mSoCheList;
-            //List<Product> mBestBuyList;
             List<Product> mProductList = new List<Product>();
             try
             {
@@ -129,7 +155,11 @@ namespace V308CMS.Controllers
                 ProductType ProductCategory = productRepos.LayLoaiSanPhamTheoId(pGroupId);
                 if (ProductCategory != null)
                 {
-                    //lay danh sach sieu thi ban loai san pham nay
+                    CategoryPage CategoryPage = ProductHelper.getProductsByCategory(ProductCategory.ID, nPage);
+
+                    Model.Products = CategoryPage.Products;
+                    Model.ProductTotal = CategoryPage.ProductTotal;
+
                     if (ProductCategory.Parent == 0)
                         mProductTypeList = productRepos.getProductTypeByProductType(ProductCategory.ID);//lay danh sach cap 1
                     else
@@ -141,7 +171,6 @@ namespace V308CMS.Controllers
                     
                     if (mProductTypeList.Count > 0)
                     {
-                        //nPage = 1;
                         foreach (ProductType it in mProductTypeList)
                         {
                             mProductPageList.Add(ProductHelper.GetCategoryPage(it, nPage));
@@ -164,6 +193,7 @@ namespace V308CMS.Controllers
                 //if (mProductList.Count < 40)
                 //    Model.IsEnd = true;
                 Model.Page = nPage;
+                
 
                 string view = Theme.viewPage("category");
                 if (view.Length > 0)
@@ -182,48 +212,52 @@ namespace V308CMS.Controllers
             }
             finally
             {
-                //mEntities.Dispose();
-                //productRepository.Dispose();
+                DisposeRepos();
             }
         }
         public ActionResult Detail(int pId = 0)
         {
-            V308CMSEntities mEntities = new V308CMSEntities();
-            ProductRepository productRepository = new ProductRepository(mEntities);
-            MarketRepository marketRepository = new MarketRepository(mEntities);
+            CreateRepos();
             ProductDetailPage mProductDetailPage = new ProductDetailPage();
             Product mProduct;
             ProductType mProductType = new ProductType();
             Market mMarket = new Market(); ;
-            List<Product> MarketList;
+            //List<Product> MarketList;
             List<Product> RelatedList;
-            List<Product> DiscountList;
+            //List<Product> DiscountList;
             List<ProductType> mProductTypeList;
             try
             {
-                mProduct = productRepository.LayTheoId(pId);
+                mProduct = productRepos.LayTheoId(pId);
                 if (mProduct != null)
                 {
                     mProductDetailPage.Product = mProduct;
-                    mMarket = marketRepository.LayTheoId((int)mProduct.MarketId);
+                    mMarket = marketRepos.LayTheoId((int)mProduct.MarketId);
                     if (mMarket == null)
                         mMarket = new Market();
                     mProductDetailPage.Market = mMarket;
                     //lay chi tiet ve loai san pham
-                    mProductType = productRepository.LayLoaiSanPhamTheoId((int)mProduct.Type);
+                    mProductType = productRepos.LayLoaiSanPhamTheoId((int)mProduct.Type);
                     if (mProductType == null)
                         mProductType = new ProductType();
                     mProductDetailPage.ProductType = mProductType;
                     //lay danh sach san pham cua sieu thi
-                    MarketList = productRepository.getByPageSizeMarketId(1, 6, mMarket.ID);
-                    mProductDetailPage.MarketList = MarketList;
-                    RelatedList = productRepository.LayDanhSachSanPhamLienQuan((int)mProduct.Type, 6);
+                    //MarketList = productRepos.getByPageSizeMarketId(1, 6, mMarket.ID);
+                    //mProductDetailPage.MarketList = MarketList;
+
+                    RelatedList = productRepos.LayDanhSachSanPhamLienQuan((int)mProduct.Type, 6);
                     mProductDetailPage.RelatedList = RelatedList;
-                    DiscountList = productRepository.LaySanPhamKhuyenMai(1, 6);
-                    mProductDetailPage.DiscountList = DiscountList;
+
+                    //DiscountList = productRepos.LaySanPhamKhuyenMai(1, 6);
+                    //mProductDetailPage.DiscountList = DiscountList;
                     //
-                    mProductTypeList = productRepository.getProductTypeParent();
+                    mProductTypeList = productRepos.getProductTypeParent();
                     mProductDetailPage.ProductTypeList = mProductTypeList;
+
+                    ProductSlideShow ProductImages = new ProductSlideShow();
+
+                    mProductDetailPage.Images = productRepos.LayProductImageTheoIDProduct(mProduct.ID);
+                    
                 }
                 mProductDetailPage.ProductLastest = productRepos.getProductsRandom(6);
                 string view = Theme.viewPage("detail");
@@ -245,15 +279,14 @@ namespace V308CMS.Controllers
             }
             finally
             {
-                //mEntities.Dispose();
-                //productRepository.Dispose();
+                DisposeRepos();
             }
         }
         public ActionResult Search(string pKey, int pVendor = 2, int pPage = 1)
         {
             //V308CMSEntities mEntities = new V308CMSEntities();
             //ProductRepository productRepository = new ProductRepository(mEntities);
-           
+            CreateRepos();
             SearchPage mSearchPage = new SearchPage();
             List<Product> mProductList = null;
             List<Market> mMarketList = null;
@@ -315,12 +348,12 @@ namespace V308CMS.Controllers
             }
             finally
             {
-                //mEntities.Dispose();
-                //productRepository.Dispose();
+                DisposeRepos();
             }
         }
         public ActionResult YoutubeDetail(int pId = 0)
         {
+            CreateRepos();
             V308CMSEntities mEntities = new V308CMSEntities();
             NewsRepository newsRepository = new NewsRepository(mEntities);
             NewsPage mCommonModel = new NewsPage();
@@ -358,11 +391,126 @@ namespace V308CMS.Controllers
             }
             finally
             {
-                //mEntities.Dispose();
-                //newsRepository.Dispose();
+                DisposeRepos();
             }
         }
 
+        public ActionResult News(int pPage = 1, int pType = 1)
+        {
+            CreateRepos();
+            V308CMSEntities mEntities = new V308CMSEntities();
+            NewsRepository newsRepository = new NewsRepository(mEntities);
+            NewsPage mCommonModel = new NewsPage();
+            StringBuilder mStr = new StringBuilder();
+            List<News> mList;
+            NewsGroups mNewsGroups;
+            try
+            {
+                //lay chi tiet loai tin tuc
+                mNewsGroups = newsRepository.LayTheLoaiTinTheoId(pType);
+                if (mNewsGroups != null)
+                {
+                    mCommonModel.NewsGroups = mNewsGroups;
+                    //lay chi tiet san pham
+                    mList = newsRepository.LayTinTheoTrangAndGroupIdAndLevel(pPage, 10, pType, mNewsGroups.Level);
+                    if (mList.Count > 0)
+                    {
+                        foreach (News it in mList)
+                        {
+                            if (mNewsGroups.Level.Substring(0, 5) == "10006")
+                            {
+                                mStr.Append("<div class=\"news\">");
+                                mStr.Append("<h2 class=\"title\"><a href=\"/" + Ultility.LocDau(it.Title) + "-youtube" + it.ID + ".html\">" + it.Title + "</a></h2>");
+                                mStr.Append("<div class=\"image_container\">");
+                                mStr.Append("<div class=\"image_cell\">");
+                                mStr.Append("<a href=\"/" + Ultility.LocDau(it.Title) + "-youtube" + it.ID + ".html\">");
+                                mStr.Append("<img class=\"image_news\" src=\"https://i.ytimg.com/vi/" + it.Summary + "/hqdefault.jpg?custom=true&w=250&h=141&stc=true&jpg444=true&jpgq=90&sp=68\" alt=\"" + it.Title + "\">");
+                                mStr.Append("</a>");
+                                mStr.Append("</div>");
+                                mStr.Append("</div>");
+                                mStr.Append("<div class=\"create_time\"><span class=\"crateTimeTitle\">Thời gian đăng :</span> " + ConverterUlti.GetNgayDangByDateTime(it.Date.Value) + "</div>");
+                                mStr.Append("<p class=\"description\">" + it.Title + "</p>");
+                                mStr.Append("</div>");
+                            }
+                            else
+                            {
+                                mStr.Append("<div class=\"news\">");
+                                mStr.Append("<h2 class=\"title\"><a href=\"/" + Ultility.LocDau(it.Title) + "-n" + it.ID + ".html\">" + it.Title + "</a></h2>");
+                                mStr.Append("<div class=\"image_container\">");
+                                mStr.Append("<div class=\"image_cell\">");
+                                mStr.Append("<a href=\"/" + Ultility.LocDau(it.Title) + "-n" + it.ID + ".html\">");
+                                mStr.Append("<img class=\"image_news\" src=\"" + it.Image + "\" alt=\"" + it.Title + "\">");
+                                mStr.Append("</a>");
+                                mStr.Append("</div>");
+                                mStr.Append("</div>");
+                                mStr.Append("<div class=\"create_time\"><span class=\"crateTimeTitle\">Thời gian đăng :</span> " + ConverterUlti.GetNgayDangByDateTime(it.Date.Value) + "</div>");
+                                mStr.Append("<p class=\"description\">" + it.Summary + "</p>");
+                                mStr.Append("</div>");
+                            }
+
+                        }
+                        if (mList.Count < 10)
+                            mCommonModel.IsEnd = true;
+                        mCommonModel.Page = pPage;
+                        mCommonModel.Html = mStr.ToString();
+                    }
+                    else
+                    {
+                        mCommonModel.Html = "Không tìm thấy sản phẩm";
+                    }
+                }
+                return View(mCommonModel);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("error :", ex);
+                return Content("<h2>Có lỗi xảy ra trên hệ thống ! Vui lòng thử lại sau.</h2>");
+            }
+            finally
+            {
+                DisposeRepos();
+            }
+        }
+        public ActionResult NewsDetail(int pId = 0)
+        {
+            CreateRepos();
+            NewsPage mCommonModel = new NewsPage();
+            StringBuilder mStr = new StringBuilder();
+            News mNews;
+            try
+            {
+                //lay chi tiet san pham
+                mNews = newsRepos.LayTinTheoId(pId);
+                if (mNews != null)
+                {
+
+                    mCommonModel.pNews = mNews;
+                    //mListLienQuan = newsRepository.LayTinTucLienQuan(mNews.ID, (int)mNews.TypeID, 4);
+                    //tao Html tin tuc lien quan
+                }
+                else
+                {
+                    mCommonModel.Html = "Không tìm thấy bài viết";
+                }
+
+                string view = Theme.viewPage("article");
+                if (view.Length > 0)
+                {
+                    return View(view, mCommonModel);
+                }
+
+                return View(mCommonModel);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("error :", ex);
+                return Content("<h2>Có lỗi xảy ra trên hệ thống ! Vui lòng thử lại sau.</h2>");
+            }
+            finally
+            {
+                DisposeRepos();
+            }
+        }
         #region shopping cart actions
 
         public ActionResult ShopCartDetail(int pId = 0)
@@ -484,21 +632,6 @@ namespace V308CMS.Controllers
         }
         
         #endregion
-
-        //private void PageData()
-        //{
-        //    V308CMSEntities mEntities = new V308CMSEntities();
-        //    SiteRepository siteRepository = new SiteRepository(mEntities);
-
-        //    TempData["FooterCompanyContact"] = (siteRepository.SiteConfig("company-footer-contact") != null ? siteRepository.SiteConfig("company-footer-contact") : "");
-        //    TempData["CompanyName"] = (siteRepository.SiteConfig("company-name") != null ? siteRepository.SiteConfig("company-name") : "");
-        //    TempData["FaceBookPage"] = (siteRepository.SiteConfig("facebook-page") !=null ? siteRepository.SiteConfig("facebook-page") : "");
-
-        //    TempData["BaseUrl"] = Request.Url.GetLeftPart(UriPartial.Authority);
-
-        //    TempData["Logo"] = (siteRepository.SiteConfig("site-logo") != null ? siteRepository.SiteConfig("site-logo") : "");
-            
-        //}
 
         
         [HttpPost]
@@ -786,117 +919,7 @@ namespace V308CMS.Controllers
                 productRepository.Dispose();
             }
         }
-        public ActionResult News(int pPage = 1, int pType = 1)
-        {
-            V308CMSEntities mEntities = new V308CMSEntities();
-            NewsRepository newsRepository = new NewsRepository(mEntities);
-            NewsPage mCommonModel = new NewsPage();
-            StringBuilder mStr = new StringBuilder();
-            List<News> mList;
-            NewsGroups mNewsGroups;
-            try
-            {
-                //lay chi tiet loai tin tuc
-                mNewsGroups = newsRepository.LayTheLoaiTinTheoId(pType);
-                if (mNewsGroups != null)
-                {
-                    mCommonModel.NewsGroups = mNewsGroups;
-                    //lay chi tiet san pham
-                    mList = newsRepository.LayTinTheoTrangAndGroupIdAndLevel(pPage, 10, pType, mNewsGroups.Level);
-                    if (mList.Count > 0)
-                    {
-                        foreach (News it in mList)
-                        {
-                            if (mNewsGroups.Level.Substring(0, 5) == "10006")
-                            {
-                                mStr.Append("<div class=\"news\">");
-                                mStr.Append("<h2 class=\"title\"><a href=\"/" + Ultility.LocDau(it.Title) + "-youtube" + it.ID + ".html\">" + it.Title + "</a></h2>");
-                                mStr.Append("<div class=\"image_container\">");
-                                mStr.Append("<div class=\"image_cell\">");
-                                mStr.Append("<a href=\"/" + Ultility.LocDau(it.Title) + "-youtube" + it.ID + ".html\">");
-                                mStr.Append("<img class=\"image_news\" src=\"https://i.ytimg.com/vi/" + it.Summary + "/hqdefault.jpg?custom=true&w=250&h=141&stc=true&jpg444=true&jpgq=90&sp=68\" alt=\"" + it.Title + "\">");
-                                mStr.Append("</a>");
-                                mStr.Append("</div>");
-                                mStr.Append("</div>");
-                                mStr.Append("<div class=\"create_time\"><span class=\"crateTimeTitle\">Thời gian đăng :</span> " + ConverterUlti.GetNgayDangByDateTime(it.Date.Value) + "</div>");
-                                mStr.Append("<p class=\"description\">" + it.Title + "</p>");
-                                mStr.Append("</div>");
-                            }
-                            else
-                            {
-                                mStr.Append("<div class=\"news\">");
-                                mStr.Append("<h2 class=\"title\"><a href=\"/" + Ultility.LocDau(it.Title) + "-n" + it.ID + ".html\">" + it.Title + "</a></h2>");
-                                mStr.Append("<div class=\"image_container\">");
-                                mStr.Append("<div class=\"image_cell\">");
-                                mStr.Append("<a href=\"/" + Ultility.LocDau(it.Title) + "-n" + it.ID + ".html\">");
-                                mStr.Append("<img class=\"image_news\" src=\"" + it.Image + "\" alt=\"" + it.Title + "\">");
-                                mStr.Append("</a>");
-                                mStr.Append("</div>");
-                                mStr.Append("</div>");
-                                mStr.Append("<div class=\"create_time\"><span class=\"crateTimeTitle\">Thời gian đăng :</span> " + ConverterUlti.GetNgayDangByDateTime(it.Date.Value) + "</div>");
-                                mStr.Append("<p class=\"description\">" + it.Summary + "</p>");
-                                mStr.Append("</div>");
-                            }
-
-                        }
-                        if (mList.Count < 10)
-                            mCommonModel.IsEnd = true;
-                        mCommonModel.Page = pPage;
-                        mCommonModel.Html = mStr.ToString();
-                    }
-                    else
-                    {
-                        mCommonModel.Html = "Không tìm thấy sản phẩm";
-                    }
-                }
-                return View(mCommonModel);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("error :", ex);
-                return Content("<h2>Có lỗi xảy ra trên hệ thống ! Vui lòng thử lại sau.</h2>");
-            }
-            finally
-            {
-                mEntities.Dispose();
-                newsRepository.Dispose();
-            }
-        }
-        public ActionResult NewsDetail(int pId = 0)
-        {
-            V308CMSEntities mEntities = new V308CMSEntities();
-            NewsRepository newsRepository = new NewsRepository(mEntities);
-            NewsPage mCommonModel = new NewsPage();
-            StringBuilder mStr = new StringBuilder();
-            News mNews;
-            try
-            {
-                //lay chi tiet san pham
-                mNews = newsRepository.LayTinTheoId(pId);
-                if (mNews != null)
-                {
-
-                    mCommonModel.pNews = mNews;
-                    //mListLienQuan = newsRepository.LayTinTucLienQuan(mNews.ID, (int)mNews.TypeID, 4);
-                    //tao Html tin tuc lien quan
-                }
-                else
-                {
-                    mCommonModel.Html = "Không tìm thấy sản phẩm";
-                }
-                return View(mCommonModel);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("error :", ex);
-                return Content("<h2>Có lỗi xảy ra trên hệ thống ! Vui lòng thử lại sau.</h2>");
-            }
-            finally
-            {
-                mEntities.Dispose();
-                newsRepository.Dispose();
-            }
-        }
+        
         
         public ActionResult MarketList(int ptype = 0)
         {

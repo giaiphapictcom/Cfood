@@ -1200,6 +1200,7 @@ namespace V308CMS.Data
     public class ProductTypePage
     {
         public List<ProductType> List { get; set; }
+        public List<ProductType> CategorySub { get; set; }
         public string Name { get; set; }
         public int Id { get; set; }
         public string Image { get; set; }
@@ -1297,11 +1298,13 @@ namespace V308CMS.Data
         public List<ProductCategoryPage> List { get; set; }
         public List<ProductType> ProductTypeList { get; set; }
         public List<Product> ProductList { get; set; }
+        public List<Product> Products { get; set; }
         public ProductType ProductType { get; set; }
         public string Name { get; set; }
         public int Id { get; set; }
         public string Image { get; set; }
         public string Value { get; set; }
+        public int ProductTotal { get; set; }
         ///
         int _Page;
         int _NextPage;
@@ -1373,6 +1376,12 @@ namespace V308CMS.Data
             }
         }
     }
+     
+    public class CategoryPage{
+         public List<Product> Products { get; set; }
+         public int ProductTotal { get; set; }
+        
+    }
     public class ProductCategoryPageBox
     {
         public List<ProductCategoryPage> List { get; set; }
@@ -1394,6 +1403,8 @@ namespace V308CMS.Data
         public string Image { get; set; }
         public List<ProductType> ProductTypeList { get; set; }
         public List<Product> ProductLastest { get; set; }
+        public List<ProductImage> Images { get; set; }
+
         
     }
     public class ProductSlideShow
@@ -1890,9 +1901,11 @@ namespace V308CMS.Data
         public NewsGroupPage CategoryWhoSale { get; set; }
         //public List<News> ArticleWhoSale { get; set; }
         public List<NewsGroupPage> NewsCategorys { get; set; }
-        
-        
-        
-        
+    }
+
+    public class ProductDetail
+    {
+        public Product Product { get; set; }
+        public List<ProductImage> Images { get; set; }
     }
 }

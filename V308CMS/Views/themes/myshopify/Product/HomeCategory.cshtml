@@ -1,0 +1,164 @@
+﻿@model V308CMS.Data.ProductCategoryPageContainer
+@using V308CMS.Data
+@using V308CMS.Common
+
+<div class="shopify-section index-section product-category">
+    <div class="tabs-product-home tabs-home-">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="tabs-product-container group-@Model.ProductType.ColorTheme">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="title-container">
+                                    <div class="row">
+                                        <div class="block-title col-xs-10 col-sm-10 col-md-5">
+                                            <a href="@url.productCategoryURL(@Model.ProductType.Name, @Model.ProductType.ID)">
+                                            <h2 style="">
+                                                <span>@Model.ProductType.Name</span>
+                                                <i class="fa fa-desktop"></i>
+                                            </h2>
+                                            </a>
+                                        </div>
+                                        @{
+                                            string active = "";
+                                        }
+                                        @if (Model.List != null & Model.List.Count() > 0)
+                                        { 
+                                            <div class="tabs-product col-xs-2 col-sm-2 col-md-7">
+                                                <div class="icon-bar"></div>
+                                                <ul class="nav nav-tabs" role="tablist">
+                                                    @foreach (ProductCategoryPage subCate in Model.List)
+                                                    {
+                                                        active = Model.List.First() == subCate ? "active" : "";
+                                                        <li role="presentation" class="@active">
+                                                            <a href="#@subCate.Id" role="tab" data-toggle="tab">@subCate.Name</a>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </div>
+                                        }
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="product-featured tabs-product">
+                                <div class="hidden-xs hidden-sm col-md-4 col-lg-5">
+                                    <div class="banner-featured">
+                                        <a href="#1">
+                                            <img src="@ImageHelper.Crop(Model.ProductType.Image, 445,500)" alt="" />
+                                        </a>
+                                    </div>
+                                    @*<div class="brand-image">
+                                        <a href="#">
+                                            <img src="//cdn.shopify.com/s/files/1/1498/2346/files/banner-2_2048x.jpg?v=1483976018" alt="" />
+                                        </a>
+                                        <a href="#">
+                                            <img src="//cdn.shopify.com/s/files/1/1498/2346/files/banner-3_2048x.jpg?v=1483976023" alt="" />
+                                        </a>
+                                        <a href="#">
+                                            <img src="//cdn.shopify.com/s/files/1/1498/2346/files/banner-4_2048x.jpg?v=1483976027" alt="" />
+                                        </a>
+                                        <a href="#">
+                                            <img src="//cdn.shopify.com/s/files/1/1498/2346/files/banner-5_2f7ab610-4aab-4c63-8142-77f1c912cb72_2048x.jpg?v=1483979938" alt="" />
+                                        </a>
+                                        <a href="#">
+                                            <img src="//cdn.shopify.com/s/files/1/1498/2346/files/banner-6_2048x.jpg?v=1483976042" alt="" />
+                                        </a>
+                                        <a href="#">
+                                            <img src="//cdn.shopify.com/s/files/1/1498/2346/files/banner-7_2048x.jpg?v=1483976047" alt="" />
+                                        </a>
+                                    </div>*@
+                                </div>
+                                <div class="product-featured-content col-xs-12 col-sm-12 col-md-8 col-lg-7">
+                                    <div class="tab-content">
+                                        @foreach (ProductCategoryPage subCate in Model.List)
+                                        {
+                                            active = Model.List.First() == subCate ? "in active" : "";
+                                            
+                                            <div class="tab-pane tabs-content fade   @active" id="@subCate.Id">
+                                                <div class="carousel slide productCateCarousel" id="@subCate.Id-caro">
+                                                    @if (subCate.List != null & subCate.List.Count() > 0)
+                                                    {
+                                                        int line = 0;
+                                                        var products = subCate.List.Take(6);
+                                                        foreach (Product prod in products)
+                                                        {
+                                                            int lineCheck = line % 2;
+                                                            if (lineCheck == 0)
+                                                            {
+                                                            @:<div class="product_list"><div class="products-row">
+                                                            }
+                                                            
+                                                            <div class="item">
+                                                                <div class="grid-3  grid-item product-item product-hover product-review" id="product-7824318409">
+                                                                    <div class="product-image ">
+                                                                        @if (prod.SaleOff > 0)
+                                                                        { 
+                                                                            <div class="product-label"><label class="label">Sale</label></div>
+                                                                        }
+                                                                        <a href="@url.productURL(prod.Name, prod.ID)" class="grid-image">
+                                                                            <img class="feature-images" src="@ImageHelper.Crop(prod.Image, 250)" alt="@prod.Name">
+                                                                        </a>
+
+                                                                        <div class="quickview-button">
+                                                                            <a href="javascript:void(0)" id="aerocool-dead-silence-gaming" data-toggle="tooltip" data-placement="top" title="@prod.Name" class="sca-qv-button btn">Xem nhanh</a>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="product-content">
+                                                                        <h3><a class="product-title" href="@url.productURL(prod.Name, prod.ID)">@prod.Name</a></h3>
+                                                                        <div class="price-box">
+                                                                            <p class="sale">
+                                                                                @if (prod.Price > 0)
+                                                                                {
+                                                                                    <span class="special-price"><span class="money">@String.Format("{0: 0,0}", (prod.Price)) @ViewBag.MoneyShort</span></span>
+                                                                                }
+                                                                                @if (prod.SaleOff > 0)
+                                                                                { 
+                                                                                    <span class="old-price"><span class="money">@String.Format("{0: 0,0}", prod.Price - (prod.Price / 100) * prod.SaleOff) ) @ViewBag.MoneyShort</span></span>
+                                                                                }
+                                                                            </p>
+                                                                        </div>
+                                                                        <span class="shopify-product-reviews-badge" data-id="7824318409"></span>
+                                                                        <div class="add-to-link">
+                                                                            <div class="add-to-cart">
+
+                                                                                <a href="javascript:void(0);" class="btn add-to-cart-btn" add-cart="@prod.ID" title="Thêm vào giỏ hàng">Thêm vào giỏ hàng</a>
+                                                                            </div>
+
+
+
+                                                                            <a class="wishlist btn" href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="Yêu thích"><span><i class="fa fa-heart" aria-hidden="true"></i></span></a>
+
+
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        
+                                                            if (lineCheck == 1 || prod == products.Last())
+                                                            {
+                                                                Console.Write("end line");
+                                                            @:</div></div>
+                                                            }
+                                                            line++;
+                                                        }
+                                                    }
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

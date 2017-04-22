@@ -680,6 +680,48 @@ namespace V308CMS.Data
                 throw;
             }
         }
+        public List<Product> getProductsByCategory(int CategoryID, int Limit = 20, int Page =1)
+        {
+            List<Product> mList = null;
+            try
+            {
+                var CategoryIDs = (from c in entities.ProductType
+                                   where c.Parent == CategoryID
+                                   select c.ID).ToList();
+                CategoryIDs.Add(CategoryID);
+
+                var items = (from p in entities.Product
+                            where CategoryIDs.Any(c => c == p.Type)
+                             orderby p.ID descending
+                             select p).Skip((Page - 1) * Limit);
+                mList = items.Take(Limit).ToList();
+                return mList;
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+                throw;
+            }
+        }
+
+        public int getProductTotalByCategory(int CategoryID)
+        {
+            int countTotal = 0;
+            if (CategoryID > 0)
+            {
+                var CategoryIDs = (from c in entities.ProductType
+                                   where c.Parent == CategoryID
+                                   select c.ID).ToList();
+                CategoryIDs.Add(CategoryID);
+
+                var mList = from p in entities.Product
+                            where CategoryIDs.Any(c => c == p.Type)
+                            select p;
+
+                countTotal = mList.Count();
+            }
+            return countTotal;
+        }
 
         public List<ProductType> LayNhomSanPhamAll()
         {
@@ -706,6 +748,7 @@ namespace V308CMS.Data
                 //lay danh sach tin moi dang nhat
                 mList = (from p in entities.ProductType
                          where p.Parent == 0
+                         orderby p.Number ascending
                          select p).ToList();
                 return mList;
             }
@@ -715,7 +758,7 @@ namespace V308CMS.Data
                 throw;
             }
         }
-        public List<ProductType> getProductTypeByParent(int pParent)
+        public List<ProductType> getProductTypeByParent(int pParent, int limit = 10)
         {
             List<ProductType> mList = null;
             try
@@ -723,7 +766,8 @@ namespace V308CMS.Data
                 //lay danh sach tin moi dang nhat
                 mList = (from p in entities.ProductType
                          where p.Parent == pParent
-                         select p).ToList();
+                         orderby p.Number descending
+                         select p).Take(limit).ToList();
                 return mList;
             }
             catch (Exception ex)
@@ -804,15 +848,15 @@ namespace V308CMS.Data
             }
         }
 
-        public List<ProductType> getProductTypeByProductType(int pProductType)
+        public List<ProductType> getProductTypeByProductType(int pProductType, int Limit=10)
         {
             List<ProductType> mList = null;
             try
             {
-                //lay danh sach tin moi dang nhat
-                mList = (from p in entities.ProductType
+                var categorys = from p in entities.ProductType
                          where p.Parent == pProductType
-                         select p).ToList();
+                         select p;
+                mList = categorys.Take(Limit).ToList();
                 return mList;
             }
             catch (Exception ex)
@@ -821,6 +865,8 @@ namespace V308CMS.Data
                 throw;
             }
         }
+        
+        
         public List<ProductType> getProductTypeByProductType2(int pProductType)
         {
             List<ProductType> mList = null;

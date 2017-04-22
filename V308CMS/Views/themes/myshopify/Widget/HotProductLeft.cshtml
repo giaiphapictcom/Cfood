@@ -1,0 +1,68 @@
+﻿@using V308CMS.Data
+@using V308CMS.Common
+@model List<Product>
+
+@if (Model != null & Model.Count() > 0)
+{
+    <div class="bestseller-sidebar bestseller-homepage">
+        <div class="module-title">
+            <h5>Sản phẩm nổi bật</h5>
+        </div>
+        @foreach (Product prod in Model)
+        {
+            <div class="item-poduct">
+                <div class="grid-3  grid-item product-item product-hover product-review" id="product-@prod.ID">
+                    <div class="product-image ">
+                        @if( prod.SaleOff == 1 ){
+                        <div class="product-label"><label class="label">Sale</label></div>
+                        }
+
+                        <a href="@url.productURL(prod.Name,prod.ID)" class="grid-image">
+                            <img class="feature-images" src="@ImageHelper.Crop(@prod.Image, 250)" alt="@prod.Name">
+                            <span class="product-hover" data-idproduct="7824329673">
+                                <img class="img-responsive" alt="@prod.Name" src="@ImageHelper.Crop(@prod.Image, 250)">
+                            </span>
+                        </a>
+
+                        <div class="quickview-button">
+                            <a href="javascript:void(0)" id="clear-view-cover-case-to-galasy" data-toggle="tooltip" data-placement="top" title="Xem nhanh" class="sca-qv-button btn">Xem nhanh</a>
+                        </div>
+
+                    </div>
+                    <div class="product-content">
+                        <h3><a class="product-title" href="@url.productURL(prod.Name,prod.ID)">@prod.Name</a></h3>
+                        <div class="price-box">
+                            <p class="sale">
+                                @if (prod.Price > 0)
+                                {
+                                    <span class="special-price"><span class="money">@String.Format("{0: 0,0}", (prod.Price)) @ViewBag.MoneyShort</span></span>
+                                }
+                                @if (prod.SaleOff > 0)
+                                { 
+                                    <span class="old-price"><span class="money">@String.Format("{0: 0,0}", prod.Price - (prod.Price / 100) * prod.SaleOff) ) @ViewBag.MoneyShort</span></span>
+                                }
+                            </p>
+
+                        </div>
+
+                        <span class="shopify-product-reviews-badge" data-id="@prod.ID"></span>
+                        <div class="add-to-link">
+                            <div class="add-to-cart">
+                                <form action="/cart/add" method="post" class="variants" id="product-actions-7824329673" enctype="multipart/form-data" style="padding: 0px;">
+                                    <span>
+                                        <input class="btn" type="button" title="Select options" onclick="window.location.href = '/products/clear-view-cover-case-to-galasy'" value="Select options" />
+                                    </span>
+                                </form>
+                            </div>
+
+                            <a class="wishlist btn" href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="Yêu thích"><span><i class="fa fa-heart" aria-hidden="true"></i></span></a>
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        }
+    </div>
+}

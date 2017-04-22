@@ -15,7 +15,7 @@ namespace V308CMS.Common
 
         public static HtmlString productCategory(string title = "", int id = 0)
         {
-            string url = "/" + Ultility.URITitle(title) + "-t" + id + ".html";
+            string url = productCategoryURL(title,id);
             string anchor = "<a href=\"" + url + "\">" + title + "</a>";
             return new HtmlString(anchor);
         }
@@ -23,10 +23,21 @@ namespace V308CMS.Common
         public static string productCategoryURL(string title = "", int id = 0)
         {
             string url = "/" + Ultility.URITitle(title) + "-t" + id + ".html";
-            //string anchor = "<a href=\"" + url + "\">" + title + "</a>";
             return url;
         }
 
+        public static string productURL(string title = "", int id = 0, string ext = "html")
+        {
+            string url = "/" + Ultility.URITitle(title) + "-d" + id + "." + ext;
+            return url;
+        }
+
+        public static HtmlString VideoAnchor(string title = "", int id = 0)
+        {
+            string url = videoURL(title, id);
+            string anchor = "<a href=\"" + url + "\">" + title + "</a>";
+            return new HtmlString(anchor);
+        }
         public static string videoURL(string title = "", int id = 0)
         {
             return "/" + Ultility.URITitle(title) + "-youtube" + id + ".html";

@@ -22,6 +22,8 @@ namespace V308CMS.Common
                 height = width;
             }
 
+            string extension = Path.GetExtension(img);
+            string filenameEncode = Base64Encode(img) + extension;
 
             var appSettings = ConfigurationManager.AppSettings;
             string uploadPath = appSettings["imgUpload"];
@@ -39,24 +41,39 @@ namespace V308CMS.Common
                 Directory.CreateDirectory(thumbPath);
             }
 
+            if (System.IO.File.Exists(thumbPath + filenameEncode)) {
+                return imgThumbUrl + width + "x" + height + "/" + filenameEncode;
+            }
 
             if (uploadPath.Count() > 0 & Directory.Exists(uploadPath))
             {
                 string imgRealPath = uploadPath + img;
-                if ( System.IO.File.Exists(imgRealPath) ) {
-                    string extension = Path.GetExtension(imgRealPath);
-                    string filenameEncode = Base64Encode(img) + extension;
+                if (System.IO.File.Exists(imgRealPath))
+                {
+                    extension = Path.GetExtension(imgRealPath);
+                    
 
                     if (!System.IO.File.Exists(thumbPath + filenameEncode))
                     {
                         CropImage(width, height, imgRealPath, thumbPath + filenameEncode);
-                    }
-
-                    if (!System.IO.File.Exists(thumbPath + filenameEncode)) {
                         imgPath = imgThumbUrl + width + "x" + height + "/" + filenameEncode;
                     }
-                    
                 }
+                else {
+                    imgRealPath = HttpContext.Current.Server.MapPath("~") + img;
+                    if (System.IO.File.Exists(imgRealPath))
+                    {
+                        extension = Path.GetExtension(imgRealPath);
+
+                        if (!System.IO.File.Exists(thumbPath + filenameEncode))
+                        {
+                            CropImage(width, height, imgRealPath, thumbPath + filenameEncode);
+                            imgPath = imgThumbUrl + width + "x" + height + "/" + filenameEncode;
+                        }
+                    }
+                }
+
+
             }
             return imgPath;
         }

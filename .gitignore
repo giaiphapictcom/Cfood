@@ -11,3 +11,9 @@ V308CMS/obj/Release/
 V308CMS.Sale/obj/Release/
 V308CMS.Revenue/obj/Release
 V308CMS.Data/obj/Release/
+V308CMS/Content/thumb/
+V308CMS/bin/*.xml
+V308CMS.Data/bin/*.xml
+V308CMS.Common/bin/System.Web.*
+V308CMS.Common/bin/Newtonsoft.Json.xml
+V308CMS.Common/bin/System.Net.Http.Formatting.xml
