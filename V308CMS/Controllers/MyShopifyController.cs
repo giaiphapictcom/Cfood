@@ -167,6 +167,7 @@ namespace V308CMS.Controllers
                 }
                 Model.List = mProductPageList;
                 Model.ProductType = ProductCategory;
+                Model.Brands = ProductRepos.getRandomBrands(cate.ID, 6);
 
                 string view = "~/Views/themes/" + Theme.domain + "/Product/HomeCategory.cshtml";
                 return View(view, Model);

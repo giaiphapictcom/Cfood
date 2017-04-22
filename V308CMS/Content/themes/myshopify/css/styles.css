@@ -3659,7 +3659,7 @@ body{ position: relative;}
 }
 /*--------------------------------------- Home Page Products Tab */
 .product-featured.tabs-product {
-  padding: 0 15px 0;
+  padding: 0 15px 10px;
   display: flex;
 }
 .tabs-product-home.tabs-home-1 .block-title h2  {background: #ef5350;}
@@ -4723,7 +4723,7 @@ div#rev_slider {
   padding: 5px;
   float: left;
 }
-.brand-image a img { width: 100%;}
+.brand-image a img { width: 100%; border: 1px solid #ddd; padding: 2px;}
 .brand-image {margin:0 -5px;}
 .product-list .grid-item .product-title {
   color: #000;

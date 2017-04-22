@@ -1354,5 +1354,26 @@ namespace V308CMS.Data
                 throw;
             }
         }
+
+        public List<Brand> getRandomBrands(int CategoryID, int Limit = 1)
+        {
+
+            List<Brand> brands = new List<Brand>();
+            try
+            {
+
+                var items = from b in entities.Brand where b.category_default == CategoryID & b.status.Equals(1)
+                            select b;
+                brands = items.ToList().OrderBy(x => Guid.NewGuid()).Take(Limit).ToList();
+
+
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+            }
+            return brands;
+
+        }
     }
 }

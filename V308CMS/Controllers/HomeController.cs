@@ -159,7 +159,7 @@ namespace V308CMS.Controllers
 
                     Model.Products = CategoryPage.Products;
                     Model.ProductTotal = CategoryPage.ProductTotal;
-
+                    Model.Brands = productRepos.getRandomBrands(ProductCategory.ID, 6);
                     if (ProductCategory.Parent == 0)
                         mProductTypeList = productRepos.getProductTypeByProductType(ProductCategory.ID);//lay danh sach cap 1
                     else

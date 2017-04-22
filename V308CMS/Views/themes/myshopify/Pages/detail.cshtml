@@ -121,7 +121,8 @@
                     @Html.Raw(@Model.Product.Detail.Replace("\n", "<br />"))
                 </div>
                 <div id="collapse-tab2" class="tab-pane fade">
-                    <div id="shopify-product-reviews" data-id="7825635209"></div>
+                    @*<div id="shopify-product-reviews" data-id="7825635209"></div>*@
+                    <div class="fb-comments" data-href="@Ultility.LocDau(@Model.Product.Name)-d@(Model.Product.ID).html" data-width="100%" data-numposts="5" data-colorscheme="light"></div>
                 </div>
             </div>
         </div>

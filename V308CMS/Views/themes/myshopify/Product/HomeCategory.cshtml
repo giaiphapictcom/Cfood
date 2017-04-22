@@ -52,26 +52,18 @@
                                             <img src="@ImageHelper.Crop(Model.ProductType.Image, 445,500)" alt="" />
                                         </a>
                                     </div>
-                                    @*<div class="brand-image">
-                                        <a href="#">
-                                            <img src="//cdn.shopify.com/s/files/1/1498/2346/files/banner-2_2048x.jpg?v=1483976018" alt="" />
-                                        </a>
-                                        <a href="#">
-                                            <img src="//cdn.shopify.com/s/files/1/1498/2346/files/banner-3_2048x.jpg?v=1483976023" alt="" />
-                                        </a>
-                                        <a href="#">
-                                            <img src="//cdn.shopify.com/s/files/1/1498/2346/files/banner-4_2048x.jpg?v=1483976027" alt="" />
-                                        </a>
-                                        <a href="#">
-                                            <img src="//cdn.shopify.com/s/files/1/1498/2346/files/banner-5_2f7ab610-4aab-4c63-8142-77f1c912cb72_2048x.jpg?v=1483979938" alt="" />
-                                        </a>
-                                        <a href="#">
-                                            <img src="//cdn.shopify.com/s/files/1/1498/2346/files/banner-6_2048x.jpg?v=1483976042" alt="" />
-                                        </a>
-                                        <a href="#">
-                                            <img src="//cdn.shopify.com/s/files/1/1498/2346/files/banner-7_2048x.jpg?v=1483976047" alt="" />
-                                        </a>
-                                    </div>*@
+                                    @if (Model.Brands != null & Model.Brands.Count() > 0) {
+                                        <div class="brand-image">
+                                        @{var brands = Model.Brands.Take(6);}
+                                        @foreach (Brand brand in brands)
+                                        { 
+                                            if (brand.image.Length > 5) { 
+                                                <a href="javascript:void(0);" title="@brand.name" ><img src="@ImageHelper.Crop(brand.image, 138,68)" alt="@brand.name" /></a>
+                                            }
+                                            
+                                        }
+                                        </div>
+                                    }
                                 </div>
                                 <div class="product-featured-content col-xs-12 col-sm-12 col-md-8 col-lg-7">
                                     <div class="tab-content">

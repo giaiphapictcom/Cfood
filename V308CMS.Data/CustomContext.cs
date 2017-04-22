@@ -207,6 +207,12 @@ namespace V308CMS.Data
             set;
         }
 
+        public DbSet<Brand> Brand
+        {
+            get;
+            set;
+        }
+
         #endregion
         #region AddTo Methods
 

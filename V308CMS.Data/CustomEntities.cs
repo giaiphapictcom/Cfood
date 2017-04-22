@@ -1390,6 +1390,35 @@ namespace V308CMS.Data
     }
     //#endregion[ket thuc class tblSiteConfig]
 
+
+    #region[Bat dau 1  class tblProductImage]
+
+    [Table("product_brand")]
+    public class Brand
+    {
+
+        #region[Declare variables]
+        private int _ID;
+        private int _Category;
+        private string _Name;
+        private string _Image;
+        private int _Status;
+        #endregion
+
+        #region[Public Properties]
+        [Key]
+        public int id { get { return _ID; } set { _ID = value; } }
+        public int category_default { get { if (_Category == null || _Category < 0) return 0; else return _Category; } set { if (_Category != value) { if (_Category < 0) _Category = 0; else _Category = value; } } }
+        public string name { get { if (String.IsNullOrEmpty(_Name)) return ""; else return _Name; } set { _Name = value; } }
+        public string image { get { if (String.IsNullOrEmpty(_Image)) return ""; else return _Image; } set { _Image = value; } }
+        public int status { get { if (_Status == null || _Status < 0) return 0; else return _Status; } set { if (_Status != value) { if (_Status < 0) _Status = 0; else _Status = value; } } }
+
+
+        #endregion
+
+    }
+    #endregion[ket thuc class tblProductImage]
+
     public class RpOrderWithStatusDetail
     {
 

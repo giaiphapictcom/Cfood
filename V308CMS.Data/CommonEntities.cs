@@ -1299,6 +1299,8 @@ namespace V308CMS.Data
         public List<ProductType> ProductTypeList { get; set; }
         public List<Product> ProductList { get; set; }
         public List<Product> Products { get; set; }
+        public List<Brand> Brands { get; set; }
+        
         public ProductType ProductType { get; set; }
         public string Name { get; set; }
         public int Id { get; set; }
