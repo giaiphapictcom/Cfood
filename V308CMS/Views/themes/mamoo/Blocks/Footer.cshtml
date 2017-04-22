@@ -1,0 +1,163 @@
+﻿@model V308CMS.Data.PageFooterControl
+@{int footerGroup = 0;}
+<footer id="pFooter">
+    <div class="about">
+        <div class="container">
+            <div class="row block-home-icon">
+
+                <div class="col-xs-12 col-sm-6 col-md-3 color-block-icons">
+                    <div class=" item-1 block-item">
+                        <div class="block-icon"><i class="fa fa-plane"></i></div>
+                        <div class="static-block">
+                            <div class="block-title">
+                                <h3><span>Chuyển hàng nhanh</span></h3>
+                            </div>
+                            <div class="block-content">cho đơn hàng trên 100k</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-6 col-md-3 color-block-icons">
+                    <div class=" item-1 block-item">
+                        <div class="block-icon"><i class="fa fa-refresh"></i></div>
+                        <div class="static-block">
+                            <div class="block-title">
+                                <h3><span>Đổi trả hàng</span></h3>
+                            </div>
+                            <div class="block-content">Hoàn tiền trong 7 ngày</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-6 col-md-3 color-block-icons">
+                    <div class=" item-1 block-item">
+                        <div class="block-icon"><i class="fa fa-comments-o"></i></div>
+                        <div class="static-block">
+                            <div class="block-title">
+                                <h3><span>Hỗ trợ 24/7</span></h3>
+                            </div>
+                            <div class="block-content">Hệ thống online luôn lắng nghe</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-6 col-md-3 color-block-icons">
+                    <div class=" item-1 block-item">
+                        <div class="block-icon">
+                            <i class="fa fa-hand-o-up"></i>
+                        </div>
+                        <div class="static-block">
+                            <div class="block-title">
+                                <h3><span>Hàng mới</span></h3>
+                            </div>
+                            <div class="block-content">Hàng về hàng tuần</div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="home-block-main" style="background-image: url(/Content/images/background-newsletter_2048x.jpg);">
+        <div class="container">
+            <div class="row feature-wrap-content">
+                <div class="col-lg-6 col-xs-12 home-newsletter">
+                    <div class="newsletter">
+                        <h3 class="module-title"><span>Nhận tin mới</span></h3>
+                        <div class="content">
+                            <form action="" method="post" name="mc-embedded-subscribe-form" target="_blank" class="input-group">
+                                <input type="email" value="" placeholder="DiaChiEmailCuaBan@TenMien.com" name="EMAIL" class="input-group-field" aria-label="Địa chỉ email của bạn">
+                                <span class="input-group-btn">
+                                    <input type="submit" class="btn" value="Đăng ký" name="subscribe">
+                                </span>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xs-12 home-social">
+                    <div class="title-social">FOLLOW US:</div>
+                    <div class="footer-icon-share">
+                        <a href="javascript:void(0)"><i class="fa fa-twitter"></i></a>
+                        <a href="javascript:void(0)"><i class="fa fa-google-plus"></i></a>
+                        <a href="javascript:void(0)"><i class="fa fa-instagram"></i></a>
+                        <a href="javascript:void(0)"><i class="fa fa-rss"></i></a>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-container  footer-layout-1 m-0">
+        <div class="container">
+            <div class="footer-top">
+                <div class="row">
+                    <div class="col-md-3 col-sm-3 col-xs-6 footer-contact">
+                        <h3 class="module-title">Liên hệ với @ViewBag.SiteName</h3>
+                        <ul class="content">
+                            <li>
+                                <li>@ViewBag.CompanyHeaderAddress</li>
+                                <li>@Html.Raw(ViewBag.FooterCompanyContact)</li>
+                            </li>
+                        </ul>
+                    </div>
+
+                    @if (Model.NewsCategorys != null && Model.NewsCategorys.Count() > 0)
+                    {
+                        foreach (V308CMS.Data.NewsGroupPage group in Model.NewsCategorys)
+                        {
+                            footerGroup++;
+                            if (footerGroup > 3)
+                            {
+                                break;
+                            }
+                        <div class="col-md-3 col-sm-3 col-xs-6">
+                            <h3 class="module-title">@group.Name</h3>
+                            <ul class="content">
+                                @if (group.NewsList != null && group.NewsList.Count() > 0)
+                                {
+                                    foreach (V308CMS.Data.News news in group.NewsList)
+                                    {
+                                    <li><a href="javascript:void(0)" title="">@Html.Raw(V308CMS.Common.url.article(news.Title, news.ID))</a></li>
+                                    
+                                    }
+                                }
+                            </ul>
+                        </div>
+                        }
+                    }
+
+                </div>
+            </div>
+            <div class="row footer-bottom">
+                <div class="border-footer col-12"></div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <address>©@DateTime.Now.Year.ToString() Copyright. Đã đăng ký bản quyền</address>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="paypal-footer">
+                        <ul>
+                            <li>
+                                <img src="/Content/images/z_1600x.png" alt="Hình thức thanh toán" /></li>
+                        </ul>
+                    </div>
+
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+
+</footer>
+<div id="fb-root"></div>
+<script>(function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.8&appId=1657297111243555";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>

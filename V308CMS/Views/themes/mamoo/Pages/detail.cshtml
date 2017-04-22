@@ -1,0 +1,154 @@
+﻿@model V308CMS.Data.ProductDetailPage
+@using V308CMS.Common;
+@{
+    Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
+}
+
+@section header {
+    <title>Sản Phẩm - @Model.Product.Name</title>
+    <meta name="keywords" content="@Model.Product.Name">
+    <meta property="og:url" content="@Ultility.ImgUrl("")">
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="@Model.Product.Name">
+    <meta property="og:image" content="@Ultility.ImgUrl(@Model.Product.Image)">
+    <meta property="og:description" content="@Model.Product.Summary">
+}
+
+<div class="box-detail box-shadow">
+    @if (Model.Product.Hot==true) { 
+        <span class="close-ribbon">H<br>O<br>T</span>
+    }
+    
+    <div class="container">
+        <div class="row  p-2 pt-4 pb-4">
+        
+        <div class="col-4">
+            <div class="thumb">
+                <img src="@ImageHelper.Crop(@Model.Product.Image,240)" id="product-thumb" class="img-fluid mx-auto d-block" alt="@Model.Product.Name" />
+            </div>
+            <div class="thumb2 mt-2">
+                @Html.Action("ProductDetailSlide", "Block", Model.Product)
+            </div>
+
+            
+        </div>
+        <div class="col-8">
+            <h1>@Model.Product.Name</h1>
+            <div class="status">Tình Trạng : <span class="text-blue">còn hàng</span></div>
+            <hr>
+            @if (Model.Product.Price > 0)
+            {
+                <div class="price mb-3">
+
+                    <span class="discount">@String.Format("{0: 0,0}", Model.Product.Price - (Model.Product.Price / 100) * Model.Product.SaleOff) <i class="unit">@ViewBag.MoneyShort</i></span>
+                    <span class="sale">@String.Format("{0: 0,0}", (Model.Product.Price)) <i class="unit">@ViewBag.MoneyShort</i></span>
+                </div>
+            }
+            
+
+            <div class="action mb-3 row">
+                <div class="col">
+                    <a href="javascript:void(0);" class="buy" add-cart="@Model.Product.ID" ><i class="icon-basket text-grey"></i>Thêm vào giỏ hàng</a>
+                </div>
+                <div class="col">
+                    <a href="#" class="like"><i class="icon-heart text-grey"></i>Thêm vào danh sách ưa thích</a>
+                </div>
+
+
+            </div>
+            <div class="quantity row mb-3">
+                <div class="col">
+                    <div class="input-group cart">
+                        <span class="input-group-addon bg-grey border-0">Số lượng</span>
+                        <input type="number" class="form-control bg-grey-act border-0" />
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="input-group cart">
+                        <span class="input-group-addon bg-grey border-0">Kích thước</span>
+                        <input type="number" class="form-control bg-grey-act border-0" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="addcart row">
+                <div class="col">
+                    <a class="input-group cart" style="height: 40px;">
+                        <span class="input-group-addon bg-yellow2 border-0"><i class="icon-basket text-white"></i></span>
+                        <div class="form-control bg-yellow border-0 text-bold text-upper">
+                            Mua hàng
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col">
+                    <a class="input-group cart" style="height: 40px;">
+                        <span class="input-group-addon bg-blue-act border-0"><i class="icon-basket text-white"></i></span>
+                        <div class="form-control bg-blue border-0 text-bold text-upper">
+                            Link Bán hàng
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    
+        </div>
+    </div>
+</div>
+
+
+<div class="box-tabs box-shadow">
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#info" role="tab">Thông Tin Sản Phẩm</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#comment" role="tab">Đánh Giá</a>
+        </li>
+
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane active" id="info" role="tabpanel">@Html.Raw(@Model.Product.Detail.Replace("\n", "<br />"))</div>
+        <div class="tab-pane" id="comment" role="tabpanel">
+            <div class="fb-comments" data-href="@Ultility.LocDau(@Model.Product.Name)-d@(Model.Product.ID).html" data-width="100%" data-numposts="5" data-colorscheme="light"></div>
+        </div>
+
+    </div>
+</div>
+@if (Model.RelatedList != null && Model.RelatedList.Count > 0)
+{ 
+    <div class="box-items box-shadow">
+	    <div class="container">
+		    <h4>Sản Phẩm Cùng Loại
+		        <a class="next icon-right-open" href="#"></a>
+		        <a class="pre icon-left-open" href="#"></a>
+		    </h4>
+		    <div class="row">
+            @foreach (V308CMS.Data.Product prod in Model.RelatedList)
+            {
+                @Html.Action("ProductBlockType1_4", "Block",prod)
+            }
+            </div>
+        </div>
+    </div>
+}
+
+@if (Model.ProductLastest != null && Model.ProductLastest.Count > 0)
+{ 
+    <div class="box-items box-shadow">
+	    <div class="container">
+		    <h4>Sản Phẩm Mới
+		        <a class="next icon-right-open" href="#"></a>
+		        <a class="pre icon-left-open" href="#"></a>
+		    </h4>
+		    <div class="row">
+            @foreach (V308CMS.Data.Product prod in Model.ProductLastest)
+            {
+                @Html.Action("ProductBlockType1_4", "Block",prod)
+            }
+            </div>
+        </div>
+    </div>
+}

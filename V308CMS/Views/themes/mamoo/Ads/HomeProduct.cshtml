@@ -1,0 +1,17 @@
+﻿@if (Model != null) { 
+    <div class="row product-ads">
+        @{int limit = 2;}
+        @foreach (V308CMS.Data.Image adv in Model) {
+            if (limit < 0) {
+                break;
+            }
+            <div class="col-md-@adv.Col col-12">
+                <a class="ads ml-0" href="@adv.Link">
+                    <img src="@adv.LinkImage" class=""/>
+                </a>
+            </div>
+            {limit--;}
+        }
+
+    </div>
+}

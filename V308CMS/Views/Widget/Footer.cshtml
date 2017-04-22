@@ -103,7 +103,7 @@
         <div class="lft-ft">
             <div class="box box-1">
                 <div class="box-title">
-                    Về @TempData["CompanyName"].ToString()
+                    Về @ViewBag.SiteName
                 </div>
                 <div class="box-content box-lst">
                     @foreach (V308CMS.Data.NewsGroupPage it in Model)
@@ -155,7 +155,7 @@
                 <div class="box-content box-lst">
                     @if (@TempData["FaceBookPage"].ToString().Length > 0)
                     {
-                        @Html.Raw("<iframe src=\"http://www.facebook.com/plugins/likebox.php?profile=1&width=300&height=170&connections=10&stream=true&header=true&id="+TempData["FaceBookPage"].ToString()+"\" scrolling='no' frameborder='0' allowtransparency='true' style='border: none; overflow: hidden; width: 256px; height: 120px'></iframe>")
+                        @Html.Raw("<iframe src=\"http://www.facebook.com/plugins/likebox.php?profile=1&width=300&height=170&connections=10&stream=true&header=true&id=" + TempData["FaceBookPage"].ToString() + "\" scrolling='no' frameborder='0' allowtransparency='true' style='border: none; overflow: hidden; width: 256px; height: 120px'></iframe>")
                     }
                     
                 </div>

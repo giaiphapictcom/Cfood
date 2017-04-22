@@ -1,0 +1,38 @@
+﻿<div class="container">
+	<div class="row">
+		<div class="col-12 col-md-3" >
+			<a href="/"><img src="@ViewBag.ThemesPath/images/logo.png" class="logo"></a>
+		</div>
+		<div class="col-12 col-md-9 mt-1 ">
+			<div class="row shortlink mb-3">
+				<div class="col-md-6 col-12 hotline">Hotline: @ViewBag.Hotline</div>
+				<div class="col-5 hidden-sm-down align-self-end text-right">
+					<span class=""><i class="icon-basket"></i>Giỏ hàng của tôi</span>
+					<span class="ml-2"><i class="icon-heart"></i>Danh sách ưa thích</span>
+				</div>
+			</div>
+			<div class="row pt-2 hidden-sm-down">
+				<div class="col-9">
+					<div >
+                        <form action="/tim-kiem.html" name="frm-srch" class="input-group search">
+                          <span class="input-group-addon border-0">Danh Mục</span>
+					      <input type="text" class="form-control border-0 " placeholder="" name="pKey" />
+                          <input id="id-search" type="hidden" name="pVendor" value="2">
+					      <button class="input-group-addon bg-yellow border-0" type="submit"><i class="icon-search"></i></button>
+                        </form>
+					  
+					</div>
+				</div>
+				<div class="col-3">
+					<a href="/chi-tiet-don-hang.html" class="input-group cart">
+					  <span class="input-group-addon bg-yellow2 border-0"><i class="icon-basket text-white"></i></span>
+					  <div class="form-control bg-yellow border-0" id="shopping-cart">
+					  	<span class="title">Giỏ Hàng</span>
+					  	<span class="money"><i class="value">0</i> @ViewBag.MoneyShort</span>	
+					  </div>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>	
