@@ -855,6 +855,7 @@ namespace V308CMS.Data
             {
                 var categorys = from p in entities.ProductType
                          where p.Parent == pProductType
+                         orderby p.Number ascending
                          select p;
                 mList = categorys.Take(Limit).ToList();
                 return mList;

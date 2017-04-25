@@ -822,3 +822,7 @@ footer {
     border-top: 1px solid #1c1c1c;
     padding-top: 30px;
 }
+
+.thumb img {
+    width: 100%;
+}

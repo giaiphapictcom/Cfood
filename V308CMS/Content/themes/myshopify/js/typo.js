@@ -33,20 +33,7 @@
   });
 
   
-  
- jQuery( ".tabs-product-home .icon-bar" ).append( '  <i class="fa fa-bars" aria-hidden="true"></i>' );
-  jQuery(".tabs-product-home ul.nav-tabs").hide();
-  jQuery(".tabs-product-home .icon-bar i").addClass("show-tabs");
-  jQuery(".tabs-product-home .icon-bar i").click(function(){
-    if(jQuery(this).parent().next().is(":visible")){
-      jQuery(this).addClass("show-tabs");
-    }else{
-      jQuery(this).removeClass("show-tabs");
-    }
-    jQuery(this).parent().next().toggle(400);
-  });
-  
-  
+ 
   
   
   jQuery( ".footer-link h3.module-title" ).append( '<i class="arrow_carrot-down"></i>' );
@@ -72,3 +59,18 @@
   });
 
 })(jQuery);
+
+$(document).ready(function () {
+    jQuery(".tabs-product-home .icon-bar").append('  <i class="fa fa-bars" aria-hidden="true"></i>');
+    jQuery(".tabs-product-home ul.nav-tabs").hide();
+    jQuery(".tabs-product-home .icon-bar i").addClass("show-tabs");
+    jQuery(".tabs-product-home .icon-bar i").click(function () {
+        if (jQuery(this).parent().next().is(":visible")) {
+            jQuery(this).addClass("show-tabs");
+        } else {
+            jQuery(this).removeClass("show-tabs");
+        }
+        jQuery(this).parent().next().toggle(400);
+    });
+});
+

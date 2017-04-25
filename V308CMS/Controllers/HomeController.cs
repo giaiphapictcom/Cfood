@@ -108,11 +108,17 @@ namespace V308CMS.Controllers
                 }
 
                 List<ProductType> HomeCategorys = new List<ProductType>();
-                HomeCategorys.Add(productRepos.LayLoaiSanPhamTheoId(179));
-                HomeCategorys.Add(productRepos.LayLoaiSanPhamTheoId(175));
+                
+                HomeCategorys.Add(productRepos.LayLoaiSanPhamTheoId(177));
                 HomeCategorys.Add(productRepos.LayLoaiSanPhamTheoId(176));
+                HomeCategorys.Add(productRepos.LayLoaiSanPhamTheoId(179));
+                HomeCategorys.Add(productRepos.LayLoaiSanPhamTheoId(180));
 
+                HomeCategorys.Add(productRepos.LayLoaiSanPhamTheoId(183));
+                HomeCategorys.Add(productRepos.LayLoaiSanPhamTheoId(175));
+                
                 mIndexPageContainer.ProductTypeList = HomeCategorys;
+                //mIndexPageContainer.ProductTypeList = productRepos.LayProductTypeTheoParentId(0);
 
                 string view = Theme.viewPage("home");
                 if (view.Length > 0) {
