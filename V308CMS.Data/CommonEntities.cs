@@ -1299,6 +1299,7 @@ namespace V308CMS.Data
         public List<ProductType> ProductTypeList { get; set; }
         public List<Product> ProductList { get; set; }
         public List<Product> Products { get; set; }
+        public List<Product> BestSeller { get; set; }
         public List<Brand> Brands { get; set; }
         
         public ProductType ProductType { get; set; }
@@ -1909,5 +1910,17 @@ namespace V308CMS.Data
     {
         public Product Product { get; set; }
         public List<ProductImage> Images { get; set; }
+    }
+
+    /*
+     * QuanNH add 2017-0-8
+     */
+    public class AffiliateHomePage {
+        public NewsGroups VideoCategory { get; set; }
+        public List<News> Videos { get; set; }
+        public List<News> Articles { get; set; }
+        public List<Testimonial> Testimonial { get; set; }
+        public string[] BrandImages { get; set; }
+        public List<Categorys> Categorys { get; set; }
     }
 }

@@ -30,7 +30,7 @@
 @if (@Request.RequestContext.RouteData.Values["Action"] == "Index") {
     if (Model.Recommend != null && Model.Recommend.Count > 0)
     {
-        <div class="box-items box-shadow">
+        <div class="box-items box-shadow hidden-md-down">
             <h4>Gợi Ý
             <a class="next icon-right-open" href="#"></a>
             <a class="pre icon-left-open" href="#"></a>

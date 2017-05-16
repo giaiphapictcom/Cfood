@@ -122,6 +122,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CategoryRepository.cs" />
     <Compile Include="CommonEntities.cs" />
     <Compile Include="CustomContext.cs" />
     <Compile Include="CustomEntities.cs" />
@@ -138,6 +139,7 @@
     <Compile Include="SiteRepository.cs" />
     <Compile Include="SupportRepository.cs" />
     <Compile Include="Test.cs" />
+    <Compile Include="TestimonialRepository.cs" />
     <Compile Include="Theme.cs" />
     <Compile Include="V308HTMLHELPER.cs" />
   </ItemGroup>

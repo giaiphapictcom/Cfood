@@ -84,8 +84,8 @@ namespace V308CMS.Controllers
                     }
                 }
                 Model.LinkCategorys = CategoryPages;
-                Model.PromotionHot = ProductRepos.LaySanPhamKhuyenMai();
-                Model.Recommend = ProductRepos.getProductsRandom(5);
+                Model.PromotionHot = ProductRepos.LaySanPhamKhuyenMai(1,3);
+                Model.Recommend = ProductRepos.getProductsRandom(9);
 
                 NewsGroups videoGroup = NewsRepos.SearchNewsGroup("video");
                 if (videoGroup != null)

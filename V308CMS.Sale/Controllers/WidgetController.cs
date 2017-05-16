@@ -306,6 +306,7 @@ namespace V308CMS.Sale.Controllers
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return Content("<dx></dx>");
             }
             finally

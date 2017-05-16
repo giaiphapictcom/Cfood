@@ -207,6 +207,18 @@ namespace V308CMS.Data
             set;
         }
 
+        public DbSet<Testimonial> Testimonial
+        {
+            get;
+            set;
+        }
+
+        public DbSet<Categorys> Categorys
+        {
+            get;
+            set;
+        }
+
         public DbSet<Brand> Brand
         {
             get;

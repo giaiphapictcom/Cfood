@@ -53,6 +53,7 @@ namespace V308CMS.Data
                 }
                 catch (Exception ex)
                 {
+                    Console.Write(ex);
                     throw;
                 }
             }
@@ -69,6 +70,7 @@ namespace V308CMS.Data
                 }
                 catch (Exception ex)
                 {
+                    Console.Write(ex);
                     throw;
                 }
             }
@@ -86,6 +88,7 @@ namespace V308CMS.Data
                 }
                 catch (Exception ex)
                 {
+                    Console.Write(ex);
                     throw;
                 }
             }
@@ -104,6 +107,7 @@ namespace V308CMS.Data
                 }
                 catch (Exception ex)
                 {
+                    Console.Write(ex);
                     throw;
                 }
             }
@@ -138,6 +142,7 @@ namespace V308CMS.Data
                 }
                 catch (Exception ex)
                 {
+                    Console.Write(ex);
                     throw;
                 }
             }
@@ -172,6 +177,7 @@ namespace V308CMS.Data
                 }
                 catch (Exception ex)
                 {
+                    Console.Write(ex);
                     throw;
                 }
             }
@@ -206,6 +212,7 @@ namespace V308CMS.Data
                 }
                 catch (Exception ex)
                 {
+                    Console.Write(ex);
                     throw;
                 }
             }
@@ -224,6 +231,7 @@ namespace V308CMS.Data
                 }
                 catch (Exception ex)
                 {
+                    Console.Write(ex);
                     throw;
                 }
             }
@@ -241,6 +249,7 @@ namespace V308CMS.Data
                 }
                 catch (Exception ex)
                 {
+                    Console.Write(ex);
                     throw;
                 }
             }
@@ -258,6 +267,7 @@ namespace V308CMS.Data
                 }
                 catch (Exception ex)
                 {
+                    Console.Write(ex);
                     throw;
                 }
             }
@@ -430,7 +440,7 @@ namespace V308CMS.Data
                     throw;
                 }
             }
-            public List<News> LayDanhSachTinTheoGroupIdWithPage(int pSoLuongTin, int pType, int pcurrent)
+            public List<News> LayDanhSachTinTheoGroupIdWithPage(int pSoLuongTin, int pType, int pcurrent=1)
             {
                 List<News> mList = null;
                 try
@@ -585,7 +595,25 @@ namespace V308CMS.Data
                 try
                 {
                     var NewsGroups = from p in entities.NewsGroups
-                                     where p.Name.ToLower().Equals(name.ToLower())
+                                     where p.Name.ToLower().Contains(name.ToLower())
+                                     select p;
+                    return NewsGroups.FirstOrDefault();
+                }
+                catch (Exception ex)
+                {
+                    Console.Write(ex);
+                    throw;
+                }
+            }
+
+            public NewsGroups SearchNewsGroupByAlias(string alias)
+            {
+                try
+                {
+                    string[] words = alias.Split();
+                    var NewsGroups = from p in entities.NewsGroups
+                                     where p.Alias.ToLower().Contains(alias.ToLower())
+                                     //where  ( words.Any(r=> p.Alias.Contains(r)) || words.Any(r => p.Name.Contains(r)) )
                                      select p;
                     return NewsGroups.FirstOrDefault();
                 }

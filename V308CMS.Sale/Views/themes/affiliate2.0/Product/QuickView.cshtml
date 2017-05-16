@@ -1,0 +1,63 @@
+﻿<div class="product-quickview"></div>
+<div class="clearfix" id="quickview-popup" style="display: none">
+    <div class="overlay"></div>
+    <div class="product-content clearfix">
+        <div class="product-img col-xs-6">
+            <div class="quickview-featured-image"></div>
+            <div class="more-view">
+                <ul class="product-photo-thumbs  quickview-more-views-owlslider " data-cycle-carousel-vertical="true">
+                </ul>
+            </div>
+        </div>
+
+        <div class="product-shop col-xs-6">
+            <div class="product-item">
+                <h2 class="product-title"><a>&nbsp;</a></h2>
+
+                <span class="shopify-product-reviews-badge" data-id=""></span>
+
+
+                <div class="prices">
+                    <span class="text-price">Price:</span>
+                    <span class="compare-price"></span>
+                    <span class="price"></span>
+                </div>
+
+
+                <div class="product-infor">
+
+                    <p class="product-inventory">
+                        <label>Availability</label><span></span></p>
+
+
+                    <p class="product-vendor">
+                        <label>Vendor</label><span></span></p>
+
+                </div>
+
+
+                <p class="item-text product-description"></p>
+
+                <div class="product-details clearfix">
+                    <form action="/cart/add" method="post" class="variants">
+                        <select name='id' style="display: none"></select>
+                        <label>Quantity:</label>
+
+                        <input type="text" name="quantity" value="1" class="quantity">
+
+
+
+
+                        <div class="actions">
+                            <button type="button" class="btn add-to-cart-btn hidden">Add to cart</button>
+                            <span>
+                                <input class="btn add-to-cart-btn" title="Add to Cart" type="button" value="Add to Cart" /></span>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+        <a href="javascript:void(0)" class="close-popup"><i class="fa fa-times"></i></a>
+    </div>
+</div>

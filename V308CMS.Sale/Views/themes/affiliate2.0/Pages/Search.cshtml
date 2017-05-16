@@ -1,0 +1,26 @@
+﻿@model V308CMS.Data.SearchPage
+@{
+    Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
+}
+@section header {
+    <title>Tìm Kiếm - @ViewBag.SiteName</title>
+}
+
+ @if (@Model.Code == 1)
+ {
+ }
+ else
+ {
+     <div class="box-items box-shadow mt-0">
+         <div class="container">
+             <h4>Tìm Kiếm Sản Phẩm</h4>
+             <div class="row">
+                 @foreach (V308CMS.Data.Product prod in Model.ProductList)
+                 {
+                     @Html.Action("ProductBlockType1_4", "Block", prod)
+                 }
+             </div>
+         </div>
+     </div>
+     
+ }

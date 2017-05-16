@@ -245,6 +245,19 @@ namespace V308CMS.Controllers
             
         }
 
+        public ActionResult ProductBlockLeft(Product product = null)
+        {
+            try
+            {
+                string view = "~/Views/themes/" + Theme.domain + "/Product/ProductBlockLeft.cshtml";
+                return View(view, product);
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.InnerException.ToString());
+            }
+        }
+
         public ActionResult WidgetLeftAdv()
         {
             CreateRepos();
@@ -375,5 +388,27 @@ namespace V308CMS.Controllers
         }
         #endregion
 
+        #region Adv banner
+
+        public ActionResult CategoryAdv() {
+            try {
+                CreateRepos();
+                var images = imagesRepos.GetImagesByGroupAlias("category-adv");
+                Image img = images.First();
+                string view = "~/Views/themes/" + Theme.domain + "/Banner/CategoryAdv.cshtml";
+                return View(view, img);
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.InnerException.ToString());
+            }
+            finally
+            {
+                DisposeRepos();
+            }
+            
+        }
+        
+        #endregion
     }
 }

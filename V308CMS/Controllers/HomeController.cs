@@ -39,6 +39,7 @@ namespace V308CMS.Controllers
             marketRepo.Dispose();
             accountRepos.Dispose();
             marketRepos.Dispose();
+            newsRepos.Dispose();
         }
         #endregion
         
@@ -85,7 +86,7 @@ namespace V308CMS.Controllers
                     mBestBuyList = productRepos.LaySanPhamBanChay(1, 50);
 
                 if (mBestBuyList.Count() < 1) {
-                    mBestBuyList = productRepos.getProductsRandom(9);
+                    mBestBuyList = productRepos.getProductsRandom(18);
                 }
                 mIndexPageContainer.BestBuyList = mBestBuyList;
 
@@ -101,10 +102,10 @@ namespace V308CMS.Controllers
                 //mIndexPageContainer.BestSoCheList = mBestSoCheList;
                 //mIndexPageContainer.ProductTypeList = mSoCheList;
 
-                mIndexPageContainer.ProductLastest = productRepos.getProductsLastest(10);
+                mIndexPageContainer.ProductLastest = productRepos.getProductsLastest(18);
                 if (mIndexPageContainer.ProductLastest.Count() < 1)
                 {
-                    mIndexPageContainer.ProductLastest = productRepos.getProductsRandom(9);
+                    mIndexPageContainer.ProductLastest = productRepos.getProductsRandom(18);
                 }
 
                 List<ProductType> HomeCategorys = new List<ProductType>();
@@ -196,6 +197,7 @@ namespace V308CMS.Controllers
                 }
                 Model.List = mProductPageList;
                 Model.ProductType = ProductCategory;
+                Model.BestSeller = productRepos.getProductsRandom();
                 //if (mProductList.Count < 40)
                 //    Model.IsEnd = true;
                 Model.Page = nPage;

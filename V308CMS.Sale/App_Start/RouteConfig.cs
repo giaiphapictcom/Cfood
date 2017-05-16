@@ -29,7 +29,7 @@ namespace V308CMS.Sale
             routes.MapRoute("SearchRoute", "tim-kiem.html", new { Controller = "Home", action = "Search" });
             routes.MapRoute("MarketRoute", "{pMarketName}", new { Controller = "Home", action = "Market" });
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-            routes.MapRoute("Default", "{controller}/{action}/{id}", new { controller = "Home", action = "Index", id = UrlParameter.Optional });
+            routes.MapRoute("Default", "{controller}/{action}/{id}", new { controller = "Affiliate", action = "Home", id = UrlParameter.Optional });
             
         }
     }

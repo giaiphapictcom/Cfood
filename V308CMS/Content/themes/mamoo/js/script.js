@@ -2,7 +2,7 @@ $(document).ready(function () {
     $(window).scroll(function () {
 
         var x = $(window).scrollTop();
-        console.log(x);
+        
         if (x > 170) {
             //$('#leftcol').scrollToFixed({ bottom: 0 });
             

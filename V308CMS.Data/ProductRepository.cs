@@ -77,16 +77,17 @@ namespace V308CMS.Data
                 throw;
             }
         }
-        public List<Product> getProductsRandom(int psize = 5)
+        public List<Product> getProductsRandom(int psize = 5,int category_id=0)
         {
             try
             {
-
                 var products = from p in entities.Product
                                where p.Status == true
                                
                                select p;
-
+                if (category_id > 0) { 
+                    products = from p in products where p.Type == category_id select p;
+                }
                 return products.ToList().OrderBy(x => Guid.NewGuid()).Take(psize).ToList();
             }
             catch (Exception ex)

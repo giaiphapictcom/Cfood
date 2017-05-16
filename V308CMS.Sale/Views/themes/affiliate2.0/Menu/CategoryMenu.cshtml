@@ -1,0 +1,48 @@
+﻿@using V308CMS.Common
+@model  List<V308CMS.Data.ProductTypePage>
+@if (Model != null && Model.Count > 0)
+{
+    <ul class="nav navbar-nav nav-verticalmenu">
+        @foreach (V308CMS.Data.ProductTypePage ca in Model)
+        {
+
+            <li class="parent dropdown" >
+                <a href="@url.productCategoryURL(@ca.Name, @ca.Id)" title="@ca.Name">
+                    <span class="menu-icon menu-icon-10">
+                        <i class="fa fa-@ca.Icon"></i>
+                        <span class="menu-titlea">@ca.Name</span>
+                    </span>
+                </a>
+                @if (ca.CategorySub != null & ca.CategorySub.Count() > 0)
+                { 
+                    <i class="fa fa-angle-right"></i>
+                    <div class="dropdown-menu level1">
+                        <div class="dropdown-menu-inner">
+                            <div class="row">
+                                <div class="mega-col col-sm-12">
+                                    <div class="mega-col-inner">
+                                        <ul>
+                                            @foreach (V308CMS.Data.ProductType caSub in ca.CategorySub)
+                                            {
+                                                <li class="">
+                                                    <a class="" href="@url.productCategoryURL(caSub.Name, caSub.ID)" title="@caSub.Name">
+                                                        <span class="">@caSub.Name</span>
+                                                    </a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </li>
+        }
+    </ul>
+}
+
+
+
+
+

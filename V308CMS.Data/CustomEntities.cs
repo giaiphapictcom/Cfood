@@ -597,6 +597,7 @@ namespace V308CMS.Data
         #region[Declare variables]
         private int _ID;
         private string _Name;
+        private string _Alias;
         private bool? _Status;
         private int? _Number;
         private bool? _Visible;
@@ -604,12 +605,14 @@ namespace V308CMS.Data
         private DateTime? _Date;
         private string _Level;
         private string _Link;
+        private string _Description;
 
         #endregion
         #region[Public Properties]
         [Key]
         public int ID { get { return _ID; } set { _ID = value; } }
         public string Name { get { if (String.IsNullOrEmpty(_Name)) return ""; else return _Name; } set { _Name = value; } }
+        public string Alias { get { if (String.IsNullOrEmpty(_Alias)) return ""; else return _Alias; } set { _Alias = value; } }
         public bool? Status { get { if (_Status == null) return false; else return _Status; } set { if (_Status != value) { _Status = value; } } }
         public int? Number { get { if (_Number == null || _Number < 0) return 0; else return _Number; } set { if (_Number != value) { if (_Number < 0) _Number = 0; else _Number = value; } } }
         public bool? Visible { get { if (_Visible == null) return false; else return _Visible; } set { if (_Visible != value) { _Visible = value; } } }
@@ -617,6 +620,7 @@ namespace V308CMS.Data
         public DateTime? Date { get { if (_Date == null) return new DateTime(); else return _Date; } set { if (_Date != value) { _Date = value; } } }
         public string Level { get { if (String.IsNullOrEmpty(_Level)) return ""; else return _Level; } set { _Level = value; } }
         public string Link { get { if (String.IsNullOrEmpty(_Link)) return ""; else return _Link; } set { _Link = value; } }
+        public string Description { get { if (String.IsNullOrEmpty(_Description)) return ""; else return _Description; } set { _Description = value; } }
 
 
         #endregion
@@ -1389,6 +1393,56 @@ namespace V308CMS.Data
 
     }
     //#endregion[ket thuc class tblSiteConfig]
+
+    #region Testimonial Table
+    [Table("testimonial")]
+    public class Testimonial
+    {
+        private int _id;
+        private string _taget;
+        private string _fullname;
+        private string _avartar;
+        private string _mobile;
+        private string _content;
+        private int? _order;
+        private int? _status;
+
+        [Key]
+        public int id { get { return _id; } set { _id = value; } }
+        public string taget { get { if (String.IsNullOrEmpty(_taget)) return ""; else return _taget; } set { _taget = value; } }
+        public string fullname { get { if (String.IsNullOrEmpty(_fullname)) return ""; else return _fullname; } set { _fullname = value; } }
+        public string avartar { get { if (String.IsNullOrEmpty(_avartar)) return ""; else return _avartar; } set { _avartar = value; } }
+        public string mobile { get { if (String.IsNullOrEmpty(_mobile)) return ""; else return _mobile; } set { _mobile = value; } }
+        public string content { get { if (String.IsNullOrEmpty(_content)) return ""; else return _content; } set { _content = value; } }
+        public int? order { get { if (_order == null || _order < 0) return 0; else return _order; } set { if (_order != value) { if (_order < 0) _order = 0; else _order = value; } } }
+        public int? status { get { if (_status == null || _status < 0) return 0; else return _status; } set { if (_status != value) { if (_status < 0) _status = 0; else _status = value; } } }
+
+
+    }
+    #endregion
+
+    #region Categorys Table
+    [Table("categorys")]
+    public class Categorys
+    {
+        private int _id;
+        private string _name;
+        private string _summary;
+        private string _image;
+        private int? _order;
+        private int? _status;
+
+        [Key]
+        public int id { get { return _id; } set { _id = value; } }
+        public string name { get { if (String.IsNullOrEmpty(_name)) return ""; else return _name; } set { _name = value; } }
+        public string image { get { if (String.IsNullOrEmpty(_image)) return ""; else return _image; } set { _image = value; } }
+        public string summary { get { if (String.IsNullOrEmpty(_summary)) return ""; else return _summary; } set { _summary = value; } }
+        public int? order { get { if (_order == null || _order < 0) return 0; else return _order; } set { if (_order != value) { if (_order < 0) _order = 0; else _order = value; } } }
+        public int? status { get { if (_status == null || _status < 0) return 0; else return _status; } set { if (_status != value) { if (_status < 0) _status = 0; else _status = value; } } }
+
+
+    }
+    #endregion
 
 
     #region[Bat dau 1  class tblProductImage]
