@@ -145,6 +145,12 @@ namespace V308CMS.Controllers
                     Model.CategoryWhoSale = WhoSalePage;
                 }
 
+                NewsGroups MenusFooter = NewsRepos.SearchNewsGroup("MenusFooter");
+                if (MenusFooter != null && MenusFooter.ID > 0)
+                {
+                    Model.MenusFooter = NewsRepos.GetNewsGroup(MenusFooter.ID, true, 6);
+                }
+                
                 string view = "~/Views/themes/" + Theme.domain + "/Blocks/Footer.cshtml";
 
                 return View(view, Model);

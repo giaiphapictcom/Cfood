@@ -1,89 +1,177 @@
 ﻿@model V308CMS.Data.PageFooterControl
-@{int footerGroup = 0;}
-<footer id="footer">
-    <div class="about">
-        <div class="container-fluid">
-            <div class="row block-home-icon">
 
-                <div class="col-md-12 col-lg-3 color-block-icons">
-                    <div class=" item-1 block-item">
-                        <div class="block-icon"><i class="fa fa-plane"></i></div>
-                        <div class="static-block">
-                            <div class="block-title">
-                                <h3><span>Chuyển hàng nhanh</span></h3>
-                            </div>
-                            <div class="block-content">cho đơn hàng trên 100k</div>
-                        </div>
+<div id="shopify-section-1476418232986" class="shopify-section index-section" style="margin-top: 20px;">
+    <div class="main-brand brand-bottom" style="padding: 0px 0px 30px 0px">
+        <div class="container">
+            <div class="logo-brand-content">
+                <div id="logo-brand" class="owl-carousel owl-theme">
+                    <div class="item a-center">
+                        <a href="#">
+                            <img src="//cdn.shopify.com/s/files/1/1498/2346/files/9_200x.jpg?v=1476418259" alt="" />
+                        </a>
                     </div>
-                </div>
 
-                <div class="col-md-12 col-lg-3 color-block-icons">
-                    <div class=" item-1 block-item">
-                        <div class="block-icon"><i class="fa fa-refresh"></i></div>
-                        <div class="static-block">
-                            <div class="block-title">
-                                <h3><span>Đổi trả hàng</span></h3>
-                            </div>
-                            <div class="block-content">Hoàn tiền trong 7 ngày</div>
-                        </div>
+                    <div class="item a-center">
+                        <a href="#">
+                            <img src="//cdn.shopify.com/s/files/1/1498/2346/files/10_200x.jpg?v=1476418263" alt="" />
+                        </a>
                     </div>
-                </div>
 
-                <div class="col-md-12 col-lg-3 color-block-icons">
-                    <div class=" item-1 block-item">
-                        <div class="block-icon"><i class="fa fa-comments-o"></i></div>
-                        <div class="static-block">
-                            <div class="block-title">
-                                <h3><span>Hỗ trợ 24/7</span></h3>
-                            </div>
-                            <div class="block-content">Hệ thống online luôn lắng nghe</div>
-                        </div>
+
+                    <div class="item a-center">
+                        <a href="#">
+                            <img src="//cdn.shopify.com/s/files/1/1498/2346/files/11_200x.jpg?v=1476418266" alt="" />
+                        </a>
                     </div>
-                </div>
 
-                <div class="col-md-12 col-lg-3 color-block-icons">
-                    <div class=" item-1 block-item">
-                        <div class="block-icon">
-                            <i class="fa fa-hand-o-up"></i>
-                        </div>
-                        <div class="static-block">
-                            <div class="block-title">
-                                <h3><span>Hàng mới</span></h3>
-                            </div>
-                            <div class="block-content">Hàng về hàng tuần</div>
 
-                        </div>
+
+
+                    <div class="item a-center">
+                        <a href="#">
+                            <img src="//cdn.shopify.com/s/files/1/1498/2346/files/12_200x.jpg?v=1476418270" alt="" />
+                        </a>
                     </div>
+
+
+
+
+                    <div class="item a-center">
+                        <a href="#">
+                            <img src="//cdn.shopify.com/s/files/1/1498/2346/files/13_200x.jpg?v=1476418274" alt="" />
+                        </a>
+                    </div>
+
+
+
+
+                    <div class="item a-center">
+                        <a href="#">
+                            <img src="//cdn.shopify.com/s/files/1/1498/2346/files/14_200x.jpg?v=1476418278" alt="" />
+                        </a>
+                    </div>
+
+
+
+
+                    <div class="item a-center">
+                        <a href="#">
+                            <img src="//cdn.shopify.com/s/files/1/1498/2346/files/15_200x.jpg?v=1476418282" alt="" />
+                        </a>
+                    </div>
+
+
+
+
+                    <div class="item a-center">
+                        <a href="#">
+                            <img src="//cdn.shopify.com/s/files/1/1498/2346/files/12_dc12eb8c-afb1-4a83-b72a-71c84a74a6bd_200x.jpg?v=1482074693" alt="" />
+                        </a>
+                    </div>
+
+
+
+
+                    <div class="item a-center">
+                        <a href="#">
+                            <img src="//cdn.shopify.com/s/files/1/1498/2346/files/10_6c8760cd-7d01-47a5-a05f-f7d5c11b34cb_200x.jpg?v=1482074640" alt="" />
+                        </a>
+                    </div>
+
+
+
+
                 </div>
-
-
             </div>
+            <script>
+                $(document).ready(function () {
+                    $("#logo-brand").owlCarousel({
+                        itemsCustom: [
+                          [0, 1],
+                          [450, 2],
+                          [600, 3],
+                          [700, 4],
+                          [1000, 5],
+                          [1200, 6],
+                          [1400, 7],
+                          [1600, 7]
+                        ],
+                        autoPlay: true,
+                        stopOnHover: false,
+
+                        lazyLoad: false,
+                        lazyFollow: true,
+                        lazyEffect: "fade",
+                        pagination: false,
+
+                        // Navigation
+                        navigation: false,
+                        //navigationText : ['<i class="arrow_carrot-left"></i>','<i class="arrow_carrot-right"></i>'],
+                        //rewindNav : true,
+                        //scrollPerPage : false,
+
+                    });
+                })
+    </script>
         </div>
     </div>
 
-    <div class="home-block-main" style="background-image: url(/Content/images/background-newsletter_2048x.jpg);">
+</div>
+<div class="shopify-section">
+
+
+
+    <div class="footer-logo-top" style="background: #141414">
         <div class="container">
-            <div class="row feature-wrap-content">
-                <div class="col-lg-6 col-xs-12 home-newsletter">
-                    <div class="newsletter">
-                        <h3 class="module-title"><span>Đăng ký nhận Voucher giảm giá</span></h3>
-                        <div class="content">
-                            <form action="" method="post" name="mc-embedded-subscribe-form" target="_blank" class="input-group">
-                                <input type="email" value="" placeholder="DiaChiEmailCuaBan@TenMien.com" name="EMAIL" class="input-group-field" aria-label="Địa chỉ email của bạn">
-                                <span class="input-group-btn">
-                                    <input type="submit" class="btn" value="Đăng ký" name="subscribe">
-                                </span>
-                            </form>
-                        </div>
-                    </div>
+            <div class="row">
+                <div class="col-md-2 col-sm-2 col-xs-12 logo-footer">
+                    <img src="@ViewBag.ThemesPath/images/logo.png" class="logo img-fluid">
                 </div>
-                <div class="col-lg-6 col-xs-12 home-social">
+                <div class="col-md-7 col-sm-7 col-xs-12 link-list-footer">
+                    @if (Model.MenusFooter != null && Model.MenusFooter.Count() > 0)
+                    {
+                        <div class="link-list">
+                            <ul class="">
+                                @foreach (V308CMS.Data.NewsGroups menu in Model.MenusFooter)
+                                {
+                                <li><a href="@menu.Link">@menu.Name</a></li>
+                                }
+                            </ul>
+                        </div>
+                    }
+
+
+
+
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-12 share-social-footer">
+
                     <div class="title-social">FOLLOW US:</div>
                     <div class="footer-icon-share">
-                        <a href="javascript:void(0)"><img src="~/Content/images/social/google.png" /></a>
-                        <a href="javascript:void(0)"><img src="~/Content/images/social/facebook.png" /></a>
-                        <a href="javascript:void(0)"><img src="~/Content/images/social/zalo.png" /></a>
-                        <a href="javascript:void(0)"><img src="~/Content/images/social/youtube.png" /></a>
+
+                        <a href="#">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+
+
+                        <a href="#">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+
+
+                        <a href="#">
+                            <i class="fa fa-google-plus"></i>
+                        </a>
+
+
+                        <a href="#">
+                            <i class="fa fa-instagram"></i>
+                        </a>
+
+
+                        <a href="">
+                            <i class="fa fa-rss"></i>
+                        </a>
 
                     </div>
 
@@ -91,30 +179,25 @@
             </div>
         </div>
     </div>
-    <div class="footer-container  footer-layout-1 m-0">
+    <footer class="footer-container  footer-layout-2" style="margin: 0px 0px 0px 0px; background: #141414">
         <div class="container">
+
             <div class="footer-top">
-                <div class="row">
-                    <div class="col-sm-12 col-md-6 col-lg-3 footer-contact">
+                <div class="row row-eq-height">
+
+                    <div class="col-md-3 col-sm-6 col-xs-12 footer-contact">
                         <h3 class="module-title">Liên hệ với @ViewBag.SiteName</h3>
                         <ul class="content">
-                            <li>
-                                <li>@ViewBag.CompanyHeaderAddress</li>
-                                <li>@Html.Raw(ViewBag.FooterCompanyContact)</li>
-                            </li>
+                            <li></li>
+                            <li>@ViewBag.CompanyHeaderAddress</li>
+                            <li>@Html.Raw(ViewBag.FooterCompanyContact)</li>
                         </ul>
                     </div>
-
                     @if (Model.NewsCategorys != null && Model.NewsCategorys.Count() > 0)
                     {
-                        foreach (V308CMS.Data.NewsGroupPage group in Model.NewsCategorys)
+                        foreach (V308CMS.Data.NewsGroupPage group in Model.NewsCategorys.Take(2))
                         {
-                            footerGroup++;
-                            if (footerGroup > 3)
-                            {
-                                break;
-                            }
-                        <div class="col-md-3 col-sm-3 col-xs-6">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
                             <h3 class="module-title">@group.Name</h3>
                             <ul class="content">
                                 @if (group.NewsList != null && group.NewsList.Count() > 0)
@@ -130,29 +213,58 @@
                         }
                     }
 
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="newsletter">
+                            <h3 class="module-title"><span>Theo Dõi </span></h3>
+
+
+                            <div class="content">
+
+                                <p>Đăng ký để nhận tin tức mới nhất từ chúng tôi</p>
+                                <form action="" method="post" name="mc-embedded-subscribe-form" target="_blank" class="input-group">
+                                    <input value="" placeholder="youremail@domain.com" name="EMAIL" class="input-group-field" aria-label="Email Address" type="email">
+                                    <span class="input-group-btn">
+                                        <input class="btn" value="Đăng ký" name="subscribe" type="submit">
+                                    </span>
+                                </form>
+                            </div>
+                        </div>
+
+
+                    </div>
                 </div>
+
+
+
             </div>
-            <div class="row footer-bottom">
-                <div class="border-footer col-12"></div>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <address>©@DateTime.Now.Year.ToString() Copyright. Đã đăng ký bản quyền</address>
-                </div>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <div class="paypal-footer">
-                        <ul>
-                            <li>
-                                <img src="/Content/images/z_1600x.png" alt="Hình thức thanh toán" class="img-fluid" /></li>
-                        </ul>
+
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+
+                        <address>©@DateTime.Now.Year.ToString() Copyright. Đã đăng ký bản quyền</address>
+
                     </div>
 
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+
+                        <div class="paypal-footer">
+                            <ul>
+                                <li><a href="#">
+                                    <img src="//cdn.shopify.com/s/files/1/1498/2346/files/z_1600x.png?v=1476112615" alt=""></a></li>
+                            </ul>
+                        </div>
+
+                    </div>
                 </div>
-                
             </div>
         </div>
+    </footer>
+</div>
 
-    </div>
 
-</footer>
 <div id="fb-root"></div>
 <script>(function (d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];

@@ -1904,6 +1904,7 @@ namespace V308CMS.Data
         public NewsGroupPage CategoryWhoSale { get; set; }
         //public List<News> ArticleWhoSale { get; set; }
         public List<NewsGroupPage> NewsCategorys { get; set; }
+        public List<NewsGroups> MenusFooter { get; set; }
     }
 
     public class ProductDetail
