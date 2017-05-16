@@ -44,7 +44,7 @@
 
     if (Model.News != null && Model.News.Count > 0)
     {
-        <div class="box-items box-shadow pt-0">
+        <div class="box-items box-shadow pt-0 hidden-md-down">
         @foreach (V308CMS.Data.News video in Model.News)
         {
             @Html.Action("YoutubeBlock", "Block",video)
