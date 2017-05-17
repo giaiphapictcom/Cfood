@@ -1,0 +1,48 @@
+.leftmenu {
+    border-right: 1px solid #ddd;
+    padding: 0;
+}
+ul.adminmenu {
+
+}
+.adminmenu > li > a {
+    font-weight: bold;
+    font-size: 13px;
+    color : red;
+    text-transform: uppercase;
+    line-height: 30px;
+}
+.adminmenu li {
+    border-bottom: 1px solid #ddd;
+    padding: 3px 0;
+}
+.adminmenu li.noborder {
+     border: 0;
+}
+.adminmenu > li > a span {
+    color: orange;
+    width: 15px;
+    margin-right: 5px;
+    margin-left: 10px;
+    font-size: 17px;
+}
+
+.adminmenu li > ul {
+    list-style: none;
+    margin-top: 5px;
+}
+
+.adminmenu li.noborder li:first-child {
+     border-top: 1px solid #ddd;
+}
+
+.adminmenu li > ul a {
+    margin-left: 30px;
+    line-height: 30px;
+    font-size: 14px;
+}
+.adminmenu li > ul a::before {
+    font-family: 'FontAwesome';
+    content: "\f105";
+    margin-right: 5px;
+}

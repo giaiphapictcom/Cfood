@@ -38,8 +38,6 @@ namespace V308CMS.Sale.Controllers
         }
         #endregion
 
-        //
-        // GET: /Affiliate/
 
         public ActionResult Home()
         {
