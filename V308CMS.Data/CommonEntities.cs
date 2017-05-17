@@ -82,7 +82,7 @@ namespace V308CMS.Data
         bool _IsEnd;
         int _TypeId;
         public NewsGroups NewsGroups { get; set; }
-        public List<News> List { get; set; }
+        public List<News> List { get; set; }        
         public int TypeId
         {
             get { return _TypeId; }
@@ -1379,7 +1379,8 @@ namespace V308CMS.Data
             }
         }
     }
-     
+
+    
     public class CategoryPage{
          public List<Product> Products { get; set; }
          public int ProductTotal { get; set; }
@@ -1923,5 +1924,82 @@ namespace V308CMS.Data
         public List<Testimonial> Testimonial { get; set; }
         public string[] BrandImages { get; set; }
         public List<Categorys> Categorys { get; set; }
+    }
+    public class NewsIndexPageContainer
+    {
+
+        public NewsGroups NewsGroups { get; set; }
+        public List<News> ListNews { get; set; }
+        public List<News> ListNewsLastest { get; set; }
+        int _Page;
+        int _NextPage;
+        int _BackPage;
+        bool _IsEnd;
+        public bool IsEnd
+        {
+            get
+            {
+                return _IsEnd;
+            }
+            set
+            {
+                _IsEnd = value;
+            }
+        }
+        public int Page
+        {
+            get
+            {
+                if (_Page >= 1)
+                {
+                    return _Page;
+                }
+                else
+                {
+                    return 1;
+                }
+            }
+            set
+            {
+                _Page = value;
+            }
+        }
+        public int NextPage
+        {
+            get
+            {
+                if (_IsEnd)
+                {
+                    return _Page;
+                }
+                else
+                {
+                    return (_Page + 1);
+                }
+            }
+            set
+            {
+                _NextPage = value;
+            }
+        }
+        public int BackPage
+        {
+            get
+            {
+                if (_Page <= 1)
+                {
+                    return 1;
+                }
+                else
+                {
+                    return (_Page - 1);
+                }
+            }
+            set
+            {
+                _BackPage = value;
+            }
+        }
+
     }
 }
