@@ -303,7 +303,11 @@ namespace V308CMS.Common
                 Regex regex = new Regex("\\p{IsCombiningDiacriticalMarks}+");
                 string strRuler = str.ToLower().Normalize(System.Text.NormalizationForm.FormD);
                 strRuler = regex.Replace(strRuler, String.Empty).Replace('\u0111', 'd').Replace('\u0110', 'D');
-                return Regex.Replace(strRuler, @"[^\w\.-]", "-");
+                string slug =  Regex.Replace(strRuler, @"[^\w\.-]", "-");
+                while (slug.Contains("--"))
+                {
+                    slug = slug.Replace("--", "-");
+                }
             }
             catch
             {
