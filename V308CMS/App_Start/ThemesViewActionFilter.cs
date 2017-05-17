@@ -27,6 +27,9 @@ namespace V308CMS.App_Start
                 ViewBag.FooterCompanyContact = config.SiteConfig("company-footer-contact");
                 ViewBag.CompanyHeaderAddress = config.SiteConfig("company-header-address");
                 ViewBag.FacebookPage = config.SiteConfig("facebook-page");
+                ViewBag.GPlus = config.SiteConfig("gplus");
+                ViewBag.Zalo = config.SiteConfig("zalo");
+                ViewBag.Youtube = config.SiteConfig("youtube-channel");
             }
             catch (Exception ex)
             {
