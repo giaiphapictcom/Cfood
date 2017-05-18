@@ -1,4 +1,5 @@
-﻿@model V308CMS.Data.PageFooterControl
+﻿@using V308CMS.Helpers
+@model V308CMS.Data.PageFooterControl
 <div class="shopify-section">
     <div class="home-block-main" style="background-image: url(/Content/images/background-newsletter_2048x.jpg);">
         <div class="container">
@@ -60,19 +61,23 @@
                             {
                                 break;
                             }
-                        <div class="col-md-3 col-sm-3 col-xs-12">
-                            <h3 class="module-title">@group.Name</h3>
-                            <ul class="content">
-                                 @if (group.NewsList != null && group.NewsList.Count() > 0)
-                                {
-                                    foreach (V308CMS.Data.News news in group.NewsList)
+                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                <h3 class="module-title">@group.Name</h3>
+                                <ul class="content">
+                                     @if (group.NewsList != null && group.NewsList.Any())
                                     {
-                                        <li><a href="javascript:void(0)" title="">@Html.Raw(V308CMS.Common.url.article(news.Title, news.ID))</a></li>
+                                        foreach (V308CMS.Data.News news in group.NewsList)
+                                        {
+                                            <li>
+                                                <a href="@Url.NewsDetailUrl(news)" title="@news.Title">
+                                                   @news.Title
+                                                </a>
+                                            </li>
                                     
+                                        }
                                     }
-                                }
-                            </ul>
-                        </div>
+                                </ul>
+                            </div>
                         }
                     }
                     @if (ViewBag.FacebookPage != null & ViewBag.FacebookPage is string) {

@@ -50,7 +50,8 @@ namespace V308CMS.Controllers
             {
                 NewsItem = newsItem,
                 NextNewsItem = NewsService.GetNext(id),
-                PreviousNewsItem = NewsService.GetPrevious(id)
+                ListNewsMostView = NewsService.GetListNewsMostView(58, ""),
+                 PreviousNewsItem = NewsService.GetPrevious(id)
             };
 
             return View(FindView("News.Detail"), newsDetailViewModel);
@@ -60,8 +61,5 @@ namespace V308CMS.Controllers
         {
             return Content("ok");
         }
-
-    
-
     }
 }

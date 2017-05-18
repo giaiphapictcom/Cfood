@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace V308CMS.Controllers
 {
-    public class VideoController : Controller
+    public class VideoController : BaseController
     {
         //
         // GET: /Video/

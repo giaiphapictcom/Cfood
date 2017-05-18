@@ -7,7 +7,7 @@ namespace V308CMS.Helpers
     {
         public static string NewsIndexUrl(this UrlHelper helper, int page = 1, string controller = "news", string action = "index")
         {
-            return page ==1?"tin-tuc.html": string.Format("tin-tuc/trang-{0}.html",page);
+            return page ==1?"/tin-tuc.html": string.Format("/tin-tuc/trang-{0}.html",page);
         }
         
         public static string NewsDetailUrl(this UrlHelper helper, int newsId, string controller = "news", string action = "detail")
