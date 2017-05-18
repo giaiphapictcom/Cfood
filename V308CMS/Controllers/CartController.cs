@@ -50,7 +50,7 @@ namespace V308CMS.Controllers
                 if (Session["ShopCart"] != null)
                 {
                     var mShopCart = (ShopCart)Session["ShopCart"];
-                    return Json(new { code = 1, count = 1, totalprice = $"{(mShopCart.getTotalPrice()): 0,0}", message = "Không tìm thấy sản phẩm.", html = V308HTMLHELPER.createShopCart(mShopCart) });
+                    return Json(new { code = 1, count = 1, totalprice = String.Format("{0: 0,0}", mShopCart.getTotalPrice()), message = "Không tìm thấy sản phẩm.", html = V308HTMLHELPER.createShopCart(mShopCart) });
                 }
                 else
                 {
