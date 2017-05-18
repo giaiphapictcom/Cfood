@@ -126,6 +126,7 @@ namespace V308CMS.Models
         }
         public int Voucher { get; set; }
         public int ShipPrice { get; set; }
+    
 
     }
 }
