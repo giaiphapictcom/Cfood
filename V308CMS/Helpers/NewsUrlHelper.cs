@@ -25,6 +25,7 @@ namespace V308CMS.Helpers
 
             return $"/tin-tuc/{newsItem.Title.ToSlug()}.{newsItem.ID}";
         }
+        
 
 
     }
