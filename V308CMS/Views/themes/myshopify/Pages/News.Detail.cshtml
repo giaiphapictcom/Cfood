@@ -1,10 +1,21 @@
-﻿@{
+﻿@using V308CMS.Helpers
+@model V308CMS.Data.NewsDetailPageContainer
+@{
     Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
 
 }
 @section header {
-    <title>@ViewBag.SiteName</title>
-
+    <title>@Model.NewsItem.Title</title>
+    <meta name="description" content="@Model.NewsItem.Summary" />
+    <meta name="keywords" content="@Model.NewsItem.Keyword"/>
+    <meta content="@Model.NewsItem.Title - @ViewBag.SiteName" itemprop="headline" property="og:title"/>
+    <meta content="http://video.vnexpress.net/tin-tuc/xa-hoi/do-ng-ba-ng-song-cu-u-long-sat-lo-gan-600-km-bo-song-3586902.html" itemprop="url" property="og:url" />
+    <meta content="http://img.f31.vnecdn.net/2017/05/18/Sequence0100002419Still001-149-7482-1361-1495104217_660x430.jpg" itemprop="thumbnailUrl" property="og:image" />
+    <meta content="Báo cáo của Bộ Nông nghiệp và Phát triển nông thôn nêu, đến nay toàn miền Tây có 393 điểm sạt lở với tổng chiều dài trên 581 km bờ sông, bờ biển. " itemprop="description" property="og:description" />
+    <meta name="tt_site_id" content="1003834" />
+    <meta name="tt_category_id" content="1003004" />
+    <meta name="tt_article_id" content="@Model.NewsItem.ID" />
+    <meta name="tt_page_type" content="article" />
 }
 @section Breadcrumb{
     <div class="clearfix breadcrumb-wrap">
@@ -14,17 +25,11 @@
                     <div class="breadcrumb">
                         <h2></h2>
                         <a href="/" title="Back to the frontpage">Home</a>
-
-
                         <span class="icon"><i class="fa fa-circle"></i></span>
-
-                        <a href="/blogs/news" title="">News</a>
-
+                            <a href="@Url.NewsIndexUrl()" title="Tin tức">Tin tức</a>
                         <span class="icon"><i class="fa fa-circle"></i></span>
                         <strong>
-
-                            Sustainable style: just lovely handbags
-
+                            @Model.NewsItem.Title 
                         </strong>
                     </div>
                 </div>
@@ -32,4 +37,77 @@
         </div>
     </div>
 }
-<h2>News.Detail</h2>
+<div class="row">
+    <!-- Begin sidebar -->
+    <div class="col-xs-12 col-sm-5 col-md-3 sidebar">
+        <div class="widget widget-recent-articles">
+            <div class="widget-title">
+                <h3><span>Bài viết đọc nhiều</span></h3>
+            </div>
+            <div class="widget-content">
+                @if (Model.ListNewsMostView.IsHasData())
+                {
+                    <ul>
+                        @foreach (var newsItem in Model.ListNewsMostView)
+                        {
+                            <li class="article">
+                                <p>
+                                    <a href="@Url.NewsDetailUrl(newsItem)" title="@newsItem.Title">
+                                     @newsItem.Title
+                                    </a>
+                                    <em>@newsItem.Date.ToDdmmyyyyHhm()</em>
+                                </p>
+                            </li>
+                        }
+
+                    </ul>
+                }
+                
+            </div>
+        </div>
+    </div>
+    <!-- End sidebar -->
+    @if (Model.NewsItem != null)
+    {
+        <div class="col-xs-12 col-md-9 col-sm-9 blog-detail col-main">
+            <header class="page-header">
+                <h1>
+                    <a href="@Url.NewsDetailUrl(Model.NewsItem)" title="@Model.NewsItem.Title">
+                        @Model.NewsItem.Title
+                    </a>
+                </h1>
+
+                <div class="blog-time">
+                    <span class="date-time">
+                        <span class="date-sub">Ngày đăng : </span>@Model.NewsItem.Date.ToDdmmyyyyHhm()
+                    </span>
+                </div>
+                <div class="block-images">
+                    <img src="@Model.NewsItem.Image.ToUrl()" alt="@Model.NewsItem.Title"/>
+                </div>
+            </header>
+
+            <div class="rte">
+                @Html.Raw(Model.NewsItem.Detail)
+            </div>
+            @if (Model.NextNewsItem != null || Model.PreviousNewsItem != null)
+            {
+                <div class="action-btn">
+                    @if (Model.PreviousNewsItem != null)
+                    {
+
+                        <span class="left"><a href="@Url.NewsDetailUrl(Model.PreviousNewsItem)" title="@Model.PreviousNewsItem.Title">Tin cũ</a></span>
+                    }
+                    @if (Model.NextNewsItem != null)
+                    {
+                        <span class="right"><a href="@Url.NewsDetailUrl(Model.NextNewsItem)" title="@Model.NextNewsItem.Title">Tin mới</a></span>
+
+                    }
+                </div>
+
+            }
+        </div>
+    }
+
+   
+</div>

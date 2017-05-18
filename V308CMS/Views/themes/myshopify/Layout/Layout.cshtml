@@ -10,7 +10,10 @@
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="shortcut icon" href="@ViewBag.ThemesPath/images/favicon.png" type="image/png">
-    <link rel="icon" href="@ViewBag.ThemesPath/images/favicon.png" type="image/png" />
+    <link rel="icon" href="@ViewBag.ThemesPath/images/favicon.png" type="image/png"/>
+    <meta content="website" property="og:type"/>
+    <meta content="@ViewBag.SiteName" property="og:site_name" />
+     
     @RenderSection("header", false)
     @Html.Action("Resources", "Block")
     <script>(function (d, s, id) {
