@@ -24,7 +24,7 @@ namespace V308CMS.Controllers
                     return Json(new
                     {
                         code = 1,
-                        totalprice = $"{shoppingCart.SubTotal: 0,0}",
+                        totalprice = String.Format("{0: 0,0}", shoppingCart.SubTotal),
                         message = "Sản phẩm đã được thêm vào giỏ hàng thành công."
                     });
 
