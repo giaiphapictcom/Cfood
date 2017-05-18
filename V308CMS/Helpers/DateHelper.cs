@@ -9,7 +9,7 @@ namespace V308CMS.Helpers
     {
         public static string ToDdmmyyyyHhm(this DateTime? dateTime)
         {
-            return dateTime?.ToString("dd/MM/yyyy hh:mm") ?? "";
+            return dateTime.HasValue? dateTime.Value.ToString("dd/MM/yyyy hh:mm") : "";
 
 
         }
