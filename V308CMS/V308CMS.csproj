@@ -1865,10 +1865,11 @@
     <Content Include="Views\themes\mamoo\Product_div\Type1_4.cshtml" />
     <Content Include="Views\themes\mamoo\Product_div\Type2.cshtml" />
     <Content Include="Views\themes\mamoo\Product_div\Youtube.cshtml" />
-    <Content Include="Views\themes\myshopify\Pages\news.index.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\News.Index.cshtml" />
     <Content Include="Views\themes\myshopify\Product\ProductBlockLeft.cshtml" />
     <Content Include="Views\themes\myshopify\Banner\CategoryAdv.cshtml" />
     <Content Include="Views\themes\myshopify\Pages\contact.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\News.Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

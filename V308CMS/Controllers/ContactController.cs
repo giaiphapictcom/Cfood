@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using V308CMS.Models;
 
 namespace V308CMS.Controllers
 {
@@ -16,8 +17,11 @@ namespace V308CMS.Controllers
             return View(FindView("Contact"));
         }
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult HandleIndex()
+        public ActionResult HandleIndex(ContactModels contact)
         {
+            if(ModelState.IsValid){
+
+            }
             return Content("ok");
         }
 

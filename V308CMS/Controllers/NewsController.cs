@@ -38,7 +38,7 @@ namespace V308CMS.Controllers
             newsIndexViewModel.ListNewsMostView = NewsService.GetListNewsMostView(type, level);
             return View(FindView("News.Index"), newsIndexViewModel);            
         }
-
+    
         public ActionResult Detail(int id)
         {
             var newsItem = NewsService.LayTinTheoId(id);
@@ -46,8 +46,12 @@ namespace V308CMS.Controllers
             {
                 return HttpNotFound("Tin này không tồn tại trên hệ thống");
             }
+            var newsDetailViewModel = new NewsDetailPageContainer();
+            newsDetailViewModel.NewsItem = newsItem;
+            newsDetailViewModel.NextNewsItem = NewsService.GetNext(id);
+            newsDetailViewModel.PreviousNewsItem = NewsService.GetPrevious(id);
 
-            return View(FindView("Detail"), newsItem);
+            return View(FindView("News.Detail"), newsDetailViewModel);
         }
 
     }

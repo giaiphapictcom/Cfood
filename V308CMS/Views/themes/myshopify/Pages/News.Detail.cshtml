@@ -1,0 +1,35 @@
+﻿@{
+    Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
+
+}
+@section header {
+    <title>@ViewBag.SiteName</title>
+
+}
+@section Breadcrumb{
+    <div class="clearfix breadcrumb-wrap">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="breadcrumb">
+                        <h2></h2>
+                        <a href="/" title="Back to the frontpage">Home</a>
+
+
+                        <span class="icon"><i class="fa fa-circle"></i></span>
+
+                        <a href="/blogs/news" title="">News</a>
+
+                        <span class="icon"><i class="fa fa-circle"></i></span>
+                        <strong>
+
+                            Sustainable style: just lovely handbags
+
+                        </strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<h2>News.Detail</h2>

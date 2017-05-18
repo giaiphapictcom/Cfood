@@ -692,6 +692,34 @@ namespace V308CMS.Data
                     throw;
                 }
             }
+            public News GetNext(int id)
+            {
+
+              
+                try
+                {
+                   return entities.News.SkipWhile(news => news.ID != id).Skip(1).First();
+
+                }
+                catch (Exception)
+                {
+                 return null;
+                }                
+
+            }
+            public News GetPrevious(int id)
+            {
+                try
+                {
+                    return entities.News.TakeWhile(news => news.ID != id).Last();
+                }
+                catch (Exception)
+                {
+
+                 return null;
+                }
+                
+            }
 
         }
 }

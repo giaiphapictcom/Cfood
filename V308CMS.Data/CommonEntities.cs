@@ -1925,6 +1925,14 @@ namespace V308CMS.Data
         public string[] BrandImages { get; set; }
         public List<Categorys> Categorys { get; set; }
     }
+    public class NewsDetailPageContainer
+    {
+        public News NewsItem { get; set; }
+        public News NextNewsItem { get; set; }
+        public News PreviousNewsItem { get; set; }
+        public List<News> ListNewsMostView { get; set; }
+    
+    }
     public class NewsIndexPageContainer
     {
         public NewsGroups NewsGroups { get; set; }
