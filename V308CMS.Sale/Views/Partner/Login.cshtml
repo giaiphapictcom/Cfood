@@ -1,0 +1,56 @@
+﻿@using System.Text.RegularExpressions;
+@{
+    Layout = "~/Views/Affiliate/Layout/Default.cshtml";
+    string PageTitle = "Đăng nhập hệ thống";
+}
+@section header {
+    <title>@PageTitle</title>
+    <link href="@ViewBag.ThemesPath/css/login.css" rel="stylesheet" type="text/css" />
+}
+<div class="shopify-section loginform">
+    <div class="container-block m-0">
+        <div class="container border-col">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12 article-home-full">
+                    <h3><span>@PageTitle</span></h3>
+                </div>
+                <div class="col-md-7 col-sm-12 col-xs-12 SocialAreaRight">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="inputEmail" class="control-label col-xs-2">Email</label>
+                            <div class="col-xs-10">
+                                <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword" class="control-label col-xs-2">Password</label>
+                            <div class="col-xs-10">
+                                <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-offset-2 col-xs-10">
+                                    <a href="#">Quên mật khẩu</a>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-offset-2 col-xs-10">
+                                <button type="submit" class="btn btn-primary">Đăng nhập</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-offset-2 col-xs-10">
+                                    Bạn chưa là thành viên ? <a href="#">Đăng ký ngay!</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-5 col-sm-12 col-xs-12 ">
+                    <a href="#" class="btn btn-facebook"><span class="fa fa-facebook"></span> Facebook</a>
+                    <a href="#" class="btn btn-google"><span class="fa fa-google-plus"></span> Google</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -912,3 +912,31 @@ background-color: #e60f1e;
 color: #ffffff;
 width: 100%;
 } 
+
+
+@media (max-width: 767px) {
+    .footer-logo-top .link-list-footer {
+        margin-top: 15px;
+    }
+    .footer-logo-top .row > div {
+        text-align: center;
+    }
+    .footer-logo-top .link-list-footer ul {
+        line-height: 25px;
+    }
+    .footer-logo-top .footer-icon-share {
+        text-align: center;
+    }
+
+    .main-content .col-12 .box-items {
+        padding-right : 2px;
+        padding-left: 2px;
+    }
+    .box-items .item-type-1 .detail {
+        width: 100%;
+    }
+    .box-items .item-type-1  {
+        padding-right : 0;
+        padding-left: 0;
+    }
+}

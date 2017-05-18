@@ -6,7 +6,7 @@ body .zoomContainer{display:block!important;}
 .zoomContainer{display:none!important;}
 html,
 body { font-size: 16px; color: #332f30; }
-a { color:#1f1f1f; }
+a { color:#00aeef; }
 a:hover, a:active,#filter-sidebar .sidebar-links li a:hover,.product-tabs .nav.nav-tabs > li.active > a,.product-tabs .nav.nav-tabs > li > a:hover,
 .home-social .footer-icon-share a,.footer-bottom address a { color:#00aeef; }
 .blog-detail .user-tags li  { color:#000000; }

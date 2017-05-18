@@ -13,6 +13,7 @@
     <link rel="icon" href="@ViewBag.ThemesPath/images/favicon.png" type="image/png" />
     @RenderSection("header", false)
     @Html.Action("Resources", "Theme")
+    <link href="@ViewBag.ThemesPath/css/backend.css" rel="stylesheet" type="text/css" />
 </head>
 <body 
     @if (@Request.RequestContext.RouteData.Values["Action"] == "Index")
@@ -28,12 +29,21 @@
         <div id="shopify-section-header" class="shopify-section">
             @Html.Action("Header", "Theme")
         </div>
+        <div class="container-block m-0" data-section-id="1475814045391" data-section-type="slideshow-section">
+            <main class="container main-content border-col">
+                <div class="row">
+                    <div class="col-md-3 col-sm-3 col-xs-12 leftmenu">
+                         @Html.Action("AdminMenu", "Theme")
+                    </div>
+                    <div class="col-md-9 col-sm-9 col-xs-12 mainbody">
+                        @RenderBody()
+                    </div>
+                     
+                </div>
+            </main>
 
-        <main class="container main-content">
-            @RenderBody()
-        </main>
-
-        @Html.Action("Footer", "Theme")
+            @Html.Action("Footer", "Theme")
+        </div>
     </div>
 </body>
 </html>

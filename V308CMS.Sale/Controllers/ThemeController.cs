@@ -13,7 +13,7 @@ namespace V308CMS.Sale.Controllers
 
         static string MainController = "";
         public ThemeController() {
-            
+            MainController = "Affiliate";
         }
 
         #region Repository
@@ -78,10 +78,13 @@ namespace V308CMS.Sale.Controllers
 
         public ActionResult Resources()
         {
-
-            MainController = ControllerContext.ParentActionViewContext.RouteData.GetRequiredString("controller");
             return View("~/Views/" + MainController + "/Elements/Resources.cshtml");
         }
+        public ActionResult AdminMenu()
+        {
+            return View("~/Views/" + MainController + "/Elements/AdminMenu.cshtml");
+        }
+        
 
         public ActionResult Header()
         {
@@ -90,7 +93,6 @@ namespace V308CMS.Sale.Controllers
             {
                 var menu = NewsRepos.GetNewsGroup();
 
-                MainController = ControllerContext.ParentActionViewContext.RouteData.GetRequiredString("controller");
                 string view = "~/Views/" + MainController + "/Elements/Header.cshtml";
                 return View(view, menu);
             }
@@ -140,7 +142,6 @@ namespace V308CMS.Sale.Controllers
                     Model.CategoryWhoSale = WhoSalePage;
                 }
 
-                MainController = ControllerContext.ParentActionViewContext.RouteData.GetRequiredString("controller");
                 string view = "~/Views/" + MainController + "/Elements/Footer.cshtml";
                 return View(view, Model);
             }
@@ -158,7 +159,6 @@ namespace V308CMS.Sale.Controllers
 
         public ActionResult HomeSlides()
         {
-            MainController = ControllerContext.ParentActionViewContext.RouteData.GetRequiredString("controller");
             string view = "~/Views/" + MainController + "/Blocks/HomeSlides.cshtml";
             return View(view);
         }
