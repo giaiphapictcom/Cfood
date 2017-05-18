@@ -6,8 +6,9 @@
   
 }
 @section header {
-    <title>@ViewBag.SiteName</title>
-    
+    <title>Tin tức</title>
+    <meta name="twitter:title" content="Mpstart, Tin tức">
+    <meta name="twitter:description" content="Tin tức, thương mại điện tử, điện thoại">
 }
 @section Breadcrumb{
     <div class="clearfix breadcrumb-wrap">
@@ -32,7 +33,7 @@
             <div class="content-blog">                
                 @if (Model.ListNews.IsHasData()){
                     <ul class="list-blog row">
-                        @foreach (News newsItem in Model.ListNews)
+                        @foreach (var newsItem in Model.ListNews)
                         {
                             <li class="col-xs-12">
                                 <h3>
@@ -129,7 +130,7 @@
                             </div>
                         </div>
                     }
-}
+                }
 
             </div>
         </div>
@@ -138,7 +139,7 @@
             @if (Model.ListNewsMostView.IsHasData()){
                 <div class="widget widget-recent-articles">
                     <div class="widget-title">
-                        <h3><span>Bài viết đọc  nhiều</span></h3>
+                        <h3><span>Bài viết đọc nhiều</span></h3>
                     </div>
                     <div class="widget-content">
 

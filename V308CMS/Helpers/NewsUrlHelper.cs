@@ -22,8 +22,18 @@ namespace V308CMS.Helpers
         public static string NewsDetailUrl(this UrlHelper helper, News newsItem, string controller = "news",
             string action = "detail")
         {
-
+        
             return $"/tin-tuc/{newsItem.Title.ToSlug()}.{newsItem.ID}";
+        }
+
+        public static string NewsTagUrl(this UrlHelper helper, string tag,int page =1, string controller = "news",
+            string action = "ListByTag")
+        {
+            return helper.Action(action, controller, new
+            {
+                tag,
+                page
+            });
         }
         
 
