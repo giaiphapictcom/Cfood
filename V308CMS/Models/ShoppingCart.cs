@@ -124,8 +124,10 @@ namespace V308CMS.Models
                 return subTotalAfterService;
             }
         }
+        //Voucher code
         public int Voucher { get; set; }
         public int ShipPrice { get; set; }
+
 
     }
 }
