@@ -253,7 +253,7 @@ namespace V308CMS.Controllers
                     //MarketList = productRepos.getByPageSizeMarketId(1, 6, mMarket.ID);
                     //mProductDetailPage.MarketList = MarketList;
 
-                    RelatedList = productRepos.LayDanhSachSanPhamLienQuan((int)mProduct.Type, 6);
+                    RelatedList = productRepos.LayDanhSachSanPhamLienQuan((int)mProduct.Type, 12,true);
                     mProductDetailPage.RelatedList = RelatedList;
 
                     //DiscountList = productRepos.LaySanPhamKhuyenMai(1, 6);
@@ -403,24 +403,25 @@ namespace V308CMS.Controllers
             }
         }
 
-        public ActionResult News(int pPage = 1, int pType = 1)
+        public ActionResult News(int pPage = 1, int pType = 58)
         {
             CreateRepos();
             V308CMSEntities mEntities = new V308CMSEntities();
             NewsRepository newsRepository = new NewsRepository(mEntities);
             NewsPage mCommonModel = new NewsPage();
             StringBuilder mStr = new StringBuilder();
-            List<News> mList;
-            NewsGroups mNewsGroups;
             try
             {
                 //lay chi tiet loai tin tuc
-                mNewsGroups = newsRepository.LayTheLoaiTinTheoId(pType);
+                var mNewsGroups = newsRepository.LayTheLoaiTinTheoId(pType);
                 if (mNewsGroups != null)
                 {
                     mCommonModel.NewsGroups = mNewsGroups;
                     //lay chi tiet san pham
-                    mList = newsRepository.LayTinTheoTrangAndGroupIdAndLevel(pPage, 10, pType, mNewsGroups.Level);
+                    var mList = newsRepository.LayTinTheoTrangAndGroupIdAndLevel(pPage, 10, pType, mNewsGroups.Level);
+                    
+
+
                     if (mList.Count > 0)
                     {
                         foreach (News it in mList)
@@ -457,6 +458,7 @@ namespace V308CMS.Controllers
                             }
 
                         }
+                        
                         if (mList.Count < 10)
                             mCommonModel.IsEnd = true;
                         mCommonModel.Page = pPage;
@@ -466,6 +468,11 @@ namespace V308CMS.Controllers
                     {
                         mCommonModel.Html = "Không tìm thấy sản phẩm";
                     }
+                }
+                string view = Theme.viewPage("News.Index");
+                if (view.Length > 0)
+                {
+                    return View(view, mCommonModel);
                 }
                 return View(mCommonModel);
             }
@@ -521,197 +528,13 @@ namespace V308CMS.Controllers
         }
         #region shopping cart actions
 
-        public ActionResult ShopCartDetail(int pId = 0)
-        {
-            V308CMSEntities mEntities = new V308CMSEntities();
-            ProductRepository productRepository = new ProductRepository();
-            AccountRepository accountRepository = new AccountRepository();
-            ShopCartPage mShopCartPage = new ShopCartPage();
-            Account mAccount = null;
-            try
-            {
-                ShopCart mShopCart;
-                if (Session["ShopCart"] != null)
-                {
-                    mShopCart = (ShopCart)Session["ShopCart"];
-                    //
-                    if (HttpContext.User.Identity.IsAuthenticated == true && Session["UserId"] != null)
-                    {
-                        mAccount = accountRepository.LayTinTheoId((int)Session["UserId"]);
-                    }
-                    if (mAccount == null)
-                        mAccount = new Account();
-                    mShopCart.Account = mAccount;
-                    mShopCartPage.ShopCart = mShopCart;
-                }
-
-                string view = Theme.viewPage("ShopCardDetail");
-                if (view.Length > 0)
-                {
-                    return View(view, mShopCartPage);
-                }
-
-                return View(mShopCartPage);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("error :", ex);
-                return Content("<h2>Có lỗi xảy ra trên hệ thống ! Vui lòng thử lại sau.</h2>");
-            }
-            finally
-            {
-                //accountRepository.Dispose();
-                //productRepository.Dispose();
-                //mEntities.Dispose();
-            }
-        }
-        [HttpPost]
-        public JsonResult addToShopCart(int pNumber = 1, int pId = 0, int pUnit = 0)
-        {
-            //V308CMSEntities mEntities = new V308CMSEntities();
-            //AccountRepository accountRepository = new AccountRepository(mEntities);
-            //ProductRepository productRepository = new ProductRepository(mEntities);
-            try
-            {
-                ShopCart mShopCart;
-                Product mProduct;
-                if (Session["ShopCart"] != null)
-                    mShopCart = (ShopCart)Session["ShopCart"];
-                else
-                    mShopCart = new ShopCart();
-                //thuc hien them muon do vao gio hang
-                //lay chi tiet san pham
-                mProduct = productRepos.LayTheoId(pId);
-                if (mProduct != null)
-                {
-                    mProduct.Number = pNumber;
-                    mProduct.Unit = pUnit;
-                    mShopCart.List.Add(mProduct);
-                    Session["ShopCart"] = mShopCart;
-                    mProduct.Buy = (mProduct.Buy + 1);
-                    return Json(new { code = 1, totalprice = String.Format("{0: 0,0}", mShopCart.getTotalPrice()), message = "Sản phẩm đã được thêm vào giỏ hàng thành công." });
-                }
-                else
-                    return Json(new { code = 0, message = "Không tìm thấy sản phẩm." });
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("error :", ex);
-                return Json(new { code = 0, message = "Có lỗi xảy ra. Vui lòng thử lại." });
-            }
-            finally
-            {
-                //mEntities.Dispose();
-                //accountRepository.Dispose();
-            }
-
-        }
-        [HttpPost]
-        [ValidateInput(false)]
-        public JsonResult getShopCart()
-        {
-            V308CMSEntities mEntities = new V308CMSEntities();
-            AccountRepository accountRepository = new AccountRepository(mEntities);
-            ProductRepository productRepository = new ProductRepository(mEntities);
-            try
-            {
-                ShopCart mShopCart;
-                if (Session["ShopCart"] != null)
-                {
-                    mShopCart = (ShopCart)Session["ShopCart"];
-                    return Json(new { code = 1, count = 1, totalprice = String.Format("{0: 0,0}", (mShopCart.getTotalPrice())), message = "Không tìm thấy sản phẩm.", html = V308HTMLHELPER.createShopCart(mShopCart) });
-                }
-                else
-                {
-                    return Json(new { code = 0, count = 1, totalprice = 0, message = "Không tìm thấy sản phẩm." });
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("error :", ex);
-                return Json(new { code = 0, count = 1, totalprice = 0, message = "Có lỗi xảy ra. Vui lòng thử lại." });
-            }
-            finally
-            {
-                //mEntities.Dispose();
-                //accountRepository.Dispose();
-            }
-
-        }
+        
+       
         
         #endregion
 
         
-        [HttpPost]
-        [ValidateInput(false)]
-        public JsonResult updateShopCart(int? pId, int pCount, string pVoucher, int pType = 0)
-        {
-            V308CMSEntities mEntities = new V308CMSEntities();
-            AccountRepository accountRepository = new AccountRepository(mEntities);
-            ProductRepository productRepository = new ProductRepository(mEntities);
-            FileRepository fileRepository = new FileRepository(mEntities);
-            File mFile;
-            int mVoucher = 0;
-            try
-            {
-                ShopCart mShopCart;
-                if (Session["ShopCart"] != null)
-                {
-                    mShopCart = (ShopCart)Session["ShopCart"];
-                    if (pType == 0)
-                    {
-                        foreach (Product it in mShopCart.List)
-                        {
-                            if (it.ID == pId)
-                            {
-                                it.Number = pCount;
-                                break;
-                            }
-
-                        }
-                    }
-                    else if (pType == 1)
-                    {
-                        //pVoucher
-                        mShopCart.VoucherName = pVoucher;
-                        mFile = fileRepository.GetFileByTypeIdAndName(1, pVoucher, 1).FirstOrDefault();
-                        if (mFile != null)
-                            mVoucher = (int)mFile.Value;
-                        else
-                            mVoucher = 0;
-                        mShopCart.Voucher = mVoucher;
-                    }
-                    else if (pType == 2)
-                    {
-                        foreach (Product it in mShopCart.List)
-                        {
-                            if (it.ID == pId)
-                            {
-                                mShopCart.List.Remove(it);
-                                break;
-                            }
-                        }
-                    }
-                    Session["ShopCart"] = mShopCart;
-                    return Json(new { code = 1, message = "Không tìm thấy sản phẩm." });
-                }
-                else
-                {
-                    return Json(new { code = 0, count = 1, totalprice = 0, message = "Không tìm thấy sản phẩm." });
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("error :", ex);
-                return Json(new { code = 0, count = 1, totalprice = 0, message = "Có lỗi xảy ra. Vui lòng thử lại." });
-            }
-            finally
-            {
-                mEntities.Dispose();
-                accountRepository.Dispose();
-            }
-
-        }
+        
         [HttpPost]
         public JsonResult ThucHienThanhToan(string pFullName, string pEmail, string pMobile, string pAddress, string pAddressDelivery, string pCity, string pDistrict, string pTimeDelivery, string pDayDelivery)
         {
@@ -1026,6 +849,8 @@ namespace V308CMS.Controllers
             }
 
         }
+
+     
        
     }
 

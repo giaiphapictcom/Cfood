@@ -9,7 +9,19 @@ namespace V308CMS.Controllers
 {
     public class NewsController : BaseController
     {
-      
+        private const int PageSize = 10;
+
+        private int GetTotalPage(int totalItem)
+        {
+            int totalPage = totalItem / PageSize;           
+            if (totalItem % PageSize != 0)
+            {
+                totalPage += 1;
+            }
+            return totalPage;
+        }
+
+       
         public ActionResult Index(int type = 58, int page = 1)
         {
             var newsIndexViewModel = new NewsIndexPageContainer();
@@ -20,9 +32,10 @@ namespace V308CMS.Controllers
                 newsIndexViewModel.NewsGroups = newsGroup;
                 level = newsGroup.Level;
             }
-            newsIndexViewModel.Page = page;
             newsIndexViewModel.ListNews = NewsService.LayTinTheoTrangAndGroupIdAndLevel(page, 10, type, level);
-            newsIndexViewModel.ListNewsLastest = NewsService.GetListNewsLastest(type, level);
+            newsIndexViewModel.Page = page;
+            newsIndexViewModel.TotalPage = GetTotalPage(newsIndexViewModel.ListNews.Count);
+            newsIndexViewModel.ListNewsMostView = NewsService.GetListNewsMostView(type, level);
             return View(FindView("News.Index"), newsIndexViewModel);            
         }
 

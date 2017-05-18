@@ -1,4 +1,5 @@
 ﻿@model V308CMS.Data.ProductCategoryPageContainer
+@using System.Data.Entity.Migrations.Infrastructure
 @using V308CMS.Data
 @using V308CMS.Common
 
@@ -23,7 +24,7 @@
                                         @{
                                             string active = "";
                                         }
-                                        @if (Model.List != null & Model.List.Count() > 0)
+                                        @if (Model.List != null & Model.List.Any())
                                         { 
                                             <div class="tabs-product col-xs-2 col-sm-2 col-md-7">
                                                 <div class="icon-bar"></div>
@@ -52,7 +53,7 @@
                                             <img src="@ImageHelper.Crop(Model.ProductType.Image, 445,500)" alt="" />
                                         </a>
                                     </div>
-                                    @if (Model.Brands != null & Model.Brands.Count() > 0) {
+                                    @if (Model.Brands != null && Model.Brands.Count() > 0) {
                                         <div class="brand-image">
                                         @{var brands = Model.Brands.Take(6);}
                                         @foreach (Brand brand in brands)
@@ -73,7 +74,7 @@
                                             
                                             <div class="tab-pane tabs-content fade   @active" id="@subCate.Id">
                                                 <div class="carousel slide productCateCarousel" id="@subCate.Id-caro">
-                                                    @if (subCate.List != null & subCate.List.Count() > 0)
+                                                    @if (subCate.List != null & subCate.List.Any())
                                                     {
                                                         int line = 0;
                                                         var products = subCate.List.Take(6);
@@ -86,7 +87,7 @@
                                                             }
                                                             
                                                             <div class="item">
-                                                                <div class="grid-3  grid-item product-item product-hover product-review" id="product-7824318409">
+                                                                <div class="grid-3  grid-item product-item product-hover product-review" id="product-@prod.ID">
                                                                     <div class="product-image ">
                                                                         @if (prod.SaleOff > 0)
                                                                         { 
@@ -94,10 +95,20 @@
                                                                         }
                                                                         <a href="@url.productURL(prod.Name, prod.ID)" class="grid-image">
                                                                             <img class="feature-images" src="@ImageHelper.Crop(prod.Image, 250)" alt="@prod.Name">
+                                                                            @if (prod.ProductImages.Count > 0)
+                                                                            {
+                                                                                <span class="product-hover" data-idproduct="@prod.ID">
+
+                                                                                    <img class="img-responsive" alt="@prod.Name" src="@ImageHelper.Crop(@prod.ProductImages.First().Name, 250)">
+                                                                                </span>
+                                                                            }
                                                                         </a>
 
+
                                                                         <div class="quickview-button">
-                                                                            <a href="javascript:void(0)" id="aerocool-dead-silence-gaming" data-toggle="tooltip" data-placement="top" title="@prod.Name" class="sca-qv-button btn">Xem nhanh</a>
+                                                                            <a href="javascript:void(0)" id="aerocool-dead-silence-gaming" data-toggle="tooltip" data-placement="top" title="@prod.Name" class="sca-qv-button btn">
+                                                                                @AppSetting.ProductTextView
+                                                                            </a>
                                                                         </div>
                                                                     </div>
                                                                     <div class="product-content">
@@ -114,15 +125,15 @@
                                                                                 }
                                                                             </p>
                                                                         </div>
-                                                                        <span class="shopify-product-reviews-badge" data-id="7824318409"></span>
+                                                                        <span class="shopify-product-reviews-badge" data-id="@prod.ID"></span>
                                                                         <div class="add-to-link">
                                                                             <div class="add-to-cart">
+                                                                                <a href="javascript:void(0);"
+                                                                                   class="btn add-to-cart-btn" add-cart="@prod.ID" title="Thêm vào giỏ hàng">
+                                                                                    Thêm vào giỏ hàng
+                                                                                </a>
 
-                                                                                <a href="javascript:void(0);" class="btn add-to-cart-btn" add-cart="@prod.ID" title="Thêm vào giỏ hàng">Thêm vào giỏ hàng</a>
                                                                             </div>
-
-
-
                                                                             <a class="wishlist btn" href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="Yêu thích"><span><i class="fa fa-heart" aria-hidden="true"></i></span></a>
 
 

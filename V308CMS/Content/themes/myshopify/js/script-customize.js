@@ -52,24 +52,24 @@ Shopify.theme.style = { "id": null, "handle": null };
 //]]>
 
 
-$(document).ready(function () {
+$(document).ready(function() {
 
-    $('.tabs-product .nav-tabs a').click(function (e) {
+    $('.tabs-product .nav-tabs a').click(function(e) {
         e.preventDefault()
         $(this).tab('show')
     })
     $(".productCateCarousel").owlCarousel({
         itemsCustom: [
-          [320, 1],
-          [360, 1],
-          [450, 2],
-          [600, 2],
-          [700, 2],
-          [800, 2],
-          [1000, 3],
-          [1200, 3],
-          [1400, 3],
-          [1600, 3]
+            [320, 1],
+            [360, 1],
+            [450, 2],
+            [600, 2],
+            [700, 2],
+            [800, 2],
+            [1000, 3],
+            [1200, 3],
+            [1400, 3],
+            [1600, 3]
         ],
         autoPlay: false,
         stopOnHover: false,
@@ -87,7 +87,7 @@ $(document).ready(function () {
 
     });
 
-})
+});
 
 
 
@@ -201,8 +201,6 @@ var selectCallbackQuickview = function (variant, selector) {
     }
 
 };
-
-
 
 
 // Pick your format here:  

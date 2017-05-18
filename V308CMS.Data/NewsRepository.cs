@@ -146,8 +146,42 @@ namespace V308CMS.Data
                     throw;
                 }
             }
+        public List<News> GetListNewsMostView(int pTypeId, string pLevel, int psize = 10)
+        {
+            List<News> mList = null;
+            int[] mIdGroup;
+            try
+            {
+                if (pTypeId > 0)
+                {
+                    //lay tat ca cac ID cua group theo Level
+                    mIdGroup = (from p in entities.NewsGroups
+                                where p.Level.Substring(0, pLevel.Length).Equals(pLevel)
+                                select p.ID).ToArray();
+                    //lay danh sach tin moi dang nhat
+                    mList = (from p in entities.News
+                             where mIdGroup.Contains(p.TypeID.Value)
+                             orderby p.Views, p.ID descending
+                             select p).Take(psize).ToList();
+                }
+                else if (pTypeId == 0)
+                {
+                    //lay danh sach tin moi dang nhat
+                    mList = (from p in entities.News
+                             orderby p.Views, p.ID descending
+                             select p).Take(psize).ToList();
+                }
+                return mList;
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+                throw;
+            }
 
-         public List<News> GetListNewsLastest(int pTypeId, string pLevel, int psize =10)
+        }
+
+        public List<News> GetListNewsLastest(int pTypeId, string pLevel, int psize =10)
         {
             List<News> mList = null;
             int[] mIdGroup;

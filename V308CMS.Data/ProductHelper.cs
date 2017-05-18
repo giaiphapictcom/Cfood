@@ -28,7 +28,7 @@ namespace V308CMS.Data
 
         public static int ProductShowLimit = 18;
 
-        public static ProductCategoryPage GetCategoryPage(ProductType ProductCategory,int nPage = 1)
+        public static ProductCategoryPage GetCategoryPage(ProductType ProductCategory,int nPage = 1,bool includeProductImages =false)
         {
             CreateRepos();
             ProductCategoryPage ModelPage = new ProductCategoryPage();
@@ -44,8 +44,8 @@ namespace V308CMS.Data
                 }
                 ModelPage.Paging = ModelPage.ProductTotal > ProductShowLimit;
 
-                List<Product> ProductItems = ProductRepos.LayTheoTrangAndType(nPage, ProductShowLimit, ProductCategory.ID, ProductCategory.Level);
-                ModelPage.List = ProductItems;
+                List<Product> productItems = ProductRepos.LayTheoTrangAndType(nPage, ProductShowLimit, ProductCategory.ID, ProductCategory.Level, includeProductImages);
+                ModelPage.List = productItems;
 
                 
             }

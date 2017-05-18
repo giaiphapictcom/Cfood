@@ -1,23 +1,67 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using V308CMS.Data;
 
 namespace V308CMS.Controllers
 {
     public abstract class BaseController : Controller
     {
-        private static readonly V308CMSEntities MEntities = new V308CMSEntities() ;
-
-        protected BaseController()
-        {           
-            NewsService = new NewsRepository(MEntities);
+        private static V308CMSEntities _mEntities;
+        private static V308CMSEntities EnsureV308CmsEntitiesNotNull()
+        {
+            return _mEntities ?? (_mEntities = new V308CMSEntities());
         }
 
-        protected V308CMSEntities MpStartEntities => MEntities;
-        protected NewsRepository NewsService { get; }
+        private readonly ProductRepository _productService;
+        private readonly NewsRepository _newsService;
+        private readonly AccountRepository _accountService;
+        private readonly FileRepository _fileService;
+        protected BaseController()
+        {
+            _mEntities = EnsureV308CmsEntitiesNotNull();
+            _productService = new ProductRepository(_mEntities);
+            _newsService = new NewsRepository(_mEntities);
+
+            _accountService = new AccountRepository(_mEntities);
+            _fileService = new FileRepository(_mEntities);
+        }
+
+        protected V308CMSEntities MpStartEntities => _mEntities;
+
+        protected NewsRepository NewsService
+        {
+            get
+            {
+                EnsureV308CmsEntitiesNotNull();
+                return _newsService;
+            }
+        }
+
+        protected ProductRepository ProductsService
+        {
+            get
+            {
+                EnsureV308CmsEntitiesNotNull();
+                return _productService;
+            }
+            
+        }
+
+        protected AccountRepository AccountService
+        {
+            get
+            {
+                EnsureV308CmsEntitiesNotNull();
+                return _accountService;
+            }
+        }
+        protected FileRepository FileService {
+            get
+            {
+                EnsureV308CmsEntitiesNotNull();
+                return _fileService;
+            }
+        }
+      
 
         protected string FindView(string name)
         {

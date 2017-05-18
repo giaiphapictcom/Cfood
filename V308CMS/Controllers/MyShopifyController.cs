@@ -161,7 +161,7 @@ namespace V308CMS.Controllers
                         //nPage = 1;
                         foreach (ProductType it in mProductTypeList)
                         {
-                            mProductPageList.Add(ProductHelper.GetCategoryPage(it, 1));
+                            mProductPageList.Add(ProductHelper.GetCategoryPage(it, 1,true));
                         }
                     }
                 }

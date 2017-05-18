@@ -693,7 +693,10 @@ namespace V308CMS.Data
     [Table("product")]
     public class Product
     {
-
+        public Product()
+        {
+            ProductImages = new List<ProductImage>();
+        }
         #region[Declare variables]
         private int _ID;
         private string _Name;
@@ -804,6 +807,8 @@ namespace V308CMS.Data
 
             return V308CMS.Common.RamdomUltis.getRamdom(2, 5);
         }
+        //add by toaihv
+        public virtual ICollection<ProductImage> ProductImages { get;set; }
     }
     #endregion[ket thuc class tblProduct]
 
@@ -901,6 +906,10 @@ namespace V308CMS.Data
         public int? ProductID { get { if (_ProductID == null || _ProductID < 0) return 0; else return _ProductID; } set { if (_ProductID != value) { if (_ProductID < 0) _ProductID = 0; else _ProductID = value; } } }
         public string Title { get { if (String.IsNullOrEmpty(_Title)) return ""; else return _Title; } set { _Title = value; } }
 
+        //add by toaihv
+        [ForeignKey("ProductID")]
+        [Required]
+        public virtual  Product Product { get; set; }
 
         #endregion
 

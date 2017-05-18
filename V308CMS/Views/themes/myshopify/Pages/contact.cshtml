@@ -1,0 +1,126 @@
+﻿@{
+    Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
+
+}
+@section header {
+    <title>Liên hệ</title>
+
+}
+@section Breadcrumb{
+    <div class="clearfix breadcrumb-wrap">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="breadcrumb">
+                        <h2></h2>
+                        <a href="/" title="Back to the frontpage">Home</a>
+                        <span class="icon"><i class="fa fa-circle"></i></span>
+                        <strong>
+                            Liên hệ
+                        </strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<div class="map">
+
+    <iframe width="100%" height="470" frameborder="0" src="https://maps.google.com/maps?hl=en&amp;q=4th Ave New York&amp;ie=UTF8&amp;t=roadmap&amp;z=16&amp;iwloc=B&amp;output=embed" marginwidth="0" marginheight="0" scrolling="no" style="pointer-events: none;"></iframe>
+
+</div>
+
+<div class="contact-top">
+    <div class="container">
+
+        <h2>We’re glad to work together</h2>
+
+
+        <p>Phasellus tempus. Proin viverra, ligula sit amet ultrices semper. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum.</p>
+
+    </div>
+</div>
+<div class="contactus-page">
+    <div class="container">
+
+        <div class="rte">
+
+
+
+        </div>
+
+
+        <div class="col-md-4 col-sm-4 col-xs-12">
+
+            <h3>
+
+                80’s Mod Contact info
+
+            </h3>
+
+            <div class="content-left">
+
+                Phasellus tempus. Proin viverra, ligula sit amet ultrices semper. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum.
+
+            </div>
+
+
+            <div class="content-left">
+
+                <ul>
+                    <li><span>Address:</span> San Francisco 80 South Avenue, 13/47</li>
+                    <li><span>Phone:</span> <a href="tel:+66 123 456 789">+66 123 456 789</a>  /  <a href="tel:+8 800 123 456 789">+8 800 123 456 789</a></li>
+                    <li><span>Email:</span> <a href="mailto:Sales@80SMOD.com">Sales@80SMOD.com</a></li>
+                    <li><a href="www.80smod.com" target="_brank">www.80smod.com</a></li>
+                </ul>
+
+            </div>
+
+        </div>
+        <div class="col-md-8 col-sm-8 col-sx-12">
+
+            <form method="post" action="https://bigsale-01.myshopify.com/contact#contact_form" id="contact_form" class="contact-form" accept-charset="UTF-8">
+                <input type="hidden" value="contact" name="form_type"><input type="hidden" name="utf8" value="✓">
+                <div class="note form-error">
+                    <p>Sorry, looks like something went wrong. Please correct the following and submit again:</p>
+
+                    <ul class="disc">
+                        <li>
+                            <span>The</span> <strong>email</strong> <span>field</span> is invalid
+                        </li>
+                    </ul>
+                </div>
+
+
+                <div id="contactFormWrapper" class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+
+                    <div class="col-md-6 col-sm-6 col-sx-12">
+                        <label for="contactFormName"><span>Your Name</span><em>*</em></label>
+                        <input type="text" id="contactFormName" name="contact[name]" autocapitalize="words" placeholder="Name *"><i class="fa fa-user" aria-hidden="true"></i>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-sx-12">
+                        <label for="contactFormEmail"><span>Your Email</span><em>*</em></label>
+                        <input type="email" name="contact[email]" id="contactFormEmail" autocorrect="off" autocapitalize="off" placeholder="Email *"><i class="fa fa-envelope" aria-hidden="true"></i>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-sx-12">
+                        <label for="contactFormCompany"><span>Your Phone</span><em>*</em></label>
+                        <input type="tel" name="contact[phone]" id="contactFormPhone" pattern="[0-9]*" placeholder="Your Phone"><i class="fa fa-phone" aria-hidden="true"></i>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-sx-12">
+                        <label for="contactFormMessage"><span>Your Comment</span><em>*</em></label>
+                        <textarea rows="10" name="contact[body]" id="contactFormMessage" placeholder="Message"></textarea><i class="fa fa-eyedropper" aria-hidden="true"></i>
+                    </div>
+                    <div class="button col-md-12 col-sm-12 col-sx-12">
+                        <input type="submit" class="btn left" value="Send message">
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    jQuery('.main-content').removeClass('container');
+    jQuery('body').addClass('contactus');
+</script>

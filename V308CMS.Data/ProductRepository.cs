@@ -116,7 +116,7 @@ namespace V308CMS.Data
             }
             return countTotal;
         }
-        public List<Product> LayTheoTrangAndType(int pcurrent, int psize, int pType, string pLevel)
+        public List<Product> LayTheoTrangAndType(int pcurrent, int psize, int pType, string pLevel, bool includeProductImages = false)
         {
             List<Product> mList = null;
             int[] mIdGroup;
@@ -127,18 +127,31 @@ namespace V308CMS.Data
                     mIdGroup = (from p in entities.ProductType
                                 where p.Level.Substring(0, pLevel.Length).Equals(pLevel)
                                 select p.ID).ToArray();
+                    mList =
+                        includeProductImages ?
 
-                    mList = (from p in entities.Product
+                            (from p in entities.Product.Include("ProductImages")
                              where mIdGroup.Contains(p.Type.Value)
                              orderby p.ID descending
                              select p).Skip((pcurrent - 1) * psize)
-                             .Take(psize).ToList();
+                             .Take(psize).ToList() :
+                            (from p in entities.Product
+                             where mIdGroup.Contains(p.Type.Value)
+                             orderby p.ID descending
+                             select p).Skip((pcurrent - 1) * psize)
+                            .Take(psize).ToList();
                 }
                 else if (pType == 0)
                 {
-                    mList = (from p in entities.Product
+                    mList = includeProductImages ?
+                            (from p in entities.Product.Include("ProductImages")
                              orderby p.ID descending
                              select p).Skip((pcurrent - 1) * psize)
+                                .Take(psize).ToList()
+                            :
+                             (from p in entities.Product
+                              orderby p.ID descending
+                              select p).Skip((pcurrent - 1) * psize)
                             .Take(psize).ToList();
                 }
                 return mList;
@@ -446,17 +459,23 @@ namespace V308CMS.Data
             }
         }
 
-        public List<Product> LayDanhSachSanPhamLienQuan(int pType, int pSize)
+        public List<Product> LayDanhSachSanPhamLienQuan(int pType, int pSize, bool includeProductImages =false)
         {
             List<Product> mList = null;
             string mGuid = Guid.NewGuid().ToString();
             try
             {
                 //lay danh sach tin moi dang nhat
-                mList = (from p in entities.Product
-                         where p.Type == pType
-                         orderby mGuid
-                         select p)
+                mList = includeProductImages?
+                        (from p in entities.Product.Include("ProductImages")
+                             where p.Type == pType
+                             orderby mGuid
+                             select p)
+                             .Take(pSize).ToList(): 
+                         (from p in entities.Product
+                                                 where p.Type == pType
+                                                 orderby mGuid
+                                                 select p)
                          .Take(pSize).ToList();
                 return mList;
             }

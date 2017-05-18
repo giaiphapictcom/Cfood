@@ -25,7 +25,12 @@ namespace V308CMS.Data
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+
             modelBuilder.Ignore<IncludeMetadataConvention>();
+            modelBuilder.Entity<ProductImage>()
+            .HasRequired<Product>(p => p.Product)
+            .WithMany(p => p.ProductImages)
+            .HasForeignKey(p => p.ProductID);
         }
         #endregion
         #region ObjectSet Properties

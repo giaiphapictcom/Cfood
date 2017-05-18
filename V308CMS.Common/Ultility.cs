@@ -308,6 +308,7 @@ namespace V308CMS.Common
                 {
                     slug = slug.Replace("--", "-");
                 }
+                return slug;
             }
             catch
             {

@@ -93,8 +93,9 @@ function attributeToString(e) {
         }
     };
     jQuery.ajax(n)
-}, Shopify.getCart = function (e) {
-    jQuery.getJSON("/cart.js", function (t, n) {
+},
+Shopify.getCart = function (e) {
+    jQuery.getJSON("/cart.js", function (t, n){
         "function" == typeof e ? e(t) : Shopify.onCartUpdate(t)
     })
 }, Shopify.pollForCartShippingRatesForDestination = function (e, t, n) {

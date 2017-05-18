@@ -11,6 +11,9 @@ namespace V308CMS
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
+            routes.MapRoute("VideoIndexRoute", "video.html", new { Controller = "MyShopify", action = "HomeYoutube" });
+            routes.MapRoute("NewsIndexRoute", "tin-tuc.html", new { Controller = "News", action = "Index", page =1, type = 58 });
+            routes.MapRoute("NewsIndexPagingRoute", "tin-tuc/trang-{page}.html", new { Controller = "News", action = "Index",type = 58 });
             routes.MapRoute("LoginRoute", "dang-nhap.html", new { Controller = "Account", action = "Login"});
             routes.MapRoute("LogoutRoute", "dang-xuat.html", new { Controller = "Account", action = "Logout" });
             routes.MapRoute("ProfileRoute", "profile.html", new { Controller = "Account", action = "ProfileUser" });
@@ -24,7 +27,7 @@ namespace V308CMS
             routes.MapRoute("MarketCategoryRoute", "{pMarketName}-m{pGroupId}.html", new { Controller = "Home", action = "MarketCategory" }, new { pGroupId = @"\d+" });
             routes.MapRoute("NewsDetailRoute", "{title}-n{pId}.html", new { Controller = "Home", action = "NewsDetail" }, new { pId = @"\d+" });
             routes.MapRoute("YoutubeDetailRoute", "{title}-youtube{pId}.html", new { Controller = "Home", action = "YoutubeDetail" }, new { pId = @"\d+" });
-            routes.MapRoute("NewsRoute", "{title}-group{pType}.html", new { Controller = "Home", action = "News" }, new { pType = @"\d+" });
+          
             routes.MapRoute("CategoryRoute", "{title}-t{pGroupId}.html", new { Controller = "Home", action = "Category" }, new { pGroupId = @"\d+" });
             routes.MapRoute("DetailRoute", "{title}-d{pId}.html", new { Controller = "Home", action = "Detail" }, new { pId = @"\d+" });
             ///

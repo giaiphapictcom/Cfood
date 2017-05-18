@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Web;
 using V308CMS.Common;
@@ -42,6 +43,24 @@ namespace V308CMS.Data
         }
         #endregion
 
+        public List<SiteConfig> LoadSiteConfig(string[] configs )
+        {
+            List <SiteConfig> listSiteConfig = new List<SiteConfig>();
+            if (configs != null && configs.Length>0)
+            {
+                var configString = string.Join(";", configs);
+                listSiteConfig = entities.SiteConfig.Where(item => configString.Contains(item.name)).ToList();
+               
+            }
+            return listSiteConfig;
+        }
+
+        public string ReadSiteConfig(List<SiteConfig> siteConfigs, string config,  string defaultValue ="")
+        {
+            var siteConfig = siteConfigs.FirstOrDefault(item => item.name == config);
+            return siteConfig != null ? siteConfig.content : defaultValue;
+
+        }
 
         public string SiteConfig(string name)
         {

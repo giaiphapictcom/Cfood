@@ -1927,10 +1927,10 @@ namespace V308CMS.Data
     }
     public class NewsIndexPageContainer
     {
-
         public NewsGroups NewsGroups { get; set; }
         public List<News> ListNews { get; set; }
-        public List<News> ListNewsLastest { get; set; }
+        public List<News> ListNewsMostView { get; set; }
+        public int TotalPage { get; set; }
         int _Page;
         int _NextPage;
         int _BackPage;

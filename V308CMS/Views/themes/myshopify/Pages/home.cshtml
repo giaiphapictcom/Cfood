@@ -1,4 +1,5 @@
-﻿@model V308CMS.Data.IndexPageContainer
+﻿@using V308CMS.Helpers
+@model V308CMS.Data.IndexPageContainer
 @{
     Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
 }
@@ -28,8 +29,8 @@
 @Html.Action("ProductMost", "MyShopify")
 @Html.Action("ProductHot", "MyShopify")
 
-@if (Model.ProductTypeList != null & Model.ProductTypeList.Count() > 0) {
-    foreach (V308CMS.Data.ProductType cate in Model.ProductTypeList) { 
+@if (Model.ProductTypeList.IsHasData()) {
+    foreach (V308CMS.Data.ProductType cate in Model.ProductTypeList) {
         @Html.Action("ProductHomeCategory", "MyShopify",cate)
     }
 }

@@ -21,13 +21,17 @@
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));</script>
 </head>
-<body 
-    @if (@Request.RequestContext.RouteData.Values["Action"] == "Index")
+<body
+    @if(Request.RequestContext.RouteData.Values["Controller"].ToString() =="News" ){
+         @:id="news" class="template-blog" 
+    }
+    else if (@Request.RequestContext.RouteData.Values["Action"].ToString() == "Index")
     { 
         @:id="bigsale-01" class="template-index" 
     }
+ 
     else
-    { 
+    {
         @:id="facial-cleansing-pad" class="template-product"
     }
 >

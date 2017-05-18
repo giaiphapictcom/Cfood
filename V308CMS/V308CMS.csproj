@@ -20,6 +20,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -142,16 +143,30 @@
     <Compile Include="App_Start\ThemesViewActionFilter.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BlockController.cs" />
     <Compile Include="Controllers\CaptchaController.cs" />
+    <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MyShopifyController.cs" />
+    <Compile Include="Controllers\NewsController.cs" />
+    <Compile Include="Controllers\CartController.cs" />
+    <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\WidgetController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\DateHelper.cs" />
+    <Compile Include="Helpers\ImageUrlHelper.cs" />
+    <Compile Include="Helpers\ListHelper.cs" />
+    <Compile Include="Helpers\NewsUrlHelper.cs" />
+    <Compile Include="Helpers\SlugHelper.cs" />
+    <Compile Include="Helpers\SapoHelper.cs" />
     <Compile Include="Models\Authenicate.cs" />
     <Compile Include="Models\CaptchaModel.cs" />
+    <Compile Include="Models\CartItem.cs" />
+    <Compile Include="Models\ContactModels.cs" />
+    <Compile Include="Models\ShoppingCart.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1502,6 +1517,23 @@
     <Content Include="Content\themes\myshopify\js\canvas.js" />
     <Content Include="Content\themes\myshopify\js\classie.js" />
     <Content Include="Content\themes\myshopify\js\currencies.js" />
+    <Content Include="Content\themes\myshopify\js\elevatezoom\demo.html" />
+    <Content Include="Content\themes\myshopify\js\elevatezoom\images\large\image1.jpg" />
+    <Content Include="Content\themes\myshopify\js\elevatezoom\images\large\image2.jpg" />
+    <Content Include="Content\themes\myshopify\js\elevatezoom\images\large\image3.jpg" />
+    <Content Include="Content\themes\myshopify\js\elevatezoom\images\large\image4.jpg" />
+    <Content Include="Content\themes\myshopify\js\elevatezoom\images\small\image1.png" />
+    <Content Include="Content\themes\myshopify\js\elevatezoom\images\small\image2.png" />
+    <Content Include="Content\themes\myshopify\js\elevatezoom\images\small\image3.png" />
+    <Content Include="Content\themes\myshopify\js\elevatezoom\images\small\image4.png" />
+    <Content Include="Content\themes\myshopify\js\elevatezoom\images\thumb\image1.jpg" />
+    <Content Include="Content\themes\myshopify\js\elevatezoom\images\thumb\image2.jpg" />
+    <Content Include="Content\themes\myshopify\js\elevatezoom\images\thumb\image3.jpg" />
+    <Content Include="Content\themes\myshopify\js\elevatezoom\images\thumb\image4.jpg" />
+    <Content Include="Content\themes\myshopify\js\elevatezoom\images\window-positions.png" />
+    <Content Include="Content\themes\myshopify\js\elevatezoom\jquery-1.8.3.min.js" />
+    <Content Include="Content\themes\myshopify\js\elevatezoom\jquery.elevateZoom-3.0.8.min.js" />
+    <Content Include="Content\themes\myshopify\js\elevatezoom\jquery.elevatezoom.js" />
     <Content Include="Content\themes\myshopify\js\jquery-cookie.min.js" />
     <Content Include="Content\themes\myshopify\js\jquery.currencies.min.js" />
     <Content Include="Content\themes\myshopify\js\jquery.fakecrop.js" />
@@ -1664,6 +1696,8 @@
     <Content Include="Content\themes\mamoo\fonts\fontello\fontello.ttf" />
     <Content Include="Content\themes\mamoo\fonts\fontello\fontello.woff" />
     <Content Include="Content\themes\mamoo\fonts\fontello\fontello.woff2" />
+    <Content Include="Content\themes\myshopify\js\elevatezoom\elevatezoom.jquery.json" />
+    <Content Include="Content\themes\myshopify\js\elevatezoom\README.md" />
     <None Include="Properties\PublishProfiles\MPStart.pubxml" />
     <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Views\Widget\Search.cshtml" />
@@ -1831,6 +1865,10 @@
     <Content Include="Views\themes\mamoo\Product_div\Type1_4.cshtml" />
     <Content Include="Views\themes\mamoo\Product_div\Type2.cshtml" />
     <Content Include="Views\themes\mamoo\Product_div\Youtube.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\news.index.cshtml" />
+    <Content Include="Views\themes\myshopify\Product\ProductBlockLeft.cshtml" />
+    <Content Include="Views\themes\myshopify\Banner\CategoryAdv.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\contact.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

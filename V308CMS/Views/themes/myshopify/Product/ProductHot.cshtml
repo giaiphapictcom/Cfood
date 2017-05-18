@@ -16,30 +16,30 @@
                             {
                                 <div class="item-poduct">
 
-                                    <div class="grid-3  grid-item product-item product-hover product-review" >
+                                    <div class="grid-3  grid-item product-item product-hover product-review" id="product-@item.Product.ID">
                                         <div class="product-image ">
-                                            
-                                            @if (item.Product.SaleOff > 0) { 
+
+                                            @if (item.Product.SaleOff > 0)
+                                            {
                                                 <div class="product-label"><label class="label">Giảm giá</label></div>
                                             }
-                                                
-                                            
-
                                             <a href="@url.productURL(item.Product.Name,item.Product.ID)" class="grid-image">
                                                 <img class="feature-images" src="@ImageHelper.Crop(@item.Product.Image, 250)" alt="@item.Product.Name">
 
                                                 @if (item.Images.Count() > 0)
                                                 {
                                                     <span class="product-hover" data-idproduct="@item.Product.ID">
-                                                    
-                                                    <img class="img-responsive" alt="@item.Product.Name" src="@ImageHelper.Crop(@item.Images.First().Name, 250)">
-                                                </span>
+
+                                                        <img class="img-responsive" alt="@item.Product.Name" src="@ImageHelper.Crop(@item.Images.First().Name, 250)">
+                                                    </span>
                                                 }
-                                                
+
                                             </a>
 
                                             <div class="quickview-button">
-                                                <a href="javascript:void(0)" id="fero-moda-belted-drape-coat" data-toggle="tooltip" data-placement="top" title="@item.Product.Name" class="sca-qv-button btn">Xem nhanh</a>
+                                                <a href="javascript:void(0)" id="fero-moda-belted-drape-coat" data-toggle="tooltip" data-placement="top" title="@item.Product.Name" class="sca-qv-button btn">
+                                                    @AppSetting.ProductTextView
+                                                </a>
                                             </div>
 
                                         </div>
@@ -53,10 +53,10 @@
                                                         <span class="special-price"><span class="money">@String.Format("{0: 0,0}", (item.Product.Price)) @ViewBag.MoneyShort</span></span>
                                                     }
                                                     @if (item.Product.SaleOff > 0)
-                                                    { 
+                                                    {
                                                         <span class="old-price"><span class="money">@String.Format("{0: 0,0}", item.Product.Price - (item.Product.Price / 100) * item.Product.SaleOff) ) @ViewBag.MoneyShort</span></span>
                                                     }
-                                                    
+
                                                 </p>
 
                                             </div>
@@ -66,11 +66,6 @@
                                             <div class="add-to-link">
 
                                                 <div class="add-to-cart">
-
-                                                    @*<form action="/cart/add" method="post" class="variants" id="product-actions-8747959625" enctype="multipart/form-data" style="padding: 0px;">
-                                                        <input type="hidden" name="id" value="29670586569" />
-                                                        <span><input class="btn add-to-cart-btn" title="Thêm vào giỏ hàng" type="submit" value="Thêm vào giỏ hàng" /></span>
-                                                    </form>*@
                                                     <a href="javascript:void(0);" class="btn add-to-cart-btn" add-cart="@item.Product.ID" title="Thêm vào giỏ hàng">Thêm vào giỏ hàng</a>
                                                 </div>
                                                 <a class="wishlist btn" href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="Yêu thích"><span><i class="fa fa-heart" aria-hidden="true"></i></span></a>
@@ -124,5 +119,5 @@
         })
 
     </script>
-    
+
 }

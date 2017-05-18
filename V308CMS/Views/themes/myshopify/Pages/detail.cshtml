@@ -30,23 +30,20 @@
                     </a>
                     <div id="zt_list_product" class="thumbs">
                         <div class="image-item">
-                            <a href="javascript:void(0)" data-image="@ImageHelper.Crop(@Model.Product.Image, 500)" data-zoom-image="@ImageHelper.Crop(@Model.Product.Image, 1200)">
+                            <a href="javascript:void(0)" data-image="@ImageHelper.Crop(@Model.Product.Image, 500)" data-zoom-image="@ImageHelper.Crop(@Model.Product.Image, 1200)" >
                                 <img src="@ImageHelper.Crop(@Model.Product.Image, 100)" alt="@Model.Product.Name">
                             </a>
                         </div>
-                        @if (Model.Images != null & Model.Images.Count() > 0)
+                        @if (Model.Images != null & Model.Images.Any())
                         {
                             foreach (ProductImage img in Model.Images) {
                             <div class="image-item">
-                                <a href="javascript:void(0)" data-image="@ImageHelper.Crop(@img.Name, 500)" data-zoom-image="@ImageHelper.Crop(@img.Name, 1200)">
+                                <a href="javascript:void(0)" data-image="@ImageHelper.Crop(@img.Name, 500)"  data-zoom-image="@ImageHelper.Crop(@img.Name, 1200)">
                                     <img src="@ImageHelper.Crop(@img.Name, 100)" alt="@Model.Product.Name">
                                 </a>
                             </div>
                             }
                         }
-
-                        
-
                     </div>
                 </div>
 
@@ -61,7 +58,9 @@
                                 <p class="regular-product">
                                     @if (Model.Product.Price > 0)
                                     {
-                                        <span class="price" itemprop="price"><span class="money">@String.Format("{0: 0,0}", (Model.Product.Price)) @ViewBag.MoneyShort</span></span>
+                                        <span class="price" itemprop="price">
+                                                <span class="money">@String.Format("{0: 0,0}", (Model.Product.Price)) @ViewBag.MoneyShort</span>
+                                        </span>
                                     }
                                     
                                 </p>
@@ -70,11 +69,9 @@
 
                         <div class="availability">
                             <p class="product-inventory">
-                                <label>Tình trạng</label><span><span>còn hàng</span></span>
+                                <label>Tình trạng</label><span><span>@(Model.Product.Number > 0 ? "Còn hàng" :"Hết hàng")</span></span>
                             </p>
                         </div>
-
-
                         <link itemprop="availability" href="http://schema.org/InStock">
 
                         <span class="shopify-product-reviews-badge" data-id="7825635209"></span>
@@ -89,8 +86,6 @@
 
                         <div class="product-bottom">
                             <form action="/cart/add" method="post" enctype="multipart/form-data" id="add-to-cart-form">
-
-
                                 <label>Số lượng:</label>
                                 <div class="wrap-qty">
                                     <span class="down-qty"></span>
@@ -158,6 +153,8 @@
             navigation: true,
             navigationText: ['<i class="arrow_carrot-left"></i>', '<i class="arrow_carrot-right"></i>']
         });
+        jQuery('#product-featured-image').elevateZoom();
+
     });
     //Shopify.Image.preload(["\/\/cdn.shopify.com\/s\/files\/1\/1498\/2346\/products\/21_d775a09c-a223-4d2f-bc4a-7d8e2c3474e8.jpg?v=1484812816","\/\/cdn.shopify.com\/s\/files\/1\/1498\/2346\/products\/23_f5425920-e855-4fdd-accb-0b480443dd09.jpg?v=1484812817","\/\/cdn.shopify.com\/s\/files\/1\/1498\/2346\/products\/24_d5cd5894-cd4d-412a-933e-f11c715907e8.jpg?v=1484812818","\/\/cdn.shopify.com\/s\/files\/1\/1498\/2346\/products\/25_d3353baa-4cc4-4cba-a95c-1523cc987ab1.jpg?v=1484812819"], 'grande');
 
@@ -195,7 +192,7 @@
 
             // Also update and show the product's compare price if necessary
             if (variant.compare_at_price > variant.price) {
-                productPrice.addClass("on-sale")
+                productPrice.addClass("on-sale");
                 comparePrice
                 .html(Shopify.formatMoney(variant.compare_at_price, "<span class=money>${{amount}}</span>"))
                                           .show();
@@ -239,7 +236,6 @@
         /*begin variant image*/
 
 
-
         if (variant && variant.featured_image) {
             var originalImage = jQuery("#product-featured-image");
             var newImage = variant.featured_image;
@@ -250,9 +246,6 @@
                 if (arr[0])
                     return arr[0];
             }
-
-
-
 
             Shopify.Image.switchImage(newImage, element, function (newImageSizedSrc, newImage, element) {
                 jQuery('#zt_list_product img').each(function () {
@@ -298,11 +291,7 @@
 
 
 
-
-
         $('.single-option-selector:eq(0)').val("Default Title").trigger('change');
-
-
 
 
 
@@ -340,69 +329,73 @@
 @if (Model.RelatedList != null && Model.RelatedList.Count > 0)
 {
 
-<section class="related-products">
-    <h2><span>Sản phẩm cùng loại</span></h2>
-    <div class="products-grid">
-        @foreach (V308CMS.Data.Product prod in Model.RelatedList)
-        {
-            <div class="product-hover product-review no_crop_image grid-item product-item wow fadeIn" data-wow-delay="0ms" id="product-@prod.ID">
+    <section class="related-products">
+        <h2><span>Sản phẩm cùng loại</span></h2>
+        <div class="products-grid">
+            @foreach (V308CMS.Data.Product prod in Model.RelatedList)
+            {
+                <div class="product-hover product-review no_crop_image grid-item product-item wow fadeIn" data-wow-delay="0ms" id="product-@prod.ID">
 
-                <div class="item-poduct">
-                    <div class="product-top">
-                        <div class="product-image ">
+                    <div class="item-poduct">
+                        <div class="product-top">
+                            <div class="product-image ">
 
-                            <a href="@url.productURL(prod.Name, prod.ID)" class="grid-image">
-                                <img class="feature-images" src="@ImageHelper.Crop(prod.Image, 250)" alt="@prod.Name">
-                                @*<span class="product-hover" data-idproduct="7825628937">
-                                    <img class="img-responsive" alt="Eye Shadow Palette" src="//cdn.shopify.com/s/files/1/1498/2346/products/21_large.jpg?v=1484812770">
-                                </span>*@
-                            </a>
+                                <a href="@url.productURL(prod.Name, prod.ID)" class="grid-image">
+                                    <img class="feature-images" src="@ImageHelper.Crop(prod.Image, 250)" alt="@prod.Name">
+                                    @if (prod.ProductImages.Any()){
+                                        <span class="product-hover" data-idproduct="@prod.ID">
+                                            <img class="img-responsive" alt="@prod.Name" src="@ImageHelper.Crop(prod.ProductImages.First().Name, 250)">
+                                        </span>
 
-                            <div class="quickview-button">
-                                <a href="javascript:void(0)" id="eye-shadow-palette" data-toggle="tooltip" data-placement="top" title="@prod.Name" class="sca-qv-button btn">Xem nhanh</a>
+                                    }
+
+                                </a>
+
+                                <div class="quickview-button">
+                                    <a href="javascript:void(0)" id="eye-shadow-palette" data-toggle="tooltip" data-placement="top" title="@prod.Name" class="sca-qv-button btn">Xem nhanh</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="product-content">
-                        <h3><a class="product-title" href="@url.productURL(prod.Name, prod.ID)">@prod.Name</a></h3>
-                        <div class="price-box">
+                        <div class="product-content">
+                            <h3><a class="product-title" href="@url.productURL(prod.Name, prod.ID)">@prod.Name</a></h3>
+                            <div class="price-box">
 
-                            <p class="regular-product">
-                                @if (prod.Price > 0)
-                                {
-                                    <span><span class="money">@String.Format("{0: 0,0}", (prod.Price)) @ViewBag.MoneyShort</span></span>
-                                }
-                                    
-                            </p>
+                                <p class="regular-product">
+                                    @if (prod.Price > 0)
+                                    {
+                                        <span><span class="money">@String.Format("{0: 0,0}", (prod.Price)) @ViewBag.MoneyShort</span></span>
+                                    }
 
-                        </div>
+                                </p>
 
-
-                        <span class="shopify-product-reviews-badge" data-id="@prod.ID"></span>
-
-                        <div class="add-to-link">
-
-                            <div class="add-to-cart">
-
-                                <form action="/cart/add" method="post" class="variants" id="product-actions-@prod.ID" enctype="multipart/form-data" style="padding: 0px;">
-                                    <input type="hidden" name="id" value="@prod.ID" />
-                                    <span>
-                                        <input class="btn add-to-cart-btn" data-toggle="tooltip" data-placement="top" title="Thêm vào giỏ hàng" type="submit" value="Thêm vào giỏ hàng" />
-                                    </span>
-                                </form>
                             </div>
 
-                            <a class="wishlist btn" href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="Yêu thích"><span><i class="fa fa-heart" aria-hidden="true"></i></span></a>
 
+                            <span class="shopify-product-reviews-badge" data-id="@prod.ID"></span>
+
+                            <div class="add-to-link">
+
+                                <div class="add-to-cart">
+
+                                    <form action="/cart/add" method="post" class="variants" id="product-actions-@prod.ID" enctype="multipart/form-data" style="padding: 0px;">
+                                        <input type="hidden" name="id" value="@prod.ID" />
+                                        <span>
+                                            <input class="btn add-to-cart-btn" data-toggle="tooltip" data-placement="top" title="Thêm vào giỏ hàng" type="submit" value="Thêm vào giỏ hàng" />
+                                        </span>
+                                    </form>
+                                </div>
+
+                                <a class="wishlist btn" href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="Yêu thích"><span><i class="fa fa-heart" aria-hidden="true"></i></span></a>
+
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        }
+            }
 
-    </div>
-</section>
+        </div>
+    </section>
     <script>
         jQuery(document).ready(function () {
             jQuery(".related-products .products-grid").owlCarousel({
