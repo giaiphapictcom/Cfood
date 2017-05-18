@@ -23,12 +23,23 @@ namespace V308CMS.Models
             }
         }
         public int Voucher { get; set; }
-        public int SaleOff => ProductItem.SaleOff ?? 0;
 
-
-        public double TotalPrice => SaleOff > 0 ? 
-            Quantity * ((UnitPrice - ((UnitPrice / 100) * SaleOff))) : 
+        public int SaleOff
+        {
+            get
+            {
+                return ProductItem.SaleOff ?? 0;
+            }
+        }
+        public double TotalPrice
+        {
+            get
+            {
+                return SaleOff > 0 ?
+            Quantity * ((UnitPrice - ((UnitPrice / 100) * SaleOff))) :
             Quantity * UnitPrice;
+            }
+        }
 
         public bool Equals(CartItem other)
         {
