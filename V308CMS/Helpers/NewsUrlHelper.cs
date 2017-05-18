@@ -3,7 +3,7 @@ using V308CMS.Data;
 
 namespace V308CMS.Helpers
 {
-    public static  class MpStartUrlHelper
+    public static class MpStartUrlHelper
     {
         public static string NewsIndexUrl(this UrlHelper helper, int page = 1, string controller = "news", string action = "index")
         {
@@ -19,7 +19,7 @@ namespace V308CMS.Helpers
             string action = "detail")
         {
         
-            return $"/tin-tuc/{newsItem.Title.ToSlug()}.{newsItem.ID}";
+            return string.Format("/tin-tuc/{0}.{1}", newsItem.Title.ToSlug(), newsItem.ID);
         }
 
         public static string NewsTagUrl(this UrlHelper helper, string tag,int page =1, string controller = "news",
