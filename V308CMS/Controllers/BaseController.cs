@@ -25,7 +25,10 @@ namespace V308CMS.Controllers
             _fileService = new FileRepository(_mEntities);
         }
 
-        protected V308CMSEntities MpStartEntities => _mEntities;
+        protected V308CMSEntities MpStartEntities
+        {
+            get { return _mEntities; }
+        }
 
         protected NewsRepository NewsService
         {
