@@ -12,7 +12,7 @@ namespace V308CMS
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.MapRoute("VideoIndexRoute", "video.html", new { Controller = "MyShopify", action = "HomeYoutube" });
-            routes.MapRoute("NewsIndexRoute", "tin-tu.html", new { Controller = "News", action = "Index", page =1, type = 58 });
+            routes.MapRoute("NewsIndexRoute", "tin-tuc.html", new { Controller = "News", action = "Index", page =1, type = 58 });
             routes.MapRoute("NewsIndexPagingRoute", "tin-tuc/trang-{page}.html", new { Controller = "News", action = "Index",type = 58 });
             routes.MapRoute("NewsDetailRoute", "tin-tuc/{slug}.{id}.html", new { Controller = "News", action = "Detail" }, new { id = @"\d+" });
             routes.MapRoute("LoginRoute", "dang-nhap.html", new { Controller = "Account", action = "Login"});
