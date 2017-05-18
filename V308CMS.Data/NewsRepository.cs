@@ -694,8 +694,6 @@ namespace V308CMS.Data
             }
             public News GetNext(int id)
             {
-
-              
                 try
                 {
                    return entities.News.SkipWhile(news => news.ID != id).Skip(1).First();
@@ -720,6 +718,17 @@ namespace V308CMS.Data
                 }
                 
             }
+
+            public List<News> GetListNewsByTag(string tag, out int totalRecord, int page = 1, int pageSize = 10)
+            {
+                var listNews = entities.News                  
+                    .Where(news => news.Keyword.Contains(tag))
+                    .OrderByDescending(news => news.ID)
+                    .Select(news => news)
+                    .ToList();
+                totalRecord = listNews.Count;
+                return listNews.Skip((page - 1)*pageSize).Take(pageSize).ToList();
+            } 
 
         }
 }

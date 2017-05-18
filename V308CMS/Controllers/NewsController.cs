@@ -46,13 +46,22 @@ namespace V308CMS.Controllers
             {
                 return HttpNotFound("Tin này không tồn tại trên hệ thống");
             }
-            var newsDetailViewModel = new NewsDetailPageContainer();
-            newsDetailViewModel.NewsItem = newsItem;
-            newsDetailViewModel.NextNewsItem = NewsService.GetNext(id);
-            newsDetailViewModel.PreviousNewsItem = NewsService.GetPrevious(id);
+            var newsDetailViewModel = new NewsDetailPageContainer
+            {
+                NewsItem = newsItem,
+                NextNewsItem = NewsService.GetNext(id),
+                PreviousNewsItem = NewsService.GetPrevious(id)
+            };
 
             return View(FindView("News.Detail"), newsDetailViewModel);
         }
+
+        public ActionResult ListByTag(string tag, int page = 1)
+        {
+            return Content("ok");
+        }
+
+    
 
     }
 }

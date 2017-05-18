@@ -9,11 +9,11 @@
     <meta name="description" content="@Model.NewsItem.Summary" />
     <meta name="keywords" content="@Model.NewsItem.Keyword"/>
     <meta content="@Model.NewsItem.Title - @ViewBag.SiteName" itemprop="headline" property="og:title"/>
-    <meta content="http://video.vnexpress.net/tin-tuc/xa-hoi/do-ng-ba-ng-song-cu-u-long-sat-lo-gan-600-km-bo-song-3586902.html" itemprop="url" property="og:url" />
-    <meta content="http://img.f31.vnecdn.net/2017/05/18/Sequence0100002419Still001-149-7482-1361-1495104217_660x430.jpg" itemprop="thumbnailUrl" property="og:image" />
-    <meta content="Báo cáo của Bộ Nông nghiệp và Phát triển nông thôn nêu, đến nay toàn miền Tây có 393 điểm sạt lở với tổng chiều dài trên 581 km bờ sông, bờ biển. " itemprop="description" property="og:description" />
+    <meta content="@Request.Url" itemprop="url" property="og:url" />
+    <meta content="@Model.NewsItem.Image.ToUrl()" itemprop="thumbnailUrl" property="og:image" />
+    <meta content="@Model.NewsItem.Summary" itemprop="description" property="og:description" />
     <meta name="tt_site_id" content="1003834" />
-    <meta name="tt_category_id" content="1003004" />
+    <meta name="tt_category_id" content="@Model.NewsItem." />
     <meta name="tt_article_id" content="@Model.NewsItem.ID" />
     <meta name="tt_page_type" content="article" />
 }
@@ -53,7 +53,7 @@
                             <li class="article">
                                 <p>
                                     <a href="@Url.NewsDetailUrl(newsItem)" title="@newsItem.Title">
-                                     @newsItem.Title
+                                        @newsItem.Title
                                     </a>
                                     <em>@newsItem.Date.ToDdmmyyyyHhm()</em>
                                 </p>
@@ -62,8 +62,39 @@
 
                     </ul>
                 }
-                
+
             </div>
+        </div>
+        <div class="widget widget-tags">
+            <div class="widget-title">
+                <h3><span>Tags</span></h3>
+            </div>
+            <div class="widget-content">
+                <ul class="tags">
+                    <li class="active">
+                        <a href="@Url.NewsIndexUrl()" title="Danh sách tin">All</a>
+                    </li>
+                    @if (!string.IsNullOrWhiteSpace(Model.NewsItem.Keyword))
+                    {
+                        var listTag = Model.NewsItem.Keyword.Split(new[] { ';', ',' }, StringSplitOptions.RemoveEmptyEntries);
+                        if (listTag.Any())
+                        {
+                            foreach (var tag in listTag)
+                            {
+                                <li>
+                                    <a href="@Url.NewsTagUrl(tag)" title="@tag">@tag</a>
+
+                                </li>
+                            }
+
+                        }
+
+
+                    }
+                </ul>
+            </div>
+
+
         </div>
     </div>
     <!-- End sidebar -->
