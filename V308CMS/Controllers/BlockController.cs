@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using V308CMS.Common;
 using V308CMS.Data;
+using V308CMS.Models;
 
 namespace V308CMS.Controllers
 {
@@ -108,8 +109,25 @@ namespace V308CMS.Controllers
         }
         public ActionResult Header()
         {
+            var shoppingCart = ShoppingCart.Instance;
+            var result = new Models.ShoppingCartModels
+            {
+                item_count = shoppingCart.Items.Count,
+                items = shoppingCart.Items.Select(product => new ProductsCartModels
+                {
+                    Id = product.ProductItem.Id,
+                    Url = url.productURL(product.ProductItem.Name, product.ProductItem.Id),
+                    Title = product.ProductItem.Name,
+                    Quanity = product.Quantity,
+                    Image = product.ProductItem.Avatar,
+                    Price = product.ProductItem.Price.ToString("N0")
+                }).ToList(),
+                total_price = shoppingCart.SubTotal
+
+            };
+          
             string view = "~/Views/themes/" + Theme.domain + "/Blocks/Header.cshtml";
-            return View(view);
+            return View(view, result);
         }
         public ActionResult Footer()
         {

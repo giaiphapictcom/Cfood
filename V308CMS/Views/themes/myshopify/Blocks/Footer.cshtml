@@ -117,11 +117,11 @@
     </div>
     <div class="ajax-error-cbox cbox">
         <div class="modal-inner">
-
-            <div class="ajax-error-title">Error</div>
+            <div class="ajax-error-title">Lỗi</div>
             <div class="ajax-error-message"></div>
         </div>
     </div>
+
     <div class="ajax-success-cbox cbox">
         <div class="content">
             <div class="success-message show-cart">
@@ -129,11 +129,11 @@
                     Sản phẩm đã được thêm vào giỏ hàng thành công.
                 </div>
                 <div class="button-link-cart">
-                    <div class="view-cart"><a href="/cart">Xem giỏ hàng</a></div>
-                    <button class="btn" onclick="window.location='/checkout'">Thanh toán</button>
+                    <div class="view-cart"><a title="Xem giỏ hàng" href="@Url.ViewCartUrl()">Xem giỏ hàng</a></div>
+                    <button class="btn" onclick="window.location='@Url.CheckoutCartUrl()'" title="Thanh toán">Thanh toán</button>
                 </div>
             </div>
-            <p class="success-message show-wishlist">Success! You&#39;ve added to wishlist success.</p>
+            <p class="success-message show-wishlist">Success! You&#39;ve added to wishlist success.</p>         
             <a href="javascript:void(0)" class="close-cbox"><span class="icon_close"></span></a>
         </div>
     </div>

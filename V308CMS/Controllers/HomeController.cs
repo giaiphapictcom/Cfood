@@ -8,6 +8,7 @@ using System.Web.Security;
 using ServiceStack.Text;
 using V308CMS.Common;
 using V308CMS.Data;
+using V308CMS.Helpers;
 
 namespace V308CMS.Controllers
 {
@@ -46,6 +47,7 @@ namespace V308CMS.Controllers
 
         public ActionResult Index()
         {
+            var wishlist = WishListLocalStorage.GetWishList();       
             CreateRepos();
             IndexPageContainer mIndexPageContainer = new IndexPageContainer();
             List<IndexPage> mIndexPageList = new List<IndexPage>();

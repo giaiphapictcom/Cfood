@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using V308CMS.Data;
+using V308CMS.Helpers;
 
 namespace V308CMS.Controllers
 {
@@ -15,6 +16,8 @@ namespace V308CMS.Controllers
         private readonly NewsRepository _newsService;
         private readonly AccountRepository _accountService;
         private readonly FileRepository _fileService;
+        private readonly ProductWishlistRepositry _productWishlistService;
+      
         protected BaseController()
         {
             _mEntities = EnsureV308CmsEntitiesNotNull();
@@ -23,19 +26,27 @@ namespace V308CMS.Controllers
 
             _accountService = new AccountRepository(_mEntities);
             _fileService = new FileRepository(_mEntities);
+            _productWishlistService = new ProductWishlistRepositry(_mEntities);
         }
 
         protected V308CMSEntities MpStartEntities
         {
             get { return _mEntities; }
         }
-
         protected NewsRepository NewsService
         {
             get
             {
                 EnsureV308CmsEntitiesNotNull();
                 return _newsService;
+            }
+        }
+        protected ProductWishlistRepositry ProductWishlistService
+        {
+            get
+            {
+                EnsureV308CmsEntitiesNotNull();
+                return _productWishlistService;
             }
         }
 

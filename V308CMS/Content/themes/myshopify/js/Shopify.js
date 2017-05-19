@@ -95,10 +95,11 @@ function attributeToString(e) {
     jQuery.ajax(n)
 },
 Shopify.getCart = function (e) {
-    jQuery.getJSON("/cart.js", function (t, n){
-        "function" == typeof e ? e(t) : Shopify.onCartUpdate(t)
-    })
-}, Shopify.pollForCartShippingRatesForDestination = function (e, t, n) {
+    jQuery.getJSON("/cart/index", function(t, n) {
+        "function" == typeof e ? e(t) : Shopify.onCartUpdate(t);
+    });
+},
+Shopify.pollForCartShippingRatesForDestination = function (e, t, n) {
     n = n || Shopify.onError;
     var r = function () {
         jQuery.ajax("/cart/async_shipping_rates", {
@@ -145,7 +146,7 @@ Shopify.changeItem = function (e, t, n) {
 }, Shopify.removeItem = function (e, t) {
     var n = {
         type: "POST",
-        url: "/cart/change.js",
+        url: "/cart/removeItem",
         data: "quantity=0&id=" + e,
         dataType: "json",
         success: function (e) {

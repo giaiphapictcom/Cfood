@@ -5,31 +5,24 @@ namespace V308CMS.Models
 {
     public class CartItem : IEquatable<CartItem>
     {
-        public CartItem(Product productItem)
+        public CartItem(ProductModels productItem)
         {
             ProductItem = productItem;           
         }
         //San pham
-        public Product ProductItem { get; set; }    
+        public ProductModels ProductItem { get; set; }    
         //So luong
         public int Quantity { get; set; }
         //Don gia
         public double UnitPrice
         {
-            get {
-                if (ProductItem.Price != null)
-                    return ProductItem.Price.Value;
-                return 0;
-            }
+            get { return ProductItem.Price; }
         }
         public int Voucher { get; set; }
 
         public int SaleOff
         {
-            get
-            {
-                return ProductItem.SaleOff ?? 0;
-            }
+            get { return ProductItem.SaleOff; }
         }
         public double TotalPrice
         {
@@ -43,7 +36,7 @@ namespace V308CMS.Models
 
         public bool Equals(CartItem other)
         {
-            return other != null && (other.ProductItem.ID == this.ProductItem.ID);
+            return other != null && (other.ProductItem.Id == this.ProductItem.Id);
         }
     }
 }

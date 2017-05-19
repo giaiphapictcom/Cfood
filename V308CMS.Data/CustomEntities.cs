@@ -914,7 +914,30 @@ namespace V308CMS.Data
         #endregion
 
     }
-    #endregion[ket thuc class tblProductImage]
+    #endregion[ket thuc class tblProductWishlist]
+    #region[Bat dau 1  class tblProductWishlist]
+
+    [Table("productwishlist")]
+    public class ProductWishlist
+    {
+
+        #region[Declare variables]
+        private int _ID;
+        private string _UserID;      
+        private int _ProductID;      
+        private DateTime? _Date;
+
+        #endregion
+        #region[Public Properties]
+        [Key]
+        public int Id { get { return _ID; } set { _ID = value; } }
+        public string UserId { get { if (String.IsNullOrEmpty(_UserID)) return ""; else return _UserID; } set { _UserID = value; } }       
+        public int ProductId { get { if (_ProductID == null || _ProductID < 0) return 0; else return _ProductID; } set { if (_ProductID != value) { if (_ProductID < 0) _ProductID = 0; else _ProductID = value; } } }
+        public DateTime? Date { get { if (_Date == null) return new DateTime(); else return _Date; } set { if (_Date != value) { _Date = value; } } }        
+        #endregion
+
+    }
+    #endregion[ket thuc class tblProductWishlist]
 
 
 

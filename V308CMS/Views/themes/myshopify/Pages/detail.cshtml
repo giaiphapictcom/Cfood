@@ -1,6 +1,7 @@
 ﻿@model V308CMS.Data.ProductDetailPage
 @using V308CMS.Common;
 @using V308CMS.Data;
+@using V308CMS.Helpers
 @{
     Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
 }
@@ -78,28 +79,33 @@
 
                         <div class="short-description">@Model.Product.Summary</div>
 
-                        <form action="/cart/add" method="post" enctype="multipart/form-data">
-                            <div id="product-variants">
-                                <input type="hidden" name="id" value="25223403849" />
-                            </div>
-                        </form>
-
+                       
                         <div class="product-bottom">
-                            <form action="/cart/add" method="post" enctype="multipart/form-data" id="add-to-cart-form">
-                                <label>Số lượng:</label>
-                                <div class="wrap-qty">
-                                    <span class="down-qty"></span>
-                                    <input class="qty" type="text" id="quantity" name="quantity" value="1">
-                                    <span class="up-qty"></span>
-                                </div>
+                            <form action="@Url.AddToCartUrl()" method="post" enctype="multipart/form-data" id="add-to-cart-form">
+                                <input name="id" type="hidden" value="@Model.Product.ID"/>
+                                @if (Model.Product.Number > 0)
+                                {
+                                    <label>Số lượng:</label>
+                                    <div class="wrap-qty">
+                                        <span class="down-qty"></span>
+                                        <input class="qty" type="text" id="quantity" name="quantity" value="1">
+                                        <span class="up-qty"></span>
+                                    </div>
+                                }
                                 <div class="cart-wraper">
-                                    <button type="submit" name="add" class="btn " id="product-add-to-cart" value="Add to Cart">Thêm vào giỏ hàng</button>
+                                    @if (Model.Product.Number > 0){
+                                        <button type="submit" name="add" class="btn " id="product-add-to-cart" value="@Model.Product.ID">Thêm vào giỏ hàng</button>
+                                        
+                                    }
+                                    else{
+                                        <span style="color: #f00; font-weight: bold">Sản phẩm tạm hết hàng</span>
+                                    }
+                                    <a data-id="@Model.Product.ID" class="wishlist btn" href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="Yêu thích"><span><i class="fa fa-heart" aria-hidden="true"></i></span></a>
+
                                 </div>
                             </form>
                         </div>
-
-                        <a class="wishlist btn" href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="Yêu thích"><span><i class="fa fa-heart" aria-hidden="true"></i></span></a>
-
+                       
                     </div>
                 </div>
             </div>
@@ -370,23 +376,27 @@
                                 </p>
 
                             </div>
-
-
                             <span class="shopify-product-reviews-badge" data-id="@prod.ID"></span>
 
                             <div class="add-to-link">
+                                @if (prod.Number > 0)
+                                {
+                                    <div class="add-to-cart">
 
-                                <div class="add-to-cart">
+                                        <form action="/cart/add" method="post" class="variants" id="product-actions-@prod.ID" enctype="multipart/form-data" style="padding: 0px;">
+                                            <input type="hidden" name="id" value="@prod.ID"/>
+                                            <span>
+                                                <input class="btn add-to-cart-btn" data-toggle="tooltip" data-placement="top" title="Thêm vào giỏ hàng" type="submit" value="Thêm vào giỏ hàng" />
+                                            </span>
+                                        </form>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <span style="color: #f00; font-weight: bold">Sản phẩm tạm hết hàng</span>
+                                }
 
-                                    <form action="/cart/add" method="post" class="variants" id="product-actions-@prod.ID" enctype="multipart/form-data" style="padding: 0px;">
-                                        <input type="hidden" name="id" value="@prod.ID" />
-                                        <span>
-                                            <input class="btn add-to-cart-btn" data-toggle="tooltip" data-placement="top" title="Thêm vào giỏ hàng" type="submit" value="Thêm vào giỏ hàng" />
-                                        </span>
-                                    </form>
-                                </div>
-
-                                <a class="wishlist btn" href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="Yêu thích"><span><i class="fa fa-heart" aria-hidden="true"></i></span></a>
+                                <a data-id="@prod.ID" class="wishlist btn" href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="Yêu thích"><span><i class="fa fa-heart" aria-hidden="true"></i></span></a>
 
                             </div>
                         </div>

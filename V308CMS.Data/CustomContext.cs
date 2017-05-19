@@ -229,6 +229,11 @@ namespace V308CMS.Data
             get;
             set;
         }
+        public DbSet<ProductWishlist> ProductWishlist
+        {
+            get;
+            set;
+        }
 
         #endregion
         #region AddTo Methods
