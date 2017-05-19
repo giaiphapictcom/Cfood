@@ -16,7 +16,7 @@ namespace V308CMS.Controllers
         private readonly NewsRepository _newsService;
         private readonly AccountRepository _accountService;
         private readonly FileRepository _fileService;
-        private readonly ProductWishlistRepositry _productWishlistService;
+        private readonly IProductWishlistRepositry _productWishlistService;
       
         protected BaseController()
         {
@@ -41,7 +41,7 @@ namespace V308CMS.Controllers
                 return _newsService;
             }
         }
-        protected ProductWishlistRepositry ProductWishlistService
+        protected IProductWishlistRepositry ProductWishlistService
         {
             get
             {
