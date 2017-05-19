@@ -332,13 +332,13 @@
 
 </script>
 
-@if (Model.RelatedList != null && Model.RelatedList.Count > 0)
+@if (Model.RelatedList.IsHasData())
 {
 
     <section class="related-products">
         <h2><span>Sản phẩm cùng loại</span></h2>
         <div class="products-grid">
-            @foreach (V308CMS.Data.Product prod in Model.RelatedList)
+            @foreach (var prod in Model.RelatedList)
             {
                 <div class="product-hover product-review no_crop_image grid-item product-item wow fadeIn" data-wow-delay="0ms" id="product-@prod.ID">
 
@@ -358,7 +358,7 @@
                                 </a>
 
                                 <div class="quickview-button">
-                                    <a href="javascript:void(0)" id="eye-shadow-palette" data-toggle="tooltip" data-placement="top" title="@prod.Name" class="sca-qv-button btn">Xem nhanh</a>
+                                    <a href="javascript:void(0)" id="eye-shadow-palette" data-toggle="tooltip" data-placement="top" title="@prod.Name" class="sca-qv-button btn">@ViewBag.ProductViewText</a>
                                 </div>
                             </div>
                         </div>
@@ -368,8 +368,7 @@
                             <div class="price-box">
 
                                 <p class="regular-product">
-                                    @if (prod.Price > 0)
-                                    {
+                                    @if (prod.Price > 0){
                                         <span><span class="money">@String.Format("{0: 0,0}", (prod.Price)) @ViewBag.MoneyShort</span></span>
                                     }
 
@@ -383,7 +382,7 @@
                                 {
                                     <div class="add-to-cart">
 
-                                        <form action="/cart/add" method="post" class="variants" id="product-actions-@prod.ID" enctype="multipart/form-data" style="padding: 0px;">
+                                        <form action="@Url.AddToCartUrl()" method="post" class="variants" id="product-actions-@prod.ID" enctype="multipart/form-data" style="padding: 0px;">
                                             <input type="hidden" name="id" value="@prod.ID"/>
                                             <span>
                                                 <input class="btn add-to-cart-btn" data-toggle="tooltip" data-placement="top" title="Thêm vào giỏ hàng" type="submit" value="Thêm vào giỏ hàng" />
