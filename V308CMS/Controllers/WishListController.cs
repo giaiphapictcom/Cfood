@@ -12,8 +12,6 @@ namespace V308CMS.Controllers
     {
         //
         // GET: /WishList/
-
-        [Authorize]
         public ActionResult ListProduct()
         {
             var wishlist = ProductWishlistService.GetListWishlist(AuthenticationHelper.CurrentUser);
