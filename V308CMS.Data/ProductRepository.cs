@@ -1396,5 +1396,33 @@ namespace V308CMS.Data
             return brands;
 
         }
+
+        public List<Product> GetListProductWishlist(string listWishlist)
+        {
+            if (!string.IsNullOrWhiteSpace(listWishlist))
+            {
+                if (listWishlist.Contains(";"))
+                {
+                    return (from item in entities.Product.AsEnumerable()
+                            where listWishlist.Contains(item.ID + ";") || listWishlist.Contains(";" + item.ID)
+                            orderby item.ID descending
+                            select item
+                        ).ToList();
+                }
+                else
+                {
+                    var productId = Convert.ToInt32(listWishlist.Trim());
+                    return (from item in entities.Product
+                            where item.ID == productId
+                            orderby item.ID descending
+                            select item
+                      ).ToList();
+                }
+            }
+
+            return default(List<Product>);
+
+
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Web;
 using V308CMS.Common;
 
@@ -132,6 +133,167 @@ namespace V308CMS.Data
                 Console.Write(ex);
                 throw;
             }
+        }
+
+        public string Insert(string email, string password, string salt, string token, DateTime tokenExpireDate)
+        {
+            var checkAccount = (from p in entities.Account
+                        where p.Email.Equals(email) || p.UserName.Equals(email)
+                                select p).FirstOrDefault();
+            if (checkAccount != null) {
+                return "exist";
+            }
+            else {
+
+                var mAccount = new Account()
+                {
+                    Email = email,
+                    UserName = email,
+                    Password = HashPassword(password,salt) ,
+                    Salt = salt,
+                    Token = token,
+                    TokenExpireDate = tokenExpireDate,
+                    Status = false
+                };
+                entities.Account.Add(mAccount);
+                entities.SaveChanges();
+                return "ok";
+            }
+
+        }
+
+        public string UpdateToken(string email, string token,DateTime tokenExpireDate)
+        {
+            var checkAccount = (from p in entities.Account
+                                where p.Email.Equals(email) || p.UserName.Equals(email)
+                                select p).FirstOrDefault();
+            if (checkAccount == null)
+            {
+                return "invalid";
+            }
+            if (checkAccount.Status == true)
+            {
+                return "active";
+            }
+           
+            checkAccount.Token = token;
+            checkAccount.TokenExpireDate = tokenExpireDate;
+            entities.SaveChanges();
+            return "ok";
+        }
+
+        public string Active(string token)
+        {
+            var checkToken = (from account in entities.Account
+                where account.Token == token
+                select account
+                ).FirstOrDefault();
+            if (checkToken == null){
+                return "invalid";
+            }
+            if (checkToken.TokenExpireDate < DateTime.Now){
+                return "expire";
+
+            }
+            checkToken.Status = true;
+
+            entities.SaveChanges();
+            return "ok";
+
+        }
+
+        public string RequestForgotPassword(string email, string forgotPasswordToken, DateTime forgotPasswordTokenExpireDate)
+        {
+
+            var checkAccount = (from account in entities.Account
+                              where account.Email == email
+                              select account
+                ).FirstOrDefault();
+            if (checkAccount == null)
+            {
+                return "invalid";
+            }
+            var newPassword = StringHelper.GenerateString(6);
+            checkAccount.ForgotPasswordToken = forgotPasswordToken;
+            checkAccount.ForgotPasswordTokenExpireDate = forgotPasswordTokenExpireDate;
+            checkAccount.Password = HashPassword(newPassword, checkAccount.Salt);
+            entities.SaveChanges();
+            return newPassword;
+        }
+
+        public string CheckForgotPasswordToken(string token)
+        {
+            var checkForgotPasswordToken = (from account in entities.Account
+                                where account.ForgotPasswordToken == token
+                                select account
+              ).FirstOrDefault();
+            if (checkForgotPasswordToken == null)
+            {
+                return "invalid";
+            }
+            if (checkForgotPasswordToken.ForgotPasswordTokenExpireDate < DateTime.Now)
+            {
+                return "expire";
+            }
+            return "ok";
+        }
+
+        public string ChangePassword(string email, string currentPassword, string newPassword)
+        {
+            var checkAccount = (from account in entities.Account
+                                where account.Email == email
+                                select account
+                ).FirstOrDefault();
+            if (checkAccount == null)
+            {
+                return "invalid";
+            }
+            var hashCurrentPassword = HashPassword(currentPassword, checkAccount.Salt);
+            if (checkAccount.Password != hashCurrentPassword)
+            {
+                return "current_wrong";
+
+            }
+            checkAccount.Password = HashPassword(newPassword, checkAccount.Salt);           
+            entities.SaveChanges();
+            return "ok";
+
+        }
+
+        private string HashPassword(string password, string salt)
+        {
+           return  EncryptionMD5.ToMd5(string.Format("{0}|{1}", password, salt));
+        }
+        public string CheckAccount(string email, string password)
+        {
+            var checkAccount = (from p in entities.Account
+                                where p.Email.Equals(email) || p.UserName.Equals(email)
+                                select p).FirstOrDefault();
+            if (checkAccount == null)
+            {
+                return "invalid";
+            }
+            if (checkAccount.Status == false)
+            {
+                return "not_active";
+            }
+            var hashPassword = HashPassword(password, checkAccount.Salt);
+            if (checkAccount.Password != hashPassword)
+            {
+                return "invalid";
+
+            }
+            return "ok";
+
+        }
+
+        public string CheckEmail(string email)
+        {
+            var checkAccount = (from p in entities.Account
+                                where p.Email.Equals(email) || p.UserName.Equals(email)
+                                select p).FirstOrDefault();
+            return checkAccount != null ? "exist" : "not_exist";
+
         }
         public ETLogin CheckDangKyHome(string pUsername, string pPassword, string pPassWord2, string pEmail, string pFullName, string pMobile)
         {

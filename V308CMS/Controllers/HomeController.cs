@@ -47,7 +47,7 @@ namespace V308CMS.Controllers
 
         public ActionResult Index()
         {
-            var wishlist = WishListLocalStorage.GetWishList();       
+             
             CreateRepos();
             IndexPageContainer mIndexPageContainer = new IndexPageContainer();
             List<IndexPage> mIndexPageList = new List<IndexPage>();

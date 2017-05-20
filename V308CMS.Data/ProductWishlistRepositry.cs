@@ -6,6 +6,7 @@ namespace V308CMS.Data
     {
         string AddItemToWishlist(int productId, string userId);
         string RemoveItemFromWishlist(int productId, string userId);
+        string GetListWishlist(string userId);
     }
     public class ProductWishlistRepositry : IProductWishlistRepositry
     {
@@ -13,6 +14,15 @@ namespace V308CMS.Data
         public ProductWishlistRepositry(V308CMSEntities entities)
         {
             _entities = entities;
+        }
+
+        public string GetListWishlist(string userId)
+        {
+            var wishlistItem = (from item in _entities.ProductWishlist
+                                where item.UserId == userId
+                                select item
+                ).FirstOrDefault();
+            return wishlistItem != null ? wishlistItem.ListProduct : "";
         }
 
 
@@ -31,11 +41,18 @@ namespace V308CMS.Data
                     _entities.SaveChanges();
                     return "ok";
                 }
-                if (wishlistItem.ListProduct.Contains(";" + productId) ||
-                    wishlistItem.ListProduct.Contains(productId + ";"))
+                if (wishlistItem.ListProduct.Contains(";"))
                 {
-                    return "exist";
+                    if (wishlistItem.ListProduct.Contains(";" + productId) 
+                        ||wishlistItem.ListProduct.Contains(productId + ";"))
+                    {
+                        return "exist";
+                    }
                 }
+                if (wishlistItem.ListProduct.Contains(productId.ToString())){
+                    return "exist";
+                }  
+              
                 wishlistItem.ListProduct = wishlistItem.ListProduct + ";" + productId;
                 _entities.SaveChanges();
                 return "ok";
@@ -62,19 +79,31 @@ namespace V308CMS.Data
                  ).FirstOrDefault();
             if (wishlistItem != null)
             {
-                if (!string.IsNullOrWhiteSpace(wishlistItem.ListProduct)
-                    && (wishlistItem.ListProduct.Contains(";" + productId)
-                        || wishlistItem.ListProduct.Contains(productId + ";")))
+                if (!string.IsNullOrWhiteSpace(wishlistItem.ListProduct))
                 {
-                    wishlistItem.ListProduct =
-                        wishlistItem.ListProduct.Replace(";" + productId, "").Replace(productId + ";", "");
-                    _entities.SaveChanges();
-                    return "ok";
+                    if (wishlistItem.ListProduct.Contains(";")) {
+                        if ((wishlistItem.ListProduct.Contains(";" + productId)
+                             || wishlistItem.ListProduct.Contains(productId + ";")))
+                        {
+                            wishlistItem.ListProduct =
+                                wishlistItem.ListProduct.Replace(";" + productId, "").Replace(productId + ";", "");
+                            _entities.SaveChanges();
+                            return "ok";
+                        }
+                        return "invalid";
 
+                    }
+                    else
+                    {
+                        wishlistItem.ListProduct =
+                          wishlistItem.ListProduct.Replace(productId.ToString(), "");
+                        _entities.SaveChanges();
+                        return "ok";
+                    }
                 }
-                return "none_exist";
+                return "not_exist";
             }
-            return "userid_not_exist";
+            return "userid_invalid";
         }
     }
 }

@@ -5,6 +5,18 @@ using System.Web;
 
 namespace V308CMS.Data
 {
+        public interface INewsRepository
+        {
+            News LayTinTheoId(int pId);
+            News getFirstNewsWithType(int pId);
+            List<News> LayTinTheoTrang(int pcurrent, int psize);
+            List<News> LayTinTheoTrangAndGroupId(int pcurrent, int psize, int pTypeID);
+            List<News> LayTinTheoTrangAndGroupIdAdmin(int pcurrent, int psize, int pTypeID, string pLevel);
+             List<News> GetListNewsMostView(int pTypeId, string pLevel, int psize = 10);
+            List<News> GetListNewsLastest(int pTypeId, string pLevel, int psize = 10);
+            List<News> LayTinTheoTrangAndGroupIdAndLevel(int pcurrent, int psize, int pTypeID, string pLevel);
+
+        }
         public class NewsRepository
         {
             private V308CMSEntities entities;

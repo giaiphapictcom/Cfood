@@ -176,28 +176,7 @@ namespace V308CMS.Controllers
             }
 
         }
-        [HttpPost]
-        public ActionResult AddToWishList(int id)
-        {
-            if (!MyUser.IsAuthenticate)
-            {
-                return Json(new {code = "require_login", message = "Bạn cần đăng nhập để thực hiện chức năng này."});
-            }
-            else
-            {
-                var result = ProductWishlistService.AddItemToWishlist(id, MyUser.UserName);
-                if (result == "exist")
-                {
-                    return Json(new {code = result, message = "Sản phẩm đã có trong danh sách yêu thích."});
-                }
-                else{
-                   
-                    WishListLocalStorage.AddToWishList(id.ToString());
-                    return Json(new { code = result, message = "Thêm sản phẩm vào danh sách yêu thích thành công." });
-                }
-            }
-            
-        }
+        
        
     }
 }
