@@ -13,8 +13,26 @@ using System.ComponentModel.DataAnnotations;
 namespace V308CMS.Data
 {
     #region[Bat dau 1  class tblAccount]
+    [Table("contact")]
+    public class Contact
+    {
+        private int _Id;
+        private string _FullName;
+        private string _Email;
+        private string _Phone;
+        private string _Message;
+        private DateTime? _CreatedDate;
+        [Key]
+        public int ID { get { return _Id; } set { _Id = value; } }
+        public string FullName { get { if (String.IsNullOrEmpty(_FullName)) return ""; else return _FullName; } set { _FullName = value; } }
+        public string Email { get { if (String.IsNullOrEmpty(_Email)) return ""; else return _Email; } set { _Email = value; } }
+        public string Phone { get { if (String.IsNullOrEmpty(_Phone)) return ""; else return _Phone; } set { _Phone = value; } }
+        public string Message { get { if (String.IsNullOrEmpty(_Message)) return ""; else return _Message; } set { _Message = value; } }
+        public DateTime? CreatedDate { get { if (_CreatedDate == null) return new DateTime(); else return _CreatedDate; } set { if (_CreatedDate != value) { _CreatedDate = value; } } }
+    }
 
-    [Table("account")]
+
+        [Table("account")]
     public class Account
     {
 

@@ -19,10 +19,8 @@ namespace V308CMS.Helpers
                 "~/Views/themes/myshopify/Product/{0}.cshtml",
                 "~/Views/themes/myshopify/Widget/{0}.cshtml",
                 "~/Views/themes/myshopify/Blocks/Filter/{0}.cshtml",
-                "~/Views/{1}/{0}.cshtml",
-                "~/Views/Shared/PartialViews/{0}.cshtml",
-                "~/Views/Shared/Layouts/{0}.cshtml"
-
+                "~/Views/Home/{0}.cshtml"
+              
             };
 
             this.ViewLocationFormats = locations;

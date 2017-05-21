@@ -234,6 +234,11 @@ namespace V308CMS.Data
             get;
             set;
         }
+        public DbSet<Contact> Contact
+        {
+            get;
+            set;
+        }
 
         #endregion
         #region AddTo Methods

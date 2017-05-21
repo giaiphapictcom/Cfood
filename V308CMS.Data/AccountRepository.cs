@@ -286,7 +286,14 @@ namespace V308CMS.Data
             return "ok";
 
         }
+        public Account GetByUserId(string userId)
+        {
+            return (from p in entities.Account
+                                where p.Email.Equals(userId) || p.UserName.Equals(userId)
+                                select p).FirstOrDefault();
+          
 
+        }
         public string CheckEmail(string email)
         {
             var checkAccount = (from p in entities.Account

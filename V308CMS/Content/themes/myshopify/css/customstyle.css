@@ -40,3 +40,8 @@
     padding: 10px 30px;
     margin: auto;
 }
+.site-nav li.active a {
+    font-weight: bold;
+    color: #ff7900;
+ 
+}

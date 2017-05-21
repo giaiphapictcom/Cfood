@@ -19,7 +19,9 @@ namespace V308CMS.Controllers
         }
 
         public ActionResult MainMenu()
-        {          
+        {
+          
+
             return View("MainMenu", NewsService.GetNewsGroup());
         }
 
@@ -84,13 +86,10 @@ namespace V308CMS.Controllers
                 var categorys = NewsService.GetNewsGroup(footerCate.ID, true, 3);
                 if (categorys.Any())
                 {
-                    foreach (var cate in categorys)
+                    newsCategorys.AddRange(categorys.Select(cate => new NewsGroupPage
                     {
-                        var newsCategory = new NewsGroupPage();
-                        newsCategory.Name = cate.Name;
-                        newsCategory.NewsList = NewsService.LayDanhSachTinMoiNhatTheoGroupId(5, cate.ID);
-                        newsCategorys.Add(newsCategory);
-                    }
+                        Name = cate.Name, NewsList = NewsService.LayDanhSachTinMoiNhatTheoGroupId(5, cate.ID)
+                    }));
                 }
             }
             model.NewsCategorys = newsCategorys;

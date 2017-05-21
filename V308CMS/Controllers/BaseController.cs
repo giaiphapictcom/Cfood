@@ -19,6 +19,7 @@ namespace V308CMS.Controllers
         private readonly IProductWishlistRepositry _productWishlistService;
         private readonly ImagesRepository _imagesRepository;
         private readonly MarketRepository _marketRepository;
+        private readonly IContactRepository _contactRepository;
       
         protected BaseController()
         {
@@ -31,8 +32,16 @@ namespace V308CMS.Controllers
             _productWishlistService = new ProductWishlistRepositry(_mEntities);
             _imagesRepository = new ImagesRepository(_mEntities);
             _marketRepository = new MarketRepository(_mEntities);
+            _contactRepository = new ContactRepository(_mEntities);
         }
-
+        protected IContactRepository ContactService
+        {
+            get
+            {
+                EnsureV308CmsEntitiesNotNull();
+                return _contactRepository;
+            }
+        }
         protected V308CMSEntities MpStartEntities
         {
             get { return _mEntities; }
