@@ -837,6 +837,8 @@ namespace V308CMS.Data
         }
         //add by toaihv
         public virtual ICollection<ProductImage> ProductImages { get;set; }
+        [ForeignKey("Manufacturer")]
+        public virtual ProductManufacturer ProductManufacturer { get;set; }
     }
     #endregion[ket thuc class tblProduct]
 

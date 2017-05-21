@@ -28,9 +28,7 @@ namespace V308CMS.Models
         {
             get
             {
-                return SaleOff > 0 ?
-            Quantity * ((UnitPrice - ((UnitPrice / 100) * SaleOff))) :
-            Quantity * UnitPrice;
+                return SaleOff > 0 ?Quantity * ((UnitPrice - ((UnitPrice / 100) * SaleOff))) : Quantity * UnitPrice;
             }
         }
 

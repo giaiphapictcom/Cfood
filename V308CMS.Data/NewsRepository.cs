@@ -69,6 +69,13 @@ namespace V308CMS.Data
                     throw;
                 }
             }
+
+            public News GetById(int id, int type = 58)
+            {
+               return (from p in entities.News
+                         where p.ID == id && type == 58
+                       select p).FirstOrDefault();
+            }
             public News getFirstNewsWithType(int pId)
             {
                 News mNews = null;
@@ -704,24 +711,24 @@ namespace V308CMS.Data
                     throw;
                 }
             }
-            public News GetNext(int id)
+            public News GetNext(int id, int type =58)
             {
                 try
                 {
-                   return entities.News.SkipWhile(news => news.ID != id).Skip(1).First();
+                   return entities.News.SkipWhile(news => news.ID != id && news.TypeID == type).Skip(1).First();
 
                 }
                 catch (Exception)
                 {
-                 return null;
+                    return null;
                 }                
 
             }
-            public News GetPrevious(int id)
+            public News GetPrevious(int id,int type =58)
             {
                 try
                 {
-                    return entities.News.TakeWhile(news => news.ID != id).Last();
+                    return entities.News.TakeWhile(news => news.ID != id && news.TypeID == type).Last();
                 }
                 catch (Exception)
                 {

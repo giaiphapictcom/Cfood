@@ -61,7 +61,7 @@
                                     <td class="image">
                                         <div class="product_image">
                                             <a href="@url.productURL(cart.ProductItem.Name, cart.ProductItem.Id)" title="Xem chi tiết sản phẩm @cart.ProductItem.Name">
-                                                <img src="@cart.ProductItem.Avatar.ToUrl()" alt="@cart.ProductItem.Name">
+                                                <img src="@cart.ProductItem.Avatar.ToUrl(152,160)" alt="@cart.ProductItem.Name">
                                             </a>
                                         </div>
                                     </td>
@@ -81,14 +81,12 @@
                                         <a href="/cart/remove?id=@cart.ProductItem.Id&quantity=0" class="cart" title="Xóa sản phẩm khỏi giỏ hàng"><i class="icon_close"></i></a>
                                     </td>
                                 </tr>
-
+                            }
                                 <tr class="summary">
                                     <td colspan="3">Tổng tiền</td>
                                     <td class="price"><span class="total"><strong><span class="money">@Model.SubTotal.ToString("N0") đ</span></strong></span></td>
                                     <td>&nbsp;</td>
                                 </tr>
-                            }
-
                             </tbody>
                         </table>
                         <div class="row">

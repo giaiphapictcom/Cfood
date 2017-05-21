@@ -125,9 +125,9 @@ Shopify.pollForCartShippingRatesForDestination = function (e, t, n) {
     jQuery.ajax(r)
 },
 Shopify.getProduct = function (e, t) {
-    jQuery.getJSON("/products/" + e + ".js", function (e, n) {
-        "function" == typeof t ? t(e) : Shopify.onProduct(e)
-    })
+    jQuery.getJSON("/product/index?id=" + e, function(e, n) {
+        "function" == typeof t ? t(e) : Shopify.onProduct(e);
+    });
 },
 Shopify.changeItem = function (e, t, n) {
     var r = {

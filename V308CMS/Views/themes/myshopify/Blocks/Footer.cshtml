@@ -129,13 +129,64 @@
                     Sản phẩm đã được thêm vào giỏ hàng thành công.
                 </div>
                 <div class="button-link-cart">
-                    <div class="view-cart"><a title="Xem giỏ hàng" href="@Url.ViewCartUrl()">Xem giỏ hàng</a></div>
-                    <button class="btn" onclick="window.location='@Url.CheckoutCartUrl()'" title="Thanh toán">Thanh toán</button>
+                    <div class="view-cart"><a title="Xem giỏ hàng" href="@Url.ViewCartUrl()">Xem giỏ hàng</a>
+                    </div>
+                    <button class="btn" onclick="window.location = '@Url.CheckoutCartUrl()'" title="Thanh toán">Thanh toán</button>
                 </div>
             </div>
-            <p class="success-message show-wishlist">Success! You&#39;ve added to wishlist success.</p>         
+            <p class="success-message show-wishlist">Success! You&#39;ve added to wishlist success.</p>
             <a href="javascript:void(0)" class="close-cbox"><span class="icon_close"></span></a>
         </div>
     </div>
+    <div class="product-quickview"></div>
+    <!-- Begin quick-view-template -->
+    <div class="clearfix" id="quickview-popup" style="display:none">
+        <div class="overlay"></div>
+        <div class="product-content clearfix">
+            <div class="product-img col-xs-6">
+                <div class="quickview-featured-image"></div>
+                <div class="more-view">
+                    <ul class="product-photo-thumbs  quickview-more-views-owlslider " data-cycle-carousel-vertical=true></ul>
+                </div>
+            </div>
 
+            <div class="product-shop col-xs-6">
+                <div class="product-item">
+                    <h2 class="product-title"><a>&nbsp;</a></h2>
+                    <span class="shopify-product-reviews-badge" data-id=""></span>
+
+                    <div class="prices">
+                        <span class="text-price">Giá :</span>
+                        <span class="compare-price"></span>
+                        <span class="price"></span>
+                    </div>
+
+                    <div class="product-infor">
+
+                        <p class="product-inventory"><label>Trạng thái</label><span></span></p>
+
+                        <p class="product-vendor"><label>Nhà sản xuất</label><span></span></p>
+
+                    </div>
+
+                    <p class="item-text product-description"></p>
+
+                    <div class="product-details clearfix">
+                        <form action="@Url.AddToCartUrl()" method="post" class="variants" name="quickview-form">
+                            <input name="id" value="0" type="hidden"/>                           
+                            <label>Số lượng :</label>
+                            <input type="text" name="quantity" value="1" class="quantity">
+                            <div class="actions">
+                                <button type="button" class="btn add-to-cart-btn hidden">Thêm vào giỏ hàng</button>
+                                <span><input class="btn add-to-cart-btn" title="Thêm vào giỏ hàng" type="button" value="Thêm vào giỏ hàng" /></span>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+            <a href="javascript:void(0)" class="close-popup"><i class="fa fa-times"></i></a>
+        </div>
+    </div>
+    <!-- End of quick-view-template -->
 </div>

@@ -26,7 +26,7 @@
                                             <a href="@url.productURL(item.Product.Name,item.Product.ID)" class="grid-image">
                                                 <img class="feature-images" src="@ImageHelper.Crop(@item.Product.Image, 250)" alt="@item.Product.Name">
 
-                                                @if (item.Images.Count() > 0)
+                                                @if (item.Images.Any())
                                                 {
                                                     <span class="product-hover" data-idproduct="@item.Product.ID">
 
@@ -37,7 +37,7 @@
                                             </a>
 
                                             <div class="quickview-button">
-                                                <a href="javascript:void(0)" id="fero-moda-belted-drape-coat" data-toggle="tooltip" data-placement="top" title="@item.Product.Name" class="sca-qv-button btn">
+                                                <a href="javascript:void(0)"  data-toggle="tooltip" data-placement="top" title="@item.Product.Name" class="sca-qv-button btn" id="@item.Product.ID">
                                                     @ViewBag.ProductViewText
                                                 </a>
                                             </div>

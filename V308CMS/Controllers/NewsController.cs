@@ -10,6 +10,7 @@ namespace V308CMS.Controllers
     public class NewsController : BaseController
     {
         private const int PageSize = 10;
+        private const int NewsType = 58;
 
         private int GetTotalPage(int totalItem)
         {
@@ -22,7 +23,7 @@ namespace V308CMS.Controllers
         }
 
        
-        public ActionResult Index(int type = 58, int page = 1)
+        public ActionResult Index(int type = NewsType, int page = 1)
         {
             var newsIndexViewModel = new NewsIndexPageContainer();
             var newsGroup = NewsService.LayTheLoaiTinTheoId(type);
@@ -41,7 +42,7 @@ namespace V308CMS.Controllers
     
         public ActionResult Detail(int id)
         {
-            var newsItem = NewsService.LayTinTheoId(id);
+            var newsItem = NewsService.GetById(id, NewsType);
             if (newsItem == null)
             {
                 return HttpNotFound("Tin này không tồn tại trên hệ thống");
@@ -49,9 +50,9 @@ namespace V308CMS.Controllers
             var newsDetailViewModel = new NewsDetailPageContainer
             {
                 NewsItem = newsItem,
-                NextNewsItem = NewsService.GetNext(id),
-                ListNewsMostView = NewsService.GetListNewsMostView(58, ""),
-                 PreviousNewsItem = NewsService.GetPrevious(id)
+                NextNewsItem = NewsService.GetNext(id, NewsType),
+                ListNewsMostView = NewsService.GetListNewsMostView(NewsType, ""),
+                 PreviousNewsItem = NewsService.GetPrevious(id, NewsType)
             };
 
             return View("News.Detail", newsDetailViewModel);

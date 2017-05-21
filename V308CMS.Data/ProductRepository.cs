@@ -183,6 +183,20 @@ namespace V308CMS.Data
                 throw;
             }
         }
+
+        public Product GetById(int id, bool includeDetail = true)
+        {
+            return includeDetail
+                ? (from p in entities.Product.Include("ProductManufacturer").Include("ProductImages")
+                    where p.ID == id
+                    select p).FirstOrDefault()
+                : (from p in entities.Product
+                    where p.ID == id
+                    select p).FirstOrDefault();
+
+
+
+        }
         public List<Product> LayTheoTrang(int pcurrent, int psize)
         {
             List<Product> mList = null;
