@@ -36,7 +36,7 @@ namespace V308CMS.Controllers
             newsIndexViewModel.Page = page;
             newsIndexViewModel.TotalPage = GetTotalPage(newsIndexViewModel.ListNews.Count);
             newsIndexViewModel.ListNewsMostView = NewsService.GetListNewsMostView(type, level);
-            return View(FindView("News.Index"), newsIndexViewModel);            
+            return View("News.Index", newsIndexViewModel);            
         }
     
         public ActionResult Detail(int id)
@@ -54,7 +54,7 @@ namespace V308CMS.Controllers
                  PreviousNewsItem = NewsService.GetPrevious(id)
             };
 
-            return View(FindView("News.Detail"), newsDetailViewModel);
+            return View("News.Detail", newsDetailViewModel);
         }
 
         public ActionResult ListByTag(string tag, int page = 1)

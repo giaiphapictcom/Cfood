@@ -31,8 +31,8 @@ namespace V308CMS.Controllers
             if (AuthenticationHelper.IsAuthenticate) {
                 return RedirectToUrl(returnUrl);
 
-            }
-            return View(FindView("Account.Login"), new LoginModels
+            }            
+            return View("Account.Login", new LoginModels
             {
                 ReturnUrl = returnUrl
             });
@@ -50,24 +50,24 @@ namespace V308CMS.Controllers
                 {
                     ViewBag.Error = "Tên tài khoản hoặc Mật khẩu không chính xác.";               
                     login.Password = "";
-                    return View(FindView("Account.Login"), login);
+                    return View("Account.Login", login);
                 } 
                  if (checkLogin == "not_active")
                 {
-                    var activeAccountUrl = string.Format("{0}account/active", ConfigHelper.Domain);
+                    var activeAccountUrl = string.Format("{0}account/active", ConfigHelper.WebDomain);
                     ViewBag.Error = string.Format(
                         "Tài khoản của bạn chưa được kích hoạt, click vào <a href='{0}' title='Kích hoạt tài khoản' style='color: #007FF0'> đây</a> để kích hoạt tài khoản của bạn.",
                         activeAccountUrl);
                  
                     login.Password = "";
-                    return View(FindView("Account.Login"), login);
+                    return View("Account.Login", login);
                 }
                 AuthenticationHelper.SignIn(login);
                 return RedirectToUrl(login.ReturnUrl);
 
 
-            }
-           return View(FindView("Account.Login"),login);
+            }           
+            return View("Account.Login", login);
         }
         [Authorize]
         public ActionResult LogOut()
@@ -77,8 +77,8 @@ namespace V308CMS.Controllers
            
         }
         public ActionResult Register()
-        {
-            return View(FindView("Account.Register"), new RegisterModels());
+        {           
+            return View("Account.Register", new RegisterModels());
         }
 
         private string getToken(string email, bool forForgotPassword = false)
@@ -101,34 +101,27 @@ namespace V308CMS.Controllers
                 if (result == "exist"){
                     register.ResetPasswordValue();
                     ViewBag.Error = "Địa chỉ Email này đã được sử dụng để đăng ký, vui lòng sử dụng tên tài khoản khác.";                  
-                    return View(FindView("Account.Register"), register);
+                    return View("Account.Register", register);
                 }
                 else{
-                    var emailSender = new EmailSender(
-                     ConfigHelper.GMailUserName,
-                     ConfigHelper.GMailPassword,
-                     ConfigHelper.GmailSmtpServer,
-                     ConfigHelper.GMailPort
-                    );
-                    var activeAccountUrl = string.Format("{0}account/active", ConfigHelper.Domain);
+                    var activeAccountUrl = string.Format("{0}account/active", ConfigHelper.WebDomain);
                     var body =
                         string.Format(
                             "Cảm ơn bạn đã đăng ký tài khoản trên hệ thống của {0}. Mã kích hoạt tài khoản của bạn là {1}. Click vào <a style='color: #007FF0' href='{2}' title='Kích hoạt tài khoản'> đây</a> để kích hoạt tài khoản của bạn.",
                             ViewBag.SiteName, token, activeAccountUrl);
-                    emailSender.SendMail(ConfigHelper.GMailUserName, register.Email,
-                        "Đăng ký tài khoản", body);
+                    InternalSendEmail(register.Email, "Đăng ký tài khoản", body);
                     return RedirectToAction("Active");
                 }
              
             }
             register.ResetPasswordValue();         
-            return View(FindView("Account.Register"), register);
+            return View("Account.Register", register);
 
         }
         
         public ActionResult Active()
-        {
-            return View(FindView("Account.Active"));
+        {           
+            return View("Account.Active");
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -140,21 +133,21 @@ namespace V308CMS.Controllers
                 var activeResult = AccountService.Active(active.Token);
                 if (activeResult == "invalid"){
                    ModelState.AddModelError("Token","Mã kích hoạt tài khoản không đúng.");
-                   return View(FindView("Account.Active"), active);
+                   return View("Account.Active", active);
                 }
                 if (activeResult == "expire"){
-                    var getTokenUrl = string.Format("{0}account/gettoken", ConfigHelper.Domain);
+                    var getTokenUrl = string.Format("{0}account/gettoken", ConfigHelper.WebDomain);
                     ModelState.AddModelError("Token", string.Format("Mã kích hoạt tài khoản đã hết hạn. Click vào <a style='color: #007FF0' href='{0}' title='Kích hoạt tài khoản'> đây</a> để lấy mã kích hoạt. ", getTokenUrl) );
-                    return View(FindView("Account.Active"), active);
+                    return View("Account.Active", active);
                 }
                 return RedirectToAction("Login");
-            }
-            return View(FindView("Account.Active"), active);
+            }            
+            return View("Account.Active", active);
         }
 
         public ActionResult GetToken()
         {
-            return View(FindView("Account.GetToken"), new GetTokenModels());
+            return View("Account.GetToken", new GetTokenModels());
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -167,32 +160,26 @@ namespace V308CMS.Controllers
                 if (result == "invalid")
                 {
                     ModelState.AddModelError("Email", "Địa chỉ Email không đúng.");
-                    return View(FindView("Account.GetToken"), token);
+                    return View("Account.GetToken", token);
                 }
                 if (result == "active")
                 {
-                    var loginAccountUrl = string.Format("{0}account/active", ConfigHelper.Domain);
+                    var loginAccountUrl = string.Format("{0}account/active", ConfigHelper.WebDomain);
                     ModelState.AddModelError("Email", string.Format("Tài khoản của bạn đã được kích hoạt rôì. Click vào <a href='{0}' style='color: #007FF0' title='Đăng nhập'> đây</a> để đăng nhập.", loginAccountUrl));
-                    return View(FindView("Account.GetToken"), token);
+                    return View("Account.GetToken", token);
                 }
-                var emailSender = new EmailSender(
-                   ConfigHelper.GMailUserName,
-                   ConfigHelper.GMailPassword,
-                   ConfigHelper.GmailSmtpServer,
-                   ConfigHelper.GMailPort
-                  );
-                var activeAccountUrl = string.Format("{0}account/active", ConfigHelper.Domain);
+            
+                var activeAccountUrl = string.Format("{0}account/active", ConfigHelper.WebDomain);
                 var body =
                     string.Format(
                         "Mã kích hoạt tài khoản của bạn là {0}. Click vào <a href='{1}' style='color: #007FF0' title='Kích hoạt tài khoản'> đây</a> để kích hoạt tài khoản của bạn.",
                         token, activeAccountUrl);
-                emailSender.SendMail(ConfigHelper.GMailUserName, token.Email,
-                    "Lấy mã kích hoạt tài khoản", body);
+                InternalSendEmail(token.Email, "Lấy mã kích hoạt tài khoản", body);
                 return RedirectToAction("Active");
             
             }
 
-            return View(FindView("Account.GetToken"), token);
+            return View("Account.GetToken", token);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -204,7 +191,7 @@ namespace V308CMS.Controllers
             if (result == "invalid")
             {
                 ModelState.AddModelError("Email", "Địa chỉ Email không đúng.");
-                return View(FindView("Account.ForgotPassword"), forgot);
+                return View("Account.ForgotPassword", forgot);
 
             }
             var emailSender = new EmailSender(
@@ -213,9 +200,8 @@ namespace V308CMS.Controllers
                   ConfigHelper.GmailSmtpServer,
                   ConfigHelper.GMailPort
                  );
-            var changePasswordUrl = string.Format("{0}account/changepassword", ConfigHelper.Domain);
-            var body =
-                string.Format(
+            var changePasswordUrl = string.Format("{0}account/changepassword", ConfigHelper.WebDomain);
+            var body =string.Format(
                     "Mật khẩu mới của bạn là : {0}. Click vào <a href='{1}' style='color: #007FF0' title='Đổi mật khẩu'> đây</a> đề thay đổi mật khẩu của bạn.",
                     result, changePasswordUrl);
             emailSender.SendMail(ConfigHelper.GMailUserName, forgot.Email,
@@ -228,15 +214,15 @@ namespace V308CMS.Controllers
             if (result == "invalid")
             {
                 ViewBag.Error = string.Format("Mã xác thực không đúng. Click vào <a href='{0}' style='color: #007FF0' title='Quên mật khẩu'> đây</a> để gửi yêu cầu cấp mật khẩu mới.", string.Format("{0}account/forgotpassword", ConfigHelper.Domain)) ;
-                return View(FindView("Account.InvalidToken"));
+                return View("Account.InvalidToken");
             }
             if (result == "expire")
             {
                 ViewBag.Error =string.Format("Mã xác thực hết hạn. Click vào <a href='{0}' style='color: #007FF0' title='Quên mật khẩu'> đây</a> để gửi yêu cầu cấp mật khẩu mới.", string.Format("{0}account/forgotpassword", ConfigHelper.Domain)) ;
-                return View(FindView("Account.InvalidToken"));
+                return View("Account.InvalidToken");
             }           
 
-            return View(FindView("Account.ChangePassword"), new ChangePasswordModels {Token = token});
+            return View("Account.ChangePassword", new ChangePasswordModels {Token = token});
         }
 
         [HttpPost]
@@ -251,7 +237,7 @@ namespace V308CMS.Controllers
                     account.OldPassword = "";
                     account.NewPassword = "";
                     account.ConfirmPassword = "";
-                    return View(FindView("Account.ChangePassword"), account);
+                    return View("Account.ChangePassword", account);
                 }
                 var result = AccountService.ChangePassword(account.Token, account.OldPassword,
                     account.NewPassword);
@@ -261,7 +247,7 @@ namespace V308CMS.Controllers
                     account.OldPassword = "";
                     account.NewPassword = "";
                     account.ConfirmPassword = "";
-                    return View(FindView("Account.ChangePassword"), account);
+                    return View("Account.ChangePassword", account);
                 }
                 if (result == "current_wrong")
                 {
@@ -269,16 +255,16 @@ namespace V308CMS.Controllers
                     account.OldPassword = "";
                     account.NewPassword = "";
                     account.ConfirmPassword = "";
-                    return View(FindView("Account.ChangePassword"), account);
+                    return View("Account.ChangePassword", account);
                 }
                 return Redirect("/");
             }
-            return View(FindView("Account.ChangePassword"), account);
+            return View("Account.ChangePassword", account);
         }
        
         public ActionResult Profiles()
         {
-            return View(FindView("Account.Profile"));
+            return View("Account.Profile");
         }
 
         public ActionResult HandleUpdateProfiles()
@@ -287,9 +273,16 @@ namespace V308CMS.Controllers
 
         }
 
-        public ActionResult Addresses()
+        private string InternalSendEmail(string to,string subject,string body)
         {
-            return View(FindView("Account.Addresses"));
+            var emailSender = new EmailSender(
+                 ConfigHelper.GMailUserName,
+                 ConfigHelper.GMailPassword,
+                 ConfigHelper.GmailSmtpServer,
+                 ConfigHelper.GMailPort
+                );
+          return  emailSender.SendMail(ConfigHelper.GMailUserName, to,
+               subject, body);
         }
 
 

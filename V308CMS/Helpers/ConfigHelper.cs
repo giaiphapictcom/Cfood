@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using V308CMS.Common;
+﻿using V308CMS.Common;
 
 namespace V308CMS.Helpers
 {
@@ -25,9 +21,13 @@ namespace V308CMS.Helpers
             get { return Configs.GetItemConfig("port"); }
         }
 
+        public static string WebDomain
+        {
+            get { return Configs.GetItemConfig("WebDomain"); }
+        }
         public static string Domain
         {
-            get { return Configs.GetItemConfig("Doamin"); }
+            get { return Configs.GetItemConfig("domain"); }
         }
     }
 }

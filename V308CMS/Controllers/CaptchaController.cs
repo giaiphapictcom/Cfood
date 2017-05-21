@@ -21,15 +21,15 @@ namespace V308CMS.Controllers
     /// </summary>
     public class CaptchaController : Controller
     {
-        public JsonResult ValidateCaptcha(string CaptchaValue)
+        public JsonResult ValidateCaptcha(string captchaValue)
         {
-            bool b = IsValidCaptchaValue(CaptchaValue.ToUpper());
+            bool b = IsValidCaptchaValue(captchaValue.ToUpper());
             if (!b) return Json(string.Empty, JsonRequestBehavior.AllowGet);
             else return Json(true, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult ValidateInvisibleCaptcha(string CaptchaValue)
+        public JsonResult ValidateInvisibleCaptcha(string captchaValue)
         {
-            bool b = CaptchaValue == "";
+            bool b = captchaValue == "";
             if (!b) return Json(string.Empty, JsonRequestBehavior.AllowGet);
             else return Json(true, JsonRequestBehavior.AllowGet);
         }

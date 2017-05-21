@@ -14,7 +14,7 @@ namespace V308CMS.Controllers
 
         public ActionResult Index()
         {
-            return View(FindView("Contact"));
+            return View("Contact");
         }
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult HandleIndex(ContactModels contact)

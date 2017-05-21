@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using V308CMS.Data;
-namespace V308CMS.App_Start
+
+namespace V308CMS
 {
     public class ThemesViewActionFilter : ActionFilterAttribute
     {
