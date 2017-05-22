@@ -18,6 +18,10 @@ namespace V308CMS.Sale
             routes.MapRoute("Register-html", "dang-ky.html", new { Controller = "Partner", action = "Register" });
 
             routes.MapRoute("Dashboard", "dashboard", new { Controller = "Partner", action = "index" });
+
+            routes.MapRoute("ShortLinks", "link", new { Controller = "Partner", action = "Links" });
+            routes.MapRoute("ShortLink-Create", "link/tao-moi", new { Controller = "Partner", action = "LinkForm" });
+            routes.MapRoute("ShortLink-Edit", "link/chinh-sua/{id}", new { Controller = "Partner", action = "LinkForm" }, new { id = @"\d+" });
             
 
             routes.MapRoute("LogoutRoute", "dang-xuat.html", new { Controller = "Admin", action = "Logout" });

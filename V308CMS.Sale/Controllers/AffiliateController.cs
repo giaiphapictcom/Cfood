@@ -53,6 +53,7 @@ namespace V308CMS.Sale.Controllers
                 if (NewsHomeCategory != null)
                 {
                     Model.Articles = NewsRepos.LayDanhSachTinTheoGroupIdWithPage(5, NewsHomeCategory.ID);
+                    //Model.Articles = Model.Articles.OrderBy(x => x.Order);
                 }
                 Model.Testimonial = CommentRepo.GetRandom(4);
 
