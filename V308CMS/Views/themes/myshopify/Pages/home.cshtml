@@ -29,7 +29,7 @@
 @Html.Action("ProductMost", "MyShopify")
 @Html.Action("ProductHot", "MyShopify")
 
-@if (Model.ProductTypeList.IsHasData()) {
+@if (Model.ProductTypeList != null ) {
     foreach (V308CMS.Data.ProductType cate in Model.ProductTypeList) {
         @Html.Action("ProductHomeCategory", "MyShopify",cate)
     }
