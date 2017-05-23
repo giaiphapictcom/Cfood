@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using V308CMS.Data;
-namespace V308CMS.App_Start
+
+namespace V308CMS
 {
     public class ThemesViewActionFilter : ActionFilterAttribute
     {
@@ -32,7 +30,7 @@ namespace V308CMS.App_Start
                     "gplus",
                     "zalo",
                     "youtube-channel",
-                    "product-view-text",
+                    "product-text-view",
                     "home-text-alias",
                     "subscribe-news"
                 };
@@ -51,7 +49,7 @@ namespace V308CMS.App_Start
                     viewBag.GPlus = config.ReadSiteConfig(siteConfigs,"gplus");
                     viewBag.Zalo = config.ReadSiteConfig(siteConfigs,"zalo");
                     viewBag.Youtube = config.ReadSiteConfig(siteConfigs,"youtube-channel");
-                    viewBag.ProductViewText = config.ReadSiteConfig(siteConfigs,"product-view-text");
+                    viewBag.ProductViewText = config.ReadSiteConfig(siteConfigs, "product-text-view");
                     viewBag.HomeAliasText = config.ReadSiteConfig(siteConfigs, "home-text-alias");
                     viewBag.SubscribeNews = config.ReadSiteConfig(siteConfigs, "subscribe-news");
                 }

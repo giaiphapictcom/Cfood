@@ -13,8 +13,26 @@ using System.ComponentModel.DataAnnotations;
 namespace V308CMS.Data
 {
     #region[Bat dau 1  class tblAccount]
+    [Table("contact")]
+    public class Contact
+    {
+        private int _Id;
+        private string _FullName;
+        private string _Email;
+        private string _Phone;
+        private string _Message;
+        private DateTime? _CreatedDate;
+        [Key]
+        public int ID { get { return _Id; } set { _Id = value; } }
+        public string FullName { get { if (String.IsNullOrEmpty(_FullName)) return ""; else return _FullName; } set { _FullName = value; } }
+        public string Email { get { if (String.IsNullOrEmpty(_Email)) return ""; else return _Email; } set { _Email = value; } }
+        public string Phone { get { if (String.IsNullOrEmpty(_Phone)) return ""; else return _Phone; } set { _Phone = value; } }
+        public string Message { get { if (String.IsNullOrEmpty(_Message)) return ""; else return _Message; } set { _Message = value; } }
+        public DateTime? CreatedDate { get { if (_CreatedDate == null) return new DateTime(); else return _CreatedDate; } set { if (_CreatedDate != value) { _CreatedDate = value; } } }
+    }
 
-    [Table("account")]
+
+        [Table("account")]
     public class Account
     {
 
@@ -32,7 +50,12 @@ namespace V308CMS.Data
         private string _Avata;
         private int? _Role;
         private DateTime? _Date;
+        private string _Salt;
+        private string _Token;
+        private DateTime _TokenExpireDate;
 
+        private string _ForgotPasswordToken;
+        private DateTime __ForgotPasswordTokenExpireDate;
 
         #endregion
         #region[Public Properties]
@@ -49,7 +72,12 @@ namespace V308CMS.Data
         public bool? Status { get { if (_Status == null) return false; else return _Status; } set { if (_Status != value) { _Status = value; } } }
         public string Avata { get { if (String.IsNullOrEmpty(_Avata)) return ""; else return _Avata; } set { _Avata = value; } }
         public int? Role { get { if (_Role == null || _Role < 0) return 0; else return _Role; } set { if (_Role != value) { if (_Role < 0) _Role = 0; else _Role = value; } } }
-        public DateTime? Date { get { if (_Date == null) return new DateTime(); else return _Date; } set { if (_Date != value) { _Date = value; } } }
+        public DateTime? Date { get { if (_Date == null) return new DateTime(); else return _Date; } set { if (_Date != value) { _Date = value; } } }     
+        public string Salt { get { if (String.IsNullOrEmpty(_Salt)) return ""; else return _Salt; } set { _Salt = value; } }
+        public string Token { get { if (String.IsNullOrEmpty(_Token)) return ""; else return _Token; } set { _Token = value; } }
+        public DateTime TokenExpireDate { get { if (_TokenExpireDate == null) return new DateTime(); else return _TokenExpireDate; } set { if (_TokenExpireDate != value) { _TokenExpireDate = value; } } }
+        public string ForgotPasswordToken { get { if (String.IsNullOrEmpty(_ForgotPasswordToken)) return ""; else return _ForgotPasswordToken; } set { _ForgotPasswordToken = value; } }
+        public DateTime ForgotPasswordTokenExpireDate { get { if (__ForgotPasswordTokenExpireDate == null) return new DateTime(); else return __ForgotPasswordTokenExpireDate; } set { if (__ForgotPasswordTokenExpireDate != value) { __ForgotPasswordTokenExpireDate = value; } } }
 
 
         #endregion
@@ -809,6 +837,8 @@ namespace V308CMS.Data
         }
         //add by toaihv
         public virtual ICollection<ProductImage> ProductImages { get;set; }
+        [ForeignKey("Manufacturer")]
+        public virtual ProductManufacturer ProductManufacturer { get;set; }
     }
     #endregion[ket thuc class tblProduct]
 
@@ -914,7 +944,27 @@ namespace V308CMS.Data
         #endregion
 
     }
-    #endregion[ket thuc class tblProductImage]
+    #endregion[ket thuc class tblProductWishlist]
+    #region[Bat dau 1  class tblProductWishlist]
+
+    [Table("productwishlist")]
+    public class ProductWishlist
+    {
+
+        #region[Declare variables]
+        private int _ID;
+        private string _UserID;      
+        private string _ListProduct;      
+        #endregion
+        #region[Public Properties]
+        [Key]
+        public int Id { get { return _ID; } set { _ID = value; } }
+        public string UserId { get { if (String.IsNullOrEmpty(_UserID)) return ""; else return _UserID; } set { _UserID = value; } }
+        public string ListProduct { get { if (String.IsNullOrEmpty(_ListProduct)) return ""; else return _ListProduct; } set { _ListProduct = value; } }
+        #endregion
+
+    }
+    #endregion[ket thuc class tblProductWishlist]
 
 
 

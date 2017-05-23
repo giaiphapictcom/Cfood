@@ -1,9 +1,11 @@
-﻿@{
+﻿@using V308CMS.Helpers.Url
+@model V308CMS.Models.ContactModels
+@{
     Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
 
 }
 @section header {
-    <title>Liên hệ</title>
+    <title>@ViewBag.SiteName - Liên hệ</title>
 
 }
 @section Breadcrumb{
@@ -26,7 +28,7 @@
 }
 <div class="map">
 
-    <iframe width="100%" height="470" frameborder="0" src="https://maps.google.com/maps?hl=en&amp;q=4th Ave New York&amp;ie=UTF8&amp;t=roadmap&amp;z=16&amp;iwloc=B&amp;output=embed" marginwidth="0" marginheight="0" scrolling="no" style="pointer-events: none;"></iframe>
+    <iframe width="100%" height="470" frameborder="0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3723.9166151084783!2d105.8204490154866!3d21.036022185994444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ab0c87ee439b%3A0x8d79c6656de5cf64!2zTmfDtSAyMDkgxJDhu5lpIEPhuqVuLCBOZ-G7jWMgSMOgLCBCYSDEkMOsbmgsIEjDoCBO4buZaSwgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1495335392579" marginwidth="0" marginheight="0" scrolling="no" style="pointer-events: none;"></iframe>
 
 </div>
 
@@ -44,8 +46,6 @@
     <div class="container">
 
         <div class="rte">
-
-
 
         </div>
 
@@ -68,10 +68,10 @@
             <div class="content-left">
 
                 <ul>
-                    <li><span>Address:</span> San Francisco 80 South Avenue, 13/47</li>
-                    <li><span>Phone:</span> <a href="tel:+66 123 456 789">+66 123 456 789</a>  /  <a href="tel:+8 800 123 456 789">+8 800 123 456 789</a></li>
-                    <li><span>Email:</span> <a href="mailto:Sales@80SMOD.com">Sales@80SMOD.com</a></li>
-                    <li><a href="www.80smod.com" target="_brank">www.80smod.com</a></li>
+                    <li><span>Địa chỉ :</span> 209 Phố Đội Cấn, Phường Đội Cấn, Ba Đình, Hà Nội</li>
+                    <li><span>Phone:</span> <a href="tel:+8496.567.9191">096.567.9191</a>  /  <a href="tel:+0466886613">04.6688.6613</a></li>
+                    <li><span>Email:</span> <a href="mailto:mpstartvn@gmail.com">mpstartvn@gmail.com</a></li>
+                    <li><span>Opening :</span> 7:00am - 21:30pm</li>
                 </ul>
 
             </div>
@@ -79,39 +79,44 @@
         </div>
         <div class="col-md-8 col-sm-8 col-sx-12">
 
-            <form method="post" action="https://bigsale-01.myshopify.com/contact#contact_form" id="contact_form" class="contact-form" accept-charset="UTF-8">
+            <form method="post" action="@Url.ContactIndexUrl()" id="contact_form" class="contact-form" accept-charset="UTF-8">
                 <input type="hidden" value="contact" name="form_type"><input type="hidden" name="utf8" value="✓">
+                @Html.AntiForgeryToken()
                 <div class="note form-error">
-                    <p>Sorry, looks like something went wrong. Please correct the following and submit again:</p>
-
-                    <ul class="disc">
-                        <li>
-                            <span>The</span> <strong>email</strong> <span>field</span> is invalid
-                        </li>
-                    </ul>
+                    <span style="margin-left: 5px;" class="success-message">
+                        @Html.Raw(ViewBag.Message)
+                    </span>
+                    
                 </div>
-
 
                 <div id="contactFormWrapper" class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
 
                     <div class="col-md-6 col-sm-6 col-sx-12">
-                        <label for="contactFormName"><span>Your Name</span><em>*</em></label>
-                        <input type="text" id="contactFormName" name="contact[name]" autocapitalize="words" placeholder="Name *"><i class="fa fa-user" aria-hidden="true"></i>
+                        <label for="contactFormName"><span>Họ tên</span><em>*</em></label>
+                        @Html.TextBoxFor(m=>m.Name, new { autocapitalize = "words",placeholder = "Nhập họ tên" })
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        @Html.ValidationMessageFor(m=>m.Name)
                     </div>
                     <div class="col-md-6 col-sm-6 col-sx-12">
-                        <label for="contactFormEmail"><span>Your Email</span><em>*</em></label>
-                        <input type="email" name="contact[email]" id="contactFormEmail" autocorrect="off" autocapitalize="off" placeholder="Email *"><i class="fa fa-envelope" aria-hidden="true"></i>
+                        <label for="contactFormEmail"><span>Email</span><em>*</em></label>
+                        @Html.TextBoxFor(m => m.Email, new { autocorrect = "off", autocapitalize = "off", placeholder = "Nhập địa chỉ Email" })
+                        <i class="fa fa-envelope" aria-hidden="true"></i>
+                        @Html.ValidationMessageFor(m => m.Email)
                     </div>
                     <div class="col-md-6 col-sm-6 col-sx-12">
-                        <label for="contactFormCompany"><span>Your Phone</span><em>*</em></label>
-                        <input type="tel" name="contact[phone]" id="contactFormPhone" pattern="[0-9]*" placeholder="Your Phone"><i class="fa fa-phone" aria-hidden="true"></i>
+                        <label for="contactFormCompany"><span>Số điện thoại</span><em>*</em></label>
+                        @Html.TextBoxFor(m => m.Phone, new { placeholder = "Số điện thoại" })
+                        <i class="fa fa-phone" aria-hidden="true"></i>
+                        @Html.ValidationMessageFor(m => m.Phone)
                     </div>
                     <div class="col-md-12 col-sm-12 col-sx-12">
-                        <label for="contactFormMessage"><span>Your Comment</span><em>*</em></label>
-                        <textarea rows="10" name="contact[body]" id="contactFormMessage" placeholder="Message"></textarea><i class="fa fa-eyedropper" aria-hidden="true"></i>
+                        <label for="contactFormMessage"><span>Lời nhắn</span><em>*</em></label>
+                        @Html.TextAreaFor(m=>m.Message, new { rows = "10", placeholder = "Lời nhắn" })
+                        <i class="fa fa-eyedropper" aria-hidden="true"></i>
+                        @Html.ValidationMessageFor(m => m.Message)
                     </div>
                     <div class="button col-md-12 col-sm-12 col-sx-12">
-                        <input type="submit" class="btn left" value="Send message">
+                        <input type="submit" class="btn left" value="Gửi">
                     </div>
                 </div>
 
@@ -119,8 +124,8 @@
         </div>
     </div>
 </div>
-
 <script>
     jQuery('.main-content').removeClass('container');
     jQuery('body').addClass('contactus');
+    jQuery('#verticalmenu').hide();
 </script>

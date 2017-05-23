@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Web;
 
 namespace V308CMS.Data
 {
@@ -31,6 +28,11 @@ namespace V308CMS.Data
             .HasRequired<Product>(p => p.Product)
             .WithMany(p => p.ProductImages)
             .HasForeignKey(p => p.ProductID);
+
+            modelBuilder.Entity<Product>()
+           .HasRequired<ProductManufacturer>(p => p.ProductManufacturer)
+           .WithMany()
+           .HasForeignKey(p => p.Manufacturer);
         }
         #endregion
         #region ObjectSet Properties
@@ -225,6 +227,16 @@ namespace V308CMS.Data
         }
 
         public DbSet<Brand> Brand
+        {
+            get;
+            set;
+        }
+        public DbSet<ProductWishlist> ProductWishlist
+        {
+            get;
+            set;
+        }
+        public DbSet<Contact> Contact
         {
             get;
             set;

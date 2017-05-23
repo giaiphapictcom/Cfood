@@ -5,6 +5,18 @@ using System.Web;
 
 namespace V308CMS.Data
 {
+        public interface INewsRepository
+        {
+            News LayTinTheoId(int pId);
+            News getFirstNewsWithType(int pId);
+            List<News> LayTinTheoTrang(int pcurrent, int psize);
+            List<News> LayTinTheoTrangAndGroupId(int pcurrent, int psize, int pTypeID);
+            List<News> LayTinTheoTrangAndGroupIdAdmin(int pcurrent, int psize, int pTypeID, string pLevel);
+             List<News> GetListNewsMostView(int pTypeId, string pLevel, int psize = 10);
+            List<News> GetListNewsLastest(int pTypeId, string pLevel, int psize = 10);
+            List<News> LayTinTheoTrangAndGroupIdAndLevel(int pcurrent, int psize, int pTypeID, string pLevel);
+
+        }
         public class NewsRepository
         {
             private V308CMSEntities entities;
@@ -56,6 +68,13 @@ namespace V308CMS.Data
                     Console.Write(ex);
                     throw;
                 }
+            }
+
+            public News GetById(int id, int type = 58)
+            {
+               return (from p in entities.News
+                         where p.ID == id && type == 58
+                       select p).FirstOrDefault();
             }
             public News getFirstNewsWithType(int pId)
             {
@@ -692,24 +711,24 @@ namespace V308CMS.Data
                     throw;
                 }
             }
-            public News GetNext(int id)
+            public News GetNext(int id, int type =58)
             {
                 try
                 {
-                   return entities.News.SkipWhile(news => news.ID != id).Skip(1).First();
+                   return entities.News.SkipWhile(news => news.ID != id && news.TypeID == type).Skip(1).First();
 
                 }
                 catch (Exception)
                 {
-                 return null;
+                    return null;
                 }                
 
             }
-            public News GetPrevious(int id)
+            public News GetPrevious(int id,int type =58)
             {
                 try
                 {
-                    return entities.News.TakeWhile(news => news.ID != id).Last();
+                    return entities.News.TakeWhile(news => news.ID != id && news.TypeID == type).Last();
                 }
                 catch (Exception)
                 {

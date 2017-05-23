@@ -2,13 +2,25 @@
     border-right: 1px solid #ddd;
     padding: 0;
 }
+.notification-red {
+    width: 5px;
+    height: 5px;
+    position:relative;
+}
+.notification-red::after {
+    content: "*";
+    color: red;
+}
+form .notification-red::after {
+    content :"(*)";
+}
 ul.adminmenu {
 
 }
 .adminmenu > li > a {
     font-weight: bold;
     font-size: 13px;
-    color : red;
+    color : #fd393d;
     text-transform: uppercase;
     line-height: 30px;
 }
@@ -20,11 +32,12 @@ ul.adminmenu {
      border: 0;
 }
 .adminmenu > li > a span {
-    color: orange;
+    color: #ff7e00;
     width: 15px;
     margin-right: 5px;
     margin-left: 10px;
     font-size: 17px;
+    padding-right: 25px;
 }
 
 .adminmenu li > ul {
@@ -37,12 +50,77 @@ ul.adminmenu {
 }
 
 .adminmenu li > ul a {
-    margin-left: 30px;
+    margin-left: 40px;
     line-height: 30px;
     font-size: 14px;
+    color: #626262;
 }
 .adminmenu li > ul a::before {
     font-family: 'FontAwesome';
     content: "\f105";
-    margin-right: 5px;
+    margin-right: 15px;
+    color: #ff7e00;
+    font-weight: bold;
+}
+.adminmenu li li.selected {
+    background-color: #ffe4c9;
+}
+
+.main-content h4 {
+    color: #fd393d;
+    margin-bottom: 35px;
+    margin-top: 25px;
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.pagination {
+    margin: 0;
+}
+
+.form-group {
+    margin-bottom: 0;
+}
+.form-group label {
+    color: #646464;
+}
+
+
+form .form-group {
+    margin-bottom: 1rem;
+}
+.border-radius-0 .form-control {
+    border-radius: 0;
+}
+.border-radius-0 .input-group-addon {
+    border-radius: 0;
+}
+
+
+.placenote {
+    color: #999999;
+    padding: 15px;
+}
+
+.text-note {
+    color: #d36e60;
+}
+
+form hr {
+    margin: 5px 0;
+}
+
+.table thead th {
+    background-color: #ffe4c9;
+    text-transform: none;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+/*
+ * update style
+ */
+.textright {
+    text-align: right;
 }

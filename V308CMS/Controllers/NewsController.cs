@@ -9,7 +9,13 @@ namespace V308CMS.Controllers
 {
     public class NewsController : BaseController
     {
+        public NewsController()
+        {
+            ViewEngines.Engines.Clear();
+            ViewEngines.Engines.Add(new V308CMS.Helpers.MpStartViewEngine(false));
+        }
         private const int PageSize = 10;
+        private const int NewsType = 58;
 
         private int GetTotalPage(int totalItem)
         {
@@ -22,7 +28,7 @@ namespace V308CMS.Controllers
         }
 
        
-        public ActionResult Index(int type = 58, int page = 1)
+        public ActionResult Index(int type = NewsType, int page = 1)
         {
             var newsIndexViewModel = new NewsIndexPageContainer();
             var newsGroup = NewsService.LayTheLoaiTinTheoId(type);
@@ -36,12 +42,12 @@ namespace V308CMS.Controllers
             newsIndexViewModel.Page = page;
             newsIndexViewModel.TotalPage = GetTotalPage(newsIndexViewModel.ListNews.Count);
             newsIndexViewModel.ListNewsMostView = NewsService.GetListNewsMostView(type, level);
-            return View(FindView("News.Index"), newsIndexViewModel);            
+            return View("News.Index", newsIndexViewModel);            
         }
     
         public ActionResult Detail(int id)
         {
-            var newsItem = NewsService.LayTinTheoId(id);
+            var newsItem = NewsService.GetById(id, NewsType);
             if (newsItem == null)
             {
                 return HttpNotFound("Tin này không tồn tại trên hệ thống");
@@ -49,19 +55,17 @@ namespace V308CMS.Controllers
             var newsDetailViewModel = new NewsDetailPageContainer
             {
                 NewsItem = newsItem,
-                NextNewsItem = NewsService.GetNext(id),
-                PreviousNewsItem = NewsService.GetPrevious(id)
+                NextNewsItem = NewsService.GetNext(id, NewsType),
+                ListNewsMostView = NewsService.GetListNewsMostView(NewsType, ""),
+                 PreviousNewsItem = NewsService.GetPrevious(id, NewsType)
             };
 
-            return View(FindView("News.Detail"), newsDetailViewModel);
+            return View("News.Detail", newsDetailViewModel);
         }
 
         public ActionResult ListByTag(string tag, int page = 1)
         {
             return Content("ok");
         }
-
-    
-
     }
 }

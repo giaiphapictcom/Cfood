@@ -37,7 +37,7 @@ namespace V308CMS.Models
         /**
              * AddItem() - Adds an item to the shopping 
         */
-        public void AddItem(Product product)
+        public void AddItem(ProductModels product)
         {
             // Create a new item to add to the cart
             CartItem newItem = new CartItem(product);
@@ -64,7 +64,7 @@ namespace V308CMS.Models
         /**
             * SetItemQuantity() - Changes the quantity of an item in the cart
         */
-        public void SetItemQuantity(Product productItem, int quantity)
+        public void SetItemQuantity(ProductModels productItem, int quantity)
         {
             // If we are setting the quantity to 0, remove the item entirely
             if (quantity == 0)
@@ -88,7 +88,7 @@ namespace V308CMS.Models
         /**
             * RemoveItem() - Removes an item from the shopping cart
         */
-        public void RemoveItem(Product productItem)
+        public void RemoveItem(ProductModels productItem)
         {
             CartItem removedItem = new CartItem(productItem);
             Items.Remove(removedItem);
@@ -97,7 +97,6 @@ namespace V308CMS.Models
            * SubTotal- returns the total price of all of the items
            *                 before tax, shipping, etc.
         */
-
         public double SubTotal
         {
             get

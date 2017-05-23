@@ -1,4 +1,5 @@
-﻿@model V308CMS.Data.PageFooterControl
+﻿@using V308CMS.Helpers
+@model V308CMS.Data.PageFooterControl
 <div class="shopify-section">
     <div class="home-block-main" style="background-image: url(/Content/images/background-newsletter_2048x.jpg);">
         <div class="container">
@@ -20,10 +21,10 @@
                     <div class="title-social">FOLLOW US:</div>
                     <div class="footer-icon-share">
                         <!--Edited by toaihv-->
-                        <a href="@(ViewBag.GPlus ?? "javascript:void(0)")"><img src="~/Content/images/social/google.png" /></a>
-                        <a href="@(ViewBag.FacebookPage ?? "javascript:void(0)")"><img src="~/Content/images/social/facebook.png" /></a>
-                        <a href="@(ViewBag.Zalo ?? "javascript:void(0)")"><img src="~/Content/images/social/zalo.png" /></a>
-                        <a href="@(ViewBag.Youtube ?? "javascript:void(0)")"><img src="~/Content/images/social/youtube.png" /></a>
+                        <a href="@(ViewBag.GPlus  != null?ViewBag.GPlus: "javascript:void(0)")" target="_blank"><img src="~/Content/images/social/google.png" /></a>
+                        <a href="@(ViewBag.FacebookPage != null ?ViewBag.FacebookPage: "javascript:void(0)")" target="_blank"><img src="~/Content/images/social/facebook.png" /></a>
+                        <a href="@(ViewBag.Zalo != null ?ViewBag.Zalo: "javascript:void(0)")" target="_blank"><img src="~/Content/images/social/zalo.png" /></a>
+                        <a href="@(ViewBag.Youtube != null?ViewBag.Youtube: "javascript:void(0)")" target="_blank"><img src="~/Content/images/social/youtube.png" /></a>
                     </div>
 
                 </div>
@@ -60,19 +61,23 @@
                             {
                                 break;
                             }
-                        <div class="col-md-3 col-sm-3 col-xs-12">
-                            <h3 class="module-title">@group.Name</h3>
-                            <ul class="content">
-                                 @if (group.NewsList != null && group.NewsList.Count() > 0)
-                                {
-                                    foreach (V308CMS.Data.News news in group.NewsList)
+                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                <h3 class="module-title">@group.Name</h3>
+                                <ul class="content">
+                                     @if (group.NewsList != null && group.NewsList.Any())
                                     {
-                                        <li><a href="javascript:void(0)" title="">@Html.Raw(V308CMS.Common.url.article(news.Title, news.ID))</a></li>
+                                        foreach (V308CMS.Data.News news in group.NewsList)
+                                        {
+                                            <li>
+                                                <a href="@Url.NewsDetailUrl(news)" title="@news.Title">
+                                                   @news.Title
+                                                </a>
+                                            </li>
                                     
+                                        }
                                     }
-                                }
-                            </ul>
-                        </div>
+                                </ul>
+                            </div>
                         }
                     }
                     @if (ViewBag.FacebookPage != null & ViewBag.FacebookPage is string) {
@@ -112,11 +117,11 @@
     </div>
     <div class="ajax-error-cbox cbox">
         <div class="modal-inner">
-
-            <div class="ajax-error-title">Error</div>
+            <div class="ajax-error-title">Lỗi</div>
             <div class="ajax-error-message"></div>
         </div>
     </div>
+
     <div class="ajax-success-cbox cbox">
         <div class="content">
             <div class="success-message show-cart">
@@ -124,13 +129,64 @@
                     Sản phẩm đã được thêm vào giỏ hàng thành công.
                 </div>
                 <div class="button-link-cart">
-                    <div class="view-cart"><a href="/cart">Xem giỏ hàng</a></div>
-                    <button class="btn" onclick="window.location='/checkout'">Thanh toán</button>
+                    <div class="view-cart"><a title="Xem giỏ hàng" href="@Url.ViewCartUrl()">Xem giỏ hàng</a>
+                    </div>
+                    <button class="btn" onclick="window.location = '@Url.CheckoutCartUrl()'" title="Thanh toán">Thanh toán</button>
                 </div>
             </div>
             <p class="success-message show-wishlist">Success! You&#39;ve added to wishlist success.</p>
             <a href="javascript:void(0)" class="close-cbox"><span class="icon_close"></span></a>
         </div>
     </div>
+    <div class="product-quickview"></div>
+    <!-- Begin quick-view-template -->
+    <div class="clearfix" id="quickview-popup" style="display:none">
+        <div class="overlay"></div>
+        <div class="product-content clearfix">
+            <div class="product-img col-xs-6">
+                <div class="quickview-featured-image"></div>
+                <div class="more-view">
+                    <ul class="product-photo-thumbs  quickview-more-views-owlslider " data-cycle-carousel-vertical=true></ul>
+                </div>
+            </div>
 
+            <div class="product-shop col-xs-6">
+                <div class="product-item">
+                    <h2 class="product-title"><a>&nbsp;</a></h2>
+                    <span class="shopify-product-reviews-badge" data-id=""></span>
+
+                    <div class="prices">
+                        <span class="text-price">Giá :</span>
+                        <span class="compare-price"></span>
+                        <span class="price"></span>
+                    </div>
+
+                    <div class="product-infor">
+
+                        <p class="product-inventory"><label>Trạng thái</label><span></span></p>
+
+                        <p class="product-vendor"><label>Nhà sản xuất</label><span></span></p>
+
+                    </div>
+
+                    <p class="item-text product-description"></p>
+
+                    <div class="product-details clearfix">
+                        <form action="@Url.AddToCartUrl()" method="post" class="variants" name="quickview-form">
+                            <input name="id" value="0" type="hidden"/>                           
+                            <label>Số lượng :</label>
+                            <input type="text" name="quantity" value="1" class="quantity">
+                            <div class="actions">
+                                <button type="button" class="btn add-to-cart-btn hidden">Thêm vào giỏ hàng</button>
+                                <span><input class="btn add-to-cart-btn" title="Thêm vào giỏ hàng" type="button" value="Thêm vào giỏ hàng" /></span>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+            <a href="javascript:void(0)" class="close-popup"><i class="fa fa-times"></i></a>
+        </div>
+    </div>
+    <!-- End of quick-view-template -->
 </div>

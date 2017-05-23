@@ -1,4 +1,5 @@
-﻿@using V308CMS.Helpers
+﻿@using V308CMS.Common
+@using V308CMS.Helpers
 @model V308CMS.Data.NewsDetailPageContainer
 @{
     Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
@@ -88,8 +89,6 @@
                             }
 
                         }
-
-
                     }
                 </ul>
             </div>
@@ -113,6 +112,7 @@
                         <span class="date-sub">Ngày đăng : </span>@Model.NewsItem.Date.ToDdmmyyyyHhm()
                     </span>
                 </div>
+                
                 <div class="block-images">
                     <img src="@Model.NewsItem.Image.ToUrl()" alt="@Model.NewsItem.Title"/>
                 </div>

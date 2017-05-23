@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using V308CMS.Common;
 using V308CMS.Data;
 
 namespace V308CMS.Helpers
 {
-    public static partial class MpStartUrlHelper
+    public static class NewsUrlHelper
     {
         public static string NewsIndexUrl(this UrlHelper helper, int page = 1, string controller = "news", string action = "index")
         {
-            return helper.Action(action, controller,page);
+            return page ==1?"/tin-tuc.html": string.Format("/tin-tuc/trang-{0}.html",page);
         }
         
         public static string NewsDetailUrl(this UrlHelper helper, int newsId, string controller = "news", string action = "detail")
@@ -23,7 +20,7 @@ namespace V308CMS.Helpers
             string action = "detail")
         {
         
-            return $"/tin-tuc/{newsItem.Title.ToSlug()}.{newsItem.ID}";
+            return string.Format("/tin-tuc/{0}.{1}.html", newsItem.Title.ToSlug(), newsItem.ID);
         }
 
         public static string NewsTagUrl(this UrlHelper helper, string tag,int page =1, string controller = "news",

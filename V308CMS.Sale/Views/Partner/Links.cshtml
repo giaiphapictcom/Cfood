@@ -1,0 +1,105 @@
+﻿@{
+    Layout = "~/Views/Affiliate/Layout/Backend.cshtml";
+    string PageTitle = "Quản lý Link đã tạo";
+}
+@section header {
+    <title>@PageTitle</title>
+
+}
+<h4>Link đã tạo</h4>
+<div class="row">
+    <div class="col-md-5">
+        <a href="/link/tao-moi" class="btn btn-green">Tạo link phân phối</a>
+    </div>
+    <div class="col-md-4">
+        <div class="input-group border-radius-0">
+            <input type="text" class="form-control" placeholder="Tìm kiếm" aria-describedby="tablesearch">
+            <span class="input-group-addon btn-green" ><i class="fa fa-search"></i></span>
+        </div>
+
+    </div>
+    <div class="col-md-3">
+        <div class="form-group border-radius-0 bg-secondary">
+
+            <select class="form-control" id="exampleSelect1">
+                <option>Hiển thị : 10</option>
+                <option>Hiển thị : 30</option>
+                <option>Hiển thị : 50</option>
+                <option>Hiển thị : 100</option>
+            </select>
+        </div>
+    </div>
+
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-10 textright">
+        <ul class="pagination">
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">&laquo;</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <span aria-hidden="true">&raquo;</span>
+
+            </li>
+        </ul>
+
+    </div>
+    <div class="col-md-2 textright" style="margin-bottom: 15px;">
+        <button type="button" class="btn btn-secondary">Xuất excel</button>
+    </div>
+</div>
+<table class="table table-bordered table-responsive">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Thời gian</th>
+            <th>Link</th>
+            <th>Shop</th>
+            <th>Table heading</th>
+            <th>Table heading</th>
+            <th>Table heading</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">1</th>
+            <td>Table cell</td>
+            <td>
+                <div class="input-group">
+                    <input type="text" class="form-control" disabled="disabled" >
+                    <span class="input-group-addon"><i class="fa fa-copy"></i></span>
+                    <span class="input-group-addon"><i class="fa fa-external-link"></i></span>
+                    
+                </div>
+                <small class="form-text text-muted">xxxx</small>
+
+            </td>
+            <td>Table cell</td>
+            <td>Table cell</td>
+            <td>Table cell</td>
+            <td>Table cell</td>
+        </tr>
+        <tr>
+            <th scope="row">2</th>
+            <td>Table cell</td>
+            <td>Table cell</td>
+            <td>Table cell</td>
+            <td>Table cell</td>
+            <td>Table cell</td>
+            <td>Table cell</td>
+        </tr>
+        <tr>
+            <th scope="row">3</th>
+            <td>Table cell</td>
+            <td>Table cell</td>
+            <td>Table cell</td>
+            <td>Table cell</td>
+            <td>Table cell</td>
+            <td>Table cell</td>
+        </tr>
+    </tbody>
+</table>

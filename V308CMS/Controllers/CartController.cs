@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using V308CMS.Common;
 using V308CMS.Data;
+using V308CMS.Helpers;
 using V308CMS.Models;
 
 namespace V308CMS.Controllers
@@ -13,144 +15,128 @@ namespace V308CMS.Controllers
 
         [HttpPost]
         public JsonResult Add(int id = 0,int quantity = 1)
-        {                   
-            try
+        {
+            var product = ProductsService.LayTheoId(id);
+            if (product != null)
             {
-                var product = ProductsService.LayTheoId(id);
-                if (product != null)
-                {        
-                    var shoppingCart = ShoppingCart.Instance;
-                    shoppingCart.AddItem(product);
-                    return Json(new
-                    {
-                        code = 1,
-                        totalprice = $"{shoppingCart.SubTotal: 0,0}",
-                        message = "Sản phẩm đã được thêm vào giỏ hàng thành công."
-                    });
+                var shoppingCart = ShoppingCart.Instance;
+                shoppingCart.AddItem(new ProductModels
+                {
+                    Id = product.ID,
+                    Avatar = product.Image.ToUrl(95, 100),
+                    Name = product.Name,
+                    SaleOff = product.SaleOff.HasValue ? product.SaleOff.Value : 0,
+                    Price = product.Price.HasValue ? product.Price.Value : 0
+                });
+                return Json(new
+                {
+                    code = 1,
+                    totalprice = String.Format("{0: 0,0}", shoppingCart.SubTotal),
+                    message = "Sản phẩm đã được thêm vào giỏ hàng thành công."
+                });
 
-                }
-                else
-                    return Json(new { code = 0, message = "Không tìm thấy sản phẩm." });
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine("error :", ex);
-                return Json(new { code = 0, message = "Có lỗi xảy ra. Vui lòng thử lại." });
-            }
-         
+            return Json(new { code = 0, message = "Không tìm thấy sản phẩm." });
         }
+        [HttpGet,ActionName("remove")]
+        public ActionResult HandleRemoveItem(int id)
+        {
+            var product = ProductsService.LayTheoId(id);
+            if (product != null)
+            {
+                ShoppingCart.Instance.RemoveItem(new ProductModels
+                {
+                    Id = product.ID
+                });
+            }
+            return RedirectToAction("ViewCart");
 
+        }
         [HttpPost]
+        public JsonResult RemoveItem(int id, int quantity =0)
+        {
+            var product = ProductsService.LayTheoId(id);
+            if (product != null)
+            {
+                var shoppingCart = ShoppingCart.Instance;
+                shoppingCart.RemoveItem(new ProductModels
+                {
+                    Id = product.ID
+                });
+                return Json(new
+                {
+                    code = 1,
+                    totalprice = String.Format("{0: 0,0}", shoppingCart.SubTotal),
+                    message = string.Format("Sản phẩm {0} đã được xóa khỏi giỏ hàng thành công.", product.Name)
+                });
+
+            }
+            return Json(new { code = 0, message = "Không tìm thấy sản phẩm." });
+        }
+      
         [ValidateInput(false)]
         public JsonResult Index()
         {
-        
-            try
-            {
-                if (Session["ShopCart"] != null)
-                {
-                    var mShopCart = (ShopCart)Session["ShopCart"];
-                    return Json(new { code = 1, count = 1, totalprice = $"{(mShopCart.getTotalPrice()): 0,0}", message = "Không tìm thấy sản phẩm.", html = V308HTMLHELPER.createShopCart(mShopCart) });
-                }
-                else
-                {
-                    return Json(new { code = 0, count = 1, totalprice = 0, message = "Không tìm thấy sản phẩm." });
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("error :", ex);
-                return Json(new { code = 0, count = 1, totalprice = 0, message = "Có lỗi xảy ra. Vui lòng thử lại." });
-            }
-            
 
-        }
-        public ActionResult ShopCartDetail(int pId = 0)
-        {           
-            ShopCartPage mShopCartPage = new ShopCartPage();
-            Account mAccount = null;
-            try
+            var shoppingCart = ShoppingCart.Instance;
+            return Json(new
             {
-                if (Session["ShopCart"] != null)
+                code = 1,
+                item_count = shoppingCart.Items.Count,
+                items = shoppingCart.Items.Select(product => new
                 {
-                    var mShopCart = (ShopCart)Session["ShopCart"];
-                    //
-                    if (HttpContext.User.Identity.IsAuthenticated == true && Session["UserId"] != null)
-                    {
-                        mAccount = AccountService.LayTinTheoId((int)Session["UserId"]);
-                    }
-                    if (mAccount == null)
-                        mAccount = new Account();
-                    mShopCart.Account = mAccount;
-                    mShopCartPage.ShopCart = mShopCart;
-                }
-                return View(FindView("ShopCardDetail"), mShopCartPage);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("error :", ex);
-                return Content("<h2>Có lỗi xảy ra trên hệ thống ! Vui lòng thử lại sau.</h2>");
-            }
-          
+                    id = product.ProductItem.Id,
+                    url = url.productURL(product.ProductItem.Name, product.ProductItem.Id),
+                    title = product.ProductItem.Name,
+                    quantity = product.Quantity,
+                    image = product.ProductItem.Avatar,
+                    price = product.ProductItem.Price.ToString("N0")
+                }),
+                total_price = shoppingCart.SubTotal.ToString("N0")
+
+            }, JsonRequestBehavior.AllowGet);
+        }
+        
+        public ActionResult ViewCart()
+        {
+            return View("Cart.View", ShoppingCart.Instance);
+        }
+
+        public ActionResult Checkout()
+        {
+            return View("Cart.Checkout");
         }
         [HttpPost]
-        [ValidateInput(false)]
-        public JsonResult UpdateCart(int? pId, int pCount, string pVoucher, int pType = 0)
+        public ActionResult UpdateCart(int id, int quantity)
         {
-            try
-            {
-                if (Session["ShopCart"] != null)
-                {
-                    var mShopCart = (ShopCart)Session["ShopCart"];
-                    if (pType == 0)
-                    {
-                        foreach (Product it in mShopCart.List)
-                        {
-                            if (it.ID == pId)
-                            {
-                                it.Number = pCount;
-                                break;
-                            }
 
-                        }
-                    }
-                    else if (pType == 1)
-                    {
-                        //pVoucher
-                        mShopCart.VoucherName = pVoucher;
-                        var mFile = FileService.GetFileByTypeIdAndName(1, pVoucher, 1).FirstOrDefault();
-                        var mVoucher = 0;
-                        if (mFile != null)
-                            mVoucher = (int)mFile.Value;
-                        else
-                            mVoucher = 0;
-                        mShopCart.Voucher = mVoucher;
-                    }
-                    else if (pType == 2)
-                    {
-                        foreach (Product it in mShopCart.List)
-                        {
-                            if (it.ID == pId)
-                            {
-                                mShopCart.List.Remove(it);
-                                break;
-                            }
-                        }
-                    }
-                    Session["ShopCart"] = mShopCart;
-                    return Json(new { code = 1, message = "Không tìm thấy sản phẩm." });
-                }
-                else
-                {
-                    return Json(new { code = 0, count = 1, totalprice = 0, message = "Không tìm thấy sản phẩm." });
-                }
-            }
-            catch (Exception ex)
+            var product = ProductsService.LayTheoId(id);
+            if (product != null)
             {
-                Console.WriteLine("error :", ex);
-                return Json(new { code = 0, count = 1, totalprice = 0, message = "Có lỗi xảy ra. Vui lòng thử lại." });
+                if (product.Number == 0)
+                {
+                    return Json(new { code = 0, message = "Sản phẩm hiện đã hết hàng." });
+                }
+                if (product.Number < quantity)
+                {
+                    return Json(new { code = 0, message = string.Format("Chỉ còn {0} sản phẩm.", product.Number) });
+                }
+
+                var shoppingCart = ShoppingCart.Instance;
+                shoppingCart.SetItemQuantity(new ProductModels
+                {
+                    Id = product.ID
+                }, quantity);
+                return Json(new
+                {
+                    code = 1,
+                    message = string.Format("Cập nhật số lượng sản phẩm {0} thành công.", product.Name)
+                });
+
             }
+            return Json(new { code = 0, message = "Không tìm thấy sản phẩm." });
         }
-
+        
+       
     }
 }

@@ -26,5 +26,36 @@ namespace V308CMS.Sale.Controllers
             return View();
         }
 
+
+
+        #region LinkForm Action
+        
+        [HttpGet]
+        public ActionResult Links()
+        {
+            return View();
+        }
+
+        [HttpPost, ActionName("Links")]
+        public ActionResult LinksPost()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult LinkForm()
+        {
+            return View();
+        }
+
+        [HttpPost, ActionName("LinkForm")]
+        public ActionResult LinkFormPost()
+        {
+            return View();
+        }
+        #endregion
+        
+        
+
     }
 }
