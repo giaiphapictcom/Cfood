@@ -26,8 +26,6 @@ namespace V308CMS.Helpers
             this.ViewLocationFormats = locations;
             this.PartialViewLocationFormats = locations;
             this.MasterLocationFormats = locations;
-
-
         }
 
     }
