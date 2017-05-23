@@ -14,8 +14,12 @@ namespace V308CMS.Controllers
 {
     public class HomeController : BaseController
     {
-       
 
+        public HomeController()
+        {
+            ViewEngines.Engines.Clear();
+            ViewEngines.Engines.Add(new V308CMS.Helpers.MpStartViewEngine(false));
+        }
         public ActionResult Index()
         {
                      

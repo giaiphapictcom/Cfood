@@ -11,6 +11,11 @@ namespace V308CMS.Controllers
 {
     public class ContactController : BaseController
     {
+        public ContactController()
+        {
+            ViewEngines.Engines.Clear();
+            ViewEngines.Engines.Add(new V308CMS.Helpers.MpStartViewEngine(false));
+        }
         //
         // GET: /Contact/
 
