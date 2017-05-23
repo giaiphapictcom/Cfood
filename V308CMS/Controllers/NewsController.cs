@@ -9,6 +9,11 @@ namespace V308CMS.Controllers
 {
     public class NewsController : BaseController
     {
+        public NewsController()
+        {
+            ViewEngines.Engines.Clear();
+            ViewEngines.Engines.Add(new V308CMS.Helpers.MpStartViewEngine(false));
+        }
         private const int PageSize = 10;
         private const int NewsType = 58;
 
