@@ -172,6 +172,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ConfigHelper.cs" />
     <Compile Include="Helpers\Url\AccountUrlHelper.cs" />
     <Compile Include="Helpers\Url\AdminAccountUrlHelper.cs" />
     <Compile Include="Helpers\Url\FileTypeUrlHelper.cs" />
