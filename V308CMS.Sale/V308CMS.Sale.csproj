@@ -145,6 +145,7 @@
     <Compile Include="Controllers\AffiliateController.cs" />
     <Compile Include="Controllers\CaptchaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PartnerController.cs" />
     <Compile Include="Controllers\ThemeController.cs" />
     <Compile Include="Controllers\WidgetController.cs" />
     <Compile Include="Global.asax.cs">
@@ -1325,10 +1326,12 @@
     <Content Include="Content\Scripts\v308.js" />
     <Content Include="Content\Scripts\_references.js" />
     <Content Include="Content\themes\affiliate2.0\css\animate.css" />
+    <Content Include="Content\themes\affiliate2.0\css\backend.css" />
     <Content Include="Content\themes\affiliate2.0\css\bootstrap.min.css" />
     <Content Include="Content\themes\affiliate2.0\css\color.css" />
     <Content Include="Content\themes\affiliate2.0\css\component.css" />
     <Content Include="Content\themes\affiliate2.0\css\font-icon.css" />
+    <Content Include="Content\themes\affiliate2.0\css\login.css" />
     <Content Include="Content\themes\affiliate2.0\css\owl.theme.css" />
     <Content Include="Content\themes\affiliate2.0\css\responsive.css" />
     <Content Include="Content\themes\affiliate2.0\css\retina-responsive.css" />
@@ -1539,6 +1542,16 @@
     <Content Include="Views\Affiliate\Elements\Header.cshtml" />
     <Content Include="Views\Affiliate\Elements\Footer.cshtml" />
     <Content Include="Views\Affiliate\Blocks\HomeSlides.cshtml" />
+    <Content Include="Views\Affiliate\Elements\AdminMenu.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Affiliate\Layout\Backend.cshtml" />
+    <Content Include="Views\Partner\index.cshtml" />
+    <Content Include="Views\Partner\Login.cshtml" />
+    <Content Include="Views\Partner\Register.cshtml" />
+    <Content Include="Views\Partner\Links.cshtml" />
+    <Content Include="Views\Partner\LinkForm.cshtml" />
+    <Content Include="Views\Partner\Products.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

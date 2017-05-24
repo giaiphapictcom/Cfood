@@ -106,8 +106,10 @@
   <ItemGroup>
     <Compile Include="AppSetting.cs" />
     <Compile Include="AuthorizeAttribute.cs" />
+    <Compile Include="Configs.cs" />
     <Compile Include="ConverterUlti.cs" />
     <Compile Include="CookieClass.cs" />
+    <Compile Include="EmailSender.cs" />
     <Compile Include="Emotions.cs" />
     <Compile Include="EncryptionMD5.cs" />
     <Compile Include="FilterChat.cs" />
