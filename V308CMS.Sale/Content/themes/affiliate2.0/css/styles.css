@@ -145,7 +145,7 @@ a, a:link, a:hover, a:active { outline: none; }
 .section-title {  display: none;}
 
 /*  Layout -------------------------------------------------- */
-.main-content {display: block;clear: both; padding-bottom: 10px; min-height: 450px; margin-bottom: 24px; }
+.main-content {display: block;clear: both; min-height: 450px; }
 .template-index .main-content { padding: 0;clear:both;margin-bottom:0 }
 
 /*  Buttons -------------------------------------------------- */
@@ -647,7 +647,7 @@ width: 30px;height: 30px; text-align: center;    padding: 7px 0;}
 .icon-search {
   padding-top: 3px;
 }
-.header-top-right { float: right;}
+.header-top-right { float: right; position:relative;}
 .header-top-right .top-currency{float:right;margin:0 0 0 8px;padding-bottom:15px;padding-top:2px;}
 .header-top-right div#search-top,.header-top-right div#header-top-cart{float:left;}
 div#search-top .search-form {
@@ -2643,7 +2643,7 @@ body .allinone_bannerRotator.universal .bottomNav{bottom: 26px !important;displa
   padding-top: 25px;
 }
 /* Product Detail Custom *****************************************/
-.template-product .main-content{margin-top: 10px; margin-bottom: 50px;}
+.template-product .main-content{ }
 .product {margin-bottom: 0px;display: inline-block;vertical-align: top;width: 100%;}
 .product-img-box #zt_list_product {padding: 0 27px;margin: 23px 0 0;}
 .product .product-img-box .thumbs .image-item {padding: 0 8px;}
@@ -3507,6 +3507,23 @@ body{ position: relative;}
   line-height: 53px;
   color: #f03e3e;
   width: auto;
+}
+.header-body .header-top-right .btn-login {
+    color: #fd393d;
+    font-weight: bold;
+    font-size: 13px;
+    top: 7px;
+    position: relative;
+}
+.header-body .header-top-right .btn-login i {
+    display: inline-block;
+    font-size: 15px;
+    color:#ffcd03;
+    border: 1px solid #ffcd03;
+    border-radius: 50%;
+    width: 35px;
+    line-height: 35px;
+    height: 35px;
 }
 .header-body a#cartToggle .top-icon-cart {
   display: inline-block;
@@ -4774,8 +4791,18 @@ div#rev_slider {
     background: #111111
 }
 
+.logo-container {
+    position: relative;
+}
 .logo-container .logo {
     position:absolute;
+    bottom:-49px;
+    left: 15px;
+}
+
+.article-home-full {
+    margin-bottom: 40px;
+    margin-top: 30px;
 }
 
 .border-col {
