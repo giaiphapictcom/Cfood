@@ -84,7 +84,7 @@ function Admin_Product_Hien(pId, pPage) {
         type: 'POST',
         data: { 'pId': pId },
         dataType: 'json',
-        url: "/Admin/SanPhamThucHienHien",
+        url: "/Product/ChangeStatus",
         timeout: 60000,
         success: function (data) {
             if (data.code == 1) {
@@ -160,7 +160,7 @@ function Admin_Product_ThucHienLuuSua() {
         type: 'POST',
         data: formData,
         dataType: 'json',
-        url: "/Product/Edit/",
+        url: "/Product/OnEdit/",
         timeout: 60000,
         success: function (data) {
             $("#wait").css("display", "none");

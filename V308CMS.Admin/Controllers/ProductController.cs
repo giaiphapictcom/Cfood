@@ -327,8 +327,7 @@ namespace V308CMS.Admin.Controllers
         }
         [HttpPost]      
         [CheckAdminJson(1)]
-        [ValidateInput(false)]
-        [ActionName("Edit")]
+        [ValidateInput(false)]        
         public JsonResult OnEdit(
             int pId, int? pTransport1, int? pTransport2, 
             int? pTransport12, int? pTransport22,

@@ -46,7 +46,7 @@ namespace V308CMS.Admin.Models
                 }
                 else if (mAdmin.PTaiKhoan != true && pId == 6)
                 {
-                    RedirectResult mRS = new RedirectResult("/Admin/ChucNang");
+                    RedirectResult mRS = new RedirectResult("/Home/ChucNang");
                     filterContext.Result = mRS;
                 }
                 else if (mAdmin.PHeThong != true && pId == 7)
