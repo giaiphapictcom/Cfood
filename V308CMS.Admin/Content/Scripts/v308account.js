@@ -34,7 +34,7 @@ function Admin_Account_Xoa(pId, pPage) {
         type: 'POST',
         data: { 'pId': pId },
         dataType: 'json',
-        url: "/Account/Delete",
+        url: "/Account/OnDelete",
         timeout: 60000,
         success: function (data) {
             if (data.code == 1) {
@@ -59,7 +59,7 @@ function Admin_Account_An(pId, pPage) {
         type: 'POST',
         data: { 'pId': pId },
         dataType: 'json',
-        url: "/Admin/AccountThucHienAn",
+        url: "/Account/OnChangeStatus",
         timeout: 60000,
         success: function (data) {
             if (data.code == 1) {
@@ -83,7 +83,7 @@ function Admin_Account_Hien(pId, pPage) {
         type: 'POST',
         data: { 'pId': pId },
         dataType: 'json',
-        url: "/Account/ChangeStatus",
+        url: "/Account/OnChangeStatus",
         timeout: 60000,
         success: function (data) {
             if (data.code == 1) {
@@ -113,7 +113,7 @@ function Admin_Account_ThucHienLuuMoi() {
         type: 'POST',
         data: { 'pTitle': mFullName, 'pGroupId': mNhomTin, 'pAccount': mpAccount, 'pPassword1': mpPassword1, 'pPassword2': mpPassword2, 'pEmail': mpEmail },
         dataType: 'json',
-        url: "/Account/Create/",
+        url: "/Account/OnCreate/",
         timeout: 60000,
         success: function (data) {
             $("#wait").css("display", "none");
@@ -146,7 +146,7 @@ function Admin_Account_ThucHienLuuSua() {
         type: 'POST',
         data: { 'pId': mId, 'pTitle': mFullName, 'pGroupId': mNhomTin, 'pAccount': mpAccount, 'pActive': mpActive, 'pEmail': mpEmail },
         dataType: 'json',
-        url: "/Account/Edit/",
+        url: "/Account/OnEdit/",
         timeout: 60000,
         success: function (data) {
             $("#wait").css("display", "none");
@@ -177,7 +177,7 @@ function Admin_Product_ThayDoiPassWord(pId) {
         type: 'POST',
         data: { 'pId': mId, 'pPassword1': mpPassword1, 'pPassword2': mpPassword2, 'pPassword3': mpPassword3 },
         dataType: 'json',
-        url: "/Account/ChangePassword/",
+        url: "/Account/OnChangePassword/",
         timeout: 60000,
         success: function (data) {
             $("#wait").css("display", "none");
@@ -211,7 +211,7 @@ function Admin_Account_ComeHome() {
 
 function Admin_Account_ComeSua(pId) {
 
-    window.location = "/Account/Index?pId=" + pId + "";
+    window.location = "/Account/Edit?pId=" + pId + "";
 }
 function ThayDoiKieuNhomAccount(pPage) {
     var pType = $("#pGroupId").val();

@@ -35,7 +35,7 @@ function Admin_News_XoaTinTuc(pId, pPage) {
         type: 'POST',
         data: { 'pId': pId},
         dataType: 'json',
-        url: "/News/Delete",
+        url: "/News/OnDelete",
         timeout: 60000,
         success: function (data) {
             if (data.code == 1) {
@@ -60,7 +60,7 @@ function Admin_News_AnTinTuc(pId, pPage) {
         type: 'POST',
         data: { 'pId': pId },
         dataType: 'json',
-        url: "/News/ChangeStatus",
+        url: "/News/OnChangeStatus",
         timeout: 60000,
         success: function (data) {
             if (data.code == 1) {
@@ -84,7 +84,7 @@ function Admin_News_HienTinTuc(pId, pPage) {
         type: 'POST',
         data: { 'pId': pId },
         dataType: 'json',
-        url: "/News/ChangeStatus",
+        url: "/News/OnChangeStatus",
         timeout: 60000,
         success: function (data) {
             if (data.code == 1) {
@@ -123,7 +123,7 @@ function Admin_News_ThucHienLuuMoi() {
         type: 'POST',
         data: { 'pDescription': mDescription, 'pKeyWord': mKeyWord, 'pTieuDe': mTieuDe, 'pImageUrl': mAnh, 'pGroupId': mNhomTin, 'pMoTa': mMoTa, 'pNoiDung': mNoiDung, 'pKichHoat': mKichHoat, 'pUuTien': mThuTu, 'pHot': mHot, 'pFast': mFast, 'pFeatured': mFeatured, 'pSlide': mSlide },
         dataType: 'json',
-        url: "/News/Create/",
+        url: "/News/OnCreate/",
         timeout: 60000,
         success: function (data) {
             $("#wait").css("display", "none");
@@ -165,7 +165,7 @@ function Admin_News_ThucHienLuuSua() {
         type: 'POST',
         data: { 'pDescription': mDescription, 'pKeyWord': mKeyWord, 'pId': mId, 'pTieuDe': mTieuDe, 'pImageUrl': mAnh, 'pGroupId': mNhomTin, 'pMoTa': mMoTa, 'pNoiDung': mNoiDung, 'pKichHoat': mKichHoat, 'pUuTien': mThuTu, 'pHot': mHot, 'pFast': mFast, 'pFeatured': mFeatured, 'pSlide': mSlide },
         dataType: 'json',
-        url: "/News/Edit/",
+        url: "/News/OnEdit/",
         timeout: 60000,
         success: function (data) {
             $("#wait").css("display", "none");

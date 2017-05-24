@@ -24,7 +24,7 @@ function Admin_ImagesGroup_Xoa(pId, pPage) {
         type: 'POST',
         data: { 'pId': pId },
         dataType: 'json',
-        url: "/ImageType/Delete",
+        url: "/ImageType/OnDelete",
         timeout: 60000,
         success: function (data) {
             if (data.code == 1) {
@@ -54,7 +54,7 @@ function Admin_ImagesGroup_ThucHienLuuMoi() {
         type: 'POST',
         data: { 'pTieuDe': mTieuDe, 'pGroupId': mNhomTin, 'pUuTien': mThuTu, 'pKichCo': mKichCo, 'pImageUrl': mAnh },
         dataType: 'json',
-        url: "/ImageType/Create/",
+        url: "/ImageType/OnCreate/",
         timeout: 60000,
         success: function (data) {
             $("#wait").css("display", "none");
@@ -87,7 +87,7 @@ function Admin_ImagesGroup_ThucHienLuuSua() {
         type: 'POST',
         data: { 'pId': mId, 'pTieuDe': mTieuDe, 'pGroupId': mNhomTin, 'pUuTien': mThuTu, 'pKichCo': mKichCo, 'pImageUrl': mAnh },
         dataType: 'json',
-        url: "/ImageType/Edit/",
+        url: "/ImageType/OnEdit/",
         timeout: 60000,
         success: function (data) {
             $("#wait").css("display", "none");

@@ -24,7 +24,7 @@ function Admin_Images_Xoa(pId, pPage) {
         type: 'POST',
         data: { 'pId': pId },
         dataType: 'json',
-        url: "/Image/Delete",
+        url: "/Image/OnDelete",
         timeout: 60000,
         success: function (data) {
             if (data.code == 1) {
@@ -55,7 +55,7 @@ function Admin_Images_ThucHienLuuMoi() {
         type: 'POST',
         data: { 'pTitle': mTieuDe, 'pGroupId': mNhomTin, 'pLink': mLink, 'pSummary': mSummary, 'pImageUrl': mImageLink },
         dataType: 'json',
-        url: "/Image/Create/",
+        url: "/Image/OnCreate/",
         timeout: 60000,
         success: function (data) {
             $("#wait").css("display", "none");
@@ -89,7 +89,7 @@ function Admin_Images_ThucHienLuuSua() {
         type: 'POST',
         data: { 'pId': mId, 'pTitle': mTieuDe, 'pGroupId': mNhomTin, 'pLink': mLink, 'pSummary': mSummary, 'pImageUrl': mImageLink },
         dataType: 'json',
-        url: "/Image/Edit/",
+        url: "/Image/OnEdit/",
         timeout: 60000,
         success: function (data) {
             $("#wait").css("display", "none");

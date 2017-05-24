@@ -37,8 +37,7 @@ namespace V308CMS.Admin.Controllers
             return View("Index", mProductPage);
         }       
         [CheckAdminJson(1)]
-        [HttpPost]
-        [ActionName("Delete")]
+        [HttpPost]      
         public JsonResult OnDelete(int pId = 0)
         {            
             var mProductManufacturer = ProductsService.LayProductManufacturerTheoId(pId);
@@ -57,8 +56,7 @@ namespace V308CMS.Admin.Controllers
         }
         [HttpPost]     
         [CheckAdminJson(1)]
-        [ValidateInput(false)]
-        [ActionName("Create")]
+        [ValidateInput(false)]      
         public JsonResult OnCreate(string pTieuDe, int? pUuTien, string pSummary, string pUrlImage)
         {
             var mProductManufacturer = new ProductManufacturer() { Date = DateTime.Now, Number = pUuTien, Name = pTieuDe, Detail = pSummary, Image = pUrlImage, Status = true, Visible = true };
@@ -83,8 +81,7 @@ namespace V308CMS.Admin.Controllers
         }
         [HttpPost]      
         [CheckAdminJson(1)]
-        [ValidateInput(false)]
-        [ActionName("Edit")]
+        [ValidateInput(false)]    
         public JsonResult OnEdit(int pId, string pTieuDe, int? pUuTien, string pSummary, string pUrlImage)
         {
             var mProductManufacturer = ProductsService.LayProductManufacturerTheoId(pId);

@@ -24,7 +24,7 @@ function Admin_ProductManufacturer_Xoa(pId, pPage) {
         type: 'POST',
         data: { 'pId': pId },
         dataType: 'json',
-        url: "/ProductManufacturer/Delete",
+        url: "/ProductManufacturer/OnDelete",
         timeout: 60000,
         success: function (data) {
             if (data.code == 1) {
@@ -54,7 +54,7 @@ function Admin_ProductManufacturer_ThucHienLuuMoi() {
         type: 'POST',
         data: { 'pTieuDe': mTieuDe, 'pUuTien': mThuTu, 'pSummary': mSummary, 'pUrlImage': mImageUrl },
         dataType: 'json',
-        url: "/ProductManufacturer/Create/",
+        url: "/ProductManufacturer/OnCreate/",
         timeout: 60000,
         success: function (data) {
             $("#wait").css("display", "none");
@@ -87,7 +87,7 @@ function Admin_ProductManufacturer_ThucHienLuuSua() {
         type: 'POST',
         data: { 'pId': mId, 'pTieuDe': mTieuDe, 'pUuTien': mThuTu, 'pSummary': mSummary, 'pUrlImage': mImageUrl },
         dataType: 'json',
-        url: "/ProductManufacturer/Edit/",
+        url: "/ProductManufacturer/OnEdit/",
         timeout: 60000,
         success: function (data) {
             $("#wait").css("display", "none");

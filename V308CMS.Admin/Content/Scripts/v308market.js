@@ -32,7 +32,7 @@ function Admin_Market_Xoa(pId, pPage) {
         type: 'POST',
         data: { 'pId': pId },
         dataType: 'json',
-        url: "/Market/Delete",
+        url: "/Market/OnDelete",
         timeout: 60000,
         success: function (data) {
             if (data.code == 1) {
@@ -57,7 +57,7 @@ function Admin_Market_An(pId, pPage) {
         type: 'POST',
         data: { 'pId': pId },
         dataType: 'json',
-        url: "/Market/ChangeStatus",
+        url: "/Market/OnChangeStatus",
         timeout: 60000,
         success: function (data) {
             if (data.code == 1) {
@@ -81,7 +81,7 @@ function Admin_Market_Hien(pId, pPage) {
         type: 'POST',
         data: { 'pId': pId },
         dataType: 'json',
-        url: "/Market/ChangeStatus",
+        url: "/Market/OnChangeStatus",
         timeout: 60000,
         success: function (data) {
             if (data.code == 1) {
@@ -114,7 +114,7 @@ function Admin_Market_ThucHienLuuMoi() {
         type: 'POST',
         data: { 'pUserName': mUserName, 'pMarketType': mpMarketType, 'pAvata': mImageUrl, 'pActive': mActive, 'pEmail': mEmail, 'pFullName': mFullName, 'pMobile': mMobile, 'pSumary': mSumary },
         dataType: 'json',
-        url: "/Market/Create/",
+        url: "/Market/OnCreate/",
         timeout: 60000,
         success: function (data) {
             $("#wait").css("display", "none");
@@ -150,7 +150,7 @@ function Admin_Market_ThucHienLuuSua() {
         type: 'POST',
         data: { 'pId': mId, 'pUserName': mUserName,'pMarketType':mpMarketType, 'pAvata': mImageUrl, 'pActive': mActive, 'pEmail': mEmail, 'pFullName': mFullName, 'pMobile': mMobile, 'pSumary': mSumary },
         dataType: 'json',
-        url: "/Market/Edit/",
+        url: "/Market/OnEdit/",
         timeout: 60000,
         success: function (data) {
             $("#wait").css("display", "none");

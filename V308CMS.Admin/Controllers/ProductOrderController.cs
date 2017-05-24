@@ -53,8 +53,7 @@ namespace V308CMS.Admin.Controllers
             return View("Index", mProductPage);
         }        
         [CheckAdminJson(3)]
-        [HttpPost]
-        [ActionName("Delete")]
+        [HttpPost]        
         public JsonResult OnDelete(int pId = 0)
         {          
             var mProductOrder = ProductsService.LayProductOrderTheoId(pId);

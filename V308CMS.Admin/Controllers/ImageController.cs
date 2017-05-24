@@ -59,8 +59,7 @@ namespace V308CMS.Admin.Controllers
             return View("Index", mImagesPage);
         }       
         [CheckAdminJson(4)]
-        [HttpPost]
-        [ActionName("Delete")]
+        [HttpPost]    
         public JsonResult OnDelete(int pId = 0)
         {          
             var mImage = ImagesService.LayAnhTheoId(pId);
@@ -85,8 +84,7 @@ namespace V308CMS.Admin.Controllers
         }
         [HttpPost]       
         [CheckAdminJson(4)]
-        [ValidateInput(false)]
-        [ActionName("Create")]
+        [ValidateInput(false)]      
         public JsonResult OnCreate(string pTitle, int? pGroupId, string pLink, string pSummary, string pImageUrl)
         {           
             var mImage = new Image()
@@ -123,8 +121,7 @@ namespace V308CMS.Admin.Controllers
         }
         [HttpPost]       
         [CheckAdminJson(4)]
-        [ValidateInput(false)]
-        [ActionName("Edit")]
+        [ValidateInput(false)]        
         public JsonResult OnEdit(int pId, string pTitle, int? pGroupId, string pLink, string pSummary, string pImageUrl)
         {
            

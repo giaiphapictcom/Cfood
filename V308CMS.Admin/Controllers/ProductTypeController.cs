@@ -67,8 +67,7 @@ namespace V308CMS.Admin.Controllers
             return View("Index", mProductPage);
         }     
         [CheckAdminJson(1)]
-        [HttpPost]
-        [ActionName("Delete")]
+        [HttpPost]       
         public JsonResult OnDelete(int pId = 0)
         {           
             var mProductType = ProductsService.LayProductTypeTheoId(pId);
@@ -92,8 +91,7 @@ namespace V308CMS.Admin.Controllers
         }
         [HttpPost]      
         [CheckAdminJson(1)]
-        [ValidateInput(false)]
-        [ActionName("Create")]
+        [ValidateInput(false)]      
         public JsonResult OnCreate(string pTieuDe, int? pGroupId, string pSummary, int? pKichHoat, int? pUuTien, string pImageUrl, string pImageBanner, string pDescription)
         {         
             ProductType mProductType;
@@ -164,8 +162,7 @@ namespace V308CMS.Admin.Controllers
         }
         [HttpPost]      
         [CheckAdminJson(1)]
-        [ValidateInput(false)]
-        [ActionName("Edit")]
+        [ValidateInput(false)]       
         public JsonResult OnEdit(int pId, string pTieuDe, int? pGroupId, string pSummary, int? pKichHoat, int? pUuTien, string pImageUrl, string pImageBanner, string pDescription)
         {            
             var mProductType = ProductsService.LayProductTypeTheoId(pId);

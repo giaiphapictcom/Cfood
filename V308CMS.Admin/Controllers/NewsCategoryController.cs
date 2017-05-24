@@ -60,8 +60,7 @@ namespace V308CMS.Admin.Controllers
             return View(mNewsGroupPage);
         }       
         [CheckAdminJson(2)]
-        [HttpPost]
-        [ActionName("Delete")]
+        [HttpPost]      
         public JsonResult OnDelete(int pId = 0)
         {
            
@@ -77,8 +76,7 @@ namespace V308CMS.Admin.Controllers
 
         }       
         [CheckAdminJson(2)]
-        [HttpPost]
-        [ActionName("ChangeStatus")]
+        [HttpPost]      
         public JsonResult OnChangeStatus(int pId = 0)
         {                    
             var mNewsGroups = NewsService.LayTheLoaiTinTheoId(pId);
@@ -104,8 +102,7 @@ namespace V308CMS.Admin.Controllers
         }
         [HttpPost]      
         [CheckAdminJson(2)]
-        [ValidateInput(false)]
-        [ActionName("Create")]
+        [ValidateInput(false)]       
         public JsonResult OnCreate(string pTieuDe, string pLink, int? pKichHoat, int? pUuTien, int? pGroupId = 0)
         {          
             NewsGroups mNewsGroups;
@@ -157,8 +154,7 @@ namespace V308CMS.Admin.Controllers
 
         }
         [CustomAuthorize]
-        [CheckAdminAuthorize(2)]
-        [ActionName("Edit")]
+        [CheckAdminAuthorize(2)]      
         public ActionResult Edit(int pId = 0)
         {         
             NewsGroupPage mNewsGroupPage = new NewsGroupPage();
@@ -178,8 +174,7 @@ namespace V308CMS.Admin.Controllers
         }
         [HttpPost]       
         [CheckAdminJson(2)]
-        [ValidateInput(false)]
-        [ActionName("Edit")]
+        [ValidateInput(false)]        
         public JsonResult OnEdit(int pId, string pTieuDe, string pLink, int? pGroupId, int? pKichHoat, int? pUuTien)
         {           
             var mNewsGroups = NewsService.LayTheLoaiTinTheoId(pId);

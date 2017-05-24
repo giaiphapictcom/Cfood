@@ -47,8 +47,7 @@ namespace V308CMS.Admin.Controllers
           
         }     
         [CheckAdminJson(6)]
-        [HttpPost]
-        [ActionName("Delete")]
+        [HttpPost]        
         public JsonResult OnDelete(int pId = 0)
         {
             var mAccount = AccountService.LayTinTheoId(pId);
@@ -64,8 +63,7 @@ namespace V308CMS.Admin.Controllers
         }
 
         [CheckAdminJson(6)]
-        [HttpPost]
-        [ActionName("ChangeStatus")]
+        [HttpPost]       
         public JsonResult OnChangeStatus(int pId = 0)
         {
             

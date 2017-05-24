@@ -39,8 +39,7 @@ namespace V308CMS.Admin.Controllers
             return View("Index", mSupportPage);
         }       
         [CheckAdminJson(7)]
-        [HttpPost]
-        [ActionName("Delete")]
+        [HttpPost]      
         public JsonResult OnDelete(int pId = 0)
         {           
             Support mSupport;
@@ -63,8 +62,7 @@ namespace V308CMS.Admin.Controllers
         }
         [HttpPost]       
         [CheckAdminJson(7)]
-        [ValidateInput(false)]
-        [ActionName("Create")]
+        [ValidateInput(false)]      
         public JsonResult OnCreate(string pTieuDe, int? pUuTien, int? pGroupId, string pNick, string pMobile, string pEmail)
         {                    
             var mSupport = new Support() { Date = DateTime.Now, Name = pTieuDe, TypeID = pGroupId, Phone = pMobile, Nick = pNick, Email = pEmail };
@@ -92,8 +90,7 @@ namespace V308CMS.Admin.Controllers
         }
         [HttpPost]      
         [CheckAdminJson(7)]
-        [ValidateInput(false)]
-        [ActionName("Edit")]
+        [ValidateInput(false)]       
         public JsonResult OnEdit(int pId, string pTieuDe, int? pUuTien, int? pGroupId, string pNick, string pMobile, string pEmail)
         {
             var mSupport = SupportService.LayTheoId(pId);

@@ -61,8 +61,7 @@ namespace V308CMS.Admin.Controllers
             return View("Index", mFilePage);
         }      
         [CheckAdminJson(5)]
-        [HttpPost]
-        [ActionName("Delete")]
+        [HttpPost]       
         public JsonResult OnDelete(int pId = 0)
         {
             
@@ -88,8 +87,7 @@ namespace V308CMS.Admin.Controllers
         }
         [HttpPost]     
         [CheckAdminJson(5)]
-        [ValidateInput(false)]
-        [ActionName("Create")]
+        [ValidateInput(false)]      
         public JsonResult OnCreate(string pTitle, int? pGroupId, string pLink, string pKichHoat, int? pValue, string pSummary, string pImageUrl)
         {           
             var mFile = new File()
@@ -127,8 +125,7 @@ namespace V308CMS.Admin.Controllers
         }
         [HttpPost]    
         [CheckAdminJson(5)]
-        [ValidateInput(false)]
-        [ActionName("Edit")]
+        [ValidateInput(false)]     
         public JsonResult OnEdit(int pId, string pTitle, int? pGroupId, int? pValue, string pLink, string pKichHoat, string pSummary, string pImageUrl)
         {           
             var mFile = FileService.LayFileTheoId(pId);

@@ -39,8 +39,7 @@ namespace V308CMS.Admin.Controllers
         }
       
         [CheckAdminJson(7)]
-        [HttpPost]
-        [ActionName("Delete")]
+        [HttpPost]        
         public JsonResult OnDelete(int pId = 0)
         {
             var mSupportType = SupportService.LaySupportTypeTheoId(pId);
@@ -60,8 +59,7 @@ namespace V308CMS.Admin.Controllers
         }
         [HttpPost]
         [CheckAdminJson(7)]
-        [ValidateInput(false)]
-        [ActionName("Create")]
+        [ValidateInput(false)]      
         public JsonResult OnCreate(string pTieuDe, int? pUuTien)
         {            
             var mSupportType = new SupportType() { Date = DateTime.Now, Number = pUuTien, Name = pTieuDe };
@@ -87,8 +85,7 @@ namespace V308CMS.Admin.Controllers
         }
         [HttpPost]
         [CheckAdminJson(7)]
-        [ValidateInput(false)]
-        [ActionName("Edit")]
+        [ValidateInput(false)]     
         public JsonResult OnEdit(int pId, string pTieuDe, int? pUuTien)
         {
             var mSupportType = SupportService.LaySupportTypeTheoId(pId);

@@ -55,8 +55,7 @@ namespace V308CMS.Admin.Controllers
         }
         [HttpPost]      
         [CheckAdminJson(1)]
-        [ValidateInput(false)]
-        [ActionName("Create")]
+        [ValidateInput(false)]       
         public JsonResult OnCreate(string pUserName, string pAvata, int pMarketType, string pEmail, string pFullName, string pMobile, string pSumary, bool pActive = true)
         {
             var mMarket = new Market()
@@ -115,8 +114,7 @@ namespace V308CMS.Admin.Controllers
         }
         [HttpPost]        
         [CheckAdminJson(1)]
-        [ValidateInput(false)]
-        [ActionName("Edit")]
+        [ValidateInput(false)]      
         public JsonResult OnEdit(int pId, string pUserName, string pAvata, string pEmail, int pMarketType, string pFullName, string pMobile, string pSumary, bool pActive = true)
         {           
             var mMarket = MarketService.LayTheoId(pId);
@@ -137,8 +135,7 @@ namespace V308CMS.Admin.Controllers
             return Json(new { code = 0, message = "Không tìm thấy cửa hàng để sửa." });
         }        
         [CheckAdminJson(6)]
-        [HttpPost]
-        [ActionName("Delete")]
+        [HttpPost]      
         public JsonResult OnDelete(int pId = 0)
         {            
             var mMarket = MarketService.LayTheoId(pId);
@@ -159,8 +156,7 @@ namespace V308CMS.Admin.Controllers
 
         }
         [CheckAdminJson(6)]
-        [HttpPost]
-        [ActionName("ChangeStatus")]
+        [HttpPost]    
         public JsonResult OnChangeStatus(int pId = 0)
         {
            

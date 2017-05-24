@@ -51,8 +51,7 @@ namespace V308CMS.Admin.Controllers
 
         }      
         [CheckAdminJson(6)]
-        [HttpPost]
-        [ActionName("Delete")]
+        [HttpPost]       
         public JsonResult OnDelete(int pId = 0)
         {          
            
@@ -74,8 +73,7 @@ namespace V308CMS.Admin.Controllers
         [HttpPost]     
         [CheckAdminJson(6)]
         [CheckDelete]
-        [ValidateInput(false)]
-        [ActionName("Create")]
+        [ValidateInput(false)]     
         public JsonResult OnCreate(bool? phethong, bool? psanpham, bool? ptintuc, bool? pkhachhang, bool? phinhanh, bool? pupload, bool? ptaikhoan, bool? pthungrac, string pTitle, int? pGroupId, string pAccount, string pPassword1, string pPassword2, string pEmail)
         {
 
@@ -135,8 +133,7 @@ namespace V308CMS.Admin.Controllers
         [HttpPost]       
         [CheckAdminJson(6)]
         [CheckDelete]
-        [ValidateInput(false)]
-        [ActionName("Edit")]
+        [ValidateInput(false)]        
         public JsonResult OnEdit(bool? phethong, bool? psanpham, bool? ptintuc, bool? pkhachhang, bool? phinhanh, bool? pupload, bool? ptaikhoan, bool? pthungrac, int pId, string pTitle, int? pGroupId, string pAccount, bool? pActive, string pEmail)
         {          
             var mAdmin = AccountService.LayAdminTheoId(pId);
@@ -177,8 +174,7 @@ namespace V308CMS.Admin.Controllers
             }
             return View("Info", mAccountPage);
         }
-        [HttpPost]
-        [ActionName("ChangePassword")]     
+        [HttpPost]        
         public JsonResult OnChangePassword(int pId, string pPassword1, string pPassword2, string pPassword3)
         {
             V308CMSEntities mEntities = new V308CMSEntities();           

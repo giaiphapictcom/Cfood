@@ -35,7 +35,7 @@ function Admin_NewsGroup_XoaTinTuc(pId, pPage) {
         type: 'POST',
         data: { 'pId': pId },
         dataType: 'json',
-        url: "/NewsCategory/Delete",
+        url: "/NewsCategory/OnDelete",
         timeout: 60000,
         success: function (data) {
             if (data.code == 1) {
@@ -60,7 +60,7 @@ function Admin_NewsGroup_AnTinTuc(pId, pPage) {
         type: 'POST',
         data: { 'pId': pId },
         dataType: 'json',
-        url: "/NewsCategory/ChangeStatus",
+        url: "/NewsCategory/OnChangeStatus",
         timeout: 60000,
         success: function (data) {
             if (data.code == 1) {
@@ -84,7 +84,7 @@ function Admin_NewsGroup_HienTinTuc(pId, pPage) {
         type: 'POST',
         data: { 'pId': pId },
         dataType: 'json',
-        url: "/NewsCategory/ChangeStatus",
+        url: "/NewsCategory/OnChangeStatus",
         timeout: 60000,
         success: function (data) {
             if (data.code == 1) {
@@ -114,7 +114,7 @@ function Admin_NewsGroup_ThucHienLuuMoi() {
         type: 'POST',
         data: { 'pTieuDe': mTieuDe, 'pLink': mLink, 'pGroupId': mNhomTin, 'pKichHoat': mKichHoat, 'pUuTien': mThuTu },
         dataType: 'json',
-        url: "/NewsCategory/Create/",
+        url: "/NewsCategory/OnCreate/",
         timeout: 60000,
         success: function (data) {
             $("#wait").css("display", "none");
@@ -147,7 +147,7 @@ function Admin_NewsGroup_ThucHienLuuSua() {
         type: 'POST',
         data: { 'pId': mId, 'pTieuDe': mTieuDe, 'pLink': mLink, 'pGroupId': mNhomTin, 'pKichHoat': mKichHoat, 'pUuTien': mThuTu },
         dataType: 'json',
-        url: "/NewsCategory/Edit/",
+        url: "/NewsCategory/OnEdit/",
         timeout: 60000,
         success: function (data) {
             $("#wait").css("display", "none");

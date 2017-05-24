@@ -24,7 +24,7 @@ function Admin_Support_Xoa(pId, pPage) {
         type: 'POST',
         data: { 'pId': pId },
         dataType: 'json',
-        url: "/Support/Delete",
+        url: "/Support/OnDelete",
         timeout: 60000,
         success: function (data) {
             if (data.code == 1) {
@@ -55,7 +55,7 @@ function Admin_Support_ThucHienLuuMoi() {
         type: 'POST',
         data: { 'pTieuDe': mTieuDe, 'pUuTien': mThuTu, 'pGroupId': mpGroupId, 'pNick': mpNick, 'pMobile': mpMobile, 'pEmail': mpEmail },
         dataType: 'json',
-        url: "/Support/Create/",
+        url: "/Support/OnCreate/",
         timeout: 60000,
         success: function (data) {
             $("#wait").css("display", "none");
@@ -89,7 +89,7 @@ function Admin_Support_ThucHienLuuSua() {
         type: 'POST',
         data: { 'pId': mId, 'pTieuDe': mTieuDe, 'pUuTien': mThuTu, 'pGroupId': mpGroupId, 'pNick': mpNick, 'pMobile': mpMobile, 'pEmail': mpEmail },
         dataType: 'json',
-        url: "/Support/Edit/",
+        url: "/Support/OnEdit/",
         timeout: 60000,
         success: function (data) {
             $("#wait").css("display", "none");

@@ -14,7 +14,7 @@ function Admin_Order_Xoa(pId, pPage) {
         type: 'POST',
         data: { 'pId': pId },
         dataType: 'json',
-        url: "/ProductOrder/Delete",
+        url: "/ProductOrder/OnDelete",
         timeout: 60000,
         success: function (data) {
             if (data.code == 1) {

@@ -24,7 +24,7 @@ function Admin_ProductDistributor_Xoa(pId, pPage) {
         type: 'POST',
         data: { 'pId': pId },
         dataType: 'json',
-        url: "/ProductDistributor/Delete",
+        url: "/ProductDistributor/OnDelete",
         timeout: 60000,
         success: function (data) {
             if (data.code == 1) {
@@ -87,7 +87,7 @@ function Admin_ProductDistributor_ThucHienLuuSua() {
         type: 'POST',
         data: { 'pId': mId, 'pTieuDe': mTieuDe, 'pUuTien': mThuTu, 'pSummary': mSummary, 'pUrlImage': mImageUrl },
         dataType: 'json',
-        url: "/ProductDistributor/Edit/",
+        url: "/ProductDistributor/OnEdit/",
         timeout: 60000,
         success: function (data) {
             $("#wait").css("display", "none");

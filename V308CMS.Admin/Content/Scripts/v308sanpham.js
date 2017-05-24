@@ -35,7 +35,7 @@ function Admin_Product_Xoa(pId, pPage) {
         type: 'POST',
         data: { 'pId': pId },
         dataType: 'json',
-        url: "/Product/Delete",
+        url: "/Product/OnDelete",
         timeout: 60000,
         success: function (data) {
             if (data.code == 1) {
@@ -60,7 +60,7 @@ function Admin_Product_An(pId, pPage) {
         type: 'POST',
         data: { 'pId': pId },
         dataType: 'json',
-        url: "/Product/ChangeStatus",
+        url: "/Product/OnChangeStatus",
         timeout: 60000,
         success: function (data) {
             if (data.code == 1) {
@@ -84,7 +84,7 @@ function Admin_Product_Hien(pId, pPage) {
         type: 'POST',
         data: { 'pId': pId },
         dataType: 'json',
-        url: "/Product/ChangeStatus",
+        url: "/Product/OnChangeStatus",
         timeout: 60000,
         success: function (data) {
             if (data.code == 1) {
@@ -120,7 +120,7 @@ function Admin_Product_ThucHienLuuMoi() {
         type: 'POST',
         data: formData,
         dataType: 'json',
-        url: "/Product/Create/",
+        url: "/Product/OnCreate/",
         timeout: 60000,
         success: function (data) {
             $("#wait").css("display", "none");

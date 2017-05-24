@@ -25,7 +25,7 @@ function Admin_AdminAccount_Xoa(pId, pPage) {
         type: 'POST',
         data: { 'pId': pId },
         dataType: 'json',
-        url: "/AdminAccount/Delete",
+        url: "/AdminAccount/OnDelete",
         timeout: 60000,
         success: function (data) {
             if (data.code == 1) {
@@ -66,7 +66,7 @@ function Admin_AdminAccount_ThucHienLuuMoi() {
         type: 'POST',
         data:{ 'psanpham': mpsanpham, 'ptintuc': mptintuc, 'pkhachhang': mpkhachhang, 'phinhanh': mphinhanh, 'pupload': mpupload, 'ptaikhoan': mptaikhoan, 'phethong': mphethong, 'pthungrac': mpthungrac, 'pTitle': mFullName, 'pGroupId': mNhomTin, 'pAccount': mpAccount, 'pPassword1': mpPassword1, 'pPassword2': mpPassword2, 'pEmail': mpEmail },
         dataType: 'json',
-        url: "/AdminAccount/Create/",
+        url: "/AdminAccount/OnCreate/",
         timeout: 60000,
         success: function (data) {
             $("#wait").css("display", "none");
@@ -109,7 +109,7 @@ function Admin_AdminAccount_ThucHienLuuSua() {
         type: 'POST',
         data: { 'psanpham': mpsanpham, 'ptintuc': mptintuc, 'pkhachhang': mpkhachhang, 'phinhanh': mphinhanh, 'pupload': mpupload, 'ptaikhoan': mptaikhoan, 'phethong': mphethong, 'pthungrac': mpthungrac, 'pId': mId, 'pTitle': mFullName, 'pGroupId': mNhomTin, 'pAccount': mpAccount, 'pActive': mpActive, 'pEmail': mpEmail },
         dataType: 'json',
-        url: "/AdminAccount/Edit/",
+        url: "/AdminAccount/OnEdit/",
         timeout: 60000,
         success: function (data) {
             $("#wait").css("display", "none");

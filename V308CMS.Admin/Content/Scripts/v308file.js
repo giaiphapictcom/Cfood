@@ -24,7 +24,7 @@ function Admin_File_Xoa(pId, pPage) {
         type: 'POST',
         data: { 'pId': pId },
         dataType: 'json',
-        url: "/File/Delete",
+        url: "/File/OnDelete",
         timeout: 60000,
         success: function (data) {
             if (data.code == 1) {
@@ -55,7 +55,7 @@ function Admin_File_ThucHienLuuMoi() {
         type: 'POST',
         data: { 'pTitle': mTieuDe, 'pGroupId': mNhomTin, 'pActive': mKichHoat, 'pLink': mLink, 'pSummary': mSummary, 'pImageUrl': mImageLink, 'pValue': mpValue },
         dataType: 'json',
-        url: "/File/Create/",
+        url: "/File/OnCreate/",
         timeout: 60000,
         success: function (data) {
             $("#wait").css("display", "none");
@@ -90,7 +90,7 @@ function Admin_File_ThucHienLuuSua() {
         type: 'POST',
         data: { 'pId': mId, 'pTitle': mTieuDe, 'pActive': mKichHoat, 'pGroupId': mNhomTin, 'pLink': mLink, 'pSummary': mSummary, 'pImageUrl': mImageLink, 'pValue': mpValue },
         dataType: 'json',
-        url: "/File/Edit/",
+        url: "/File/OnEdit/",
         timeout: 60000,
         success: function (data) {
             $("#wait").css("display", "none");

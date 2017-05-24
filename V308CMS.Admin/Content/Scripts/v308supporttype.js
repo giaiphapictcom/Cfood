@@ -24,7 +24,7 @@ function Admin_SupportType_Xoa(pId, pPage) {
         type: 'POST',
         data: { 'pId': pId },
         dataType: 'json',
-        url: "/SupportType/Delete",
+        url: "/SupportType/OnnDelete",
         timeout: 60000,
         success: function (data) {
             if (data.code == 1) {
@@ -51,7 +51,7 @@ function Admin_SupportType_ThucHienLuuMoi() {
         type: 'POST',
         data: { 'pTieuDe': mTieuDe, 'pUuTien': mThuTu},
         dataType: 'json',
-        url: "/SupportType/Create/",
+        url: "/SupportType/OnCreate/",
         timeout: 60000,
         success: function (data) {
             $("#wait").css("display", "none");
@@ -81,7 +81,7 @@ function Admin_SupportType_ThucHienLuuSua() {
         type: 'POST',
         data: { 'pId': mId, 'pTieuDe': mTieuDe,'pUuTien': mThuTu},
         dataType: 'json',
-        url: "/SupportType/Edit/",
+        url: "/SupportType/OnEdit/",
         timeout: 60000,
         success: function (data) {
             $("#wait").css("display", "none");

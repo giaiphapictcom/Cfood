@@ -58,8 +58,7 @@ namespace V308CMS.Admin.Controllers
         }
 
         [CheckAdminJson(2)]
-        [HttpPost]
-        [ActionName("Delete")]
+        [HttpPost]     
         public JsonResult OnDelete(int pId = 0)
         {
             var mNews = NewsService.LayTinTheoId(pId);
@@ -72,8 +71,7 @@ namespace V308CMS.Admin.Controllers
             return Json(new { code = 0, message = "Không tìm thấy tin cần xóa." });
         }
         [CheckAdminJson(2)]
-        [HttpPost]
-        [ActionName("ChangeStatus")]
+        [HttpPost]      
         public JsonResult OnChangeStatus(int pId = 0)
         {           
             var mNews = NewsService.LayTinTheoId(pId);
@@ -95,6 +93,26 @@ namespace V308CMS.Admin.Controllers
             mNewsPage.HtmlNhomTin = V308HTMLHELPER.TaoDanhSachNhomTin(mListNewsGroup, 0);
             return View(mNewsPage);
         }
+        [HttpPost]
+        [CustomAuthorize]
+        [CheckAdminJson(2)]
+        [ValidateInput(false)]
+        public JsonResult OnCreate
+            (
+                string pTieuDe, string pImageUrl,
+                int? pGroupId, string pMoTa, 
+                string pNoiDung, string pKichHoat, 
+                int? pUuTien, string pDescription, string pKeyWord, 
+                string pSlide, string pHot, string pFast,
+                string pFeatured
+            )
+        {
+            var mNews = new News() { Date = DateTime.Now, Detail = pNoiDung, Image = pImageUrl, Order = pUuTien, Status = true, Summary = pMoTa, Title = pTieuDe, TypeID = pGroupId, Keyword = pKeyWord, Description = pDescription, Slider = ConverterUlti.ConvertStringToLogic2(pSlide), Hot = ConverterUlti.ConvertStringToLogic2(pHot), Fast = ConverterUlti.ConvertStringToLogic2(pFast), Featured = ConverterUlti.ConvertStringToLogic2(pFeatured) };
+            MpStartEntities.AddToNews(mNews);
+            MpStartEntities.SaveChanges();
+            return Json(new { code = 1, message = "Lưu tin tức thành công." });
+
+        }
         [CheckAdminAuthorize(2)]
         public ActionResult Edit(int pId = 0)
         {
@@ -115,9 +133,15 @@ namespace V308CMS.Admin.Controllers
         }
         [HttpPost]
         [CheckAdminJson(2)]
-        [ValidateInput(false)]
-        [ActionName("Edit")]
-        public JsonResult OnEdit(int pId, string pTieuDe, string pImageUrl, int? pGroupId, string pMoTa, string pNoiDung, string pKichHoat, int? pUuTien, string pDescription, string pKeyWord, string pSlide, string pHot, string pFast, string pFeatured)
+        [ValidateInput(false)]     
+        public JsonResult OnEdit
+            (
+                int pId, string pTieuDe, string pImageUrl,
+                int? pGroupId, string pMoTa, string pNoiDung,
+                string pKichHoat, int? pUuTien, string pDescription,
+                string pKeyWord, string pSlide, string pHot,
+                string pFast, string pFeatured
+            )
         {
             var mNews = NewsService.LayTinTheoId(pId);
             if (mNews != null)

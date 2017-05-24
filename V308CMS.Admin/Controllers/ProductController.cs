@@ -222,7 +222,21 @@ namespace V308CMS.Admin.Controllers
         [CheckAdminJson(1)]
         [ValidateInput(false)]
         [ActionName("Create")]
-        public JsonResult OnCreate(int? pTransport1, int? pTransport2, int? pTransport12, int? pTransport22, string pTitle, string pDapAn1, string pDapAn2, string pDapAn3, string pDapAn4, int? pKetQua, int? pGroup, int? pProductDistributor, int? pProductManufacturer, string pImage, int? pPrice, int? pPrice2, int? pPrice3, string pUnit1, string pUnit2, string pUnit3, string pSeri, string pSummary, string[] imageslide, string[] pNamePro, string[] pValuePro, string editor1, int? pOrder, int? pSaleOff, string pActive, int? pBaoHanh, int? pSize, int? pPower, int? pMotoGroup, int? pMarket, string pDescription, string pKeyWord)
+        public JsonResult OnCreate
+            (
+                int? pTransport1, int? pTransport2, int? pTransport12,
+                int? pTransport22, string pTitle, string pDapAn1,
+                string pDapAn2, string pDapAn3, string pDapAn4,
+                int? pKetQua, int? pGroup, int? pProductDistributor, 
+                int? pProductManufacturer, string pImage, int? pPrice,
+                int? pPrice2, int? pPrice3, string pUnit1,
+                string pUnit2, string pUnit3, string pSeri, 
+                string pSummary, string[] imageslide, string[] pNamePro,
+                string[] pValuePro, string editor1, int? pOrder, 
+                int? pSaleOff, string pActive, int? pBaoHanh,
+                int? pSize, int? pPower, int? pMotoGroup, 
+                int? pMarket, string pDescription, string pKeyWord
+            )
         {                       
             int i = 0;
             var mProduct = new Product()
@@ -329,19 +343,20 @@ namespace V308CMS.Admin.Controllers
         [CheckAdminJson(1)]
         [ValidateInput(false)]        
         public JsonResult OnEdit(
-            int pId, int? pTransport1, int? pTransport2, 
-            int? pTransport12, int? pTransport22,
-            string pTitle, string pDapAn1, string pDapAn2,
-            string pDapAn3, string pDapAn4, int? pKetQua,
-            int? pGroup, int? pProductDistributor, int? pProductManufacturer,
-            string pImage, int? pPrice, int? pPrice2, 
-            int? pPrice3, string pUnit1, string pUnit2, 
-            string pUnit3, string pSeri, string pSummary, 
-            string[] imageslide, string[] pNamePro, string[] pValuePro,
-            string editor1, int? pOrder, int? pSaleOff, 
-            string pActive, int? pBaoHanh, int? pSize, 
-            int? pPower, int? pMotoGroup, int? pMarket, 
-            string pDescription, string pKeyWord)
+                int pId, int? pTransport1, int? pTransport2, 
+                int? pTransport12, int? pTransport22,
+                string pTitle, string pDapAn1, string pDapAn2,
+                string pDapAn3, string pDapAn4, int? pKetQua,
+                int? pGroup, int? pProductDistributor, int? pProductManufacturer,
+                string pImage, int? pPrice, int? pPrice2, 
+                int? pPrice3, string pUnit1, string pUnit2, 
+                string pUnit3, string pSeri, string pSummary, 
+                string[] imageslide, string[] pNamePro, string[] pValuePro,
+                string editor1, int? pOrder, int? pSaleOff, 
+                string pActive, int? pBaoHanh, int? pSize, 
+                int? pPower, int? pMotoGroup, int? pMarket, 
+                string pDescription, string pKeyWord
+            )
         {
             int i = 0;
             var mProduct = ProductsService.LayTheoId(pId);

@@ -30,7 +30,7 @@ function Admin_ProductType_Xoa(pId, pPage) {
         type: 'POST',
         data: { 'pId': pId },
         dataType: 'json',
-        url: "/ProductType/Delete",
+        url: "/ProductType/OnDelete",
         timeout: 60000,
         success: function (data) {
             if (data.code == 1) {
@@ -63,7 +63,7 @@ function Admin_ProductType_ThucHienLuuMoi() {
         type: 'POST',
         data: { 'pDescription':mpDescription,'pTieuDe': mTieuDe, 'pGroupId': mpGroup, 'pSummary': mpSummary, 'pKichHoat': mpActive, 'pUuTien': mThuTu, 'pImageUrl': mAnh, 'pImageBanner': mAnhBanner },
         dataType: 'json',
-        url: "/ProductType/Create/",
+        url: "/ProductType/OnCreate/",
         timeout: 60000,
         success: function (data) {
             $("#wait").css("display", "none");
@@ -99,7 +99,7 @@ function Admin_ProductType_ThucHienLuuSua() {
         type: 'POST',
         data: { 'pId': mId, 'pDescription': mpDescription, 'pTieuDe': mTieuDe, 'pGroupId': mpGroup, 'pSummary': mpSummary, 'pKichHoat': mpActive, 'pUuTien': mThuTu, 'pImageUrl': mAnh, 'pImageBanner': mAnhBanner },
         dataType: 'json',
-        url: "/ProductType/Edit/",
+        url: "/ProductType/OnEdit/",
         timeout: 60000,
         success: function (data) {
             $("#wait").css("display", "none");
