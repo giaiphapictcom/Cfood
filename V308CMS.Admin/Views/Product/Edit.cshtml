@@ -1,0 +1,384 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@model V308CMS.Data.ProductPage
+@{
+    ViewBag.Title = "Sửa Sản phẩm";
+    ViewBag.LinkBack = "<li><a href=" + Url.ProductEditUrl()+">Sửa Sản phẩm</a> </li>";
+    ViewBag.MenuValue = 1;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Header {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            CKEDITOR.replace('editor1',
+
+   {
+       filebrowserBrowseUrl: '/Content/Plugins/ckfinder/ckfinder.html',
+       filebrowserImageBrowseUrl: '/Content/Plugins/ckfinder/ckfinder.html?type=Images',
+       filebrowserFlashBrowseUrl: '/Content/Plugins/ckfinder/ckfinder.html?type=Flash',
+       filebrowserUploadUrl: '/Content/Plugins/ckfinder/core/connector/asp/connector.asp?command=QuickUpload&type=Files',
+       filebrowserImageUploadUrl: '/Content/Plugins/ckfinder/core/connector/asp/connector.asp?command=QuickUpload&type=Images',
+       filebrowserFlashUploadUrl: '/Content/Plugins/ckfinder/core/connector/asp/connector.asp?command=QuickUpload&type=Flash',
+       filebrowserWindowWidth: '100%',
+       filebrowserWindowHeight: '700', height: '400px'
+   });
+            //
+            CKEDITOR.replace('pUnit1Id',
+
+   {
+       filebrowserBrowseUrl: '/Content/Plugins/ckfinder/ckfinder.html',
+       filebrowserImageBrowseUrl: '/Content/Plugins/ckfinder/ckfinder.html?type=Images',
+       filebrowserFlashBrowseUrl: '/Content/Plugins/ckfinder/ckfinder.html?type=Flash',
+       filebrowserUploadUrl: '/Content/Plugins/ckfinder/core/connector/asp/connector.asp?command=QuickUpload&type=Files',
+       filebrowserImageUploadUrl: '/Content/Plugins/ckfinder/core/connector/asp/connector.asp?command=QuickUpload&type=Images',
+       filebrowserFlashUploadUrl: '/Content/Plugins/ckfinder/core/connector/asp/connector.asp?command=QuickUpload&type=Flash',
+       filebrowserWindowWidth: '30%',
+       filebrowserWindowHeight: '300', height: '300px'
+   });
+            //
+            CKEDITOR.replace('pUnit2Id',
+
+   {
+       filebrowserBrowseUrl: '/Content/Plugins/ckfinder/ckfinder.html',
+       filebrowserImageBrowseUrl: '/Content/Plugins/ckfinder/ckfinder.html?type=Images',
+       filebrowserFlashBrowseUrl: '/Content/Plugins/ckfinder/ckfinder.html?type=Flash',
+       filebrowserUploadUrl: '/Content/Plugins/ckfinder/core/connector/asp/connector.asp?command=QuickUpload&type=Files',
+       filebrowserImageUploadUrl: '/Content/Plugins/ckfinder/core/connector/asp/connector.asp?command=QuickUpload&type=Images',
+       filebrowserFlashUploadUrl: '/Content/Plugins/ckfinder/core/connector/asp/connector.asp?command=QuickUpload&type=Flash',
+       filebrowserWindowWidth: '30%',
+       filebrowserWindowHeight: '300', height: '300px'
+   });
+            //
+            CKEDITOR.replace('pUnit3Id',
+
+   {
+       filebrowserBrowseUrl: '/Content/Plugins/ckfinder/ckfinder.html',
+       filebrowserImageBrowseUrl: '/Content/Plugins/ckfinder/ckfinder.html?type=Images',
+       filebrowserFlashBrowseUrl: '/Content/Plugins/ckfinder/ckfinder.html?type=Flash',
+       filebrowserUploadUrl: '/Content/Plugins/ckfinder/core/connector/asp/connector.asp?command=QuickUpload&type=Files',
+       filebrowserImageUploadUrl: '/Content/Plugins/ckfinder/core/connector/asp/connector.asp?command=QuickUpload&type=Images',
+       filebrowserFlashUploadUrl: '/Content/Plugins/ckfinder/core/connector/asp/connector.asp?command=QuickUpload&type=Flash',
+       filebrowserWindowWidth: '30%',
+       filebrowserWindowHeight: '300', height: '300px'
+   });
+        });
+    </script>
+    <script type="text/javascript">
+        var iv308 = 0;
+        $(document).ready(function () {
+            $("#btnSelectImg").click(function () {
+                var finder = new CKFinder();
+                finder.selectActionFunction = function (fileUrl) {
+                    $("#anhdaidien").html('<img style="width:100px;height:60px;margin-left:10px;" src="' + fileUrl + '" />');
+                    $('#ImageUrl').val(fileUrl);
+                };
+                finder.popup();
+            });
+
+            $("#btnSelectImgSlide").click(function () {
+                var finder = new CKFinder();
+                finder.selectActionFunction = SetFileFieldSlide;
+                finder.popup();
+            });
+
+
+        });
+
+        function CloseButton(classname) {
+            $('#' + classname).remove();
+
+        }
+        function slidepropertiesCloseButton(classname) {
+            $('#' + classname).remove();
+        }
+        function SetFileField(fileUrl) {
+            $('#ImageUrl').val(fileUrl);
+        }
+
+        function SetFileFieldSlide(fileUrl) {
+            $("#slidegalaxy").append('<div class="slidegalaxyittem" id="slidegalaxyittemid_' + iv308 + '"><div class="slidegalaxyclosebutton" onclick="javascript:CloseButton(\'slidegalaxyittemid_' + iv308 + '\');"></div><img style="width:100px;height:60px;margin-left:10px;" src="' + fileUrl + '" /><input type="hidden" value="' + fileUrl + '" name="imageslide"/><div>');
+            iv308 = (iv308 + 1);
+        }
+        function ThemThuocTinh() {
+            $("#slideproperties").append('<div class="slidepropertiesittem"  id="slidepropertiesittemid_' + iv308 + '"><div class="slidepropertiesclosebutton" onclick="javascript:slidepropertiesCloseButton(\'slidepropertiesittemid_' + iv308 + '\');"></div><input placeholder="Tên thuộc tính" style="min-width:40px;" type="text" name="pNamePro" /><input  placeholder="Giá trị"   style="min-width:40px;"  type="text" name="pValuePro" /></div>');
+            iv308 = (iv308 + 1);
+        }
+    </script>
+}
+<form id="formtaomoi">
+    <div>
+        <div>
+            <a class="mbutton" href="javascript:Admin_Product_ThucHienLuuSua();" style="float: right;">Lưu sửa</a><h3>Thêm sản phẩm mới</h3>
+            <hr />
+            <div style="width: 100%;">
+                <input type="hidden" id="pId" value="@Model.pProduct.ID" name="pId" />
+                <div id="v308inputContent" class="RadGrid RadGrid_MetroTouch table table-striped table-bordered table-hover dataTable" tabindex="0">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td>Tên</td>
+                            <td>
+                                <input type="text" id="pTitleId" name="pTitle" value="@Model.pProduct.Name" />
+                            </td>
+                            <td>Hình Ảnh</td>
+                            <td>
+                                <div id="anhdaidien">
+                                    <img style="width:100px;height:60px;margin-left:10px;" src="@Model.pProduct.Image" />
+                                </div>
+                                <input id="ImageUrl" type="text" name="pImage" value="@Model.pProduct.Image" /><a id="btnSelectImg" class="mbutton" href="javascript:void(0);">Chọn ảnh</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Nhóm sản phẩm</td>
+                            <td>@Html.Raw(Model.HtmlNhom)</td>
+                            <td>Siêu thị</td>
+                            <td>@Html.Raw(Model.HtmlNhom4)</td>
+                        </tr>
+                        <tr style="display: none;">
+                            <td>Nhà phân phối</td>
+                            <td>@Html.Raw(Model.HtmlNhom2)</td>
+                            <td>Nhà sản xuất</td>
+                            <td>@Html.Raw(Model.HtmlNhom3)</td>
+                        </tr>
+                        <tr></tr>
+                        <tr>
+                            <td>Số Seri</td>
+                            <td>
+                                <input type="text" id="pSeriId" name="pSeri" value="@Model.pProduct.SeriNumber" />
+                            </td>
+                            <td>Thứ Tự</td>
+                            <td>
+                                <input type="text" id="pOrderId" name="pOrder" value="@Model.pProduct.Number" />
+                            </td>
+                        </tr>
+                        <tr></tr>
+                        <tr>
+                            <td>Hình Ảnh Slide</td>
+                            <td>
+                                <div id="slidegalaxy">@Html.Raw(Model.HtmlProductImage)</div>
+                                <a id="btnSelectImgSlide" class="mbutton" href="javascript:void(0);">Chọn ảnh</a>
+                            </td>
+                            <td>Thuộc Tính</td>
+                            <td>
+                                <div id="slideproperties">
+                                    @Html.Raw(Model.HtmlProductAttribute)
+                                </div>
+                                <a id="btnProperties" class="mbutton" href="javascript:ThemThuocTinh();">Thêm</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Khuyến Mãi (%)</td>
+                            <td>
+                                <input type="text" id="pSaleOffId" name="pSaleOff" value="@Model.pProduct.SaleOff" />
+                            </td>
+                            <td>Bảo Hành (tháng)</td>
+                            <td>
+                                <input type="text" id="pBaoHanhId" name="pBaoHanh" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Khối lượng</td>
+                            <td>
+                                <input type="text" id="pSizeId" name="pSize" />
+                            </td>
+                            <td>Công suất</td>
+                            <td>
+                                <input type="text" id="pPowerId" name="pPower" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Thời gian giao hàng</td>
+                            <td>
+                                <select name="pTransport1" style="width: 186px;">
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(0, Model.pProduct.Transport1)) value="0">Chọn giờ giao hàng</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(1, Model.pProduct.Transport1)) value="1">1H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(2, Model.pProduct.Transport1)) value="2">2H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(3, Model.pProduct.Transport1)) value="3">3H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(4, Model.pProduct.Transport1)) value="4">4H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(5, Model.pProduct.Transport1)) value="5">5H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(6, Model.pProduct.Transport1)) value="6">6H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(7, Model.pProduct.Transport1)) value="7">7H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(8, Model.pProduct.Transport1)) value="8">8H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(9, Model.pProduct.Transport1)) value="9">9H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(10, Model.pProduct.Transport1)) value="10">10H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(11, Model.pProduct.Transport1)) value="11">11H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(12, Model.pProduct.Transport1)) value="12">12H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(13, Model.pProduct.Transport1)) value="13">13H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(14, Model.pProduct.Transport1)) value="14">14H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(15, Model.pProduct.Transport1)) value="15">15H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(16, Model.pProduct.Transport1)) value="16">16H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(17, Model.pProduct.Transport1)) value="17">17H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(18, Model.pProduct.Transport1)) value="18">18H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(20, Model.pProduct.Transport1)) value="20">20H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(21, Model.pProduct.Transport1)) value="21">21H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(22, Model.pProduct.Transport1)) value="22">22H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(23, Model.pProduct.Transport1)) value="23">23H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(24, Model.pProduct.Transport1)) value="24">24H00</option>
+                                </select>
+                                Tới:<select name="pTransport12" style="width: 186px; margin-left: 15px;">
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(0, Model.pProduct.Transport12)) value="0">Chọn giờ giao hàng</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(1, Model.pProduct.Transport12)) value="1">1H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(2, Model.pProduct.Transport12)) value="2">2H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(3, Model.pProduct.Transport12)) value="3">3H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(4, Model.pProduct.Transport12)) value="4">4H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(5, Model.pProduct.Transport12)) value="5">5H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(6, Model.pProduct.Transport12)) value="6">6H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(7, Model.pProduct.Transport12)) value="7">7H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(8, Model.pProduct.Transport12)) value="8">8H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(9, Model.pProduct.Transport12)) value="9">9H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(10, Model.pProduct.Transport12)) value="10">10H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(11, Model.pProduct.Transport12)) value="11">11H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(12, Model.pProduct.Transport12)) value="12">12H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(13, Model.pProduct.Transport12)) value="13">13H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(14, Model.pProduct.Transport12)) value="14">14H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(15, Model.pProduct.Transport12)) value="15">15H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(16, Model.pProduct.Transport12)) value="16">16H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(17, Model.pProduct.Transport12)) value="17">17H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(18, Model.pProduct.Transport12)) value="18">18H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(20, Model.pProduct.Transport12)) value="20">20H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(21, Model.pProduct.Transport12)) value="21">21H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(22, Model.pProduct.Transport12)) value="22">22H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(23, Model.pProduct.Transport12)) value="23">23H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(24, Model.pProduct.Transport12)) value="24">24H00</option>
+                                </select>
+                            <td>Thời gian áp dụng</td>
+                            <td>
+                                <select name="pTransport2" style="width: 186px;">
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(0, Model.pProduct.Transport2)) value="0">Chọn giờ áp dụng</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(1, Model.pProduct.Transport2)) value="1">1H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(2, Model.pProduct.Transport2)) value="2">2H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(3, Model.pProduct.Transport2)) value="3">3H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(4, Model.pProduct.Transport2)) value="4">4H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(5, Model.pProduct.Transport2)) value="5">5H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(6,Model.pProduct.Transport2)) value="6">6H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(7, Model.pProduct.Transport2)) value="7">7H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(8, Model.pProduct.Transport2)) value="8">8H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(9, Model.pProduct.Transport2)) value="9">9H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(10, Model.pProduct.Transport2)) value="10">10H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(11, Model.pProduct.Transport2)) value="11">11H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(12, Model.pProduct.Transport2)) value="12">12H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(13, Model.pProduct.Transport2)) value="13">13H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(14, Model.pProduct.Transport2)) value="14">14H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(15, Model.pProduct.Transport2)) value="15">15H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(16, Model.pProduct.Transport2)) value="16">16H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(17, Model.pProduct.Transport2)) value="17">17H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(18, Model.pProduct.Transport2)) value="18">18H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(19, Model.pProduct.Transport2)) value="19">19H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(20, Model.pProduct.Transport2)) value="20">20H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(21, Model.pProduct.Transport2)) value="21">21H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(22, Model.pProduct.Transport2)) value="22">22H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(23, Model.pProduct.Transport2)) value="23">23H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(24, Model.pProduct.Transport2)) value="24">24H00</option>
+                                </select>
+                                Tới: <select name="pTransport22" style="width: 186px; margin-left: 15px;">
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(0, Model.pProduct.Transport22)) value="0">Chọn giờ áp dụng</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(1, Model.pProduct.Transport22)) value="1">1H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(2, Model.pProduct.Transport22)) value="2">2H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(3, Model.pProduct.Transport22)) value="3">3H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(4, Model.pProduct.Transport22)) value="4">4H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(5, Model.pProduct.Transport22)) value="5">5H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(6, Model.pProduct.Transport22)) value="6">6H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(7, Model.pProduct.Transport22)) value="7">7H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(8, Model.pProduct.Transport22)) value="8">8H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(9, Model.pProduct.Transport22)) value="9">9H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(10, Model.pProduct.Transport22)) value="10">10H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(11, Model.pProduct.Transport22)) value="11">11H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(12, Model.pProduct.Transport22)) value="12">12H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(13, Model.pProduct.Transport22)) value="13">13H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(14, Model.pProduct.Transport22)) value="14">14H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(15, Model.pProduct.Transport22)) value="15">15H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(16, Model.pProduct.Transport22)) value="16">16H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(17, Model.pProduct.Transport22)) value="17">17H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(18, Model.pProduct.Transport22)) value="18">18H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(19, Model.pProduct.Transport22)) value="19">19H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(20, Model.pProduct.Transport22)) value="20">20H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(21, Model.pProduct.Transport22)) value="21">21H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(22, Model.pProduct.Transport22)) value="22">22H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(23, Model.pProduct.Transport22)) value="23">23H00</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(24, Model.pProduct.Transport22)) value="24">24H00</option>
+                                </select>
+                        </tr>
+                        <tr>
+                            <td>Chọn định lượng sản phẩm</td>
+                            <td>
+                                <select name="pMotoGroup">
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(0, Model.pProduct.Group)) value="0">Chọn loại định lượng</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(1, Model.pProduct.Group)) value="1">Kg</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(2, Model.pProduct.Group)) value="2">Đĩa</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(3, Model.pProduct.Group)) value="3">Mớ</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(4, Model.pProduct.Group)) value="4">Gói</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(5, Model.pProduct.Group)) value="5">Túi</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(6, Model.pProduct.Group)) value="6">Hộp</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(7, Model.pProduct.Group)) value="7">Cái</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(8, Model.pProduct.Group)) value="8">Món</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(9, Model.pProduct.Group)) value="9">Nồi</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(10, Model.pProduct.Group)) value="10">Xuất</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(11, Model.pProduct.Group)) value="11">Tô</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(12, Model.pProduct.Group)) value="12">Quả</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(13, Model.pProduct.Group)) value="13">Lon</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(14, Model.pProduct.Group)) value="14">Chiếc</option>
+                                    <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(15, Model.pProduct.Group)) value="15">Gram</option>
+                                </select>
+                            <td>Kích Hoạt</td>
+                            <td>
+                                <input type="checkbox" id="pActiveId" name="pActive" checked="checked" style="width: 40px !important;" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Mô Tả</td>
+                            <td colspan="3">
+                                <textarea cols="160" id="pSummaryId" name="pSummary" rows="3" style="margin: 0px 0px 10px; width: 98%; height: 60px;">@Model.pProduct.Summary</textarea>
+                            </td>
+                        </tr>
+                        <tr style="display:none;">
+                            <td>Mô tả ngắn</td>
+                            <td colspan="3">
+                                <input type="text" name="pDapAn1" placeholder="Mô tả ngắn 1" value="@Model.pProduct.Choice1" style="width: 40px !important; display: block;" />
+                                <input type="text" name="pDapAn2" placeholder="Mô tả ngắn 2" value="@Model.pProduct.Choice2" style="width: 40px !important; display: block;" />
+                                <input type="text" name="pDapAn3" placeholder="Mô tả ngắn 3" value="@Model.pProduct.Choice3" style="width: 40px !important; display: block;" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Description(SEO)</td>
+                            <td>
+                                <input type="text" id="pDescriptionId" name="pDescription" value="@Model.pProduct.Description" />
+                            </td>
+                            <td>KeyWord(SEO)</td>
+                            <td>
+                                <input type="text" id="pKeyWordId" name="pKeyWord" value="@Model.pProduct.Keyword" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Giá</td>
+                            <td colspan="3">
+                                <input type="text" id="pPrice1Id" name="pPrice" placeholder="Giá 1" value="@Model.pProduct.Price" style="display:block;" />
+                                <input type="text" id="pPrice2Id" name="pPrice2" placeholder="Giá 1" value="@Model.pProduct.Price2" style="display:block;" />
+                                <input type="text" id="pPrice3Id" name="pPrice3" placeholder="Giá 1" value="@Model.pProduct.Price3" style="display:block;" />
+
+                            </td>
+                        </tr>
+                        <tr style="">
+                            <td>Định lượng</td>
+                            <td colspan="3">
+                                <textarea cols="80" id="pUnit1Id" name="pUnit1" rows="6" style="display: block;">@Model.pProduct.Unit1</textarea>
+                                <textarea cols="80" id="pUnit2Id" name="pUnit2" rows="6" style="display: block;">@Model.pProduct.Unit2</textarea>
+                                <textarea cols="80" id="pUnit3Id" name="pUnit3" rows="6" style="display: block;">@Model.pProduct.Unit3</textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Nội Dung</td>
+                            <td colspan="3">
+                                <textarea class="ckeditor" id="editor1" name="editor1" cols="80" rows="20" style="width: 600px;">@Model.pProduct.Detail</textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Lưu sửa</td>
+                            <td colspan="3">
+                                <a class="mbutton" href="javascript:Admin_Product_ThucHienLuuSua();">Lưu sửa</a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <hr />
+        </div>
+    </div>
+</form>

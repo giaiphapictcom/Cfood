@@ -1,0 +1,124 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@model V308CMS.Data.NewsPage
+@{
+    ViewBag.Title = "Tin Tức";
+    ViewBag.LinkBack = "<li><a href=" + Url.NewsIndexUrl()+">Tin Tức</a> </li>";
+    ViewBag.MenuValue = 2;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Header {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            CKEDITOR.replace('editor1',
+
+   {
+       filebrowserBrowseUrl: '/Content/Plugins/ckfinder/ckfinder.html',
+       filebrowserImageBrowseUrl: '/Content/Plugins/ckfinder/ckfinder.html?type=Images',
+       filebrowserFlashBrowseUrl: '/Content/Plugins/ckfinder/ckfinder.html?type=Flash',
+       filebrowserUploadUrl: '/Content/Plugins/ckfinder/core/connector/asp/connector.asp?command=QuickUpload&type=Files',
+       filebrowserImageUploadUrl: '/Content/Plugins/ckfinder/core/connector/asp/connector.asp?command=QuickUpload&type=Images',
+       filebrowserFlashUploadUrl: '/Content/Plugins/ckfinder/core/connector/asp/connector.asp?command=QuickUpload&type=Flash',
+       filebrowserWindowWidth: '100%',
+       filebrowserWindowHeight: '700', height: '400px'
+   });
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btnSelectImg").click(function () {
+                var finder = new CKFinder();
+                finder.selectActionFunction = function (fileUrl) {
+                    $("#anhdaidien").html('<img style="width:100px;height:60px;margin-left:10px;" src="' + fileUrl + '" />');
+                    $('#ImageUrl').val(fileUrl);
+                };
+                finder.popup();
+            });
+        });
+
+        function SetFileField(fileUrl) {
+            $('#ImageUrl').val(fileUrl);
+        }
+
+    </script>
+}
+<div>
+    <div>
+        <h3>Thêm tin tức mới</h3>
+        <hr />
+        <div style="width: 100%;">
+            <div id="v308inputContent" class="RadGrid RadGrid_MetroTouch table table-striped table-bordered table-hover dataTable" tabindex="0">
+                <table>
+                    <tr>
+                        <td>Tiêu Đề</td>
+                        <td>
+                            <input type="text" id="pTitleId" name="pTitle" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Nhóm Tin</td>
+                        <td>@Html.Raw(Model.HtmlNhomTin)</td>
+                    </tr>
+                    <tr>
+                        <td>Hình Ảnh</td>
+                        <td>
+                            <div id="anhdaidien"></div>
+                            <input id="ImageUrl" type="text" name="pImage" /><a id="btnSelectImg" class="mbutton" href="javascript:void(0);">Chọn ảnh</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Mô Tả</td>
+                        <td>
+                            <textarea cols="80" id="pSummaryId" name="pSummary" rows="6"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Nội Dung</td>
+                        <td>
+                            <textarea class="ckeditor" id="editor1" name="editor1" cols="80" rows="20" style="width: 600px;"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Description(SEO)</td>
+                        <td>
+                            <input type="text" id="pDescriptionId" name="pDescription" value="" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>KeyWord(SEO)</td>
+                        <td>
+                            <input type="text" id="pKeyWordId" name="pKeyWord" value="" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Thứ Tự</td>
+                        <td>
+                            <input type="text" id="pOrderId" name="pOrder" value="0" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Mục riêng</td>
+                        <td>
+                            <span>Slider:</span><input type="checkbox" class="chk" id="pSlideId" name="pSlide" style="width: 40px !important;" />
+                            <span style="margin-left: 40px;">Tin Hot:</span><input class="chk" type="checkbox" id="pHotId" name="pHot" style="width: 40px !important;" />
+                            <span style="margin-left: 40px;">Phổ Biến:</span><input class="chk" type="checkbox" id="pFastId" name="pFast" style="width: 40px !important;" />
+                            <span style="margin-left: 40px;">Đề Xuất:</span><input class="chk" type="checkbox" id="pFeaturedId" name="pFeatured" style="width: 40px !important;" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Kích Hoạt</td>
+                        <td>
+                            <input type="checkbox" id="pActiveId" class="chk" name="pActive" style="width: 40px !important;" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <a class="mbutton" href="javascript:Admin_News_ThucHienLuuMoi();">Lưu mới</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <hr />
+    </div>
+</div>

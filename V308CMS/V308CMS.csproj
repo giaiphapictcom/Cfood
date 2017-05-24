@@ -143,7 +143,11 @@
     <Compile Include="App_Start\ThemesViewActionFilter.cs" />
     <Compile Include="Controllers\AccountAddressController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+<<<<<<< HEAD
     <Compile Include="Controllers\AccountWishListController.cs" />
+=======
+    <Compile Include="Controllers\AccountAddressController.cs" />
+>>>>>>> 6067c3ba4d9215aae6f92cbf5428967cb4d95676
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BlockController.cs" />
@@ -158,26 +162,46 @@
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\VideoController.cs" />
     <Compile Include="Controllers\WidgetController.cs" />
+<<<<<<< HEAD
     <Compile Include="DataAnnotations\BirthDayAttribute.cs" />
     <Compile Include="DataAnnotations\BirthMonthAttribute.cs" />
     <Compile Include="DataAnnotations\BirthYearAttribute..cs" />
     <Compile Include="DataAnnotations\EmailAttribute.cs" />
     <Compile Include="DataAnnotations\PhoneAttribute.cs" />
+=======
+    <Compile Include="Controllers\AccountWishListController.cs" />
+    <Compile Include="DataAnnotations\BirthDayAttribute.cs" />
+    <Compile Include="DataAnnotations\BirthMonthAttribute.cs" />
+    <Compile Include="DataAnnotations\BirthYearAttribute..cs" />
+    <Compile Include="DataAnnotations\PhoneAttribute.cs" />
+    <Compile Include="DataAnnotations\EmailAttribute.cs" />
+>>>>>>> 6067c3ba4d9215aae6f92cbf5428967cb4d95676
     <Compile Include="DataAnnotations\UserNameAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+<<<<<<< HEAD
     <Compile Include="Helpers\AuthenticationHelper.cs" />
+=======
+>>>>>>> 6067c3ba4d9215aae6f92cbf5428967cb4d95676
     <Compile Include="Helpers\ConfigHelper.cs" />
     <Compile Include="Helpers\MpStartViewEngine.cs" />
     <Compile Include="Helpers\MyUser.cs" />
     <Compile Include="Helpers\Url\AccountUrlHelper.cs" />
+<<<<<<< HEAD
     <Compile Include="Helpers\Url\AccountWishlistUrlHelper.cs" />
+=======
+    <Compile Include="Helpers\AuthenticationHelper.cs" />
+>>>>>>> 6067c3ba4d9215aae6f92cbf5428967cb4d95676
     <Compile Include="Helpers\Url\CartUrlHelper.cs" />
     <Compile Include="Helpers\Url\ContactUrlHelper.cs" />
     <Compile Include="Helpers\Url\ImageUrlHelper.cs" />
     <Compile Include="Helpers\Url\MpstartUrlHelper.cs" />
     <Compile Include="Helpers\Url\NewsUrlHelper.cs" />
+<<<<<<< HEAD
+=======
+    <Compile Include="Helpers\Url\AccountWishlistUrlHelper.cs" />
+>>>>>>> 6067c3ba4d9215aae6f92cbf5428967cb4d95676
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Authenicate.cs" />
     <Compile Include="Models\CaptchaModel.cs" />
@@ -1286,6 +1310,7 @@
     <Content Include="Content\Images\bct.png" />
     <Content Include="Content\Images\cateicon.png" />
     <Content Include="Content\Images\emailicon.png" />
+    <Content Include="Content\Images\favicon.ico" />
     <Content Include="Content\Images\lk1.png" />
     <Content Include="Content\Images\lk2.png" />
     <Content Include="Content\Images\lk3.png" />
@@ -1293,9 +1318,11 @@
     <Content Include="Content\Images\lk5.png" />
     <Content Include="Content\Images\lk6.png" />
     <Content Include="Content\Images\loading.gif" />
+    <Content Include="Content\Images\logo.png" />
     <Content Include="Content\Images\micon1.png" />
     <Content Include="Content\Images\micon2.png" />
     <Content Include="Content\Images\micon3.png" />
+    <Content Include="Content\Images\mpstart-not-found-pgae.png" />
     <Content Include="Content\Images\noimage.jpg" />
     <Content Include="Content\Images\phoneicon.png" />
     <Content Include="Content\Images\trust.png" />
@@ -1520,6 +1547,7 @@
     <Content Include="Content\themes\myshopify\css\bootstrap.min.css" />
     <Content Include="Content\themes\myshopify\css\color.css" />
     <Content Include="Content\themes\myshopify\css\component.css" />
+    <Content Include="Content\themes\myshopify\css\customstyle.css" />
     <Content Include="Content\themes\myshopify\css\font-icon.css" />
     <Content Include="Content\themes\myshopify\css\owl.theme.css" />
     <Content Include="Content\themes\myshopify\css\responsive.css" />
@@ -1530,6 +1558,8 @@
     <Content Include="Content\themes\myshopify\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\themes\myshopify\fonts\ionicons.svg" />
     <Content Include="Content\themes\myshopify\fonts\Simple-Line-Icons.svg" />
+    <Content Include="Content\themes\myshopify\images\btn-cart01.png" />
+    <Content Include="Content\themes\myshopify\images\btn-remove01.png" />
     <Content Include="Content\themes\myshopify\images\loading-top.gif" />
     <Content Include="Content\themes\myshopify\js\ajax.jquery.min.js" />
     <Content Include="Content\themes\myshopify\js\all.jquery.min.js" />
@@ -1559,6 +1589,8 @@
     <Content Include="Content\themes\myshopify\js\jquery.history.js" />
     <Content Include="Content\themes\myshopify\js\jquery.revolution.tools.js" />
     <Content Include="Content\themes\myshopify\js\jquery.themepunch.revolution.js" />
+    <Content Include="Content\themes\myshopify\js\jquery.validate.min.js" />
+    <Content Include="Content\themes\myshopify\js\jquery.validate.unobtrusive.min.js" />
     <Content Include="Content\themes\myshopify\js\modernizr.custom.js" />
     <Content Include="Content\themes\myshopify\js\option_selection-f3dd7ba25bddfb6b0fe9addc0cae11dc709eeb6a469ec7f66f49e3abc4ce8c81.js" />
     <Content Include="Content\themes\myshopify\js\owl.carousel.js" />
@@ -1567,6 +1599,9 @@
     <Content Include="Content\themes\myshopify\js\selectize.min.js" />
     <Content Include="Content\themes\myshopify\js\Shopify.js" />
     <Content Include="Content\themes\myshopify\js\typo.js" />
+    <Content Include="db\news.sql" />
+    <Content Include="db\newsgroups.sql" />
+    <Content Include="db\siteconfig.sql" />
     <Content Include="Global.asax" />
     <None Include="Content\Scripts\jquery-1.5.1-vsdoc.js" />
     <Content Include="Content\Scripts\jquery-1.5.1.js" />
@@ -1833,10 +1868,10 @@
     <Content Include="Views\themes\myshopify\Layout\Resources.cshtml">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="Views\themes\myshopify\Pages\category.cshtml" />
-    <Content Include="Views\themes\myshopify\Pages\detail.cshtml" />
-    <Content Include="Views\themes\myshopify\Pages\error.cshtml" />
-    <Content Include="Views\themes\myshopify\Pages\home.cshtml">
+    <Content Include="Views\themes\myshopify\Pages\Category.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Detail.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Error.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Home.cshtml">
       <SubType>Code</SubType>
     </Content>
     <Content Include="Views\themes\myshopify\Pages\Search.cshtml" />
@@ -1852,7 +1887,7 @@
     <Content Include="Views\themes\myshopify\Menu\CategoryMenu.cshtml" />
     <Content Include="Views\themes\myshopify\Menu\MainmenuSource.cshtml" />
     <Content Include="Views\themes\myshopify\Menu\Mainmenu.cshtml" />
-    <Content Include="Views\themes\myshopify\Pages\article.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Article.cshtml" />
     <Content Include="Views\themes\myshopify\Widget\HotProductLeft.cshtml" />
     <Content Include="Views\themes\myshopify\Widget\AdvLeft.cshtml" />
     <Content Include="Views\themes\myshopify\Blocks\Filter\Prices.cshtml" />
@@ -1887,8 +1922,20 @@
     <Content Include="Views\themes\myshopify\Pages\News.Index.cshtml" />
     <Content Include="Views\themes\myshopify\Product\ProductBlockLeft.cshtml" />
     <Content Include="Views\themes\myshopify\Banner\CategoryAdv.cshtml" />
-    <Content Include="Views\themes\myshopify\Pages\contact.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Contact.cshtml" />
     <Content Include="Views\themes\myshopify\Pages\News.Detail.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Cart.View.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Cart.Checkout.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Account.Login.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Account.Register.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Account.Active.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Account.GetToken.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Account.ChangePassword.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Wishlist.Index.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Account.ForgotPassword.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Account.InvalidToken.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Account.Profile.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Account.Addresses.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
