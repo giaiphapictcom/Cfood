@@ -8,5 +8,10 @@ namespace V308CMS.Admin.Helpers.Url
         {
             return "/Content/Images/them-moi.png";
         }
+
+        public static string ToImageThumbUrl(this string path)
+        {
+            return string.Format("{0}/{1}", ConfigHelper.ImageDomain, path);
+        }
     }
 }
