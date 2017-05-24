@@ -1,0 +1,105 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@model V308CMS.Data.ProductPage
+@{
+    ViewBag.Title = "Thể Loại";
+    ViewBag.LinkBack = "<li><a href=" + Url.ProductTypeIndexUrl()+">Thể Loại</a> </li>";
+    ViewBag.MenuValue = 1;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Header {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btnSelectImg").click(function () {
+                var finder = new CKFinder();
+                finder.selectActionFunction = function (fileUrl) {
+                    $("#anhdaidien").html('<img style="width:100px;height:60px;margin-left:10px;" src="' + fileUrl + '" />');
+                    $('#ImageUrl').val(fileUrl);
+                };
+                finder.popup();
+            });
+            $("#btnSelectImgBanner").click(function () {
+                var finder = new CKFinder();
+                finder.selectActionFunction = function (fileUrl) {
+                    //$("#anhdaidienBanner").html('<img style="width:100px;height:60px;margin-left:10px;" src="' + fileUrl + '" />');
+                    $('#ImageUrlBanner').val(fileUrl);
+                };
+                finder.popup();
+            });
+        });
+
+        function SetFileField(fileUrl) {
+            $('#ImageUrl').val(fileUrl);
+        }
+        function SetFileFieldBanner(fileUrl) {
+            $('#ImageUrlBanner').val(fileUrl);
+        }
+    </script>
+}
+<div>
+    <div>
+        <h3>Sửa Thể Loại sản phẩm</h3>
+        <hr />
+        <div style="width: 100%;">
+            <input id="pId" type="hidden" value="@Model.pProductType.ID" />
+            <div id="v308inputContent" class="RadGrid RadGrid_MetroTouch table table-striped table-bordered table-hover dataTable" tabindex="0">
+                <table>
+                    <tr>
+                        <td>Tên</td>
+                        <td>
+                            <input type="text" id="pTitleId" name="pTitle" value="@Model.pProductType.Name" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Nhóm Sản Phẩm</td>
+                        <td>@Html.Raw(Model.HtmlNhom)</td>
+                    </tr>
+                    <tr>
+                        <td>Ghi chú</td>
+                        <td>
+                            <textarea id="pDescriptionId" name="pDescription" cols="80" rows="15" style="width: 600px;">@Model.pProductType.Description</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Mô tả</td>
+                        <td>
+                            <textarea id="pSummaryId" name="pSummary">@Model.pProductType.Detail</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Ảnh banner trang chủ</td>
+                        <td>
+                            <div id="anhdaidien"><img style="width:100px;height:60px;margin-left:10px;" src="@Model.pProductType.Image" /></div>
+                            <input id="ImageUrl" type="text" value="@Model.pProductType.Image" name="pImage" /><a id="btnSelectImg" class="mbutton" href="javascript:void(0);">Chọn ảnh</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Ảnh banner</td>
+                        <td>
+                            <div id="anhdaidienBanner" style="display:none;"><img style="width:100px;height:60px;margin-left:10px;" src="@Model.pProductType.ImageBanner" /></div>
+                            <input id="ImageUrlBanner" type="text" value="@Model.pProductType.ImageBanner" name="pImageBanner" /><a id="btnSelectImgBanner" class="mbutton" href="javascript:void(0);">Chọn file</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Thứ Tự</td>
+                        <td>
+                            <input type="text" id="pOrderId" name="pOrder" value="@Model.pProductType.Number" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Kích Hoạt</td>
+                        <td>
+                            <input type="checkbox" id="pActiveId" name="pActive" checked="checked" style="width:40px !important;" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <a class="mbutton" href="javascript:Admin_ProductType_ThucHienLuuSua();">Lưu mới</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <hr />
+    </div>
+</div>

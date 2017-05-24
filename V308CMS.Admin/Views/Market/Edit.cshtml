@@ -1,0 +1,99 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@model V308CMS.Data.MarketPage
+@{
+    ViewBag.Title = "Sửa cửa hàng";
+    ViewBag.LinkBack = "<li><a href=" + Url.MarketIndexUrl()+">Thể Loại</a> </li>";
+    ViewBag.MenuValue = 10;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Header {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btnSelectImg").click(function () {
+                var finder = new CKFinder();
+                finder.selectActionFunction = function (fileUrl) {
+                    $("#anhdaidien").html('<img style="width:100px;height:60px;margin-left:10px;" src="' + fileUrl + '" />');
+                    $('#ImageUrl').val(fileUrl);
+                };
+                finder.popup();
+            });
+        });
+
+        function SetFileField(fileUrl) {
+            $('#ImageUrl').val(fileUrl);
+        }
+    </script>
+}
+<div>
+    <div>
+        <h3>Sửa cửa hàng</h3>
+        <hr />
+        <div style="width: 100%;">
+            <input id="pId" type="hidden" value="@Model.Market.ID" />
+            <div id="v308inputContent" class="RadGrid RadGrid_MetroTouch table table-striped table-bordered table-hover dataTable" tabindex="0">
+                <table>
+                    <tr>
+                        <td>Tên</td>
+                        <td>
+                            <input type="text" id="pUserNameId" name="pUserName" value="@Model.Market.UserName" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Hình Ảnh</td>
+                        <td>
+                            <div id="anhdaidien"><img style="width:100px;height:60px;margin-left:10px;" src="@Model.Market.Avata" /></div>
+                            <input id="ImageUrl" type="text" value="@Model.Market.Avata" name="pImage" /><a id="btnSelectImg" class="mbutton" href="javascript:void(0);">Chọn ảnh</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td>
+                            <input type="text" id="pEmailId" name="pEmail" value="@Model.Market.Email" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Tên đầy đủ</td>
+                        <td>
+                            <input type="text" id="pFullNameId" name="pFullName" value="@Model.Market.FullName" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Mobile</td>
+                        <td>
+                            <input type="text" id="pMobileId" name="pMobile" value="@Model.Market.Phone" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Mô tả</td>
+                        <td>
+                            <input type="text" id="pSumaryId" name="pSumary" value="@Model.Market.Sumary" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Loại siêu thị</td>
+                        <td>
+                            <select name="pMarketType" id="pMarketTypeId">
+                                <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(0, Model.Market.Role)) value="0">Chọn kiểu</option>
+                                <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(1, Model.Market.Role)) value="1">Hệ  thống siêu thị</option>
+                                <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(2, Model.Market.Role)) value="2">Chuỗi cửa hàng</option>
+                                <option @Html.Raw(V308CMS.Common.Ultility.CheckSeclectSelected(3, Model.Market.Role)) value="3">Chợ truyền thống</option>
+                            </select>
+                    </tr>
+                    <tr>
+                        <td>Kích Hoạt</td>
+                        <td>
+                            <input type="checkbox" id="pActiveId" name="pActive" checked="checked" style="width:40px !important;" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <a class="mbutton" href="javascript:Admin_Market_ThucHienLuuSua();">Sửa</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <hr />
+    </div>
+</div>
