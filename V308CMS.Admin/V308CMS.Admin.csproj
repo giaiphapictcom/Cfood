@@ -41,6 +41,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CKFinder, Version=2.4.1.2663, Culture=neutral, PublicKeyToken=579e7adc719a1423, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\CKFinder.dll</HintPath>
+    </Reference>
+    <Reference Include="ClosedXML, Version=0.80.0.0, Culture=neutral, PublicKeyToken=fd1eb21b62ae805b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\ClosedXML.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.5.5631.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\V308CMS\Bin\EntityFramework.dll</HintPath>
     </Reference>
@@ -154,6 +166,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminAccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\FileTypeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -167,12 +180,18 @@
     <Compile Include="Controllers\ProductManufacturerController.cs" />
     <Compile Include="Controllers\ProductOrderController.cs" />
     <Compile Include="Controllers\ProductTypeController.cs" />
+    <Compile Include="Controllers\SiteConfigController.cs" />
     <Compile Include="Controllers\SupportController.cs" />
     <Compile Include="Controllers\SupportTypeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\AuthenticationHelper.cs" />
     <Compile Include="Helpers\ConfigHelper.cs" />
+    <Compile Include="Helpers\ContentHelper.cs" />
+    <Compile Include="Helpers\CustomPrincipal.cs" />
+    <Compile Include="Helpers\FlashMessageHelper.cs" />
+    <Compile Include="Helpers\Result.cs" />
     <Compile Include="Helpers\Url\AccountUrlHelper.cs" />
     <Compile Include="Helpers\Url\AdminAccountUrlHelper.cs" />
     <Compile Include="Helpers\Url\FileTypeUrlHelper.cs" />
@@ -188,10 +207,14 @@
     <Compile Include="Helpers\Url\ProductOrderUrlHelper.cs" />
     <Compile Include="Helpers\Url\ProductTypeUrlHelper.cs" />
     <Compile Include="Helpers\Url\ProductUrlHelper.cs" />
+    <Compile Include="Helpers\Url\SiteConfigUrlHelper.cs" />
     <Compile Include="Helpers\Url\SupportTypeUrlHelper.cs" />
     <Compile Include="Helpers\Url\SupportUrlHelper.cs" />
     <Compile Include="Helpers\Url\UrlContentHelper.cs" />
     <Compile Include="Models\Authenicate.cs" />
+    <Compile Include="Models\LoginModels.cs" />
+    <Compile Include="Models\MyUser.cs" />
+    <Compile Include="Models\SiteConfigModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -214,8 +237,10 @@
     <Content Include="Content\assets\css\jquery-ui-1.10.3.custom.min.css" />
     <Content Include="Content\assets\css\jquery.gritter.css" />
     <Content Include="Content\assets\css\prettify.css" />
+    <Content Include="Content\assets\css\sb-admin-2.css" />
     <Content Include="Content\assets\css\select2.css" />
     <Content Include="Content\assets\css\site.css" />
+    <Content Include="Content\assets\css\validation.css" />
     <Content Include="Content\assets\font\fontawesome-webfont.svg" />
     <Content Include="Content\assets\img\bglogin.png" />
     <Content Include="Content\assets\img\clear.png.html" />
@@ -225,8 +250,13 @@
     <Content Include="Content\assets\js\ace-elements.min.js" />
     <Content Include="Content\assets\js\ace.min.js" />
     <Content Include="Content\assets\js\bootstrap.min.js" />
+    <Content Include="Content\assets\js\html5shiv.js" />
     <Content Include="Content\assets\js\jquery-1.10.2.min.js" />
+    <Content Include="Content\assets\js\respond.min.js" />
+    <Content Include="Content\assets\js\sb-admin-2.js" />
     <Content Include="Content\assets\js\script.js" />
+    <Content Include="Content\data\flot-data.js" />
+    <Content Include="Content\data\morris-data.js" />
     <Content Include="Content\Images\avatar.png" />
     <Content Include="Content\Images\bg-login-top.png" />
     <Content Include="Content\Images\bg-login.png" />
@@ -1293,6 +1323,108 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="Content\vendor\bootstrap-datetimepicker\css\bootstrap-datetimepicker.min.css" />
+    <Content Include="Content\vendor\bootstrap-datetimepicker\js\bootstrap-datetimepicker.min.js" />
+    <Content Include="Content\vendor\bootstrap-social\bootstrap-social.css" />
+    <Content Include="Content\vendor\bootstrap\css\bootstrap.css" />
+    <Content Include="Content\vendor\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Content\vendor\bootstrap\js\bootstrap.js" />
+    <Content Include="Content\vendor\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Content\vendor\datatables-plugins\datatables.bootstrap.css" />
+    <Content Include="Content\vendor\datatables-plugins\datatables.bootstrap.js" />
+    <Content Include="Content\vendor\datatables-plugins\datatables.bootstrap.min.js" />
+    <Content Include="Content\vendor\datatables-plugins\index.html" />
+    <Content Include="Content\vendor\datatables-responsive\datatables.responsive.css" />
+    <Content Include="Content\vendor\datatables-responsive\datatables.responsive.js" />
+    <Content Include="Content\vendor\datatables\css\datatables.bootstrap.css" />
+    <Content Include="Content\vendor\datatables\css\datatables.bootstrap.min.css" />
+    <Content Include="Content\vendor\datatables\css\datatables.bootstrap4.css" />
+    <Content Include="Content\vendor\datatables\css\datatables.bootstrap4.min.css" />
+    <Content Include="Content\vendor\datatables\css\datatables.foundation.css" />
+    <Content Include="Content\vendor\datatables\css\datatables.foundation.min.css" />
+    <Content Include="Content\vendor\datatables\css\datatables.jqueryui.css" />
+    <Content Include="Content\vendor\datatables\css\datatables.jqueryui.min.css" />
+    <Content Include="Content\vendor\datatables\css\datatables.material.css" />
+    <Content Include="Content\vendor\datatables\css\datatables.material.min.css" />
+    <Content Include="Content\vendor\datatables\css\datatables.semanticui.css" />
+    <Content Include="Content\vendor\datatables\css\datatables.semanticui.min.css" />
+    <Content Include="Content\vendor\datatables\css\datatables.uikit.css" />
+    <Content Include="Content\vendor\datatables\css\datatables.uikit.min.css" />
+    <Content Include="Content\vendor\datatables\css\jquery.datatables.css" />
+    <Content Include="Content\vendor\datatables\css\jquery.datatables.min.css" />
+    <Content Include="Content\vendor\datatables\css\jquery.datatables_themeroller.css" />
+    <Content Include="Content\vendor\datatables\images\favicon.ico" />
+    <Content Include="Content\vendor\datatables\images\sort_asc.png" />
+    <Content Include="Content\vendor\datatables\images\sort_asc_disabled.png" />
+    <Content Include="Content\vendor\datatables\images\sort_both.png" />
+    <Content Include="Content\vendor\datatables\images\sort_desc.png" />
+    <Content Include="Content\vendor\datatables\images\sort_desc_disabled.png" />
+    <Content Include="Content\vendor\datatables\js\datatables.bootstrap.js" />
+    <Content Include="Content\vendor\datatables\js\datatables.bootstrap.min.js" />
+    <Content Include="Content\vendor\datatables\js\datatables.bootstrap4.js" />
+    <Content Include="Content\vendor\datatables\js\datatables.bootstrap4.min.js" />
+    <Content Include="Content\vendor\datatables\js\datatables.foundation.js" />
+    <Content Include="Content\vendor\datatables\js\datatables.foundation.min.js" />
+    <Content Include="Content\vendor\datatables\js\datatables.jqueryui.js" />
+    <Content Include="Content\vendor\datatables\js\datatables.jqueryui.min.js" />
+    <Content Include="Content\vendor\datatables\js\datatables.material.js" />
+    <Content Include="Content\vendor\datatables\js\datatables.material.min.js" />
+    <Content Include="Content\vendor\datatables\js\datatables.semanticui.js" />
+    <Content Include="Content\vendor\datatables\js\datatables.semanticui.min.js" />
+    <Content Include="Content\vendor\datatables\js\datatables.uikit.js" />
+    <Content Include="Content\vendor\datatables\js\datatables.uikit.min.js" />
+    <Content Include="Content\vendor\datatables\js\jquery.datatables.js" />
+    <Content Include="Content\vendor\datatables\js\jquery.datatables.min.js" />
+    <Content Include="Content\vendor\datatables\js\jquery.js" />
+    <Content Include="Content\vendor\flot-tooltip\jquery.flot.tooltip.js" />
+    <Content Include="Content\vendor\flot-tooltip\jquery.flot.tooltip.min.js" />
+    <Content Include="Content\vendor\flot-tooltip\jquery.flot.tooltip.source.js" />
+    <Content Include="Content\vendor\flot\excanvas.js" />
+    <Content Include="Content\vendor\flot\excanvas.min.js" />
+    <Content Include="Content\vendor\flot\jquery.colorhelpers.js" />
+    <Content Include="Content\vendor\flot\jquery.flot.canvas.js" />
+    <Content Include="Content\vendor\flot\jquery.flot.categories.js" />
+    <Content Include="Content\vendor\flot\jquery.flot.crosshair.js" />
+    <Content Include="Content\vendor\flot\jquery.flot.errorbars.js" />
+    <Content Include="Content\vendor\flot\jquery.flot.fillbetween.js" />
+    <Content Include="Content\vendor\flot\jquery.flot.image.js" />
+    <Content Include="Content\vendor\flot\jquery.flot.js" />
+    <Content Include="Content\vendor\flot\jquery.flot.navigate.js" />
+    <Content Include="Content\vendor\flot\jquery.flot.pie.js" />
+    <Content Include="Content\vendor\flot\jquery.flot.resize.js" />
+    <Content Include="Content\vendor\flot\jquery.flot.selection.js" />
+    <Content Include="Content\vendor\flot\jquery.flot.stack.js" />
+    <Content Include="Content\vendor\flot\jquery.flot.symbol.js" />
+    <Content Include="Content\vendor\flot\jquery.flot.threshold.js" />
+    <Content Include="Content\vendor\flot\jquery.flot.time.js" />
+    <Content Include="Content\vendor\flot\jquery.js" />
+    <Content Include="Content\vendor\font-awesome\css\font-awesome.css" />
+    <Content Include="Content\vendor\font-awesome\css\font-awesome.min.css" />
+    <Content Include="Content\vendor\font-awesome\help-us-out.txt" />
+    <Content Include="Content\vendor\images\favicon.ico" />
+    <Content Include="Content\vendor\images\sort_asc.png" />
+    <Content Include="Content\vendor\images\sort_asc_disabled.png" />
+    <Content Include="Content\vendor\images\sort_both.png" />
+    <Content Include="Content\vendor\images\sort_desc.png" />
+    <Content Include="Content\vendor\images\sort_desc_disabled.png" />
+    <Content Include="Content\vendor\jquery-cookie\jquery.cookie.min.js" />
+    <Content Include="Content\vendor\jquery\jquery.js" />
+    <Content Include="Content\vendor\jquery\jquery.min.js" />
+    <Content Include="Content\vendor\metisMenu\metisMenu.css" />
+    <Content Include="Content\vendor\metisMenu\metisMenu.js" />
+    <Content Include="Content\vendor\metisMenu\metisMenu.min.css" />
+    <Content Include="Content\vendor\metisMenu\metisMenu.min.js" />
+    <Content Include="Content\vendor\moment\js\moment.min.js" />
+    <Content Include="Content\vendor\morrisjs\morris.css" />
+    <Content Include="Content\vendor\morrisjs\morris.js" />
+    <Content Include="Content\vendor\morrisjs\morris.min.js" />
+    <Content Include="Content\vendor\raphael\raphael.js" />
+    <Content Include="Content\vendor\raphael\raphael.min.js" />
+    <Content Include="Content\vendor\select2\css\select2.min.css" />
+    <Content Include="Content\vendor\select2\js\select2.min.js" />
+    <Content Include="Content\vendor\select2\js\vi.js" />
+    <Content Include="Content\vendor\toastr\toastr.min.css" />
+    <Content Include="Content\vendor\toastr\toastr.min.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
@@ -1314,6 +1446,7 @@
     <Folder Include="Content\Plugins\ckfinder\plugins\imageresize\bin\Release\" />
     <Folder Include="Content\Plugins\ckfinder\plugins\watermark\bin\Debug\" />
     <Folder Include="Content\Plugins\ckfinder\plugins\watermark\bin\Release\" />
+    <Folder Include="Content\vendor\moment\css\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\assets\font\fontawesome-webfont.woff" />
@@ -1441,7 +1574,65 @@
     <Content Include="Views\Home\ChucNang.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\vendor\bootstrap-social\bootstrap-social.less" />
+    <Content Include="Content\vendor\bootstrap-social\bootstrap-social.scss" />
+    <Content Include="Content\vendor\bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\vendor\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\vendor\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\vendor\bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\vendor\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\vendor\datatables-responsive\datatables.responsive.scss" />
+    <Content Include="Content\vendor\datatables\images\sorting icons.psd" />
+    <Content Include="Content\vendor\font-awesome\css\font-awesome.css.map" />
+    <Content Include="Content\vendor\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\vendor\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\vendor\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\vendor\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\vendor\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\vendor\font-awesome\fonts\fontawesome.otf" />
+    <Content Include="Content\vendor\font-awesome\less\animated.less" />
+    <Content Include="Content\vendor\font-awesome\less\bordered-pulled.less" />
+    <Content Include="Content\vendor\font-awesome\less\core.less" />
+    <Content Include="Content\vendor\font-awesome\less\extras.less" />
+    <Content Include="Content\vendor\font-awesome\less\fixed-width.less" />
+    <Content Include="Content\vendor\font-awesome\less\font-awesome.less" />
+    <Content Include="Content\vendor\font-awesome\less\icons.less" />
+    <Content Include="Content\vendor\font-awesome\less\larger.less" />
+    <Content Include="Content\vendor\font-awesome\less\list.less" />
+    <Content Include="Content\vendor\font-awesome\less\mixins.less" />
+    <Content Include="Content\vendor\font-awesome\less\path.less" />
+    <Content Include="Content\vendor\font-awesome\less\rotated-flipped.less" />
+    <Content Include="Content\vendor\font-awesome\less\screen-reader.less" />
+    <Content Include="Content\vendor\font-awesome\less\spinning.less" />
+    <Content Include="Content\vendor\font-awesome\less\stacked.less" />
+    <Content Include="Content\vendor\font-awesome\less\variables.less" />
+    <Content Include="Content\vendor\font-awesome\scss\font-awesome.scss" />
+    <Content Include="Content\vendor\font-awesome\scss\_animated.scss" />
+    <Content Include="Content\vendor\font-awesome\scss\_bordered-pulled.scss" />
+    <Content Include="Content\vendor\font-awesome\scss\_core.scss" />
+    <Content Include="Content\vendor\font-awesome\scss\_extras.scss" />
+    <Content Include="Content\vendor\font-awesome\scss\_fixed-width.scss" />
+    <Content Include="Content\vendor\font-awesome\scss\_icons.scss" />
+    <Content Include="Content\vendor\font-awesome\scss\_larger.scss" />
+    <Content Include="Content\vendor\font-awesome\scss\_list.scss" />
+    <Content Include="Content\vendor\font-awesome\scss\_mixins.scss" />
+    <Content Include="Content\vendor\font-awesome\scss\_path.scss" />
+    <Content Include="Content\vendor\font-awesome\scss\_rotated-flipped.scss" />
+    <Content Include="Content\vendor\font-awesome\scss\_screen-reader.scss" />
+    <Content Include="Content\vendor\font-awesome\scss\_spinning.scss" />
+    <Content Include="Content\vendor\font-awesome\scss\_stacked.scss" />
+    <Content Include="Content\vendor\font-awesome\scss\_variables.scss" />
+    <Content Include="Content\vendor\images\sorting icons.psd" />
     <None Include="Properties\PublishProfiles\V308Cms.pubxml" />
+    <Content Include="Views\Shared\_LayoutV2.cshtml" />
+    <Content Include="Views\Shared\_Header.cshtml" />
+    <Content Include="Views\Shared\_Stylesheet.cshtml" />
+    <Content Include="Views\Shared\_Navigation.cshtml" />
+    <Content Include="Views\Home\IndexV2.cshtml" />
+    <Content Include="Views\Shared\_Js.cshtml" />
+    <Content Include="Views\SiteConfig\Index.cshtml" />
+    <Content Include="Views\SiteConfig\Create.cshtml" />
+    <Content Include="Views\SiteConfig\Edit.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

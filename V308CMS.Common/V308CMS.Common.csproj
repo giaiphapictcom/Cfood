@@ -110,7 +110,6 @@
     <Compile Include="Base64Helper.cs" />
     <Compile Include="Configs.cs" />
     <Compile Include="ConverterUlti.cs" />
-    <Compile Include="CookieClass.cs" />
     <Compile Include="CookieHelper.cs" />
     <Compile Include="DataHelper.cs" />
     <Compile Include="DateTimeHelper.cs" />

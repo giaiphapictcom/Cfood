@@ -141,8 +141,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\ThemesViewActionFilter.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AccountAddressController.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AccountWishListController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BlockController.cs" />
@@ -157,12 +158,11 @@
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\VideoController.cs" />
     <Compile Include="Controllers\WidgetController.cs" />
-    <Compile Include="Controllers\AccountWishListController.cs" />
     <Compile Include="DataAnnotations\BirthDayAttribute.cs" />
     <Compile Include="DataAnnotations\BirthMonthAttribute.cs" />
     <Compile Include="DataAnnotations\BirthYearAttribute..cs" />
-    <Compile Include="DataAnnotations\PhoneAttribute.cs" />
     <Compile Include="DataAnnotations\EmailAttribute.cs" />
+    <Compile Include="DataAnnotations\PhoneAttribute.cs" />
     <Compile Include="DataAnnotations\UserNameAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -177,7 +177,6 @@
     <Compile Include="Helpers\Url\ImageUrlHelper.cs" />
     <Compile Include="Helpers\Url\MpstartUrlHelper.cs" />
     <Compile Include="Helpers\Url\NewsUrlHelper.cs" />
-    <Compile Include="Helpers\Url\AccountWishlistUrlHelper.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Authenicate.cs" />
     <Compile Include="Models\CaptchaModel.cs" />
@@ -194,7 +193,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="bin\CKFinder.dll" />
-    <Content Include="bin\CKFinder.pdb" />
     <Content Include="bin\ServiceStack.Text.dll" />
     <Content Include="Content\Admin\assets\font\fontawesome-webfont.svg" />
     <Content Include="Content\Admin\assets\font\fontawesome-webfont.woff" />
@@ -1939,6 +1937,9 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

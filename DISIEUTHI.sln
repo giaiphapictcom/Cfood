@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V308CMS", "V308CMS\V308CMS.csproj", "{3A816CC7-C3BC-4D58-AED9-88F1A2D7198B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V308CMS.Data", "V308CMS.Data\V308CMS.Data.csproj", "{4F5528A8-75F6-4B33-B254-2EAA5F916F12}"
