@@ -186,3 +186,32 @@ function ThayDoiKieuTinTuc2(pPage) {
     var pType = $("#pGroupIdHome").val();
     window.location = "/NewsCategory/Index?pPage=1&pType=" + pType + "";
 }
+function Admin_NewsGroup_ChangeRooId() {
+    window.location = "/NewsCategory/Index?pPage=1&rootId=" + $("#RootId").val() + "";
+}
+function Admin_NewsGroup_ChangeParentId() {
+    var rootId = $("#RootId").val();
+    var parentId = $("#ParentId").val();
+    var baseUrl = "/NewsCategory/Index?pPage=1";    
+    if (rootId)
+        baseUrl += "&rootId=" + rootId;
+    if (parentId)
+        baseUrl += "&parentId=" + parentId;
+  
+    window.location = baseUrl;
+
+}
+function Admin_NewsGroup_ChangeChildId() {
+    var rootId = $("#RootId").val();
+    var parentId = $("#ParentId").val();
+    var childId = $("#ChildId").val();
+    var baseUrl = "/NewsCategory/Index?pPage=1";
+    if (rootId)
+        baseUrl += "&rootId=" + rootId;
+    if (parentId)
+        baseUrl += "&parentId=" + parentId;
+    if (childId)
+        baseUrl += "&childId=" + childId;
+    window.location = baseUrl;
+
+}

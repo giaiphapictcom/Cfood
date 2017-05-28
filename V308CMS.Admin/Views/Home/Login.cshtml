@@ -1,218 +1,80 @@
-﻿@{
+﻿@model V308CMS.Admin.Models.LoginModels
+@{
     Layout = null;
 }
+@using V308CMS.Admin.Helpers.Url
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>Đăng nhập - Admin</title>
-    <meta name="description" content="User login page" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="/Content/assets/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="/Content/assets/css/bootstrap-responsive.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="/Content/assets/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,300" />
-    <link rel="stylesheet" href="/Content/assets/css/ace.min.css" />
-    <link rel="stylesheet" href="/Content/assets/css/ace-responsive.min.css" />
-    <link rel="stylesheet" href="/Content/assets/css/ace-skins.min.css" />
-    <link rel="stylesheet" href="/Content/Styles/login.css?v=1.0" />
-    <script src="/Content/assets/js/jquery-1.10.2.min.js"></script>
-    <script src="/Content/Scripts/v308login.js"></script>
-    <script src="/Content/assets/js/bootstrap.min.js"></script>
-    <script src="/Content/assets/js/ace-elements.min.js"></script>
-    <script src="/Content/assets/js/ace.min.js"></script>
-    <script src="/Content/Scripts/SoJSLib.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#txtPassword').keydown(function (evt) {
-                if (evt.keyCode == 13) {
-                    DangNhap();
-                }
-            });
-        });
-
-    </script>
-    <script type="text/javascript">
-        function show_box(id) {
-            $('.widget-box.visible').removeClass('visible');
-            $('#' + id).addClass('visible');
-        }
-    </script>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="admin.mpstart.vn" />
+    <meta name="author" content="toaihv" />
+    <title>Đăng nhập hệ thống</title>
+    <link href="/Content/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/Content/vendor/metisMenu/metisMenu.min.css" rel="stylesheet" />
+    <link href="/Content/vendor/morrisjs/morris.css" rel="stylesheet" />
+    <link href="/Content/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet"
+          type="text/css" />
+    <link href="/Content/vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="/Content/vendor/datatables-responsive/dataTables.responsive.css"
+          rel="stylesheet">
+    <link href="/Content/assets/css/sb-admin-2.css" rel="stylesheet"/>
+    <link href="/Content/assets/css/validation.css" rel="stylesheet" />
+    <script src="/Content/assets/js/html5shiv.js"></script>
+    <script src="/Content/assets/js/respond.min.js"></script>
 </head>
-<body class="login-layout">
-    <div class="main-container container-fluid">
-        <div class="main-content">
-            <div class="row-fluid">
-                <div class="span12">
-                    <div class="login-container">
-                        <div class="space-6">
-                        </div>
-                        <div class="row-fluid">
-                            <div class="position-relative">
-                                <div id="login-box" class="login-box visible widget-box no-border">
-                                    <div class="widget-body">
-                                        <div class="row-fluid" style="background-color: #000;">
-                                            <div class="center">
-                                                <h1>
-                                                    <span class="red">CMS</span> <span class="white">SYSTEM</span>
-                                                </h1>
-                                                <h4 class="blue">CONTROL PANEL</h4>
-                                            </div>
-                                        </div>
-                                        <div class="widget-main">
-                                            <h4 class="header blue lighter bigger">
-                                                <i class="icon-coffee green"></i>Đăng nhập
-                                            </h4>
-                                            <div style="color: red;" id="ThongBao">
-                                            </div>
-                                            <fieldset>
-                                                <label>
-                                                    <span class="block input-icon input-icon-right">
-                                                        <input name="txtUserName" type="text" id="txtUserName" class="span12" placeholder="Username">
-                                                        <i class="icon-user"></i>
-                                                    </span>
-                                                </label>
-                                                <label>
-                                                    <span class="block input-icon input-icon-right">
-                                                        <input name="txtPassword" type="password" id="txtPassword" class="span12" placeholder="Mật khẩu">
-                                                        <i class="icon-lock"></i>
-                                                    </span>
-                                                </label>
-                                                <div class="space">
-                                                </div>
-                                                <div class="clearfix">
-                                                    <label class="inline">
-                                                        <input id="chkremember" type="checkbox" name="chkremember">
-                                                        <span class="lbl" style="margin-left: 3px;">Nhớ tôi</span>
-                                                    </label>
-                                                    <a id="lbtnLogin" class="width-35 pull-right btn btn-small btn-primary" href="javascript:DangNhap();">
-                                                        <i class="icon-key"></i>Đăng nhập
-                                                    </a>
-                                                </div>
-                                                <div class="space-4">
-                                                </div>
-                                            </fieldset>
-                                        </div>
-                                        <!--/widget-main-->
-                                        <div class="toolbar clearfix">
-                                            <div>
-                                                <a href="javascript:void(0);" onclick="show_box('forgot-box'); return false;" class="forgot-password-link">
-                                                    <i class="icon-arrow-left"></i>Quên mật khẩu
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--/widget-body-->
-                                </div>
-                                <!--/login-box-->
-                                <div id="forgot-box" class="forgot-box widget-box no-border">
-                                    <div class="widget-body">
-                                        <div class="widget-main">
-                                            <h4 class="header red lighter bigger">
-                                                <i class="icon-key"></i>Nhận lại mật khẩu
-                                            </h4>
-                                            <div class="space-6">
-                                            </div>
-                                            <p>
-                                                Bạn hãy nhập email để nhận lại mật khẩu
-                                            </p>
-                                            <fieldset>
-                                                <label>
-                                                    <span class="block input-icon input-icon-right">
-                                                        <input name="txtEmail" type="text" id="txtEmail" class="span12" placeholder="Email">
-                                                        <i class="icon-envelope"></i>
-                                                    </span>
-                                                </label>
-                                                <div class="clearfix">
-                                                    <a id="lbtnGetPass" class="pull-right btn btn-small btn-danger" href="javascript:__doPostBack('lbtnGetPass','')">
-                                                        <i class="icon-lightbulb"></i>Gửi cho tôi !
-                                                    </a>
-                                                </div>
-                                            </fieldset>
-                                        </div>
-                                        <!--/widget-main-->
-                                        <div class="toolbar center">
-                                            <a href="#" onclick="show_box('login-box'); return false;" class="back-to-login-link">Quay lại trang đăng nhập <i class="icon-arrow-right"></i></a>
-                                        </div>
-                                    </div>
-                                    <!--/widget-body-->
-                                </div>
-                                <!--/forgot-box-->
-                                <div id="signup-box" class="signup-box widget-box no-border">
-                                    <div class="widget-body">
-                                        <div class="widget-main">
-                                            <h4 class="header green lighter bigger">
-                                                <i class="icon-group blue"></i>New User Registration
-                                            </h4>
-                                            <div class="space-6">
-                                            </div>
-                                            <p>
-                                                Enter your details to begin:
-                                            </p>
-                                            <fieldset>
-                                                <label>
-                                                    <span class="block input-icon input-icon-right">
-                                                        <input type="email" class="span12" placeholder="Email">
-                                                        <i class="icon-envelope"></i>
-                                                    </span>
-                                                </label>
-                                                <label>
-                                                    <span class="block input-icon input-icon-right">
-                                                        <input type="text" class="span12" placeholder="Username">
-                                                        <i class="icon-user"></i>
-                                                    </span>
-                                                </label>
-                                                <label>
-                                                    <span class="block input-icon input-icon-right">
-                                                        <input type="password" class="span12" placeholder="Password">
-                                                        <i class="icon-lock"></i>
-                                                    </span>
-                                                </label>
-                                                <label>
-                                                    <span class="block input-icon input-icon-right">
-                                                        <input type="password" class="span12" placeholder="Repeat password">
-                                                        <i class="icon-retweet"></i>
-                                                    </span>
-                                                </label>
-                                                <label>
-                                                    <input type="checkbox">
-                                                    <span class="lbl">I accept the <a href="#">User Agreement</a> </span>
-                                                </label>
-                                                <div class="space-24">
-                                                </div>
-                                                <div class="clearfix">
-                                                    <button type="reset" class="width-30 pull-left btn btn-small">
-                                                        <i class="icon-refresh"></i>Reset
-                                                    </button>
-                                                    <button onclick="return false;" class="width-65 pull-right btn btn-small btn-success">
-                                                        Register <i class="icon-arrow-right icon-on-right"></i>
-                                                    </button>
-                                                </div>
-                                            </fieldset>
-                                        </div>
-                                        <div class="toolbar center">
-                                            <a href="#" onclick="show_box('login-box'); return false;" class="back-to-login-link">
-                                                <i class="icon-arrow-left"></i>Back to login
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <!--/widget-body-->
-                                </div>
-                                <!--/signup-box-->
-                            </div>
-                            <!--/position-relative-->
-                        </div>
-                    </div>
+
+
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="login-panel panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Đăng nhập hệ thống</h3>
                 </div>
-                <!--/.span-->
+                <div class="panel-body">
+                    @Html.ValidationSummary(true)
+                    <form role="form" method="post" action="@Url.HomeLoginUrl()">
+                        <fieldset>
+                            <div class="form-group">
+                                @Html.TextBoxFor(login => login.Username, new {placeholder = "Tên tài khoản", @class = "form-control"})
+                                @Html.ValidationMessageFor(login => login.Username)
+                            </div>
+                            <div class="form-group">
+                                @Html.PasswordFor(login => login.Password, new {placeholder = "Mật khẩu", @class = "form-control"})
+                                @Html.ValidationMessageFor(login => login.Password)
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input id="remember" name="remember" type="checkbox" value="1">Ghi nhớ
+                                </label>
+                            </div>
+                            <button name="btnLogin" class="btn btn-lg btn-success btn-block">Đăng nhập</button>
+                        </fieldset>
+                    </form>
+                </div>
             </div>
-            <!--/.row-fluid-->
         </div>
     </div>
-    <div id="wait">
-        <div class="innerWait">
-        </div>
-    </div>
+</div>
+
+<script src="/Content/vendor/jquery/jquery.min.js"></script>
+<script src="/Content/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="/Content/vendor/metisMenu/metisMenu.min.js"></script>
+<script src="/Content/assets/js/sb-admin-2.js"></script>
+<script type="text/javascript">
+    $('#remember').change(function () {
+        $('#remember').prop('checked', $('#status').is(":checked"));
+        $("#remember").prop('value', $('#status').is(":checked") ? 1 : 0);
+
+    });
+</script>
 </body>
+
 </html>
+
+
+

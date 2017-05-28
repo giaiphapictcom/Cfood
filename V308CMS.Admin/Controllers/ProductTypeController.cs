@@ -9,38 +9,24 @@ using V308CMS.Data;
 
 namespace V308CMS.Admin.Controllers
 {
+   
     [CustomAuthorize]
     public class ProductTypeController : BaseController
     {
+        private const int PageSize = 30;
         #region LOAI SAN PHAM
         [CheckAdminAuthorize(1)]
-        public ActionResult Index(int? pType, int? pPage)
+        public ActionResult Index(int pType=0, int pPage=1, string keyword="", int rootId = 0, int parentId = 0, int childId = 0)
         {           
             ProductPage mProductPage = new ProductPage();
             ProductType mProductTypeDetail = new ProductType() { Parent = 0 };
             string mLevel = "";
-            if (pType == null)
-            {
-                if (Session["LoaiSanPhamType"] != null)
-                    pType = (int)Session["LoaiSanPhamType"];
-                else
-                    pType = 0;
-            }
-            else
-            {
-                Session["LoaiSanPhamType"] = pType;
-            }
-            if (pPage == null)
-            {
-                if (Session["LoaiSanPhamPage"] != null)
-                    pPage = (int)Session["LoaiSanPhamPage"];
-                else
-                    pPage = 1;
-            }
-            else
-            {
-                Session["LoaiSanPhamPage"] = pPage;
-            }
+            pType = (int)GetState("pType",pType, 0);
+            pPage = (int) GetState("pPage",pPage, 1);
+            rootId = (int)GetState("rootId",rootId, 0);
+            parentId = (int)GetState("parentId",parentId, 0);
+            childId = (int)GetState("childId",childId, 0);
+            keyword =(string)GetState("keyword",keyword, "");           
             #endregion
             //lay Level cua Type
             if (pType != 0)
@@ -51,11 +37,11 @@ namespace V308CMS.Admin.Controllers
             }
             /*Lay danh sach cac tin theo page*/
             /*Lay danh sach cac tin theo page*/
-            var mProductType = ProductsService.LayProductTypeTheoTrangAndType((int)pPage, 5, (int)pType, mLevel);
+            var mProductType = ProductTypeService.GetList(keyword,pType, mLevel,rootId,parentId,childId,(int)pPage, PageSize);
             //Lay tat ca cac nhom
             var mProductTypeAll = ProductsService.LayProductTypeAll();
             var mProductTypeChildList = ProductsService.LayProductTypeTheoParentId((int)pType);
-            if (mProductType.Count < 5)
+            if (mProductType.Count < PageSize)
                 mProductPage.IsEnd = true;
             //Tao Html cho danh sach tin nay
             mProductPage.Html = V308HTMLHELPER.TaoDanhSachProductType(mProductType, (int)pPage);
@@ -64,6 +50,13 @@ namespace V308CMS.Admin.Controllers
             mProductPage.TypeId = (int)pType;
             mProductPage.ProductTypeLt = mProductTypeChildList;
             mProductPage.pProductType = mProductTypeDetail;
+            mProductPage.Keyword = keyword;
+            mProductPage.RootId = rootId;
+            mProductPage.ListProductTypeRoot = ProductTypeService.GetListRoot();
+            mProductPage.ParentId = parentId;
+            mProductPage.ListProductTypeParent = ProductTypeService.GetListParent(rootId);
+            mProductPage.ChildId = childId;
+            mProductPage.ListProductTypeChild = ProductTypeService.GetListParent(parentId);
             return View("Index", mProductPage);
         }     
         [CheckAdminJson(1)]

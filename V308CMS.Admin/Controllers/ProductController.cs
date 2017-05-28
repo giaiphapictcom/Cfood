@@ -12,6 +12,7 @@ namespace V308CMS.Admin.Controllers
     [CustomAuthorize]
     public class ProductController : BaseController
     {
+        private int PageSize = 26;
         #region SAN PHAM
       
         [CheckAdminAuthorize(1)]
@@ -82,7 +83,7 @@ namespace V308CMS.Admin.Controllers
             var mMarketList = MarketService.getAll(1000);
             mProductPage.MarketList = mMarketList;
             /*Lay danh sach cac tin theo page*/
-            var mProductList = ProductsService.getByTypeAndNameAndMarket((int)pPage, 18, (int)pType, (int)pMarket, pKey, mLevel);
+            var mProductList = ProductsService.getByTypeAndNameAndMarket((int)pPage, PageSize, (int)pType, (int)pMarket, pKey, mLevel);
             //lay danh sach cac kieu san pham
             var mProductTypeList = ProductsService.LayProductTypeAll();
             var mProductTypeChildList = ProductsService.LayProductTypeTheoParentId((int)pType);

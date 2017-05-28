@@ -205,13 +205,19 @@ namespace V308CMS.Data
         private string _HtmlNhomTin;
         private NewsGroups _pNewsGroups;
         public List<News> NewsList;
+        public int RootId { get; set; }
+        public int ParentId { get; set; }
+        public int ChildId { get; set; }
         public string Name;
+        public string Keyword { get; set; }
         int _Page;
         int _NextPage;
         int _BackPage;
         bool _IsEnd;
         int _TypeId;
-
+        public List<NewsGroups> ListNewsGroupRoot { get; set; }
+        public List<NewsGroups> ListNewsGroupParent { get; set; }
+        public List<NewsGroups> ListNewsGroupChild { get; set; }
         public int TypeId
         {
             get { return _TypeId; }
@@ -695,6 +701,26 @@ namespace V308CMS.Data
         private ProductManufacturer _pProductManufacturer;
         private ProductType _pProductType;
         private ProductOrder _pProductOrder;
+
+        public List<ProductType> ListProductTypeRoot { get; set; }
+        public int RootId
+        {
+            get; set;
+
+        }
+        public List<ProductType> ListProductTypeParent { get; set; }
+        public int ParentId
+        {
+            get; set;
+
+        }
+        public List<ProductType> ListProductTypeChild { get; set; }
+        public string Keyword { get; set; }
+        public int ChildId
+        {
+            get; set;
+
+        }
         int _Page;
         int _NextPage;
         int _BackPage;

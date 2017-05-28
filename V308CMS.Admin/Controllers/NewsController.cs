@@ -9,6 +9,7 @@ namespace V308CMS.Admin.Controllers
     [CustomAuthorize]
     public class NewsController : BaseController
     {
+        private const int PageSize = 30;
         [CheckAdminAuthorize(2)]
         public ActionResult Index(int? pType, int? pPage)
         {
@@ -44,7 +45,7 @@ namespace V308CMS.Admin.Controllers
                     mLevel = mNewsGroups.Level.Trim();
             }
             /*Lay danh sach cac tin theo page*/
-            var mNewsList = NewsService.LayTinTheoTrangAndGroupIdAdmin((int)pPage, 10, (int)pType, mLevel);
+            var mNewsList = NewsService.LayTinTheoTrangAndGroupIdAdmin((int)pPage, PageSize, (int)pType, mLevel);
             var mNewsGroupsList = NewsService.LayNhomTinAll();
             if (mNewsList.Count < 10)
                 mNewsPage.IsEnd = true;
@@ -107,7 +108,15 @@ namespace V308CMS.Admin.Controllers
                 string pFeatured
             )
         {
-            var mNews = new News() { Date = DateTime.Now, Detail = pNoiDung, Image = pImageUrl, Order = pUuTien, Status = true, Summary = pMoTa, Title = pTieuDe, TypeID = pGroupId, Keyword = pKeyWord, Description = pDescription, Slider = ConverterUlti.ConvertStringToLogic2(pSlide), Hot = ConverterUlti.ConvertStringToLogic2(pHot), Fast = ConverterUlti.ConvertStringToLogic2(pFast), Featured = ConverterUlti.ConvertStringToLogic2(pFeatured) };
+            var mNews = new News()
+            {
+                Date = DateTime.Now, Detail = pNoiDung, Image = pImageUrl,
+                Order = pUuTien, Status = true, Summary = pMoTa,
+                Title = pTieuDe, TypeID = pGroupId, Keyword = pKeyWord,
+                Description = pDescription, Slider = ConverterUlti.ConvertStringToLogic2(pSlide),
+                Hot = ConverterUlti.ConvertStringToLogic2(pHot), Fast = ConverterUlti.ConvertStringToLogic2(pFast),
+                Featured = ConverterUlti.ConvertStringToLogic2(pFeatured)
+            };
             MpStartEntities.AddToNews(mNews);
             MpStartEntities.SaveChanges();
             return Json(new { code = 1, message = "Lưu tin tức thành công." });

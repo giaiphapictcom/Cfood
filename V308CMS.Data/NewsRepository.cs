@@ -269,32 +269,48 @@ namespace V308CMS.Data
                     throw;
                 }
             }
-            public List<NewsGroups> LayNewsGroupsTrangAndGroupIdAdmin(int pcurrent, int psize, int pTypeID, string pLevel)
+            public List<NewsGroups> LayNewsGroupsTrangAndGroupIdAdmin(int pcurrent, int psize, int pTypeId, string pLevel, string keyword ="")
             {
                 List<NewsGroups> mList = null;
-                int[] mIdGroup;
                 try
                 {
-                    if (pTypeID > 0)
+                    if (pTypeId > 0)
                     {
                         //lay tat ca cac ID cua group theo Level
-                        mIdGroup = (from p in entities.NewsGroups
-                                    where p.Level.Substring(0, pLevel.Length).Equals(pLevel)
-                                    select p.ID).ToArray();
+                        var mIdGroup = (from p in entities.NewsGroups
+                            where p.Level.Substring(0, pLevel.Length).Equals(pLevel)
+                            select p.ID).ToArray();
                         //lay danh sach tin moi dang nhat
-                        mList = (from p in entities.NewsGroups
+                        mList =  (from p in entities.NewsGroups
                                  where mIdGroup.Contains(p.ID)
                                  orderby p.ID descending
                                  select p).Skip((pcurrent - 1) * psize)
                                  .Take(psize).ToList();
+                        if (!string.IsNullOrWhiteSpace(keyword))
+                        {
+                            mList = (from p in mList
+                                     where mIdGroup.Contains(p.ID) &&
+                                     p.Name.ToLower().Contains(keyword.ToLower())
+                                     orderby p.ID descending
+                                     select p).Skip((pcurrent - 1) * psize)
+                                .Take(psize).ToList();
+                        }
                     }
-                    else if (pTypeID == 0)
+                    else if (pTypeId == 0)
                     {
                         //lay danh sach tin moi dang nhat
-                        mList = (from p in entities.NewsGroups
+                        mList =  (from p in entities.NewsGroups
                                  orderby p.ID descending
                                  select p).Skip((pcurrent - 1) * psize)
                                  .Take(psize).ToList();
+                        if (!string.IsNullOrWhiteSpace(keyword))
+                        {
+                            mList = (from p in mList
+                                     where p.Name.ToLower().Contains(keyword.ToLower())
+                                     orderby p.ID descending
+                                     select p).Skip((pcurrent - 1) * psize)
+                                 .Take(psize).ToList();
+                        }
                     }
                     return mList;
                 }
@@ -304,6 +320,8 @@ namespace V308CMS.Data
                     throw;
                 }
             }
+
+            
             public List<News> LayTinTucLienQuan(int pId,int pTypeID,int pSize)
             {
                 List<News> mList = null;
@@ -427,6 +445,14 @@ namespace V308CMS.Data
                     Console.Write(ex);
                     throw;
                 }
+            }
+
+            public List<NewsGroups> GetListNewsGroupRoot()
+            {
+                return (from p in entities.NewsGroups
+                    where p.Parent == 0
+                    orderby p.ID descending
+                    select p).ToList();
             }
             public List<News> LayDanhSachTinHot(int pSoLuongTin)
             {

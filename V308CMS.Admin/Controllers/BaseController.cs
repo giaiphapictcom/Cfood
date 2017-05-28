@@ -20,6 +20,9 @@ namespace V308CMS.Admin.Controllers
         private readonly MarketRepository _marketRepository;
         private readonly IContactRepository _contactRepository;
         private readonly SupportRepository _supportRepository;
+        private readonly INewsGroupRepository _newsGroupRepository;
+        private readonly IProductTypeRepository _productTypeRepository;
+        private readonly ISiteConfigRespository _siteConfigRepository;
 
         protected BaseController()
         {
@@ -34,6 +37,33 @@ namespace V308CMS.Admin.Controllers
             _marketRepository = new MarketRepository(_mEntities);
             _contactRepository = new ContactRepository(_mEntities);
             _supportRepository = new SupportRepository(_mEntities);
+            _newsGroupRepository = new NewsGroupRepository(_mEntities);
+            _productTypeRepository = new ProductTypeRepository(_mEntities);
+            _siteConfigRepository = new SiteConfigRespository(_mEntities);
+        }
+        public ISiteConfigRespository SiteConfigService
+        {
+            get
+            {
+                EnsureV308CmsEntitiesNotNull();
+                return _siteConfigRepository;
+            }
+        }
+        public IProductTypeRepository ProductTypeService
+        {
+            get
+            {
+                EnsureV308CmsEntitiesNotNull();
+                return _productTypeRepository;
+            }
+        }
+        public INewsGroupRepository NewsGroupService
+        {
+            get
+            {
+                EnsureV308CmsEntitiesNotNull();
+                return _newsGroupRepository;
+            }
         }
         protected SupportRepository SupportService
         {
@@ -113,6 +143,30 @@ namespace V308CMS.Admin.Controllers
                 EnsureV308CmsEntitiesNotNull();
                 return _fileService;
             }
+        }
+
+        protected object GetState(string name,object value,object defaultValue)
+        {
+            var controller = ControllerContext.RouteData.Values["controller"].ToString();
+            var sessionName = $"{controller}{name}";
+            if (value == null){
+                value = Session[sessionName] != null ? Session[sessionName].ToString() : defaultValue;
+            }
+            else{
+                SetState(sessionName, defaultValue);
+            }
+            return value;
+        }
+
+        private void SetState(string key, object value)
+        {
+            Session[key] = value;
+
+        }
+
+        protected void SetFlashMessage(string message)
+        {
+            TempData["Message"] = message;
         }
     }
 }

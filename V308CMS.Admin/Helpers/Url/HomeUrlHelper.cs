@@ -14,6 +14,11 @@ namespace V308CMS.Admin.Helpers.Url
         {
             return helper.Action(action, controller, routeValue);
         }
+        public static string HomeLoginUrl(this UrlHelper helper, object routeValue = null, string controller = "home",
+          string action = "login")
+        {
+            return helper.Action(action, controller, routeValue);
+        }
         public static string HomeChucNangUrl(this UrlHelper helper, object routeValue = null, string controller = "home",
          string action = "chucnang")
         {

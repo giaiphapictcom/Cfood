@@ -10,54 +10,26 @@ namespace V308CMS.Admin.Controllers
     [CustomAuthorize]
     public class NewsCategoryController : BaseController
     {
-        #region THE LOAI TIN TUC
-
+       
+        private const int  PageSize =30;
         [CheckAdminAuthorize(2)]
-        public ActionResult Index(int? pType, int? pPage)
+        public ActionResult Index(string keyword, int rootId = 0, int parentId = 0, int childId = 0, int pPage =1)
         {            
-            NewsGroupPage mNewsGroupPage = new NewsGroupPage();
-            string mLevel = "";           
-            if (pType == null)
-            {
-                if (Session["LoaiTinTucType"] != null)
-                    pType = (int)Session["LoaiTinTucType"];
-                else
-                    pType = 0;
-            }
-            else
-            {
-                Session["LoaiTinTucType"] = pType;
-            }
-            if (pPage == null)
-            {
-                if (Session["LoaiTinTucPage"] != null)
-                    pPage = (int)Session["LoaiTinTucPage"];
-                else
-                    pPage = 1;
-            }
-            else
-            {
-                Session["LoaiTinTucPage"] = pPage;
-            }
-            #endregion
-            //lay Level cua Type
-            if (pType != 0)
-            {
-                var mNewsGroups = NewsService.LayTheLoaiTinTheoId((int)pType);
-                if (mNewsGroups != null)
-                    mLevel = mNewsGroups.Level.Trim();
-            }
-            /*Lay danh sach cac tin theo page*/
-            var mNewsGroupsListAll = NewsService.LayNhomTinAll();
-            var mNewsGroupsList = NewsService.LayNewsGroupsTrangAndGroupIdAdmin((int)pPage, 10, (int)pType, mLevel);
-            if (mNewsGroupsList.Count < 10)
+            NewsGroupPage mNewsGroupPage = new NewsGroupPage();           
+            var mNewsGroupsList = NewsGroupService.GetList(keyword, rootId, parentId, childId,pPage, PageSize);
+            if (mNewsGroupsList.Count < PageSize)
                 mNewsGroupPage.IsEnd = true;
             //Tao Html cho danh sach tin nay
-            mNewsGroupPage.Html = V308HTMLHELPER.TaoDanhSachCacNhomTinTuc(mNewsGroupsList, (int)pPage);
-            mNewsGroupPage.HtmlNhomTin = V308HTMLHELPER.TaoDanhSachNhomTinHome2(mNewsGroupsListAll, (int)pPage, (int)pType);
+            mNewsGroupPage.Html = V308HTMLHELPER.TaoDanhSachCacNhomTinTuc(mNewsGroupsList, pPage);
             mNewsGroupPage.Page = (int)pPage;
-            mNewsGroupPage.TypeId = (int)pType;
-            return View(mNewsGroupPage);
+            mNewsGroupPage.Keyword = keyword;
+            mNewsGroupPage.RootId = rootId;
+            mNewsGroupPage.ListNewsGroupRoot = NewsGroupService.GetListRoot();
+            mNewsGroupPage.ParentId = parentId;
+            mNewsGroupPage.ListNewsGroupParent = NewsGroupService.GetListParent(rootId);
+            mNewsGroupPage.ChildId = childId;
+            mNewsGroupPage.ListNewsGroupChild = NewsGroupService.GetListParent(parentId);
+            return View("Index",mNewsGroupPage);
         }       
         [CheckAdminJson(2)]
         [HttpPost]      
