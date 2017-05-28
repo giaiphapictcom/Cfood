@@ -24,3 +24,6 @@ E:\Work\Tam\Cfood\V308CMS.Static\bin\System.Web.WebPages.Razor.xml
 E:\Work\Tam\Cfood\V308CMS.Static\obj\Debug\V308CMS.Static.csprojResolveAssemblyReference.cache
 E:\Work\Tam\Cfood\V308CMS.Static\obj\Debug\V308CMS.Static.dll
 E:\Work\Tam\Cfood\V308CMS.Static\obj\Debug\V308CMS.Static.pdb
+D:\ASP.NET\Cfood\V308CMS.Static\obj\Debug\V308CMS.Static.csprojResolveAssemblyReference.cache
+D:\ASP.NET\Cfood\V308CMS.Static\obj\Debug\V308CMS.Static.dll
+D:\ASP.NET\Cfood\V308CMS.Static\obj\Debug\V308CMS.Static.pdb
