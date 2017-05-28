@@ -14,6 +14,7 @@ V308CMS.Data/obj/Release/
 V308CMS/Content/thumb/
 V308CMS/bin/*.xml
 V308CMS.Data/bin/*.xml
-V308CMS.Common/bin/System.Web.*
-V308CMS.Common/bin/Newtonsoft.Json.xml
-V308CMS.Common/bin/System.Net.Http.Formatting.xml
+V308CMS.Common/bin/*
+
+V308CMS/db/account.sql
+V308CMS/db/contact.sql

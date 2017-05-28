@@ -1,0 +1,299 @@
+﻿body
+{
+}
+
+#wait
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+    display: none;
+    background: rgba(0,0,0,0.8);
+}
+
+    #wait .innerWait
+    {
+        position: relative;
+        top: 30px;
+        display: block;
+        height: 320px;
+        width: 320px;
+        background: url(/Content/Images/loading2.gif) no-repeat center center;
+        margin: 0px auto;
+    }
+
+.mheader
+{
+    min-height: 32px;
+    margin: 4px;
+}
+
+.micon
+{
+    height: 20px;
+    width: 20px;
+}
+
+.ruler
+{
+    border: 1px solid #9f744e;
+    left: 2px;
+    width: 96%;
+    top: -10px;
+}
+
+.wpmn_page_navi
+{
+    text-align: center;
+    margin: 15px 0 7px;
+    padding: 0;
+}
+
+    .wpmn_page_navi span.current
+    {
+        background-color: #444;
+        border: 1px solid #444;
+        color: #fff;
+        font-weight: 700;
+        margin-right: 4px;
+        padding: 2px 5px;
+    }
+
+    .wpmn_page_navi a, .wpmn_page_navi a:link, .wpmn_page_navi a:visited
+    {
+        background-color: #fff;
+        border: 1px solid #999;
+        color: #444;
+        font-weight: 700;
+        margin-right: 4px;
+        text-decoration: none;
+        padding: 2px 5px;
+    }
+
+.box-title
+{
+    margin: 0 0 10px;
+    padding: 0;
+}
+
+    .box-title .default
+    {
+        background: #333;
+    }
+
+    .box-title h3 a, .box-title h3 a:visited
+    {
+        color: #fff;
+    }
+
+    .box-title a.box-rss
+    {
+        float: right;
+        line-height: 9px;
+        display: block;
+        margin: 1px 1px 0;
+        padding: 5px;
+    }
+
+    .box-title h4
+    {
+        color: #fff;
+        font-family: Arial,Tahoma,Verdana;
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 23px;
+        padding-left: 8px;
+        margin: 0;
+    }
+
+.pct
+{
+    position: absolute;
+    left: 0;
+    top: 0px;
+    width: 100%;
+    height: 110%;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 9999;
+}
+
+.mpopup
+{
+    min-height: 368px;
+    width: 500px;
+    margin: 100px auto;
+    background-color: white;
+    border: solid 2px silver;
+}
+
+.mpopup_header
+{
+    width: 100%;
+    height: 60px;
+    background: #5090c1;
+    position: relative;
+}
+
+.mpopup_title
+{
+    font-size: 20px;
+    color: white;
+    font-weight: bold;
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    padding-top: 16px;
+    text-align: center;
+    display: inline-block;
+}
+
+.mpopup_close
+{
+    position: absolute;
+    background: url(/Content/Images/del-icon.png) no-repeat center center;
+    height: 56px;
+    width: 66px;
+    display: inline-block;
+    right: 0px;
+    top: 0px;
+    cursor: pointer;
+}
+
+.mpopup_content
+{
+    text-align: center;
+    margin: 4px;
+    min-height: 96px;
+    padding-top: 60px;
+    font-size: 16px;
+}
+
+.mcontrols
+{
+    width: 100%;
+    min-height: 80px;
+    margin: 10px auto;
+    text-align: center;
+}
+
+.controlok
+{
+    min-width: 120px;
+    display: inline-block;
+    padding: 10px;
+    background-color: #5090c1;
+    color: white;
+    text-align: center;
+    text-decoration: none !important;
+    margin: 26px;
+}
+
+.controlno
+{
+    min-width: 120px;
+    display: inline-block;
+    padding: 10px;
+    background-color: #5090c1;
+    color: white;
+    text-align: center;
+    text-decoration: none !important;
+    margin: 26px;
+}
+
+.mbutton
+{
+    min-width: 120px;
+    display: inline-block;
+    padding: 10px;
+    background-color: #5090c1;
+    color: white;
+    text-align: center;
+    text-decoration: none !important;
+    margin: -3px;
+}
+.btcate0
+{
+    width: 120px;
+    height: 33px;
+    display: inline-block;
+    overflow:hidden;
+    padding: 5px;
+    background-color: #5d5453;
+    color: white;
+    text-align: center;
+    text-decoration: none !important;
+}
+.btcate
+{
+    width: 120px;
+    height: 33px;
+    display: inline-block;
+    overflow:hidden;
+    padding: 5px;
+    background-color: #d15b47;
+    color: white;
+    text-align: center;
+    text-decoration: none !important;
+}
+#v308inputContent [type="text"], #v308inputContent textarea
+{
+    min-width: 400px;
+}
+
+.adminimage
+{
+    height: 45px;
+    width: 105px;
+}
+
+.mvalueshort
+{
+    min-width: 40px;
+    width: 40px !important;
+}
+
+.slidegalaxyittem
+{
+    display: inline-block;
+    width: 100px;
+    height: 60px;
+    position: relative;
+    margin-left: 20px;
+}
+
+.slidegalaxyclosebutton
+{
+    display: inline-block;
+    cursor: pointer;
+    width: 24px;
+    height: 20px;
+    position: absolute;
+    top: 0px;
+    right: -25px;
+    background: url(/Content/Images/closebutton.png) no-repeat center center;
+}
+
+.slidepropertiesittem
+{
+    display: block;
+    position: relative;
+}
+
+.slidepropertiesclosebutton
+{
+    display: inline-block;
+    cursor: pointer;
+    width: 24px;
+    height: 20px;
+    position: absolute;
+    top: 0px;
+    right: 500px;
+    background: url(/Content/Images/closebutton.png) no-repeat center center;
+}
+.mspancheckbox
+{
+    margin-left:26px !important;
+}

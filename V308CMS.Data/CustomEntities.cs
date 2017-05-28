@@ -52,10 +52,10 @@ namespace V308CMS.Data
         private DateTime? _Date;
         private string _Salt;
         private string _Token;
-        private DateTime _TokenExpireDate;
+        private DateTime? _TokenExpireDate;
 
         private string _ForgotPasswordToken;
-        private DateTime __ForgotPasswordTokenExpireDate;
+        private DateTime? __ForgotPasswordTokenExpireDate;
 
         #endregion
         #region[Public Properties]
@@ -75,9 +75,9 @@ namespace V308CMS.Data
         public DateTime? Date { get { if (_Date == null) return new DateTime(); else return _Date; } set { if (_Date != value) { _Date = value; } } }     
         public string Salt { get { if (String.IsNullOrEmpty(_Salt)) return ""; else return _Salt; } set { _Salt = value; } }
         public string Token { get { if (String.IsNullOrEmpty(_Token)) return ""; else return _Token; } set { _Token = value; } }
-        public DateTime TokenExpireDate { get { if (_TokenExpireDate == null) return new DateTime(); else return _TokenExpireDate; } set { if (_TokenExpireDate != value) { _TokenExpireDate = value; } } }
+        public DateTime? TokenExpireDate { get { if (_TokenExpireDate == null) return new DateTime(); else return _TokenExpireDate; } set { if (_TokenExpireDate != value) { _TokenExpireDate = value; } } }
         public string ForgotPasswordToken { get { if (String.IsNullOrEmpty(_ForgotPasswordToken)) return ""; else return _ForgotPasswordToken; } set { _ForgotPasswordToken = value; } }
-        public DateTime ForgotPasswordTokenExpireDate { get { if (__ForgotPasswordTokenExpireDate == null) return new DateTime(); else return __ForgotPasswordTokenExpireDate; } set { if (__ForgotPasswordTokenExpireDate != value) { __ForgotPasswordTokenExpireDate = value; } } }
+        public DateTime? ForgotPasswordTokenExpireDate { get { if (__ForgotPasswordTokenExpireDate == null) return new DateTime(); else return __ForgotPasswordTokenExpireDate; } set { if (__ForgotPasswordTokenExpireDate != value) { __ForgotPasswordTokenExpireDate = value; } } }
 
 
         #endregion
@@ -767,6 +767,8 @@ namespace V308CMS.Data
         private int? _Transport22;
         private int? _Answer;
         private int? _MarketId;
+        private int _Quantity;
+
         #endregion
         #region[Public Properties]
         [Key]
@@ -828,6 +830,7 @@ namespace V308CMS.Data
         public int? Transport12 { get { if (_Transport12 == null || _Transport12 < 0) return 0; else return _Transport12; } set { if (_Transport12 != value) { if (_Transport12 < 0) _Transport12 = 0; else _Transport12 = value; } } }
         public int? Transport22 { get { if (_Transport22 == null || _Transport22 < 0) return 0; else return _Transport22; } set { if (_Transport22 != value) { if (_Transport22 < 0) _Transport22 = 0; else _Transport22 = value; } } }
         public int? Unit { get { if (_Unit == null || _Unit < 0) return 0; else return _Unit; } set { if (_Unit != value) { if (_Unit < 0) _Unit = 0; else _Unit = value; } } }
+        public int Quantity { get { if ( _Quantity < 0) return 0; else return _Quantity; } set { if (_Quantity != value) { if (_Quantity < 0) _Quantity = 0; else _Quantity = value; } } }
 
         #endregion
         public int getReview()
@@ -1525,11 +1528,11 @@ namespace V308CMS.Data
         public string name { get { if (String.IsNullOrEmpty(_Name)) return ""; else return _Name; } set { _Name = value; } }
         public string image { get { if (String.IsNullOrEmpty(_Image)) return ""; else return _Image; } set { _Image = value; } }
         public int status { get { if (_Status == null || _Status < 0) return 0; else return _Status; } set { if (_Status != value) { if (_Status < 0) _Status = 0; else _Status = value; } } }
-
-
         #endregion
 
     }
+
+
     #endregion[ket thuc class tblProductImage]
 
     public class RpOrderWithStatusDetail
@@ -1546,4 +1549,6 @@ namespace V308CMS.Data
         public Int32 TongHuy { get; set; }
 
     }
+
+
 }

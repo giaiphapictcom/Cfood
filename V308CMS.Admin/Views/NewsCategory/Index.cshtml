@@ -1,0 +1,55 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@model V308CMS.Data.NewsGroupPage
+@{
+    ViewBag.Title = "Thể Loại Tin Tức";
+    ViewBag.LinkBack = "<li><a href=" + Url.NewsCategoryIndexUrl()+">Thể Loại Tin Tức</a> </li>";
+    ViewBag.MenuValue = 2;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div>
+    <div>
+
+        <div id="close" class="mheader">
+            <a href="@Url.NewsCategoryCreateUrl()" title="Thêm mới">
+                <img src="@Url.CreateNewImageUrl()" alt="Thêm mới"/>
+            </a>
+        </div>
+        <form name="form_search" method="GET" action="@Url.NewsCategoryIndexUrl()">
+            <div style="margin-top: 16px;">
+               @*@Html.Raw(Model.HtmlNhomTin)*@
+               @Html.DropDownList("RootId",new SelectList(Model.ListNewsGroupRoot,"ID","Name",Model.RootId),"Tất cả", new
+               {
+                   onchange= "jvascript:Admin_NewsGroup_ChangeRooId()"
+               })
+
+               @Html.DropDownList("ParentId", new SelectList(Model.ListNewsGroupParent, "ID", "Name", Model.ParentId), "Danh mục cha", new
+              {
+                  onchange = "jvascript:Admin_NewsGroup_ChangeParentId()"
+              })
+                @Html.DropDownList("ChildId", new SelectList(Model.ListNewsGroupChild, "ID", "Name", Model.ChildId), "Danh mục con", new
+               {
+                   onchange = "jvascript:Admin_NewsGroup_ChangeChildId()"
+               })
+                <input value="@Model.Keyword" type="text" name="keyword" placeholder="Nhập từ khóa cần tìm kiếm"/>
+                <input type="submit" value="Tìm kiếm" name="btnSearch" style="margin-bottom: 10px;" />
+            </div>           
+            <hr/>
+        </form>
+
+        <div style="width: 100%;">
+            <div class="RadGrid RadGrid_MetroTouch table table-striped table-bordered table-hover dataTable" tabindex="0">
+                @Html.Raw(Model.Html)
+            </div>
+        </div>
+        <div class="wpmn_page_navi">
+            <a href="@Url.NewsCategoryIndexUrl(new {pPage = Model.BackPage, pType = Model.TypeId})">Back</a>
+            <span class="current">@Model.Page</span>
+            <a href="@Url.NewsCategoryIndexUrl(new {pPage = Model.NextPage, pType = Model.TypeId})">Next</a>
+        </div>
+        <hr/>
+    </div>
+    <div style="display: none;" role="status" aria-hidden="true">
+        <div class="area"></div>
+        <div class="form-loading"></div>
+    </div>
+</div>

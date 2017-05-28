@@ -1,0 +1,77 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@model V308CMS.Data.ImagesPage
+@{
+    ViewBag.Title = "Sửa Ảnh";
+    ViewBag.LinkBack = "<li><a href=" + Url.ImageIndexUrl()+">Sửa Ảnh</a> </li>";
+    ViewBag.MenuValue = 4;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Header {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btnSelectImg").click(function () {
+                var finder = new CKFinder();
+                finder.selectActionFunction = function (fileUrl) {
+                    $("#anhdaidien").html('<img style="width:100px;height:60px;margin-left:10px;" src="' + fileUrl + '" />');
+                    $('#ImageUrl').val(fileUrl);
+                };
+                finder.popup();
+            });
+        });
+
+        function SetFileField(fileUrl) {
+            $('#ImageUrl').val(fileUrl);
+        }
+
+    </script>
+}
+<div>
+    <div>
+        <h3>Thêm ảnh mới</h3>
+        <hr />
+        <div style="width: 100%;">
+            <input id="pId" value="@Model.pImage.ID" type="hidden" />
+            <div id="v308inputContent" class="RadGrid RadGrid_MetroTouch table table-striped table-bordered table-hover dataTable" tabindex="0">
+                <table>
+                    <tr>
+                        <td>Tên</td>
+                        <td>
+                            <input type="text" id="pTitleId" name="pTitle" value="@Model.pImage.Name" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Nhóm Tin</td>
+                        <td>@Html.Raw(@Model.HtmlNhom)</td>
+                    </tr>
+                    <tr>
+                        <td>Mô Tả</td>
+                        <td>
+                            <textarea cols="80" id="pSummaryId" name="pSummary" rows="6">@Model.pImage.Summary</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Link</td>
+                        <td>
+                            <input type="text" id="pLinkId" name="pLink" value="@Model.pImage.Link" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Hình Ảnh</td>
+                        <td>
+                            <div id="anhdaidien"><img style="width:100px;height:60px;margin-left:10px;" src="@Model.pImage.LinkImage" /></div>
+                            <input id="ImageUrl" type="text" value="@Model.pImage.LinkImage" name="pImage" /><a id="btnSelectImg" class="mbutton" href="javascript:void(0);">Chọn ảnh</a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td>
+                            <a class="mbutton" href="javascript:Admin_Images_ThucHienLuuSua();">Lưu sửa</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <hr />
+    </div>
+</div>

@@ -141,24 +141,42 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\ThemesViewActionFilter.cs" />
+    <Compile Include="Controllers\AccountAddressController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AccountWishListController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BlockController.cs" />
     <Compile Include="Controllers\CaptchaController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MyShopifyController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\VideoController.cs" />
     <Compile Include="Controllers\WidgetController.cs" />
+    <Compile Include="DataAnnotations\BirthDayAttribute.cs" />
+    <Compile Include="DataAnnotations\BirthMonthAttribute.cs" />
+    <Compile Include="DataAnnotations\BirthYearAttribute..cs" />
+    <Compile Include="DataAnnotations\EmailAttribute.cs" />
+    <Compile Include="DataAnnotations\PhoneAttribute.cs" />
+    <Compile Include="DataAnnotations\UserNameAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\AuthenticationHelper.cs" />
     <Compile Include="Helpers\ConfigHelper.cs" />
     <Compile Include="Helpers\MpStartViewEngine.cs" />
+    <Compile Include="Helpers\MyUser.cs" />
+    <Compile Include="Helpers\Url\AccountUrlHelper.cs" />
+    <Compile Include="Helpers\Url\CartUrlHelper.cs" />
+    <Compile Include="Helpers\Url\ContactUrlHelper.cs" />
+    <Compile Include="Helpers\Url\ImageUrlHelper.cs" />
+    <Compile Include="Helpers\Url\MpstartUrlHelper.cs" />
+    <Compile Include="Helpers\Url\NewsUrlHelper.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Authenicate.cs" />
     <Compile Include="Models\CaptchaModel.cs" />
