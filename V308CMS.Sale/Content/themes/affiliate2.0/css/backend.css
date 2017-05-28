@@ -2,21 +2,15 @@
     border-right: 1px solid #ddd;
     padding: 0;
 }
-.notification-red {
-    width: 5px;
-    height: 5px;
-    position:relative;
-}
-.notification-red::after {
-    content: "*";
-    color: red;
-}
+
 form .notification-red::after {
     content :"(*)";
 }
 ul.adminmenu {
 
 }
+
+
 .adminmenu > li > a {
     font-weight: bold;
     font-size: 13px;
@@ -103,9 +97,6 @@ form .form-group {
     padding: 15px;
 }
 
-.text-note {
-    color: #d36e60;
-}
 
 form hr {
     margin: 5px 0;
@@ -118,6 +109,19 @@ form hr {
     font-size: 12px;
 }
 
+.form-group-inline .form-group {
+    display: inline-block;
+}
+.form-group-inline .btn {
+    height: 33px;
+    line-height: 33px;
+}
+.btn.activated,
+.form-control.activated {
+    background-color:#fd393d !important;
+    color: white !important;
+    border: 1px solid #666 !important;
+}
 /*
  * update style
  */

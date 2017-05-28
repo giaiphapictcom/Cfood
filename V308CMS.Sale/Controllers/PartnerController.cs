@@ -54,8 +54,22 @@ namespace V308CMS.Sale.Controllers
             return View();
         }
         #endregion
-        
-        
+
+        #region Products
+
+        [HttpGet]
+        public ActionResult Products()
+        {
+            return View();
+        }
+
+        [HttpPost, ActionName("Products")]
+        public ActionResult ProductsPost()
+        {
+            return View();
+        }
+        #endregion
+
 
     }
 }

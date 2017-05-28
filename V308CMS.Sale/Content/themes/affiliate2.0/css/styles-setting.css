@@ -133,7 +133,8 @@ body {background: #ffffff;}
 #header-content .menu-top .site-nav .dropdown-sub ul li a:hover,#header-content .menu-top .site-nav .dropdown-sub ul li a:focus
 {color: #a3a3a3;}
 /*settings.link_color_sub_menu_hover*/
-#search-top .input-group .input-group-field {border: 1px solid #00aeef;}
+#search-top .input-group .input-group-field {border: 1px solid #fd393d;}
+#search-top .btn { border-radius : 0; }
 /*  Button
 /*-------------------------- */
 .grid-item .wishlist:hover, 
@@ -189,13 +190,28 @@ body {background: #ffffff;}
     background-color: #f5f5f5; 
     border-color: #d5d5d5;
     color:#332f30;
-    border-radius: 0;
 }
+.btn-orange {
+    background-color: #f37021; 
+    border-color: #f37021;
+    color:#FFF;
+}
+.btn-gray {
+    background-color: #8e9a85; 
+    border-color: #8e9a85;
+    color:#FFF;
+}
+
 
 .form-group.bg-secondary .form-control{
     background-color: #f5f5f5; 
     border-color: #d5d5d5;
     color:#332f30;
+}
+
+.border-radius-0.btn,
+.border-radius-0.btn:hover {
+    border-radius: 0;
 }
 
 .btn span.arrow { border-left-color: #1f1f1f; }
@@ -470,4 +486,19 @@ label,.pagination-page li a, .pagination-page li span,.toolbar .page-total,.prod
 .tp-leftarrow .tp-arr-iwrapper,
 .tp-rightarrow .tp-arr-iwrapper{
     display: none;
+}
+
+.text-note,
+.text-red {
+    color: #d36e60;
+}
+
+.notification-red {
+    width: 5px;
+    height: 5px;
+    position:relative;
+}
+.notification-red::after {
+    content: "*";
+    color: red;
 }
