@@ -153,20 +153,35 @@
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\WidgetController.cs" />
+    <Compile Include="DataAnnotations\BirthDayAttribute.cs" />
+    <Compile Include="DataAnnotations\BirthMonthAttribute.cs" />
+    <Compile Include="DataAnnotations\BirthYearAttribute..cs" />
+    <Compile Include="DataAnnotations\EmailAttribute.cs" />
+    <Compile Include="DataAnnotations\PhoneAttribute.cs" />
+    <Compile Include="DataAnnotations\UserNameAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\DateHelper.cs" />
-    <Compile Include="Helpers\ImageUrlHelper.cs" />
-    <Compile Include="Helpers\ListHelper.cs" />
-    <Compile Include="Helpers\NewsUrlHelper.cs" />
-    <Compile Include="Helpers\SlugHelper.cs" />
-    <Compile Include="Helpers\SapoHelper.cs" />
+    <Compile Include="Helpers\AuthenticationHelper.cs" />
+    <Compile Include="Helpers\ConfigHelper.cs" />
+    <Compile Include="Helpers\MpStartViewEngine.cs" />
+    <Compile Include="Helpers\MyUser.cs" />
+    <Compile Include="Helpers\Url\AccountUrlHelper.cs" />
+    <Compile Include="Helpers\Url\AccountWishlistUrlHelper.cs" />
+    <Compile Include="Helpers\Url\CartUrlHelper.cs" />
+    <Compile Include="Helpers\Url\ContactUrlHelper.cs" />
+    <Compile Include="Helpers\Url\ImageUrlHelper.cs" />
+    <Compile Include="Helpers\Url\MpstartUrlHelper.cs" />
+    <Compile Include="Helpers\Url\NewsUrlHelper.cs" />
+    <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Authenicate.cs" />
     <Compile Include="Models\CaptchaModel.cs" />
     <Compile Include="Models\CartItem.cs" />
     <Compile Include="Models\ContactModels.cs" />
+    <Compile Include="Models\ProductModels.cs" />
+    <Compile Include="Models\ProductsCartModels.cs" />
     <Compile Include="Models\ShoppingCart.cs" />
+    <Compile Include="Models\ShoppingCartModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -174,7 +189,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="bin\CKFinder.dll" />
-    <Content Include="bin\CKFinder.pdb" />
     <Content Include="bin\ServiceStack.Text.dll" />
     <Content Include="Content\Admin\assets\font\fontawesome-webfont.svg" />
     <Content Include="Content\Admin\assets\font\fontawesome-webfont.woff" />

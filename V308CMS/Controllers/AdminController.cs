@@ -2018,6 +2018,7 @@ namespace V308CMS.Controllers
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return Content("Xảy ra lỗi hệ thống ! Vui lòng thử lại.");
             }
             finally

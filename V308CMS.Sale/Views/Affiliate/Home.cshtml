@@ -1,6 +1,7 @@
 ﻿@model V308CMS.Data.AffiliateHomePage
 @using V308CMS.Data;
 @using System.Text.RegularExpressions;
+@using V308CMS.Common
 @{
     Layout = "~/Views/" + @ViewContext.RouteData.Values["controller"] + "/Layout/Default.cshtml";
 }
@@ -129,16 +130,17 @@
     </div>
 }
 
-@if (Model.BrandImages != null && Model.BrandImages.Count() > 0) {
-    string root = Server.MapPath("~");
+@if (Model.Brands != null && Model.Brands.Count() > 0)
+{
     <div class="shopify-section">
         <div class="container-block m-0">
             <div class="container border-col" style="padding-top: 20px;">
                 <div class="row">
                     <div class="col-md-12 article-home-full" style="margin-bottom: 20px;"><h3 ><span>Thương hiệu đồng hành cùng mp start</span></h3></div>
-                    @foreach (string img in Model.BrandImages) { 
+                    @foreach (Brand brand in Model.Brands)
+                    { 
                         <div class="col-md-2">
-                            <img src="@img.Replace(root,"")" class="brandlogo"/>
+                            <img src="@ImageHelper.Crop(brand.image,160,99)" class="brandlogo" />
                         </div>
                     }
                 </div>
@@ -147,12 +149,13 @@
     </div>
     
 }
+
 @if (Model.Categorys != null && Model.Categorys.Count() > 0)
 {
     int index = 0;
-    <div class="shopify-section">
-        <div class="container-block m-0">
-            <div class="container border-col" style="padding-top: 20px;">
+    <div class="shopify-section" >
+        <div class="container-block m-0" >
+            <div class="container border-col" style="padding-top: 20px; padding-bottom: 50px;">
                 <div class="row">
                     <div class="col-md-12 article-home-full" style="margin-bottom: 20px;"><h3 ><span>ngành hàng phong phú, sản phẩm đa dạng</span></h3></div>
                     @foreach (Categorys cate in Model.Categorys)

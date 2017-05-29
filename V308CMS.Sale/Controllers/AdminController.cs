@@ -61,6 +61,7 @@ namespace V308CMS.Sale.Controllers
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return Json(new { code = 0, message = "Có lỗi xảy ra. Vui lòng thử lại." });
             }
             finally

@@ -21,6 +21,7 @@ namespace V308CMS.Sale.Controllers
         ProductRepository ProductRepos;
         ImagesRepository imagesRepos;
         NewsRepository NewsRepos;
+        AccountRepository accountRepos;
 
         private void CreateRepos()
         {
@@ -28,6 +29,7 @@ namespace V308CMS.Sale.Controllers
             ProductRepos = new ProductRepository(mEntities);
             imagesRepos = new ImagesRepository(mEntities);
             NewsRepos = new NewsRepository(mEntities);
+            accountRepos = new AccountRepository(mEntities);
 
         }
         private void DisposeRepos()
@@ -36,6 +38,7 @@ namespace V308CMS.Sale.Controllers
             ProductRepos.Dispose();
             imagesRepos.Dispose();
             NewsRepos.Dispose();
+            accountRepos.Dispose();
         }
         #endregion
 
@@ -84,17 +87,36 @@ namespace V308CMS.Sale.Controllers
         {
             return View("~/Views/" + MainController + "/Elements/AdminMenu.cshtml");
         }
-        
+
+
+        public class HeaderPage
+        {
+            public Account Account { get; set; }
+            public bool IsAuthenticated { get; set; }
+            public List<NewsGroups> menu { get; set; }
+        }
 
         public ActionResult Header()
         {
             CreateRepos();
             try
             {
-                var menu = NewsRepos.GetNewsGroup();
+                //var menu = NewsRepos.GetNewsGroup();
+                HeaderPage Model = new HeaderPage();
+                NewsGroups MenuCategory = NewsRepos.SearchNewsGroup("menu-affiliate");
+                if (MenuCategory != null)
+                {
+                    Model.menu = NewsRepos.GetNewsGroup(MenuCategory.ID, true, 6);
+                }
+                if (HttpContext.User.Identity.IsAuthenticated == true && Session["UserId"] != null)
+                {
+                    //lay thong tin chi tiet user
+                    Model.Account = accountRepos.LayTinTheoId(Int32.Parse(Session["UserId"].ToString()));
+                    Model.IsAuthenticated = true;
+                }
 
                 string view = "~/Views/" + MainController + "/Elements/Header.cshtml";
-                return View(view, menu);
+                return View(view, Model);
             }
             catch (Exception ex)
             {
@@ -115,8 +137,8 @@ namespace V308CMS.Sale.Controllers
                 PageFooterControl Model = new PageFooterControl();
                 List<NewsGroupPage> NewsCategorys = new List<NewsGroupPage>(); ;
 
-                NewsGroups footerCate = NewsRepos.SearchNewsGroup("footer");
-                if (footerCate.ID > 0)
+                NewsGroups footerCate = NewsRepos.SearchNewsGroup("footer-affiliate");
+                if (footerCate != null)
                 {
                     List<NewsGroups> categorys = NewsRepos.GetNewsGroup(footerCate.ID, true, 3);
                     if (categorys.Count() > 0)
@@ -161,6 +183,29 @@ namespace V308CMS.Sale.Controllers
         {
             string view = "~/Views/" + MainController + "/Blocks/HomeSlides.cshtml";
             return View(view);
+        }
+
+
+        public class PaginationClass
+        {
+            public int ProductTotal { get; set; }
+            public int Page { get; set; }
+
+        }
+        public ActionResult BlockPagination(int ProductTotal = 0)
+        {
+            int nPage = Convert.ToInt32(Request.QueryString["p"]);
+            if (nPage < 1)
+            {
+                nPage = 1;
+            }
+            PaginationClass Model = new PaginationClass();
+            Model.Page = nPage;
+            Model.ProductTotal = ProductTotal;
+
+
+            string view = "~/Views/" + MainController + "/Blocks/BlockPagination.cshtml";
+            return View(view, Model);
         }
     }
 }

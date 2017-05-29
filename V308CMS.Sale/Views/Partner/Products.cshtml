@@ -1,4 +1,7 @@
-﻿@{
+﻿@using V308CMS.Data;
+@using V308CMS.Common;
+@model V308CMS.Data.AffiliateProductPage
+@{
     Layout = "~/Views/Affiliate/Layout/Backend.cshtml";
     string PageTitle = "Kho Sản Phẩm";
 }
@@ -51,18 +54,7 @@
         </div>
     </div>
     <div class="col-md-7 text-right">
-        <ul class="pagination">
-            <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1">&laquo;</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-                <span aria-hidden="true">&raquo;</span>
-
-            </li>
-        </ul>
+        @Html.Action("BlockPagination", "Theme",new {ProductTotal=Model.ProductTotal})
 
     </div>
     <div class="col-md-2 textright" style="margin-bottom: 15px;">
@@ -73,67 +65,44 @@
     <thead>
         <tr>
             <th>#</th>
-            <th>Thời gian</th>
-            <th>Link</th>
-            <th>Shop</th>
-            <th>Table heading</th>
-            <th>Table heading</th>
-            <th>Table heading</th>
+            <th>Tên Sản Phẩm</th>
+            <th>Mã SP</th>
+            <th>Hình Ảnh</th>
+            <th>Giá Bán</th>
+            <th>Mức CK</th>
+            <th>Mã Giảm Giá</th>
+            <th>Start</th>
+            <th>End</th>
+            <th>Tạo Link</th>
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>Table cell</td>
-            <td>
-                <div class="input-group">
-                    <input type="text" class="form-control" disabled="disabled" >
-                    <span class="input-group-addon"><i class="fa fa-copy"></i></span>
-                    <span class="input-group-addon"><i class="fa fa-external-link"></i></span>
-                    
-                </div>
-                <small class="form-text text-muted">xxxx</small>
-
-            </td>
-            <td>Table cell</td>
-            <td>Table cell</td>
-            <td>Table cell</td>
-            <td>Table cell</td>
-        </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Table cell</td>
-            <td>Table cell</td>
-            <td>Table cell</td>
-            <td>Table cell</td>
-            <td>Table cell</td>
-            <td>Table cell</td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td>Table cell</td>
-            <td>Table cell</td>
-            <td>Table cell</td>
-            <td>Table cell</td>
-            <td>Table cell</td>
-            <td>Table cell</td>
-        </tr>
+        @if (Model.Products != null && Model.Products.Count() > 0)
+        {
+            foreach( Product pro in Model.Products ){
+                <tr>
+                    <th scope="row">@pro.ID</th>
+                    <td>@pro.Name</td>
+                    <td></td>
+                    <td><img src="@ImageHelper.Crop(pro.Image, 200,200)" class="w50"/></td>
+                    <td>@String.Format("{0: 0,0}", pro.Price)</td>
+                    <td>@string.Format("{0}%",pro.SaleOff)</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><a href="#" class="btn btn-green">Tạo</a></td>
+                </tr>
+            }
+        }
+        else { 
+            <tr>
+                <td colspan="11" class="text-center">Không có sản phẩm nào</td>
+            </tr>
+        }
+        
     </tbody>
 </table>
 
 <div class="row">
-    <div class="col-md-12 text-center">
-        <ul class="pagination">
-            <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1">&laquo;</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-                <span aria-hidden="true">&raquo;</span>
-
-            </li>
-        </ul>
-    </div>
+    <div class="col-md-12 text-center">@Html.Action("BlockPagination", "Theme",new {ProductTotal=Model.ProductTotal})</div>
 </div>

@@ -61,10 +61,21 @@
                         </div>
 
                         <div class="header-top-right">
-                            <a href="/dang-nhap" class="btn-login">
-                                <i class="fa fa-shopping-basket" aria-hidden="true"></i>
-                                Đăng Nhập
-                            </a>
+                            @if (Model.IsAuthenticated == true && Model.Account != null)
+                            {
+                                <a href="/dashboard" class="btn-login">
+                                    <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+                                    @Model.Account.FullName
+                                </a>
+                            }
+                            else
+                            { 
+                                <a href="/dang-nhap" class="btn-login">
+                                    <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+                                    Đăng Nhập
+                                </a>
+                            }
+                            
 
                                 @*<div id="header-top-cart"><div class="header-cart">
                                     <p class="top-cart">
@@ -146,9 +157,9 @@
                                                     <span>Trang Chủ</span>
                                                 </a>
                                             </li>
-                                            @if (Model != null && Model.Count > 0)
+                                            @if (Model.menu != null && Model.menu.Count > 0)
                                             {
-                                                foreach (V308CMS.Data.NewsGroups menu in Model)
+                                                foreach (V308CMS.Data.NewsGroups menu in Model.menu)
                                                 {
                                                     if (!menu.Name.ToLower().Equals("footer"))
                                                     {
