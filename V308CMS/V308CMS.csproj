@@ -1889,6 +1889,25 @@
     <Content Include="Views\themes\myshopify\Banner\CategoryAdv.cshtml" />
     <Content Include="Views\themes\myshopify\Pages\contact.cshtml" />
     <Content Include="Views\themes\myshopify\Pages\News.Detail.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Account.Active.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\themes\myshopify\Pages\Account.Addresses.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Account.ChangePassword.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Account.ForgotPassword.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Account.GetToken.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Account.InvalidToken.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Account.Login.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Account.Profile.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Account.Register.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Cart.Checkout.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\themes\myshopify\Pages\Cart.View.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\themes\myshopify\Pages\Wishlist.Index.cshtml" />
+    <Content Include="Views\themes\myshopify\Product_div\Type1_4.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

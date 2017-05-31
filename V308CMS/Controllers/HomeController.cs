@@ -221,11 +221,15 @@ namespace V308CMS.Controllers
             else
                 return View("MobileDetail", mProductDetailPage);
         }
-        public ActionResult Search(string pKey, int pVendor = 2, int pPage = 1)
+        
+        public ActionResult Search()
         {
-            
+            int pVendor = 2;
+            int pPage = 1;
             SearchPage mSearchPage = new SearchPage();
-            //mList = newsRepository.LayDanhSachTinTheoKey(15, pKey, pPage);
+            
+            string pKey = Request.QueryString["q"];
+            
             if (pVendor == 1)/*Tìm theo cửa hàng*/
             {
                 List<Market> mMarketList = MarketService.SearchMarketTheoTrangAndType(pPage, 30, pKey);

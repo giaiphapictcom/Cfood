@@ -115,6 +115,13 @@
             <ul class="nav nav-tabs" id="myTab">
                 <li class="active"><a data-toggle="tab" href="#collapse-tab1">Thông tin sản phẩm</a></li>
                 <li><a data-toggle="tab" href="#collapse-tab2">Đánh giá </a></li>
+                <li>
+                    @{
+                        string url_current = Request.Url.ToString();
+                        url_current = System.Net.WebUtility.UrlEncode(url_current);
+                        }
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=@url_current&display=popup&ref=plugin&src=like&kid_directed_site=0&app_id=113869198637480" target="_blank" >Chi sẻ Facebook</a>
+                </li>
             </ul>
 
             <div id="myTabContent" class="tab-content">
