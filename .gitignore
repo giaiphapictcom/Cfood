@@ -17,3 +17,5 @@ V308CMS.Data/bin/*.xml
 V308CMS.Common/bin/System.Web.*
 V308CMS.Common/bin/Newtonsoft.Json.xml
 V308CMS.Common/bin/System.Net.Http.Formatting.xml
+V308CMS.Sale/Content/thumb/100x100
+V308CMS.Sale/Content/thumb/160x99/

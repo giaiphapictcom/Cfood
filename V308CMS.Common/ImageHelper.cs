@@ -80,6 +80,8 @@ namespace V308CMS.Common
 
         static void CropImage(int Width, int Height, string sourceFilePath, string saveFilePath)
         {
+            if (saveFilePath.Length > 248)
+                return;
             // variable for percentage resize 
             float percentageResize = 0;
             float percentageResizeW = 0;

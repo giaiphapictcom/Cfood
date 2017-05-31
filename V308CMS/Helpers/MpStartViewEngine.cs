@@ -9,7 +9,7 @@ namespace V308CMS.Helpers
 {
     public class MpStartViewEngine: RazorViewEngine
     {
-        public MpStartViewEngine()
+        public MpStartViewEngine(Boolean ViewDefault=false)
         {
             var viewPath = string.Format("~/Views/themes/{0}", ConfigHelper.Domain);
             var viewRealPath =  HttpContext.Current.Server.MapPath(viewPath);

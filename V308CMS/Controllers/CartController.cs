@@ -107,7 +107,7 @@ namespace V308CMS.Controllers
             return View("Cart.Checkout");
         }
         [HttpPost]
-        public ActionResult UpdateCart(int id, int quantity)
+        public ActionResult UpdateCart(int id=0, int quantity=0)
         {
 
             var product = ProductsService.LayTheoId(id);
