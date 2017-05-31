@@ -122,6 +122,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CartItemRepository.cs" />
+    <Compile Include="CartRepository.cs" />
     <Compile Include="CategoryRepository.cs" />
     <Compile Include="CommonEntities.cs" />
     <Compile Include="ContactRepository.cs" />

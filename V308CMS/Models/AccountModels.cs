@@ -64,6 +64,7 @@ namespace V308CMS.Models
         [Required(ErrorMessage = "Vui lòng nhập Email.")]
         [Display(Name = "Email :")]
         public string Email { get; set; }
+        public int id { get; set; }
         [Required(ErrorMessage = "Vui lòng nhập Mật khẩu tài khoản.")]
         [Display(Name = "Mật khẩu :")]
         public string Password { get; set; }

@@ -157,6 +157,11 @@ namespace V308CMS.Data
             get;
             set;
         }
+        public DbSet<productorder_detail> ProductOrderItem
+        {
+            get;
+            set;
+        }
         public DbSet<ProductSaleOff> ProductSaleOff
         {
             get;

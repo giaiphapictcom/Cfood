@@ -9,6 +9,7 @@ namespace V308CMS.Helpers
     public class AuthenticationHelper
     {
         private const string AuthenticationName = "UserName";
+        private const string AuthenticationID = "UserID";
         private const int UserTimeExpires = 10;
         public static void SignIn(LoginModels data, bool remember = false)
         {
@@ -23,13 +24,14 @@ namespace V308CMS.Helpers
             authCookie.Expires = DateTime.Now.AddDays(UserTimeExpires);
             HttpContext.Current.Response.Cookies.Add(authCookie);
 
-            SetCurrentUser(data.Email);
+            SetCurrentUser(data.Email,data.id);
 
         }
 
-        private static void SetCurrentUser(string userName)
+        private static void SetCurrentUser(string userName, int userid=0)
         {
             HttpContext.Current.Session[AuthenticationName] = userName;
+            HttpContext.Current.Session[AuthenticationID] = userid;
 
 
         }
@@ -72,6 +74,24 @@ namespace V308CMS.Helpers
                     if (HttpContext.Current.Session[AuthenticationName] != null)
                     {
                         return HttpContext.Current.Session[AuthenticationName].ToString();
+                    }
+
+                }
+                return string.Empty;
+
+            }
+        }
+
+        public static string UserID
+        {
+            get
+            {
+                if (IsAuthenticate)
+                {
+
+                    if (HttpContext.Current.Session[AuthenticationID] != null)
+                    {
+                        return HttpContext.Current.Session[AuthenticationID].ToString();
                     }
 
                 }
