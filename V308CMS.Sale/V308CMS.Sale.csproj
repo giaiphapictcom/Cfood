@@ -160,7 +160,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="bin\CKFinder.dll" />
-    <Content Include="bin\CKFinder.pdb" />
     <Content Include="bin\ServiceStack.Text.dll" />
     <Content Include="Content\Admin\assets\font\fontawesome-webfont.svg" />
     <Content Include="Content\Admin\assets\font\fontawesome-webfont.woff" />
@@ -1481,6 +1480,7 @@
     <Content Include="Content\themes\affiliate2.0\fonts\Simple-Line-Icons.eot" />
     <Content Include="Content\themes\affiliate2.0\fonts\Simple-Line-Icons.ttf" />
     <Content Include="Content\themes\affiliate2.0\fonts\Simple-Line-Icons.woff" />
+    <None Include="Properties\PublishProfiles\Affiliate MPstart.pubxml" />
     <None Include="Properties\PublishProfiles\affiliate.pubxml" />
     <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Views\Widget\Search.cshtml" />
@@ -1548,6 +1548,9 @@
     <Content Include="Views\Partner\Products.cshtml" />
     <Content Include="Views\Affiliate\Elements\AdminMenu.cshtml" />
     <Content Include="Views\Affiliate\Layout\Backend.cshtml" />
+    <Content Include="Views\Affiliate\Blocks\BlockPagination.cshtml" />
+    <Content Include="Views\Affiliate\NewsList.cshtml" />
+    <Content Include="Views\Affiliate\News.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
