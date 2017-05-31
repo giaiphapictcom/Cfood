@@ -666,7 +666,7 @@ namespace V308CMS.Data
                 try
                 {
                     var newGroups = from g in entities.NewsGroups
-                             where g.Status == true & g.Parent == Parent
+                                    where g.Status == Status & g.Parent == Parent
                              orderby g.Number ascending
                              select g;
                     return newGroups.Take(Limit).ToList();
