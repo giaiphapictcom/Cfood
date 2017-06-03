@@ -163,8 +163,15 @@ namespace V308CMS.Controllers
 
         public ActionResult CategoryAdv() {
             var images = ImagesService.GetImagesByGroupAlias("category-adv");
-            Image img = images.First();           
-            return View("CategoryAdv", img);
+            if (images.Count() > 0)
+            {
+                Image img = images.First();
+                return View("CategoryAdv", img);
+            }
+            else {
+                return View("CategoryAdv");
+            }
+            
         }
         
         #endregion
