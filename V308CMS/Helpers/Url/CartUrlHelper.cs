@@ -29,5 +29,11 @@ namespace V308CMS.Helpers
         {
             return helper.Action(action, controller);
         }
+
+        public static string SendOrderCartUrl(this UrlHelper helper, string controller = "cart",
+            string action = "sendorder")
+        {
+            return helper.Action(action, controller);
+        }
     }
 }

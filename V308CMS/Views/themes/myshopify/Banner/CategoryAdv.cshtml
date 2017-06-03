@@ -1,5 +1,6 @@
 ﻿@model  V308CMS.Data.Image
-<header class="page-header">
+@if (Model != null) { 
+    <header class="page-header">
     <div class="images">
 
         <img src="@Model.LinkImage" alt="" />
@@ -7,3 +8,5 @@
     </div>
 
 </header>
+}
+

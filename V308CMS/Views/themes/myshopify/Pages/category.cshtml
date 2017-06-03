@@ -36,21 +36,12 @@
                     </div>
                 </div>
             }
-
-            <div class="block-bottom-sidebar">
-                <img src="//cdn.shopify.com/s/files/1/1498/2346/t/12/assets/block_image_left.jpg?18357844937369814403" alt="" />
-
-                <div class="content-block-left">
-
-                    <span>Only BigSale $99.00</span>
-                    <p>Design 2016</p>
-
-                </div>
-
-            </div>
+            @Html.Action("LeftProductAdv", "MyShopify")
+            
         </div>
     </div>
     <div class="col-md-9 col-sm-12 col-xs-12 col-main display-toolbar no-sidebar collection-page no-padding-lr">
+        @*@Html.Action("CategoryAdv", "MyShopify")*@
         @Html.Action("CategoryAdv", "MyShopify")
         
         <div class="toolbar ">

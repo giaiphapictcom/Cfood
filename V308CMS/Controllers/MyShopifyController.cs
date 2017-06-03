@@ -163,9 +163,30 @@ namespace V308CMS.Controllers
 
         public ActionResult CategoryAdv() {
             var images = ImagesService.GetImagesByGroupAlias("category-adv");
-            Image img = images.First();           
-            return View("CategoryAdv", img);
+            if (images.Count() > 0)
+            {
+                Image img = images.First();
+                return View("CategoryAdv", img);
+            }
+            else {
+                return View("CategoryAdv");
+            }
+            
         }
+        public ActionResult LeftProductAdv()
+        {
+            var images = ImagesService.GetImagesByGroupAlias("product-col-left");
+            if (images.Count() > 0)
+            {
+                Image img = images.First();
+                return View("LeftProductAdv", img);
+            }
+            else {
+                return View("LeftProductAdv");
+            }
+            
+        }
+        
         
         #endregion
     }

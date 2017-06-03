@@ -20,6 +20,8 @@ namespace V308CMS.Controllers
         private readonly ImagesRepository _imagesRepository;
         private readonly MarketRepository _marketRepository;
         private readonly IContactRepository _contactRepository;
+        private readonly CartRepository _CartRepository;
+        private readonly CartItemRepository _CartItemRepository;
       
         protected BaseController()
         {
@@ -33,6 +35,8 @@ namespace V308CMS.Controllers
             _imagesRepository = new ImagesRepository(_mEntities);
             _marketRepository = new MarketRepository(_mEntities);
             _contactRepository = new ContactRepository(_mEntities);
+            _CartRepository = new CartRepository(_mEntities);
+            _CartItemRepository = new CartItemRepository(_mEntities);
         }
         protected IContactRepository ContactService
         {
@@ -104,6 +108,22 @@ namespace V308CMS.Controllers
                 return _fileService;
             }
         }
-     
+        protected CartRepository CartService
+        {
+            get
+            {
+                EnsureV308CmsEntitiesNotNull();
+                return _CartRepository;
+            }
+        }
+
+        protected CartItemRepository CartItemService
+        {
+            get
+            {
+                EnsureV308CmsEntitiesNotNull();
+                return _CartItemRepository;
+            }
+        }
     }
 }

@@ -1,6 +1,11 @@
 ﻿using System;
 using System.Linq;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
 using System.Web.Mvc;
+using System.Collections.Generic;
+
 using V308CMS.Common;
 using V308CMS.Data;
 using V308CMS.Helpers;
@@ -104,10 +109,13 @@ namespace V308CMS.Controllers
 
         public ActionResult Checkout()
         {
-            return View("Cart.Checkout");
+            if (ShoppingCart.Instance.Items.Count() < 1) {
+                return RedirectToAction("Index", "Home");
+            }
+            return View("Cart.Checkout", ShoppingCart.Instance);
         }
         [HttpPost]
-        public ActionResult UpdateCart(int id, int quantity)
+        public ActionResult UpdateCart(int id=0, int quantity=0)
         {
 
             var product = ProductsService.LayTheoId(id);
@@ -135,6 +143,41 @@ namespace V308CMS.Controllers
 
             }
             return Json(new { code = 0, message = "Không tìm thấy sản phẩm." });
+        }
+
+        [HttpPost]
+        public ActionResult SendOrder()
+        {
+            var cart = ShoppingCart.Instance;
+            var checkout = Request.Form["checkout"];
+           
+            string Address = Request.Form["address"];
+            string Email = "";
+            string Fullname = Request.Form["first_name"] + " " + Request.Form["last_name"];
+            
+            int OrderID;
+            string OrderID_Insert = CartService.Insert(Address, Email, Fullname, cart.Items.Count(), cart.SubTotal);
+            bool isNumerical = int.TryParse(OrderID_Insert, out OrderID);
+            if (isNumerical) {
+                List<ProductModels> ProductsAdded = new List<ProductModels>();
+                foreach (CartItem item in cart.Items)
+                {
+                    CartItemService.Insert(OrderID, item.ProductItem.Id, item.ProductItem.Name,item.TotalPrice,item.Quantity);
+                    ProductModels product = new ProductModels();
+                    product.Id = item.ProductItem.Id;
+                    product.Name = item.ProductItem.Name;
+                    product.Price = item.ProductItem.Price;
+                    product.SaleOff = item.ProductItem.SaleOff;
+                    ProductsAdded.Add(product);
+                }
+                if( ProductsAdded.Count() > 0 ) foreach( var product in ProductsAdded){
+                    cart.RemoveItem(product);
+                }
+
+                
+            }
+
+            return RedirectToAction("Index", "Home");
         }
         
        

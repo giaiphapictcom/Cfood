@@ -1542,19 +1542,9 @@
     <Content Include="Views\Affiliate\Elements\Header.cshtml" />
     <Content Include="Views\Affiliate\Elements\Footer.cshtml" />
     <Content Include="Views\Affiliate\Blocks\HomeSlides.cshtml" />
-<<<<<<< HEAD
-    <Content Include="Views\Partner\index.cshtml" />
-    <Content Include="Views\Partner\LinkForm.cshtml" />
-    <Content Include="Views\Partner\Links.cshtml" />
-    <Content Include="Views\Partner\Login.cshtml" />
-    <Content Include="Views\Partner\Register.cshtml" />
-    <Content Include="Views\Partner\Products.cshtml" />
+
     <Content Include="Views\Affiliate\Elements\AdminMenu.cshtml" />
-    <Content Include="Views\Affiliate\Layout\Backend.cshtml" />
-=======
-    <Content Include="Views\Affiliate\Elements\AdminMenu.cshtml">
-      <SubType>Code</SubType>
-    </Content>
+
     <Content Include="Views\Affiliate\Layout\Backend.cshtml" />
     <Content Include="Views\Partner\index.cshtml" />
     <Content Include="Views\Partner\Login.cshtml" />
@@ -1562,7 +1552,7 @@
     <Content Include="Views\Partner\Links.cshtml" />
     <Content Include="Views\Partner\LinkForm.cshtml" />
     <Content Include="Views\Partner\Products.cshtml" />
->>>>>>> admin-area
+
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -34,7 +34,7 @@
             <!--h1> 'cart.general.title' | t </h1-->
           
                 @if (Model.Items.Any()){
-                    <form action="@Url.UpdateCartUrl()" method="post" id="cartform">
+                    <form action="@Url.CheckoutCartUrl()" method="post" id="cartform">
                         @Html.AntiForgeryToken()
                         <span>
                             <h5>

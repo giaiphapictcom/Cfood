@@ -172,6 +172,9 @@
     <Compile Include="Helpers\MpStartViewEngine.cs" />
     <Compile Include="Helpers\MyUser.cs" />
     <Compile Include="Helpers\Url\AccountUrlHelper.cs" />
+
+    <Compile Include="Helpers\Url\AccountWishlistUrlHelper.cs" />
+
     <Compile Include="Helpers\Url\CartUrlHelper.cs" />
     <Compile Include="Helpers\Url\ContactUrlHelper.cs" />
     <Compile Include="Helpers\Url\ImageUrlHelper.cs" />
@@ -193,7 +196,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="bin\CKFinder.dll" />
-    <Content Include="bin\CKFinder.pdb" />
     <Content Include="bin\ServiceStack.Text.dll" />
     <Content Include="Content\Admin\assets\font\fontawesome-webfont.svg" />
     <Content Include="Content\Admin\assets\font\fontawesome-webfont.woff" />
@@ -1889,6 +1891,26 @@
     <Content Include="Views\themes\myshopify\Banner\CategoryAdv.cshtml" />
     <Content Include="Views\themes\myshopify\Pages\contact.cshtml" />
     <Content Include="Views\themes\myshopify\Pages\News.Detail.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Account.Active.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\themes\myshopify\Pages\Account.Addresses.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Account.ChangePassword.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Account.ForgotPassword.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Account.GetToken.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Account.InvalidToken.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Account.Login.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Account.Profile.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Account.Register.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Cart.Checkout.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\themes\myshopify\Pages\Cart.View.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\themes\myshopify\Pages\Wishlist.Index.cshtml" />
+    <Content Include="Views\themes\myshopify\Product_div\Type1_4.cshtml" />
+    <Content Include="Views\themes\myshopify\Banner\LeftProductAdv.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

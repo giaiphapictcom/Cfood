@@ -137,14 +137,15 @@ namespace V308CMS.Data
 
         public string Insert(string email, string password, string salt, string token, DateTime tokenExpireDate)
         {
-            var checkAccount = (from p in entities.Account
+            var accounts = from p in entities.Account
                         where p.Email.Equals(email) || p.UserName.Equals(email)
-                                select p).FirstOrDefault();
-            if (checkAccount != null) {
+                                select p;
+            
+            if (accounts != null || accounts.Count() < 1) {
                 return "exist";
             }
             else {
-
+                var checkAccount = accounts.FirstOrDefault();
                 var mAccount = new Account()
                 {
                     Email = email,
@@ -266,13 +267,16 @@ namespace V308CMS.Data
         }
         public string CheckAccount(string email, string password)
         {
-            var checkAccount = (from p in entities.Account
+            var accounts = from p in entities.Account
                                 where p.Email.Equals(email) || p.UserName.Equals(email)
-                                select p).FirstOrDefault();
-            if (checkAccount == null)
+                                select p;
+
+            if (accounts == null || accounts.Count() < 1)
             {
                 return "invalid";
             }
+            var checkAccount = accounts.FirstOrDefault();
+
             if (checkAccount.Status == false)
             {
                 return "not_active";
@@ -296,10 +300,11 @@ namespace V308CMS.Data
         }
         public string CheckEmail(string email)
         {
-            var checkAccount = (from p in entities.Account
+            var accounts = from p in entities.Account
                                 where p.Email.Equals(email) || p.UserName.Equals(email)
-                                select p).FirstOrDefault();
-            return checkAccount != null ? "exist" : "not_exist";
+                                select p;
+            //var checkAccount = ().FirstOrDefault();
+            return accounts.Count() > 1 ? "exist" : "not_exist";
 
         }
         public ETLogin CheckDangKyHome(string pUsername, string pPassword, string pPassWord2, string pEmail, string pFullName, string pMobile)

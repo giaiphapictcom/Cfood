@@ -45,3 +45,37 @@
     color: #ff7900;
  
 }
+
+.blog-item .video {
+    position: relative;
+    display: block;
+}
+
+.blog-item .video .mask-play {
+    position:absolute;
+    height: 100%;
+    width: 100%;
+    background-color:rgba(54, 25, 25, .5);
+    left: 0;
+    top: 0;
+}
+
+.blog-item .video .mask-play .fa{
+    color: #fff;
+    font-size: 50px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
+    text-align: center;
+    padding-left: 10px;
+    top: 30%;
+    position: absolute;
+    left: 40%;
+}
+
+.blog-item .video:hover .mask-play .fa{
+    color:#00aeef;
+    border-color: #00aeef;
+}

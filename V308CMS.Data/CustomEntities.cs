@@ -1052,6 +1052,34 @@ namespace V308CMS.Data
         #endregion
 
     }
+    [Table("productorder_detail")]
+    public class productorder_detail
+    {
+
+        #region[Declare variables]
+        private int _ID;
+        private int? OrderId;
+        private int? ItemId;
+        private string ItemName;
+        private int? ItemQty;
+        private double? ItemPrice;
+        
+        #endregion
+        #region[Public Properties]
+        [Key]
+        public int ID { get { return _ID; } set { _ID = value; } }
+
+        public int? order_id { get { if (OrderId == null || OrderId < 0) return 0; else return OrderId; } set { if (OrderId != value) { if (OrderId < 0) OrderId = 0; else OrderId = value; } } }
+        public int? item_id { get { if (ItemId == null || ItemId < 0) return 0; else return ItemId; } set { if (ItemId != value) { if (ItemId < 0) ItemId = 0; else ItemId = value; } } }
+        public string item_name { get { if (String.IsNullOrEmpty(ItemName)) return ""; else return ItemName; } set { ItemName = value; } }
+        public double? item_price { get { if (ItemPrice == null || ItemPrice < 0) return 0; else return ItemPrice; } set { if (ItemPrice != value) { if (ItemPrice < 0) ItemPrice = 0; else ItemPrice = value; } } }
+        public int? item_qty { get { if (ItemQty == null || ItemQty < 0) return 0; else return ItemQty; } set { if (ItemQty != value) { if (ItemQty < 0) ItemQty = 0; else ItemQty = value; } } }
+
+       
+        #endregion
+
+    }
+    
     #endregion[ket thuc class tblProductOrder]
 
 

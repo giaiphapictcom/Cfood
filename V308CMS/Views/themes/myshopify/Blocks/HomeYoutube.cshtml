@@ -17,9 +17,10 @@
                                 <div class="item">
                                     <div class="blog-item">
                                         <div class="content-blog">
-                                            <div class="image">
+                                            <a class="image video" href="@url.videoURL(video.Title, video.ID)">
                                                 <img src="https://i.ytimg.com/vi/@video.Summary/maxresdefault.jpg" alt="@video.Title">
-                                            </div>
+                                                <span class="mask-play"><i class="fa fa-play"></i></span>
+                                            </a>
                                             <div class="blog-meta">
                                                 <h6 class="p10">@url.VideoAnchor(video.Title, video.ID)</h6>
                                             </div>

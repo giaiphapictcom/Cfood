@@ -1,0 +1,68 @@
+﻿@model  V308CMS.Data.Product
+@using V308CMS.Data;
+@using V308CMS.Common;
+
+<div class="col-md-4 col-sm-4 col-xs-6">
+    <div class="grid-item product-item" id="product-@Model.ID">
+        <div class="item-poduct">
+            <div class="product-image ">
+                <div class="product-label">
+                    <lable class="label">Sale</lable>
+                </div>
+
+
+                <a href="@url.productURL(Model.Name, Model.ID)" class="grid-image">
+                    <img class="feature-Model="@ImageHelper.Crop(@Model.Image, 250)" alt="@Model.Name">
+
+
+                </a>
+
+
+                <div class="quickview-button">
+                    <a href="javascript:void(0)" id="contemporary-leopard-mini-dress" data-toggle="tooltip" data-placement="top" title="@Model.Name" class="sca-qv-button btn">Xem nhanh</a>
+                </div>
+
+
+            </div>
+            <div class="product-content">
+                <h3><a class="product-title" href="@url.productURL(Model.Name, Model.ID)">@Model.Name</a></h3>
+                <div class="price-box">
+                    <p class="sale">
+                        <span class="old-price">
+                            @if (Model.SaleOff > 0)
+                            { 
+                                <span class="money">@String.Format("{0: 0,0}", Model.Price - (Model.Price / 100) * Model.SaleOff) ) @ViewBag.MoneyShort</span>
+                            }
+                        </span>
+                        <span class="special-price">
+                            @if (Model.Price > 0)
+                            {
+                                <span class="money">@String.Format("{0: 0,0}", (Model.Price)) @ViewBag.MoneyShort</span>
+                            }
+                        </span>
+                    </p>
+
+                </div>
+
+                <div class="reviews-container">
+                    <span class="shopify-product-reviews-badge" data-id="7824322313"></span>
+                </div>
+
+                <p class="short-description">@Model.Summary</p>
+                <div class="add-to-link">
+                    <div class="add-to-cart">
+
+                        <form action="/cart/add" method="post" class="variants" id="product-actions-@Model.ID" enctype="multipart/form-data" style="padding: 0px;">
+                            <input type="hidden" name="id" value="29530312713" />
+                            <span>
+                                <input class="btn add-to-cart-btn" data-toggle="tooltip" data-placement="top" title="Thêm vào giỏ hàng" type="submit" value="Thêm vào giỏ hàng" />
+                            </span>
+                        </form>
+                    </div>
+                    <a class="wishlist btn" href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="Yêu thích"><span><i class="fa fa-heart" aria-hidden="true"></i></span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
