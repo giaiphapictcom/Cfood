@@ -173,6 +173,20 @@ namespace V308CMS.Controllers
             }
             
         }
+        public ActionResult LeftProductAdv()
+        {
+            var images = ImagesService.GetImagesByGroupAlias("product-col-left");
+            if (images.Count() > 0)
+            {
+                Image img = images.First();
+                return View("LeftProductAdv", img);
+            }
+            else {
+                return View("LeftProductAdv");
+            }
+            
+        }
+        
         
         #endregion
     }

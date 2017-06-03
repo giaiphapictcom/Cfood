@@ -1908,6 +1908,7 @@
     </Content>
     <Content Include="Views\themes\myshopify\Pages\Wishlist.Index.cshtml" />
     <Content Include="Views\themes\myshopify\Product_div\Type1_4.cshtml" />
+    <Content Include="Views\themes\myshopify\Banner\LeftProductAdv.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
