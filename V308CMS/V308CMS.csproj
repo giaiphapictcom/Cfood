@@ -172,9 +172,6 @@
     <Compile Include="Helpers\MpStartViewEngine.cs" />
     <Compile Include="Helpers\MyUser.cs" />
     <Compile Include="Helpers\Url\AccountUrlHelper.cs" />
-
-    <Compile Include="Helpers\Url\AccountWishlistUrlHelper.cs" />
-
     <Compile Include="Helpers\Url\CartUrlHelper.cs" />
     <Compile Include="Helpers\Url\ContactUrlHelper.cs" />
     <Compile Include="Helpers\Url\ImageUrlHelper.cs" />

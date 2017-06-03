@@ -9,15 +9,11 @@ namespace V308CMS.Helpers
 {
     public class MpStartViewEngine: RazorViewEngine
     {
-<<<<<<< HEAD
 
-        public MpStartViewEngine(Boolean setDefault = false)
-=======
         public MpStartViewEngine(Boolean ViewDefault=false)
->>>>>>> toai-neal
         {
             var viewPath = "";
-            if (setDefault)
+            if (ViewDefault)
             {
                 var routeValues = HttpContext.Current.Request.RequestContext.RouteData.Values;
                 string controllerName = routeValues["controller"].ToString();

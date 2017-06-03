@@ -48,5 +48,11 @@ namespace V308CMS.Common
             string anchor = string.Empty;
             return anchor;
         }
+
+        public static string WishlistIndexUrl()
+        {
+            string anchor = string.Empty;
+            return anchor;
+        }
     }
 }
