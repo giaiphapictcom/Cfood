@@ -120,7 +120,7 @@
                         string url_current = Request.Url.ToString();
                         url_current = System.Net.WebUtility.UrlEncode(url_current);
                         }
-                    <a href="https://www.facebook.com/sharer/sharer.php?u=@url_current&display=popup&ref=plugin&src=like&kid_directed_site=0&app_id=113869198637480" target="_blank" >Chi sẻ Facebook</a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=@url_current&display=popup&ref=plugin&src=like&kid_directed_site=0&app_id=113869198637480" target="_blank" class="fb-share" >Chia sẻ Facebook</a>
                 </li>
             </ul>
 
@@ -136,8 +136,11 @@
         </div>
         <script>
             jQuery('#myTab a').click(function (e) {
-                e.preventDefault();
-                jQuery(this).tab('show');
+                if (!$(this).hasClass("fb-share")) {
+                    e.preventDefault();
+                    jQuery(this).tab('show');
+                }
+                
             })
         </script>
 

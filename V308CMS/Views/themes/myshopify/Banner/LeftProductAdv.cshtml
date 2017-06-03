@@ -1,12 +1,16 @@
 ﻿@model  V308CMS.Data.Image
-<div class="block-bottom-sidebar">
-    <img src="@Model.LinkImage" alt="@Model.Name" />
+@if (Model != null)
+{ 
+    <div class="block-bottom-sidebar">
+        <img src="@Model.LinkImage" alt="@Model.Name" />
 
-    <div class="content-block-left">
+        <div class="content-block-left">
 
-        <span>@Model.Summary</span>
-        <p>@Model.Name</p>
+            <span>@Model.Summary</span>
+            <p>@Model.Name</p>
+
+        </div>
 
     </div>
 
-</div>
+}
