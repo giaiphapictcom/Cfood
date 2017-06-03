@@ -1390,18 +1390,18 @@ namespace V308CMS.Data
             }
         }
 
-        public List<Brand> getRandomBrands(int CategoryID, int Limit = 1)
+        public List<Brand> getRandomBrands(int CategoryID=0, int Limit = 1)
         {
 
             List<Brand> brands = new List<Brand>();
             try
             {
-
-                var items = from b in entities.Brand where b.category_default == CategoryID & b.status.Equals(1)
+                var items = from b in entities.Brand where b.status.Equals(1)
                             select b;
+                if (CategoryID > 0) {
+                    items = items.Where(b=> b.category_default == CategoryID);
+                }
                 brands = items.ToList().OrderBy(x => Guid.NewGuid()).Take(Limit).ToList();
-
-
             }
             catch (Exception ex)
             {
@@ -1437,6 +1437,40 @@ namespace V308CMS.Data
             return default(List<Product>);
 
 
+        }
+
+        public int PageSize = 20;
+        public List<Product> GetItems(int pcurrent=1)
+        {
+            List<Product> mList = null;
+            try
+            {
+                var products = from p in entities.Product
+                         orderby p.ID descending
+                         select p;
+                mList = products.Skip((pcurrent - 1) * PageSize)
+                         .Take(PageSize).ToList();
+                return mList;
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+                throw;
+            }
+        }
+
+        public int GetItemsTotal() {
+            try {
+                var products = from p in entities.Product
+                               orderby p.ID descending
+                               select p;
+                return products.Count();
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+                throw;
+            }
         }
     }
 }

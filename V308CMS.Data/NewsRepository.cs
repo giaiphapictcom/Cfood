@@ -165,7 +165,7 @@ namespace V308CMS.Data
                     throw;
                 }
             }
-        public List<News> GetListNewsMostView(int pTypeId, string pLevel, int psize = 10)
+            public List<News> GetListNewsMostView(int pTypeId, string pLevel, int psize = 10)
         {
             List<News> mList = null;
             int[] mIdGroup;
@@ -200,7 +200,7 @@ namespace V308CMS.Data
 
         }
 
-        public List<News> GetListNewsLastest(int pTypeId, string pLevel, int psize =10)
+            public List<News> GetListNewsLastest(int pTypeId, string pLevel, int psize =10)
         {
             List<News> mList = null;
             int[] mIdGroup;
@@ -692,7 +692,7 @@ namespace V308CMS.Data
                 try
                 {
                     var newGroups = from g in entities.NewsGroups
-                             where g.Status == true & g.Parent == Parent
+                                    where g.Status == Status & g.Parent == Parent
                              orderby g.Number ascending
                              select g;
                     return newGroups.Take(Limit).ToList();
@@ -773,7 +773,22 @@ namespace V308CMS.Data
                     .ToList();
                 totalRecord = listNews.Count;
                 return listNews.Skip((page - 1)*pageSize).Take(pageSize).ToList();
-            } 
+            }
 
+            public News SearchNews(string name)
+            {
+                try
+                {
+                    var Items = from n in entities.News
+                                     where n.Title.ToLower().Contains(name.ToLower())
+                                     select n;
+                    return Items.FirstOrDefault();
+                }
+                catch (Exception ex)
+                {
+                    Console.Write(ex);
+                    throw;
+                }
+            }
         }
 }

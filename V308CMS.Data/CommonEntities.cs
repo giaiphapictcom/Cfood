@@ -1950,6 +1950,7 @@ namespace V308CMS.Data
         public List<Testimonial> Testimonial { get; set; }
         public string[] BrandImages { get; set; }
         public List<Categorys> Categorys { get; set; }
+        public List<Brand> Brands { get; set; }
     }
     public class NewsDetailPageContainer
     {
@@ -1957,10 +1958,12 @@ namespace V308CMS.Data
         public News NextNewsItem { get; set; }
         public News PreviousNewsItem { get; set; }
         public List<News> ListNewsMostView { get; set; }
+        public string PageTitle { get; set; }
     
     }
     public class NewsIndexPageContainer
     {
+        public string PageTitle { get; set; }
         public NewsGroups NewsGroups { get; set; }
         public List<News> ListNews { get; set; }
         public List<News> ListNewsMostView { get; set; }
@@ -2034,6 +2037,17 @@ namespace V308CMS.Data
                 _BackPage = value;
             }
         }
+
+    }
+
+    /*
+     * QuanNH add Affiliate
+     */
+    public class AffiliateProductPage
+    {
+        public List<Product> Products { get; set; }
+        public int ProductTotal { get; set; }
+        public int Page { get; set; }
 
     }
 }

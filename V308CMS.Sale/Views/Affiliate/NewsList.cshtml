@@ -1,0 +1,50 @@
+﻿@model V308CMS.Data.NewsIndexPageContainer
+@using V308CMS.Data
+@using V308CMS.Common
+
+@{
+    
+    Layout = "~/Views/Affiliate/Layout/Backend.cshtml";
+    string PageTitle = Model.NewsGroups != null ?  Model.NewsGroups.Name : Model.PageTitle;
+}
+@section header {
+    <title>@PageTitle</title>
+
+}
+<h4>@PageTitle</h4>
+<div class="row">
+    
+    <div class="col-md-4 col-md-offset-5">
+        <div class="input-group border-radius-0">
+            <input type="text" class="form-control" placeholder="Tìm kiếm" aria-describedby="tablesearch">
+            <span class="input-group-addon btn-green" ><i class="fa fa-search"></i></span>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group border-radius-0 bg-secondary">
+
+            <select class="form-control" id="exampleSelect1">
+                <option>Hiển thị : 10</option>
+                <option>Hiển thị : 30</option>
+                <option>Hiển thị : 50</option>
+                <option>Hiển thị : 100</option>
+            </select>
+        </div>
+    </div>
+
+</div>
+<hr />
+@if (Model.ListNews != null && Model.ListNews.Count() > 0) { 
+    
+        foreach (News news in Model.ListNews) { 
+            <div class="row">
+                <div class="col-md-4"><img src="@ImageHelper.Crop(news.Image)" class="img-responsive" /></div>
+                <div class="col-md-8">
+                    <h5>@news.Title</h5>
+                    <p>@news.Summary</p>
+                </div>
+            </div>
+            <hr />
+        }
+    
+}

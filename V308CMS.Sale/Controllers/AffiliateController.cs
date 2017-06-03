@@ -14,6 +14,7 @@ namespace V308CMS.Sale.Controllers
         #region Repository
         static V308CMSEntities mEntities;
         ProductRepository ProductRepos;
+       
         AccountRepository AccountRepos;
         NewsRepository NewsRepos;
         TestimonialRepository CommentRepo;
@@ -53,11 +54,11 @@ namespace V308CMS.Sale.Controllers
                 if (NewsHomeCategory != null)
                 {
                     Model.Articles = NewsRepos.LayDanhSachTinTheoGroupIdWithPage(5, NewsHomeCategory.ID);
-                    //Model.Articles = Model.Articles.OrderBy(x => x.Order);
                 }
                 Model.Testimonial = CommentRepo.GetRandom(4);
 
                 Model.BrandImages = Directory.GetFiles(Server.MapPath("/Content/Images/brand/"), "*.jpg", SearchOption.TopDirectoryOnly);
+                Model.Brands = ProductRepos.getRandomBrands(0, 6);
                 Model.Categorys = CategoryRepo.GetItems(20);
                 return View(Model);
             }
@@ -73,5 +74,50 @@ namespace V308CMS.Sale.Controllers
             
         }
 
+        public ActionResult NewsList(string CategoryAlias = "", string PageTitle="")
+        {
+            try
+            {
+                CreateRepos();
+                NewsIndexPageContainer Model = new NewsIndexPageContainer();
+                Model.NewsGroups = NewsRepos.SearchNewsGroupByAlias(CategoryAlias);
+                if (Model.NewsGroups != null) {
+                    Model.ListNews = NewsRepos.LayDanhSachTinTheoGroupId(ProductHelper.ProductShowLimit, Model.NewsGroups.ID);
+                } else {
+                    Model.PageTitle = PageTitle;
+                }
+                return View(Model);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return Content(ex.InnerException.ToString());
+            }
+            finally
+            {
+                DisposeRepos();
+            }
+        }
+
+        public ActionResult News(string NewsAlias = "", string PageTitle="")
+        {
+            try
+            {
+                CreateRepos();
+                NewsDetailPageContainer Model = new NewsDetailPageContainer();
+                Model.NewsItem = NewsRepos.SearchNews(NewsAlias);
+                Model.PageTitle = PageTitle;
+                return View(Model);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return Content(ex.InnerException.ToString());
+            }
+            finally
+            {
+                DisposeRepos();
+            }
+        }
     }
 }

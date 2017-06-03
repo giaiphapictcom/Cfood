@@ -84,7 +84,7 @@
             </section>
         </div>
 
-        @if (Model.IsAuthenticated == true)
+        @if (Model.IsAuthenticated == true && Model.Account != null)
         {
             <section class="cbo-usr-ifo">
                 <div class="usr-ifo-head">

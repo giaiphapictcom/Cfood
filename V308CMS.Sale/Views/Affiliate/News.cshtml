@@ -1,0 +1,23 @@
+﻿@model V308CMS.Data.NewsDetailPageContainer
+@using V308CMS.Data
+@using V308CMS.Common
+
+@{
+    
+    Layout = "~/Views/Affiliate/Layout/Backend.cshtml";
+    string PageTitle = Model.NewsItem != null ? Model.NewsItem.Title : Model.PageTitle; 
+}
+@section header {
+    <title>@PageTitle</title>
+
+}
+<h4>@PageTitle</h4>
+@if (Model.NewsItem != null) { 
+    <div>
+        @if (Model.NewsItem.Summary.Length > 0) { 
+            <div class="col-md-12">@Model.NewsItem.Summary</div>
+        }
+        <div class="col-md-12">@Model.NewsItem.Description</div>
+    </div>
+
+}

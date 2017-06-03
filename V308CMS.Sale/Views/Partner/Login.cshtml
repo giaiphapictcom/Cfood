@@ -1,4 +1,6 @@
 ﻿@using System.Text.RegularExpressions;
+@model V308CMS.Data.ETLogin
+
 @{
     Layout = "~/Views/Affiliate/Layout/Default.cshtml";
     string PageTitle = "Đăng nhập hệ thống";
@@ -14,18 +16,27 @@
                 <div class="col-md-12 col-sm-12 col-xs-12 article-home-full">
                     <h3><span>@PageTitle</span></h3>
                 </div>
+                @if (Model != null && Model.message.Length > 0)
+                { 
+                    <div class="col-md-12">
+                    <div class="alert alert-danger">
+                      <strong>Thông Báo!</strong> @Model.message.
+                    </div>
+                    </div>
+                }
                 <div class="col-md-7 col-sm-12 col-xs-12 SocialAreaRight">
-                    <form class="form-horizontal">
+
+                    <form class="form-horizontal" action="/dang-nhap" method="post">
                         <div class="form-group">
-                            <label for="inputEmail" class="control-label col-md-3">Email</label>
-                            <div class="col-md-9">
-                                <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                            <label for="inputEmail" class="control-label col-md-4">Tên Đăng nhập</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="inputEmail" placeholder="Tên Đăng nhập/Email" name="email">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="inputPassword" class="control-label col-md-3">Password</label>
-                            <div class="col-md-9">
-                                <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                            <label for="inputPassword" class="control-label col-md-4">Mật Khẩu</label>
+                            <div class="col-md-8">
+                                <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password">
                             </div>
                         </div>
                         <div class="form-group">

@@ -31,12 +31,16 @@ namespace V308CMS.Controllers
 
             _accountService = new AccountRepository(_mEntities);
             _fileService = new FileRepository(_mEntities);
-            _productWishlistService = new ProductWishlistRepositry(_mEntities);
+            //_productWishlistService = new ProductWishlistRepositry(_mEntities);
             _imagesRepository = new ImagesRepository(_mEntities);
             _marketRepository = new MarketRepository(_mEntities);
+<<<<<<< HEAD
             _contactRepository = new ContactRepository(_mEntities);
             _CartRepository = new CartRepository(_mEntities);
             _CartItemRepository = new CartItemRepository(_mEntities);
+=======
+            //_contactRepository = new ContactRepository(_mEntities);
+>>>>>>> quannh-0529
         }
         protected IContactRepository ContactService
         {
