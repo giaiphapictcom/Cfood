@@ -1,27 +1,38 @@
-﻿@using V308CMS.Common
-@model  List<V308CMS.Data.NewsGroups>
+﻿@model List<V308CMS.Data.Models.MenuConfig>
 <ul class="navbar-nav site-nav">
-
-    <li class="menu-dropdown  level-top   active">
-        <a class="dropdown-toggle has-category" href="/" title="@ViewBag.SiteName">
-            <span>@ViewBag.HomeAliasText</span>
-        </a>
-    </li>
-    @if (Model != null && Model.Count > 0)
-    {
-        foreach (V308CMS.Data.NewsGroups menu in Model)
+    @{
+        var controller = Request.RequestContext.RouteData.Values["Controller"].ToString().ToLower();
+        if (Model.Any())
         {
-            if (!menu.Name.ToLower().Equals("footer"))
+            foreach (var menu in Model)
             {
-                <li class="menu-dropdown  level-top   active">
-                    <a class="dropdown-toggle has-category" href="@menu.Link" title="@menu.Name">
-                        <span class="">@menu.Name</span>
-                    </a>
-                </li>
+
+                var menuName = menu.Name;
+                if (!menuName.ToLower().Equals("footer"))
+                {
+                    var activeCss = "";
+                    if (menu.Link.Contains("/video") && controller == "video")
+                    {
+                        activeCss = "active";
+                    }
+                    if (menu.Link.Contains("/tin-tuc") && controller == "news")
+                    {
+                        activeCss = "active";
+                    }
+                    if (menu.Link.Contains("/lien-he") && controller == "contact")
+                    {
+                        activeCss = "active";
+                    }
+                    <li class="menu-dropdown level-top @activeCss">
+                        <a class="dropdown-toggle" href="@menu.Link" title="@menuName">
+                            <span class="">@menuName</span>
+                        </a>
+                    </li>
+
+                }
 
             }
-
         }
-    }
 
+    }
 </ul>

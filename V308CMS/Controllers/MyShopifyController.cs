@@ -16,8 +16,7 @@ namespace V308CMS.Controllers
 
         public ActionResult Mainmenu()
         {
-            var menu = NewsService.GetNewsGroup();
-            return View("Mainmenu", menu);
+            return View("Mainmenu", MenuConfigService.GetAll());
         }
 
         public ActionResult ProductMost()
