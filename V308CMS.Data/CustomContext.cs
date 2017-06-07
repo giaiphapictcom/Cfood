@@ -595,6 +595,14 @@ namespace V308CMS.Data
         {
             this.ProductType.Add(ProductType);
         }
+        public void AddToProductSize(ProductSize productSize)
+        {
+            this.ProductSize.Add(productSize);
+        }
+        public void AddToProductColor(ProductColor productColor)
+        {
+            this.ProductColor.Add(productColor);
+        }
         public void AddToQuestion(Question Question)
         {
             this.Question.Add(Question);
