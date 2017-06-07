@@ -747,7 +747,78 @@ namespace V308CMS.Data
                     .ToList();
                 totalRecord = listNews.Count;
                 return listNews.Skip((page - 1)*pageSize).Take(pageSize).ToList();
-            } 
+            }
+        public News Find(int id)
+        {
+            return entities.News.FirstOrDefault(news => news.ID == id);
+        }
+
+        public List<News> GetList(int cateoryId = 0)
+        {
+            return cateoryId > 0 ? (from news in entities.News.Include("NewsGroup")
+                                    where news.TypeID == cateoryId
+                                    orderby news.Date.Value descending
+                                    select news
+                ).ToList() : (from news in entities.News.Include("NewsGroup")
+                              orderby news.Date.Value descending
+                              select news
+                ).ToList();
+        }
+
+        public string Insert(News data)
+        {
+            var newsItem = (from news in entities.News
+                            where news.Title == data.Title && news.TypeID == data.TypeID
+                            select news).FirstOrDefault();
+            if (newsItem == null)
+            {
+                entities.News.Add(data);
+                entities.SaveChanges();
+                return "ok";
+            }
+            return "exists";
 
         }
+        public string Update(News data)
+        {
+            var newsItem = (from news in entities.News
+                            where news.ID == data.ID
+                            select news).FirstOrDefault();
+            if (newsItem != null)
+            {
+
+                newsItem.Title = data.Title;
+                newsItem.TypeID = data.TypeID;
+                newsItem.Image = data.Image;
+                newsItem.Summary = data.Summary;
+                newsItem.Detail = data.Detail;
+                newsItem.Keyword = data.Keyword;
+                newsItem.Description = data.Description;
+                newsItem.Order = data.Order;
+                newsItem.Hot = data.Hot;
+                newsItem.Fast = data.Fast;
+                newsItem.Featured = data.Featured;
+                newsItem.Status = data.Status;
+                entities.SaveChanges();
+                return "ok";
+            }
+            return "not_exists";
+
+        }
+
+        public string Delete(int id)
+        {
+            var newsItem = (from color in entities.News
+                            where color.ID == id
+                            select color).FirstOrDefault();
+            if (newsItem != null)
+            {
+                entities.News.Remove(newsItem);
+                entities.SaveChanges();
+                return "ok";
+            }
+            return "not_exists";
+        }
+
+    }
 }

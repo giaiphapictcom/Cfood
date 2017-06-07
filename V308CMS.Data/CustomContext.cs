@@ -233,6 +233,12 @@ namespace V308CMS.Data
             get;
             set;
         }
+        public DbSet<Contact> Contact
+        {
+            get;
+            set;
+        }
+
         public DbSet<ProductDistributor> ProductDistributor
         {
             get;
@@ -337,11 +343,7 @@ namespace V308CMS.Data
             get;
             set;
         }
-        public DbSet<Contact> Contact
-        {
-            get;
-            set;
-        }
+       
 
         #endregion
         #region AddTo Methods
