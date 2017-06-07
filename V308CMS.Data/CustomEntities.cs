@@ -907,6 +907,9 @@ namespace V308CMS.Data
         public string Value { get { if (String.IsNullOrEmpty(_Value)) return ""; else return _Value; } set { _Value = value; } }
         public string Name { get { if (String.IsNullOrEmpty(_Name)) return ""; else return _Name; } set { _Name = value; } }
 
+        [ForeignKey("ProductID")]
+        [Required]
+        public virtual Product Product { get; set; }
 
         #endregion
 
