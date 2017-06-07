@@ -21,6 +21,7 @@ ul.adminmenu {
 .adminmenu li {
     border-bottom: 1px solid #ddd;
     padding: 3px 0;
+    margin-bottom: 0;
 }
 .adminmenu li.noborder {
      border: 0;
@@ -56,6 +57,7 @@ ul.adminmenu {
     color: #ff7e00;
     font-weight: bold;
 }
+.adminmenu li.selected,
 .adminmenu li li.selected {
     background-color: #ffe4c9;
 }
