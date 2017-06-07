@@ -213,6 +213,7 @@ namespace V308CMS.Data
         private bool? _PTaiKhoan;
         private bool? _PHeThong;
         private bool? _PThungRac;
+        private byte? _Type;
         #endregion
         #region[Public Properties]
         [Key]
@@ -235,7 +236,7 @@ namespace V308CMS.Data
         public bool? PHeThong { get { if (_PHeThong == null) return false; else return _PHeThong; } set { if (_PHeThong != value) { _PHeThong = value; } } }
         public bool? PThungRac { get { if (_PThungRac == null) return false; else return _PThungRac; } set { if (_PThungRac != value) { _PThungRac = value; } } }
 
-
+        public Byte? Type { get { return Byte.Parse(_Type.ToString()); } set { _Type = value; } }
 
         #endregion
 

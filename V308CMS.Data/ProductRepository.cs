@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using V308CMS.Common;
 
 namespace V308CMS.Data
 {
@@ -1437,6 +1438,216 @@ namespace V308CMS.Data
             return default(List<Product>);
 
 
+        }
+        public string ChangeStatus(int id)
+        {
+            var product = (from item in entities.Product
+                           where item.ID == id
+                           select item
+                ).FirstOrDefault();
+            if (product != null)
+            {
+                product.Status = !product.Status;
+                entities.SaveChanges();
+                return "ok";
+            }
+            return "not_exists";
+        }
+
+        public List<Product> GetListProductInListId(string listId, bool includeData = true)
+        {
+            return includeData ? (from item in entities.Product.
+                      Include("ProductImages").
+                      Include("ProductColor").
+                      Include("ProductSize").
+                      Include("ProductAttribute").
+                      Include("ProductSaleOff").AsEnumerable()
+                                  where listId.Contains(item.ID.ToString())
+                                  select item
+                ).ToList() :
+                (from item in entities.Product.AsEnumerable()
+                 where listId.Contains(item.ID.ToString())
+                 select item
+                ).ToList();
+        }
+        public Product FindToModify(int id)
+        {
+            return (from item in entities.Product.
+                    Include("ProductImages").
+                    Include("ProductColor").
+                    Include("ProductSize").
+                    Include("ProductAttribute").
+                    Include("ProductSaleOff")
+                    where item.ID == id
+                    select item
+                ).FirstOrDefault();
+
+        }
+        public string UpdateQuantity(int productId, int quantity)
+        {
+            var productQuantity = (from product in entities.Product
+                                   where product.ID == productId
+                                   select product
+                ).FirstOrDefault();
+            if (productQuantity != null)
+            {
+                productQuantity.Quantity = quantity;
+                entities.SaveChanges();
+                return productQuantity.Name;
+            }
+            return "not_exists";
+        }
+        public string UpdateCode(int productId, string code)
+        {
+            var productCode = (from product in entities.Product
+                               where product.ID == productId
+                               select product
+                ).FirstOrDefault();
+            if (productCode != null)
+            {
+                productCode.Code = code;
+                entities.SaveChanges();
+                return productCode.Name;
+            }
+            return "not_exists";
+        }
+        public string UpdateNpp(int productId, double npp)
+        {
+            var productNpp = (from product in entities.Product
+                              where product.ID == productId
+                              select product
+                ).FirstOrDefault();
+            if (productNpp != null)
+            {
+                productNpp.Npp = npp;
+                entities.SaveChanges();
+                return productNpp.Name;
+            }
+            return "not_exists";
+        }
+        public string UpdatePrice(int productId, double price)
+        {
+            var productPrice = (from product in entities.Product
+                                where product.ID == productId
+                                select product
+                ).FirstOrDefault();
+            if (productPrice != null)
+            {
+                productPrice.Price = price;
+                entities.SaveChanges();
+                return productPrice.Name;
+            }
+            return "not_exists";
+        }
+
+        public string UpdateOrder(int productId, int order)
+        {
+            var productOrder = (from product in entities.Product
+                                where product.ID == productId
+                                select product
+                ).FirstOrDefault();
+            if (productOrder != null)
+            {
+                productOrder.Number = order;
+                entities.SaveChanges();
+                return productOrder.Name;
+            }
+            return "not_exists";
+        }
+
+        public List<ProductItem> GetList(
+            out int totalRecord, int categoryId = 0,
+            int quantity = 0, int state = 0,
+            int brand = 0, int manufact = 0,
+            int provider = 0,
+            string keyword = "",
+            int page = 1, int pageSize = 15)
+        {
+
+            IEnumerable<Product> data = (from product in entities.Product.Include("ProductType")
+                                         select product
+                                         ).ToList();
+
+            if (!string.IsNullOrWhiteSpace(keyword))
+            {
+                var keywordLower = Ultility.LocDau(keyword.ToLower());
+                data = (from product in entities.Product.AsEnumerable()
+                        where Ultility.LocDau(product.Code.ToLower()).Contains(keywordLower) ||
+                               Ultility.LocDau(product.Name.ToLower()).Contains(keywordLower)
+
+                        select product
+                    ).ToList();
+            }
+            if (categoryId > 0)
+            {
+                data = (from product in data
+                        where product.Type == categoryId
+                        select product
+                  ).ToList();
+
+            }
+            if (quantity > 0)
+            {
+                data = quantity == 1 ? (from product in data
+                                        where product.Quantity > 0
+                                        select product
+                 ).ToList() : (from product in data
+                               where product.Quantity == 0
+                               select product
+                 ).ToList();
+            }
+            if (state > 0)
+            {
+                data = state == 1 ? (from product in data
+                                     where product.Status == true
+                                     select product
+                 ).ToList() : (from product in data
+                               where product.Status == false
+                               select product
+                 ).ToList();
+            }
+
+            if (manufact > 0)
+            {
+                data = (from product in data
+                        where product.Manufacturer == manufact
+                        select product
+                 ).ToList();
+            }
+            if (brand > 0)
+            {
+                data = (from product in data
+                        where product.BrandId == brand
+                        select product
+                 ).ToList();
+            }
+            if (provider > 0)
+            {
+                data = (from product in data
+                        where product.AccountId == provider
+                        select product
+                 ).ToList();
+            }
+            totalRecord = data.Count();
+            return (from product in data
+                    orderby product.Date.Value descending
+                    select new ProductItem
+                    {
+                        Id = product.ID,
+                        Name = product.Name,
+                        CategoryId = product.Type,
+                        CategoryName = product.ProductType.Name,
+                        Quantity = product.Quantity,
+                        Code = product.Code,
+                        CreatedDate = product.Date.Value,
+                        Status = product.Status,
+                        Image = product.Image,
+                        Price = product.Price,
+                        Npp = product.Npp,
+                        Order = product.Number.HasValue ? product.Number.Value : 0
+                    }
+                )
+                .Skip((page - 1) * pageSize).Take(pageSize).ToList();
         }
     }
 }
