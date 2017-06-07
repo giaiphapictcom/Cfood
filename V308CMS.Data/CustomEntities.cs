@@ -1492,17 +1492,9 @@ namespace V308CMS.Data
     public class SiteConfig
     {
 
-        //#region[Declare variables]
-        private int _ID;
-        private string _name;
-        private string _content;
-
-        //    #endregion
-        //    #region[Public Properties]
-        [Key]
-        public int id { get { return _ID; } set { _ID = value; } }
-        public string name { get { if (String.IsNullOrEmpty(_name)) return ""; else return _name; } set { _name = value; } }
-        public string content { get { if (String.IsNullOrEmpty(_content)) return ""; else return _content; } set { _content = value; } }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Content { get; set; }
 
 
         //#endregion
