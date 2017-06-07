@@ -797,6 +797,7 @@ namespace V308CMS.Data
         [Key]
         public int ID { get { return _ID; } set { _ID = value; } }
         public string Name { get { if (String.IsNullOrEmpty(_Name)) return ""; else return _Name; } set { _Name = value; } }
+        public string Code { get { if (String.IsNullOrEmpty(_Code)) return ""; else return _Code; } set { _Code = value; } }
         public double? Price
         {
             get
