@@ -1,0 +1,53 @@
+﻿@{
+
+    Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
+}
+@section header {
+    <title>@ViewBag.SiteName - Tài khoản</title>
+}
+@section Breadcrumb{
+    <div class="clearfix breadcrumb-wrap">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="breadcrumb">
+                        <h2></h2>
+                        <a href="/" title="Back to the frontpage">Home</a>
+                        <span class="icon"><i class="fa fa-circle"></i></span>
+                        <strong>
+                            Tài khoản
+                        </strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<main class="container main-content">
+
+    <header class="page-header">
+        <h1>My Account</h1>
+    </header>
+
+    <div class="grid">
+
+        <div class="grid-item two-thirds medium-down--one-whole">
+            <header class="page-header">
+                <h4>Order History</h4>
+            </header>
+            <p>You haven't placed any orders yet.</p>
+        </div>
+
+        <div class="grid-item one-third medium-down--one-whole">
+            <header class="page-header">
+                <h4>Account Details</h4>
+            </header>
+            <h5>
+                toai hoang van
+            </h5>
+            <p><a href="/account/addresses"><span>View Addresses</span> (0)</a></p>
+        </div>
+
+    </div>
+</main>
