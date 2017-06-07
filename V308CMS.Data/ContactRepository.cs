@@ -8,10 +8,10 @@ namespace V308CMS.Data
     }
     public class ContactRepository: IContactRepository
     {
-        private V308CMSEntities entities;
+        private readonly V308CMSEntities _entities;
         public ContactRepository(V308CMSEntities mEntities)
         {
-            this.entities = mEntities;
+            this._entities = mEntities;
         }
 
 
@@ -25,8 +25,8 @@ namespace V308CMS.Data
                 Message = message,
                 CreatedDate = createdDate
             };
-            entities.Contact.Add(contact);
-            entities.SaveChanges();
+            _entities.Contact.Add(contact);
+            _entities.SaveChanges();
             return "ok";
         }
     }
