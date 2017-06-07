@@ -610,6 +610,9 @@ namespace V308CMS.Data
         public bool? Slider { get { if (_Slider == null) return false; else return _Slider; } set { if (_Slider != value) { _Slider = value; } } }
         public bool? Hot { get { if (_Hot == null) return false; else return _Hot; } set { if (_Hot != value) { _Hot = value; } } }
         public bool? Fast { get { if (_Fast == null) return false; else return _Fast; } set { if (_Fast != value) { _Fast = value; } } }
+        [ForeignKey("TypeID")]
+        [Required]
+        public virtual NewsGroups NewsGroup { get; set; }
         #endregion
 
     }
@@ -622,6 +625,10 @@ namespace V308CMS.Data
     [Table("newsgroups")]
     public class NewsGroups
     {
+        public NewsGroups()
+        {
+            ListNews = new List<News>();
+        }
 
         #region[Declare variables]
         private int _ID;
@@ -651,7 +658,7 @@ namespace V308CMS.Data
         public string Link { get { if (String.IsNullOrEmpty(_Link)) return ""; else return _Link; } set { _Link = value; } }
         public string Description { get { if (String.IsNullOrEmpty(_Description)) return ""; else return _Description; } set { _Description = value; } }
 
-
+        public virtual ICollection<News> ListNews { get; set; }
         #endregion
 
     }
@@ -1325,35 +1332,6 @@ namespace V308CMS.Data
     #endregion[ket thuc class tblQuestionType]
 
 
-
-    #region[Bat dau 1  class tblRole]
-
-    [Table("role")]
-    public class Role
-    {
-
-        #region[Declare variables]
-        private int _ID;
-        private string _Name;
-        private int? _Type;
-
-
-
-        #endregion
-        #region[Public Properties]
-        [Key]
-        public int ID { get { return _ID; } set { _ID = value; } }
-        public string Name { get { if (String.IsNullOrEmpty(_Name)) return ""; else return _Name; } set { _Name = value; } }
-        public int? Type { get { if (_Type == null || _Type < 0) return 0; else return _Type; } set { if (_Type != value) { if (_Type < 0) _Type = 0; else _Type = value; } } }
-
-
-        #endregion
-
-    }
-    #endregion[ket thuc class tblRole]
-
-
-
     #region[Bat dau 1  class tblSEO]
 
     [Table("seo")]
@@ -1605,7 +1583,9 @@ namespace V308CMS.Data
         public string image { get { if (String.IsNullOrEmpty(_Image)) return ""; else return _Image; } set { _Image = value; } }
         public int status { get { if (_Status == null || _Status < 0) return 0; else return _Status; } set { if (_Status != value) { if (_Status < 0) _Status = 0; else _Status = value; } } }
 
+        [ForeignKey("category_default")]
 
+        public virtual ProductType ProductType { get; set; }
         #endregion
 
     }
