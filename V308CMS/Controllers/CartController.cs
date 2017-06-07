@@ -36,7 +36,7 @@ namespace V308CMS.Controllers
                 return Json(new
                 {
                     code = 1,
-                    totalprice = String.Format("{0: 0,0}", shoppingCart.SubTotal),
+                    totalprice = string.Format("{0: 0,0}", shoppingCart.SubTotal),
                     message = "Sản phẩm đã được thêm vào giỏ hàng thành công."
                 });
 
@@ -109,7 +109,7 @@ namespace V308CMS.Controllers
 
         public ActionResult Checkout()
         {
-            if (ShoppingCart.Instance.Items.Count() < 1) {
+            if (!ShoppingCart.Instance.Items.Any()) {
                 return RedirectToAction("Index", "Home");
             }
             return View("Cart.Checkout", ShoppingCart.Instance);
@@ -121,13 +121,13 @@ namespace V308CMS.Controllers
             var product = ProductsService.LayTheoId(id);
             if (product != null)
             {
-                if (product.Number == 0)
+                if (product.Quantity == 0)
                 {
                     return Json(new { code = 0, message = "Sản phẩm hiện đã hết hàng." });
                 }
-                if (product.Number < quantity)
+                if (product.Quantity < quantity)
                 {
-                    return Json(new { code = 0, message = string.Format("Chỉ còn {0} sản phẩm.", product.Number) });
+                    return Json(new { code = 0, message = string.Format("Chỉ còn {0} sản phẩm.", product.Quantity) });
                 }
 
                 var shoppingCart = ShoppingCart.Instance;
