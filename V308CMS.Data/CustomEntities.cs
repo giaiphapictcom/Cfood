@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using V308CMS.Data.Models;
 
 namespace V308CMS.Data
 {
@@ -724,6 +725,10 @@ namespace V308CMS.Data
         public Product()
         {
             ProductImages = new List<ProductImage>();
+            ProductColor = new List<ProductColor>();
+            ProductSize = new List<ProductSize>();
+            ProductAttribute = new List<ProductAttribute>();
+            ProductSaleOff = new List<ProductSaleOff>();
         }
         #region[Declare variables]
         private int _ID;
@@ -767,6 +772,19 @@ namespace V308CMS.Data
         private int? _Transport22;
         private int? _Answer;
         private int? _MarketId;
+        private int _Quantity;
+        private string _Code;
+        private int? _BrandId;
+        private string _Country;
+        private string _Store;
+        private double? _Npp;
+        private string _Width;
+        private string _Height;
+        private string _Depth;
+        private string _Title;
+        private string _WarrantyTime;
+        private string _ExpireDate;
+        public string _Weight;
         #endregion
         #region[Public Properties]
         [Key]
@@ -828,6 +846,18 @@ namespace V308CMS.Data
         public int? Transport12 { get { if (_Transport12 == null || _Transport12 < 0) return 0; else return _Transport12; } set { if (_Transport12 != value) { if (_Transport12 < 0) _Transport12 = 0; else _Transport12 = value; } } }
         public int? Transport22 { get { if (_Transport22 == null || _Transport22 < 0) return 0; else return _Transport22; } set { if (_Transport22 != value) { if (_Transport22 < 0) _Transport22 = 0; else _Transport22 = value; } } }
         public int? Unit { get { if (_Unit == null || _Unit < 0) return 0; else return _Unit; } set { if (_Unit != value) { if (_Unit < 0) _Unit = 0; else _Unit = value; } } }
+        public int Quantity { get { if (_Quantity < 0) return 0; else return _Quantity; } set { if (_Quantity != value) { if (_Quantity < 0) _Quantity = 0; else _Quantity = value; } } }
+        public int? BrandId { get { if (_BrandId == null || _BrandId < 0) return 0; else return _BrandId; } set { if (_BrandId != value) { if (_BrandId < 0) _BrandId = 0; else _BrandId = value; } } }
+        public string Country { get { if (String.IsNullOrEmpty(_Country)) return ""; else return _Country; } set { _Country = value; } }
+        public string Store { get { if (String.IsNullOrEmpty(_Store)) return ""; else return _Store; } set { _Store = value; } }
+        public double? Npp { get { if (_Npp == null || _Npp < 0) return 0; else return _Npp; } set { if (_Npp != value) { if (_Npp < 0) _Npp = 0; else _Npp = value; } } }
+        public string Width { get { if (String.IsNullOrEmpty(_Width)) return ""; else return _Width; } set { _Width = value; } }
+        public string Height { get { if (String.IsNullOrEmpty(_Height)) return ""; else return _Height; } set { _Height = value; } }
+        public string Depth { get { if (String.IsNullOrEmpty(_Depth)) return ""; else return _Depth; } set { _Depth = value; } }
+        public string Title { get { if (String.IsNullOrEmpty(_Title)) return ""; else return _Title; } set { _Title = value; } }
+        public string WarrantyTime { get { if (String.IsNullOrEmpty(_WarrantyTime)) return ""; else return _WarrantyTime; } set { _WarrantyTime = value; } }
+        public string ExpireDate { get { if (String.IsNullOrEmpty(_ExpireDate)) return ""; else return _ExpireDate; } set { _ExpireDate = value; } }
+        public string Weight { get { if (String.IsNullOrEmpty(_Weight)) return ""; else return _Weight; } set { _Weight = value; } }
 
         #endregion
         public int getReview()
@@ -835,10 +865,20 @@ namespace V308CMS.Data
 
             return V308CMS.Common.RamdomUltis.getRamdom(2, 5);
         }
+        [ForeignKey("Type")]
+        [Required]
+        public virtual ProductType ProductType { get; set; }
         //add by toaihv
-        public virtual ICollection<ProductImage> ProductImages { get;set; }
+        public virtual ICollection<ProductImage> ProductImages { get; set; }
+
+        public virtual ICollection<ProductColor> ProductColor { get; set; }
+        public virtual ICollection<ProductSize> ProductSize { get; set; }
+
+        public virtual ICollection<ProductAttribute> ProductAttribute { get; set; }
         [ForeignKey("Manufacturer")]
-        public virtual ProductManufacturer ProductManufacturer { get;set; }
+        public virtual ProductManufacturer ProductManufacturer { get; set; }
+
+        public virtual ICollection<ProductSaleOff> ProductSaleOff { get; set; }
     }
     #endregion[ket thuc class tblProduct]
 
