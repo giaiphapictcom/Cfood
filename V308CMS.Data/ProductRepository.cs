@@ -1472,5 +1472,68 @@ namespace V308CMS.Data
                 throw;
             }
         }
+
+        public OrdersPage GetOrdersAffiliatePage(int PageCurrent = 0,int PartnerID=0)
+        {
+            OrdersPage ModelPage = new OrdersPage();
+            try
+            {
+                var items = from p in entities.ProductOrder
+                            //join m in entities.ProductOrderMap on p.AccountID equals m.uid into map
+                            //    from m in map.DefaultIfEmpty()
+                            
+                            //where m.partner_id.Equals(PartnerID)
+                            orderby p.ID descending
+                            select p;
+
+                ModelPage.Total = items.Count();
+                ModelPage.Page = PageCurrent;
+                ModelPage.Items = items.Skip((PageCurrent - 1) * PageSize).Take(PageSize).ToList();
+                return ModelPage;
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+                throw;
+            }
+        }
+
+        public OrdersReportByDaysPage GetOrderReport7DayPage(int PageCurrent = 0, int PartnerID = 0)
+        {
+            OrdersReportByDaysPage ModelPage = new OrdersReportByDaysPage();
+            List<OrdersReportByDay> ReportDays = new List<OrdersReportByDay>();
+            try
+            {
+                DateTime today = DateTime.Today;
+                DateTime begin = today.AddDays(-6);
+                var dates = Enumerable.Range(0, 7).Select(days => begin.AddDays(days)).ToList();
+                foreach( DateTime d in dates ){
+                    OrdersReportByDay ReportDay = new OrdersReportByDay();
+
+                    var items = from p in entities.ProductOrder
+                                //join m in entities.ProductOrderMap on p.AccountID equals m.uid into map
+                                //    from m in map.DefaultIfEmpty()
+
+                                //where m.partner_id.Equals(PartnerID)
+                                where p.Date <= d
+                                select p;
+
+
+                    ReportDay.date = d;
+                    ReportDay.Total = items.Count();
+
+                    ReportDays.Add(ReportDay);
+                }
+                ModelPage.report = ReportDays;
+                ModelPage.days = dates;
+                return ModelPage;
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+                throw;
+            }
+        }
+        
     }
 }

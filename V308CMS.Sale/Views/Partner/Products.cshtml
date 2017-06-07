@@ -1,5 +1,5 @@
-﻿@using V308CMS.Data;
-@using V308CMS.Common;
+﻿@using V308CMS.Data
+@using V308CMS.Common
 @model V308CMS.Data.AffiliateProductPage
 @{
     Layout = "~/Views/Affiliate/Layout/Backend.cshtml";
@@ -79,7 +79,10 @@
     <tbody>
         @if (Model.Products != null && Model.Products.Count() > 0)
         {
+            string product_href = "";
             foreach( Product pro in Model.Products ){
+                product_href = ViewBag.productLink + url.productURL(pro.Name, pro.ID);
+                
                 <tr>
                     <th scope="row">@pro.ID</th>
                     <td>@pro.Name</td>
@@ -90,7 +93,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td><a href="#" class="btn btn-green">Tạo</a></td>
+                    <td><a href="/link/tao-moi?l=@WebUtility.UrlEncode(product_href)" class="btn btn-green">Tạo</a></td>
                 </tr>
             }
         }

@@ -49,11 +49,8 @@
         <tr>
             <th>#</th>
             <th>Thời gian</th>
-            <th>Link</th>
-            <th>Click</th>
-            <th>Tên CP</th>
-            <th>Nguồn CP</th>
-
+            <th>Click Trong Tuần</th>
+            <th>Click Trong Tháng</th>
         </tr>
     </thead>
     <tbody>
@@ -65,29 +62,19 @@
                 link_href = "http://" + ViewBag.linkDomain + "/link/" + l.code;
                 
                 <tr>
-                <th scope="row">@l.code</th>
-                <td>@String.Format("{0:d}", l.created)</td>
-                <td>
-                    <div class="input-group">
-                        <input type="text" class="form-control" disabled="disabled" value="@link_href">
-                        <a class="input-group-addon link_href_copy"><i class="fa fa-copy"></i></a>
-                        <a class="input-group-addon" target="_blank" href="@link_href"><i class="fa fa-external-link"></i></a>
-
-                    </div>
-                    <small class="form-text text-muted">@StringClearFormat.LTrim(l.url,50)</small>
-
-                </td>
-                <td class="text-center">@l.click</td>
-                <td>@l.name</td>
-                <td>@l.source</td>
-            </tr>
+                    <th scope="row">@l.code</th>
+                    <td>@String.Format("{0:d}", l.created)</td>
+                
+                    <td class="text-center">@l.click</td>
+                    <td class="text-center">@l.click</td>
+                </tr>
              }
             
         }
         else
         { 
             <tr>
-                <td colspan="6" class="text-center">Không có liên kết nào</td>
+                <td colspan="6" class="text-center">Không có Link nào</td>
             </tr>
         }
 

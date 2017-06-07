@@ -61,22 +61,22 @@ namespace V308CMS.Data
         }
         public ETLogin CheckDangNhap(string  pUsername,string pPassword)
         {
-            Admin mAdmin = null;
+            Account user = null;
             ETLogin mETLogin=new ETLogin();
             try
             {
                 //lay danh sach tin moi dang nhat
-                mAdmin = (from p in entities.Admin
+                user = (from p in entities.Account
                           where p.UserName.Equals(pUsername) || p.Email.Equals(pUsername)
                             select p).FirstOrDefault();
-                if (mAdmin != null)
+                if (user != null)
                 {
-                    if (mAdmin.Password.Trim().Equals(EncryptionMD5.ToMd5(pPassword.Trim())))
+                    if (user.Password.Trim().Equals(EncryptionMD5.ToMd5(pPassword.Trim())))
                     {
                         mETLogin.code = 1;
                         mETLogin.message = "OK.";
-                        mETLogin.Admin = mAdmin;
-                        mETLogin.role = int.Parse(mAdmin.Role.ToString());
+                        mETLogin.Account = user;
+                        mETLogin.role = int.Parse(user.Role.ToString());
                     }
                     else
                     {

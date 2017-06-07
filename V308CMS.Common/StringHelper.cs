@@ -108,5 +108,27 @@ namespace V308CMS.Common
             return outputString;
         }
 
+        public static string DaynameVN(String name="")
+        {
+            string daynameVN = "";
+            switch (name) {
+                case "Monday":
+                    daynameVN = "Thứ 2";break;
+                case "Tuesday":
+                    daynameVN = "Thứ 3"; break;
+                case "Wednesday":
+                    daynameVN = "Thứ 4"; break;
+                case "Thursday":
+                    daynameVN = "Thứ 5"; break;
+                case "Friday":
+                    daynameVN = "Thứ 6"; break;
+                case "Saturday":
+                    daynameVN = "Thứ 7"; break;
+                case "Sunday":
+                    daynameVN = "Chủ Nhật"; break;
+
+            }
+            return daynameVN;
+        }
     }
 }

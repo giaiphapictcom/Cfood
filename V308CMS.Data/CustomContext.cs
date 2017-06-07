@@ -157,6 +157,11 @@ namespace V308CMS.Data
             get;
             set;
         }
+        public DbSet<ProductOrderMap> ProductOrderMap
+        {
+            get;
+            set;
+        }
         public DbSet<productorder_detail> ProductOrderItem
         {
             get;
@@ -242,6 +247,28 @@ namespace V308CMS.Data
             set;
         }
         public DbSet<Contact> Contact
+        {
+            get;
+            set;
+        }
+
+        public DbSet<AffiliateBanner> AffiliateBanner
+        {
+            get;
+            set;
+        }
+        public DbSet<AffiliateLink> AffiliateLink
+        {
+            get;
+            set;
+        }
+        public DbSet<Ticket> TicketRepository
+        {
+            get;
+            set;
+        }
+
+        public DbSet<Counpon> CounponTbl
         {
             get;
             set;

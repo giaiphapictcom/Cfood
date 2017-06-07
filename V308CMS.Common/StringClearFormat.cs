@@ -169,5 +169,19 @@ namespace V308CMS.Common
             }
             return result;
         }
+
+        public static string LTrim(string s, int Length)
+        {
+            if (s == null)
+                return string.Empty;
+            if (s.Length >= Length)
+            {
+                return s.Substring(0, Length)+"...";
+            }
+            else
+            {
+                return s;
+            }
+        }
     }
 }

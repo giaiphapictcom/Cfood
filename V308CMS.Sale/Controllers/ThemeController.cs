@@ -34,11 +34,12 @@ namespace V308CMS.Sale.Controllers
         }
         private void DisposeRepos()
         {
-            mEntities.Dispose();
+           
             ProductRepos.Dispose();
             imagesRepos.Dispose();
             NewsRepos.Dispose();
             accountRepos.Dispose();
+            mEntities.Dispose();
         }
         #endregion
 
@@ -206,6 +207,30 @@ namespace V308CMS.Sale.Controllers
 
             string view = "~/Views/" + MainController + "/Blocks/BlockPagination.cshtml";
             return View(view, Model);
+        }
+
+        public ActionResult BlockNews12(News article=null)
+        {
+            
+            try
+            {
+                CreateRepos();
+                if (article == null || article.ID < 1)
+                {
+                    article = NewsRepos.SearchNews("affiliate-co-gi-khac-biet");
+                }
+                string view = "~/Views/" + MainController + "/Blocks/BlockNews12.cshtml";
+                return View(view, article);
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.InnerException.ToString());
+            }
+            finally
+            {
+                DisposeRepos();
+            }
+            
         }
     }
 }

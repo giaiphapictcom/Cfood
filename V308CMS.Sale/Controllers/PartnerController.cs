@@ -14,32 +14,50 @@ namespace V308CMS.Sale.Controllers
         #region Repository
         static V308CMSEntities mEntities;
         ProductRepository ProductRepos;
+       
         AccountRepository AccountRepos;
         NewsRepository NewsRepos;
         TestimonialRepository CommentRepo;
         CategoryRepository CategoryRepo;
+        LinkRepository LinkRepo;
+        BannerRepository BannerRepo;
+        TicketRepository TicketRepo;
+        CouponRepository CouponRepo;
+        int PageSize = 10;
         private void CreateRepos()
         {
             mEntities = new V308CMSEntities();
             ProductRepos = new ProductRepository(mEntities);
-            ProductRepos.PageSize = 50;
+            ProductRepos.PageSize = PageSize;
             ProductHelper.ProductShowLimit = ProductRepos.PageSize;
             AccountRepos = new AccountRepository(mEntities);
             NewsRepos = new NewsRepository(mEntities);
             CommentRepo = new TestimonialRepository(mEntities);
             CategoryRepo = new CategoryRepository(mEntities);
+            LinkRepo = new LinkRepository(mEntities);
+            BannerRepo = new BannerRepository(mEntities);
+            TicketRepo = new TicketRepository(mEntities);
+            CouponRepo = new CouponRepository(mEntities);
+            CouponRepo.PageSize = PageSize;
         }
+
         private void DisposeRepos()
         {
             mEntities.Dispose();
             ProductRepos.Dispose();
+           
             AccountRepos.Dispose();
             NewsRepos.Dispose();
             CommentRepo.Dispose();
             CategoryRepo.Dispose();
+            LinkRepo.Dispose();
+            BannerRepo.Dispose();
+            TicketRepo.Dispose();
+            CouponRepo.Dispose();
         }
         #endregion
 
+        [AffiliateAuthorize]
         public ActionResult Index()
         {
             return View();
@@ -62,14 +80,13 @@ namespace V308CMS.Sale.Controllers
                 if (mETLogin.code == 1 && (mETLogin.role == 1 || mETLogin.role == 3))
                 {
                     mETLogin.message = "Đăng nhập thành công.";
-                    Session["UserId"] = mETLogin.Admin.ID;
-                    Session["UserName"] = mETLogin.Admin.UserName;
-                    Session["Role"] = mETLogin.Admin.Role;
-                    Session["Admin"] = mETLogin.Admin;
+                    Session["UserId"] = mETLogin.Account.ID;
+                    Session["UserName"] = mETLogin.Account.UserName;
+                    Session["Role"] = mETLogin.Account.Role;
+                    Session["Account"] = mETLogin.Account;
                     FormsAuthentication.SetAuthCookie(email, true);
 
-                    Response.BufferOutput = true;
-                    Response.Redirect("/dashboard");
+                    return Redirect("/dashboard");
                 }
                 
                 return View(mETLogin);
@@ -85,44 +102,141 @@ namespace V308CMS.Sale.Controllers
             }
             
         }
-
         public ActionResult Register()
         {
             return View();
         }
 
 
+        #region Support Send
+        [HttpGet]
+        [AffiliateAuthorize]
+        public ActionResult SupportRequest()
+        {
+            return View();
+        }
+        [HttpPost, ActionName("SupportRequest")]
+        [AffiliateAuthorize]
+        public ActionResult SupportRequestPost()
+        {
+            try
+            {
+                CreateRepos();
+                TicketRepo.Insert(Request["title"], Request["content"], int.Parse(Session["UserId"].ToString()));
+                return Redirect("/dashboard");
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+                return Content("Xảy ra lỗi hệ thống ! Vui lòng thử lại.");
+            }
+            finally
+            {
+                DisposeRepos();
+            }
+        }
+        #endregion
 
         #region LinkForm Action
-        
+
         [HttpGet]
+        [AffiliateAuthorize]
         public ActionResult Links()
         {
-            return View();
-        }
+            try
+            {
+                int nPage = Convert.ToInt32(Request.QueryString["p"]);
+                if (nPage < 1)
+                {
+                    nPage = 1;
+                }
 
-        [HttpPost, ActionName("Links")]
-        public ActionResult LinksPost()
-        {
-            return View();
+                CreateRepos();
+                AffiliateLinksPage Model = new AffiliateLinksPage();
+                Model.Links = LinkRepo.GetItems(nPage);
+                Model.LinkTotal = LinkRepo.GetItemsTotal();
+
+                Model.Page = nPage;
+                return View(Model);
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+                return Content("Xảy ra lỗi hệ thống ! Vui lòng thử lại.");
+            }
+            finally
+            {
+                DisposeRepos();
+            }
         }
+        
+        [HttpGet]
+        [AffiliateAuthorize]
+        public ActionResult LinkReport()
+        {
+            try
+            {
+                int nPage = Convert.ToInt32(Request.QueryString["p"]);
+                if (nPage < 1)
+                {
+                    nPage = 1;
+                }
+
+                CreateRepos();
+                AffiliateLinksPage Model = new AffiliateLinksPage();
+                Model.Links = LinkRepo.GetItems(nPage);
+                Model.LinkTotal = LinkRepo.GetItemsTotal();
+
+                Model.Page = nPage;
+                return View(Model);
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+                return Content("Xảy ra lỗi hệ thống ! Vui lòng thử lại.");
+            }
+            finally
+            {
+                DisposeRepos();
+            }
+        }
+        
 
         [HttpGet]
+        [AffiliateAuthorize]
         public ActionResult LinkForm()
         {
-            return View();
+            AffiliateLinkFormPage Model = new AffiliateLinkFormPage();
+            Model.url = Request["l"];
+            return View(Model);
         }
 
         [HttpPost, ActionName("LinkForm")]
+        [AffiliateAuthorize]
         public ActionResult LinkFormPost()
         {
-            return View();
+            try
+            {
+                CreateRepos();
+                string url = Request["url"];
+                LinkRepo.Insert(Request["url"], int.Parse(Session["UserId"].ToString()), Request["source"], Request["taget"], Request["name"], Request["summary"]);
+                return Redirect("/link");
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+                return Content("Xảy ra lỗi hệ thống ! Vui lòng thử lại.");
+            }
+            finally
+            {
+                DisposeRepos();
+            }
         }
         #endregion
 
         #region Products
-
         [HttpGet]
+        [AffiliateAuthorize]
         public ActionResult Products()
         {
             try {
@@ -151,14 +265,169 @@ namespace V308CMS.Sale.Controllers
             }
             
         }
+        #endregion
 
-        [HttpPost, ActionName("Products")]
-        public ActionResult ProductsPost()
+        #region Banner Action
+
+        [HttpGet]
+        [AffiliateAuthorize]
+        public ActionResult Banners()
         {
             return View();
         }
+
+        [HttpGet]
+        [AffiliateAuthorize]
+        public ActionResult BannerForm()
+        {
+            return View();
+        }
+
+        [HttpPost, ActionName("BannerForm")]
+        [AffiliateAuthorize]
+        public ActionResult BannerFormPost()
+        {
+            try
+            {
+                CreateRepos();
+                BannerRepo.Insert(Request["image"], Request["title"], Request["summary"], Request["url"]);
+                return Redirect("/banner");
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+                return Content("Xảy ra lỗi hệ thống ! Vui lòng thử lại.");
+            }
+            finally
+            {
+                DisposeRepos();
+            }
+        }
         #endregion
 
+        #region Coupon
+        [HttpGet]
+        [AffiliateAuthorize]
+        public ActionResult Coupons()
+        {
+            try
+            {
 
+                int nPage = Convert.ToInt32(Request.QueryString["p"]);
+                if (nPage < 1)
+                {
+                    nPage = 1;
+                }
+                CreateRepos();
+                CouponsPage Model = CouponRepo.GetItemsPage(nPage);
+                return View(Model);
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+                return Content("Xảy ra lỗi hệ thống ! Vui lòng thử lại.");
+            }
+            finally
+            {
+                DisposeRepos();
+            }
+        }
+
+        [HttpGet]
+        [AffiliateAuthorize]
+        public ActionResult CouponForm()
+        {
+            return View();
+        }
+
+        [HttpPost, ActionName("CouponForm")]
+        [AffiliateAuthorize]
+        public ActionResult CouponFormPost()
+        {
+            try
+            {
+                CreateRepos();
+                BannerRepo.Insert(Request["image"], Request["title"], Request["summary"], Request["url"]);
+                return Redirect("/banner");
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+                return Content("Xảy ra lỗi hệ thống ! Vui lòng thử lại.");
+            }
+            finally
+            {
+                DisposeRepos();
+            }
+        }
+        #endregion
+    
+    #region Orders
+        [HttpGet]
+        [AffiliateAuthorize]
+        public ActionResult Orders()
+        {
+            try
+            {
+                int nPage = Convert.ToInt32(Request.QueryString["p"]);
+                if (nPage < 1)
+                {
+                    nPage = 1;
+                }
+                CreateRepos();
+
+                OrdersPage Model = ProductRepos.GetOrdersAffiliatePage(nPage, int.Parse(Session["UserId"].ToString()));
+                return View(Model);
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+                return Content("Xảy ra lỗi hệ thống ! Vui lòng thử lại.");
+            }
+            finally
+            {
+                DisposeRepos();
+            }
+        }
+
+        [HttpGet]
+        [AffiliateAuthorize]
+        public ActionResult OrderReport()
+        {
+            try
+            {
+                int nPage = Convert.ToInt32(Request.QueryString["p"]);
+                if (nPage < 1)
+                {
+                    nPage = 1;
+                }
+                CreateRepos();
+
+                DateTime today = DateTime.Today;
+                //int currentDayOfWeek = (int)today.DayOfWeek;
+                //DateTime sunday = today.AddDays(-currentDayOfWeek);
+                //DateTime monday = sunday.AddDays(1);
+                //// If we started on Sunday, we should actually have gone *back*
+                //// 6 days instead of forward 1...
+                //if (currentDayOfWeek == 0)
+                //{
+                //    monday = monday.AddDays(-7);
+                //}
+
+
+                OrdersReportByDaysPage Model = ProductRepos.GetOrderReport7DayPage(nPage, int.Parse(Session["UserId"].ToString()));
+                return View(Model);
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+                return Content("Xảy ra lỗi hệ thống ! Vui lòng thử lại.");
+            }
+            finally
+            {
+                DisposeRepos();
+            }
+        }
+    #endregion
     }
 }

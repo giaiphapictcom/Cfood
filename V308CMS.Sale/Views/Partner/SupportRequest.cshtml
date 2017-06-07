@@ -1,0 +1,25 @@
+﻿@using V308CMS.Common;
+@{
+    Layout = "~/Views/Affiliate/Layout/Backend.cshtml";
+    string PageTitle = "Kiến nghị lãnh đạo";
+}
+@section header {
+    <title>@PageTitle</title>
+
+}
+<h4>@PageTitle</h4>
+<form style="width: 80%; margin: 0 auto;" action="" method="post">
+    <div class="row">
+        <div class="col-md-12">
+           
+             @BootstrapHelper.InputText("title", "Vấn đề kiến nghị")
+        </div>
+
+        <div class="col-md-12">
+            @BootstrapHelper.InputTextarea("content", "Nội dung kiến nghị")
+        </div>
+        
+    </div>
+
+    <button type="submit" class="btn btn-success">Gửi yêu cầu</button>
+</form>

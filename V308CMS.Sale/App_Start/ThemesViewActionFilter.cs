@@ -16,6 +16,8 @@ namespace V308CMS.App_Start
             SiteRepository config = new SiteRepository(mEntities);
             dynamic ViewBag = filterContext.Controller.ViewBag;
 
+            ViewBag.linkDomain = System.Configuration.ConfigurationManager.AppSettings["link_domain"];
+            ViewBag.productLink = System.Configuration.ConfigurationManager.AppSettings["product_link"];
             try {
                 ViewBag.domain = Theme.domain;
                 ViewBag.ThemesPath = "/Content/themes/" + Theme.domain;

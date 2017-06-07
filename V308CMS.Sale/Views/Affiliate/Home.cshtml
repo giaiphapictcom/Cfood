@@ -33,7 +33,7 @@
                         <p>@Html.Raw(Model.VideoCategory.Description)</p>
                         @if (Model.Videos != null && Model.Videos.Count() > 0)
                         {
-                            <ul>
+                            <ul class="youtubevideo">
                                 @foreach (News video in Model.Videos)
                                 {
                                     string selected = null;
@@ -41,8 +41,7 @@
                                     {
                                         selected = "class=selected";
                                     }
-                                    <li @selected >
-                                        <img src="https://i.ytimg.com/vi/@video.Summary/mqdefault.jpg" alt="@video.Title">@video.Title</li>
+                                    <li @selected vid="@video.Summary" ><img src="https://i.ytimg.com/vi/@video.Summary/mqdefault.jpg" alt="@video.Title">@video.Title</li>
                                 }
 
                             </ul>

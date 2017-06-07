@@ -4809,33 +4809,7 @@ div#rev_slider {
     border-left: 2px solid #ddd;
     border-right: 2px solid #ddd;
 }
-.videos-thumb p {
-    margin-bottom: 0;
-}
-.videos-thumb li {
-    border-top: 1px solid #ddd;
-    padding: 10px 0;
-    position:relative;
-}
-.videos-thumb li:first-child {
-    border: 0;
-}
-.videos-thumb li img {
-    width: 50px;
-    margin-right: 10px;
-}
-.videos-thumb li.selected {
-    color: #fd393d;
-}
-.videos-thumb li.selected::before  {
-    content: "\f0d9";
-    font-family: 'FontAwesome';
-    font-size: 41px;
-    position: absolute;
-    left: -23px;
-    top: -10%;
-    color: #f2b21c;
-}
+
 
 .article-home p,
 .article-home h3 {

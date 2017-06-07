@@ -76,45 +76,7 @@
                                 </a>
                             }
                             
-
-                                @*<div id="header-top-cart"><div class="header-cart">
-                                    <p class="top-cart">
-                                        <a href="/cart" id="cartToggle">
-                                            <div class="text-@*-left">
-                                                <span id="text-cart">Giỏ hàng</span>
-                                                <span id="cart-count">0 sản phẩm</span>
-                                            </div>
-                                            <span class="icon top-icon-cart"><i class="fa fa-shopping-basket" aria-hidden="true"></i></span>
-                                        </a>
-                                    </p>
-                                    <div id="dropdown-cart">
-                                        <div class="cart-empty">
-                                            <p>Chưa có sản phẩm nào!</p>
-                                        </div>
-                                        <div class="mini_cart_header">
-                                            <ol class="cart-list">
-                                            </ol>
-                                            <div class="summary">
-                                                <p class="goto total">
-                                                    <span class="label" style="color: #000"><span>Go to</span>:</span>
-                                                </p>
-                                                <p class="total">
-                                                    <span class="label" style="color: #000">Total:</span>
-                                                    <span class="price"><span class="money">$0.00</span></span>
-                                                </p>
-                                            </div>
-                                            <div class="actions">
-                                                <div class="view-cart"><a href="/cart">View Cart</a></div>
-                                                <button class="btn" onclick="window.location='/checkout'">Check Out</button>
-
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-                                    <!-- End Top Header -->
-                                </div></div>*@
-                            
+                           
                         </div>
                     </div>
                 </div>
@@ -163,10 +125,11 @@
                                                 {
                                                     if (!menu.Name.ToLower().Equals("footer"))
                                                     {
-                                                <li class="menu-dropdown  level-top   active">
-                                                    <a class="dropdown-toggle has-category" href="@menu.Link" title="@menu.Name">
+                                                <li class="menu-dropdown level-top active">
+                                                    @V308CMS.Common.url.anchor_menu(@menu.Name,menu.Link,"dropdown-toggle has-category")
+                                                    @*<a class="dropdown-toggle has-category" href="@V308CMS.Common.url.menu_src(menu.Link)" title="@menu.Name">
                                                         <span class="">@menu.Name</span>
-                                                    </a>
+                                                    </a>*@
                                                 </li>
 
                                                     }

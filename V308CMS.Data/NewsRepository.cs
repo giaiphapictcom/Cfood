@@ -709,7 +709,7 @@ namespace V308CMS.Data
                 try
                 {
                     var NewsGroups = from p in entities.NewsGroups
-                                     where p.Name.ToLower().Contains(name.ToLower())
+                                     where p.Name.ToLower().Contains(name.ToLower()) || p.Alias.ToLower().Contains(name.ToLower())
                                      select p;
                     return NewsGroups.FirstOrDefault();
                 }
@@ -780,7 +780,7 @@ namespace V308CMS.Data
                 try
                 {
                     var Items = from n in entities.News
-                                     where n.Title.ToLower().Contains(name.ToLower())
+                                where n.Title.ToLower().Contains(name.ToLower()) || n.Alias.ToLower().Contains(name.ToLower())
                                      select n;
                     return Items.FirstOrDefault();
                 }

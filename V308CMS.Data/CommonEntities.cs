@@ -2050,4 +2050,47 @@ namespace V308CMS.Data
         public int Page { get; set; }
 
     }
+
+    public class AffiliateLinkFormPage
+    {
+        public string url { get; set; }
+
+    }
+
+    public class AffiliateLinksPage
+    {
+        public List<AffiliateLink> Links { get; set; }
+        public int LinkTotal { get; set; }
+        public int Page { get; set; }
+
+    }
+
+    public class CouponsPage
+    {
+        public List<Counpon> Coupons { get; set; }
+        public int Total { get; set; }
+        public int Page { get; set; }
+
+    }
+
+    public class OrdersPage
+    {
+        public List<ProductOrder> Items { get; set; }
+        public int Total { get; set; }
+        public int Page { get; set; }
+
+    }
+
+    public class OrdersReportByDaysPage
+    {
+        public List<OrdersReportByDay> report { get; set; }
+        public List<DateTime> days { get; set; }
+
+    }
+    public class OrdersReportByDay
+    {
+        public DateTime date { get; set; }
+        public int Total { get; set; }
+        public float Price { get; set; }
+    }
 }

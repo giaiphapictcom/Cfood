@@ -139,3 +139,9 @@ img.w50 {
     width: 50px;
     height: auto;
 }
+
+
+.itemview [class^="col-"] h5 {
+    color: #81aacb;
+    margin-bottom:0;
+}

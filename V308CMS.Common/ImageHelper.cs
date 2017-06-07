@@ -51,8 +51,6 @@ namespace V308CMS.Common
                 if (System.IO.File.Exists(imgRealPath))
                 {
                     extension = Path.GetExtension(imgRealPath);
-                    
-
                     if (!System.IO.File.Exists(thumbPath + filenameEncode))
                     {
                         CropImage(width, height, imgRealPath, thumbPath + filenameEncode);

@@ -1329,6 +1329,7 @@
     <Content Include="Content\themes\affiliate2.0\css\bootstrap.min.css" />
     <Content Include="Content\themes\affiliate2.0\css\color.css" />
     <Content Include="Content\themes\affiliate2.0\css\component.css" />
+    <Content Include="Content\themes\affiliate2.0\css\custome.css" />
     <Content Include="Content\themes\affiliate2.0\css\font-icon.css" />
     <Content Include="Content\themes\affiliate2.0\css\login.css" />
     <Content Include="Content\themes\affiliate2.0\css\owl.theme.css" />
@@ -1345,6 +1346,7 @@
     <Content Include="Content\themes\affiliate2.0\images\loading-top.gif" />
     <Content Include="Content\themes\affiliate2.0\images\logo.png" />
     <Content Include="Content\themes\affiliate2.0\images\logoh70.png" />
+    <Content Include="Content\themes\affiliate2.0\js\affiliate.js" />
     <Content Include="Content\themes\affiliate2.0\js\ajax.jquery.min.js" />
     <Content Include="Content\themes\affiliate2.0\js\all.jquery.min.js" />
     <Content Include="Content\themes\affiliate2.0\js\canvas.js" />
@@ -1542,9 +1544,7 @@
     <Content Include="Views\Affiliate\Elements\Header.cshtml" />
     <Content Include="Views\Affiliate\Elements\Footer.cshtml" />
     <Content Include="Views\Affiliate\Blocks\HomeSlides.cshtml" />
-
     <Content Include="Views\Affiliate\Elements\AdminMenu.cshtml" />
-
     <Content Include="Views\Affiliate\Layout\Backend.cshtml" />
     <Content Include="Views\Partner\index.cshtml" />
     <Content Include="Views\Partner\Login.cshtml" />
@@ -1552,11 +1552,17 @@
     <Content Include="Views\Partner\Links.cshtml" />
     <Content Include="Views\Partner\LinkForm.cshtml" />
     <Content Include="Views\Partner\Products.cshtml" />
-
     <Content Include="Views\Affiliate\Blocks\BlockPagination.cshtml" />
     <Content Include="Views\Affiliate\NewsList.cshtml" />
     <Content Include="Views\Affiliate\News.cshtml" />
-
+    <Content Include="Views\Partner\BannerForm.cshtml" />
+    <Content Include="Views\Affiliate\Blocks\BlockNews12.cshtml" />
+    <Content Include="Views\Partner\SupportRequest.cshtml" />
+    <Content Include="Views\Partner\Coupons.cshtml" />
+    <Content Include="Views\Affiliate\NewsTable.cshtml" />
+    <Content Include="Views\Partner\LinkReport.cshtml" />
+    <Content Include="Views\Partner\Orders.cshtml" />
+    <Content Include="Views\Partner\OrderReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1599,7 +1605,7 @@
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
-          <AutoAssignPort>False</AutoAssignPort>
+          <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>6789</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:4377/</IISUrl>

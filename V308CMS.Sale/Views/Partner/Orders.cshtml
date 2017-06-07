@@ -1,9 +1,9 @@
-﻿@model V308CMS.Data.AffiliateLinksPage
+﻿@model V308CMS.Data.OrdersPage
 @using V308CMS.Data
 @using V308CMS.Common
 @{
     Layout = "~/Views/Affiliate/Layout/Backend.cshtml";
-    string PageTitle = "Quản lý Link đã tạo";
+    string PageTitle = "Quản lý đơn hàng";
 }
 @section header {
     <title>@PageTitle</title>
@@ -11,9 +11,7 @@
 }
 <h4>Link đã tạo</h4>
 <div class="row">
-    <div class="col-md-5">
-        <a href="/link/tao-moi" class="btn btn-green">Tạo link phân phối</a>
-    </div>
+    
     <div class="col-md-4">
         <div class="input-group border-radius-0">
             <input type="text" class="form-control" placeholder="Tìm kiếm" aria-describedby="tablesearch">
@@ -37,7 +35,7 @@
 <hr />
 <div class="row">
     <div class="col-md-10 textright">
-        @Html.Action("BlockPagination", "Theme",new {ProductTotal=Model.LinkTotal})
+        @Html.Action("BlockPagination", "Theme",new {ProductTotal=Model.Total})
 
     </div>
     <div class="col-md-2 textright" style="margin-bottom: 15px;">
@@ -49,37 +47,24 @@
         <tr>
             <th>#</th>
             <th>Thời gian</th>
-            <th>Link</th>
-            <th>Click</th>
-            <th>Tên CP</th>
-            <th>Nguồn CP</th>
+            <th>Tên Khách Hàng</th>
+            <th>Số hàng</th>
+            <th>Số tiền</th>
 
         </tr>
     </thead>
     <tbody>
-        @if (Model.Links != null && Model.Links.Count() > 0)
+        @if (Model.Items != null && Model.Items.Count() > 0)
         {
-            string link_href = "";
-            foreach (AffiliateLink l in Model.Links)
+            foreach (ProductOrder o in Model.Items)
             {
-                link_href = "http://" + ViewBag.linkDomain + "/link/" + l.code;
-                
+               
                 <tr>
-                <th scope="row">@l.code</th>
-                <td>@String.Format("{0:d}", l.created)</td>
-                <td>
-                    <div class="input-group">
-                        <input type="text" class="form-control" disabled="disabled" value="@link_href">
-                        <a class="input-group-addon link_href_copy"><i class="fa fa-copy"></i></a>
-                        <a class="input-group-addon" target="_blank" href="@link_href"><i class="fa fa-external-link"></i></a>
-
-                    </div>
-                    <small class="form-text text-muted">@StringClearFormat.LTrim(l.url,50)</small>
-
-                </td>
-                <td class="text-center">@l.click</td>
-                <td>@l.name</td>
-                <td>@l.source</td>
+                <th scope="row">@o.ID</th>
+                <td>@String.Format("{0:d}", o.Date)</td>
+                <td>@o.FullName</td>
+                <td>@o.Count</td>
+                <td>@o.Price</td>
             </tr>
              }
             
@@ -87,7 +72,7 @@
         else
         { 
             <tr>
-                <td colspan="6" class="text-center">Không có liên kết nào</td>
+                <td colspan="6" class="text-center">Không có đơn hàng nào</td>
             </tr>
         }
 
