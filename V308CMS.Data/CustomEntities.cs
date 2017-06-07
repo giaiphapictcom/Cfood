@@ -1141,9 +1141,8 @@ namespace V308CMS.Data
         private int _ID;
         private int? _ProductID;
         private DateTime? _StartTime;
+        private DateTime? _EndTime;
         private double? _Percent;
-
-
 
         #endregion
         #region[Public Properties]
@@ -1151,6 +1150,7 @@ namespace V308CMS.Data
         public int ID { get { return _ID; } set { _ID = value; } }
         public int? ProductID { get { if (_ProductID == null || _ProductID < 0) return 0; else return _ProductID; } set { if (_ProductID != value) { if (_ProductID < 0) _ProductID = 0; else _ProductID = value; } } }
         public DateTime? StartTime { get { if (_StartTime == null) return new DateTime(); else return _StartTime; } set { if (_StartTime != value) { _StartTime = value; } } }
+        public DateTime? EndTime { get { if (_EndTime == null) return new DateTime(); else return _EndTime; } set { if (_EndTime != value) { _EndTime = value; } } }
         public double? Percent { get { if (_Percent == null || _Percent < 0) return 0; else return _Percent; } set { if (_Percent != value) { if (_Percent < 0) _Percent = 0; else _Percent = value; } } }
 
 
