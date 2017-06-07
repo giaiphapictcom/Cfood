@@ -32,7 +32,7 @@ namespace V308CMS.Controllers
                 return RedirectToUrl(returnUrl);
 
             }            
-            return View("Account.Login", new LoginModels
+            return View("Member.Login", new LoginModels
             {
                 ReturnUrl = returnUrl
             });
@@ -50,7 +50,7 @@ namespace V308CMS.Controllers
                 {
                     ViewBag.Error = "Tên tài khoản hoặc Mật khẩu không chính xác.";               
                     login.Password = "";
-                    return View("Account.Login", login);
+                    return View("Member.Login", login);
                 } 
                  if (checkLogin == "not_active")
                 {
@@ -60,14 +60,14 @@ namespace V308CMS.Controllers
                         activeAccountUrl);
                  
                     login.Password = "";
-                    return View("Account.Login", login);
+                    return View("Member.Login", login);
                 }
                 AuthenticationHelper.SignIn(login);
                 return RedirectToUrl(login.ReturnUrl);
 
 
             }           
-            return View("Account.Login", login);
+            return View("Member.Login", login);
         }
         [Authorize]
         public ActionResult LogOut()
@@ -78,7 +78,7 @@ namespace V308CMS.Controllers
         }
         public ActionResult Register()
         {           
-            return View("Account.Register", new RegisterModels());
+            return View("Member.Register", new RegisterModels());
         }
 
         private string getToken(string email, bool forForgotPassword = false)
@@ -101,7 +101,7 @@ namespace V308CMS.Controllers
                 if (result == "exist"){
                     register.ResetPasswordValue();
                     ViewBag.Error = "Địa chỉ Email này đã được sử dụng để đăng ký, vui lòng sử dụng tên tài khoản khác.";                  
-                    return View("Account.Register", register);
+                    return View("Member.Register", register);
                 }
                 else{
                     var activeAccountUrl = string.Format("{0}account/active", ConfigHelper.WebDomain);
@@ -115,13 +115,13 @@ namespace V308CMS.Controllers
              
             }
             register.ResetPasswordValue();         
-            return View("Account.Register", register);
+            return View("Member.Register", register);
 
         }
         
         public ActionResult Active()
         {           
-            return View("Account.Active");
+            return View("Member.Active");
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -133,21 +133,21 @@ namespace V308CMS.Controllers
                 var activeResult = AccountService.Active(active.Token);
                 if (activeResult == "invalid"){
                    ModelState.AddModelError("Token","Mã kích hoạt tài khoản không đúng.");
-                   return View("Account.Active", active);
+                   return View("Member.Active", active);
                 }
                 if (activeResult == "expire"){
                     var getTokenUrl = string.Format("{0}account/gettoken", ConfigHelper.WebDomain);
                     ModelState.AddModelError("Token", string.Format("Mã kích hoạt tài khoản đã hết hạn. Click vào <a style='color: #007FF0' href='{0}' title='Kích hoạt tài khoản'> đây</a> để lấy mã kích hoạt. ", getTokenUrl) );
-                    return View("Account.Active", active);
+                    return View("Member.Active", active);
                 }
                 return RedirectToAction("Login");
             }            
-            return View("Account.Active", active);
+            return View("Member.Active", active);
         }
 
         public ActionResult GetToken()
         {
-            return View("Account.GetToken", new GetTokenModels());
+            return View("Member.GetToken", new GetTokenModels());
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -160,13 +160,13 @@ namespace V308CMS.Controllers
                 if (result == "invalid")
                 {
                     ModelState.AddModelError("Email", "Địa chỉ Email không đúng.");
-                    return View("Account.GetToken", token);
+                    return View("Member.GetToken", token);
                 }
                 if (result == "active")
                 {
                     var loginAccountUrl = string.Format("{0}account/active", ConfigHelper.WebDomain);
                     ModelState.AddModelError("Email", string.Format("Tài khoản của bạn đã được kích hoạt rôì. Click vào <a href='{0}' style='color: #007FF0' title='Đăng nhập'> đây</a> để đăng nhập.", loginAccountUrl));
-                    return View("Account.GetToken", token);
+                    return View("Member.GetToken", token);
                 }
             
                 var activeAccountUrl = string.Format("{0}account/active", ConfigHelper.WebDomain);
@@ -179,7 +179,7 @@ namespace V308CMS.Controllers
             
             }
 
-            return View("Account.GetToken", token);
+            return View("Member.GetToken", token);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -191,7 +191,7 @@ namespace V308CMS.Controllers
             if (result == "invalid")
             {
                 ModelState.AddModelError("Email", "Địa chỉ Email không đúng.");
-                return View("Account.ForgotPassword", forgot);
+                return View("Member.ForgotPassword", forgot);
 
             }
             var emailSender = new EmailSender(
@@ -214,15 +214,15 @@ namespace V308CMS.Controllers
             if (result == "invalid")
             {
                 ViewBag.Error = string.Format("Mã xác thực không đúng. Click vào <a href='{0}' style='color: #007FF0' title='Quên mật khẩu'> đây</a> để gửi yêu cầu cấp mật khẩu mới.", string.Format("{0}account/forgotpassword", ConfigHelper.Domain)) ;
-                return View("Account.InvalidToken");
+                return View("Member.InvalidToken");
             }
             if (result == "expire")
             {
                 ViewBag.Error =string.Format("Mã xác thực hết hạn. Click vào <a href='{0}' style='color: #007FF0' title='Quên mật khẩu'> đây</a> để gửi yêu cầu cấp mật khẩu mới.", string.Format("{0}account/forgotpassword", ConfigHelper.Domain)) ;
-                return View("Account.InvalidToken");
+                return View("Member.InvalidToken");
             }           
 
-            return View("Account.ChangePassword", new ChangePasswordModels {Token = token});
+            return View("Member.ChangePassword", new ChangePasswordModels {Token = token});
         }
 
         [HttpPost]
@@ -237,7 +237,7 @@ namespace V308CMS.Controllers
                     account.OldPassword = "";
                     account.NewPassword = "";
                     account.ConfirmPassword = "";
-                    return View("Account.ChangePassword", account);
+                    return View("Member.ChangePassword", account);
                 }
                 var result = AccountService.ChangePassword(account.Token, account.OldPassword,
                     account.NewPassword);
@@ -247,7 +247,7 @@ namespace V308CMS.Controllers
                     account.OldPassword = "";
                     account.NewPassword = "";
                     account.ConfirmPassword = "";
-                    return View("Account.ChangePassword", account);
+                    return View("Member.ChangePassword", account);
                 }
                 if (result == "current_wrong")
                 {
@@ -255,16 +255,16 @@ namespace V308CMS.Controllers
                     account.OldPassword = "";
                     account.NewPassword = "";
                     account.ConfirmPassword = "";
-                    return View("Account.ChangePassword", account);
+                    return View("Member.ChangePassword", account);
                 }
                 return Redirect("/");
             }
-            return View("Account.ChangePassword", account);
+            return View("Member.ChangePassword", account);
         }
        
         public ActionResult Profiles()
         {
-            return View("Account.Profile");
+            return View("Member.Profile");
         }
 
         public ActionResult HandleUpdateProfiles()

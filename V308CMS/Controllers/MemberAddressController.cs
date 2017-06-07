@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace V308CMS.Controllers
 {
-    public class AccountAddressController : Controller
+    public class MemberAddressController : Controller
     {
         //
         // GET: /Address/

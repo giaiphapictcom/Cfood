@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using V308CMS.Data;
 using V308CMS.Helpers;
+using V308CMS.Respository;
 
 namespace V308CMS.Controllers
 {
@@ -20,9 +21,9 @@ namespace V308CMS.Controllers
         private readonly ImagesRepository _imagesRepository;
         private readonly MarketRepository _marketRepository;
         private readonly IContactRepository _contactRepository;
-        private readonly CartRepository _CartRepository;
-        private readonly CartItemRepository _CartItemRepository;
-      
+        private readonly MenuConfigRespository _meuMenuConfigRespository;
+        private readonly ProductTypeRepository _productTypeRepository;
+
         protected BaseController()
         {
             _mEntities = EnsureV308CmsEntitiesNotNull();
@@ -35,9 +36,26 @@ namespace V308CMS.Controllers
             _imagesRepository = new ImagesRepository(_mEntities);
             _marketRepository = new MarketRepository(_mEntities);
             _contactRepository = new ContactRepository(_mEntities);
-            _CartRepository = new CartRepository(_mEntities);
-            _CartItemRepository = new CartItemRepository(_mEntities);
+            _meuMenuConfigRespository = new MenuConfigRespository(_mEntities);
+            _productTypeRepository = new ProductTypeRepository(_mEntities);
         }
+        public ProductTypeRepository ProductTypeService
+        {
+            get
+            {
+                EnsureV308CmsEntitiesNotNull();
+                return _productTypeRepository;
+            }
+        }
+        public MenuConfigRespository MenuConfigService
+        {
+            get
+            {
+                EnsureV308CmsEntitiesNotNull();
+                return _meuMenuConfigRespository;
+            }
+        }
+
         protected IContactRepository ContactService
         {
             get
@@ -90,7 +108,7 @@ namespace V308CMS.Controllers
                 EnsureV308CmsEntitiesNotNull();
                 return _productService;
             }
-            
+
         }
 
         protected AccountRepository AccountService
@@ -101,28 +119,12 @@ namespace V308CMS.Controllers
                 return _accountService;
             }
         }
-        protected FileRepository FileService {
+        protected FileRepository FileService
+        {
             get
             {
                 EnsureV308CmsEntitiesNotNull();
                 return _fileService;
-            }
-        }
-        protected CartRepository CartService
-        {
-            get
-            {
-                EnsureV308CmsEntitiesNotNull();
-                return _CartRepository;
-            }
-        }
-
-        protected CartItemRepository CartItemService
-        {
-            get
-            {
-                EnsureV308CmsEntitiesNotNull();
-                return _CartItemRepository;
             }
         }
     }
