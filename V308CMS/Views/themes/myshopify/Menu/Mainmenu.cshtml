@@ -7,29 +7,24 @@
             foreach (var menu in Model)
             {
 
-                var menuName = menu.Name;
-                if (!menuName.ToLower().Equals("footer"))
+                var activeCss = "";
+                if (menu.Link.Contains("/video") && controller == "video")
                 {
-                    var activeCss = "";
-                    if (menu.Link.Contains("/video") && controller == "video")
-                    {
-                        activeCss = "active";
-                    }
-                    if (menu.Link.Contains("/tin-tuc") && controller == "news")
-                    {
-                        activeCss = "active";
-                    }
-                    if (menu.Link.Contains("/lien-he") && controller == "contact")
-                    {
-                        activeCss = "active";
-                    }
-                    <li class="menu-dropdown level-top @activeCss">
-                        <a class="dropdown-toggle" href="@menu.Link" title="@menuName">
-                            <span class="">@menuName</span>
-                        </a>
-                    </li>
-
+                    activeCss = "active";
                 }
+                if (menu.Link.Contains("/tin-tuc") && controller == "news")
+                {
+                    activeCss = "active";
+                }
+                if (menu.Link.Contains("/lien-he") && controller == "contact")
+                {
+                    activeCss = "active";
+                }
+                <li class="menu-dropdown level-top @activeCss">
+                    <a class="dropdown-toggle" href="@menu.Link" title="@menu.Name">
+                        <span class="">@menu.Name</span>
+                    </a>
+                </li>
 
             }
         }
