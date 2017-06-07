@@ -1159,6 +1159,11 @@ namespace V308CMS.Data
     [Table("producttype")]
     public class ProductType
     {
+        public ProductType()
+        {
+            ListProduct = new List<Product>();
+            ListProductBrand = new List<Brand>();
+        }
 
         #region[Declare variables]
         private int _ID;
@@ -1194,6 +1199,9 @@ namespace V308CMS.Data
         public string TypeBanner { get { if (String.IsNullOrEmpty(_TypeBanner)) return ""; else return _TypeBanner; } set { _TypeBanner = value; } }
         public string Icon { get { if (String.IsNullOrEmpty(_Icon)) return ""; else return _Icon; } set { _Icon = value; } }
         public string ColorTheme { get { if (String.IsNullOrEmpty(_ColorTheme)) return ""; else return _ColorTheme; } set { _ColorTheme = value; } }
+
+        public virtual ICollection<Product> ListProduct { get; set; }
+        public virtual ICollection<Brand> ListProductBrand { get; set; }
 
         #endregion
 
