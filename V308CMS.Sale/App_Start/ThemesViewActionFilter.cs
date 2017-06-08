@@ -28,7 +28,7 @@ namespace V308CMS.App_Start
                 ViewBag.CompanyFullname = config.SiteConfig("company-fullname");
                 ViewBag.FooterCompanyContact = config.SiteConfig("company-footer-contact");
                 ViewBag.CompanyHeaderAddress = config.SiteConfig("company-header-address");
-                ViewBag.FacebookPage = config.SiteConfig("facebook-page");
+                ViewBag.FacebookPage = config.SiteConfig("affiliate-facebook-page");
             }
             catch (Exception ex)
             {

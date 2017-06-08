@@ -1542,6 +1542,7 @@ namespace V308CMS.Data
         private string _name;
         private string _summary;
         private string _image;
+        private string _link;
         private int? _order;
         private int? _status;
 
@@ -1550,6 +1551,7 @@ namespace V308CMS.Data
         public string name { get { if (String.IsNullOrEmpty(_name)) return ""; else return _name; } set { _name = value; } }
         public string image { get { if (String.IsNullOrEmpty(_image)) return ""; else return _image; } set { _image = value; } }
         public string summary { get { if (String.IsNullOrEmpty(_summary)) return ""; else return _summary; } set { _summary = value; } }
+        public string link { get { if (String.IsNullOrEmpty(_link)) return "javascript:void(0)"; else return _link; } set { _link = value; } }
         public int? order { get { if (_order == null || _order < 0) return 0; else return _order; } set { if (_order != value) { if (_order < 0) _order = 0; else _order = value; } } }
         public int? status { get { if (_status == null || _status < 0) return 0; else return _status; } set { if (_status != value) { if (_status < 0) _status = 0; else _status = value; } } }
 

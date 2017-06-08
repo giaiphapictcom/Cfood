@@ -1,6 +1,7 @@
 $(document).ready(function () {
     homevideo();
     bannerform.imgMargin();
+    commentHome.userclick();
 });
 
 
@@ -21,3 +22,17 @@ bannerform = {
         img.css("margin-top", (area.height() - img.height())/2 );
     }
 };
+
+commentHome = {
+    userclick: function () {
+        $(".usercomment").click(function () {
+            
+            var ContentRow = $(this).parents(".row").next(".row");
+            $(this).parents(".row").find(".usercomment").removeClass("actived");
+            $(this).addClass("actived");
+            ContentRow.find(".contentcomment").removeClass("show").addClass("hidden");
+            jQuery("[comment=" + $(this).attr("taget")+"]", ContentRow).removeClass("hidden").addClass("show");
+
+        });
+    }
+}

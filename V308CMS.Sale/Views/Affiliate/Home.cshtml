@@ -108,11 +108,11 @@
         <div class="container-block m-0">
             <div class="container border-col" style="padding-top: 20px;">
                 <div class="row">
-                    <div class="col-md-12 article-home-full" style="margin-bottom: 40px;"><h3 ><span>Đánh giá tiêu Biểu của các chuyên gia</span></h3></div>
+                    <div class="col-md-12 article-home-full" style="margin-bottom: 40px;"><h3 ><span>NHẬN XÉT CỦA CÁC AFFILIATE THÀNH CÔNG VỚI MP START</span></h3></div>
                     @foreach (Testimonial Comment in Model.Testimonial)
                     {
                         string actived = Comment == commentFirst ? "actived" : null;
-                        <a href="#" class="col-md-3 testimonial @actived">
+                        <a href="javascript:void(0)" class="col-md-3 testimonial usercomment @actived" taget="@Comment.id">
                             <span class="avatar"><img alt="" src="/Content/Images/avatar/@Comment.avartar" class="img-circle"></span>
                             <p class="fullname">@Comment.fullname</p>
                             <p>@Comment.mobile</p>
@@ -123,7 +123,7 @@
                     @foreach (Testimonial Comment in Model.Testimonial)
                     {
                         string actived = Comment == commentFirst ? "show" : "hidden";
-                        <div class="col-md-12 testimonial-content @actived">
+                        <div class="col-md-12 testimonial-content contentcomment @actived" comment="@Comment.id">
                             <p>@Comment.content</p>
                         </div>
                     }
@@ -167,16 +167,16 @@
                         
                         string BorderRemove = (float)index % 4 == 0 ? "" : "border-left-0";
                         float itemIndex = (float)index % 4;
-
+                        string cateHref = cate.link.Length > 0 ? cate.link : "javascript:void(0)";
                         if (itemIndex < 1)
                         { 
                             @Html.Raw("<div class=\"row\">");
                         }
-                        <div class="col-md-3 category-listall @BorderRemove index-@index" check="@Html.Raw(itemIndex)">
+                        <a class="col-md-3 category-listall @BorderRemove index-@index" check="@Html.Raw(itemIndex)" href="@cateHref" target="_blank">
                             <img src="/Content/Images/category/@cate.image" />
                             <h3>@cate.name</h3>
                             <p>&nbsp;@cate.summary</p>
-                        </div>
+                        </a>
 
                         if (itemIndex == 3 || cate == Model.Categorys.Last())
                         { 
@@ -186,16 +186,16 @@
                     }
                
                 <div class="row" style="margin-top: 40px;">
-                    <div class="col-md-6 stock-button">
+                    <a class="col-md-6 stock-button" href="/san-pham">
                         <span class="img"></span>
                         <h3>Kho Sản Phẩm</h3>
-                        <a href="#" class="btn">Liên Hệ</a>
-                    </div>
-                    <div class="col-md-6 shop-button">
+                        
+                    </a>
+                    <a class="col-md-6 shop-button" href="/san-pham">
                         <span class="img"></span>
-                        <h3>Hệ Thống Cửa Hàng</h3>
-                        <a href="#" class="btn">Đăng Nhập</a>
-                    </div>
+                        <h3>Hệ Thống AFFILIATE</h3>
+                        
+                    </a>
                 </div>
             </div>
         </div>
