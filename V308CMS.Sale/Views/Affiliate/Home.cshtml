@@ -5,6 +5,10 @@
 @{
     Layout = "~/Views/" + @ViewContext.RouteData.Values["controller"] + "/Layout/Default.cshtml";
 }
+@section header {
+    <title>@ViewBag.SiteName</title>
+}
+
 <div class="shopify-section index-section index-section--flush">
     <div class="container-block m-0" data-section-id="1475814045391" data-section-type="slideshow-section">
         <div class="container">
@@ -25,7 +29,7 @@
     <div class="shopify-section mt-2">
         <div class="container-block m-0">
             <div class="container border-col">
-                <div class="row">
+                <div class="row" style="padding-top: 25px;">
                     <div class="col-md-6 col-sm-12 col-xs-12 video-play">
                         <iframe src="https://www.youtube.com/embed/@videoPlay.Summary?autoplay=0" frameborder="0" allowFullScree style="height:auto; width: 100%; min-height: 300px;" ></iframe>
                     </div>
@@ -157,18 +161,30 @@
             <div class="container border-col" style="padding-top: 20px; padding-bottom: 50px;">
                 <div class="row">
                     <div class="col-md-12 article-home-full" style="margin-bottom: 20px;"><h3 ><span>ngành hàng phong phú, sản phẩm đa dạng</span></h3></div>
+                 </div>
                     @foreach (Categorys cate in Model.Categorys)
                     {
                         
                         string BorderRemove = (float)index % 4 == 0 ? "" : "border-left-0";
-                        index++;
-                        <div class="col-md-3 category-listall @BorderRemove">
+                        float itemIndex = (float)index % 4;
+
+                        if (itemIndex < 1)
+                        { 
+                            @Html.Raw("<div class=\"row\">");
+                        }
+                        <div class="col-md-3 category-listall @BorderRemove index-@index" check="@Html.Raw(itemIndex)">
                             <img src="/Content/Images/category/@cate.image" />
                             <h3>@cate.name</h3>
-                            <p>@cate.summary</p>
+                            <p>&nbsp;@cate.summary</p>
                         </div>
+
+                        if (itemIndex == 3 || cate == Model.Categorys.Last())
+                        { 
+                            @Html.Raw("</div>");
+                        }
+                        index++;
                     }
-                </div>
+               
                 <div class="row" style="margin-top: 40px;">
                     <div class="col-md-6 stock-button">
                         <span class="img"></span>
