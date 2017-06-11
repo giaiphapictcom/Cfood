@@ -450,5 +450,11 @@ namespace V308CMS.Data
                 throw;
             }
         }
+        public List<Admin> GetListAdminByType(byte type)
+        {
+            return (from p in entities.Admin
+                    where p.Type == type
+                    select p).ToList();
+        }
     }
 }

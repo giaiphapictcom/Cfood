@@ -10,31 +10,13 @@ namespace V308CMS.Controllers
     {
         public ActionResult CategoryMenu()
         {
-            var categoryPages = new List<ProductTypePage>();
-            var catetorys = ProductsService.getProductTypeParent();
-
-            if (catetorys.Any())
-            {
-                foreach (ProductType cate in catetorys)
-                {
-                    ProductTypePage categoryPage = new ProductTypePage();
-                    categoryPage.Id = cate.ID;
-                    categoryPage.Image = cate.ImageBanner;
-                    categoryPage.Name = cate.Name;
-                    categoryPage.Icon = cate.Icon;
-                    categoryPage.CategorySub = ProductsService.getProductTypeByParent(cate.ID);
-
-                    categoryPages.Add(categoryPage);
-                }
-            }        
-            return View("CategoryMenu", categoryPages);
+            return View("CategoryMenu", ProductTypeService.GetAllWeb());
 
         }
 
         public ActionResult Mainmenu()
         {
-            var menu = NewsService.GetNewsGroup();
-            return View("Mainmenu", menu);
+            return View("Mainmenu", MenuConfigService.GetAll());
         }
 
         public ActionResult ProductMost()

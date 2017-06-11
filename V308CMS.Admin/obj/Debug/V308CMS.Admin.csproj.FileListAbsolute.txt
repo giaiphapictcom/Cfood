@@ -52,6 +52,3 @@ E:\Work\Tam\Cfood\V308CMS.Admin\bin\Org.Mentalis.Security.Cryptography.xml
 E:\Work\Tam\Cfood\V308CMS.Admin\bin\Mono.Math.xml
 E:\Work\Tam\Cfood\V308CMS.Admin\obj\Debug\V308CMS.Admin.dll
 E:\Work\Tam\Cfood\V308CMS.Admin\obj\Debug\V308CMS.Admin.pdb
-D:\ASP.NET\Cfood\V308CMS.Admin\obj\Debug\V308CMS.Admin.csprojResolveAssemblyReference.cache
-D:\ASP.NET\Cfood\V308CMS.Admin\obj\Debug\V308CMS.Admin.dll
-D:\ASP.NET\Cfood\V308CMS.Admin\obj\Debug\V308CMS.Admin.pdb
