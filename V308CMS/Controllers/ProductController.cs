@@ -5,17 +5,37 @@ using System.Web;
 using System.Web.Mvc;
 using V308CMS.Common;
 using V308CMS.Helpers;
+using V308CMS.Data;
 
 namespace V308CMS.Controllers
 {
     public class ProductController : BaseController
     {
-        //
-        // GET: /Product/
+        #region Repository
+        static V308CMSEntities mEntities;
+        ProductRepository ProductRepos;
+
+        private void CreateRepos()
+        {
+            mEntities = new V308CMSEntities();
+            ProductRepos = new ProductRepository(mEntities);
+           
+        }
+        private void DisposeRepos()
+        {
+            mEntities.Dispose();
+            ProductRepos.Dispose();
+
+        }
+        #endregion
+
+        private void ProductController() {
+            CreateRepos();
+        }
 
         public ActionResult Index(int id)
         {
-            var product = ProductsService.GetById(id);
+            var product = ProductRepos.GetById(id);
             if (product != null)
             {
                 var producResult = new
@@ -51,6 +71,22 @@ namespace V308CMS.Controllers
 
             },JsonRequestBehavior.AllowGet);
 
+        }
+        
+        public ActionResult BigSale(){
+            try {
+                ProductItemsPage Model = new ProductItemsPage();
+                var products = ProductRepos.GetItemsBySaleoff(1,15,">");
+                return View("Search", Model);  
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.InnerException.ToString());
+            }
+            finally
+            {
+                DisposeRepos();
+            }
         }
 
     }

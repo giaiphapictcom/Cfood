@@ -882,7 +882,6 @@ namespace V308CMS.Data
                 throw;
             }
         }
-
         public List<ProductType> getProductTypeByProductType(int pProductType, int Limit=10)
         {
             List<ProductType> mList = null;
@@ -901,8 +900,6 @@ namespace V308CMS.Data
                 throw;
             }
         }
-        
-        
         public List<ProductType> getProductTypeByProductType2(int pProductType)
         {
             List<ProductType> mList = null;
@@ -956,6 +953,7 @@ namespace V308CMS.Data
                 throw;
             }
         }
+        
         public List<ProductDistributor> LayProductDistributorTheoTrang(int pcurrent, int psize)
         {
             List<ProductDistributor> mList = null;
@@ -1439,7 +1437,7 @@ namespace V308CMS.Data
 
 
         }
-<<<<<<< HEAD
+
 
         public int PageSize = 20;
         public List<Product> GetItems(int pcurrent=1)
@@ -1460,7 +1458,6 @@ namespace V308CMS.Data
                 throw;
             }
         }
-
         public int GetItemsTotal() {
             try {
                 var products = from p in entities.Product
@@ -1499,7 +1496,6 @@ namespace V308CMS.Data
                 throw;
             }
         }
-
         public OrdersReportByDaysPage GetOrderReport7DayPage(int PageCurrent = 0, int PartnerID = 0)
         {
             OrdersReportByDaysPage ModelPage = new OrdersReportByDaysPage();
@@ -1552,7 +1548,6 @@ namespace V308CMS.Data
             }
             return "not_exists";
         }
-
         public List<Product> GetListProductInListId(string listId, bool includeData = true)
         {
             return includeData ? (from item in entities.Product.
@@ -1749,5 +1744,29 @@ namespace V308CMS.Data
                 .Skip((page - 1) * pageSize).Take(pageSize).ToList();
         }
 
+
+
+        public ProductItems GetItemsBySaleoff(int page=0, float? SaleOffValue = 0,string StrOperator=">" ){
+            ProductItems ReturnValue = new ProductItems();
+
+            var items = from p in entities.Product
+                        where (StrOperator == "<") ? p.SaleOff >= SaleOffValue : p.SaleOff >= SaleOffValue
+                                  select p;
+
+            ReturnValue.Products = items.Skip((page - 1) * PageSize).Take(PageSize).ToList();
+            ReturnValue.total = items.Count();
+            ReturnValue.page = page;
+            return ReturnValue;
+
+        }
+
+        public class ProductItems
+        {
+           
+            public List<Product> Products { get; set; }
+            public int total { get; set; }
+            public int page { get; set; }
+
+        }
     }
 }

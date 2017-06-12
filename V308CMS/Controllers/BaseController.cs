@@ -23,6 +23,11 @@ namespace V308CMS.Controllers
         private readonly IContactRepository _contactRepository;
         private readonly MenuConfigRespository _meuMenuConfigRespository;
         private readonly ProductTypeRepository _productTypeRepository;
+        
+        private readonly CartRepository _CartRepository;
+        private readonly CartItemRepository _CartItemRepository;
+       
+        
 
         protected BaseController()
         {
@@ -132,6 +137,25 @@ namespace V308CMS.Controllers
             {
                 EnsureV308CmsEntitiesNotNull();
                 return _fileService;
+            }
+        }
+
+
+        public CartRepository CartService
+        {
+            get
+            {
+                EnsureV308CmsEntitiesNotNull();
+                return _CartRepository;
+            }
+        }
+
+        public CartItemRepository CartItemService
+        {
+            get
+            {
+                EnsureV308CmsEntitiesNotNull();
+                return _CartItemRepository;
             }
         }
     }

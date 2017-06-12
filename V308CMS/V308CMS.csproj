@@ -21,6 +21,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,6 +31,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -38,6 +40,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CKFinder, Version=2.4.1.2663, Culture=neutral, PublicKeyToken=579e7adc719a1423, processorArchitecture=MSIL">
@@ -73,20 +76,18 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Abstractions">
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Routing">
       <Private>True</Private>
     </Reference>
@@ -138,6 +139,7 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\ThemesViewActionFilter.cs" />
@@ -151,6 +153,9 @@
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MemberAddressController.cs" />
+    <Compile Include="Controllers\MemberController.cs" />
+    <Compile Include="Controllers\MemberWishListController.cs" />
     <Compile Include="Controllers\MyShopifyController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\CartController.cs" />
@@ -1908,6 +1913,15 @@
     <Content Include="Views\themes\myshopify\Pages\Wishlist.Index.cshtml" />
     <Content Include="Views\themes\myshopify\Product_div\Type1_4.cshtml" />
     <Content Include="Views\themes\myshopify\Banner\LeftProductAdv.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Member.Active.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Member.Addresses.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Member.ChangePassword.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Member.GetToken.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Member.InvalidToken.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Member.Login.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Member.Profile.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Member.Register.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\MemberForgotPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1930,6 +1944,10 @@
     <ProjectReference Include="..\V308CMS.Data\V308CMS.Data.csproj">
       <Project>{4f5528a8-75f6-4b33-b254-2eaa5f916f12}</Project>
       <Name>V308CMS.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\V308CMS.Respository\V308CMS.Respository.csproj">
+      <Project>{4540f1d2-c7ac-4bc4-9e2d-f2271279aeac}</Project>
+      <Name>V308CMS.Respository</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

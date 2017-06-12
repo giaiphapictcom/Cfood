@@ -34,7 +34,9 @@ namespace V308CMS
             routes.MapRoute("DetailRoute", "{title}-d{pId}.html", new { Controller = "Home", action = "Detail" }, new { pId = @"\d+" });
             ///
             routes.MapRoute("SearchRoute", "tim-kiem.html", new { Controller = "Home", action = "Search" });
-            routes.MapRoute("MarketRoute", "{pMarketName}", new { Controller = "Home", action = "Market" });
+            routes.MapRoute("ProductSaleOffRoute", "big-sale", new { Controller = "Product", action = "BigSale" });
+
+            //routes.MapRoute("MarketRoute", "{pMarketName}", new { Controller = "Home", action = "Market" });
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.MapRoute("Default", "{controller}/{action}/{id}", new { controller = "Home", action = "Index", id = UrlParameter.Optional });
             

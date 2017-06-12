@@ -10,7 +10,7 @@ namespace V308CMS.Data
         public string Image { get; set; }
         public string CategoryName { get; set; }
         public int? CategoryId { get; set; }
-        public int Quantity { get; set; }
+        public int? Quantity { get; set; }
         public bool? Status { get; set; }
         public DateTime CreatedDate { get; set; }
         public double? Price { get; set; }

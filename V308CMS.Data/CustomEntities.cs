@@ -1525,12 +1525,15 @@ namespace V308CMS.Data
     public class SiteConfig
     {
 
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Content { get; set; }
+        private int _Id { get; set; }
+        private string _Name { get; set; }
+        private string _Content { get; set; }
 
+        [Key]
+        public int id { get { return _Id; } set { _Id = value; } }
+        public string name { get { if (String.IsNullOrEmpty(_Name)) return ""; else return _Name; } set { _Name = value; } }
+        public string content { get { if (String.IsNullOrEmpty(_Content)) return ""; else return _Content; } set { _Content = value; } }
 
-        //#endregion
 
     }
     //#endregion[ket thuc class tblSiteConfig]

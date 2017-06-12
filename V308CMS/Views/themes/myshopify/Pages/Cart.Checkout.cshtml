@@ -244,7 +244,8 @@
                             <input type="hidden" name="step" value="shipping_method" />
 
                             <div class="step__sections">
-
+                                @if (AuthenticationHelper.IsAuthenticate != false & AuthenticationHelper.CurrentUser != null)
+                                { 
                                 <div class="section section--contact-information">
                                     <div class="section__header">
                                         <div class="layout-flex layout-flex--tight-vertical layout-flex--loose-horizontal layout-flex--wrap">
@@ -253,22 +254,25 @@
                                         </div>
                                     </div>
                                     <div class="section__content" data-section="customer-information">
-                                        <input value="toaihv@gmail.com" size="30" type="hidden" name="checkout[email]" id="checkout_email" />
-                                        <div class="logged-in-customer-information">
-                                            <div class="logged-in-customer-information__avatar-wrapper">
-                                                <div class="logged-in-customer-information__avatar gravatar" style="background-image: url(//proxy.shopifycdn.com/90d0613dff5e4065b926fe15fd35d6c253578ff44ee5d5341fa975fa69bd5ac1/www.gravatar.com/avatar/668d4f705efdd081975d651796dbd82a.jpg?s=100&amp;d=blank); filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=&#39; //proxy.shopifycdn.com/90d0613dff5e4065b926fe15fd35d6c253578ff44ee5d5341fa975fa69bd5ac1/www.gravatar.com/avatar/668d4f705efdd081975d651796dbd82a.jpg?s=100&amp; d=blank&#39; , sizingMethod=&#39; scale&#39; )" role="img" aria-label="Avatar"></div>
-                                            </div>
+                                        
+                                            <input value="toaihv@gmail.com" size="30" type="hidden" name="checkout[email]" id="checkout_email" />
+                                            <div class="logged-in-customer-information">
+                                                <div class="logged-in-customer-information__avatar-wrapper">
+                                                    <div class="logged-in-customer-information__avatar gravatar" style="background-image: url(//proxy.shopifycdn.com/90d0613dff5e4065b926fe15fd35d6c253578ff44ee5d5341fa975fa69bd5ac1/www.gravatar.com/avatar/668d4f705efdd081975d651796dbd82a.jpg?s=100&amp;d=blank); filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=&#39; //proxy.shopifycdn.com/90d0613dff5e4065b926fe15fd35d6c253578ff44ee5d5341fa975fa69bd5ac1/www.gravatar.com/avatar/668d4f705efdd081975d651796dbd82a.jpg?s=100&amp; d=blank&#39; , sizingMethod=&#39; scale&#39; )" role="img" aria-label="Avatar"></div>
+                                                </div>
 
-                                            <p class="logged-in-customer-information__paragraph">
-                                                <span class="page-main__emphasis">toai hoang van</span>
-                                                <span data-rtl-ensure>(toaihv@gmail.com)</span>
-                                                <br>
-                                                <a href="https://bigsale-01.myshopify.com/account/logout?return_url=https%3A%2F%2Fcheckout.shopify.com%2F14982346%2Fcheckouts%2F819f674a463255a4798dbe5a6c0984c4%3Fstep%3Dcontact_information">Log out</a>
-                                            </p>
-                                        </div>
+                                                <p class="logged-in-customer-information__paragraph">
+                                                    <span class="page-main__emphasis">toai hoang van</span>
+                                                    <span data-rtl-ensure>(toaihv@gmail.com)</span>
+                                                    <br>
+                                                    <a href="https://bigsale-01.myshopify.com/account/logout?return_url=https%3A%2F%2Fcheckout.shopify.com%2F14982346%2Fcheckouts%2F819f674a463255a4798dbe5a6c0984c4%3Fstep%3Dcontact_information">Log out</a>
+                                                </p>
+                                            </div>
+                                        
+
                                     </div>
                                 </div>
-
+                                }
 
                                 <div class="section section--shipping-address" data-shipping-address
                                     data-update-order-summary>
@@ -295,13 +299,13 @@
                                             <div class="field--half field field--optional" data-address-field="first_name">
                                                 <label class="field__label" for="checkout_shipping_address_first_name">Họ</label>
                                                 <div class="field__input-wrapper">
-                                                    <input placeholder="First name" autocomplete="shipping given-name" data-backup="first_name" class="field__input" size="30" type="text" value="toai" name="first_name" id="checkout_shipping_address_first_name" />
+                                                    <input placeholder="First name" autocomplete="shipping given-name" data-backup="first_name" class="field__input" size="30" type="text" value="" name="first_name" id="checkout_shipping_address_first_name" />
                                                 </div>
                                             </div>
                                             <div class="field--half field field--required" data-address-field="last_name">
                                                 <label class="field__label" for="checkout_shipping_address_last_name">Tên</label>
                                                 <div class="field__input-wrapper">
-                                                    <input placeholder="Last name" autocomplete="shipping family-name" data-backup="last_name" class="field__input" size="30" type="text" value="hoang van" name="last_name" id="checkout_shipping_address_last_name" />
+                                                    <input placeholder="Last name" autocomplete="shipping family-name" data-backup="last_name" class="field__input" size="30" type="text" value="" name="last_name" id="checkout_shipping_address_last_name" />
                                                 </div>
                                             </div>
 
@@ -311,7 +315,7 @@
                                                     <input placeholder="Address" autocomplete="shipping address-line1" data-backup="address1" class="field__input" size="30" type="text" name="address" id="checkout_shipping_address_address1" />
                                                 </div>
                                             </div>
-                                            
+
                                             <div data-address-field="city" data-google-places="true" class="field field--required">
                                                 <label class="field__label" for="checkout_shipping_address_city">Thành Phố</label>
                                                 <div class="field__input-wrapper">
@@ -325,11 +329,18 @@
                                 </div>
                             </div>
                             <div class="step__footer" data-step-footer>
-
+                                @if (AuthenticationHelper.IsAuthenticate != false & AuthenticationHelper.CurrentUser != null)
+                                {
                                 <button name="button" type="submit" class="step__footer__continue-btn btn ">
                                     <span class="btn__content">Đặt hàng</span>
                                     <i class="btn__spinner icon icon--button-spinner"></i>
                                 </button>
+                                } else {
+                                    <a href="" class="step__footer__continue-btn btn ">
+                                    <span class="btn__content">Đăng ký thành viên</span>
+                                    
+                                </a>
+                                }
                                 <a class="step__footer__previous-link" href="/cart/viewcart">
                                     <svg class="icon-svg icon-svg--color-accent icon-svg--size-10 previous-link__icon rtl-flip" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
                                         <path d="M8 1L7 0 3 4 2 5l1 1 4 4 1-1-4-4" />
@@ -350,9 +361,8 @@
 
 
                     <div role="contentinfo" aria-label="Footer">
-                        <p class="copyright-text">
-                            All rights reserved bigsale-01
-                        </p>
+                       
+                        <address class="copyright-text" >©@DateTime.Now.Year.ToString() Copyright. Đã đăng ký bản quyền</address>
                     </div>
 
                     <div id="dialog-close-title" class="hidden">Close</div>

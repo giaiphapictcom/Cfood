@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using V308CMS.Common;
 using V308CMS.Data;
 using V308CMS.Data.Models;
 
@@ -29,7 +30,7 @@ namespace V308CMS.Respository
 
         public ColorRespository(V308CMSEntities entities)
         {
-            _entities = entities;
+            this._entities = entities;
         }
 
         public Color Find(int id)

@@ -19,14 +19,14 @@ namespace V308CMS.Respository
         public SiteConfig Find(int id)
         {
             return (from config in _entities.SiteConfig
-                where config.Id == id
+                where config.id == id
                 select config).FirstOrDefault();
         }
 
         public string Delete(int id)
         {
             var configItem = (from config in _entities.SiteConfig
-                    where config.Id == id
+                    where config.id == id
                     select config).FirstOrDefault();
             if (configItem != null)
             {
@@ -40,12 +40,12 @@ namespace V308CMS.Respository
         public string Update(SiteConfig data)
         {
             var configItem = (from config in _entities.SiteConfig
-                              where config.Id == data.Id
+                              where config.id == data.id
                               select config).FirstOrDefault();
             if (configItem != null)
             {
-                configItem.Name = data.Name;
-                configItem.Content = data.Content;
+                configItem.name = data.name;
+                configItem.content = data.content;
                 _entities.SaveChanges();
                 return "ok";
             }
@@ -55,7 +55,7 @@ namespace V308CMS.Respository
         public string Insert(SiteConfig data)
         {
             var configItem = (from config in _entities.SiteConfig
-                              where config.Name == data.Name
+                              where config.name == data.name
                               select config).FirstOrDefault();
             if (configItem == null)
             {
@@ -70,7 +70,7 @@ namespace V308CMS.Respository
         {
             return (from config in _entities.SiteConfig
                     
-                    orderby config.Id descending
+                    orderby config.id descending
                     select config
                 ).ToList();
         }

@@ -17,26 +17,26 @@ namespace V308CMS.Data
     //        int pageSize = 10);
     }
 
-    public class NewsGroupRepository: INewsGroupRepository
-    {
-        private readonly V308CMSEntities _entities;
+    //public class NewsGroupRepository: INewsGroupRepository
+    //{
+    //    private readonly V308CMSEntities _entities;
 
 
-        List<NewsGroups> GetList(
-            string keyword = "", int rootId = 0, int parentId = 0, int childId = 0, int page = 1,
-            int pageSize = 10);
+    //    List<NewsGroups> GetList(
+    //        string keyword = "", int rootId = 0, int parentId = 0, int childId = 0, int page = 1,
+    //        int pageSize = 10);
 
-        List<NewsGroups> GetAll(bool state = true);
-        string ChangeState(int id);
-        string Insert(string name,int parentId,int number,bool state,DateTime createdDate);
+    //    List<NewsGroups> GetAll(bool state = true);
+    //    string ChangeState(int id);
+    //    string Insert(string name,int parentId,int number,bool state,DateTime createdDate);
 
-        string Update(int id,string name, int parentId, int number, bool state, DateTime createdDate);
-    }
+    //    string Update(int id,string name, int parentId, int number, bool state, DateTime createdDate);
+    //}
 
 
     public class NewsGroupRepository : IBaseRespository<NewsGroups>, INewsGroupRepository
     {
-        //private readonly V308CMSEntities _entities;
+        private readonly V308CMSEntities _entities;
 
 
 

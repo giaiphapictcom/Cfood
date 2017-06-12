@@ -1913,6 +1913,37 @@ namespace V308CMS.Data
         }
     }
 
+    public class ProductItemsPage
+    {
+        int _Page;
+        public string Name { get; set; }
+        public List<Product> Products { get; set; }
+        public ProductItemsPage()
+        {
+            _Page = 0;
+        }
+       
+        public int Page
+        {
+            get
+            {
+                if (_Page >= 1)
+                {
+                    return _Page;
+                }
+                else
+                {
+                    return 1;
+                }
+            }
+            set
+            {
+                _Page = value;
+            }
+        }
+       
+    }
+
     /*
      * QuanNH Add 2017-01
      */

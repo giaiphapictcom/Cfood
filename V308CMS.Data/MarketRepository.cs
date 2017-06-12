@@ -221,6 +221,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 throw;
             }
         }

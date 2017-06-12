@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V308CMS.Admin", "V308CMS.Ad
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V308CMS.Static", "V308CMS.Static\V308CMS.Static.csproj", "{2A2933C8-6F8F-448D-9972-0C6BBD0FDB50}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V308CMS.Respository", "V308CMS.Respository\V308CMS.Respository.csproj", "{4540F1D2-C7AC-4BC4-9E2D-F2271279AEAC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,10 @@ Global
 		{2A2933C8-6F8F-448D-9972-0C6BBD0FDB50}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A2933C8-6F8F-448D-9972-0C6BBD0FDB50}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A2933C8-6F8F-448D-9972-0C6BBD0FDB50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4540F1D2-C7AC-4BC4-9E2D-F2271279AEAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4540F1D2-C7AC-4BC4-9E2D-F2271279AEAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4540F1D2-C7AC-4BC4-9E2D-F2271279AEAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4540F1D2-C7AC-4BC4-9E2D-F2271279AEAC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

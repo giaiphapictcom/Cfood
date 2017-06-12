@@ -1,21 +1,4 @@
-﻿@*<ul class="navbar-nav mr-auto">
-    <li class="nav-item active">
-        <a class="nav-link" href="/">Trang chủ <span class="sr-only">(current)</span></a>
-    </li>
-    @if (Model != null && Model.Count > 0)
-    {
-        foreach (V308CMS.Data.NewsGroups menu in Model)
-        {
-            if (!menu.Name.ToLower().Equals("footer"))
-            {
-                <li class="nav-item"><a class="nav-link" href="@menu.Link">@menu.Name</a></li>
-            }
-
-        }
-    }
-</ul>*@
-
-
+﻿@using V308CMS.Data;
 <ul class="navbar-nav site-nav">
     @{
         var controller = Request.RequestContext.RouteData.Values["Controller"].ToString().ToLower();
@@ -26,7 +9,7 @@
         </li>
         if (Model != null && Model.Count > 0)
         {
-            foreach (V308CMS.Data.NewsGroups menu in Model)
+            foreach (V308CMS.Data.Models.MenuConfig menu in Model)
             {
 
                 var menuName = menu.Name;

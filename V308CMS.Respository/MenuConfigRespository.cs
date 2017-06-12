@@ -57,6 +57,7 @@ namespace V308CMS.Respository
                 menuConfig.CreatedAt = config.CreatedAt;
                 menuConfig.UpdatedAt = config.UpdatedAt;
                 menuConfig.Order = config.Order;
+
                 _entities.SaveChanges();
                 return "ok";
 
