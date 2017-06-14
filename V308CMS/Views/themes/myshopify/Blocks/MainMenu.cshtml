@@ -2,11 +2,11 @@
 <ul class="navbar-nav site-nav">
     @{
         var controller = Request.RequestContext.RouteData.Values["Controller"].ToString().ToLower();
-        <li class="menu-dropdown level-top @(controller =="home"?"active" :"") ">
+        @*<li class="menu-dropdown level-top @(controller =="home"?"active" :"") ">
             <a class="dropdown-toggle" href="/" title="MP START">
                 <span>Trang chủ</span>
             </a>
-        </li>
+        </li>*@
         if (Model != null && Model.Count > 0)
         {
             foreach (V308CMS.Data.Models.MenuConfig menu in Model)
@@ -28,8 +28,9 @@
                     {
                         activeCss = "active";
                     }
+                    string taget = menu.Target != null ? menu.Target : "_self";
                     <li class="menu-dropdown level-top @activeCss">
-                        <a class="dropdown-toggle" href="@menu.Link" title="@menuName">
+                        <a class="dropdown-toggle" href="@menu.Link" title="@menuName" target="@taget">
                             <span class="">@menuName</span>
                         </a>
                     </li>

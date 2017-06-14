@@ -32,7 +32,7 @@ namespace V308CMS.Common
 
             if (uploadPath.Count() < 1 | !Directory.Exists(imgThumbPath))
             {
-                imgThumbPath = HttpContext.Current.Server.MapPath("~/Content/thumb/");
+                //imgThumbPath = HttpContext.Current.Server.MapPath("~/Content/thumb/");
                 imgThumbUrl = "/Content/thumb/";
             }
             string thumbPath = imgThumbPath + "/" + width+"x"+height + "/";

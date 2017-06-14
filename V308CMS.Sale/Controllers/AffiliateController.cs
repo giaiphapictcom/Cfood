@@ -14,6 +14,7 @@ namespace V308CMS.Sale.Controllers
         #region Repository
         static V308CMSEntities mEntities;
         ProductRepository ProductRepos;
+        ImagesRepository ImageRepos;
        
         AccountRepository AccountRepos;
         NewsRepository NewsRepos;
@@ -22,6 +23,8 @@ namespace V308CMS.Sale.Controllers
         private void CreateRepos()
         {
             mEntities = new V308CMSEntities();
+            ImageRepos = new ImagesRepository(mEntities);
+
             ProductRepos = new ProductRepository(mEntities);
             AccountRepos = new AccountRepository(mEntities);
             NewsRepos = new NewsRepository(mEntities);
@@ -31,6 +34,8 @@ namespace V308CMS.Sale.Controllers
         private void DisposeRepos()
         {
             mEntities.Dispose();
+            ImageRepos.Dispose();
+
             ProductRepos.Dispose();
             AccountRepos.Dispose();
             NewsRepos.Dispose();

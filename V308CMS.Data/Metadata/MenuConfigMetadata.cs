@@ -16,6 +16,7 @@ namespace V308CMS.Data.Metadata
         public string Code { get; set; }
         [MaxLength(500)]
         public string Link { get; set; }
+        //public string Taget { get; set; }
         public byte State { get; set; }        
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }

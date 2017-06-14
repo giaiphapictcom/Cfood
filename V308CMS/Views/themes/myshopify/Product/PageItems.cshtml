@@ -1,0 +1,24 @@
+﻿@model V308CMS.Data.ProductItemsPage
+@{
+    Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
+}
+@section header {
+    <title>@Model.Name - @ViewBag.SiteName</title>
+}
+
+@if (Model.Products != null && Model.Products.Count() > 0 ) {
+<div class="box-items box-shadow mt-0">
+    <div class="container">
+        <h4>@Model.Name</h4>
+        <div class="row">
+            @foreach (V308CMS.Data.Product prod in Model.Products)
+                 {
+                @Html.Action("ProductBlockType1_4", "Block", prod)
+                 }
+        </div>
+    </div>
+</div>
+}
+     
+     
+ 

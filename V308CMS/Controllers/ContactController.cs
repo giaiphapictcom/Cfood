@@ -16,8 +16,7 @@ namespace V308CMS.Controllers
             ViewEngines.Engines.Clear();
             ViewEngines.Engines.Add(new V308CMS.Helpers.MpStartViewEngine(false));
         }
-        //
-        // GET: /Contact/
+
 
         public ActionResult Index()
         {

@@ -12,10 +12,18 @@ namespace V308CMS
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.MapRoute("ContactIndexUrl", "lien-he", new { Controller = "Contact", action = "Index" });
-            routes.MapRoute("VideoIndexRoute", "video.html", new { Controller = "MyShopify", action = "HomeYoutube" });
-            routes.MapRoute("NewsIndexRoute", "tin-tuc.html", new { Controller = "News", action = "Index", page =1, type = 58 });
+            
+
+            routes.MapRoute("NewsIndexRoute", "tin-tuc", new { Controller = "News", action = "Index", page = 1, type = 58 });
+            routes.MapRoute("NewsIndexHtmlRoute", "tin-tuc.html", new { Controller = "News", action = "Index", page = 1, type = 58 });
             routes.MapRoute("NewsIndexPagingRoute", "tin-tuc/trang-{page}.html", new { Controller = "News", action = "Index",type = 58 });
             routes.MapRoute("NewsDetailRoute", "tin-tuc/{slug}.{id}.html", new { Controller = "News", action = "Detail" }, new { id = @"\d+" });
+
+            //routes.MapRoute("VideoIndexRoute", "video.html", new { Controller = "MyShopify", action = "HomeYoutube" });
+            routes.MapRoute("VideoIndexRoute", "video", new { Controller = "Video", action = "Index" });
+            //routes.MapRoute("VideoDetailRoute", "{title}-youtube{pId}.html", new { Controller = "Home", action = "YoutubeDetail" }, new { pId = @"\d+" });
+            routes.MapRoute("VideoDetailRoute", "{title}-youtube{pId}.html", new { Controller = "Video", action = "Detail" }, new { pId = @"\d+" });
+
             routes.MapRoute("LoginRoute", "dang-nhap.html", new { Controller = "Account", action = "Login"});
             routes.MapRoute("LogoutRoute", "dang-xuat.html", new { Controller = "Account", action = "Logout" });
             routes.MapRoute("ProfileRoute", "profile.html", new { Controller = "Account", action = "ProfileUser" });
@@ -28,7 +36,7 @@ namespace V308CMS
             ///
             routes.MapRoute("MarketCategoryRoute", "{pMarketName}-m{pGroupId}.html", new { Controller = "Home", action = "MarketCategory" }, new { pGroupId = @"\d+" });
           
-            routes.MapRoute("YoutubeDetailRoute", "{title}-youtube{pId}.html", new { Controller = "Home", action = "YoutubeDetail" }, new { pId = @"\d+" });
+            
           
             routes.MapRoute("CategoryRoute", "{title}-t{pGroupId}.html", new { Controller = "Home", action = "Category" }, new { pGroupId = @"\d+" });
             routes.MapRoute("DetailRoute", "{title}-d{pId}.html", new { Controller = "Home", action = "Detail" }, new { pId = @"\d+" });

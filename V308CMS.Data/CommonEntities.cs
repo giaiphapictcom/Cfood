@@ -1918,6 +1918,7 @@ namespace V308CMS.Data
         int _Page;
         public string Name { get; set; }
         public List<Product> Products { get; set; }
+        public int total { get; set; }
         public ProductItemsPage()
         {
             _Page = 0;
@@ -2070,6 +2071,8 @@ namespace V308CMS.Data
         }
 
     }
+
+    
 
     /*
      * QuanNH add Affiliate

@@ -126,10 +126,9 @@ namespace V308CMS.Controllers
             // ReSharper disable once Mvc.ViewNotResolved            
             return View("HomeProduct", images);
         }
-        public ActionResult YoutubeBlock(V308CMS.Data.News video)
+        public ActionResult VideoItemBlock(V308CMS.Data.News video)
         {
-            // ReSharper disable once Mvc.ViewNotResolved 
-            return View("Youtube", video);
+            return View("VideoItemBlock", video);
         }
         
         #endregion

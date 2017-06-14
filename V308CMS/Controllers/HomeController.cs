@@ -9,267 +9,337 @@ using ServiceStack.Text;
 using V308CMS.Common;
 using V308CMS.Data;
 using V308CMS.Helpers;
+using V308CMS.Respository;
 
 namespace V308CMS.Controllers
 {
-    public class HomeController : BaseController
+    public class HomeController : Controller
     {
+        #region Repository
+        static V308CMSEntities mEntities;
+        ProductRepository ProductRepos;
+        MarketRepository MarketRepos;
+        NewsRepository NewsRepos;
+
+        
+        //ImagesRepository ImageRepos;
+        //ProductTypeRepository ProductTypeRepos;
+        
+        //MenuConfigRespository MenuConfigRepos;
+
+        //AccountRepository AccountRepos;
+        
+        //TestimonialRepository CommentRepo;
+        //CategoryRepository CategoryRepo;
+        private void CreateRepos()
+        {
+            mEntities = new V308CMSEntities();
+            ProductRepos = new ProductRepository(mEntities);
+            NewsRepos = new NewsRepository(mEntities);
+            MarketRepos = new MarketRepository(mEntities);
+  
+        }
+        private void DisposeRepos()
+        {
+            mEntities.Dispose();
+            if (ProductRepos != null) {
+                ProductRepos.Dispose();
+            }
+            if (NewsRepos != null)
+            {
+                NewsRepos.Dispose();
+            }
+            if (MarketRepos != null)
+            {
+                MarketRepos.Dispose();
+            }
+
+        }
+        #endregion
 
         public HomeController()
         {
+            if (mEntities != null) {
+                DisposeRepos();
+            }
+            CreateRepos();
+           
             ViewEngines.Engines.Clear();
             ViewEngines.Engines.Add(new V308CMS.Helpers.MpStartViewEngine(false));
         }
         public ActionResult Index()
         {
-                     
-            IndexPageContainer mIndexPageContainer = new IndexPageContainer();
-            List<IndexPage> mIndexPageList = new List<IndexPage>();
-            StringBuilder str = new StringBuilder();
-            List<Market> mMarketList = new List<Market>();
-            List<Product> mBestBuyList;
-            List<ProductType> mTypeList;
-            //List<ProductType> mSoCheList;
-            //List<Product> mBestSoCheList;
-            List<Product> mList;
-            List<ProductType> mListParent;
-            mListParent = ProductsService.LayProductTypeTheoParentId(0);
-            foreach (ProductType it in mListParent)
+
+            try
             {
-                //lay danh sach san pham
+                CreateRepos();
+                IndexPageContainer mIndexPageContainer = new IndexPageContainer();
+                List<IndexPage> mIndexPageList = new List<IndexPage>();
+                StringBuilder str = new StringBuilder();
+                List<Market> mMarketList = new List<Market>();
+                List<Product> mBestBuyList;
+                List<ProductType> mTypeList;
+                //List<ProductType> mSoCheList;
+                //List<Product> mBestSoCheList;
+                List<Product> mList;
+                List<ProductType> mListParent;
+                mListParent = ProductRepos.LayProductTypeTheoParentId(0);
+                foreach (ProductType it in mListParent)
+                {
+                    //lay danh sach san pham
+                    if (!Request.Browser.IsMobileDevice)
+                        mList = ProductRepos.LayTheoTrangAndType(1, 4, it.ID, it.Level);
+                    else
+                        mList = ProductRepos.LayTheoTrangAndType(1, 50, it.ID, it.Level);
+                    //lay danh sach nhom san pham con
+                    mTypeList = ProductRepos.getProductTypeByParent(it.ID);
+                    IndexPage mIndexPage = new IndexPage();
+                    mIndexPage.Id = it.ID;
+                    mIndexPage.Name = it.Name;
+                    mIndexPage.Image = it.Image;
+                    mIndexPage.ImageBanner = "/Content/Images/stepbuy.png"; //it.ImageBanner;
+                    mIndexPage.ProductTypeList = mTypeList;
+                    mIndexPage.ProductList = mList;
+                    mIndexPageList.Add(mIndexPage);
+                }
+                mIndexPageContainer.IndexPageList = mIndexPageList;
+                //lay cac san pham ban chay
                 if (!Request.Browser.IsMobileDevice)
-                    mList = ProductsService.LayTheoTrangAndType(1, 4, it.ID, it.Level);
+                    mBestBuyList = ProductRepos.LaySanPhamBanChay(1, 10);
                 else
-                    mList = ProductsService.LayTheoTrangAndType(1, 50, it.ID, it.Level);
-                //lay danh sach nhom san pham con
-                mTypeList = ProductsService.getProductTypeByParent(it.ID);
-                IndexPage mIndexPage = new IndexPage();
-                mIndexPage.Id = it.ID;
-                mIndexPage.Name = it.Name;
-                mIndexPage.Image = it.Image;
-                mIndexPage.ImageBanner = "/Content/Images/stepbuy.png"; //it.ImageBanner;
-                mIndexPage.ProductTypeList = mTypeList;
-                mIndexPage.ProductList = mList;
-                mIndexPageList.Add(mIndexPage);
-            }
-            mIndexPageContainer.IndexPageList = mIndexPageList;
-            //lay cac san pham ban chay
-            if (!Request.Browser.IsMobileDevice)
-                mBestBuyList = ProductsService.LaySanPhamBanChay(1, 10);
-            else
-                mBestBuyList = ProductsService.LaySanPhamBanChay(1, 50);
+                    mBestBuyList = ProductRepos.LaySanPhamBanChay(1, 50);
 
-            if (mBestBuyList.Count() < 1)
+                if (mBestBuyList.Count() < 1)
+                {
+                    mBestBuyList = ProductRepos.getProductsRandom(18);
+                }
+                mIndexPageContainer.BestBuyList = mBestBuyList;
+
+
+                mIndexPageContainer.ProductLastest = ProductRepos.getProductsLastest(18);
+                if (mIndexPageContainer.ProductLastest.Count() < 1)
+                {
+                    mIndexPageContainer.ProductLastest = ProductRepos.getProductsRandom(18);
+                }
+
+                List<ProductType> homeCategorys = new List<ProductType>();
+
+                homeCategorys.Add(ProductRepos.LayLoaiSanPhamTheoId(177));
+                homeCategorys.Add(ProductRepos.LayLoaiSanPhamTheoId(176));
+                homeCategorys.Add(ProductRepos.LayLoaiSanPhamTheoId(179));
+                homeCategorys.Add(ProductRepos.LayLoaiSanPhamTheoId(180));
+
+                homeCategorys.Add(ProductRepos.LayLoaiSanPhamTheoId(183));
+                homeCategorys.Add(ProductRepos.LayLoaiSanPhamTheoId(175));
+                homeCategorys.Add(ProductRepos.LayLoaiSanPhamTheoId(332));
+
+                mIndexPageContainer.ProductTypeList = homeCategorys;
+
+
+                string view = Theme.viewPage("home");
+                if (view.Length > 0)
+                {
+                    return View("Home", mIndexPageContainer);
+                }
+
+                if (!Request.Browser.IsMobileDevice)
+                    return View(mIndexPageContainer);
+                else
+                    return View("MobileIndex", mIndexPageContainer);
+            }
+            catch (Exception ex)
             {
-                mBestBuyList = ProductsService.getProductsRandom(18);
+                return Content(ex.ToString());
             }
-            mIndexPageContainer.BestBuyList = mBestBuyList;
-
-
-
-            //lay danh sach cac nhom cua SO CHE
-            //mSoCheList = productRepos.LayProductTypeTheoParentId(147);
-            //lay cac san pham so che
-            //if (!Request.Browser.IsMobileDevice)
-            //    mBestSoCheList = productRepos.LayTheoTrangAndType(1, 9, 147, "10030");
-            //else
-            //    mBestSoCheList = productRepos.LayTheoTrangAndType(1, 50, 147, "10030");
-            //mIndexPageContainer.BestSoCheList = mBestSoCheList;
-            //mIndexPageContainer.ProductTypeList = mSoCheList;
-
-            mIndexPageContainer.ProductLastest = ProductsService.getProductsLastest(18);
-            if (mIndexPageContainer.ProductLastest.Count() < 1)
-            {
-                mIndexPageContainer.ProductLastest = ProductsService.getProductsRandom(18);
-            }
-
-            List<ProductType> homeCategorys = new List<ProductType>();
-
-            homeCategorys.Add(ProductsService.LayLoaiSanPhamTheoId(177));
-            homeCategorys.Add(ProductsService.LayLoaiSanPhamTheoId(176));
-            homeCategorys.Add(ProductsService.LayLoaiSanPhamTheoId(179));
-            homeCategorys.Add(ProductsService.LayLoaiSanPhamTheoId(180));
-
-            homeCategorys.Add(ProductsService.LayLoaiSanPhamTheoId(183));
-            homeCategorys.Add(ProductsService.LayLoaiSanPhamTheoId(175));
-
-            mIndexPageContainer.ProductTypeList = homeCategorys;
-            //mIndexPageContainer.ProductTypeList = productRepos.LayProductTypeTheoParentId(0);
-
-            string view = Theme.viewPage("home");
-            if (view.Length > 0)
-            {
-                return View("Home", mIndexPageContainer);
-            }
-
-            if (!Request.Browser.IsMobileDevice)
-                return View(mIndexPageContainer);
-            else
-                return View("MobileIndex", mIndexPageContainer);
+            //finally
+            //{
+            //    DisposeRepos();
+            //}
 
         }
         public ActionResult Category(int pGroupId = 0)
-        {           
+        {
 
-            ProductCategoryPageContainer model = new ProductCategoryPageContainer();
+            try {
+                CreateRepos();
+                ProductCategoryPageContainer model = new ProductCategoryPageContainer();
 
-            int nPage = Convert.ToInt32(Request.QueryString["p"]);
-            if (nPage < 1)
-            {
-                nPage = 1;
-            }
-
-            List<Product> mProductList = new List<Product>();
-            List<ProductCategoryPage> mProductPageList = new List<ProductCategoryPage>();
-            List<ProductType> mProductTypeList;
-
-            ProductType ProductCategory = ProductsService.LayLoaiSanPhamTheoId(pGroupId);
-            if (ProductCategory != null)
-            {
-                CategoryPage CategoryPage = ProductHelper.getProductsByCategory(ProductCategory.ID, nPage);
-
-                model.Products = CategoryPage.Products;
-                model.ProductTotal = CategoryPage.ProductTotal;
-                model.Brands = ProductsService.getRandomBrands(ProductCategory.ID, 6);
-                if (ProductCategory.Parent == 0)
-                    mProductTypeList = ProductsService.getProductTypeByProductType(ProductCategory.ID);//lay danh sach cap 1
-                else
+                int nPage = Convert.ToInt32(Request.QueryString["p"]);
+                if (nPage < 1)
                 {
-                    mProductTypeList = new List<ProductType>();
-                    mProductTypeList.Add(ProductCategory);
-                    //mProductTypeList = productRepository.getProductTypeByProductType((int)mProductType.Parent);//lay danh sach cap 2
+                    nPage = 1;
                 }
 
-                if (mProductTypeList.Count > 0)
+                List<Product> mProductList = new List<Product>();
+                List<ProductCategoryPage> mProductPageList = new List<ProductCategoryPage>();
+                List<ProductType> mProductTypeList;
+
+                ProductType ProductCategory = ProductRepos.LayLoaiSanPhamTheoId(pGroupId);
+                if (ProductCategory != null)
                 {
-                    foreach (ProductType it in mProductTypeList)
+                    CategoryPage CategoryPage = ProductHelper.getProductsByCategory(ProductCategory.ID, nPage);
+
+                    model.Products = CategoryPage.Products;
+                    model.ProductTotal = CategoryPage.ProductTotal;
+                    model.Brands = ProductRepos.getRandomBrands(ProductCategory.ID, 6);
+                    if (ProductCategory.Parent == 0)
+                        mProductTypeList = ProductRepos.getProductTypeByProductType(ProductCategory.ID);//lay danh sach cap 1
+                    else
                     {
-                        mProductPageList.Add(ProductHelper.GetCategoryPage(it, nPage));
+                        mProductTypeList = new List<ProductType>();
+                        mProductTypeList.Add(ProductCategory);
+                        //mProductTypeList = productRepository.getProductTypeByProductType((int)mProductType.Parent);//lay danh sach cap 2
                     }
-                }
-                else
-                {
-                    mProductPageList.Add(ProductHelper.GetCategoryPage(ProductCategory, nPage));
 
+                    if (mProductTypeList.Count > 0)
+                    {
+                        foreach (ProductType it in mProductTypeList)
+                        {
+                            mProductPageList.Add(ProductHelper.GetCategoryPage(it, nPage));
+                        }
+                    }
+                    else
+                    {
+                        mProductPageList.Add(ProductHelper.GetCategoryPage(ProductCategory, nPage));
+
+                    }
+                    //lay danh sach cac nhom so che
+                    //mSoCheList = productRepos.LayProductTypeTheoParentId(147);
+                    //Model.ProductTypeList = mSoCheList;
+                    //lay cac san pham ban chay
+                    //mBestBuyList = productRepos.getBestBuyWithType(1, 10, 147, "10030");
+                    //Model.ProductList = mBestBuyList;
                 }
-                //lay danh sach cac nhom so che
-                //mSoCheList = productRepos.LayProductTypeTheoParentId(147);
-                //Model.ProductTypeList = mSoCheList;
-                //lay cac san pham ban chay
-                //mBestBuyList = productRepos.getBestBuyWithType(1, 10, 147, "10030");
-                //Model.ProductList = mBestBuyList;
+                model.List = mProductPageList;
+                model.ProductType = ProductCategory;
+                model.BestSeller = ProductRepos.getProductsRandom();
+                //if (mProductList.Count < 40)
+                //    Model.IsEnd = true;
+                model.Page = nPage;
+
+                if (!Request.Browser.IsMobileDevice)
+                    return View("Category", model);
+                else
+                    return View("MobileCategory", model);
             }
-            model.List = mProductPageList;
-            model.ProductType = ProductCategory;
-            model.BestSeller = ProductsService.getProductsRandom();
-            //if (mProductList.Count < 40)
-            //    Model.IsEnd = true;
-            model.Page = nPage;
-         
-            if (!Request.Browser.IsMobileDevice)
-                return View("Category", model);
-            else
-                return View("MobileCategory", model);
+            catch (Exception ex)
+            {
+                return Content(ex.ToString());
+            }
+           
         }
         public ActionResult Detail(int pId = 0)
         {
-         
-            ProductDetailPage mProductDetailPage = new ProductDetailPage();
-            Product mProduct;
-            ProductType mProductType = new ProductType();
-            Market mMarket = new Market(); ;
-            //List<Product> MarketList;
-            List<Product> RelatedList;
-            //List<Product> DiscountList;
-            List<ProductType> mProductTypeList;
-            mProduct = ProductsService.LayTheoId(pId);
-            if (mProduct != null)
-            {
-                mProductDetailPage.Product = mProduct;
-                mMarket = MarketService.LayTheoId((int)mProduct.MarketId);
-                if (mMarket == null)
-                    mMarket = new Market();
-                mProductDetailPage.Market = mMarket;
-                //lay chi tiet ve loai san pham
-                mProductType = ProductsService.LayLoaiSanPhamTheoId((int)mProduct.Type);
-                if (mProductType == null)
-                    mProductType = new ProductType();
-                mProductDetailPage.ProductType = mProductType;
-                //lay danh sach san pham cua sieu thi
-                //MarketList = productRepos.getByPageSizeMarketId(1, 6, mMarket.ID);
-                //mProductDetailPage.MarketList = MarketList;
 
-                RelatedList = ProductsService.LayDanhSachSanPhamLienQuan((int)mProduct.Type, 12, true);
-                mProductDetailPage.RelatedList = RelatedList;
+            try {
+                ProductDetailPage mProductDetailPage = new ProductDetailPage();
+                Product mProduct;
+                ProductType mProductType = new ProductType();
+                Market mMarket = new Market(); ;
+                //List<Product> MarketList;
+                List<Product> RelatedList;
+                //List<Product> DiscountList;
+                List<ProductType> mProductTypeList;
+                mProduct = ProductRepos.LayTheoId(pId);
+                if (mProduct != null)
+                {
+                    mProductDetailPage.Product = mProduct;
+                    mMarket = MarketRepos.LayTheoId((int)mProduct.MarketId);
+                    if (mMarket == null)
+                        mMarket = new Market();
+                    mProductDetailPage.Market = mMarket;
+                    //lay chi tiet ve loai san pham
+                    mProductType = ProductRepos.LayLoaiSanPhamTheoId((int)mProduct.Type);
+                    if (mProductType == null)
+                        mProductType = new ProductType();
+                    mProductDetailPage.ProductType = mProductType;
+                    //lay danh sach san pham cua sieu thi
+                    //MarketList = productRepos.getByPageSizeMarketId(1, 6, mMarket.ID);
+                    //mProductDetailPage.MarketList = MarketList;
 
-                //DiscountList = productRepos.LaySanPhamKhuyenMai(1, 6);
-                //mProductDetailPage.DiscountList = DiscountList;
-                //
-                mProductTypeList = ProductsService.getProductTypeParent();
-                mProductDetailPage.ProductTypeList = mProductTypeList;
+                    RelatedList = ProductRepos.LayDanhSachSanPhamLienQuan((int)mProduct.Type, 12, true);
+                    mProductDetailPage.RelatedList = RelatedList;
 
-                ProductSlideShow ProductImages = new ProductSlideShow();
+                    //DiscountList = productRepos.LaySanPhamKhuyenMai(1, 6);
+                    //mProductDetailPage.DiscountList = DiscountList;
+                    //
+                    mProductTypeList = ProductRepos.getProductTypeParent();
+                    mProductDetailPage.ProductTypeList = mProductTypeList;
 
-                mProductDetailPage.Images = ProductsService.LayProductImageTheoIDProduct(mProduct.ID);
+                    ProductSlideShow ProductImages = new ProductSlideShow();
 
+                    mProductDetailPage.Images = ProductRepos.LayProductImageTheoIDProduct(mProduct.ID);
+
+                }
+                mProductDetailPage.ProductLastest = ProductRepos.getProductsRandom(6);
+
+                //lay chi tiet san pham
+                if (!Request.Browser.IsMobileDevice)
+                    return View("Detail", mProductDetailPage);
+                else
+                    return View("MobileDetail", mProductDetailPage);
             }
-            mProductDetailPage.ProductLastest = ProductsService.getProductsRandom(6);
-          
-            //lay chi tiet san pham
-            if (!Request.Browser.IsMobileDevice)
-                return View("Detail",mProductDetailPage);
-            else
-                return View("MobileDetail", mProductDetailPage);
+            catch (Exception ex)
+            {
+                return Content(ex.ToString());
+            }
         }
         
         public ActionResult Search()
         {
-            int pVendor = 2;
-            int pPage = 1;
-            SearchPage mSearchPage = new SearchPage();
-            
-            string pKey = Request.QueryString["q"];
-            
-            if (pVendor == 1)/*Tìm theo cửa hàng*/
+            try
             {
-                List<Market> mMarketList = MarketService.SearchMarketTheoTrangAndType(pPage, 30, pKey);
+                int pVendor = 2;
+                int pPage = 1;
+                SearchPage mSearchPage = new SearchPage();
 
-                mSearchPage.Code = 1;
-                if (mMarketList.Count > 0)
+                string pKey = Request.QueryString["q"];
+
+                if (pVendor == 1)/*Tìm theo cửa hàng*/
                 {
-                    mSearchPage.MarketList = mMarketList;
-                    if (mMarketList.Count < 30)
-                        mSearchPage.IsEnd = true;
-                    mSearchPage.Page = pPage;
-                    mSearchPage.Name = pKey;
+                    List<Market> mMarketList = MarketRepos.SearchMarketTheoTrangAndType(pPage, 30, pKey);
+
+                    mSearchPage.Code = 1;
+                    if (mMarketList.Count > 0)
+                    {
+                        mSearchPage.MarketList = mMarketList;
+                        if (mMarketList.Count < 30)
+                            mSearchPage.IsEnd = true;
+                        mSearchPage.Page = pPage;
+                        mSearchPage.Name = pKey;
+                    }
+                    else
+                    {
+                        mSearchPage.MarketList = new List<Data.Market>();
+                        mSearchPage.Name = pKey;
+                        mSearchPage.Html = "Không tìm thấy kết quả nào.";
+                    }
                 }
-                else
+                else /*Tìm theo sản phẩm*/
                 {
-                    mSearchPage.MarketList = new List<Data.Market>();
-                    mSearchPage.Name = pKey;
-                    mSearchPage.Html = "Không tìm thấy kết quả nào.";
+                    List<Product> mProductList = ProductRepos.TimSanPhamTheoTen(pPage, 30, pKey.ToLower());
+                    mSearchPage.Code = 2;
+                    if (mProductList.Count > 0)
+                    {
+                        mSearchPage.ProductList = mProductList;
+                        if (mProductList.Count < 30)
+                            mSearchPage.IsEnd = true;
+                        mSearchPage.Page = pPage;
+                        mSearchPage.Name = pKey;
+                    }
+                    else
+                    {
+                        mSearchPage.ProductList = new List<Product>();
+                        mSearchPage.Name = pKey;
+                        mSearchPage.Html = "Không tìm thấy kết quả nào.";
+                    }
                 }
+                return View("Search", mSearchPage);
             }
-            else /*Tìm theo sản phẩm*/
+            catch (Exception ex)
             {
-                List<Product> mProductList = ProductsService.TimSanPhamTheoTen(pPage, 30, pKey.ToLower());
-                mSearchPage.Code = 2;
-                if (mProductList.Count > 0)
-                {
-                    mSearchPage.ProductList = mProductList;
-                    if (mProductList.Count < 30)
-                        mSearchPage.IsEnd = true;
-                    mSearchPage.Page = pPage;
-                    mSearchPage.Name = pKey;
-                }
-                else
-                {
-                    mSearchPage.ProductList = new List<Product>();
-                    mSearchPage.Name = pKey;
-                    mSearchPage.Html = "Không tìm thấy kết quả nào.";
-                }
+                return Content(ex.ToString());
             }
-            return View("Search",mSearchPage);           
         }
         public ActionResult YoutubeDetail(int pId = 0)
         {
@@ -278,12 +348,12 @@ namespace V308CMS.Controllers
             NewsPage mCommonModel = new NewsPage();
             StringBuilder mStr = new StringBuilder();
             //lay chi tiet san pham
-            var mNews = NewsService.LayTinTheoId(pId);
+            var mNews = NewsRepos.LayTinTheoId(pId);
             if (mNews != null)
             {
 
                 mCommonModel.pNews = mNews;
-                var mListLienQuan = NewsService.LayTinTucLienQuan(mNews.ID, 26, 5);
+                var mListLienQuan = NewsRepos.LayTinTucLienQuan(mNews.ID, 26, 5);
                 //tao Html tin tuc lien quan
                 mCommonModel.List = mListLienQuan;
             }
@@ -305,12 +375,12 @@ namespace V308CMS.Controllers
             //lay chi tiet ProductType
             //lay danh sach các nhóm sản phẩm con
             //lay cac san pham cua nhom
-            mMarket = MarketService.getByName(pMarketName.Replace('-', ' '));
+            mMarket = MarketRepos.getByName(pMarketName.Replace('-', ' '));
             if (mMarket != null)
             {
                 mProductCategoryPageBox.List = new List<ProductCategoryPage>();
                 mProductCategoryPageBox.Market = mMarket;
-                var mProductTypeList = ProductsService.getProductTypeParent();
+                var mProductTypeList = ProductRepos.getProductTypeParent();
                 foreach (ProductType it in mProductTypeList)
                 {
                     ProductCategoryPage mProductPage = new ProductCategoryPage();
@@ -318,7 +388,7 @@ namespace V308CMS.Controllers
                     mProductPage.Value = mMarket.UserName;
                     mProductPage.Id = (int)it.ID;
                     mProductPage.Image = it.Image;
-                    List<Product> mProductList = ProductsService.getByPageSizeMarketId(1, 4, (int)it.ID, mMarket.ID, it.Level);
+                    List<Product> mProductList = ProductRepos.getByPageSizeMarketId(1, 4, (int)it.ID, mMarket.ID, it.Level);
                     mProductPage.List = mProductList;
                     mProductCategoryPageBox.List.Add(mProductPage);
                 }

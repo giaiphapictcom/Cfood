@@ -9,33 +9,16 @@ using V308CMS.Data;
 
 namespace V308CMS.Controllers
 {
-    public class ProductController : BaseController
+
+    public class ProductController : BaseController 
     {
-        #region Repository
-        static V308CMSEntities mEntities;
-        ProductRepository ProductRepos;
+        
 
-        private void CreateRepos()
-        {
-            mEntities = new V308CMSEntities();
-            ProductRepos = new ProductRepository(mEntities);
-           
-        }
-        private void DisposeRepos()
-        {
-            mEntities.Dispose();
-            ProductRepos.Dispose();
-
-        }
-        #endregion
-
-        private void ProductController() {
-            CreateRepos();
-        }
+ 
 
         public ActionResult Index(int id)
         {
-            var product = ProductRepos.GetById(id);
+            var product = ProductsService.GetById(id);
             if (product != null)
             {
                 var producResult = new
@@ -75,18 +58,19 @@ namespace V308CMS.Controllers
         
         public ActionResult BigSale(){
             try {
+                
                 ProductItemsPage Model = new ProductItemsPage();
-                var products = ProductRepos.GetItemsBySaleoff(1,15,">");
-                return View("Search", Model);  
+                var products = ProductsService.GetItemsBySaleoff(1, 15, ">");
+                Model.Products = products.Products;
+                Model.total = products.total;
+
+                return View("PageItems", Model);  
             }
             catch (Exception ex)
             {
                 return Content(ex.InnerException.ToString());
             }
-            finally
-            {
-                DisposeRepos();
-            }
+
         }
 
     }

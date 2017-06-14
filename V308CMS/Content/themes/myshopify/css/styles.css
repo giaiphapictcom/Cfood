@@ -108,7 +108,7 @@ h2 {
   font-weight: 400;
   font-size: 86px;
   margin-bottom: 1em;}
-h3 {font-size: 48px ; margin-bottom: 1.25em;;color: #000;text-transform: uppercase; font-weight: 400;}
+h3 {font-size: 48px ; margin-bottom: 1.25em;color: #000;text-transform: uppercase; font-weight: 400;}
 h4 {font-size:36px ;  margin-bottom: 1.5em;}
 h5 {font-size:24px ;  margin-bottom: 1.5em;}
 h6 {font-size: 16px; margin-bottom: 1.5em;}
@@ -459,7 +459,7 @@ section.recently-viewed-products h2{    background: white;
   text-align: left;
   padding: 0;
   font-weight: bold;
-}
+
 width: 30px;height: 30px; text-align: center;    padding: 7px 0;}
 .sidebar-block{margin: 20px 0; }
 .sidebar-tag.size li:hover input[type="checkbox"] + label, .sidebar-tag.size li [type=checkbox]:checked  + label{color:#00aeef;}
@@ -2736,7 +2736,7 @@ body .allinone_bannerRotator.universal .bottomNav{bottom: 26px !important;displa
   max-width: 100%;}
 .product .product-img-box .thumbs .image-item a:hover img{    -ms-transform: scale3d(1.1, 1.1, 1);
   -webkit-transform: scale3d(1.1, 1.1, 1);
-  transform: scale3d(1.1, 1.1, 1));}
+  transform: scale3d(1.1, 1.1, 1);}
 #zt_list_product.owl-theme:hover .owl-controls .arrow_carrot-left,#zt_list_product.owl-theme:hover .owl-controls .arrow_carrot-right{display:block}
 
 .toolbar-mode{

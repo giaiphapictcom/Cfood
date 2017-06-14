@@ -20,8 +20,10 @@
                 {
                     activeCss = "active";
                 }
+                string taget = menu.Target != null ? menu.Target : "_self";
+                
                 <li class="menu-dropdown level-top @activeCss">
-                    <a class="dropdown-toggle" href="@menu.Link" title="@menu.Name">
+                    <a class="dropdown-toggle" href="@menu.Link" title="@menu.Name" target="@taget" >
                         <span class="">@menu.Name</span>
                     </a>
                 </li>

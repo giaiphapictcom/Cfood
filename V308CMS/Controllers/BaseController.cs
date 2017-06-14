@@ -32,6 +32,8 @@ namespace V308CMS.Controllers
         protected BaseController()
         {
             _mEntities = EnsureV308CmsEntitiesNotNull();
+            //V308CMSEntities mEntities = new V308CMSEntities();
+
             _productService = new ProductRepository(_mEntities);
             _newsService = new NewsRepository(_mEntities);
 
@@ -50,6 +52,13 @@ namespace V308CMS.Controllers
             _meuMenuConfigRespository = new MenuConfigRespository(_mEntities);
             _productTypeRepository = new ProductTypeRepository(_mEntities);
         }
+
+        //public void DisposeRepos() {
+        //    _mEntities.Dispose();
+        //    _productService.Dispose();
+        //    //    ProductRepos.Dispose();
+        //}
+
         public ProductTypeRepository ProductTypeService
         {
             get

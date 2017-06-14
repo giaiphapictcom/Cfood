@@ -3,77 +3,197 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using V308CMS.Data;
+using V308CMS.Respository;
 
 namespace V308CMS.Controllers
 {
-    public class MyShopifyController : BaseController
+    public class MyShopifyController : Controller
     {
+
+        #region Repository
+        static V308CMSEntities mEntities;
+        ImagesRepository ImageRepos;
+        ProductTypeRepository ProductTypeRepos;
+        ProductRepository ProductRepos;
+        MenuConfigRespository MenuConfigRepos;
+        NewsRepository NewsRepos;
+
+        private void CreateRepos()
+        {
+            mEntities = new V308CMSEntities();
+            ImageRepos = new ImagesRepository(mEntities);
+            ProductTypeRepos = new ProductTypeRepository(mEntities);
+            ProductRepos = new ProductRepository(mEntities);
+            NewsRepos = new NewsRepository(mEntities);
+            MenuConfigRepos = new MenuConfigRespository(mEntities);
+        }
+        private void DisposeRepos()
+        {
+            mEntities.Dispose();
+            ImageRepos.Dispose();
+            ProductTypeRepos.Dispose();
+            ProductRepos.Dispose();
+            NewsRepos.Dispose();
+            MenuConfigRepos.Dispose();
+
+        }
+        #endregion
+       
+
         public ActionResult CategoryMenu()
         {
-            return View("CategoryMenu", ProductTypeService.GetAllWeb());
-
+            
+            try
+            {
+                CreateRepos();
+                return View("CategoryMenu", ProductTypeRepos.GetAllWeb());
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.ToString());
+            }
+            finally
+            {
+                DisposeRepos();
+            }
         }
 
         public ActionResult Mainmenu()
         {
-            return View("Mainmenu", MenuConfigService.GetAll());
+            try {
+                CreateRepos();
+                return View("Mainmenu", MenuConfigRepos.GetAll());
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.ToString());
+            }
+            finally
+            {
+                DisposeRepos();
+            }
+            
+        }
+
+        public ActionResult OffCanvas(){
+            try
+            {
+                CreateRepos();
+                return View("OffCanvas", MenuConfigRepos.GetAll());
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.ToString());
+            }
+            finally
+            {
+                DisposeRepos();
+            }
         }
 
         public ActionResult ProductMost()
         {
-            List<Product> products = ProductsService.LaySanPhamBanChay(1, 3);
-            if (!products.Any())
-            {
-                products = ProductsService.getProductsRandom(3);
-            }
+            try {
+                CreateRepos();
+                List<Product> products = ProductRepos.LaySanPhamBanChay(1, 3);
+                if (!products.Any())
+                {
+                    products = ProductRepos.getProductsRandom(3);
+                }
 
-            return View("ProductMost", products);
+                return View("ProductMost", products);
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.ToString());
+            }
+            finally
+            {
+                DisposeRepos();
+            }
+           
         }
 
         public ActionResult ProductHot()
         {
-            List<Product> products = ProductsService.getProductsLastest(10);
-            if (!products.Any())
-            {
-                products = ProductsService.getProductsRandom(10);
+            
+            try {
+                CreateRepos();
+                List<Product> products = ProductRepos.getProductsLastest(10);
+                if (!products.Any())
+                {
+                    products = ProductRepos.getProductsRandom(10);
+                }
+                List<ProductDetail> productDetails = products.Select(pro => new ProductDetail
+                {
+                    Product = pro,
+                    Images = ProductRepos.LayProductImageTheoIDProduct(pro.ID)
+                }).ToList();
+                return View("ProductHot", productDetails);
             }
-            List<ProductDetail> productDetails = products.Select(pro => new ProductDetail
+            catch (Exception ex)
             {
-                Product = pro, Images = ProductsService.LayProductImageTheoIDProduct(pro.ID)
-            }).ToList();
-            return View("ProductHot", productDetails);
+                return Content(ex.ToString());
+            }
+            finally
+            {
+                DisposeRepos();
+            }
 
         }
 
         public ActionResult ProductHomeCategory(ProductType cate)
         {
-            ProductCategoryPageContainer model = new ProductCategoryPageContainer();
-            List<ProductCategoryPage> mProductPageList = new List<ProductCategoryPage>();
-            ProductType productCategory = ProductsService.LayLoaiSanPhamTheoId(cate.ID);
-            if (productCategory != null)
-            {
-                List<ProductType> mProductTypeList = ProductsService.getProductTypeByProductType(productCategory.ID, 3);
-                if (mProductTypeList.Count > 0)
+            try {
+                CreateRepos();
+                ProductCategoryPageContainer model = new ProductCategoryPageContainer();
+                List<ProductCategoryPage> mProductPageList = new List<ProductCategoryPage>();
+                ProductType productCategory = ProductRepos.LayLoaiSanPhamTheoId(cate.ID);
+                if (productCategory != null)
                 {
-                    //nPage = 1;
-                    mProductPageList.AddRange(mProductTypeList.Select(it => ProductHelper.GetCategoryPage(it, 1, true)));
+                    List<ProductType> mProductTypeList = ProductRepos.getProductTypeByProductType(productCategory.ID, 3);
+                    if (mProductTypeList.Count > 0)
+                    {
+                        //nPage = 1;
+                        mProductPageList.AddRange(mProductTypeList.Select(it => ProductHelper.GetCategoryPage(it, 1, true)));
+                    }
                 }
+                model.List = mProductPageList;
+                model.ProductType = productCategory;
+                model.Brands = ProductRepos.getRandomBrands(cate.ID, 12);
+                return View("HomeCategory", model);
             }
-            model.List = mProductPageList;
-            model.ProductType = productCategory;
-            model.Brands = ProductsService.getRandomBrands(cate.ID, 6);
-            return View("HomeCategory", model);
+            catch (Exception ex)
+            {
+                return Content(ex.ToString());
+            }
+            finally
+            {
+                DisposeRepos();
+            }
         }
 
         public ActionResult HomeYoutube()
         {
-            List<News> videos = new List<News>();
-            NewsGroups videoGroup = NewsService.SearchNewsGroup("video");
-            if (videoGroup != null)
-            {
-                videos = NewsService.LayTinTheoGroupId(videoGroup.ID);
+            try {
+                CreateRepos();
+                List<News> videos = new List<News>();
+                NewsGroups videoGroup = NewsRepos.SearchNewsGroup("video");
+                if (videoGroup != null)
+                {
+                    videos = NewsRepos.LayTinTheoGroupId(videoGroup.ID);
+                }
+                return View("HomeYoutube", videos);
             }
-            return View("HomeYoutube", videos);
+            catch (Exception ex)
+            {
+                return Content(ex.ToString());
+            }
+            finally
+            {
+                DisposeRepos();
+            }
+           
 
         }
 
@@ -94,14 +214,36 @@ namespace V308CMS.Controllers
 
         #region Widget Left
         public ActionResult WidgetLeftHotProducts() {
-            List<Product> products = ProductsService.getProductsRandom(5);          
-            return View("HotProductLeft", products);
+            try {
+                CreateRepos();
+                List<Product> products = ProductRepos.getProductsRandom(5);
+                return View("HotProductLeft", products);
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.ToString());
+            }
+            finally
+            {
+                DisposeRepos();
+            }
 
         }
 
         public ActionResult ProductBlockLeft(Product product = null)
-        {          
-            return View("ProductBlockLeft", product);
+        {
+            try {
+                CreateRepos();
+                return View("ProductBlockLeft", product);
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.ToString());
+            }
+            finally
+            {
+                DisposeRepos();
+            }
         }
 
         public ActionResult WidgetLeftAdv()
@@ -144,28 +286,49 @@ namespace V308CMS.Controllers
         #region Adv banner
 
         public ActionResult CategoryAdv() {
-            var images = ImagesService.GetImagesByGroupAlias("category-adv");
+
+            try {
+                CreateRepos();
+                var images = ImageRepos.GetImagesByGroupAlias("category-adv");
             if (images.Count() > 0)
             {
                 Image img = images.First();
                 return View("CategoryAdv", img);
             }
-            else {
-                return View("CategoryAdv");
             }
+            catch (Exception ex)
+            {
+                return Content(ex.ToString());
+            }
+            finally
+            {
+                DisposeRepos();
+            }
+            return View("CategoryAdv");
             
         }
         public ActionResult LeftProductAdv()
         {
-            var images = ImagesService.GetImagesByGroupAlias("product-col-left");
-            if (images.Count() > 0)
+            
+            try
             {
-                Image img = images.First();
-                return View("LeftProductAdv", img);
+                CreateRepos();
+                var images = ImageRepos.GetImagesByGroupAlias("product-col-left");
+                if (images.Count() > 0)
+                {
+                    Image img = images.First();
+                    return View("LeftProductAdv", img);
+                }
             }
-            else {
-                return View("LeftProductAdv");
+            catch (Exception ex)
+            {
+                return Content(ex.ToString());
             }
+            finally
+            {
+                DisposeRepos();
+            }
+            return View("LeftProductAdv");
             
         }
         

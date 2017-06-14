@@ -15,7 +15,7 @@
                 <div class="col-md-12">
                     <div class="breadcrumb">
                         <h2></h2>
-                        <a href="/" title="Back to the frontpage">Home</a>
+                        <a href="/" title="Back to the frontpage">Trang chủ</a>
                         <span class="icon"><i class="fa fa-circle"></i></span>
                         <strong>
                             Liên hệ
@@ -32,16 +32,6 @@
 
 </div>
 
-<div class="contact-top">
-    <div class="container">
-
-        <h2>We’re glad to work together</h2>
-
-
-        <p>Phasellus tempus. Proin viverra, ligula sit amet ultrices semper. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum.</p>
-
-    </div>
-</div>
 <div class="contactus-page">
     <div class="container">
 
@@ -54,13 +44,13 @@
 
             <h3>
 
-                80’s Mod Contact info
+                Thông tin liên hệ @ViewBag.SiteName
 
             </h3>
 
             <div class="content-left">
 
-                Phasellus tempus. Proin viverra, ligula sit amet ultrices semper. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum.
+                @ViewBag.CompanyFullname
 
             </div>
 
@@ -68,10 +58,10 @@
             <div class="content-left">
 
                 <ul>
-                    <li><span>Địa chỉ :</span> 209 Phố Đội Cấn, Phường Đội Cấn, Ba Đình, Hà Nội</li>
-                    <li><span>Phone:</span> <a href="tel:+8496.567.9191">096.567.9191</a>  /  <a href="tel:+0466886613">04.6688.6613</a></li>
-                    <li><span>Email:</span> <a href="mailto:mpstartvn@gmail.com">mpstartvn@gmail.com</a></li>
-                    <li><span>Opening :</span> 7:00am - 21:30pm</li>
+                    <li><span>Địa chỉ :</span> @ViewBag.CompanyHeaderAddress</li>
+                    <li><span>Phone:</span> <a href="tel:@ViewBag.Hotline">@ViewBag.Hotline</a></a></li>
+                    <li><span>Email:</span> <a href="mailto:@ViewBag.CompanyEmail">ViewBag.CompanyEmail</a></li>
+                    
                 </ul>
 
             </div>

@@ -1,0 +1,110 @@
+﻿@model List<V308CMS.Data.Models.MenuConfig>
+<section id="offcanvas" class="megamenu-canvas">
+    <nav class="offcanvas-mainnav">
+        <div id="off-canvas-button">
+            <span class="off-canvas-nav"><i class="icon_close"></i></span>
+        </div>
+        <ul class="nav navbar-nav megamenu">
+
+            @if (Model.Any())
+            {
+                foreach (var menu in Model)
+                {
+                    string taget = menu.Target != null ? menu.Target : "_self";
+                    <li>
+                        <a href="@menu.Link" title="@menu.Name" target="@taget">
+                            <span>@menu.Name</span>
+                        </a>
+                    </li>
+                }
+            }
+            <@*li class="parent dropdown ">
+                <h3>
+                    <i class="icon_plus accordion-show"></i>
+                    <a class="dropdown-toggle has-category" href="/" title="Home">
+                        <span class="">Home
+                                                                         
+                                </span>
+                    </a>
+                </h3>
+                <ul class="level-1" style="display: none;">
+
+
+                    <li class="">
+                        <a class="" href="http://bigsale-01.myshopify.com/?preview_theme_id=158713545" title="Home Page 1">
+                            <span class="">Home Page 1
+                                                                          
+                                  </span>
+                        </a>
+                    </li>
+
+
+
+                    <li class="">
+                        <a class="" href="http://bigsale-01.myshopify.com/?preview_theme_id=147445129" title="Home Page 2">
+                            <span class="">Home Page 2
+                                                                          
+                                  </span>
+                        </a>
+                    </li>
+
+
+
+                    <li class="">
+                        <a class="" href="http://bigsale-01.myshopify.com/?preview_theme_id=148512393" title="Home Page 3">
+                            <span class="">Home Page 3
+                                                                          
+                                  </span>
+                        </a>
+                    </li>
+
+
+
+                    <li class="">
+                        <a class="" href="http://bigsale-01.myshopify.com/?preview_theme_id=152685577" title="Home Page 4">
+                            <span class="">Home Page 4
+                                                                          
+                                  </span>
+                        </a>
+                    </li>
+
+
+
+                    <li class="">
+                        <a class="" href="http://bigsale-01.myshopify.com/?preview_theme_id=154377929" title="Home Page 5">
+                            <span class="">Home Page 5
+                                                                          
+                                  </span>
+                        </a>
+                    </li>
+
+
+
+                    <li class="">
+                        <a class="" href="http://bigsale-01.myshopify.com/?preview_theme_id=156176649" title="Home Page 6">
+                            <span class="">Home Page 6
+                                                                          
+                                  </span>
+                        </a>
+                    </li>
+
+
+
+                    <li class="">
+                        <a class="" href="http://bigsale-01.myshopify.com/?preview_theme_id=163926409" title="Home page 7">
+                            <span class="">Home page 7
+                                                                          
+                                  </span>
+                        </a>
+                    </li>
+
+
+                </ul>
+
+            </@*li>*@
+
+
+
+        </ul>
+    </nav>
+</section>

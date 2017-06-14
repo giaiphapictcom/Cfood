@@ -18,7 +18,7 @@
                                             <a href="@url.productCategoryURL(@Model.ProductType.Name, @Model.ProductType.ID)">
                                             <h2 style="">
                                                 <span>@Model.ProductType.Name</span>
-                                                <i class="fa fa-desktop"></i>
+                                                <i class="fa fa-@Model.ProductType.Icon"></i>
                                             </h2>
                                             </a>
                                         </div>
@@ -34,7 +34,7 @@
                                                     {
                                                         active = Model.List.First() == subCate ? "active" : "";
                                                         <li role="presentation" class="@active">
-                                                            <a href="#@subCate.Id" role="tab" data-toggle="tab">@subCate.Name</a>
+                                                            <a href="#@subCate.Id" role="tab" data-toggle="tab" class="showtab">@subCate.Name</a>
                                                         </li>
                                                     }
                                                 </ul>
@@ -44,6 +44,13 @@
                                     </div>
                                 </div>
                             </div>
+                            <script>
+                                jQuery(function () {
+                                    jQuery("a.showtab").click(function () {
+                                        jQuery(this).parents("ul.nav").hide();
+                                    });
+                                });
+                            </script>
                         </div>
 
                         <div class="row">
@@ -78,7 +85,7 @@
                                                     @if (subCate.List != null & subCate.List.Any())
                                                     {
                                                         int line = 0;
-                                                        var products = subCate.List.Take(6);
+                                                        var products = subCate.List.Take(12);
                                                         foreach (Product prod in products)
                                                         {
                                                             int lineCheck = line % 2;
@@ -159,6 +166,9 @@
                                         }
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-md-12 visible-xs  text-right" style="margin: 5px 15px;">
+                                <a href="@url.productCategoryURL(@Model.ProductType.Name, @Model.ProductType.ID)" > Xem Thêm</a>
                             </div>
                         </div>
 

@@ -26,6 +26,8 @@ namespace V308CMS
                     "company-fullname",
                     "company-footer-contact",
                     "company-header-address",
+                    "company-email",
+                    "company-position",
                     "facebook-page",
                     "gplus",
                     "zalo",
@@ -43,6 +45,8 @@ namespace V308CMS
                     viewBag.SiteName = config.ReadSiteConfig(siteConfigs, "site-name");
                     viewBag.Hotline = config.ReadSiteConfig(siteConfigs, "hotline");
                     viewBag.CompanyFullname = config.ReadSiteConfig(siteConfigs, "company-fullname");
+                    viewBag.CompanyEmail = config.ReadSiteConfig(siteConfigs, "company-email");
+                    viewBag.CompanyPosition = config.ReadSiteConfig(siteConfigs, "company-position");
                     viewBag.FooterCompanyContact = config.ReadSiteConfig(siteConfigs,"company-footer-contact");
                     viewBag.CompanyHeaderAddress = config.ReadSiteConfig(siteConfigs,"company-header-address");
                     viewBag.FacebookPage = config.ReadSiteConfig(siteConfigs,"facebook-page");

@@ -14,7 +14,8 @@
                         <div id="latest-blogs">
                             @foreach (V308CMS.Data.News video in Model)
                             {
-                                <div class="item">
+                                @Html.Action("VideoItemBlock", "Block", video)
+                                @*<div class="item">
                                     <div class="blog-item">
                                         <div class="content-blog">
                                             <a class="image video" href="@url.videoURL(video.Title, video.ID)">
@@ -26,7 +27,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div>*@
                             }
                         </div>
                     </div>

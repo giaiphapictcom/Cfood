@@ -19,6 +19,10 @@ namespace V308CMS.Data.Models
         public string Description { get; set; }
         public string Code { get; set; }
         public string Link { get; set; }
+
+        private string _Target;
+        public string Target { get { if (String.IsNullOrEmpty(_Target)) return ""; else return _Target; } set { _Target = value; } }
+
         public byte State { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }

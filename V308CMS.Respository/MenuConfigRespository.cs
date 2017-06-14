@@ -12,7 +12,25 @@ namespace V308CMS.Respository
     }
     public class MenuConfigRespository: Data.IBaseRespository<MenuConfig>, IMenuConfigRespository
     {
-        private readonly V308CMSEntities _entities;
+        private V308CMSEntities _entities;
+        #region["Vung cac thao tac Dispose"]
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (this._entities != null)
+                {
+                    this._entities.Dispose();
+                    this._entities = null;
+                }
+            }
+        }
+        #endregion
 
         public MenuConfigRespository(V308CMSEntities entities)
         {

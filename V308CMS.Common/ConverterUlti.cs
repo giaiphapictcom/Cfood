@@ -167,6 +167,7 @@ namespace V308CMS.Common
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "Không Rõ";
             }
             return str;

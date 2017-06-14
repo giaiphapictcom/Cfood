@@ -1748,15 +1748,25 @@ namespace V308CMS.Data
 
         public ProductItems GetItemsBySaleoff(int page=0, float? SaleOffValue = 0,string StrOperator=">" ){
             ProductItems ReturnValue = new ProductItems();
+            try
+            {
+                var items = from p in entities.Product
+                            //where (StrOperator == "<") ? float.Parse(p.SaleOff.ToString()) >= SaleOffValue : float.Parse(p.SaleOff.ToString()) >= SaleOffValue
+                            where p.SaleOff >= SaleOffValue
+                            orderby p.SaleOff descending
+                            select p;
 
-            var items = from p in entities.Product
-                        where (StrOperator == "<") ? p.SaleOff >= SaleOffValue : p.SaleOff >= SaleOffValue
-                                  select p;
+                ReturnValue.Products = items.Skip((page - 1) * PageSize).Take(PageSize).ToList();
+                ReturnValue.total = items.Count();
+                ReturnValue.page = page;
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+            }
 
-            ReturnValue.Products = items.Skip((page - 1) * PageSize).Take(PageSize).ToList();
-            ReturnValue.total = items.Count();
-            ReturnValue.page = page;
             return ReturnValue;
+           
 
         }
 

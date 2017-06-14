@@ -1922,6 +1922,10 @@
     <Content Include="Views\themes\myshopify\Pages\Member.Profile.cshtml" />
     <Content Include="Views\themes\myshopify\Pages\Member.Register.cshtml" />
     <Content Include="Views\themes\myshopify\Pages\MemberForgotPassword.cshtml" />
+    <Content Include="Views\themes\myshopify\Product\PageItems.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Video.Index.cshtml" />
+    <Content Include="Views\themes\myshopify\Blocks\VideoItemBlock.cshtml" />
+    <Content Include="Views\themes\myshopify\Menu\OffCanvas.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

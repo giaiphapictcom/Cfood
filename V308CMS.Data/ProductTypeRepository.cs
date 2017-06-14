@@ -35,7 +35,26 @@ namespace V308CMS.Data
 
     public class ProductTypeRepository : IProductTypeRepository
     {
-        private readonly V308CMSEntities _entities;
+        private V308CMSEntities _entities;
+
+        #region["Vung cac thao tac Dispose"]
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (this._entities != null)
+                {
+                    _entities.Dispose();
+                    _entities = null;
+                }
+            }
+        }
+        #endregion
 
         public ProductTypeRepository(V308CMSEntities entities)
         {

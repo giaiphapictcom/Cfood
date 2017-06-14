@@ -792,6 +792,35 @@ namespace V308CMS.Data
                 ).ToList();
         }
 
+        public List<News> GetVideos(int pcurrent, int psize, int pTypeID)
+        {
+            List<News> mList = null;
+            //int[] mIdGroup;
+            try
+            {
+                if (pTypeID > 0)
+                {
+                    //lay tat ca cac ID cua group theo Level
+                    //mIdGroup = (from p in entities.NewsGroups
+                                
+                    //            select p.ID).ToArray();
+
+                    //lay danh sach tin moi dang nhat
+                    mList = (from p in entities.News
+                             where p.TypeID.Value.Equals(pTypeID) && p.Summary.Length > 0
+                             orderby p.ID descending
+                             select p).Skip((pcurrent - 1) * psize)
+                             .Take(psize).ToList();
+                }
+                return mList;
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+                throw;
+            }
+        }
+
         public string Insert(News data)
         {
             var newsItem = (from news in entities.News
