@@ -136,6 +136,7 @@ namespace V308CMS.Data
                              orderby p.ID descending
                              select p).Skip((pcurrent - 1) * psize)
                              .Take(psize).ToList() :
+
                             (from p in entities.Product
                              where mIdGroup.Contains(p.Type.Value)
                              orderby p.ID descending

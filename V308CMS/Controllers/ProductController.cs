@@ -60,6 +60,8 @@ namespace V308CMS.Controllers
             try {
                 
                 ProductItemsPage Model = new ProductItemsPage();
+                Model.BestSeller = ProductsService.getProductsRandom();
+
                 var products = ProductsService.GetItemsBySaleoff(1, 15, ">");
                 Model.Products = products.Products;
                 Model.total = products.total;

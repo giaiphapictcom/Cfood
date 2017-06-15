@@ -37,15 +37,26 @@ namespace V308CMS.Data
                 ModelPage.Name = ProductCategory.Name;
                 ModelPage.Id = (int)ProductCategory.ID;
                 ModelPage.Image = ProductCategory.Image;
-                ModelPage.ProductTotal = ProductRepos.getProductTotal(ProductCategory.ID, ProductCategory.Level);
+
+                var products = from p in mEntities.Product
+                              
+                               where p.Type == ProductCategory.ID && p.Status == true
+                                orderby p.ID descending
+                                select p
+
+                                ;
+
+                
+
+                
+                ModelPage.ProductTotal = products.Count();
                 if (nPage * ProductShowLimit > ModelPage.ProductTotal)
                 {
                     nPage = 1;
                 }
                 ModelPage.Paging = ModelPage.ProductTotal > ProductShowLimit;
-
-                List<Product> productItems = ProductRepos.LayTheoTrangAndType(nPage, ProductShowLimit, ProductCategory.ID, ProductCategory.Level, includeProductImages);
-                ModelPage.List = productItems;
+                
+                ModelPage.List = products.Skip((nPage - 1) * ProductShowLimit).Take(ProductShowLimit).ToList(); ;
 
                 
             }
@@ -80,6 +91,38 @@ namespace V308CMS.Data
                 DisposeRepos();
             }
             return ModelPage;            
+        }
+
+        public static List<ProductImage> getProductImages(int? ProductID, int limit = 0)
+        {
+            CreateRepos();
+            List<ProductImage> images = null;
+            try
+            {
+                var imgEntities = (from img in mEntities.ProductImage
+                          where img.ProductID == ProductID
+                          orderby img.ID descending
+                          select img);
+
+                if (limit > 0)
+                {
+                    images = imgEntities.Take(limit).ToList();
+                }
+                else {
+                    images = imgEntities.ToList();
+                }
+                return images;
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+                throw;
+            }
+            finally
+            {
+                DisposeRepos();
+            }
+            
         }
 
         

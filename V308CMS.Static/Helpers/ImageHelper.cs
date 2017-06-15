@@ -199,6 +199,12 @@ namespace V308CMS.Static.Helpers
            
             // Create the image object 
             try {
+                var savePath = System.IO.Path.GetDirectoryName(saveFilePath);
+                if (!Directory.Exists(savePath))
+                {
+                    Directory.CreateDirectory(savePath);
+                }
+
                 using (Bitmap objBitmap = new Bitmap(Width, Height))
                 {
                     objBitmap.SetResolution(sourceImage.HorizontalResolution, sourceImage.VerticalResolution);
@@ -217,8 +223,10 @@ namespace V308CMS.Static.Helpers
                                 objBitmap.Save(saveFilePath, ImageFormat.Png);
                                 break;
                             case ".jpg":
-
                                 objBitmap.Save(saveFilePath, ImageFormat.Jpeg);
+                                break;
+                            case ".gif":
+                                objBitmap.Save(saveFilePath, ImageFormat.Gif);
                                 break;
                         }
 

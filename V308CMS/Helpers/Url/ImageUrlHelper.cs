@@ -14,6 +14,10 @@ namespace V308CMS.Helpers
             if (ImageUploadSource.Length < 1) {
                 return path;
             }
+            else if (Uri.IsWellFormedUriString(path, UriKind.Absolute))
+            {
+                return path;
+            }
 
             
             string resizeDir = "";
@@ -29,8 +33,9 @@ namespace V308CMS.Helpers
             {
                 resizeDir = String.Format("h{0}", height);
             }
-
-            var imgUploadPath = path.Replace("/Content/Images/Upload/", "").Trim();
+            path = path.Replace("\\","/");
+            var imgUploadPath = path.Replace("/Content/Images/", "").Trim();
+            //imgUploadPath = imgUploadPath.Replace("\\Content\\Images\\", "");
 
 
             if (imgUploadPath.Length < 1) {

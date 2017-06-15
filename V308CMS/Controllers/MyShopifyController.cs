@@ -147,6 +147,7 @@ namespace V308CMS.Controllers
             try {
                 CreateRepos();
                 ProductCategoryPageContainer model = new ProductCategoryPageContainer();
+
                 List<ProductCategoryPage> mProductPageList = new List<ProductCategoryPage>();
                 ProductType productCategory = ProductRepos.LayLoaiSanPhamTheoId(cate.ID);
                 if (productCategory != null)
@@ -154,7 +155,6 @@ namespace V308CMS.Controllers
                     List<ProductType> mProductTypeList = ProductRepos.getProductTypeByProductType(productCategory.ID, 3);
                     if (mProductTypeList.Count > 0)
                     {
-                        //nPage = 1;
                         mProductPageList.AddRange(mProductTypeList.Select(it => ProductHelper.GetCategoryPage(it, 1, true)));
                     }
                 }
@@ -202,15 +202,22 @@ namespace V308CMS.Controllers
             return View("HomeFooter");
         }
 
+        
+
+
+        #region HTML view onlye
         public ActionResult QuickView()
-        {            
+        {
             return View("QuickView");
         }
         public ActionResult WapperPopup()
-        {       
+        {
             return View("WapperPopup");
         }
-
+        public ActionResult FillerProductList() {
+            return View("ProductList");
+        }
+        #endregion
 
         #region Widget Left
         public ActionResult WidgetLeftHotProducts() {
@@ -233,17 +240,14 @@ namespace V308CMS.Controllers
         public ActionResult ProductBlockLeft(Product product = null)
         {
             try {
-                CreateRepos();
+                
                 return View("ProductBlockLeft", product);
             }
             catch (Exception ex)
             {
                 return Content(ex.ToString());
             }
-            finally
-            {
-                DisposeRepos();
-            }
+            
         }
 
         public ActionResult WidgetLeftAdv()

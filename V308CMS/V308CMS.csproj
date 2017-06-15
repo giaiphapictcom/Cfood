@@ -1524,6 +1524,7 @@
     <Content Include="Content\themes\myshopify\css\bootstrap.min.css" />
     <Content Include="Content\themes\myshopify\css\color.css" />
     <Content Include="Content\themes\myshopify\css\component.css" />
+    <Content Include="Content\themes\myshopify\css\customstyle.css" />
     <Content Include="Content\themes\myshopify\css\font-icon.css" />
     <Content Include="Content\themes\myshopify\css\owl.theme.css" />
     <Content Include="Content\themes\myshopify\css\responsive.css" />
@@ -1926,6 +1927,7 @@
     <Content Include="Views\themes\myshopify\Pages\Video.Index.cshtml" />
     <Content Include="Views\themes\myshopify\Blocks\VideoItemBlock.cshtml" />
     <Content Include="Views\themes\myshopify\Menu\OffCanvas.cshtml" />
+    <Content Include="Views\themes\myshopify\Blocks\Filter\ProductList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

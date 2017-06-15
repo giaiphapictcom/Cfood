@@ -29,14 +29,14 @@
 @Html.Action("ProductMost", "MyShopify")
 @Html.Action("ProductHot", "MyShopify")
 
-@*@if (Model.ProductTypeList != null)
+@if (Model.ProductTypeList != null)
 {
     foreach (V308CMS.Data.ProductType cate in Model.ProductTypeList)
     {
     @Html.Action("ProductHomeCategory", "MyShopify", cate)
     }
 }
-*@
+
 
 @Html.Action("HomeYoutube", "MyShopify")
 @Html.Action("HomeFooter", "MyShopify")

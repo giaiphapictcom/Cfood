@@ -3780,8 +3780,8 @@ body{ position: relative;}
 }
 .home-blog span.date, .home-blog .blog-author, .home-blog .blog-cm {
   color: #9f9f9f;
-  font-size: 13px;
-  line-height: 30px;
+font-size: 15px;
+line-height: 19px;
 }
 
 #block-home-icon {

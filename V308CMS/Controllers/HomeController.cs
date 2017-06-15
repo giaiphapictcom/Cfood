@@ -216,11 +216,11 @@ namespace V308CMS.Controllers
                 //if (mProductList.Count < 40)
                 //    Model.IsEnd = true;
                 model.Page = nPage;
-
-                if (!Request.Browser.IsMobileDevice)
-                    return View("Category", model);
-                else
-                    return View("MobileCategory", model);
+                return View("Category", model);
+                //if (!Request.Browser.IsMobileDevice)
+                //    return View("Category", model);
+                //else
+                //    return View("MobileCategory", model);
             }
             catch (Exception ex)
             {
@@ -274,10 +274,11 @@ namespace V308CMS.Controllers
                 mProductDetailPage.ProductLastest = ProductRepos.getProductsRandom(6);
 
                 //lay chi tiet san pham
-                if (!Request.Browser.IsMobileDevice)
-                    return View("Detail", mProductDetailPage);
-                else
-                    return View("MobileDetail", mProductDetailPage);
+                return View("Detail", mProductDetailPage);
+                //if (!Request.Browser.IsMobileDevice)
+                //    return View("Detail", mProductDetailPage);
+                //else
+                //    return View("MobileDetail", mProductDetailPage);
             }
             catch (Exception ex)
             {

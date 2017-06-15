@@ -82,13 +82,15 @@
                                             
                                             <div class="tab-pane tabs-content fade   @active" id="@subCate.Id">
                                                 <div class="carousel slide productCateCarousel" id="@subCate.Id-caro">
-                                                    @if (subCate.List != null & subCate.List.Any())
+                                                    @if (subCate.List != null )
                                                     {
                                                         int line = 0;
-                                                        var products = subCate.List.Take(12);
-                                                        foreach (Product prod in products)
+                                                        //var products = subCate.List.Take(12);
+                                                        foreach (Product prod in subCate.List)
                                                         {
                                                             int lineCheck = line % 2;
+                                                           
+
                                                             if (lineCheck == 0)
                                                             {
                                                             @:<div class="product_list"><div class="products-row">
@@ -102,12 +104,17 @@
                                                                             <div class="product-label"><label class="label">Sale</label></div>
                                                                         }
                                                                         <a href="@url.productURL(prod.Name, prod.ID)" class="grid-image">
-                                                                            <img class="feature-images" src="@ImageUrlHelper.ToUrl(prod.Image, 250)" alt="@prod.Name">
-                                                                            @if (prod.ProductImages.Count > 0)
+                                                                            <img class="feature-images" src="@ImageUrlHelper.ToUrl(prod.Image, 250,250)" alt="@prod.Name">
+
+                                                                            @{
+                                                                                List<ProductImage> images = ProductHelper.getProductImages(prod.ID, 1);
+                                                                            }
+
+                                                                            @if (images != null && images.Count() > 0)
                                                                             {
                                                                                 <span class="product-hover" data-idproduct="@prod.ID">
 
-                                                                                    <img class="img-responsive" alt="@prod.Name" src="@ImageUrlHelper.ToUrl(@prod.ProductImages.First().Name, 250)">
+                                                                                    <img class="img-responsive" alt="@prod.Name" src="@ImageUrlHelper.ToUrl(@images.First().Name, 250,250)">
                                                                                 </span>
                                                                             }
                                                                         </a>
@@ -153,10 +160,10 @@
                                                                 </div>
                                                             </div>
                                                         
-                                                            if (lineCheck == 1 || prod == products.Last())
+                                                            if (lineCheck == 1 || prod == subCate.List.Last())
                                                             {
-                                                                Console.Write("end line");
-                                                            @:</div></div>
+                                                                
+                                                                @:</div></div>
                                                             }
                                                             line++;
                                                         }

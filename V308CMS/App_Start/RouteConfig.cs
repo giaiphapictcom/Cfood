@@ -22,7 +22,7 @@ namespace V308CMS
             //routes.MapRoute("VideoIndexRoute", "video.html", new { Controller = "MyShopify", action = "HomeYoutube" });
             routes.MapRoute("VideoIndexRoute", "video", new { Controller = "Video", action = "Index" });
             //routes.MapRoute("VideoDetailRoute", "{title}-youtube{pId}.html", new { Controller = "Home", action = "YoutubeDetail" }, new { pId = @"\d+" });
-            routes.MapRoute("VideoDetailRoute", "{title}-youtube{pId}.html", new { Controller = "Video", action = "Detail" }, new { pId = @"\d+" });
+            routes.MapRoute("VideoDetailRoute", "{title}-youtube{id}.html", new { Controller = "Video", action = "Detail" }, new { id = @"\d+" });
 
             routes.MapRoute("LoginRoute", "dang-nhap.html", new { Controller = "Account", action = "Login"});
             routes.MapRoute("LogoutRoute", "dang-xuat.html", new { Controller = "Account", action = "Logout" });

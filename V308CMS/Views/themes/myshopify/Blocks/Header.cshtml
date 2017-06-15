@@ -26,7 +26,7 @@
                                     {
                                         <li>
                                             <a href="@Url.AccountLogoutUrl()" id="customer_logout_link">Thoát tài khoản</a>
-                                            <a href="/account">My Account</a>
+                                            <a href="/account">Tài khoản của tôi</a>
                                         </li>
                                     }
                                     else
@@ -195,9 +195,7 @@
                                                     
                                                 </ol>
                                                 <div class="summary">
-                                                    <p class="goto total">
-                                                        <span class="label" style="color: #000"><span>Go to</span>:</span>
-                                                    </p>
+
                                                     <p class="total">
                                                         <span class="label" style="color: #000">Tổng tiền:</span>
                                                         <span class="price"><span class="money">@Model.total_price đ</span></span>
@@ -205,9 +203,9 @@
                                                 </div>
                                                 <div class="actions">
                                                     <div class="view-cart">
-                                                        <a href="@Url.ViewCartUrl()" title="Xem giỏ hàng">View Cart</a>
+                                                        <a href="@Url.ViewCartUrl()" title="Xem giỏ hàng">Xem</a>
                                                     </div>
-                                                    <button class="btn" onclick="window.location = '@Url.CheckoutCartUrl()'">Check Out</button>
+                                                    <button class="btn" onclick="window.location = '@Url.CheckoutCartUrl()'">Thanh Toán</button>
                                                 </div>
 
                                             </div>
