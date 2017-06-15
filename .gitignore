@@ -39,3 +39,10 @@ V308CMS.Sale/Content/thumb/536x271
 V308CMS.Sale/Content/thumb/300x170/
 >>>>>>> toai-neal
 V308CMS.Respository/obj/Debug/
+V308CMS.Static/bin/Newtonsoft.Json.xml
+V308CMS.Static/bin/ImageResizer.xml
+V308CMS.Static/bin/ImageResizer.Plugins.PrettyGifs.xml
+V308CMS.Static/bin/ImageResizer.Plugins.FriendlyUrls.xml
+V308CMS.Static/bin/ImageResizer.Plugins.DiskCache.xml
+V308CMS.Static/bin/ImageResizer.Plugins.AnimatedGifs.xml
+V308CMS.Static/obj/Debug/V308CMS.Static.csproj.FileListAbsolute.txt

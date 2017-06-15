@@ -58,7 +58,7 @@
                                 <div class="hidden-xs hidden-sm col-md-4 col-lg-5">
                                     <div class="banner-featured">
                                         <a href="#1">
-                                            <img src="@ImageHelper.Crop(Model.ProductType.Image, 445,500)" alt="" />
+                                            <img src="@ImageUrlHelper.ToUrl(Model.ProductType.Image, 445,500)" alt="" />
                                         </a>
                                     </div>
                                     @if (Model.Brands != null ) {
@@ -67,7 +67,7 @@
                                         @foreach (Brand brand in brands)
                                         { 
                                             if (brand.image.Length > 5) { 
-                                                <a href="javascript:void(0);" title="@brand.name" ><img src="@ImageHelper.Crop(brand.image, 138,68)" alt="@brand.name" /></a>
+                                                <a href="javascript:void(0);" title="@brand.name" ><img src="@ImageUrlHelper.ToUrl(brand.image, 138,68)" alt="@brand.name" /></a>
                                             }
                                             
                                         }
@@ -102,12 +102,12 @@
                                                                             <div class="product-label"><label class="label">Sale</label></div>
                                                                         }
                                                                         <a href="@url.productURL(prod.Name, prod.ID)" class="grid-image">
-                                                                            <img class="feature-images" src="@ImageHelper.Crop(prod.Image, 250)" alt="@prod.Name">
+                                                                            <img class="feature-images" src="@ImageUrlHelper.ToUrl(prod.Image, 250)" alt="@prod.Name">
                                                                             @if (prod.ProductImages.Count > 0)
                                                                             {
                                                                                 <span class="product-hover" data-idproduct="@prod.ID">
 
-                                                                                    <img class="img-responsive" alt="@prod.Name" src="@ImageHelper.Crop(@prod.ProductImages.First().Name, 250)">
+                                                                                    <img class="img-responsive" alt="@prod.Name" src="@ImageUrlHelper.ToUrl(@prod.ProductImages.First().Name, 250)">
                                                                                 </span>
                                                                             }
                                                                         </a>

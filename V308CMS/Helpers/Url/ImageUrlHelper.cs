@@ -8,9 +8,36 @@ namespace V308CMS.Helpers
 {
     public static class ImageUrlHelper
     {
-        public static string ToUrl(this string path, int width =848, int height =458)
+        public static string ToUrl(this string path, int width =0, int height =0)
         {
-            return ImageHelper.Crop(path, width,height);
+            string ImageUploadSource = System.Configuration.ConfigurationManager.AppSettings["ResourceDomain"] ?? String.Empty;
+            if (ImageUploadSource.Length < 1) {
+                return path;
+            }
+
+            
+            string resizeDir = "";
+            if (width > 0 && height > 0)
+            {
+                resizeDir = String.Format("w{0}h{1}", width, height);
+            }
+            else if (width > 0)
+            {
+                resizeDir = String.Format("w{0}", width);
+            }
+            else if (height > 0)
+            {
+                resizeDir = String.Format("h{0}", height);
+            }
+
+            var imgUploadPath = path.Replace("/Content/Images/Upload/", "").Trim();
+
+
+            if (imgUploadPath.Length < 1) {
+                imgUploadPath = "noimage.jpg";
+            }
+            return ImageUploadSource + "/" + resizeDir + "/" + imgUploadPath;
+            //return ImageHelper.Crop(path, width,height);
             
         }
     }
