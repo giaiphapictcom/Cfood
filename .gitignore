@@ -46,3 +46,5 @@ V308CMS.Static/bin/ImageResizer.Plugins.FriendlyUrls.xml
 V308CMS.Static/bin/ImageResizer.Plugins.DiskCache.xml
 V308CMS.Static/bin/ImageResizer.Plugins.AnimatedGifs.xml
 V308CMS.Static/obj/Debug/V308CMS.Static.csproj.FileListAbsolute.txt
+V308CMS/Content/Plugins/OwlCarousel/js/.jshintrc
+V308CMS/Content/Plugins/OwlCarousel/js/.jscsrc
