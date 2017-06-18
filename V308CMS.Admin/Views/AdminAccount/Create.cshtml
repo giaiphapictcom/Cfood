@@ -1,0 +1,14 @@
+﻿@model V308CMS.Admin.Models.AdminModels
+@using V308CMS.Admin.Helpers.Url
+@{
+    ViewBag.Title = "Thêm mới tài khoản hệ thống.";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+<div class="panel panel-primary">
+    <div class="panel-body">
+        <form method="post" role="form" action="@Url.AdminAccountCreateUrl()" enctype = "multipart/form-data">
+            @Html.Partial("_AdminForm", Model)
+        </form>
+    </div>
+
+</div>
