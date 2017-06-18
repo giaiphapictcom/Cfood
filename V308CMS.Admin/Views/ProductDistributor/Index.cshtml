@@ -1,0 +1,85 @@
+﻿@using V308CMS.Admin.Helpers
+@using V308CMS.Admin.Helpers.UI
+@using V308CMS.Admin.Helpers.Url
+@using V308CMS.Admin.Models.UI
+@using V308CMS.Common
+@model List<V308CMS.Data.ProductDistributor>
+@{
+    ViewBag.Title = "Danh sách Nhà cung cấp";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+@Html.Partial("UI/_AddNewButton", Url.ProductDistributorCreateUrl())
+@if (Model.Any())
+{
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Tên</th>
+                        <th>Ảnh</th>
+                        <th>Mô tả</th>
+                        <th>Ngày tạo</th>
+                        <th>Trạng thái</th>
+                        <th>Thứ tự</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                        var distributor = Model[i];
+                        <tr>
+                            <td style="text-align: center">
+                                @(i + 1)
+                            </td>
+                            <td>
+                                <a title="Cập nhật Nhà cung cấp @distributor.Name" class="btn btn-link" href="@Url.ProductManufacturerEditUrl(new {distributor.ID})">
+                                    @distributor.Name
+                                </a>
+                            </td>
+                            <td>
+                                <img class="image-brand img-circle" src="@distributor.Image.ToImageUrl()" alt="@distributor.Name" />
+                            </td>
+                            <td>
+                                @distributor.Detail.ToTitle()
+                            </td>
+                            <td>
+                                @distributor.Date.ToDdmmyyyy()
+                            </td>
+                            <td>
+                                @distributor.Number
+                            </td>
+                            <td>@distributor.Status.ToStateLabelHtml()</td>
+                            <td style="width: 200px">
+                                @Html.Partial("UI/_EditButton", new ButtonModels
+                               {
+                                   Id = string.Format("distributor_{0}", distributor.ID),
+                                   Href = Url.ProductDistributorEditUrl(new { distributor.ID }),
+                                   Title = "Cập nhật thông tin Nhà cung cấp " + distributor.Name
+                               })
+                                @Html.Partial("UI/_DeleteForm", new DeleteFormModels
+                               {
+                                   NameOfId = "Id",
+                                   ValueOfId = distributor.ID,
+                                   IsConfirm = true,
+                                   Url = Url.ProductDistributorDeleteUrl()
+                               })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#dataTables-example').DataTable({
+            responsive: true
+        });
+    });
+</script>
+

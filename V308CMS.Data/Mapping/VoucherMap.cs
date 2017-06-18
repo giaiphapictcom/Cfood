@@ -24,8 +24,9 @@ namespace V308CMS.Data.Mapping
             Property(t => t.Description).HasColumnName("description");
             Property(t => t.CreatedAt).HasColumnName("created_at");
             Property(t => t.UpdatedAt).HasColumnName("updated_at");
-            Property(t => t.StartDate).HasColumnName("start_date");
-            Property(t => t.EndDate).HasColumnName("end_date");
+            Property(t => t.ExpireDate).HasColumnName("expire_date");
+            Property(t => t.DiscountType).HasColumnName("discount_type");
+            Property(t => t.Value).HasColumnName("value");
             Property(t => t.State).HasColumnName("state");
 
         }

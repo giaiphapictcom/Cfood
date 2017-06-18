@@ -6,7 +6,14 @@ namespace V308CMS.Data
 {
     public interface IContactRepository
     {
-        string Insert(string name, string email, string phone, string message, DateTime createdDate);
+        string Insert
+            (
+                string name,
+                string email,
+                string phone, 
+                string message,
+                DateTime createdDate
+            );
         string Update(int id, string name, string email, string phone, string message, DateTime createdDate);
         string Delete(int id);
         List<Contact> GetAll();
@@ -14,73 +21,98 @@ namespace V308CMS.Data
     }
     public class ContactRepository: IContactRepository
     {
-        private readonly V308CMSEntities _entities;
-        public ContactRepository(V308CMSEntities mEntities)
+      
+        public ContactRepository()
         {
-            _entities = mEntities;
+            
         }
         public List<Contact> GetAll()
         {
-            return (from contact in _entities.Contact
-                    orderby contact.CreatedDate descending
-                    select contact
-                ).ToList();
+            using (var entities = new V308CMSEntities())
+            {
+                return (from contact in entities.Contact
+                        orderby contact.CreatedDate descending
+                        select contact
+                    ).ToList();
+            }
+                
         }
         public Contact Find(int id)
         {
-            return (from contact in _entities.Contact
-                    where contact.ID == id
-                    select contact
-                ).FirstOrDefault();
+            using (var entities = new V308CMSEntities())
+            {
+                return (from contact in entities.Contact
+                        where contact.ID == id
+                        select contact
+                   ).FirstOrDefault();
+
+            }
+            
         }
 
         public string Insert(string fullName, string email, string phone, string message, DateTime createdDate)
         {
-            var contact = new Contact
+            using (var entities = new V308CMSEntities())
             {
-                FullName = fullName,
-                Email = email,
-                Phone = phone,
-                Message = message,
-                CreatedDate = createdDate
-            };
-            _entities.Contact.Add(contact);
-            _entities.SaveChanges();
-            return "ok";
+                var contact = new Contact
+                {
+                    FullName = fullName,
+                    Email = email,
+                    Phone = phone,
+                    Message = message,
+                    CreatedDate = createdDate
+                };
+                entities.Contact.Add(contact);
+                entities.SaveChanges();
+                return "ok";
+
+            }
+                
+            
         }
 
         public string Update(int id, string fullName, string email, string phone, string message, DateTime createdDate)
         {
-            var contactUpdate = (from contact in _entities.Contact
-                                 where contact.ID == id
-                                 select contact
-                  ).FirstOrDefault();
-            if (contactUpdate != null)
+            using (var entities = new V308CMSEntities())
             {
-                contactUpdate.FullName = fullName;
-                contactUpdate.Email = email;
-                contactUpdate.Phone = phone;
-                contactUpdate.Message = message;
-                contactUpdate.CreatedDate = createdDate;
-                _entities.SaveChanges();
-                return "ok";
+                var contactUpdate = (from contact in entities.Contact
+                                     where contact.ID == id
+                                     select contact
+                 ).FirstOrDefault();
+                if (contactUpdate != null)
+                {
+                    contactUpdate.FullName = fullName;
+                    contactUpdate.Email = email;
+                    contactUpdate.Phone = phone;
+                    contactUpdate.Message = message;
+                    contactUpdate.CreatedDate = createdDate;
+                    entities.SaveChanges();
+                    return "ok";
 
+                }
+                return "not_exists";
             }
-            return "not_exists";
+
+           
         }
 
         public string Delete(int id)
         {
-            var contactDelete = (from contact in _entities.Contact
-                                 where contact.ID == id
-                                 select contact
-                 ).FirstOrDefault();
-            if (contactDelete != null)
+            using (var entities = new V308CMSEntities())
             {
-                _entities.Contact.Remove(contactDelete);
-                return "ok";
+                var contactDelete = (from contact in entities.Contact
+                                     where contact.ID == id
+                                     select contact
+                  ).FirstOrDefault();
+                if (contactDelete != null)
+                {
+                    entities.Contact.Remove(contactDelete);
+                    return "ok";
+                }
+                return "not_exists";
+
             }
-            return "not_exists";
+          
         }
     }
 }

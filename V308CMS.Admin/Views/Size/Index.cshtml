@@ -1,0 +1,71 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@using V308CMS.Admin.Models.UI
+@model List<V308CMS.Data.Models.Size>
+@{
+    ViewBag.Title = "Danh sách Kích cỡ sản phẩm";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+@Html.Partial("UI/_AddNewButton", Url.SizeCreateUrl())
+@if (Model.Any())
+{
+    <div class="panel panel-default">
+        <div class="panel-body">
+
+            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Tên</th>
+                        <th>Giá trị</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                        var size = Model[i];
+                        <tr>
+                            <td style="text-align: center">
+                                @(i + 1)
+                            </td>
+                            <td>
+                                <a title="Cập nhật thông tin kích cỡ @size.Name" class="btn btn-link" href="@Url.SizeEditUrl(new {size.Id})">
+                                    @size.Name
+                                </a>
+                            </td>
+                            <td>
+                                @size.Description
+                            </td>
+
+                            <td style="width: 200px">
+                                @Html.Partial("UI/_EditButton", new ButtonModels
+                           {
+                               Id = string.Format("country_{0}", size.Id),
+                               Href = Url.SizeEditUrl(new { size.Id }),
+                               Title = "Cập nhật thông tin Kích cỡ " + size.Name
+                           })
+                                @Html.Partial("UI/_DeleteForm", new DeleteFormModels
+                           {
+                               NameOfId = "Id",
+                               ValueOfId = size.Id,
+                               IsConfirm = true,
+                               Url = Url.SizeDeleteUrl()
+                           })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#dataTables-example').DataTable({
+            responsive: true
+        });
+    });
+</script>
+

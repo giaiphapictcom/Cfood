@@ -864,14 +864,14 @@ namespace V308CMS.Sale.Controllers
                                 Email = pEmail,
                                 UserName = pEmail,
                                 Password = EncryptionMD5.ToMd5(pPassWord.Trim()),
-                                PSanPham = (true),
-                                PFileUpload = (true),
-                                PHeThong = (true),
-                                PHinhAnh = (true),
-                                PKhachHang = (true),
-                                PTaiKhoan = (true),
-                                PThungRac = (true),
-                                PTinTuc = (true),
+                                //PSanPham = (true),
+                                //PFileUpload = (true),
+                                //PHeThong = (true),
+                                //PHinhAnh = (true),
+                                //PKhachHang = (true),
+                                //PTaiKhoan = (true),
+                                //PThungRac = (true),
+                                //PTinTuc = (true),
                                 Status=false
                             };
                             mEntities.AddToAdmin(mAdmin);

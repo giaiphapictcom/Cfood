@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using V308CMS.Common;
+using V308CMS.Data.Enum;
 
 namespace V308CMS.Data
 {
@@ -1598,13 +1599,26 @@ namespace V308CMS.Data
             }
             if (state > 0)
             {
-                data = state == 1 ? (from product in data
-                                     where product.Status == true
-                                     select product
-                 ).ToList() : (from product in data
-                               where product.Status == false
-                               select product
-                 ).ToList();
+                if (state == (int) StateFilterEnum.Active)
+                {
+                    data = (from product in data
+                        where product.Status == true
+                        select product
+                        ).ToList();
+                }
+                if (state == (int)StateFilterEnum.Pending)
+                {
+                    data = (from product in data
+                        where product.Status == false
+                        select product).ToList();
+                }
+                if (state == (int)StateFilterEnum.PriceEmpty)
+                {
+                    data = (from product in data
+                            where ((product.Price.HasValue == false) || (product.Price.Value == 0))
+                            select product).ToList();
+                }
+
             }
 
             if (manufact > 0)

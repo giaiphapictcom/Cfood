@@ -1,0 +1,89 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@using V308CMS.Admin.Models.UI
+@using V308CMS.Common
+@using V308CMS.Data
+@model List<NewsGroups>
+@{
+    ViewBag.Title = "Danh sách Chuyên mục Tin tức";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+@helper ShowListMenu(
+            List<NewsGroups> data = null,
+            int parentId = 0,
+            string strLimit = "")
+{
+    if (Model.Any())
+    {
+        foreach (var category in Model)
+        {
+            if (category.Parent == parentId)
+            {
+                <tr>
+                    <td>
+                        <a class="btn btn-link" href="@Url.NewsCategoryEditUrl(new {category.ID})" title="Cập nhật chuyên mục tin">
+                            @strLimit@category.Name
+                        </a>                            
+                    </td>
+                    <td>@category.Date.ToDdmmyyyy()</td>
+                    <td>
+                        @Html.Partial("UI/_ChangeStateForm", new ChangeStateFormModels
+                       {
+                           NameOfId = "Id",
+                           ValueOfId = category.ID,
+                           IsConfirm = true,
+                           State = category.Status,
+                           Url = Url.NewsCategoryChangeStateUrl()
+                       })
+                    </td>
+                    <td style='width: 200px'>
+                        @Html.Partial("UI/_EditButton", new ButtonModels
+                        {
+                            Id = string.Format("category_{0}", category.ID),
+                            Href = Url.NewsCategoryEditUrl(new {category.ID}),
+                            Title = "Cập nhật thông tin chuyên mục " + category.Name
+                        })
+                        @Html.Partial("UI/_DeleteForm", new DeleteFormModels
+                        {
+                            NameOfId = "Id",
+                            ValueOfId = category.ID,
+                            IsConfirm = true,
+                            Url = Url.NewsCategoryDeleteUrl()
+                        })
+                    </td>
+                </tr>
+                @ShowListMenu(Model, category.ID, strLimit + "---|")                
+            }
+        }
+    }
+}
+@Html.Partial("UI/_AddNewButton", Url.NewsCategoryCreateUrl())
+@if (Model.Any())
+{
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                <thead>
+                    <tr>
+                        <th>Tên</th>
+                        <th>Ngày tạo</th>
+                        <th>Trạng thái</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @ShowListMenu(Model)
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#dataTables-example').DataTable({
+            responsive: true
+        });
+    });
+</script>
+

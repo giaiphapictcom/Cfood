@@ -37,9 +37,9 @@ namespace V308CMS.Data
             modelBuilder.Configurations.Add(new CountryMap());
             modelBuilder.Configurations.Add(new SizeMap());
             modelBuilder.Configurations.Add(new ProductColorMap());
-            modelBuilder.Configurations.Add(new ProductSizeMap());
-            modelBuilder.Configurations.Add(new GroupPermissionMap());
+            modelBuilder.Configurations.Add(new ProductSizeMap());          
             modelBuilder.Configurations.Add(new PermissionMap());
+            modelBuilder.Configurations.Add(new BannerMap());
             modelBuilder.Entity<News>()
              .HasRequired(p => p.NewsGroup)
              .WithMany(p => p.ListNews)
@@ -65,29 +65,31 @@ namespace V308CMS.Data
             .WithMany(p => p.ListProductBrand)
             .HasForeignKey(p => p.category_default);
 
-            modelBuilder.Entity<Permission>()
-                .HasMany(gp => gp.Roles)
-                .WithMany(p => p.Permissions)
-                .Map(gp =>
-                {
-                    gp.MapLeftKey("PermissionId");
-                    gp.MapRightKey("RoleId");
-                    gp.ToTable("role_permission");
 
-                });
+            modelBuilder.Entity<Admin>()
+           .HasRequired(p => p.RoleInfo)
+           .WithMany(p => p.AdminAccounts)
+           .HasForeignKey(p => p.Role);
+
+
+           modelBuilder.Entity<Permission>()
+          .HasRequired(p => p.RoleInfo)
+          .WithMany(p => p.Permissions)
+          .HasForeignKey(p => p.RoleId);
+
         }
         #endregion
         #region ObjectSet Properties
+        public DbSet<Banner> Banner
+        {
+            get;
+            set;
+        }
         public DbSet<Permission> Permission
         {
             get;
             set;
-        }
-        public DbSet<GroupPermission> GroupPermission
-        {
-            get;
-            set;
-        }
+        }      
         public DbSet<ProductSize> ProductSize
         {
             get;

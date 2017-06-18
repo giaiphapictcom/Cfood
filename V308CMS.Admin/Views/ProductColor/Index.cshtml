@@ -1,0 +1,76 @@
+﻿@using V308CMS.Admin.Helpers
+@using V308CMS.Admin.Helpers.UI
+@using V308CMS.Admin.Helpers.Url
+@using V308CMS.Admin.Models.UI
+@model List<V308CMS.Data.Models.Color>
+@{
+    ViewBag.Title = "Danh sách Màu sắc sản phẩm";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+@Html.Partial("UI/_AddNewButton", Url.ProductColorCreateUrl())
+@if (Model.Any())
+{
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Tên</th>
+                        <th>Mã màu</th>
+                        <th>Mô tả</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                        var color = Model[i];
+                        <tr>
+                            <td style="text-align: center">
+                                @(i + 1)
+                            </td>
+                            <td>
+                                <a title="Cập nhật thông tin Màu @color.Name" class="btn btn-link" href="@Url.ProductEditUrl(new {color.Id})">
+                                    @color.Name
+                                </a>
+                            </td>
+                            <td>
+                                @color.Code.ToShowColor()
+                            </td>
+                            <td>
+                                @color.Description.ToTitle()
+                            </td>
+                            <td style="width: 200px">
+                                @Html.Partial("UI/_EditButton", new ButtonModels
+                               {
+                                   Id = string.Format("color_{0}", color.Id),
+                                   Href = Url.ProductColorEditUrl(new { color.Id }),
+                                   Title = "Cập nhật thông tin Màu " + color.Name
+                               })
+                                @Html.Partial("UI/_DeleteForm", new DeleteFormModels
+                               {
+                                   NameOfId = "Id",
+                                   ValueOfId = color.Id,
+                                   IsConfirm = true,
+                                   Url = Url.ProductColorDeleteUrl()
+                               })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#dataTables-example').DataTable({
+            responsive: true
+        });
+    });
+</script>
+

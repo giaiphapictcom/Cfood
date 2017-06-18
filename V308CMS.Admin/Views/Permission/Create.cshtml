@@ -1,0 +1,14 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@model V308CMS.Admin.Models.PermissionModels
+@{
+    ViewBag.Title = "Thêm mới quyền";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+<div class="panel panel-primary">
+    <div class="panel-body">
+        <form method="post" role="form" action="@Url.PermissionCreateUrl()">
+            @Html.Partial("_PermissionForm", Model)
+        </form>
+    </div>
+
+</div>

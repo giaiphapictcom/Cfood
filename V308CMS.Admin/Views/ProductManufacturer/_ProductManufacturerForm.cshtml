@@ -1,0 +1,43 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@using V308CMS.Admin.Models.UI
+@model  V308CMS.Admin.Models.ProductManufacturerModels
+@Html.HiddenFor(manufacturer => Model.Id)
+@Html.AntiForgeryToken()
+<div class="row">
+    @Html.ValidationSummary(true)
+    <div class="col-lg-6">
+        <div class="form-group">
+            @Html.LabelFor(manufacturer => manufacturer.Name)
+            @Html.TextBoxFor(manufacturer => manufacturer.Name, new {@class = "form-control", placeholder = "Tên"})
+            @Html.ValidationMessageFor(manufacturer => manufacturer.Name)
+        </div>
+
+        @Html.Partial("UI/_ImageSelectPreview", new ImageSelectPreviewModels
+        {
+           Id = Model.Id,
+           Name = "Image",
+           ImageUrl = Model.ImageUrl,
+           ImageUrlHiddenName = "ImageUrl"
+        })
+        <div class="form-group">
+            @Html.LabelFor(manufacturer => manufacturer.Detail)
+            @Html.TextBoxFor(manufacturer => manufacturer.Detail, new { @class = "form-control", placeholder = "Mô tả" })
+            @Html.ValidationMessageFor(manufacturer => manufacturer.Detail)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(manufacturer => manufacturer.Order)
+            @Html.TextBoxFor(manufacturer => manufacturer.Order, new { @class = "form-control", placeholder = "Thứ tự" })
+            @Html.ValidationMessageFor(manufacturer => manufacturer.Order)
+        </div>
+        
+        <div class="form-group">
+            <div class="checkbox">
+                @Html.CheckBoxFor(manufacturer => manufacturer.Status, new { @checked = (Model.Status ? "checked" : "") })
+                @Html.LabelFor(manufacturer=> manufacturer.Status)                
+            </div>
+        </div>
+        @Html.Partial("UI/_FormAction")
+        <a href="@Url.ProductManufacturerIndexUrl()" title="Danh sách Nhà sản xuất" class="btn btn-link">Danh sách</a>
+
+    </div>
+</div>

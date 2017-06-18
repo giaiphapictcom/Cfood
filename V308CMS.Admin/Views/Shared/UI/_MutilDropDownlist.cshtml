@@ -1,0 +1,51 @@
+﻿@using V308CMS.Admin.Models.UI
+@model MutilDropDownlistModels
+
+@helper MutilDropDownlist(
+    string name = "",
+    List<MutilCategoryItem> data = null,
+    int selected = 0,
+    string placeHolder = "",
+    string cssClass = "form-control")
+{
+
+    <select class='@cssClass select-2' name='@name' id='@name' placeholder='@placeHolder'>
+        @if (selected > 0){
+            <option value='0' selected>Tất cả các loại</option>
+        }
+        else{
+            <option value='0'>Tất cả các loại</option>
+        }
+        @InternalMutilDropDownlist(data, selected)
+    </select>
+
+}
+@helper InternalMutilDropDownlist(
+            List<MutilCategoryItem> data = null,
+            int selected = 0,
+            int parentId = 0,
+            string strLimit = ""
+    )
+{
+if (data != null && data.Count > 0)
+{
+    foreach (var item in data)
+    {
+        if (item.ParentId == parentId)
+        {
+
+            if (selected > 0 && item.Id == selected){
+                    <option value='@item.Id' selected>@strLimit @item.Name</option>
+            }
+            else{
+                    <option value='@item.Id'>@strLimit @item.Name</option>
+            }
+            @InternalMutilDropDownlist(data, selected, item.Id, strLimit + "---|")
+
+        }
+
+    }
+}
+}
+@MutilDropDownlist(Model.Name, Model.Data, Model.ParentId,Model.PlaceHolder,Model.CssClass)
+

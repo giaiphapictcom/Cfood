@@ -13,124 +13,161 @@ namespace V308CMS.Respository
     }
     public  class ProductManufacturerRespository:IBaseRespository<ProductManufacturer>, IProductManufacturerRespository
     {
-        private readonly V308CMSEntities _entities;
-        public ProductManufacturerRespository(V308CMSEntities entities)
+       
+        public ProductManufacturerRespository()
         {
-            _entities = entities;
+            
         }
         public ProductManufacturer Find(int id)
         {
-            return (from manufacturer in _entities.ProductManufacturer
-                    where manufacturer.ID == id
-                    select manufacturer).FirstOrDefault();
+            using (var entities = new V308CMSEntities())
+            {
+                return (from manufacturer in entities.ProductManufacturer
+                        where manufacturer.ID == id
+                        select manufacturer).FirstOrDefault();
+            }
+           
         }
 
         public string Delete(int id)
         {
-            var manufacturerItem = (from manufacturer in _entities.ProductManufacturer
-                              where manufacturer.ID == id
-                              select manufacturer).FirstOrDefault();
-            if (manufacturerItem != null)
+            using (var entities = new V308CMSEntities())
             {
-                _entities.ProductManufacturer.Remove(manufacturerItem);
-                _entities.SaveChanges();
-                return "ok";
+                var manufacturerItem = (from manufacturer in entities.ProductManufacturer
+                                        where manufacturer.ID == id
+                                        select manufacturer).FirstOrDefault();
+                if (manufacturerItem != null)
+                {
+                    entities.ProductManufacturer.Remove(manufacturerItem);
+                    entities.SaveChanges();
+                    return "ok";
+                }
+                return "not_exists";
+
             }
-            return "not_exists";
+
+           
         }
 
         public string Update(ProductManufacturer data)
         {
-            var manufacturerItem = (from manufacturer in _entities.ProductManufacturer
-                              where manufacturer.ID == data.ID
-                              select manufacturer).FirstOrDefault();
-            if (manufacturerItem != null)
+            using (var entities = new V308CMSEntities())
             {
-                manufacturerItem.Name = data.Name;
-                manufacturerItem.Image = data.Image;
-                manufacturerItem.Detail = data.Detail;
-                manufacturerItem.Status = data.Status;
-                manufacturerItem.Number = data.Number;
-                manufacturerItem.Date = data.Date;
-                _entities.SaveChanges();
-                return "ok";
+                var manufacturerItem = (from manufacturer in entities.ProductManufacturer
+                                        where manufacturer.ID == data.ID
+                                        select manufacturer).FirstOrDefault();
+                if (manufacturerItem != null)
+                {
+                    manufacturerItem.Name = data.Name;
+                    manufacturerItem.Image = data.Image;
+                    manufacturerItem.Detail = data.Detail;
+                    manufacturerItem.Status = data.Status;
+                    manufacturerItem.Number = data.Number;
+                    manufacturerItem.Date = data.Date;
+                    entities.SaveChanges();
+                    return "ok";
+                }
+                return "not_exists";
             }
-            return "not_exists";
+
+            
         }
 
         public string Insert(ProductManufacturer data)
         {
-            var manufacturerItem = (from manufacturer in _entities.ProductManufacturer
-                              where manufacturer.Name == data.Name
-                              select manufacturer).FirstOrDefault();
-            if (manufacturerItem == null)
+            using (var entities = new V308CMSEntities())
             {
-                _entities.ProductManufacturer.Add(data);
-                _entities.SaveChanges();
-                return "ok";
+                var manufacturerItem = (from manufacturer in entities.ProductManufacturer
+                                        where manufacturer.Name == data.Name
+                                        select manufacturer).FirstOrDefault();
+                if (manufacturerItem == null)
+                {
+                    entities.ProductManufacturer.Add(data);
+                    entities.SaveChanges();
+                    return "ok";
+                }
+                return "exists";
+
             }
-            return "exists";
+
+            
         }
 
         public List<ProductManufacturer> GetAll()
         {
-            return (from manufacturer in _entities.ProductManufacturer
-                    orderby manufacturer.Date.Value descending
-                    select manufacturer
-                 ).ToList();
+            using (var entities = new V308CMSEntities())
+            {
+                return (from manufacturer in entities.ProductManufacturer
+                        orderby manufacturer.Date.Value descending
+                        select manufacturer
+                   ).ToList();
+
+            }
+           
         }
-
-
         public string Insert( string name, string image, string detail, bool status, int order, DateTime createdDate)
         {
-            var manufacturerItem = (from manufacturer in _entities.ProductManufacturer
-                                    where manufacturer.Name == name
-                                    select manufacturer).FirstOrDefault();
-            if (manufacturerItem == null)
+            using (var entities = new V308CMSEntities())
             {
-                var manufacturer = new ProductManufacturer
+                var manufacturerItem = (from manufacturer in entities.ProductManufacturer
+                                        where manufacturer.Name == name
+                                        select manufacturer).FirstOrDefault();
+                if (manufacturerItem == null)
                 {
-                    Name = name,
-                    Image = image,
-                    Detail = detail,
-                    Status = status,
-                    Number = order,
-                    Date = createdDate
-                };
-                _entities.ProductManufacturer.Add(manufacturer);
-                _entities.SaveChanges();
-                return "ok";
+                    var manufacturer = new ProductManufacturer
+                    {
+                        Name = name,
+                        Image = image,
+                        Detail = detail,
+                        Status = status,
+                        Number = order,
+                        Date = createdDate
+                    };
+                    entities.ProductManufacturer.Add(manufacturer);
+                    entities.SaveChanges();
+                    return "ok";
+                }
+                return "exists";
+
             }
-            return "exists";
+            
         }
 
         public string Update(int id, string name, string image, string detail, bool status, int order, DateTime createdDate)
         {
-            var manufacturerItem = (from manufacturer in _entities.ProductManufacturer
-                                    where manufacturer.ID == id
-                                    select manufacturer).FirstOrDefault();
-            if (manufacturerItem != null)
+            using (var entities = new V308CMSEntities())
             {
-                manufacturerItem.Name = name;
-                manufacturerItem.Image = image;
-                manufacturerItem.Detail = detail;
-                manufacturerItem.Status = status;
-                manufacturerItem.Number = order;
-                manufacturerItem.Date = createdDate;
-                _entities.SaveChanges();
-                return "ok";
+                var manufacturerItem = (from manufacturer in entities.ProductManufacturer
+                                        where manufacturer.ID == id
+                                        select manufacturer).FirstOrDefault();
+                if (manufacturerItem != null)
+                {
+                    manufacturerItem.Name = name;
+                    manufacturerItem.Image = image;
+                    manufacturerItem.Detail = detail;
+                    manufacturerItem.Status = status;
+                    manufacturerItem.Number = order;
+                    manufacturerItem.Date = createdDate;
+                    entities.SaveChanges();
+                    return "ok";
+                }
+                return "not_exists";
             }
-            return "not_exists";
+            
         }
         public List<ProductManufacturer> GetAllByState(bool state = true)
         {
-            return state ? (from manufacturer in _entities.ProductManufacturer
-                            orderby manufacturer.Date.Value descending
-                            where manufacturer.Status == true
-                            select manufacturer).ToList() :
-                     (from manufacturer in _entities.ProductManufacturer
+            using (var entities = new V308CMSEntities())
+            {
+                return state ? (from manufacturer in entities.ProductManufacturer
+                                orderby manufacturer.Date.Value descending
+                                where manufacturer.Status == true
+                                select manufacturer).ToList() :
+                     (from manufacturer in entities.ProductManufacturer
                       orderby manufacturer.Date.Value descending
                       select manufacturer).ToList();
+            }
+            
         }
     }
 }

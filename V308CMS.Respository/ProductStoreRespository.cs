@@ -19,73 +19,93 @@ namespace V308CMS.Respository
 
     public class StoreRespository : IBaseRespository<Store>, IStoreRespository
     {
-        private readonly V308CMSEntities _entities;
+      
 
-        public StoreRespository(V308CMSEntities entities)
+        public StoreRespository()
         {
-            _entities = entities;
+           
         }
 
         public Store Find(int id)
         {
-            return (from store in _entities.Store
-                    where store.Id == id
-                select store).FirstOrDefault();
+            using (var entities = new V308CMSEntities())
+            {
+                return (from store in entities.Store
+                        where store.Id == id
+                        select store).FirstOrDefault();
+            }
+           
         }
 
         public string Delete(int id)
         {
-            var storeItem = (from store in _entities.Store
-                             where store.Id == id
-                select store).FirstOrDefault();
-            if (storeItem != null)
+            using (var entities = new V308CMSEntities())
             {
-                _entities.Store.Remove(storeItem);
-                _entities.SaveChanges();
-                return "ok";
+                var storeItem = (from store in entities.Store
+                                 where store.Id == id
+                                 select store).FirstOrDefault();
+                if (storeItem != null)
+                {
+                    entities.Store.Remove(storeItem);
+                    entities.SaveChanges();
+                    return "ok";
+                }
+                return "not_exists";
             }
-            return "not_exists";
+          
         }
 
         public string Update(Store data)
         {
-            var storeItem = (from store in _entities.Store
-                             where store.Id == data.Id
-                select store).FirstOrDefault();
-            if (storeItem != null)
+            using (var entities = new V308CMSEntities())
             {
-                storeItem.Name = data.Name;
-                storeItem.Phone = data.Phone;
-                storeItem.Manager = data.Manager;
-                storeItem.Address = data.Address;
-                storeItem.UpdatedAt = data.UpdatedAt;
-                storeItem.State = data.State;
-                _entities.SaveChanges();
-                return "ok";
+                var storeItem = (from store in entities.Store
+                                 where store.Id == data.Id
+                                 select store).FirstOrDefault();
+                if (storeItem != null)
+                {
+                    storeItem.Name = data.Name;
+                    storeItem.Phone = data.Phone;
+                    storeItem.Manager = data.Manager;
+                    storeItem.Address = data.Address;
+                    storeItem.UpdatedAt = data.UpdatedAt;
+                    storeItem.State = data.State;
+                    entities.SaveChanges();
+                    return "ok";
+                }
+                return "not_exists";
             }
-            return "not_exists";
+           
         }
 
         public string Insert(Store data)
         {
-            var storeItem = (from store in _entities.Store
-                             where store.Name == data.Name
-                select store).FirstOrDefault();
-            if (storeItem == null)
+            using (var entities = new V308CMSEntities())
             {
-                _entities.Store.Add(data);
-                _entities.SaveChanges();
-                return "ok";
+                var storeItem = (from store in entities.Store
+                                 where store.Name == data.Name
+                                 select store).FirstOrDefault();
+                if (storeItem == null)
+                {
+                    entities.Store.Add(data);
+                    entities.SaveChanges();
+                    return "ok";
+                }
+                return "exists";
             }
-            return "exists";
+            
         }
 
         public List<Store> GetAll()
         {
-            return (from store in _entities.Store
-                    orderby store.UpdatedAt descending
-                select store
-                ).ToList();
+            using (var entities = new V308CMSEntities())
+            {
+                return (from store in entities.Store
+                        orderby store.UpdatedAt descending
+                        select store
+               ).ToList();
+            }
+           
         }
 
 
@@ -96,26 +116,30 @@ namespace V308CMS.Respository
             DateTime updatedAt, byte state
             )
         {
-            var storeItem = (from store in _entities.Store
-                             where store.Name == name
-                select store).FirstOrDefault();
-            if (storeItem == null)
+            using (var entities = new V308CMSEntities())
             {
-                var store = new Store
+                var storeItem = (from store in entities.Store
+                                 where store.Name == name
+                                 select store).FirstOrDefault();
+                if (storeItem == null)
                 {
-                    Name = name,
-                    Phone = phone,
-                    Manager = manager,
-                    Address = address,
-                    CreatedAt = createdAt,
-                    UpdatedAt = updatedAt,
-                    State = state
-                };
-                _entities.Store.Add(store);
-                _entities.SaveChanges();
-                return "ok";
+                    var store = new Store
+                    {
+                        Name = name,
+                        Phone = phone,
+                        Manager = manager,
+                        Address = address,
+                        CreatedAt = createdAt,
+                        UpdatedAt = updatedAt,
+                        State = state
+                    };
+                    entities.Store.Add(store);
+                    entities.SaveChanges();
+                    return "ok";
+                }
+                return "exists";
             }
-            return "exists";
+           
         }
 
         public string Update(int id, string name, string phone,
@@ -123,32 +147,41 @@ namespace V308CMS.Respository
             string address, DateTime createdAt,
             DateTime updatedAt, byte state)
         {
-            var storeItem = (from store in _entities.Store
-                             where store.Id == id
-                select store).FirstOrDefault();
-            if (storeItem != null)
+            using (var entities = new V308CMSEntities())
             {
-                storeItem.Name = name;
-                storeItem.Phone = phone;
-                storeItem.Manager = manager;
-                storeItem.Address = address;
-                storeItem.CreatedAt = createdAt;
-                storeItem.UpdatedAt = updatedAt;
-                storeItem.State = state;
-                _entities.SaveChanges();
-                return "ok";
+                var storeItem = (from store in entities.Store
+                                 where store.Id == id
+                                 select store).FirstOrDefault();
+                if (storeItem != null)
+                {
+                    storeItem.Name = name;
+                    storeItem.Phone = phone;
+                    storeItem.Manager = manager;
+                    storeItem.Address = address;
+                    storeItem.CreatedAt = createdAt;
+                    storeItem.UpdatedAt = updatedAt;
+                    storeItem.State = state;
+                    entities.SaveChanges();
+                    return "ok";
+                }
+                return "not_exists";
+
             }
-            return "not_exists";
+            
         }
         public List<Store> GetAllByState(bool state = true)
         {
-            return state ? (from store in _entities.Store
-                            orderby store.CreatedAt descending
-                            where store.State == 1
-                            select store).ToList() :
-                     (from store in _entities.Store
-                      orderby store.CreatedAt descending
-                      select store).ToList();
+            using (var entities = new V308CMSEntities())
+            {
+                return state ? (from store in entities.Store
+                                orderby store.CreatedAt descending
+                                where store.State == 1
+                                select store).ToList() :
+                    (from store in entities.Store
+                     orderby store.CreatedAt descending
+                     select store).ToList();
+            }
+           
         }
     }
 }

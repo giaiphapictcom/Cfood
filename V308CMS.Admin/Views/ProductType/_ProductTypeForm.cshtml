@@ -1,0 +1,96 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@using V308CMS.Admin.Models.UI
+@model V308CMS.Admin.Models.ProductTypeModels
+@{
+    var listCategory = (List<MutilCategoryItem>)ViewBag.ListCategory;
+}
+
+@Html.AntiForgeryToken()
+@Html.HiddenFor(type => Model.Id)
+<div class="row">
+    @Html.ValidationSummary(true)
+    <div class="col-lg-6">
+        <div class="form-group">
+            @Html.LabelFor(type => type.Name)
+            @Html.TextBoxFor(type => type.Name, new {@class = "form-control", placeholder = "Tên loại sản phẩm"})
+            @Html.ValidationMessageFor(type => type.Name)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(type => type.Icon)
+            @Html.TextBoxFor(type => type.Icon, new {@class = "form-control", placeholder = "Icon"})
+            @Html.ValidationMessageFor(type => type.Icon)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(type => Model.ParentId)
+            @Html.Partial("UI/_MutilDropDownlist", new MutilDropDownlistModels
+            {
+                Name = "ParentId",
+                Data = listCategory,
+                PlaceHolder = "Chọn Danh mụch cha",
+                ParentId = Model.ParentId
+
+            })
+            @Html.ValidationMessageFor(type => Model.ParentId)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(category => Model.Description)
+            @Html.TextAreaFor(type => Model.Description, new {@class = "form-control", placeholder = "Ghi chú về loại sản phẩm"})
+            @Html.ValidationMessageFor(type => Model.Description)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(category => Model.Detail)
+            @Html.TextAreaFor(type => Model.Detail, new {@class = "form-control", placeholder = "Mô tả về loại sản phẩm"})
+            @Html.ValidationMessageFor(type => Model.Detail)
+        </div>
+        
+        <div class="form-group">
+            <label for="image">@(Model.Id > 0 ? "Ảnh banner hiện tại" : "Ảnh banner")</label>
+        </div>
+        @Html.Partial("UI/_ImageSelectPreview", new ImageSelectPreviewModels
+        {
+           Id = Model.Id,
+           Name = "Image",
+           ImageUrl = Model.ImageUrl,
+           ImageUrlHiddenName = "ImageUrl",
+           AutoGenerateLabel =  false
+        })
+
+        <div class="form-group">
+            <label for="image">@(Model.Id > 0 ? "Ảnh banner trang chủ hiện tại" : "Ảnh banner trang chủ")</label>
+        </div>
+
+        @Html.Partial("UI/_ImageSelectPreview", new ImageSelectPreviewModels
+        {
+           Id = Model.Id,
+           Name = "ImageBanner",
+           ImageUrl = Model.ImageBannerUrl,
+           ImageUrlHiddenName = "ImageBannerUrl",
+           AutoGenerateLabel = false
+        })
+        <div class="form-group">
+            @Html.LabelFor(category => Model.Number)
+            @Html.TextBoxFor(category => Model.Number, new {@class = "form-control", placeholder = "Nhập thứ tự hiển thị nếu bạn muốn sắp xếp"})
+            @Html.ValidationMessageFor(category => Model.Number)
+        </div>
+        <div class="form-group">
+            <div class="checkbox">
+                @Html.CheckBoxFor(category => category.Status, new {@checked = (Model.Status ? "checked" : "")})
+                @Html.LabelFor(category => category.Status)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="checkbox">
+                @Html.CheckBoxFor(category => category.IsHome, new { @checked = (Model.Status ? "checked" : "") })
+                @Html.LabelFor(category => category.IsHome)              
+            </div>
+        </div>
+        @Html.Partial("UI/_FormAction")
+        <a href="@Url.ProductTypeIndexUrl()" title="Danh sách loại sản phẩm" class="btn btn-link">Danh sách</a>
+
+    </div>
+</div>
+<script type="text/javascript">
+    $(function() {
+        $(".select-2").select2();
+    });
+</script>

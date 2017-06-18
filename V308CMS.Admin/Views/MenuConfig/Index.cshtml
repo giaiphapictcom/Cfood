@@ -1,0 +1,93 @@
+﻿@using V308CMS.Admin.Helpers
+@using V308CMS.Admin.Helpers.UI
+@using V308CMS.Admin.Helpers.Url
+@using V308CMS.Admin.Models.UI
+@using V308CMS.Common
+@model List<V308CMS.Data.Models.MenuConfig>
+@{
+    ViewBag.Title = "Danh sách cấu hình menu";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";  
+}
+@Html.Partial("UI/_AddNewButton", Url.MenuConfigCreateUrl())
+@if (Model.Any())
+{
+    <div class="panel panel-default">
+        <!-- /.panel-heading -->
+        <div class="panel-body">
+            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Tên</th>
+                        <th>Mô tả</th>
+                        <th>Mã</th>
+                        <th>Link</th>
+                        <th>Thứ tự</th>
+                        <th>Trạng thái</th>
+                        <th>Ngày tạo</th>
+                        <th>Ngày cập nhật</th>
+                       
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                        var menu = Model[i];
+                        <tr>
+                            <td style="text-align: center">
+                                @(i + 1)
+                            </td>
+                            <td>
+                                <a title="Cập nhật Menu @menu.Name" class="btn btn-link" href="@Url.MenuConfigEditUrl(new {menu.Id})">
+                                    @menu.Name
+                                </a>
+                            </td>
+                            <td>
+                                @menu.Description.ToTitle()
+                            </td>
+                            <td>@menu.Code</td>
+                            <td>
+                                <a href="@menu.Link" target="_blank" title="Xem địa chỉ @menu.Link">
+                                    @menu.Link.ToTitle()
+                                </a>
+                            </td>
+                            <td>@menu.Order</td>
+                            <td>@Html.Raw(menu.State.ToStateLabelHtml())</td>
+                            <td>@menu.CreatedAt.ToDdmmyyyy()</td>
+                            <td>@menu.UpdatedAt.ToDdmmyyyy()</td>
+                           
+                            <td style="width: 200px">
+                                @Html.Partial("UI/_EditButton", new ButtonModels
+                               {
+                                   Id = string.Format("config_{0}", menu.Id),
+                                   Href = Url.MenuConfigEditUrl(new { menu.Id }),
+                                   Title = "Cập nhật thông tin Menu " + menu.Name
+                               })
+                                @Html.Partial("UI/_DeleteForm", new DeleteFormModels
+                               {
+                                   NameOfId = "Id",
+                                   ValueOfId = menu.Id,
+                                   IsConfirm = true,
+                                   Url = Url.MenuConfigDeleteUrl()
+                               })
+
+                            </td>
+                        </tr>
+                    }
+
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#dataTables-example').DataTable({
+            responsive: true
+        });
+    });
+</script>

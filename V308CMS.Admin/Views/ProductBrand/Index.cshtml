@@ -1,0 +1,78 @@
+﻿@using V308CMS.Admin.Helpers
+@using V308CMS.Admin.Helpers.UI
+@using V308CMS.Admin.Helpers.Url
+@using V308CMS.Admin.Models.UI
+@model List<V308CMS.Data.Brand>
+@{
+    ViewBag.Title = "Danh sách Thương hiệu";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+@Html.Partial("UI/_AddNewButton", Url.ProductBrandCreateUrl())
+@if (Model.Any())
+{
+    <div class="panel panel-default">
+        <!-- /.panel-heading -->
+        <div class="panel-body">
+            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Tên</th>
+                        <th>Ảnh</th>
+                        <th>Loại sản phẩm</th>
+                        <th>Trạng thái</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                        var brand = Model[i];
+                        <tr>
+                            <td style="text-align: center">
+                                @(i + 1)
+                            </td>
+                            <td>
+                                <a title="Cập nhật thương hiệu @brand.name" class="btn btn-link" href="@Url.ProductBrandEditUrl(new {brand.id})">
+                                    @brand.name
+                                </a>
+                            </td>
+                            <td>
+                                <img class="image-brand img-circle" src="@brand.image.ToImageUrl()" alt="@brand.name" />
+                            </td>
+                            <td>
+                                @brand.ProductType.Name.ToTitle()
+                            </td>
+                            <td>@brand.status.ToStateLabel()</td>
+                            <td style="width: 200px">
+                                @Html.Partial("UI/_EditButton", new ButtonModels
+                               {
+                                   Id = string.Format("brand_{0}", brand.id),
+                                   Href = Url.ProductBrandEditUrl(new { brand.id }),
+                                   Title = "Cập nhật thông tin thương hiệu " + brand.name
+                               })
+                                @Html.Partial("UI/_DeleteForm", new DeleteFormModels
+                               {
+                                   NameOfId = "Id",
+                                   ValueOfId = brand.id,
+                                   IsConfirm = true,
+                                   Url = Url.ProductBrandDeleteUrl()
+                               })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#dataTables-example').DataTable({
+            responsive: true
+        });
+    });
+</script>
+

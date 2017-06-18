@@ -23,46 +23,46 @@ namespace V308CMS.Sale.Models
             if (!(filterContext.HttpContext.Session["Admin"] == null))
             {
                 Admin mAdmin = (Admin)filterContext.HttpContext.Session["Admin"];
-                if (mAdmin.PSanPham != true && pId==1)
-                {
-                    RedirectResult mRS = new RedirectResult("/Admin/ChucNang");
-                    filterContext.Result = mRS;
-                }
-                else if (mAdmin.PTinTuc != true && pId == 2)
-                {
-                    RedirectResult mRS = new RedirectResult("/Admin/ChucNang");
-                    filterContext.Result = mRS;
-                }
-                else if (mAdmin.PKhachHang != true && pId == 3)
-                {
-                    RedirectResult mRS = new RedirectResult("/Admin/ChucNang");
-                    filterContext.Result = mRS;
-                }
-                else if (mAdmin.PHinhAnh != true && pId == 4)
-                {
-                    RedirectResult mRS = new RedirectResult("/Admin/ChucNang");
-                    filterContext.Result = mRS;
-                }
-                else if (mAdmin.PFileUpload != true && pId == 5)
-                {
-                    RedirectResult mRS = new RedirectResult("/Admin/ChucNang");
-                    filterContext.Result = mRS;
-                }
-                else if (mAdmin.PTaiKhoan != true && pId == 6)
-                {
-                    RedirectResult mRS = new RedirectResult("/Admin/ChucNang");
-                    filterContext.Result = mRS;
-                }
-                else if (mAdmin.PHeThong != true && pId == 7)
-                {
-                    RedirectResult mRS = new RedirectResult("/Admin/ChucNang");
-                    filterContext.Result = mRS;
-                }
-                else if (mAdmin.PThungRac != true && pId == 8)
-                {
-                    RedirectResult mRS = new RedirectResult("/Admin/ChucNang");
-                    filterContext.Result = mRS;
-                }
+                //if (mAdmin.PSanPham != true && pId==1)
+                //{
+                //    RedirectResult mRS = new RedirectResult("/Admin/ChucNang");
+                //    filterContext.Result = mRS;
+                //}
+                //else if (mAdmin.PTinTuc != true && pId == 2)
+                //{
+                //    RedirectResult mRS = new RedirectResult("/Admin/ChucNang");
+                //    filterContext.Result = mRS;
+                //}
+                //else if (mAdmin.PKhachHang != true && pId == 3)
+                //{
+                //    RedirectResult mRS = new RedirectResult("/Admin/ChucNang");
+                //    filterContext.Result = mRS;
+                //}
+                //else if (mAdmin.PHinhAnh != true && pId == 4)
+                //{
+                //    RedirectResult mRS = new RedirectResult("/Admin/ChucNang");
+                //    filterContext.Result = mRS;
+                //}
+                //else if (mAdmin.PFileUpload != true && pId == 5)
+                //{
+                //    RedirectResult mRS = new RedirectResult("/Admin/ChucNang");
+                //    filterContext.Result = mRS;
+                //}
+                //else if (mAdmin.PTaiKhoan != true && pId == 6)
+                //{
+                //    RedirectResult mRS = new RedirectResult("/Admin/ChucNang");
+                //    filterContext.Result = mRS;
+                //}
+                //else if (mAdmin.PHeThong != true && pId == 7)
+                //{
+                //    RedirectResult mRS = new RedirectResult("/Admin/ChucNang");
+                //    filterContext.Result = mRS;
+                //}
+                //else if (mAdmin.PThungRac != true && pId == 8)
+                //{
+                //    RedirectResult mRS = new RedirectResult("/Admin/ChucNang");
+                //    filterContext.Result = mRS;
+                //}
             }
             else
             {
@@ -87,54 +87,54 @@ namespace V308CMS.Sale.Models
             if (!(filterContext.HttpContext.Session["Admin"] == null))
             {
                 Admin mAdmin = (Admin)filterContext.HttpContext.Session["Admin"];
-                if (mAdmin.PSanPham != true && pId == 1)
-                {
-                    JsonResult mCR = new JsonResult();
-                    mCR.Data = new { code = 0, message = "Bạn không có quyền truy cập chức năng này." };
-                    filterContext.Result = mCR;
-                }
-                else if (mAdmin.PTinTuc != true && pId == 2)
-                {
-                    JsonResult mCR = new JsonResult();
-                    mCR.Data = new { code = 0, message = "Bạn không có quyền truy cập chức năng này." };
-                    filterContext.Result = mCR;
-                }
-                else if (mAdmin.PKhachHang != true && pId == 3)
-                {
-                    JsonResult mCR = new JsonResult();
-                    mCR.Data = new { code = 0, message = "Bạn không có quyền truy cập chức năng này." };
-                    filterContext.Result = mCR;
-                }
-                else if (mAdmin.PHinhAnh != true && pId == 4)
-                {
-                    JsonResult mCR = new JsonResult();
-                    mCR.Data = new { code = 0, message = "Bạn không có quyền truy cập chức năng này." };
-                    filterContext.Result = mCR;
-                }
-                else if (mAdmin.PFileUpload != true && pId == 5)
-                {
-                    JsonResult mCR = new JsonResult();
-                    mCR.Data = new { code = 0, message = "Bạn không có quyền truy cập chức năng này." };
-                    filterContext.Result = mCR;
-                }
-                else if (mAdmin.PTaiKhoan != true && pId == 6)
-                {
-                    JsonResult mCR = new JsonResult();
-                    mCR.Data = new { code = 0, message = "Bạn không có quyền truy cập chức năng này." };
-                    filterContext.Result = mCR;
-                }
-                else if (mAdmin.PHeThong != true && pId == 7)
-                {
-                    JsonResult mCR = new JsonResult();
-                    mCR.Data = new { code = 0, message = "Bạn không có quyền truy cập chức năng này." };
-                    filterContext.Result = mCR;
-                }
-                else if (mAdmin.PThungRac != true && pId == 8)
-                {
-                    JsonResult mCR = new JsonResult();
-                    mCR.Data = new { code = 0, message = "Bạn không có quyền truy cập chức năng này." };
-                    filterContext.Result = mCR;
-                }
+                //if (mAdmin.PSanPham != true && pId == 1)
+                //{
+                //    JsonResult mCR = new JsonResult();
+                //    mCR.Data = new { code = 0, message = "Bạn không có quyền truy cập chức năng này." };
+                //    filterContext.Result = mCR;
+                //}
+                //else if (mAdmin.PTinTuc != true && pId == 2)
+                //{
+                //    JsonResult mCR = new JsonResult();
+                //    mCR.Data = new { code = 0, message = "Bạn không có quyền truy cập chức năng này." };
+                //    filterContext.Result = mCR;
+                //}
+                //else if (mAdmin.PKhachHang != true && pId == 3)
+                //{
+                //    JsonResult mCR = new JsonResult();
+                //    mCR.Data = new { code = 0, message = "Bạn không có quyền truy cập chức năng này." };
+                //    filterContext.Result = mCR;
+                //}
+                //else if (mAdmin.PHinhAnh != true && pId == 4)
+                //{
+                //    JsonResult mCR = new JsonResult();
+                //    mCR.Data = new { code = 0, message = "Bạn không có quyền truy cập chức năng này." };
+                //    filterContext.Result = mCR;
+                //}
+                //else if (mAdmin.PFileUpload != true && pId == 5)
+                //{
+                //    JsonResult mCR = new JsonResult();
+                //    mCR.Data = new { code = 0, message = "Bạn không có quyền truy cập chức năng này." };
+                //    filterContext.Result = mCR;
+                //}
+                //else if (mAdmin.PTaiKhoan != true && pId == 6)
+                //{
+                //    JsonResult mCR = new JsonResult();
+                //    mCR.Data = new { code = 0, message = "Bạn không có quyền truy cập chức năng này." };
+                //    filterContext.Result = mCR;
+                //}
+                //else if (mAdmin.PHeThong != true && pId == 7)
+                //{
+                //    JsonResult mCR = new JsonResult();
+                //    mCR.Data = new { code = 0, message = "Bạn không có quyền truy cập chức năng này." };
+                //    filterContext.Result = mCR;
+                //}
+                //else if (mAdmin.PThungRac != true && pId == 8)
+                //{
+                //    JsonResult mCR = new JsonResult();
+                //    mCR.Data = new { code = 0, message = "Bạn không có quyền truy cập chức năng này." };
+                //    filterContext.Result = mCR;
+                //}
             }
             else
             {

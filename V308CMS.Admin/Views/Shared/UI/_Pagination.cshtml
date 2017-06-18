@@ -1,0 +1,105 @@
+﻿@using System.Text.RegularExpressions
+@model V308CMS.Admin.Models.PaginationModels
+@functions
+{
+    public string GetPageUrl(int page, string baseUrl, string pageParamFormat = @"page=\d+")
+    {
+        string pageUrl = "";
+        if (Regex.IsMatch(baseUrl, pageParamFormat))
+        {
+            pageUrl = Regex.Replace(baseUrl, pageParamFormat, "page=" + page);
+        }
+
+        return pageUrl;
+    }
+}
+@helper MakePagination(int totalPages, int currPages,
+    int recordPerPages, int links, string baseUrl,
+    string pageParamFormat = @"page=\d+")
+{
+    if (totalPages > 1)
+    {
+        int ranges = currPages / recordPerPages;
+        if (currPages % recordPerPages > 0)
+        {
+            ranges += 1;
+        }
+
+        int start = recordPerPages * (ranges - 1) + 1;
+        int end = start + recordPerPages;
+
+        if (end > totalPages)
+        {
+            end = totalPages + 1;
+        }
+        if (currPages > 1)
+        {
+            <li class="first">
+                <a href="@GetPageUrl(1, baseUrl)">First</a>
+            </li>
+            <li class="previous">
+                <a href="@GetPageUrl(currPages - 1, baseUrl)">Previous</a>
+            </li>
+        }
+
+        for (int i = start; i < end; i++)
+        {
+            var cssClass = "";
+            if (i == currPages)
+            {
+                cssClass = "active";
+            }
+            <li class="@cssClass">
+                <a href="@GetPageUrl(i, baseUrl)">@i</a>
+            </li>
+        }
+        if (currPages < totalPages)
+        {
+                <li class="next">
+                    <a href="@GetPageUrl(currPages + 1, baseUrl)">Next</a>
+                </li>
+                <li class="last">
+                    <a href="@GetPageUrl(totalPages, baseUrl)">Last</a>
+                </li>
+        }        
+    }
+}
+<ul class="pagination" style="float: right">
+    <li style="float: left">
+        <input data-baseurl="@Model.BaseUrl"
+               id="custom_page" type="text" style="padding: 5px;" 
+               placeholder="Nhập trang cần chuyển" data-totalpage="@Model.TotalPages">
+    </li>
+
+    @MakePagination(
+        Model.TotalPages,
+        Model.CurrentPage,
+        Model.RecordPerPages,
+        Model.Links,
+        Model.BaseUrl,
+        Model.PageParamFormat
+        )
+</ul>
+<script type="text/javascript">
+    $("#custom_page").keyup(function (e) {
+        if (e.keyCode === 13) {
+            var targetPage = parseInt($(this).val());
+            var totalPage = $(this).attr('data-totalpage');
+            if (isNaN(targetPage)) {
+                toastr.error('Trang cần chuyển phải là số.');
+                return false;
+            }
+            else if (targetPage > totalPage) {
+                toastr.error('Số trang cần chuyển lớn hơn tổng số trang hiện có.');
+                return false;
+            }
+            else {
+                var baseUrl = $(this).attr('data-baseurl').replace(/page=\d+/, "page=" + targetPage);
+                window.location = baseUrl;
+                return true;
+            }
+           
+        }
+    });
+
+</script>

@@ -1,0 +1,186 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@using V308CMS.Admin.Models.UI
+@using V308CMS.Common
+@using V308CMS.Data
+@model V308CMS.Admin.Models.ProductTypeViewModels
+@{
+    ViewBag.Title = "Danh sách Loại sản phẩm";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+    var listRoot =(List<ProductType>) ViewBag.ListRoot;
+    var listParent = (List<ProductType>)ViewBag.ListParent;
+    var listChild = (List<ProductType>)ViewBag.ListChild;
+}
+@helper ShowCategoryItem(ProductType category,int parentId = 0, string parentName = "",
+            string strLimit = "")
+{
+    <tr>
+        <td>
+            <a class="btn btn-link" href="@Url.ProductTypeEditUrl(new {category.ID})" title="Cập nhật thể loại sản phẩm">
+               @strLimit@category.Name
+            </a>
+        </td>
+        <td>@category.Date.ToDdmmyyyy()</td>
+        <td>
+            @Html.Partial("UI/_ChangeStateForm", new ChangeStateFormModels
+                   {
+                       NameOfId = "Id",
+                       ValueOfId = category.ID,
+                       IsConfirm = true,
+                       State = category.Status,
+                       Url = Url.ProductTypeChangeStateUrl()
+                   })
+        </td>
+        <td style='width: 200px'>
+            @Html.Partial("UI/_EditButton", new ButtonModels
+           {
+               Id = string.Format("category_{0}", category.ID),
+               Href = Url.ProductTypeEditUrl(new { category.ID }),
+               Title = "Cập nhật thông tin loại sản phẩm " + category.Name
+           })
+            @Html.Partial("UI/_DeleteForm", new DeleteFormModels
+                       {
+                           NameOfId = "Id",
+                           ValueOfId = category.ID,
+                           IsConfirm = true,
+                           Url = Url.ProductTypeDeleteUrl()
+                       })
+        </td>
+    </tr>
+}
+@helper ShowListMenu(
+            List<ProductType> data = null,
+            int parentId = 0,string parentName="",
+            string strLimit = "")
+{
+if (data != null && data.Any())
+{
+    int level = 0;
+    if (Model.ParentId > 0)
+    {
+        level = 1;
+    }
+    foreach (var productType in data)
+    {
+        if (level > 0)
+        {
+            @ShowCategoryItem(productType, parentId, parentName, strLimit)
+        }
+        else
+        {
+            if (productType.Parent == parentId)
+            {
+                @ShowCategoryItem(productType, parentId, parentName, strLimit)
+                @ShowListMenu(Model.Data, productType.ID, productType.Name, strLimit + productType.Name +"--->")
+            }
+
+        }
+
+
+
+    }
+}
+}
+@Html.Partial("UI/_AddNewButton", Url.ProductTypeCreateUrl())
+<div class="row">
+    <form action="@Url.ProductTypeIndexUrl()" method="get">
+        <div class="col-md-2">
+            @Html.DropDownListFor(product => product.RootId, new SelectList(listRoot, "ID", "Name", Model.RootId),"Chọn danh mục gốc",
+                new
+                {
+                    @class = "form-control",
+                    placeholder = "Chọn danh mục gốc",
+                    @onchange = "changeGroup(0,this.value)",
+                    style="margin-bottom:5px"
+                })
+        </div>
+        <div class="col-md-2">
+            @Html.DropDownListFor(product => product.ParentId, new SelectList(listParent, "ID", "Name", Model.ParentId), "Chọn danh mục cha",
+                new
+                {
+                    @class = "form-control",
+                    placeholder = "Chọn danh mục cha",
+                    @onchange = "changeGroup(1,this.value)",
+                    style = "margin-bottom:5px"
+                })
+        </div>
+        <div class="col-md-2">
+            @Html.DropDownListFor(product => product.ChildId, new SelectList(listChild, "ID", "Name", Model.ChildId), "Chọn danh mục con",
+           new
+           {
+               @class = "form-control",
+               placeholder = "Chọn danh mục con",
+               @onchange = "changeGroup(2,this.value)",
+               style = "margin-bottom:5px"
+           })
+        </div>
+    </form>
+</div>
+    @if (Model.Data.Any())
+    {
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                    <thead>
+                        <tr>
+                            <th>Tên</th>
+                            <th>Ngày tạo</th>
+                            <th>Trạng thái</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @ShowListMenu(Model.Data,Model.RootId)
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    }
+
+<script type="text/javascript">
+    function changeGroup(level, val) {
+        var param = "";
+        var url = window.location.href;
+        var resultUrl = "";
+        var paramRegex = "";
+        var baseParamValue = "";
+        if (val === "") {
+            val = "0";
+        }
+        if (level == "0") {            
+            param = "rootId";
+            paramRegex = /rootId=\d+/;
+            baseParamValue = "rootId=";
+        }
+        if (level == "1") {
+            param = "parentId";
+            paramRegex = /parentId=\d+/;
+            baseParamValue = "parentId=";
+        }
+        if (level == "2") {
+            param = "childId";
+            paramRegex = /childId=\d+/;
+            baseParamValue = "childId=";
+        }
+        if (url.indexOf(param) > 0) {
+            if (level == "0") {
+                resultUrl = window.location.href.split('?')[0] + "?rootId=" + val;                
+            } else {
+                resultUrl = url.replace(paramRegex, baseParamValue + val);
+            }
+           
+        } else {
+
+            resultUrl = url.indexOf("?") > 0 ?
+                url + "&" + param + "=" + val : url + "?" + param + "=" + val;
+        }
+        window.location.href = resultUrl;
+    }
+    $(document).ready(function () {
+            
+        $('#dataTables-example').DataTable({
+            responsive: true
+        });
+    });
+</script>
+

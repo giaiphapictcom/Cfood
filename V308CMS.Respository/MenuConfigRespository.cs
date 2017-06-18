@@ -12,71 +12,88 @@ namespace V308CMS.Respository
     }
     public class MenuConfigRespository: Data.IBaseRespository<MenuConfig>, IMenuConfigRespository
     {
-        private readonly V308CMSEntities _entities;
+      
 
-        public MenuConfigRespository(V308CMSEntities entities)
+        public MenuConfigRespository()
         {
-            _entities = entities;
+            
         }
         public MenuConfig Find(int id)
         {
-            return (from item in _entities.MenuConfig
-                    where item.Id == id
-                    select item
+            using (var entities = new V308CMSEntities())
+            {
+                return (from item in entities.MenuConfig
+                        where item.Id == id
+                        select item
                ).FirstOrDefault();
+            }
+            
         }
 
         public string Delete(int id)
         {
-            var menuConfig = (from item in _entities.MenuConfig
-                               where item.Id == id
-                               select item
-               ).FirstOrDefault();
-            if (menuConfig != null)
+            using (var entities = new V308CMSEntities())
             {
-                _entities.MenuConfig.Remove(menuConfig);
-                return "ok";
+                var menuConfig = (from item in entities.MenuConfig
+                                  where item.Id == id
+                                  select item
+              ).FirstOrDefault();
+                if (menuConfig != null)
+                {
+                    entities.MenuConfig.Remove(menuConfig);
+                    return "ok";
+                }
+                return "not_exists";
             }
-            return "not_exists";
+           
         }
 
         public string Update(MenuConfig config)
         {
-            var menuConfig = (from item in _entities.MenuConfig
-                              where item.Id == config.Id
-                              select item
-                ).FirstOrDefault();
-            if (menuConfig != null)
+            using (var entities = new V308CMSEntities())
             {
-              
-                menuConfig.Name = config.Name;
-                menuConfig.Description = config.Description;
-                menuConfig.Code = config.Code;
-                menuConfig.Link = config.Link;
-                menuConfig.State = config.State;
-                menuConfig.CreatedAt = config.CreatedAt;
-                menuConfig.UpdatedAt = config.UpdatedAt;
-                menuConfig.Order = config.Order;
-                _entities.SaveChanges();
-                return "ok";
+                var menuConfig = (from item in entities.MenuConfig
+                                  where item.Id == config.Id
+                                  select item
+                ).FirstOrDefault();
+                if (menuConfig != null)
+                {
 
+                    menuConfig.Name = config.Name;
+                    menuConfig.Description = config.Description;
+                    menuConfig.Code = config.Code;
+                    menuConfig.Link = config.Link;
+                    menuConfig.State = config.State;
+                    menuConfig.CreatedAt = config.CreatedAt;
+                    menuConfig.UpdatedAt = config.UpdatedAt;
+                    menuConfig.Order = config.Order;
+                    entities.SaveChanges();
+                    return "ok";
+
+                }
+                return "not_exists";
             }
-            return "not_exists";
+            
         }
 
         public string Insert(MenuConfig config)
         {
-            var menuConfig = (from item in _entities.MenuConfig
-                              where item.Name == config.Name
-                              select item
+            using (var entities = new V308CMSEntities())
+            {
+                var menuConfig = (from item in entities.MenuConfig
+                                  where item.Name == config.Name
+                                  select item
                 ).FirstOrDefault();
-            if (menuConfig == null) { 
-          
-                _entities.MenuConfig.Add(config);
-                _entities.SaveChanges();
-                return "ok";
+                if (menuConfig == null)
+                {
+
+                    entities.MenuConfig.Add(config);
+                    entities.SaveChanges();
+                    return "ok";
+                }
+                return "exists";
             }
-            return "exists";
+            
         }
 
        
@@ -88,59 +105,75 @@ namespace V308CMS.Respository
                 DateTime updatedAt
             )
         {
-            var menuConfig = (from item in _entities.MenuConfig
-                               where item.Name == name
-                               select item
-               ).FirstOrDefault();
-            if (menuConfig == null)
+            using (var entities = new V308CMSEntities())
             {
-                var newMenuConfig = new MenuConfig
+                var menuConfig = (from item in entities.MenuConfig
+                                  where item.Name == name
+                                  select item
+               ).FirstOrDefault();
+                if (menuConfig == null)
                 {
-                    Name = name,
-                    Description = description,
-                    Code = code,
-                    Link = link,
-                    State = state,
-                    CreatedAt = createdAt,
-                    UpdatedAt = updatedAt
-                };
-                _entities.MenuConfig.Add(newMenuConfig);
-                _entities.SaveChanges();
-                return "ok";
+                    var newMenuConfig = new MenuConfig
+                    {
+                        Name = name,
+                        Description = description,
+                        Code = code,
+                        Link = link,
+                        State = state,
+                        CreatedAt = createdAt,
+                        UpdatedAt = updatedAt
+                    };
+                    entities.MenuConfig.Add(newMenuConfig);
+                    entities.SaveChanges();
+                    return "ok";
+                }
+                return "exists";
             }
-            return "exists";
+            
         }
 
         public List<MenuConfig> GetList(int page = 1, int pageSize = 10)
         {
-            return (from item in _entities.MenuConfig
-                    orderby item.CreatedAt descending
-                    select item
+            using (var entities = new V308CMSEntities())
+            {
+                return (from item in entities.MenuConfig
+                        orderby item.CreatedAt descending
+                        select item
                 ).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            }
+            
         }
         public List<MenuConfig> GetAll()
         {
-            return (from item in _entities.MenuConfig
-                orderby item.Order
-                select item
-                ).ToList();
+            using (var entities = new V308CMSEntities())
+            {
+                return (from item in entities.MenuConfig
+                        orderby item.Order
+                        select item
+               ).ToList();
+            }
+           
         }
 
 
         public string ChangeState(int id)
         {
-            var menuConfig = (from item in _entities.MenuConfig
-                               where item.Id == id
-                               select item
-                  ).FirstOrDefault();
-            if (menuConfig != null)
+            using (var entities = new V308CMSEntities())
             {
-                menuConfig.State = (byte)(menuConfig.State == 1 ? 0 : 1);
-                _entities.SaveChanges();
-                return "ok";
+                var menuConfig = (from item in entities.MenuConfig
+                                  where item.Id == id
+                                  select item
+                  ).FirstOrDefault();
+                if (menuConfig != null)
+                {
+                    menuConfig.State = (byte)(menuConfig.State == 1 ? 0 : 1);
+                    entities.SaveChanges();
+                    return "ok";
 
+                }
+                return "not_exists";
             }
-            return "not_exists";
+            
         }
     }
 }

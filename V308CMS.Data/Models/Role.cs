@@ -20,5 +20,7 @@ namespace V308CMS.Data.Models
         public byte Status { get; set; }
 
         public virtual  ICollection<Permission> Permissions { get; set; }
+
+        public virtual ICollection<Admin> AdminAccounts { get; set; }
     }
 }

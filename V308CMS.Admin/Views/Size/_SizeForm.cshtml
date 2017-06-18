@@ -1,0 +1,21 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@model  V308CMS.Admin.Models.SizeModels
+@Html.HiddenFor(country => Model.Id)
+@Html.AntiForgeryToken()
+<div class="row">
+    @Html.ValidationSummary(true)
+    <div class="col-lg-6">
+        <div class="form-group">
+            @Html.LabelFor(size => Model.Name)
+            @Html.TextBoxFor(size => Model.Name, new {@class = "form-control", placeholder = "Nhập tên kích cỡ"})
+            @Html.ValidationMessageFor(size => size.Name)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(size => Model.Description)
+            @Html.TextBoxFor(size => Model.Description, new {@class = "form-control", placeholder = "Nhập Mô tả kích cỡ"})
+            @Html.ValidationMessageFor(size => Model.Description)
+        </div>
+        @Html.Partial("UI/_FormAction")
+        <a href="@Url.SizeIndexUrl()" title="Danh sách Kích cỡ" class="btn btn-link">Danh sách</a>
+    </div>
+</div>

@@ -1,0 +1,13 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@model V308CMS.Admin.Models.ProductUnitModels
+@{
+    ViewBag.Title = "Thêm mới Đơn vị tính";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+<div class="panel panel-primary">
+    <div class="panel-body">
+        <form method="post" role="form" action="@Url.ProductUnitCreateUrl()">
+            @Html.Partial("_UnitForm", Model)
+        </form>
+    </div>
+</div>

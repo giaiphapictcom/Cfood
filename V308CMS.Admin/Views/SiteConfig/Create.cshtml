@@ -1,0 +1,16 @@
+﻿@model V308CMS.Admin.Models.SiteConfigModels
+@using V308CMS.Admin.Helpers.Url
+@{
+    ViewBag.Title = "Thêm mới cấu hình";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+
+<div class="panel panel-primary">
+    <div class="panel-body">
+        <form method="post" role="form" action="@Url.SiteConfigCreateUrl()">
+           @Html.Partial("_SiteConfigForm", Model)
+        </form>
+        <!-- /.row (nested) -->
+    </div>
+
+</div>

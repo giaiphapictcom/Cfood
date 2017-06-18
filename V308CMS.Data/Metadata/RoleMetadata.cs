@@ -15,6 +15,7 @@ namespace V308CMS.Data.Metadata
         public string Name { get; set; }
         [MaxLength(500)]
         public string Description { get; set; }
+      
 
     }
 }

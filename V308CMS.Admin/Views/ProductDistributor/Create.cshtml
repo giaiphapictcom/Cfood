@@ -1,0 +1,13 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@model V308CMS.Admin.Models.ProductDistributorModels
+@{
+    ViewBag.Title = "Thêm mới Nhà cung cấp";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+<div class="panel panel-primary">
+    <div class="panel-body">
+        <form method="post" role="form" action="@Url.ProductDistributorCreateUrl()">
+            @Html.Partial("_ProductDistributorForm", Model)
+        </form>
+    </div>
+</div>

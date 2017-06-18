@@ -1,0 +1,15 @@
+﻿@model V308CMS.Admin.Models.EmailConfigModels
+@using V308CMS.Admin.Helpers.Url
+@{
+    ViewBag.Title = "Thêm mới cấu hình Email";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+
+<div class="panel panel-primary">
+    <div class="panel-body">
+        <form method="post" role="form" action="@Url.EmailConfigCreateUrl()">
+           @Html.Partial("_EmailConfigForm",Model)
+        </form>     
+    </div>
+
+</div>

@@ -20,6 +20,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -107,6 +108,7 @@
     <Compile Include="AppSetting.cs" />
     <Compile Include="AuthorizeAttribute.cs" />
     <Compile Include="Base64Helper.cs" />
+    <Compile Include="CloneObjectHelper.cs" />
     <Compile Include="Configs.cs" />
     <Compile Include="ConverterUlti.cs" />
     <Compile Include="CookieClass.cs" />
@@ -119,6 +121,7 @@
     <Compile Include="FilterChat.cs" />
     <Compile Include="ImageHelper.cs" />
     <Compile Include="ListExtensions.cs" />
+    <Compile Include="ObjectHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RamdomUltis.cs" />
     <Compile Include="StringClearFormat.cs" />

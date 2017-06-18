@@ -1,0 +1,14 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@model V308CMS.Admin.Models.NewsCategoryModels
+@{
+    ViewBag.Title = "Cập nhật chuyên mục Tin tức";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+<div class="panel panel-primary">
+    <div class="panel-body">
+        <form method="post" role="form" action="@Url.NewsCategoryEditUrl()">
+            @Html.Partial("_NewsCategoryForm", Model)
+        </form>
+    </div>
+
+</div>

@@ -1,0 +1,14 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@model V308CMS.Admin.Models.ContactModels
+@{
+    ViewBag.Title = "Cập nhật thông tin liên hệ";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+<div class="panel panel-primary">
+    <div class="panel-body">
+        <form method="post" role="form" action="@Url.ContactEditUrl()">
+            @Html.Partial("_ContactForm", Model)
+        </form>
+    </div>
+
+</div>

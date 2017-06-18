@@ -8,12 +8,10 @@ namespace V308CMS.Data.Metadata
         [Required]
         public int Id { get; set; }
         [Required]
-        public int GroupId { get; set; }
-
-        [Required]
         [MaxLength(50)]
-        public string Action { get; set; }
+        public string GroupPermission { get; set; }
         [Required]
         public int Value { get; set; }
+        public int RoleId { get; set; }
     }
 }

@@ -53,10 +53,10 @@ namespace V308CMS.Data
         private DateTime? _Date;
         private string _Salt;
         private string _Token;
-        private DateTime _TokenExpireDate;
+        private DateTime? _TokenExpireDate;
 
         private string _ForgotPasswordToken;
-        private DateTime __ForgotPasswordTokenExpireDate;
+        private DateTime? __ForgotPasswordTokenExpireDate;
 
         #endregion
         #region[Public Properties]
@@ -76,9 +76,9 @@ namespace V308CMS.Data
         public DateTime? Date { get { if (_Date == null) return new DateTime(); else return _Date; } set { if (_Date != value) { _Date = value; } } }     
         public string Salt { get { if (String.IsNullOrEmpty(_Salt)) return ""; else return _Salt; } set { _Salt = value; } }
         public string Token { get { if (String.IsNullOrEmpty(_Token)) return ""; else return _Token; } set { _Token = value; } }
-        public DateTime TokenExpireDate { get { if (_TokenExpireDate == null) return new DateTime(); else return _TokenExpireDate; } set { if (_TokenExpireDate != value) { _TokenExpireDate = value; } } }
+        public DateTime? TokenExpireDate { get { if (_TokenExpireDate == null) return new DateTime(); else return _TokenExpireDate; } set { if (_TokenExpireDate != value) { _TokenExpireDate = value; } } }
         public string ForgotPasswordToken { get { if (String.IsNullOrEmpty(_ForgotPasswordToken)) return ""; else return _ForgotPasswordToken; } set { _ForgotPasswordToken = value; } }
-        public DateTime ForgotPasswordTokenExpireDate { get { if (__ForgotPasswordTokenExpireDate == null) return new DateTime(); else return __ForgotPasswordTokenExpireDate; } set { if (__ForgotPasswordTokenExpireDate != value) { __ForgotPasswordTokenExpireDate = value; } } }
+        public DateTime? ForgotPasswordTokenExpireDate { get { if (__ForgotPasswordTokenExpireDate == null) return new DateTime(); else return __ForgotPasswordTokenExpireDate; } set { if (__ForgotPasswordTokenExpireDate != value) { __ForgotPasswordTokenExpireDate = value; } } }
 
 
         #endregion
@@ -223,20 +223,16 @@ namespace V308CMS.Data
         public string Email { get { if (String.IsNullOrEmpty(_Email)) return ""; else return _Email; } set { _Email = value; } }
         public string FullName { get { if (String.IsNullOrEmpty(_FullName)) return ""; else return _FullName; } set { _FullName = value; } }
         public bool? OrderRequest { get { if (_OrderRequest == null) return false; else return _OrderRequest; } set { if (_OrderRequest != value) { _OrderRequest = value; } } }
-        //public int? Role { get { if (_Role == null || _Role < 0) return 0; else return _Role; } set { if (_Role != value) { if (_Role < 0) _Role = 0; else _Role = value; } } }
-        public int? Role { get { return int.Parse(_Role.ToString()); } set { _Role = value; } }
+       
+        public int? Role { get { return _Role; } set { _Role = value; } }
         public DateTime? Date { get { if (_Date == null) return new DateTime(); else return _Date; } set { if (_Date != value) { _Date = value; } } }
         public bool? Status { get { if (_Status == null) return false; else return _Status; } set { if (_Status != value) { _Status = value; } } }
-        public bool? PSanPham { get { if (_PSanPham == null) return false; else return _PSanPham; } set { if (_PSanPham != value) { _PSanPham = value; } } }
-        public bool? PTinTuc { get { if (_PTinTuc == null) return false; else return _PTinTuc; } set { if (_PTinTuc != value) { _PTinTuc = value; } } }
-        public bool? PKhachHang { get { if (_PKhachHang == null) return false; else return _PKhachHang; } set { if (_PKhachHang != value) { _PKhachHang = value; } } }
-        public bool? PHinhAnh { get { if (_PHinhAnh == null) return false; else return _PHinhAnh; } set { if (_PHinhAnh != value) { _PHinhAnh = value; } } }
-        public bool? PFileUpload { get { if (_PFileUpload == null) return false; else return _PFileUpload; } set { if (_PFileUpload != value) { _PFileUpload = value; } } }
-        public bool? PTaiKhoan { get { if (_PTaiKhoan == null) return false; else return _PTaiKhoan; } set { if (_PTaiKhoan != value) { _PTaiKhoan = value; } } }
-        public bool? PHeThong { get { if (_PHeThong == null) return false; else return _PHeThong; } set { if (_PHeThong != value) { _PHeThong = value; } } }
-        public bool? PThungRac { get { if (_PThungRac == null) return false; else return _PThungRac; } set { if (_PThungRac != value) { _PThungRac = value; } } }
+       
 
         public Byte? Type { get { return Byte.Parse(_Type.ToString()); } set { _Type = value; } }
+        public string Avatar { get; set; }
+        [ForeignKey("Role")]
+        public Role RoleInfo { get; set; }
 
         #endregion
 
@@ -592,6 +588,7 @@ namespace V308CMS.Data
         private bool? _Slider;
         private bool? _Hot;
         private bool? _Fast;
+        
         #endregion
         #region[Public Properties]
         [Key]
@@ -611,6 +608,7 @@ namespace V308CMS.Data
         public bool? Slider { get { if (_Slider == null) return false; else return _Slider; } set { if (_Slider != value) { _Slider = value; } } }
         public bool? Hot { get { if (_Hot == null) return false; else return _Hot; } set { if (_Hot != value) { _Hot = value; } } }
         public bool? Fast { get { if (_Fast == null) return false; else return _Fast; } set { if (_Fast != value) { _Fast = value; } } }
+        public  byte Site { get; set; }
         [ForeignKey("TypeID")]
         [Required]
         public virtual NewsGroups NewsGroup { get; set; }
@@ -1190,6 +1188,8 @@ namespace V308CMS.Data
         private string _Level;
         private string _ImageBanner;
         private string _TypeBanner;
+        private bool _IsHome;
+
         #endregion
         #region[Public Properties]
         [Key]
@@ -1208,6 +1208,12 @@ namespace V308CMS.Data
         public string TypeBanner { get { if (String.IsNullOrEmpty(_TypeBanner)) return ""; else return _TypeBanner; } set { _TypeBanner = value; } }
         public string Icon { get { if (String.IsNullOrEmpty(_Icon)) return ""; else return _Icon; } set { _Icon = value; } }
         public string ColorTheme { get { if (String.IsNullOrEmpty(_ColorTheme)) return ""; else return _ColorTheme; } set { _ColorTheme = value; } }
+
+        public bool IsHome
+        {
+            get { return _IsHome; }
+            set { _IsHome = value; }
+        }
 
         public virtual ICollection<Product> ListProduct { get; set; }
         public virtual ICollection<Brand> ListProductBrand { get; set; }

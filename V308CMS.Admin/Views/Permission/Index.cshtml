@@ -1,0 +1,71 @@
+﻿@using V308CMS.Admin.Helpers
+@using V308CMS.Admin.Helpers.UI
+@using V308CMS.Admin.Helpers.Url
+@using V308CMS.Admin.Models.UI
+@model List<V308CMS.Data.Models.Permission>
+@{
+    ViewBag.Title = "Danh sách Quyền";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+@Html.Partial("UI/_AddNewButton", Url.PermissionCreateUrl())
+@if (Model.Any())
+{<div class="panel panel-default">
+        <div class="panel-body">
+            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Quyền</th>
+                        <th>Nhóm</th>
+                        <th>Trạng thái</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                        var permission = Model[i];
+                        <tr>
+                            <td style="text-align: center">
+                                @(i + 1)
+                            </td>
+                            <td>
+                                <a title="Cập nhật thông tin Quyề @permission.Action" class="btn btn-link" href="@Url.PermissionEditUrl(new {permission.Id})">
+                                    @permission.Action
+                                </a>
+                            </td>
+                            <td>
+                                @permission.GroupCode
+                            </td>
+                            <td>@permission.Status.ToStateLabelHtml()</td>
+                            <td style="width: 200px">
+                                @Html.Partial("UI/_EditButton", new ButtonModels
+                                {
+                                   Id = string.Format("permission_{0}", permission.Id),
+                                   Href = Url.PermissionEditUrl(new { permission.Id }),
+                                   Title = "Cập nhật thông tin Quyền " + permission.Action
+                                })
+                                @Html.Partial("UI/_DeleteForm", new DeleteFormModels
+                                {
+                                   NameOfId = "Id",
+                                   ValueOfId = permission.Id,
+                                   IsConfirm = true,
+                                   Url = Url.PermissionDeleteUrl()
+                                })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#dataTables-example').DataTable({
+            responsive: true
+        });
+    });
+</script>

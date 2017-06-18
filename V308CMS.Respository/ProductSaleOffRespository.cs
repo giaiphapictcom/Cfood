@@ -9,70 +9,94 @@ namespace V308CMS.Respository
         
     }
 
-    public class ProductSaleOffRespository: IBaseRespository<ProductSaleOff>, IProductAttributeRespository
+    public class ProductSaleOffRespository: IBaseRespository<ProductSaleOff>, IProductSaleOffRespository
     {
-        private readonly V308CMSEntities _entities;
-        public ProductSaleOffRespository(V308CMSEntities entities)
+        
+        public ProductSaleOffRespository()
         {
-            _entities = entities;
+           
         }
         public ProductSaleOff Find(int id)
         {
-            return (from sale in _entities.ProductSaleOff
-                    where sale.ID == id
-                    select sale).FirstOrDefault();
+            using (var entities = new V308CMSEntities())
+            {
+                return (from sale in entities.ProductSaleOff
+                        where sale.ID == id
+                        select sale).FirstOrDefault();
+            }
+            
         }
 
         public string Delete(int id)
         {
-            var saleItem = (from sale in _entities.ProductSaleOff
-                            where sale.ID == id
-                                 select sale).FirstOrDefault();
-            if (saleItem != null)
+            using (var entities = new V308CMSEntities())
             {
-                _entities.ProductSaleOff.Remove(saleItem);
-                _entities.SaveChanges();
-                return "ok";
+                var saleItem = (from sale in entities.ProductSaleOff
+                                where sale.ID == id
+                                select sale).FirstOrDefault();
+                if (saleItem != null)
+                {
+                    entities.ProductSaleOff.Remove(saleItem);
+                    entities.SaveChanges();
+                    return "ok";
+                }
+                return "not_exists";
             }
-            return "not_exists";
+            
         }
 
         public string Update(ProductSaleOff data)
         {
-            var saleItem = (from sale in _entities.ProductSaleOff
-                                 where sale.ID == data.ID
-                                 select sale).FirstOrDefault();
-            if (saleItem != null)
+            using (var entities = new V308CMSEntities())
             {
+                var saleItem = (from sale in entities.ProductSaleOff
+                                where sale.ID == data.ID
+                                select sale).FirstOrDefault();
+                if (saleItem != null)
+                {
 
-                saleItem.ProductID = data.ProductID;
-                saleItem.StartTime = data.StartTime;
-                saleItem.EndTime = data.EndTime;               
-                saleItem.Percent = data.Percent;
-                _entities.SaveChanges();
-                return "ok";
+                    saleItem.ProductID = data.ProductID;
+                    saleItem.StartTime = data.StartTime;
+                    saleItem.EndTime = data.EndTime;
+                    saleItem.Percent = data.Percent;
+                    entities.SaveChanges();
+                    return "ok";
+                }
+                return "not_exists";
             }
-            return "not_exists";
+            
         }
 
         public string Insert(ProductSaleOff data)
         {
-            _entities.ProductSaleOff.Add(data);
-            _entities.SaveChanges();
-            return "ok";
+            using (var entities = new V308CMSEntities())
+            {
+                entities.ProductSaleOff.Add(data);
+                entities.SaveChanges();
+                return "ok";
+            }
+            
         }
         public List<ProductSaleOff> GetAllByProductId(int productId)
         {
-            return (from sale in _entities.ProductSaleOff
-                    where sale.ProductID == productId
-                    orderby sale.ID descending
-                    select sale).ToList();
+            using (var entities = new V308CMSEntities())
+            {
+                return (from sale in entities.ProductSaleOff
+                        where sale.ProductID == productId
+                        orderby sale.ID descending
+                        select sale).ToList();
+            }
+            
         }
         public List<ProductSaleOff> GetAll()
         {
-            return (from sale in _entities.ProductSaleOff
-                    orderby sale.ID descending
-                    select sale).ToList();
+            using (var entities = new V308CMSEntities())
+            {
+                return (from sale in entities.ProductSaleOff
+                        orderby sale.ID descending
+                        select sale).ToList();
+            }
+         
         }
     }
 }

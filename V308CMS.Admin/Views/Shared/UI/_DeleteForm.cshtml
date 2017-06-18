@@ -1,0 +1,14 @@
+﻿@model V308CMS.Admin.Models.UI.DeleteFormModels
+<form method="post" action="@Model.Url" style="display: inline-block;">
+    @Html.Hidden(Model.NameOfId, Model.ValueOfId)
+    @if (Model.IsConfirm){
+        <button title="Xóa mục này" name="btnDelete" onclick="return confirm('Bạn muốn xóa mục này ?');" style="margin-left: 5px;" type="submit" class="btn btn-circle btn-danger">
+            <i class="fa fa-trash"></i>
+        </button>
+    }
+    else{
+        <button title="Xóa mục này" name="btnDelete" style="margin-left: 5px;" type="submit" class="btn btn-circle btn-danger">
+            <i class="fa fa-trash"></i>
+        </button>
+    }
+</form>

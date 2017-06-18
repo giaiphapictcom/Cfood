@@ -1,0 +1,52 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@using V308CMS.Admin.Models.UI
+@model  V308CMS.Admin.Models.ProductBrandModels
+@{
+    var listState = (List<SelectListItem>)ViewBag.ListState;
+    var listCategory = (List<MutilCategoryItem>)ViewBag.ListCategory;
+}
+@Html.HiddenFor(menu => Model.Id)
+@Html.AntiForgeryToken()
+<div class="row">
+    @Html.ValidationSummary(true)
+    <div class="col-lg-6">
+        <div class="form-group">
+            @Html.LabelFor(brand => brand.Name)
+            @Html.TextBoxFor(brand => brand.Name, new { @class = "form-control", placeholder = "Nhập tên" })
+            @Html.ValidationMessageFor(brand => brand.Name)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(brand => brand.CategoryId)
+            @Html.Partial("UI/_MutilDropDownlist", new MutilDropDownlistModels
+           {
+               Name = "CategoryId",
+               Data = listCategory,
+               PlaceHolder = "Chọn loại sản phẩm",
+               ParentId = Model.CategoryId
+
+           })
+            @Html.ValidationMessageFor(brand => brand.CategoryId)
+        </div>
+        @Html.Partial("UI/_ImageSelectPreview", new ImageSelectPreviewModels
+        {
+           Id = Model.Id,
+           Name = "Image",
+           ImageUrl = Model.ImageUrl,
+           ImageUrlHiddenName = "ImageUrl"
+        })
+        
+        <div class="form-group">
+            @Html.LabelFor(brand => brand.Status)
+            @Html.DropDownListFor(brand => brand.Status, listState, new
+           {
+               @class = "form-control",
+               placeholder = "Trạng thái"
+           })
+            @Html.ValidationMessageFor(brand => brand.Status)
+        </div>
+
+        @Html.Partial("UI/_FormAction")
+        <a href="@Url.ProductBrandIndexUrl()" title="Danh sách Thương hiệu" class="btn btn-link">Danh sách</a>
+
+    </div>
+</div>
