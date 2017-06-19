@@ -15,14 +15,14 @@ namespace V308CMS.Admin.Controllers
             return View("Index");
         }
 
-        public ActionResult Create()
+        public ActionResult Send()
         {
-            return View("Create");
+            return View("Send");
         }
 
-        public ActionResult OnCreate()
+        public ActionResult OnSend()
         {
-            return View("Create");
+            return View("Send");
         }
 
         public ActionResult Detail(int id)
