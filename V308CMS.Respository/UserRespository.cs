@@ -12,10 +12,16 @@ namespace V308CMS.Respository {
             );
 
         string ChangeStatus(int id);
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 =======
         int Count();
+>>>>>>> toai-neal
+=======
+        
+        int Count();
+        List<Account> Take(int count = 10);
 >>>>>>> toai-neal
     }
 
@@ -224,6 +230,16 @@ namespace V308CMS.Respository {
             using (var entities = new V308CMSEntities())
             {
                 return entities.Account.Count();
+            }
+        }
+
+        public List<Account> Take(int count = 10)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return (from user in entities.Account
+                        orderby user.Date.Value descending
+                        select user).Take(count).ToList();
             }
         }
     }

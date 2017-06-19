@@ -1,12 +1,17 @@
-﻿<div class="box box-info">
+﻿@using V308CMS.Admin.Helpers
+@using V308CMS.Admin.Helpers.Url
+@using V308CMS.Common
+@model List<V308CMS.Data.Contact>
+<div class="box box-info">
     <div class="box-header with-border">
         <h3 class="box-title">
             <i class="fa fa-book"></i>
             Liên hệ
-            <a href="/Admin/Order/List" class="btn btn-xs btn-info btn-flat margin-l-10">Xem thêm</a>
+            <a href="@Url.ContactIndexUrl()" class="btn btn-xs btn-info btn-flat margin-l-10">Xem thêm</a>
         </h3>
     </div>
-    <div class="box-body" style="display: block;">
+    @if (Model.Any())
+    {<div class="box-body" style="display: block;">
         <div class="k-grid k-widget">
             <table>
                 <colgroup>
@@ -28,128 +33,27 @@
                     </tr>
                 </thead>
                 <tbody>
+                @for (int i = 0, total = Model.Count; i < total; i++)
+                {
+                    var contact = Model[i];
                     <tr>
-                        <td>9</td>
-                        <td>toaihv@gmail.com</td>
-                        <td>0939220986</td>
-                        <td>Mp start</td>
-                        <td>3/13/2017 6:20:10 PM</td>
+                        <td>@(i+1)</td>
+                        <td>@contact.Email</td>
+                        <td>@contact.Phone</td>
+                        <td>@contact.Message.ToTitle()</td>
+                        <td>@contact.CreatedDate.ToDdmmyyyy()</td>
                         <td style="text-align: center" role="gridcell">
-                            <a class="btn btn-xs btn-default" href="/Admin/Order/Edit/5">
+                            <a class="btn btn-xs btn-default" href="@Url.ContactEditUrl(new {id = contact.ID})">
                                 <i class="fa fa-eye"></i>Chi tiết
                             </a>
                         </td>
                     </tr>
-                    <tr>
-                        <td>9</td>
-                        <td>toaihv@gmail.com</td>
-                        <td>0939220986</td>
-                        <td>Mp start</td>
-                        <td>3/13/2017 6:20:10 PM</td>
-                        <td style="text-align: center" role="gridcell">
-                            <a class="btn btn-xs btn-default" href="/Admin/Order/Edit/5">
-                                <i class="fa fa-eye"></i>Chi tiết
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>9</td>
-                        <td>toaihv@gmail.com</td>
-                        <td>0939220986</td>
-                        <td>Mp start</td>
-                        <td>3/13/2017 6:20:10 PM</td>
-                        <td style="text-align: center" role="gridcell">
-                            <a class="btn btn-xs btn-default" href="/Admin/Order/Edit/5">
-                                <i class="fa fa-eye"></i>Chi tiết
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>9</td>
-                        <td>toaihv@gmail.com</td>
-                        <td>0939220986</td>
-                        <td>Mp start</td>
-                        <td>3/13/2017 6:20:10 PM</td>
-                        <td style="text-align: center" role="gridcell">
-                            <a class="btn btn-xs btn-default" href="/Admin/Order/Edit/5">
-                                <i class="fa fa-eye"></i>Chi tiết
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>9</td>
-                        <td>toaihv@gmail.com</td>
-                        <td>0939220986</td>
-                        <td>Mp start</td>
-                        <td>3/13/2017 6:20:10 PM</td>
-                        <td style="text-align: center" role="gridcell">
-                            <a class="btn btn-xs btn-default" href="/Admin/Order/Edit/5">
-                                <i class="fa fa-eye"></i>Chi tiết
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>9</td>
-                        <td>toaihv@gmail.com</td>
-                        <td>0939220986</td>
-                        <td>Mp start</td>
-                        <td>3/13/2017 6:20:10 PM</td>
-                        <td style="text-align: center" role="gridcell">
-                            <a class="btn btn-xs btn-default" href="/Admin/Order/Edit/5">
-                                <i class="fa fa-eye"></i>Chi tiết
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>9</td>
-                        <td>toaihv@gmail.com</td>
-                        <td>0939220986</td>
-                        <td>Mp start</td>
-                        <td>3/13/2017 6:20:10 PM</td>
-                        <td style="text-align: center" role="gridcell">
-                            <a class="btn btn-xs btn-default" href="/Admin/Order/Edit/5">
-                                <i class="fa fa-eye"></i>Chi tiết
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>9</td>
-                        <td>toaihv@gmail.com</td>
-                        <td>0939220986</td>
-                        <td>Mp start</td>
-                        <td>3/13/2017 6:20:10 PM</td>
-                        <td style="text-align: center" role="gridcell">
-                            <a class="btn btn-xs btn-default" href="/Admin/Order/Edit/5">
-                                <i class="fa fa-eye"></i>Chi tiết
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>9</td>
-                        <td>toaihv@gmail.com</td>
-                        <td>0939220986</td>
-                        <td>Mp start</td>
-                        <td>3/13/2017 6:20:10 PM</td>
-                        <td style="text-align: center" role="gridcell">
-                            <a class="btn btn-xs btn-default" href="/Admin/Order/Edit/5">
-                                <i class="fa fa-eye"></i>Chi tiết
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>9</td>
-                        <td>toaihv@gmail.com</td>
-                        <td>0939220986</td>
-                        <td>Mp start</td>
-                        <td>3/13/2017 6:20:10 PM</td>
-                        <td style="text-align: center" role="gridcell">
-                            <a class="btn btn-xs btn-default" href="/Admin/Order/Edit/5">
-                                <i class="fa fa-eye"></i>Chi tiết
-                            </a>
-                        </td>
-                    </tr>
+                }
                 </tbody>
             </table>
         </div>
     </div>
+
+    }
+    
 </div>

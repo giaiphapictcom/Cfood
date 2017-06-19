@@ -4,6 +4,12 @@ namespace V308CMS.Admin.Helpers.Url
 {
     public static class UserUrlHelper
     {
+
+        public static string UserIndexUrl(string controller = "user",
+             string action = "index")
+        {
+            return string.Format("/{0}/{1}", controller, action);
+        }
         public static string UserIndexUrl(this UrlHelper helper, object routeValue = null, string controller = "user",
              string action = "index")
         {
