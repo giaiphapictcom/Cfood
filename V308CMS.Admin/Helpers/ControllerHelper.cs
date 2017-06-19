@@ -104,6 +104,30 @@ namespace V308CMS.Admin.Helpers {
             .IsAssignableFrom(type))
             .ToList();
 
+        public static int GetActionIndex(string controller, string action)
+        {
+            var fullControllerName = (controller + "controller").ToLower();
+            var listAction = ListControllers
+                .Where(item => item.Name.ToLower() == fullControllerName)
+                .SelectMany(
+                    item => item.GetMethods(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public))
+               .ToList();
+            if (listAction.Count > 0)
+            {
+                var actionCheck = listAction.FirstOrDefault(actionMethod => actionMethod.Name == action);
+                if (actionCheck != null)
+                {
+                    var checkPermissionAttr = actionCheck.GetCustomAttributes<CheckPermissionAttribute>().FirstOrDefault();
+                    if (checkPermissionAttr == null)
+                    {
+                        return -1;
+                    }
+                    return checkPermissionAttr.Index;
+                }
+                return -1;
+            }
+            return -1;
+        }
         public static List<SelectListItem> GetListActionByController(string controller, string prefix = "On")
         {
             var fullControllerName = (controller + "controller").ToLower();

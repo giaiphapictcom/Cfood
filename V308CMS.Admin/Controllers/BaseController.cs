@@ -14,11 +14,9 @@ namespace V308CMS.Admin.Controllers
         protected BaseController()
         {                      
             NewsService = new NewsRepository();
-            AccountService = new AccountRepository();
-                               
-            ContactService = new ContactRepository();
-          
             NewsGroupService = new NewsGroupRepository();
+            AccountService = new AccountRepository();             
+            ContactService = new ContactRepository();          
             ProductTypeService = new Respository.ProductTypeRepository();
             SiteConfigService = new SiteConfigRespository();
             EmailConfigService= new EmailConfigRepository();
@@ -42,6 +40,8 @@ namespace V308CMS.Admin.Controllers
             ProductService = new ProductRespository();
             AdminAccountService = new AdminRespository();
             BannerService = new BannerRespository();
+           
+          
         }
         public BannerRespository BannerService { get; set; }
         public AdminRespository AdminAccountService { get; set; }
