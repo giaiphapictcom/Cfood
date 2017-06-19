@@ -1,154 +1,98 @@
-﻿using System.Web.Mvc;
+﻿﻿using System.Web.Mvc;
+using V308CMS.Admin.Attributes;
+using V308CMS.Admin.Helpers;
 using V308CMS.Data;
+using V308CMS.Respository;
 
 namespace V308CMS.Admin.Controllers
 {
+    [CheckGroupPermission(false)]
     public abstract class BaseController : Controller
     {
-        private static V308CMSEntities _mEntities;
-        private static V308CMSEntities EnsureV308CmsEntitiesNotNull()
-        {
-            return _mEntities ?? (_mEntities = new V308CMSEntities());
-        }
-
-        private readonly ProductRepository _productService;
-        private readonly NewsRepository _newsService;
-        private readonly AccountRepository _accountService;
-        private readonly FileRepository _fileService;
-        private readonly IProductWishlistRepositry _productWishlistService;
-        private readonly ImagesRepository _imagesRepository;
-        private readonly MarketRepository _marketRepository;
-        private readonly IContactRepository _contactRepository;
-        private readonly SupportRepository _supportRepository;
-        private readonly INewsGroupRepository _newsGroupRepository;
-        private readonly IProductTypeRepository _productTypeRepository;
-        private readonly ISiteConfigRespository _siteConfigRepository;
+        protected virtual new CustomPrincipal User => HttpContext.User as CustomPrincipal;
 
         protected BaseController()
-        {
-            _mEntities = EnsureV308CmsEntitiesNotNull();
-            _productService = new ProductRepository(_mEntities);
-            _newsService = new NewsRepository(_mEntities);
+        {                      
+            NewsService = new NewsRepository();
+            NewsGroupService = new NewsGroupRepository();
+            AccountService = new AccountRepository();             
+            ContactService = new ContactRepository();          
+            ProductTypeService = new Respository.ProductTypeRepository();
+            SiteConfigService = new SiteConfigRespository();
+            EmailConfigService= new EmailConfigRepository();
+            MenuConfigService = new MenuConfigRespository();
+            ProductBrandService = new ProductBrandRespository();
+            ProductManufacturerService = new ProductManufacturerRespository();
+            ProductDistributorService = new ProductDistributorRespository();
+            ProductStoreService = new StoreRespository();
+            UnitService = new UnitRespository();
+            ColorService = new ColorRespository();
+            CountryService = new CountryRespository();
+            SizeService =  new SizeRespository();
+            ProductAttributeService = new ProductAttributeRespository();
+            ProductImageService = new ProductImageRespository();
+            UserService = new UserRespository();
+            RoleService = new RoleRespository();
+            PermissionService = new PermissionRespository();
+            ProductSizeService = new ProductSizeRespository();
+            ProductColorService = new ProductColorRespository();
+            ProductSaleOffService = new ProductSaleOffRespository();
+            ProductService = new ProductRespository();
+            AdminAccountService = new AdminRespository();
+            BannerService = new BannerRespository();
+           
+          
+        }
+        public BannerRespository BannerService { get; set; }
+        public AdminRespository AdminAccountService { get; set; }
+        public ProductRespository ProductService { get; set; }
+        public ProductSaleOffRespository ProductSaleOffService { get; }
+        public ProductColorRespository ProductColorService { get; }
+        public ProductSizeRespository ProductSizeService { get; }       
+        public ProductDistributorRespository ProductDistributorService { get; }
 
-            _accountService = new AccountRepository(_mEntities);
-            _fileService = new FileRepository(_mEntities);
-            _productWishlistService = new ProductWishlistRepositry(_mEntities);
-            _imagesRepository = new ImagesRepository(_mEntities);
-            _marketRepository = new MarketRepository(_mEntities);
-            _contactRepository = new ContactRepository(_mEntities);
-            _supportRepository = new SupportRepository(_mEntities);
-            _newsGroupRepository = new NewsGroupRepository(_mEntities);
-            _productTypeRepository = new ProductTypeRepository(_mEntities);
-            _siteConfigRepository = new SiteConfigRespository(_mEntities);
-        }
-        public ISiteConfigRespository SiteConfigService
-        {
-            get
-            {
-                EnsureV308CmsEntitiesNotNull();
-                return _siteConfigRepository;
-            }
-        }
-        public IProductTypeRepository ProductTypeService
-        {
-            get
-            {
-                EnsureV308CmsEntitiesNotNull();
-                return _productTypeRepository;
-            }
-        }
-        public INewsGroupRepository NewsGroupService
-        {
-            get
-            {
-                EnsureV308CmsEntitiesNotNull();
-                return _newsGroupRepository;
-            }
-        }
-        protected SupportRepository SupportService
-        {
-            get
-            {
-                EnsureV308CmsEntitiesNotNull();
-                return _supportRepository;
-            }
-        }
-        protected IContactRepository ContactService
-        {
-            get
-            {
-                EnsureV308CmsEntitiesNotNull();
-                return _contactRepository;
-            }
-        }
-        protected V308CMSEntities MpStartEntities
-        {
-            get { return _mEntities; }
-        }
-        protected ImagesRepository ImagesService
-        {
-            get
-            {
-                EnsureV308CmsEntitiesNotNull();
-                return _imagesRepository;
-            }
-        }
-        protected MarketRepository MarketService
-        {
-            get
-            {
-                EnsureV308CmsEntitiesNotNull();
-                return _marketRepository;
-            }
-        }
-        protected NewsRepository NewsService
-        {
-            get
-            {
-                EnsureV308CmsEntitiesNotNull();
-                return _newsService;
-            }
-        }
-        protected IProductWishlistRepositry ProductWishlistService
-        {
-            get
-            {
-                EnsureV308CmsEntitiesNotNull();
-                return _productWishlistService;
-            }
-        }
+        public ProductManufacturerRespository ProductManufacturerService { get; }
 
-        protected ProductRepository ProductsService
-        {
-            get
-            {
-                EnsureV308CmsEntitiesNotNull();
-                return _productService;
-            }
+        public ProductBrandRespository ProductBrandService { get; }
+        public ProductImageRespository ProductImageService { get; }
 
-        }
+        public ProductAttributeRespository ProductAttributeService { get; }
 
-        protected AccountRepository AccountService
-        {
-            get
-            {
-                EnsureV308CmsEntitiesNotNull();
-                return _accountService;
-            }
-        }
-        protected FileRepository FileService
-        {
-            get
-            {
-                EnsureV308CmsEntitiesNotNull();
-                return _fileService;
-            }
-        }
+        public PermissionRespository PermissionService { get; }
+        public RoleRespository RoleService { get; }
+
+        public UserRespository UserService { get; }
+
+        public SizeRespository SizeService { get; }
+
+        public CountryRespository CountryService { get; }
+
+        public ColorRespository ColorService { get; }
+
+        public UnitRespository UnitService { get; }
+
+        public StoreRespository ProductStoreService { get; }
+        public MenuConfigRespository MenuConfigService { get; }
+
+        public EmailConfigRepository EmailConfigService { get; }
+
+        public SiteConfigRespository SiteConfigService { get; }
+
+        public Respository.ProductTypeRepository ProductTypeService { get; }
+
+        public NewsGroupRepository NewsGroupService { get; }
+
+        protected ContactRepository ContactService { get; }
+
+       
+        public NewsRepository NewsService { get; }     
+
+        protected AccountRepository AccountService { get; }
 
         protected object GetState(string name,object value,object defaultValue)
         {
             var controller = ControllerContext.RouteData.Values["controller"].ToString();
-            var sessionName = $"{controller}{name}";
+            var sessionName = string.Format("{0}{1}",controller,name);
             if (value == null){
                 value = Session[sessionName] != null ? Session[sessionName].ToString() : defaultValue;
             }
@@ -161,12 +105,23 @@ namespace V308CMS.Admin.Controllers
         private void SetState(string key, object value)
         {
             Session[key] = value;
-
         }
 
         protected void SetFlashMessage(string message)
         {
             TempData["Message"] = message;
+        }
+
+        protected void AddViewData(params dynamic[] data )
+        {
+            if (data != null && data.Length > 0)
+            {
+                for (int i = 0; i < data.Length; i+=2)
+                {
+                    ViewData[data[i]] = data[i+1];
+                }
+            }
+            
         }
     }
 }

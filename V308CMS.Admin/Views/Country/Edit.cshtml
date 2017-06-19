@@ -1,0 +1,13 @@
+﻿@model V308CMS.Admin.Models.CountryModels
+@using V308CMS.Admin.Helpers.Url
+@{
+    ViewBag.Title = "Sửa Quốc gia";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+<div class="panel panel-primary">
+    <div class="panel-body">
+        <form method="post" role="form" action="@Url.CountryEditUrl()">
+            @Html.Partial("_CountryForm", Model)
+        </form>       
+    </div>
+</div>

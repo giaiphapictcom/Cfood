@@ -1,101 +1,126 @@
-﻿using System;
 using System.Web.Mvc;
+using V308CMS.Admin.Attributes;
+using V308CMS.Admin.Helpers;
+using V308CMS.Admin.Helpers.Url;
 using V308CMS.Admin.Models;
 using V308CMS.Common;
-using V308CMS.Data;
 
 namespace V308CMS.Admin.Controllers
 {
-    [CustomAuthorize]
+    [Authorize]
+    [CheckGroupPermission(true, "Nhà sản xuất")]
     public class ProductManufacturerController : BaseController
-    {
-        #region NHA SAN XUAT
-     
-        [CheckAdminAuthorize(1)]
-        public ActionResult Index(int? pPage)
-        {           
-            ProductPage mProductPage = new ProductPage();
-            if (pPage == null)
-            {
-                if (Session["NhaSanXuatPage"] != null)
-                    pPage = (int)Session["NhaSanXuatPage"];
-                else
-                    pPage = 1;
-            }
-            else
-            {
-                Session["NhaSanXuatPage"] = pPage;
-            }
-            #endregion
-            /*Lay danh sach cac tin theo page*/
-            var mProductManufacturer = ProductsService.LayProductManufacturerTheoTrang((int)pPage, 10);
-            if (mProductManufacturer.Count < 10)
-                mProductPage.IsEnd = true;
-            //Tao Html cho danh sach tin nay
-            mProductPage.Html = V308HTMLHELPER.TaoDanhSachProductManufacturer(mProductManufacturer, (int)pPage);
-            mProductPage.Page = (int)pPage;
-            return View("Index", mProductPage);
+    {        
+        [CheckPermission(0, "Danh sách")]
+        public ActionResult Index()
+        {
+            var data = ProductManufacturerService.GetAll();
+            return View("Index", data);
         }       
-        [CheckAdminJson(1)]
-        [HttpPost]      
-        public JsonResult OnDelete(int pId = 0)
-        {            
-            var mProductManufacturer = ProductsService.LayProductManufacturerTheoId(pId);
-            if (mProductManufacturer != null)
-            {
-                MpStartEntities.DeleteObject(mProductManufacturer);
-                MpStartEntities.SaveChanges();
-                return Json(new { code = 1, message = "Xóa thành công!" });
-            }
-            return Json(new { code = 0, message = "Không tìm thấy tin cần xóa." });
-        }       
-        [CheckAdminAuthorize(1)]
+        [CheckPermission(1, "Thêm mới")]
         public ActionResult Create()
-        {
-            return View("Create");
+        {          
+            var manufacturer = new ProductManufacturerModels();
+            return View("Create", manufacturer);
         }
-        [HttpPost]     
-        [CheckAdminJson(1)]
-        [ValidateInput(false)]      
-        public JsonResult OnCreate(string pTieuDe, int? pUuTien, string pSummary, string pUrlImage)
+        [HttpPost]
+        [CheckPermission(1, "Thêm mới")]
+        [ActionName("Create")]
+        [ValidateAntiForgeryToken]       
+        public ActionResult OnCreate(ProductManufacturerModels manufacturer)
         {
-            var mProductManufacturer = new ProductManufacturer() { Date = DateTime.Now, Number = pUuTien, Name = pTieuDe, Detail = pSummary, Image = pUrlImage, Status = true, Visible = true };
-            MpStartEntities.AddToProductManufacturer(mProductManufacturer);
-            MpStartEntities.SaveChanges();
-            return Json(new { code = 1, message = "Lưu loại ảnh thành công." });
+            if (ModelState.IsValid)
+            {
+                manufacturer.ImageUrl = manufacturer.Image != null ?
+                    manufacturer.Image.Upload() :
+                    manufacturer.ImageUrl;
+                var result = ProductManufacturerService.Insert
+                    (
+                        manufacturer.Name,manufacturer.ImageUrl,
+                        manufacturer.Detail,manufacturer.Status,
+                        manufacturer.Order,manufacturer.CreatedDate
+                    );
+                if (result == Result.Exists)
+                {
+                    ModelState.AddModelError("", string.Format("Tên Nhà sản xuất '{manufacturer.Name}' đã tồn tại trên hệ thống.") );                    
+                    return View("Create", manufacturer);
+                }
+                SetFlashMessage( string.Format("Thêm Nhà sản xuất '{manufacturer.Name}' thành công.") );
+                if (manufacturer.SaveList)
+                {
+                    return RedirectToAction("Index");
+                }
+                ModelState.Clear();
+                return View("Create", manufacturer.ResetValue());
+            }            
+            return View("Create", manufacturer);
         }       
-        [CheckAdminAuthorize(1)]
-        public ActionResult Edit(int pId = 0)
-        {           
-            ProductPage mProductPage = new ProductPage();          
-            var mProductManufacturer = ProductsService.LayProductManufacturerTheoId(pId);
-            if (mProductManufacturer != null)
-            {
-                mProductPage.pProductManufacturer = mProductManufacturer;
-            }
-            else
-            {
-                mProductPage.Html = "Không tìm thấy tin tức cần sửa.";
-            }
-            return View("Edit", mProductPage);
-        }
-        [HttpPost]      
-        [CheckAdminJson(1)]
-        [ValidateInput(false)]    
-        public JsonResult OnEdit(int pId, string pTieuDe, int? pUuTien, string pSummary, string pUrlImage)
+        [CheckPermission(2, "Sửa")]
+        public ActionResult Edit(int id)
         {
-            var mProductManufacturer = ProductsService.LayProductManufacturerTheoId(pId);
-            if (mProductManufacturer != null)
+            var manufacturer = ProductManufacturerService.Find(id);
+            if (manufacturer == null)
             {
-                mProductManufacturer.Name = pTieuDe;
-                mProductManufacturer.Date = DateTime.Now;
-                mProductManufacturer.Number = pUuTien;
-                mProductManufacturer.Detail = pSummary;
-                mProductManufacturer.Image = pUrlImage;
-                MpStartEntities.SaveChanges();
-                return Json(new { code = 1, message = "Sủa thể loại ảnh thành công." });
+                return RedirectToAction("Index");
+
             }
-            return Json(new { code = 0, message = "Không tìm thấy loại ảnh để sửa." });
-        }        
+           
+            var data = new ProductManufacturerModels
+            {
+                Id = manufacturer.ID,
+                Name = manufacturer.Name,
+                ImageUrl = manufacturer.Image,
+                Detail = manufacturer.Detail,
+                Status = manufacturer.Status ?? false,
+                Order =  manufacturer.Number ?? 0
+            };
+            return View("Edit", data);
+        }
+        [HttpPost]
+        [CheckPermission(2, "Sửa")]
+        [ActionName("Edit")]
+        [ValidateAntiForgeryToken]        
+        public ActionResult OnEdit(ProductManufacturerModels manufacturer)
+        {
+            if (ModelState.IsValid)
+            {
+               
+
+                manufacturer.ImageUrl = manufacturer.Image != null?
+                    manufacturer.Image.Upload(): 
+                    manufacturer.ImageUrl.ToImageOriginalPath();
+
+                var result = ProductManufacturerService.Update(
+                    manufacturer.Id, manufacturer.Name,
+                    manufacturer.ImageUrl, manufacturer.Detail,
+                    manufacturer.Status, manufacturer.Order,
+                    manufacturer.CreatedDate);
+                if (result == Result.NotExists)
+                {
+                    ModelState.AddModelError("", "Nhà sản xuất tồn tại trên hệ thống.");                   
+                    return View("Edit", manufacturer);
+                }
+                SetFlashMessage( string.Format("Cập nhật nhà sản xuất '{0}' thành công.",manufacturer.Name) );
+                if (manufacturer.SaveList)
+                {
+                    return RedirectToAction("Index");
+                }
+                return View("Edit", manufacturer);
+            }          
+            return View("Edit", manufacturer);
+
+        }
+        [HttpPost]
+        [CheckPermission(3, "Xóa")]       
+        [ActionName("Delete")]
+        public ActionResult OnDelete(int id)
+        {
+            var result = ProductManufacturerService.Delete(id);
+            SetFlashMessage(result == Result.Ok ?
+                "Xóa nhà sản xuất thành công." :
+                "Nhà sản xuất không tồn tại trên hệ thống.");
+            return RedirectToAction("Index");
+        }
+
     }
 }

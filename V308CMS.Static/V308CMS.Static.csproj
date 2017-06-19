@@ -135,6 +135,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Content Include="Global.asax" />
+    <Content Include="image-cache\noimage.jpg" />
     <Content Include="index.html" />
     <Content Include="upload\img\red-leaf.jpg" />
     <Content Include="Web.config" />

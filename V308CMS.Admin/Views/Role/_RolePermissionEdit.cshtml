@@ -1,0 +1,177 @@
+﻿@using V308CMS.Admin.Helpers
+@using V308CMS.Admin.Models
+@model RoleModels
+@{
+ var listPermission = (List<ControllerActionItem>)ViewBag.ListPermission;
+}
+@functions
+{
+
+    private int GetGroupPermissionValue(RoleModels role, string groupPermission)
+    {
+        int permissionValue;
+        switch (groupPermission)
+        {
+            case "ProductStorePermission":
+                permissionValue = role.ProductStorePermissionAll;
+                break;
+            case "BannerPermission":
+                permissionValue = role.BannerPermissionAll;
+                break;
+            case "AdminAccountPermission":
+                permissionValue = role.AdminAccountPermissionAll;
+                break;
+            case "RolePermission":
+                permissionValue = role.RolePermissionAll;
+                break;
+            case "ContactPermission":
+                permissionValue = role.ContactPermissionAll;
+                break;
+            case "SiteConfigPermission":
+                permissionValue = role.SiteConfigPermissionAll;
+                break;
+            case "CountryPermission":
+                permissionValue = role.CountryPermissionAll;
+                break;
+            case "EmailConfigPermission":
+                permissionValue = role.EmailConfigPermissionAll;
+                break;
+            case "EmailPermission":
+                permissionValue = role.EmailPermissionAll;
+                break;
+            case "MenuConfigPermission":
+                permissionValue = role.MenuConfigPermissionAll;
+                break;
+            case "NewsCategoryPermission":
+                permissionValue = role.NewsCategoryPermissionAll;
+                break;
+            case "NewsPermission":
+                permissionValue = role.NewsPermissionAll;
+                break;
+            case "OrderPermission":
+                permissionValue = role.OrderPermissionAll;
+                break;
+            case "ProductAttributePermission":
+                permissionValue = role.ProductAttributePermissionAll;
+                break;
+            case "ProductBrandPermission":
+                permissionValue = role.ProductBrandPermissionAll;
+                break;
+            case "ProductColorPermission":
+                permissionValue = role.ProductColorPermissionAll;
+                break;
+            case "ProductImagePermission":
+                permissionValue = role.ProductImagePermissionAll;
+                break;
+            case "ProductManufacturerPermission":
+                permissionValue = role.ProductManufacturerPermissionAll;
+                break;
+            case "ProductUnitPermission":
+                permissionValue = role.ProductUnitPermissionAll;
+                break;
+            case "SizePermission":
+                permissionValue = role.SizePermissionAll;
+                break;
+            case "ProductDistributorPermission":
+                permissionValue = role.ProductDistributorPermissionAll;
+                break;
+            case "ProductTypePermission":
+                permissionValue = role.ProductTypePermissionAll;
+                break;
+            case "ProductPermission":
+                permissionValue = role.ProductPermissionAll;
+                break;
+            case "VoucherPermission":
+                permissionValue = role.VoucherPermissionAll;
+                break;
+            case "UserPermission":
+                permissionValue = role.UserPermissionAll;
+                break;
+            default:
+                permissionValue = 0;
+                break;
+        }
+        return permissionValue;
+    }
+    private bool IsHasPermission(RoleModels role, string groupPermission,int permissionCheck)
+    {
+
+        return (permissionCheck &
+                 GetGroupPermissionValue(role,groupPermission)) >0;
+    }
+
+    private bool IsHasPermissionAll(RoleModels role,string groupPermission,int permissionGroupCheck)
+    {
+        return GetGroupPermissionValue(role, groupPermission) == permissionGroupCheck;
+    }
+}
+<div class="panel panel-green">
+    <div class="panel-heading">
+        Phân quyền Nhóm tài khoản      
+        <input type="checkbox" name="AllPermission" id="AllPermission" title="Tất cả các quyền" value="0"/>
+    </div>
+    <div class="panel-body">
+        @if (listPermission != null && listPermission.Count > 0)
+        {
+            foreach (var permission in listPermission)
+            {
+                
+                <div class="col-lg-2">
+                    <div class="form-group">
+                        <label>
+                            @permission.ControllerItem.Name
+                            <input title="Tất cả các quyền thuộc mục @permission.ControllerItem.Name"
+                                   class="check_all"
+                                   type="checkbox"
+                                   id="@(permission.ControllerItem.Code.ToLower())_all"
+                                   name="@(permission.ControllerItem.Code)PermissionAll"
+                                   value="@permission.ControllerItem.Value"
+                                   @(IsHasPermissionAll(Model,permission.ControllerItem.Code +"Permission",permission.ControllerItem.Value)?"checked":"")
+                                   />
+                         </label>
+                        @if (permission.ListAction != null && permission.ListAction.Count > 0)
+                        {
+                            foreach (var action in permission.ListAction)
+                            {
+                                <div class="checkbox">
+                                    <input
+                                        id="@(string.Format("{0}_{1}", permission.ControllerItem.Code, action.Code))"
+                                        name="@(permission.ControllerItem.Code)Permission" type="checkbox"
+                                        value="@action.Value" class="check_item"
+                                        @(IsHasPermission(Model,permission.ControllerItem.Code +"Permission",action.Value)?"checked":"")>
+                                    <label>
+                                        @action.Name
+                                    </label>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            }
+
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    function autoCheckAll() {
+        if ($('.check_all:checked').length === $('.check_all').length) {
+            $('#AllPermission').prop('checked', "checked");
+            $('#AllPermission').val(1);
+        }
+       
+    }
+    $(function () {
+        autoCheckAll();
+        $('.check_all').on('change', function () {
+            var groupName = $(this).prop('name').replace('All', '');
+            $(".check_item[name='" + groupName + "']").prop('checked', $(this).is(":checked"));
+        });
+        $('.check_item').change(function () {
+            $(this).prop('checked', $(this).is(":checked"));
+        });
+        $('#AllPermission').change(function () {
+            $(this).val($(this).val() == 1 ? 0 : 1);
+            $('.check_all').trigger('click');
+        });
+    })
+</script>

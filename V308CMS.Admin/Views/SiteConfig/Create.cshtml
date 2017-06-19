@@ -8,6 +8,7 @@
 <div class="panel panel-primary">
     <div class="panel-body">
         <form method="post" role="form" action="@Url.SiteConfigCreateUrl()">
+<<<<<<< HEAD
             @Html.AntiForgeryToken()
             <div class="row">
                 @Html.ValidationSummary(true)
@@ -29,6 +30,9 @@
 
                 </div>
             </div>
+=======
+           @Html.Partial("_SiteConfigForm", Model)
+>>>>>>> toai-neal
         </form>
         <!-- /.row (nested) -->
     </div>

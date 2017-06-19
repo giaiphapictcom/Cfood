@@ -23,11 +23,9 @@ namespace V308CMS.Controllers
         private readonly IContactRepository _contactRepository;
         private readonly MenuConfigRespository _meuMenuConfigRespository;
         private readonly ProductTypeRepository _productTypeRepository;
-        
         private readonly CartRepository _CartRepository;
         private readonly CartItemRepository _CartItemRepository;
-       
-        
+
 
         protected BaseController()
         {
@@ -35,6 +33,8 @@ namespace V308CMS.Controllers
             //V308CMSEntities mEntities = new V308CMSEntities();
 
             _productService = new ProductRepository(_mEntities);
+            //_productService = new Data.ProductRepository();
+
             _newsService = new NewsRepository(_mEntities);
 
             _accountService = new AccountRepository(_mEntities);
@@ -42,23 +42,24 @@ namespace V308CMS.Controllers
             //_productWishlistService = new ProductWishlistRepositry(_mEntities);
             _imagesRepository = new ImagesRepository(_mEntities);
             _marketRepository = new MarketRepository(_mEntities);
+
             _contactRepository = new ContactRepository(_mEntities);
 
             _CartRepository = new CartRepository(_mEntities);
             _CartItemRepository = new CartItemRepository(_mEntities);
 
-
-
             _meuMenuConfigRespository = new MenuConfigRespository(_mEntities);
             _productTypeRepository = new ProductTypeRepository(_mEntities);
         }
 
-        //public void DisposeRepos() {
-        //    _mEntities.Dispose();
-        //    _productService.Dispose();
-        //    //    ProductRepos.Dispose();
+        //public ProductTypeRepository ProductTypeService {
+
+        //    //_contactRepository = new ContactRepository();
+        //    //_meuMenuConfigRespository = new MenuConfigRespository();
+        //    //_productTypeRepository = new Data.ProductTypeRepository();
         //}
 
+        
         public ProductTypeRepository ProductTypeService
         {
             get
@@ -122,7 +123,7 @@ namespace V308CMS.Controllers
             }
         }
 
-        protected ProductRepository ProductsService
+        protected Data.ProductRepository ProductsService
         {
             get
             {

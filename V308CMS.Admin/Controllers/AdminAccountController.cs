@@ -1,204 +1,229 @@
-﻿using System;
 using System.Web.Mvc;
+using V308CMS.Admin.Attributes;
+using V308CMS.Admin.Helpers;
+using V308CMS.Admin.Helpers.Url;
 using V308CMS.Admin.Models;
 using V308CMS.Common;
-using V308CMS.Data;
+using V308CMS.Data.Enum;
 
 namespace V308CMS.Admin.Controllers
-{
-    [CustomAuthorize]
+{   
+    [Authorize]
+    [CheckGroupPermission(true, "Tài khoản hệ thống")]
     public class AdminAccountController : BaseController
     {
-        #region AdminAccount
-      
-        [CheckAdminAuthorize(6)]
-        public ActionResult Index(int? pType, int? pPage)
-        {
-           
-            var mAccountPage = new AccountPage();
-            if (pType == null)
-            {
-                if (Session["AdminAccountType"] != null)
-                    pType = (int)Session["AdminAccountType"];
-                else
-                    pType = 0;
-            }
-            else
-            {
-                Session["AdminAccountType"] = pType;
-            }
-            if (pPage == null)
-            {
-                if (Session["AdminAccountPage"] != null)
-                    pPage = (int)Session["AdminAccountPage"];
-                else
-                    pPage = 1;
-            }
-            else
-            {
-                Session["AdminAccountPage"] = pPage;
-            }
-            #endregion
-            /*Lay danh sach cac tin theo page*/
-            var mmAccountList = AccountService.LayAdminTheoTrangAndType((int)pPage, 10, (int)pType);
-            if (mmAccountList.Count < 10)
-                mAccountPage.IsEnd = true;
-            //Tao Html cho danh sach tin nay
-            mAccountPage.Html = V308HTMLHELPER.TaoDanhSachCacAdminAccount(mmAccountList, (int)pPage);
-            mAccountPage.Page = (int)pPage;
-            mAccountPage.TypeId = (int)pType;
-            return View("Index", mAccountPage);
-
-        }      
-        [CheckAdminJson(6)]
-        [HttpPost]       
-        public JsonResult OnDelete(int pId = 0)
-        {          
-           
-            var mAdmin = AccountService.LayAdminTheoId(pId);
-            if (mAdmin != null)
-            {
-                MpStartEntities.DeleteObject(mAdmin);
-                MpStartEntities.SaveChanges();
-                return Json(new { code = 1, message = "Xóa thành công!" });
-            }
-            return Json(new { code = 0, message = "Không tìm thấy tài khoản cần xóa." });
-
-        }        
-        [CheckAdminAuthorize(6)]
-        public ActionResult Create()
-        {           
-            return View("Create");           
-        }
-        [HttpPost]     
-        [CheckAdminJson(6)]
-        [CheckDelete]
-        [ValidateInput(false)]     
-        public JsonResult OnCreate(bool? phethong, bool? psanpham, bool? ptintuc, bool? pkhachhang, bool? phinhanh, bool? pupload, bool? ptaikhoan, bool? pthungrac, string pTitle, int? pGroupId, string pAccount, string pPassword1, string pPassword2, string pEmail)
-        {
-
-            if (pPassword1.Trim().Equals(pPassword2.Trim()))
-            {
-                if (pAccount.Length > 5 && pPassword1.Length > 5)
-                {
-                    var mAdmin = AccountService.LayAdminTheoUserName(pAccount);
-                    if (!(mAdmin != null))
-                    {
-                        mAdmin = new Data.Admin()
-                        {
-                            Date = DateTime.Now,
-                            Role = pGroupId,
-                            FullName = pTitle,
-                            Email = pEmail,
-                            UserName = pAccount,
-                            Password = EncryptionMD5.ToMd5(pPassword1.Trim()),
-                            PSanPham = (psanpham),
-                            PFileUpload = (pupload),
-                            PHeThong = (phethong),
-                            PHinhAnh = (phinhanh),
-                            PKhachHang = (pkhachhang),
-                            PTaiKhoan = (ptaikhoan),
-                            PThungRac = (pthungrac),
-                            PTinTuc = (ptintuc)
-                        };
-                        MpStartEntities.AddToAdmin(mAdmin);
-                        MpStartEntities.SaveChanges();
-                        return Json(new { code = 1, message = "Lưu  tài khoản thành công." });
-                    }
-                    return Json(new { code = 0, message = "Tài khoản đã tồn tại. Vui lòng tại tài khoản mới." });
-                }
-                return Json(new { code = 0, message = "Mật khẩu và tài khoản và có độ dài tối thiểu 6 kí tự." });
-            }
-            return Json(new { code = 0, message = "Mật khẩu xác nhận không trùng khớp." });
-
+        //
+        // GET: /Admin/       
+        [CheckPermission(0, "Danh sách")]
+        public ActionResult Index()
+        {            
+            return View("Index", AdminAccountService.GetAll());
         }   
-        [CheckAdminAuthorize(6)]
-        public ActionResult Edit(int pId = 0)
+        [CheckPermission(1, "Thêm mới")]
+        public ActionResult Create()
         {
-          
-            var mAccountPage = new AccountPage();
-            var mAdmin = AccountService.LayAdminTheoId(pId);
-            if (mAdmin != null)
-            {
-                mAccountPage.pAdmin = mAdmin;
-                mAccountPage.TypeId = (int)mAdmin.Role;
-            }
-            else
-            {
-                mAccountPage.Html = "Không tìm thấy tài khoản muốn sửa";
-                mAccountPage.pAdmin = new Data.Admin();
-            }
-            return View("Edit", mAccountPage);
+            ViewBag.ListRole = RoleService.GetAll();
+            ViewBag.ListAccountType = DataHelper.ListEnumType<AccountType>();
+            return View("Create", new AdminModels());
         }
-        [HttpPost]       
-        [CheckAdminJson(6)]
-        [CheckDelete]
-        [ValidateInput(false)]        
-        public JsonResult OnEdit(bool? phethong, bool? psanpham, bool? ptintuc, bool? pkhachhang, bool? phinhanh, bool? pupload, bool? ptaikhoan, bool? pthungrac, int pId, string pTitle, int? pGroupId, string pAccount, bool? pActive, string pEmail)
-        {          
-            var mAdmin = AccountService.LayAdminTheoId(pId);
-            if (mAdmin != null)
+        [CheckPermission(1, "Thêm mới")]             
+        [ActionName("Create")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult OnCreate(AdminModels model)
+        {
+            if (ModelState.IsValid)
             {
-                mAdmin.FullName = pTitle;
-                mAdmin.Role = pGroupId;
-                mAdmin.Email = pEmail;
-                mAdmin.Status = (pActive);
-                mAdmin.PSanPham = (psanpham);
-                mAdmin.PFileUpload = (pupload);
-                mAdmin.PHeThong = (phethong);
-                mAdmin.PHinhAnh = (phinhanh);
-                mAdmin.PKhachHang = (pkhachhang);
-                mAdmin.PTaiKhoan = (ptaikhoan);
-                mAdmin.PThungRac = (pthungrac);
-                mAdmin.PTinTuc = (ptintuc);
-                MpStartEntities.SaveChanges();
-                return Json(new { code = 1, message = "Hoàn thành sửa thông tin." });
+                if (string.IsNullOrWhiteSpace(model.Password)){
+
+                    ModelState.AddModelError("Password","Vui lòng nhập Mật khẩu tài khoản.");
+                    ViewBag.ListRole = RoleService.GetAll();
+                    ViewBag.ListAccountType = DataHelper.ListEnumType<AccountType>();
+                    return View("Create", model);
+                }
+                if (model.ConfirmPassword != model.Password){
+                    ModelState.AddModelError("ConfirmPassword", "Mật khẩu xác nhận không đúng.");
+                    ViewBag.ListRole = RoleService.GetAll();
+                    ViewBag.ListAccountType = DataHelper.ListEnumType<AccountType>();
+                    return View("Create", model);
+                }
+                model.AvatarUrl = model.AvatarFile != null ?
+                model.AvatarFile.Upload() :
+                model.AvatarUrl;
+                var result = AdminAccountService.Insert(new Data.Admin
+                {
+                    UserName = model.UserName,
+                    Password = model.Password,
+                    Avatar = model.AvatarUrl,
+                    Email = model.Email,
+                    FullName = model.FullName,
+                    Role = model.Role,
+                    Date = model.Date,
+                    Status = model.Status,
+                    Type = model.Type,
+                });
+                if (result == Result.Exists)
+                {
+                    ModelState.AddModelError("", $"Tài khoản '{model.UserName}' đã tồn tại trên hệ thống.");
+                    ViewBag.ListRole = RoleService.GetAll();
+                    ViewBag.ListAccountType = DataHelper.ListEnumType<AccountType>();
+                    return View("Create", model);
+                }
+                SetFlashMessage($"Thêm tài khoản '{model.UserName}' thành công.");
+                if (model.SaveList)
+                {
+                    return RedirectToAction("Index");
+                }
+                ViewBag.ListRole = RoleService.GetAll();
+                ViewBag.ListAccountType = DataHelper.ListEnumType<AccountType>();
+                return View("Create", model.ResetValue());
+
             }
-            return Json(new { code = 0, message = "Không tìm thấy thông tin tài khoản." });
+            ViewBag.ListRole = RoleService.GetAll();
+            ViewBag.ListAccountType = DataHelper.ListEnumType<AccountType>();
+            return View("Create", model);
+        }        
+        [CheckPermission(2, "Sửa")]
+        public ActionResult Edit(int id)
+        {
+            var adminEdit = AdminAccountService.Find(id);
+            if (adminEdit == null)
+            {
+                return Redirect("Index");
+            }
+            var model = new AdminModels
+            {
+                Id = adminEdit.ID,
+                UserName = adminEdit.UserName,
+                Email = adminEdit.Email,
+                FullName =  adminEdit.FullName,
+                Role =  adminEdit.Role ?? 0,
+                Status = adminEdit.Status??false,
+                Type = adminEdit.Type??0,
+                AvatarUrl = adminEdit.Avatar
+
+            };
+            ViewBag.ListRole = RoleService.GetAll();
+            ViewBag.ListAccountType = DataHelper.ListEnumType<AccountType>();
+            return View("Edit", model);
+        }
+        [CheckPermission(2, "Sửa")]        
+        [ActionName("Edit")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult OnEdit(AdminModels model)
+        {
+            if (ModelState.IsValid)
+            {
+                model.AvatarUrl = model.AvatarFile != null ?
+                   model.AvatarFile.Upload() :
+                   model.AvatarUrl.ToImageOriginalPath();
+                var result = AdminAccountService.Update(new Data.Admin
+                {
+                    ID = model.Id,
+                    UserName = model.UserName,
+                    Password = model.Password,
+                    Avatar = model.AvatarUrl,
+                    Email = model.Email,
+                    FullName = model.FullName,
+                    Role = model.Role,
+                    Date = model.Date,
+                    Status = model.Status,
+                    Type = model.Type,
+
+                });
+                if (result == Result.NotExists)
+                {
+                    ModelState.AddModelError("", "Tài khoản không tồn tại trên hệ thống.");
+                    ViewBag.ListRole = RoleService.GetAll();
+                    ViewBag.ListAccountType = DataHelper.ListEnumType<AccountType>();
+                    return View("Edit", model);
+                }
+                SetFlashMessage($"Sửa tài khoản '{model.FullName}' thành công.");
+                if (model.SaveList)
+                {
+                    return RedirectToAction("Index");
+                }
+                ViewBag.ListRole = RoleService.GetAll();
+                ViewBag.ListAccountType = DataHelper.ListEnumType<AccountType>();
+                return View("Edit", model);
+
+            }
+            ViewBag.ListRole = RoleService.GetAll();
+            ViewBag.ListAccountType = DataHelper.ListEnumType<AccountType>();
+            return View("Edit", model);
+        }      
+        [CheckPermission(3, "Xóa")]
+        [ActionName("Delete")]
+        [HttpPost]
+        public ActionResult OnDelete(int id)
+        {
+            var result = AdminAccountService.Delete(id);
+            SetFlashMessage(result == Result.Ok ?
+                "Xóa tài khoản thành công." :
+                "Tài khoản không tồn tại trên hệ thống.");
+            return RedirectToAction("Index");
+        }  
+        [SkipCheckPermission]     
+        [HttpPost]
+        [ActionName("CheckUserName")]
+        public string OnCheckUserName(string userName)
+        {
+            return  AdminAccountService.CheckUserName(userName);
+        }       
+        [CheckPermission(4, "Thay đổi trạng thái")]
+        [HttpPost]
+        public ActionResult ChangeStatus(int id)
+        {
+            var result = AdminAccountService.ChangeStatus(id);
+            SetFlashMessage(result == Result.Ok
+                ? "Thay đổi trạng thái tài khoản thành công."
+                : "Không tìm thấy tài khoản cần thay đổi trạng thái.");
+            return RedirectToAction("Index");
+        }
+        [CheckPermission(5, "Đổi mật khẩu")]       
+        public ActionResult ChangePassword(int id)
+        {
+            var adminAccountPassword = AdminAccountService.Find(id);
+            if (adminAccountPassword == null)
+            {
+                return RedirectToAction("Index");
+
+            }
+            var adminChangePasswordModels = new AdminChangePassworModels
+            {
+                Id = adminAccountPassword.ID,
+                UserName = adminAccountPassword.UserName
+            };
+
+            return View("ChangePassword", adminChangePasswordModels);
+
+        }
+        [CheckPermission(5, "Đổi mật khẩu")]
+        [ActionName("ChangePassword")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult OnChangePassword(AdminChangePassworModels admin)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = AdminAccountService.ChangePassword(admin.Id, admin.NewPassword);
+                if (result == Result.NotExists)
+                {
+                    ModelState.AddModelError("", "Khách hàng không tồn tại trên hệ thống.");
+                    return View("ChangePassword", admin);
+                }
+
+                SetFlashMessage("Thay đổi mật khẩu thành công.");
+                if (admin.SaveList)
+                {
+                    return RedirectToAction("Index");
+                }
+                return View("ChangePassword", admin);
+            }
+            return View("ChangePassword", admin);
         }
 
-      
-        public ActionResult Info()
-        {               
-            AccountPage mAccountPage = new AccountPage();
-            int pId = (int)Session["UserId"];
-            var mAdmin = AccountService.LayAdminTheoId(pId);
-            if (mAdmin != null)
-            {
-                mAccountPage.pAdmin = mAdmin;
-            }
-            else
-            {
-                mAccountPage.Html = "Không tìm thấy tài khoản muốn sửa";
-                mAccountPage.pAdmin = new Data.Admin();
-            }
-            return View("Info", mAccountPage);
-        }
-        [HttpPost]        
-        public JsonResult OnChangePassword(int pId, string pPassword1, string pPassword2, string pPassword3)
-        {
-            V308CMSEntities mEntities = new V308CMSEntities();           
-            int mId = (int)Session["UserId"];
-            var mAdmin = AccountService.LayAdminTheoId(mId);
-            if (mAdmin != null)
-            {
-                if (mAdmin.Password.Trim().Equals(EncryptionMD5.ToMd5(pPassword1.Trim())))
-                {
-                    if (pPassword2.Trim().Equals(pPassword3.Trim()))
-                    {
-                        if (pPassword2.Length > 5)
-                        {
-                            mAdmin.Password = EncryptionMD5.ToMd5(pPassword2.Trim());
-                            mEntities.SaveChanges();
-                            return Json(new { code = 1, message = "thay đổi mật khẩu thành công." });
-                        }
-                        return Json(new { code = 0, message = "Mật khẩu và tài khoản và có độ dài tối thiểu 6 kí tự." });
-                    }
-                    return Json(new { code = 0, message = "Mật khẩu mới và Mật khẩu xác nhận không trùng khớp." });
-                }
-                return Json(new { code = 0, message = "Mật khẩu cũ không chính xác." });
-            }
-            return Json(new { code = 0, message = "Tài khoản không tồn tại." });
-        }       
+
     }
 }

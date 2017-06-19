@@ -14,6 +14,18 @@ namespace V308CMS.Admin.Helpers.Url
         {
             return helper.Action(action, controller, routeValue);
         }
+
+        public static string ProductManufacturerEditUrl(this UrlHelper helper, object routeValue = null, string controller = "productmanufacturer",
+         string action = "edit")
+        {
+            return helper.Action(action, controller, routeValue);
+        }
+        public static string ProductManufacturerDeleteUrl(this UrlHelper helper, object routeValue = null, string controller = "productmanufacturer",
+         string action = "delete")
+        {
+            return helper.Action(action, controller, routeValue);
+        }
+
     }
 
 }

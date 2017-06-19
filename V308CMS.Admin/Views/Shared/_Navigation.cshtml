@@ -1,4 +1,9 @@
 ﻿@using V308CMS.Admin.Helpers.Url
+<<<<<<< HEAD
+=======
+@using V308CMS.Admin.Helpers.Url
+@using V308CMS.Admin.Helpers.Url
+>>>>>>> toai-neal
 <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
     <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -14,6 +19,7 @@
     <ul class="nav navbar-top-links navbar-right">
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+<<<<<<< HEAD
                 <i class="fa fa-envelope fa-fw"></i> <i class="fa fa-caret-down"></i>
             </a>
             <ul class="dropdown-menu dropdown-messages">
@@ -204,17 +210,25 @@
         <!-- /.dropdown -->
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+=======
+                @User.UserName
+>>>>>>> toai-neal
                 <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
             </a>
             <ul class="dropdown-menu dropdown-user">
                 <li>
+<<<<<<< HEAD
                     <a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+=======
+                    <a href="#"><i class="fa fa-user fa-fw"></i>User Profile</a>
+>>>>>>> toai-neal
                 </li>
                 <li>
                     <a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                 </li>
                 <li class="divider"></li>
                 <li>
+<<<<<<< HEAD
                     <a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                 </li>
             </ul>
@@ -227,23 +241,57 @@
     <div class="navbar-default sidebar" role="navigation">
         <div class="sidebar-nav navbar-collapse">
             <ul class="nav in" id="side-menu">              
+=======
+                    <a href="@Url.HomeLogoutUrl()"><i class="fa fa-sign-out fa-fw"></i> Đăng xuất</a>
+                </li>
+            </ul>          
+        </li>        
+    </ul>    
+    <div class="navbar-default sidebar" role="navigation">
+        <div class="sidebar-nav navbar-collapse">
+            <ul class="nav in" id="side-menu">
+>>>>>>> toai-neal
                 <li>
                     <a href="@Url.HomeIndexUrl()" title="Tổng quan">
                         <i class="fa fa-dashboard fa-fw"></i> Tổng quan
                     </a>
                 </li>
                 <li>
+<<<<<<< HEAD
                     <a href="@Url.ProductIndexUrl()" title="">
                         <i class="fa fa-book fa-fw"></i> Sản phẩm
+=======
+                    <a href="@Url.ProductOrderIndexUrl()" title="Đơn hàng">
+                        <i class="fa fa-shopping-basket fa-fw"></i>Đơn hàng
+                        <span class="fa arrow"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.ContactIndexUrl()" title="">
+                        <i class="fa fa-user-md fa-fw"></i> Thông tin Liên hệ
+>>>>>>> toai-neal
                         <span class="fa arrow"></span>
                     </a>
                     <ul class="nav nav-second-level collapse">
                         <li>
+<<<<<<< HEAD
                             <a href="@Url.ProductIndexUrl()" title="Sản phẩm">Danh sách</a>
                         </li>
                         <li>
                             <a href="@Url.ProductCreateUrl()" title="Loại sản phẩm">Thêm mới</a>
                         </li>
+=======
+                            <a href="@Url.ContactIndexUrl()" title="Danh sách Liên hệ">Danh sách</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#" title="Catalog">
+                        <i class="fa fa-list-alt fa-fw"></i>Catalog
+                        <span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level collapse">
+>>>>>>> toai-neal
                         <li>
                             <a title="Danh mục Sản phẩm" href="#">
                                 Danh mục sản phẩm
@@ -257,55 +305,213 @@
                                 <li>
                                     <a title="Thêm mới" href="@Url.ProductTypeCreateUrl()">Thêm mới</a>
                                 </li>
+<<<<<<< HEAD
 
                             </ul>
                         </li>
                         <li>
                             <a title="Danh sách Thương hiệu" href="#">
+=======
+                            </ul>
+                        </li>
+                        <li>
+                            <a title="Danh sách Thương hiệu" href="@Url.ProductBrandIndexUrl()">
+>>>>>>> toai-neal
                                 Thương hiệu
                                 <span class="fa arrow"></span>
                             </a>
                             <ul class="nav nav-third-level">
                                 <li>
+<<<<<<< HEAD
                                     <a href="#" title="Danh sách thương hiệu">Danh sách</a>
                                 </li>
 
                                 <li>
                                     <a title="Thêm mới" href="#">Thêm mới</a>
+=======
+                                    <a href="@Url.ProductBrandIndexUrl()" title="Danh sách thương hiệu">Danh sách</a>
+                                </li>
+
+                                <li>
+                                    <a title="Thêm mới" href="@Url.ProductBrandCreateUrl()">Thêm mới</a>
+>>>>>>> toai-neal
                                 </li>
 
                             </ul>
                         </li>
                         <li>
+<<<<<<< HEAD
                             <a title="Danh sách Kho hàng" href="#">
+=======
+                            <a title="Danh sách Nhà sản xuất" href="@Url.ProductManufacturerIndexUrl()">
+                                Nhà sản xuất
+                                <span class="fa arrow"></span>
+                            </a>
+                            <ul class="nav nav-third-level">
+                                <li>
+                                    <a href="@Url.ProductManufacturerIndexUrl()" title="Danh sách Nhà sản xuất">Danh sách</a>
+                                </li>
+
+                                <li>
+                                    <a title="Thêm mới" href="@Url.ProductManufacturerCreateUrl()">Thêm mới</a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        <li>
+                            <a title="Danh sách Nhà phân phối" href="@Url.ProductDistributorIndexUrl()">
+                                Nhà phân phối
+                                <span class="fa arrow"></span>
+                            </a>
+                            <ul class="nav nav-third-level">
+                                <li>
+                                    <a href="@Url.ProductDistributorIndexUrl()" title="Danh sách Nhà phân phối">Danh sách</a>
+                                </li>
+
+                                <li>
+                                    <a title="Thêm mới" href="@Url.ProductDistributorCreateUrl()">Thêm mới</a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        <li>
+                            <a title="Danh sách Kho hàng" href="@Url.ProductStoreIndexUrl()">
+>>>>>>> toai-neal
                                 Kho hàng
                                 <span class="fa arrow"></span>
                             </a>
                             <ul class="nav nav-third-level">
                                 <li>
+<<<<<<< HEAD
                                     <a href="#" title="Danh sách thương hiệu">Danh sách</a>
                                 </li>
 
                                 <li>
                                     <a title="Thêm mới" href="#">Thêm mới</a>
+=======
+                                    <a href="@Url.ProductStoreIndexUrl()" title="Danh sách kho hàng">Danh sách</a>
+                                </li>
+
+                                <li>
+                                    <a title="Thêm mới" href="@Url.ProductStoreCreateUrl()">Thêm mới</a>
                                 </li>
 
                             </ul>
                         </li>
+                        <li>
+                            <a title="Danh sách Đơn vị tính" href="@Url.ProductUnitIndexUrl()">
+                                Đơn vị tính
+                                <span class="fa arrow"></span>
+                            </a>
+                            <ul class="nav nav-third-level">
+                                <li>
+                                    <a href="@Url.ProductUnitIndexUrl()" title="Danh sách Đơn vị tính">Danh sách</a>
+                                </li>
+
+                                <li>
+                                    <a title="Thêm mới" href="@Url.ProductUnitCreateUrl()">Thêm mới</a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        <li>
+                            <a title="Danh sách Màu sắc" href="@Url.ProductColorIndexUrl()">
+                                Màu sắc
+                                <span class="fa arrow"></span>
+                            </a>
+                            <ul class="nav nav-third-level">
+                                <li>
+                                    <a href="@Url.ProductColorIndexUrl()" title="Danh sách Màu sắc">Danh sách</a>
+                                </li>
+
+                                <li>
+                                    <a title="Thêm mới" href="@Url.ProductColorCreateUrl()">Thêm mới</a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        <li>
+                            <a title="Danh sách Kích cỡ" href="@Url.SizeIndexUrl()">
+                                Kích cỡ
+                                <span class="fa arrow"></span>
+                            </a>
+                            <ul class="nav nav-third-level">
+                                <li>
+                                    <a href="@Url.SizeIndexUrl()" title="Danh sách Kích cỡ">Danh sách</a>
+                                </li>
+
+                                <li>
+                                    <a title="Thêm mới" href="@Url.SizeCreateUrl()">Thêm mới</a>
+>>>>>>> toai-neal
+                                </li>
+
+                            </ul>
+                        </li>
+<<<<<<< HEAD
                     </ul>
                     <!-- /.nav-second-level -->
                 </li>
                 <li>
                     <a href="@Url.MarketIndexUrl()" title="">
                         <i class="fa fa-building fa-fw"></i> Cửa hàng
+=======
+                        <li>
+                            <a title="Danh sách Quốc gia" href="@Url.CountryIndexUrl()">
+                                Quốc gia
+                                <span class="fa arrow"></span>
+                            </a>
+                            <ul class="nav nav-third-level">
+                                <li>
+                                    <a href="@Url.CountryIndexUrl()" title="Danh sách Quốc gia">Danh sách</a>
+                                </li>
+
+                                <li>
+                                    <a title="Thêm mới" href="@Url.CountryCreateUrl()">Thêm mới</a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                    </ul>
+                </li>
+            <li>
+                <a href="@Url.ProductIndexUrl()" title="">
+                    <i class="fa fa-book fa-fw"></i> Sản phẩm
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level collapse">
+                    <li>
+                        <a href="@Url.ProductIndexUrl()" title="Sản phẩm">Danh sách</a>
+                    </li>
+                    <li>
+                        <a href="@Url.ProductCreateUrl()" title="Loại sản phẩm">Thêm mới</a>
+                    </li>
+
+
+
+                </ul>
+                <!-- /.nav-second-level -->
+                </li>
+               
+                <li>
+                    <a href="@Url.BannerIndexUrl()" title="">
+                        <i class="fa  fa-bullhorn fa-fw"></i> Banner
+>>>>>>> toai-neal
                         <span class="fa arrow"></span>
                     </a>
                     <ul class="nav nav-second-level collapse">
                         <li>
+<<<<<<< HEAD
                             <a href="@Url.MarketIndexUrl()" title="Danh sách Cửa hàng">Danh sách</a>
                         </li>
                         <li>
                             <a href="@Url.MarketCreateUrl()" title="Thêm mới">Thêm mới</a>
+=======
+                            <a href="@Url.BannerIndexUrl()" title="Danh sách Cửa hàng">Danh sách</a>
+                        </li>
+                        <li>
+                            <a href="@Url.BannerCreateUrl()" title="Thêm mới">Thêm mới</a>
+>>>>>>> toai-neal
                         </li>
                     </ul>
                 </li>
@@ -339,6 +545,7 @@
                         </li>
                     </ul>
                 </li>
+<<<<<<< HEAD
                 <li>
                     <a href="@Url.ProductOrderIndexUrl()" title="Đơn hàng">
                         <i class="fa fa-shopping-basket fa-fw"></i>Đơn hàng
@@ -353,11 +560,28 @@
                 </li>
                 <li>
                     <a href="@Url.AccountIndexUrl()" title="Tài khoản">
+=======
+               
+                <li>
+                    <a href="@Url.UserIndexUrl()" title="Khách hàng">
+                        <i class="fa fa-users fa-fw"></i>Khách hàng
+                        <span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level collapse">
+                        <li>
+                            <a href="@Url.UserIndexUrl()" title="Danh sách Tài khoản">Danh sách</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="@Url.AdminAccountIndexUrl()" title="Tài khoản">
+>>>>>>> toai-neal
                         <i class="fa fa-user fa-fw"></i>Tài khoản
                         <span class="fa arrow"></span>
                     </a>
                     <ul class="nav nav-second-level collapse">
                         <li>
+<<<<<<< HEAD
                             <a href="@Url.MarketIndexUrl()" title="Danh sách Tài khoản">Danh sách</a>
                         </li>
                         <li>
@@ -366,10 +590,21 @@
                         <li>
                             <a title="Danh mục Quyền" href="#">
                                 Danh mục Quyền
+=======
+                            <a href="@Url.AdminAccountIndexUrl()" title="Danh sách Tài khoản">Danh sách</a>
+                        </li>
+                        <li>
+                            <a href="@Url.AdminAccountCreateUrl()" title="Thêm mới">Thêm mới</a>
+                        </li>
+                        <li>
+                            <a title ="Danh sách Nhóm tài khoản" href="@Url.RoleIndexUrl()">
+                                Danh sách Nhóm tài khoản
+>>>>>>> toai-neal
                                 <span class="fa arrow"></span>
                             </a>
                             <ul class="nav nav-third-level">
                                 <li>
+<<<<<<< HEAD
                                     <a href="@Url.NewsCategoryIndexUrl()" title="Danh mục Tin tức">Danh sách</a>
                                 </li>
                                 <li>
@@ -378,16 +613,31 @@
 
                             </ul>
                         </li>
+=======
+                                    <a href="@Url.RoleIndexUrl()" title="Danh sách Nhóm tài khoản">Danh sách</a>
+                                </li>
+                                <li>
+                                    <a title="Thêm mới" href="@Url.RoleCreateUrl()">Thêm mới</a>
+                                </li>
+
+                            </ul>
+                        </li>                                               
+>>>>>>> toai-neal
                     </ul>
                 </li>
                         
                 <li>
+<<<<<<< HEAD
                     <a href="#">
+=======
+                    <a href="@Url.SiteConfigIndexUrl()">
+>>>>>>> toai-neal
                         <i class="fa fa-wrench fa-fw"></i>Cấu hình hệ thống
                         <span class="fa arrow"></span>
                     </a>
                     <ul class="nav nav-second-level collapse">
                         <li>
+<<<<<<< HEAD
                             <a href="panels-wells.html">Danh sách</a>
                         </li>
                         <li>
@@ -395,11 +645,21 @@
                         </li>
                         <li>
                             <a title="Danh sách gửi Mail" href="#">
+=======
+                            <a href="@Url.SiteConfigIndexUrl()">Danh sách</a>
+                        </li>
+                        <li>
+                            <a href="@Url.SiteConfigCreateUrl()">Thêm mới</a>
+                        </li>
+                        <li>
+                            <a title="Danh sách gửi Mail" href="@Url.EmailConfigIndexUrl()">
+>>>>>>> toai-neal
                                    Danh sách Email
                                 <span class="fa arrow"></span>
                             </a>
                             <ul class="nav nav-third-level">
                                 <li>
+<<<<<<< HEAD
                                     <a href="@Url.NewsCategoryIndexUrl()" title="Danh sách Email">Danh sách</a>
                                 </li>
                                 <li>
@@ -408,6 +668,31 @@
 
                             </ul>
                         </li>   
+=======
+                                    <a href="@Url.EmailConfigIndexUrl()" title="Danh sách Email">Danh sách</a>
+                                </li>
+                                <li>
+                                    <a title="Thêm mới" href="@Url.EmailConfigCreateUrl()">Thêm mới</a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        <li>
+                            <a title="Danh sách Menu trang chủ" href="@Url.MenuConfigIndexUrl()">
+                                Menu Trang chủ
+                                <span class="fa arrow"></span>
+                            </a>
+                            <ul class="nav nav-third-level">
+                                <li>
+                                    <a href="@Url.MenuConfigIndexUrl()" title="Danh sách Menu">Danh sách</a>
+                                </li>
+                                <li>
+                                    <a title="Thêm mới" href="@Url.MenuConfigCreateUrl()">Thêm mới</a>
+                                </li>
+
+                            </ul>
+                        </li>  
+>>>>>>> toai-neal
                     </ul>
                     <!-- /.nav-second-level -->
                 </li>

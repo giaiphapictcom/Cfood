@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Web;
 
 namespace V308CMS.Common
 {
     public static class CloneObjectHelper
     {
-        public static TConvert CloneTo<TConvert>(this object entity) where TConvert : new()
+        public static TConvert CloneTo<TConvert>(this object entity, string[] skipProperties = null) where TConvert : new()
         {
             var convertProperties = TypeDescriptor.GetProperties(typeof(TConvert)).Cast<PropertyDescriptor>();
             var entityProperties = TypeDescriptor.GetProperties(entity).Cast<PropertyDescriptor>();
@@ -19,7 +17,8 @@ namespace V308CMS.Common
             {
                 var property = entityProperty;
                 var convertProperty = convertProperties.FirstOrDefault(prop => prop.Name == property.Name);
-                if (convertProperty != null)
+                var isSkipProperty = skipProperties != null && skipProperties.Contains(property.Name) == false;
+                if (convertProperty != null && isSkipProperty)
                 {
                     convertProperty.SetValue(convert, Convert.ChangeType(entityProperty.GetValue(entity), convertProperty.PropertyType));
                 }

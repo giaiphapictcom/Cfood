@@ -1,179 +1,209 @@
-﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
+using V308CMS.Admin.Attributes;
+using V308CMS.Admin.Helpers;
+using V308CMS.Admin.Helpers.Url;
 using V308CMS.Admin.Models;
+using V308CMS.Admin.Models.UI;
 using V308CMS.Common;
 using V308CMS.Data;
+using V308CMS.Data.Enum;
 
 namespace V308CMS.Admin.Controllers
 {
-    [CustomAuthorize]
+    [Authorize]
+    [CheckGroupPermission(true, "Tin tức")]
     public class NewsController : BaseController
     {
-        private const int PageSize = 30;
-        [CheckAdminAuthorize(2)]
-        public ActionResult Index(int? pType, int? pPage)
+        [NonAction]
+        private List<MutilCategoryItem> BuildListCategory()
         {
-            NewsPage mNewsPage = new NewsPage();
-            string mLevel = "";
-            if (pType == null)
-            {
-                if (Session["TinTucType"] != null)
-                    pType = (int)Session["TinTucType"];
-                else
-                    pType = 0;
-            }
-            else
-            {
-                Session["TinTucType"] = pType;
-            }
-            if (pPage == null)
-            {
-                if (Session["TinTucPage"] != null)
-                    pPage = (int)Session["TinTucPage"];
-                else
-                    pPage = 1;
-            }
-            else
-            {
-                Session["TinTucPage"] = pPage;
-            }
-            //lay Level cua Type
-            if (pType != 0)
-            {
-                var mNewsGroups = NewsService.LayTheLoaiTinTheoId((int)pType);
-                if (mNewsGroups != null)
-                    mLevel = mNewsGroups.Level.Trim();
-            }
-            /*Lay danh sach cac tin theo page*/
-            var mNewsList = NewsService.LayTinTheoTrangAndGroupIdAdmin((int)pPage, PageSize, (int)pType, mLevel);
-            var mNewsGroupsList = NewsService.LayNhomTinAll();
-            if (mNewsList.Count < 10)
-                mNewsPage.IsEnd = true;
-            //Tao Html cho danh sach tin nay
-            mNewsPage.Html = V308HTMLHELPER.TaoDanhSachTinTuc(mNewsList, (int)pPage);
-            //Tao danh sach cac nhom tin
-            mNewsPage.HtmlNhomTin = V308HTMLHELPER.TaoDanhSachNhomTinHome(mNewsGroupsList, (int)pPage, (int)pType);
-            mNewsPage.Page = (int)pPage;
-            mNewsPage.TypeId = (int)pType;
-            return View(mNewsPage);
+            return NewsGroupService.GetAll().Select
+                (
+                    cate => new MutilCategoryItem
+                    {
+                        Name = cate.Name,
+                        Id = cate.ID,
+                        ParentId = cate.Parent
+                    }
+                ).ToList();
         }
-
-        [CheckAdminJson(2)]
-        [HttpPost]     
-        public JsonResult OnDelete(int pId = 0)
+        //
+        // GET: /News2/       
+        [CheckPermission(0, "Danh sách")]
+        public ActionResult Index(int categoryId =0, int site =0)
         {
-            var mNews = NewsService.LayTinTheoId(pId);
-            if (mNews != null)
+            ViewBag.ListCategory = BuildListCategory();
+            ViewBag.ListSite = DataHelper.ListEnumType<NewsSiteEnum>();
+            var model = new NewsViewModels
             {
-                MpStartEntities.DeleteObject(mNews);
-                MpStartEntities.SaveChanges();
-                return Json(new { code = 1, message = "Xóa thành công!" });
-            }
-            return Json(new { code = 0, message = "Không tìm thấy tin cần xóa." });
-        }
-        [CheckAdminJson(2)]
-        [HttpPost]      
-        public JsonResult OnChangeStatus(int pId = 0)
-        {           
-            var mNews = NewsService.LayTinTheoId(pId);
-            if (mNews != null)
-            {
-                mNews.Status = !mNews.Status;
-                MpStartEntities.SaveChanges();
-                return Json(new { code = 1, message = (mNews.Status == true? "Hiển thị thành công !":"Ẩn thành công!") });
-            }
-            return Json(new { code = 0, message = "Không tìm thấy tin cần ẩn." });
-
-        }
-        [CheckAdminAuthorize(2)]
-        public ActionResult Create()
-        {           
-            NewsPage mNewsPage = new NewsPage();
-            var mListNewsGroup = NewsService.LayNhomTinAll();
-            //Tao danh sach cac nhom tin
-            mNewsPage.HtmlNhomTin = V308HTMLHELPER.TaoDanhSachNhomTin(mListNewsGroup, 0);
-            return View(mNewsPage);
-        }
-        [HttpPost]
-        [CustomAuthorize]
-        [CheckAdminJson(2)]
-        [ValidateInput(false)]
-        public JsonResult OnCreate
-            (
-                string pTieuDe, string pImageUrl,
-                int? pGroupId, string pMoTa, 
-                string pNoiDung, string pKichHoat, 
-                int? pUuTien, string pDescription, string pKeyWord, 
-                string pSlide, string pHot, string pFast,
-                string pFeatured
-            )
-        {
-            var mNews = new News()
-            {
-                Date = DateTime.Now, Detail = pNoiDung, Image = pImageUrl,
-                Order = pUuTien, Status = true, Summary = pMoTa,
-                Title = pTieuDe, TypeID = pGroupId, Keyword = pKeyWord,
-                Description = pDescription, Slider = ConverterUlti.ConvertStringToLogic2(pSlide),
-                Hot = ConverterUlti.ConvertStringToLogic2(pHot), Fast = ConverterUlti.ConvertStringToLogic2(pFast),
-                Featured = ConverterUlti.ConvertStringToLogic2(pFeatured)
+                CategoryId = categoryId,
+                Site = site,
+                Data = NewsService.GetList(categoryId, site)
             };
-            MpStartEntities.AddToNews(mNews);
-            MpStartEntities.SaveChanges();
-            return Json(new { code = 1, message = "Lưu tin tức thành công." });
-
-        }
-        [CheckAdminAuthorize(2)]
-        public ActionResult Edit(int pId = 0)
+            return View("Index", model);
+        }        
+        [CheckPermission(1, "Thêm mới")]
+        public ActionResult Create()
         {
-            NewsPage mNewsPage = new NewsPage();
-            var mNews = NewsService.LayTinTheoId(pId);
-            if (mNews != null)
-            {
-                var mListNewsGroup = NewsService.LayNhomTinAll();
-                //Tao danh sach cac nhom tin
-                mNewsPage.HtmlNhomTin = V308HTMLHELPER.TaoDanhSachNhomTin(mListNewsGroup, (int)mNews.TypeID);
-                mNewsPage.pNews = mNews;
-            }
-            else
-            {
-                mNewsPage.Html = "Không tìm thấy tin tức cần sửa.";
-            }
-            return View(mNewsPage);
+            ViewBag.ListCategory = BuildListCategory();
+            ViewBag.ListSite = DataHelper.ListEnumType<NewsSiteEnum>();
+            return View("Create", new NewsModels());
         }
         [HttpPost]
-        [CheckAdminJson(2)]
-        [ValidateInput(false)]     
-        public JsonResult OnEdit
-            (
-                int pId, string pTieuDe, string pImageUrl,
-                int? pGroupId, string pMoTa, string pNoiDung,
-                string pKichHoat, int? pUuTien, string pDescription,
-                string pKeyWord, string pSlide, string pHot,
-                string pFast, string pFeatured
-            )
+        [CheckPermission(1, "Thêm mới")]        
+        [ValidateAntiForgeryToken]
+        [ActionName("Create")]
+        [ValidateInput(false)]
+        public ActionResult OnCreate(NewsModels news)
         {
-            var mNews = NewsService.LayTinTheoId(pId);
-            if (mNews != null)
+            if (ModelState.IsValid)
             {
-                mNews.Title = pTieuDe;
-                mNews.Date = DateTime.Now;
-                mNews.Detail = pNoiDung;
-                mNews.Image = pImageUrl;
-                mNews.Order = pUuTien;
-                mNews.Summary = pMoTa;
-                mNews.Keyword = pKeyWord;
-                mNews.Description = pDescription;
-                mNews.TypeID = pGroupId;
-                mNews.Status = ConverterUlti.ConvertStringToLogic2(pKichHoat);
-                mNews.Hot = ConverterUlti.ConvertStringToLogic2(pHot);
-                mNews.Slider = ConverterUlti.ConvertStringToLogic2(pSlide);
-                mNews.Fast = ConverterUlti.ConvertStringToLogic2(pFast);
-                mNews.Featured = ConverterUlti.ConvertStringToLogic2(pFeatured);
-                MpStartEntities.SaveChanges();
-                return Json(new { code = 1, message = "Lưu tin tức thành công." });
-            }
-            return Json(new { code = 0, message = "Không tìm thấy tin tức để sửa." });
+                news.ImageUrl = news.Image != null ?
+                    news.Image.Upload() :
+                    news.ImageUrl;
+                var newsItem = new News
+                {
+                    Title = news.Title,
+                    TypeID = news.CategoryId,
+                    Image = news.ImageUrl,
+                    Summary = news.Summary,
+                    Detail = news.Detail,
+                    Keyword = news.Keyword,
+                    Description = news.Description,
+                    Order = news.Order,
+                    Hot = news.IsFast,
+                    Fast = news.IsFast,
+                    Featured = news.IsFeatured,
+                    Status = news.Status,
+                    Date = news.CreatedAt,
+                    Site = news.Site
 
+                };
+                var result = NewsService.Insert(newsItem);
+                if (result == Result.Exists)
+                {
+                    ModelState.AddModelError("", string.Format("Tin tức '{0}' đã tồn tại trên hệ thống.",news.Title) );
+                    ViewBag.ListCategory = BuildListCategory();
+                    ViewBag.ListSite = DataHelper.ListEnumType<NewsSiteEnum>();
+                    return View("Create", news);
+                }
+                SetFlashMessage( string.Format("Thêm tin tức '{0}' thành công.",news.Title));
+                if (news.SaveList)
+                {
+                    return RedirectToAction("Index");
+                }
+                ModelState.Clear();
+                ViewBag.ListCategory = BuildListCategory();
+                ViewBag.ListSite = DataHelper.ListEnumType<NewsSiteEnum>();
+                return View("Create", news.ResetValue());
+            }
+            ViewBag.ListCategory = NewsGroupService.GetAll().Select
+                 (
+                       cate => new MutilCategoryItem
+                       {
+                           Name = cate.Name,
+                           Id = cate.ID,
+                           ParentId = cate.Parent
+                       }
+                 ).ToList();
+            return View("Create", news);
+        }        
+        [CheckPermission(2, "Sửa")]
+        public ActionResult Edit(int id)
+        {
+            var newsItem = NewsService.Find(id);
+            if (newsItem == null)
+            {
+                SetFlashMessage("Tin tức cần sửa không tồn tại trên hệ thống.");
+                return RedirectToAction("Index");
+            }
+            var newsEdit = new NewsModels
+            {
+                Id = newsItem.ID,
+                Title = newsItem.Title,
+                CategoryId = newsItem.TypeID ?? 0,
+                ImageUrl = newsItem.Image,
+                Summary = newsItem.Summary,
+                Detail = newsItem.Detail,
+                Keyword = newsItem.Keyword,
+                Description = newsItem.Description,
+                Order = newsItem.Order ?? 0,
+                IsHot = newsItem.Hot ?? false,
+                IsFast = newsItem.Fast ?? false,
+                IsFeatured = newsItem.Featured ?? false,
+                Status = newsItem.Status ?? false,
+                Site = newsItem.Site
+               
+            };
+            ViewBag.ListCategory = BuildListCategory();
+            ViewBag.ListSite = DataHelper.ListEnumType<NewsSiteEnum>();
+            return View("Edit", newsEdit);
+
+        }
+        [HttpPost]
+        [CheckPermission(2, "Sửa")]        
+        [ActionName("Edit")]
+        [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
+        public ActionResult OnEdit(NewsModels news)
+        {
+            if (ModelState.IsValid)
+            {
+                news.ImageUrl = news.Image != null ?
+                    news.Image.Upload() :
+                    news.ImageUrl.ToImageOriginalPath();               
+                var newsItem = new News
+                {
+                    ID = news.Id,
+                    Title = news.Title,
+                    TypeID = news.CategoryId,
+                    Image = news.ImageUrl,
+                    Summary = news.Summary,
+                    Detail = news.Detail,
+                    Keyword = news.Keyword,
+                    Description = news.Description,
+                    Order = news.Order,
+                    Hot = news.IsFast,
+                    Fast = news.IsFast,
+                    Featured = news.IsFeatured,
+                    Status = news.Status,
+                    Date = news.CreatedAt,
+                    Site = news.Site
+                };
+                var result = NewsService.Update(newsItem);
+                if (result == Result.NotExists)
+                {
+                    ModelState.AddModelError("", "Tin tức không tồn tại trên hệ thống.");
+                    ViewBag.ListCategory = BuildListCategory();
+                    ViewBag.ListSite = DataHelper.ListEnumType<NewsSiteEnum>();
+                    return View("Edit", news);
+                }
+                SetFlashMessage( string.Format("Sửa tin tức '{0}' thành công.",news.Title) );
+                if (news.SaveList)
+                {
+                    return RedirectToAction("Index");
+                }
+                ViewBag.ListCategory = BuildListCategory();
+                ViewBag.ListSite = DataHelper.ListEnumType<NewsSiteEnum>();
+                return View("Edit", news);
+
+            }
+            ViewBag.ListCategory = BuildListCategory();
+            ViewBag.ListSite = DataHelper.ListEnumType<NewsSiteEnum>();
+            return View("Edit");
+        }        
+        [CheckPermission(3, "Xóa")]
+        [ActionName("Delete")]
+        [HttpPost]
+        public ActionResult OnDelete(int id)
+        {
+            var result = NewsService.Delete(id);
+            SetFlashMessage(result == Result.Ok ?
+                "Xóa tin tức thành công." : 
+                "Tin tức không tồn tại trên hệ thống.");
+            return RedirectToAction("Index");
         }
 
     }

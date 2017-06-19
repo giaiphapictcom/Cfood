@@ -1,460 +1,522 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using V308CMS.Admin.Attributes;
+using V308CMS.Admin.Helpers;
+using V308CMS.Admin.Helpers.Url;
 using V308CMS.Admin.Models;
+using V308CMS.Admin.Models.UI;
 using V308CMS.Common;
 using V308CMS.Data;
+using V308CMS.Data.Enum;
 
 namespace V308CMS.Admin.Controllers
 {
-    [CustomAuthorize]
+
+    [Authorize]
+    [CheckGroupPermission(true, "Sản phẩm")]
     public class ProductController : BaseController
     {
-        private int PageSize = 26;
-        #region SAN PHAM
-      
-        [CheckAdminAuthorize(1)]
-        public ActionResult Index(int? pType, int? pPage, int? pMarket = 0, string pKey = "")
+        [NonAction]
+        private List<MutilCategoryItem> BuildListCategory()
         {
-            ProductPage mProductPage = new ProductPage();
-            ProductType mProductType = new ProductType() { Parent = 0 };
-            string mLevel = "";
-            if (pType == null)
-            {
-                if (Session["SanPhamType"] != null)
-                    pType = (int)Session["SanPhamType"];
-                else
-                    pType = 0;
-            }
-            else
-            {
-                Session["SanPhamType"] = pType;
-            }
-            if (pPage == null)
-            {
-                if (Session["SanPhamPage"] != null)
-                    pPage = (int)Session["SanPhamPage"];
-                else
-                    pPage = 1;
-            }
-            else
-            {
-                Session["SanPhamPage"] = pPage;
-            }
-            //
-            if (pMarket == 0)
-            {
-                if (Session["SanPhamMarket"] != null)
-                    pMarket = (int)Session["SanPhamMarket"];
-                else
-                    pMarket = 0;
-            }
-            else
-            {
-                Session["SanPhamMarket"] = pMarket;
-            }
-            //
-            if (pKey.Length == 0)
-            {
-                //if (Session["SanPhamKey"] != null)
-                //    pKey = (string)Session["SanPhamKey"];
-                //else
-                pKey = "";
-            }
-            else
-            {
-                Session["SanPhamKey"] = pKey;
-            }
-            #endregion
-
-            //lay Level cua Type
-            if (pType != 0)
-            {
-                mProductType = ProductsService.LayProductTypeTheoId((int)pType);
-                if (mProductType != null)
-                    mLevel = mProductType.Level.Trim();
-            }
-            //
-            mProductPage.Market = (int)pMarket;
-            mProductPage.Key = pKey;
-            //lay danh sach cac sieu thi
-            var mMarketList = MarketService.getAll(1000);
-            mProductPage.MarketList = mMarketList;
-            /*Lay danh sach cac tin theo page*/
-            var mProductList = ProductsService.getByTypeAndNameAndMarket((int)pPage, PageSize, (int)pType, (int)pMarket, pKey, mLevel);
-            //lay danh sach cac kieu san pham
-            var mProductTypeList = ProductsService.LayProductTypeAll();
-            var mProductTypeChildList = ProductsService.LayProductTypeTheoParentId((int)pType);
-            if (mProductList.Count < 18)
-                mProductPage.IsEnd = true;
-            //Tao Html cho danh sach tin nay
-            mProductPage.Html = V308HTMLHELPER.TaoDanhSachSanPham(mProductList, (int)pPage);
-            mProductPage.HtmlNhom = V308HTMLHELPER.TaoDanhSachProductTypeHome(mProductTypeList, (int)pPage, (int)pType);
-            mProductPage.ProductTypeLt = mProductTypeChildList;
-            mProductPage.Page = (int)pPage;
-            mProductPage.TypeId = (int)pType;
-            mProductPage.pProductType = mProductType;
-            return View("Index", mProductPage);
-        }       
-        [CheckAdminJson(1)]
-        [HttpPost]
-        [ActionName("Edit")]
-        public JsonResult OnEdit(int[] pId, int[] pNumber, bool[] pHome, bool[] pBestSale, bool[] pHide, bool[] pDelete)
-        {          
-            var mProductList = ProductsService.getProductByIdList(pId);
-            foreach (Product it in mProductList)
-            {
-                for (int i = 0; i < 18; i++)
-                {
-                    if (pId.Length > i)
-                    {
-                        if (it.ID == pId[i])
-                        {
-                            if (pHide.Length > i)
-                            {
-                                if (it.Status != pHide[i])
-                                {
-                                    it.Status = pHide[i];
-                                }
-                            }
-                            if (pHome.Length > i)
-                            {
-                                if (it.Hot != pHome[i])
-                                {
-                                    it.Hot = pHome[i];
-                                }
-                            }
-                            if (pBestSale.Length > i)
-                            {
-                                if (it.Visible != pBestSale[i])
-                                {
-                                    it.Visible = pBestSale[i];
-                                }
-                            }
-                            if (pNumber.Length > i)
-                            {
-                                if (it.Number != pNumber[i])
-                                {
-                                    it.Number = pNumber[i];
-                                }
-                            }
-                            if (pDelete.Length > i)
-                            {
-                                if (pDelete[i] == true)
-                                {
-                                    MpStartEntities.DeleteObject(it);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            MpStartEntities.SaveChanges();
-            return Json(new { code = 1, message = "Cập nhật thành công!" });
-
-        }      
-        [CheckAdminJson(1)]
-        [HttpPost]
-        [ActionName("Delete")]
-        public JsonResult OnDelete(int pId = 0)
+           return ProductTypeService.GetAll().Select
+               (
+                   cate => new MutilCategoryItem
+                   {
+                       Name = cate.Name,
+                       Id = cate.ID,
+                       ParentId = cate.Parent
+                   }
+               ).ToList();
+        }
+        [NonAction]
+        private List<SelectListItem> BuildListColor(string[] listColorSelected = null)
         {
-            var mProduct = ProductsService.LayTheoId(pId);
-            if (mProduct != null)
-            {
-                MpStartEntities.DeleteObject(mProduct);
-                //Tim danh sach anh
-                var mProductImageList = ProductsService.LayProductImageTheoIDProduct(pId);
-                var mProductAttribute = ProductsService.LayProductAttributeTheoIDProduct(pId);
-                if (mProductAttribute.Count > 0)
-                {
-                    foreach (ProductAttribute it in mProductAttribute)
-                    {
-                        MpStartEntities.DeleteObject(it);
-                    }
-                }
-                if (mProductImageList.Count > 0)
-                {
-                    foreach (ProductImage it in mProductImageList)
-                    {
-                        MpStartEntities.DeleteObject(it);
-                    }
-                }
-                MpStartEntities.SaveChanges();
-                return Json(new { code = 1, message = "Xóa thành công!" });
-            }
-            return Json(new { code = 0, message = "Không tìm thấy sản phẩm cần xóa." });
+            return ColorService.GetAll().AsEnumerable()
+                   .Select(c => new SelectListItem
+                   {
+                       Value = c.Code,
+                       Text = c.Name,
+                       Selected = (listColorSelected != null && listColorSelected.Length > 0 && listColorSelected.Contains(c.Code))
+                   }).ToList();
 
-        }      
-        [CheckAdminJson(1)]
-        [HttpPost]
-        [ActionName("ChangeStatus")]
-        public JsonResult OnChangeStatus(int pId = 0)
-        {           
-            var mProduct = ProductsService.LayTheoId(pId);
-            if (mProduct != null)
+        }
+        [NonAction]
+        private List<SelectListItem> BuildListSize(string[] listSizeSelected = null)
+        {
+          return  SizeService.GetAll().AsEnumerable()
+            .Select(c => new SelectListItem
             {
-                mProduct.Status = !mProduct.Status;
-                MpStartEntities.SaveChanges();
-                return Json(new { code = 1, message =(mProduct.Status ==true? "Hiện thành công!":"Ẩn thành công!")  });
+                Value = c.Name,
+                Text = c.Description,
+                Selected = (listSizeSelected != null && listSizeSelected.Length > 0 && listSizeSelected.Contains(c.Name))
+            }).ToList();
+        }     
+        [CheckPermission(0, "Danh sách")]
+        public ActionResult Index(
+            string keyword ="",int categoryId =0,
+            int quantity =0,int state =0, int brand=0,
+            int manufact =0,int provider =0,
+            int page  = 1, int pageSize = 25)
+        {
+           
+            int totalRecords = 0;
+            int totalPages = 0;
+            var data = ProductService.GetList(out totalRecords,
+                categoryId, quantity, state,
+                brand,manufact,provider,
+                keyword, page, pageSize);
+
+            if (totalRecords > 0)
+            {
+
+                totalPages = totalRecords / pageSize;
+                if (totalRecords % pageSize > 0)
+                    totalPages += 1;
             }
-            return Json(new { code = 0, message = "Không tìm thấy sản phẩm cần ẩn." });
-        }       
-         
-        [CheckAdminAuthorize(1)]
+            var model = new ProductViewModels
+            {
+                Keyword = keyword,
+                State = state,
+                CategoryId = categoryId,
+                Quantity = quantity,
+                Data = data,
+                Page = page,
+                PageSize =  pageSize,
+                TotalPages = totalPages,
+                TotalRecords = totalRecords,
+                Brand = brand,
+                Manufact = manufact,
+                Provider= provider
+            };        
+            ViewBag.ListStateFilter = DataHelper.ListEnumType<StateFilterEnum>();
+            ViewBag.ListQuantityFilter = DataHelper.ListEnumType<QuantityFilterEnum>();
+            ViewBag.ListBrand = ProductBrandService.GetAll();
+            ViewBag.ListManufacturer = ProductManufacturerService.GetAll();
+            ViewBag.ListProvider = AccountService.GetListAdminByType((byte)AccountType.Provider);
+            ViewBag.ListCategory = BuildListCategory();
+            return View("Index", model);
+        }
+                
+        [CheckPermission(1, "Thêm mới")]
         public ActionResult Create()
         {
- 
-            ProductPage mProductPage = new ProductPage();
 
-            var mListProductType = ProductsService.LayProductTypeAll();
-            var mListProductDistributor = ProductsService.LayProductDistributorAll();
-            var mListProductManufacturer = ProductsService.LayProductManufacturerAll();
-            var mMarketList = MarketService.LayMarketTheoTrangAndType(1, 1000, 0);
-            //Tao danh sach cac nhom tin
-            mProductPage.HtmlNhom = V308HTMLHELPER.TaoDanhSachProductType4(mListProductType, 0);
-            mProductPage.HtmlNhom2 = V308HTMLHELPER.TaoDanhSachProductDistributor4(mListProductDistributor, 0);
-            mProductPage.HtmlNhom3 = V308HTMLHELPER.TaoDanhSachProductManufacturer4(mListProductManufacturer, 0);
-            mProductPage.HtmlNhom4 = V308HTMLHELPER.TaoDanhSachMarket(mMarketList, 0);
-            return View("Create", mProductPage);
+            ViewBag.ListCategory = BuildListCategory();
+            ViewBag.ListBrand = ProductBrandService.GetAll();
+            ViewBag.ListCountry = CountryService.GetAll();
+            ViewBag.ListStore = ProductStoreService.GetAll();
+            ViewBag.ListManufacturer = ProductManufacturerService.GetAll();                      
+            ViewBag.ListUnit = UnitService.GetAll();
+            ViewBag.ListColor = BuildListColor();
+            ViewBag.ListSize = BuildListSize();
+            ViewBag.ListHour = DataHelper.ListHour;
+            return View("Create", new ProductModels());
         }
-        [HttpPost]       
-        [CheckAdminJson(1)]
-        [ValidateInput(false)]
+        [HttpPost]
+        [CheckPermission(1, "Thêm mới")]       
+        [ValidateAntiForgeryToken]
         [ActionName("Create")]
-        public JsonResult OnCreate
-            (
-                int? pTransport1, int? pTransport2, int? pTransport12,
-                int? pTransport22, string pTitle, string pDapAn1,
-                string pDapAn2, string pDapAn3, string pDapAn4,
-                int? pKetQua, int? pGroup, int? pProductDistributor, 
-                int? pProductManufacturer, string pImage, int? pPrice,
-                int? pPrice2, int? pPrice3, string pUnit1,
-                string pUnit2, string pUnit3, string pSeri, 
-                string pSummary, string[] imageslide, string[] pNamePro,
-                string[] pValuePro, string editor1, int? pOrder, 
-                int? pSaleOff, string pActive, int? pBaoHanh,
-                int? pSize, int? pPower, int? pMotoGroup, 
-                int? pMarket, string pDescription, string pKeyWord
-            )
-        {                       
-            int i = 0;
-            var mProduct = new Product()
-            {
-                Name = pTitle,
-                Choice1 = pDapAn1,
-                Choice2 = pDapAn2,
-                Choice3 = pDapAn3,
-                Choice4 = pDapAn4,
-                Price2 = pPrice2,
-                Price3 = pPrice3,
-                Unit1 = pUnit1,
-                Unit2 = pUnit2,
-                Unit3 = pUnit3,
-                Answer = pKetQua,
-                Type = pGroup,
-                Distributor = pProductDistributor,
-                Manufacturer = pProductManufacturer,
-                AccountId = 0,
-                Date = DateTime.Now,
-                Detail = editor1,
-                Image = pImage,
-                Number = pOrder,
-                Price = pPrice,
-                MarketId = pMarket,
-                SeriNumber = pSeri,
-                Status = true,
-                Summary = pSummary,
-                Visible = true,
-                SaleOff = pSaleOff,
-                BaoHanh = pBaoHanh,
-                Size = pSize,
-                Power = pPower,
-                Group = pMotoGroup,
-                Description = pDescription,
-                Keyword = pKeyWord,
-                Transport1 = pTransport1,
-                Transport2 = pTransport2,
-                Transport12 = pTransport12,
-                Transport22 = pTransport22
-            };
-            MpStartEntities.AddToProduct(mProduct);
-            MpStartEntities.SaveChanges();
-            //Tao cac anh Slide va properties
-            if (imageslide != null)
-            {
-                foreach (string it in imageslide)
-                {
-                    if (!String.IsNullOrEmpty(it))
-                    {
-                        var mProductImage = new ProductImage() { Name = it, Number = 1, ProductID = mProduct.ID, Title = pTitle };
-                        MpStartEntities.AddToProductImage(mProductImage);
-                    }
-                }
-            }
-            //Tao cac gia tri thuoc tinh
-            if (pNamePro != null)
-            {
-                foreach (string it in pNamePro)
-                {
-                    if (!String.IsNullOrEmpty(it))
-                    {
-                        var mProductAttribute = new ProductAttribute() { Name = pNamePro[i], Value = pValuePro[i], ProductID = mProduct.ID };
-                        MpStartEntities.AddToProductAttribute(mProductAttribute);
-                    }
-                    i++;
-                }
-            }
-            MpStartEntities.SaveChanges();
-            return Json(new { code = 1, message = "Lưu sản phẩm thành công." });
-
-        }      
-        [CheckAdminAuthorize(1)]
-        public ActionResult Edit(int pId)
-        {          
-            ProductPage mProductPage = new ProductPage();
-            var mProduct = ProductsService.LayTheoId(pId);
-            if (mProduct != null)
-            {
-                var mListProductType = ProductsService.LayProductTypeAll();
-                var mListProductDistributor = ProductsService.LayProductDistributorAll();
-                var mListProductManufacturer = ProductsService.LayProductManufacturerAll();
-                var mMarketList = MarketService.LayMarketTheoTrangAndType(1, 1000, 0);
-                //lay cac anh cu va xoa di
-                var mProductImageList = ProductsService.LayProductImageTheoIDProduct(mProduct.ID);
-                //lay danh sach cac thuoc tinh cu
-                var mProductAttributeList = ProductsService.LayProductAttributeTheoIDProduct(mProduct.ID);
-                //Tao danh sach cac nhom tin
-                mProductPage.HtmlNhom = V308HTMLHELPER.TaoDanhSachProductType4(mListProductType, (int)mProduct.Type);
-                mProductPage.HtmlNhom2 = V308HTMLHELPER.TaoDanhSachProductDistributor4(mListProductDistributor, (int)mProduct.Distributor);
-                mProductPage.HtmlNhom3 = V308HTMLHELPER.TaoDanhSachProductManufacturer4(mListProductManufacturer, (int)mProduct.Manufacturer);
-                mProductPage.HtmlNhom4 = V308HTMLHELPER.TaoDanhSachMarket(mMarketList, (int)mProduct.MarketId);
-                mProductPage.HtmlProductAttribute = V308HTMLHELPER.TaoDanhSachAnhAttributeSanPham(mProductAttributeList);
-                mProductPage.HtmlProductImage = V308HTMLHELPER.TaoDanhSachAnhSlideSanPham(mProductImageList);
-                mProductPage.pProduct = mProduct;
-            }
-            else
-            {
-                mProductPage.Html = "Không tìm thấy sản phẩm cần sửa.";
-            }
-            return View("Edit", mProductPage);
-        }
-        [HttpPost]      
-        [CheckAdminJson(1)]
-        [ValidateInput(false)]        
-        public JsonResult OnEdit(
-                int pId, int? pTransport1, int? pTransport2, 
-                int? pTransport12, int? pTransport22,
-                string pTitle, string pDapAn1, string pDapAn2,
-                string pDapAn3, string pDapAn4, int? pKetQua,
-                int? pGroup, int? pProductDistributor, int? pProductManufacturer,
-                string pImage, int? pPrice, int? pPrice2, 
-                int? pPrice3, string pUnit1, string pUnit2, 
-                string pUnit3, string pSeri, string pSummary, 
-                string[] imageslide, string[] pNamePro, string[] pValuePro,
-                string editor1, int? pOrder, int? pSaleOff, 
-                string pActive, int? pBaoHanh, int? pSize, 
-                int? pPower, int? pMotoGroup, int? pMarket, 
-                string pDescription, string pKeyWord
-            )
+        [ValidateInput(false)]
+        public ActionResult OnCreate(ProductModels product)
         {
-            int i = 0;
-            var mProduct = ProductsService.LayTheoId(pId);
-            if (mProduct != null)
+           
+            if (ModelState.IsValid)
             {
-                mProduct.Name = pTitle;
-                mProduct.Choice1 = pDapAn1;
-                mProduct.Choice2 = pDapAn2;
-                mProduct.Choice3 = pDapAn3;
-                mProduct.Choice4 = pDapAn4;
-                mProduct.Price2 = pPrice2;
-                mProduct.Price3 = pPrice3;
-                mProduct.Unit1 = pUnit1;
-                mProduct.Unit2 = pUnit2;
-                mProduct.Unit3 = pUnit3;
-                mProduct.Unit3 = pUnit3;
-                mProduct.Answer = pKetQua;
-                mProduct.Date = DateTime.Now;
-                mProduct.Detail = editor1;
-                mProduct.Image = pImage;
-                mProduct.Number = pOrder;
-                mProduct.Summary = pSummary;
-                mProduct.Type = pGroup;
-                mProduct.SeriNumber = pSeri;
-                mProduct.Manufacturer = pProductManufacturer;
-                mProduct.Distributor = pProductDistributor;
-                mProduct.SaleOff = pSaleOff;
-                mProduct.MarketId = pMarket;
-                mProduct.BaoHanh = pBaoHanh;
-                mProduct.Size = pSize;
-                mProduct.Power = pPower;
-                mProduct.Price = pPrice;
-                mProduct.Group = pMotoGroup;
-                mProduct.Description = pDescription;
-                mProduct.Keyword = pKeyWord;
-                mProduct.Transport1 = pTransport1;
-                mProduct.Transport2 = pTransport2;
-                mProduct.Transport12 = pTransport12;
-                mProduct.Transport22 = pTransport22;
-                //Tao cac anh Slide va properties
-                if (imageslide != null)
+                if (string.IsNullOrWhiteSpace(product.Code))
                 {
-                    if (imageslide.Any())
-                    {
-                        //lay cac anh cu va xoa di
-                        var mProductImageList = ProductsService.LayProductImageTheoIDProduct(mProduct.ID);
-                        //xoa cac anh cu nay
-                        foreach (ProductImage it in mProductImageList)
-                        {
-                            MpStartEntities.DeleteObject(it);
-                        }
-                        //luu ket qua
-                        MpStartEntities.SaveChanges();
-                        //them cac anh moi
-                        foreach (string it in imageslide)
-                        {
-                            if (!String.IsNullOrEmpty(it))
-                            {
-                                var mProductImage = new ProductImage() { Name = it, Number = 1, ProductID = mProduct.ID, Title = pTitle };
-                                MpStartEntities.AddToProductImage(mProductImage);
-                            }
-                        }
-                        //luu ket qua
-                        MpStartEntities.SaveChanges();
-                    }
+                    product.Code = string.Format("{0}-{1}",ConfigHelper.ProductCode,DateTime.Now.Ticks.GetHashCode() );
+                }
+                product.ImageUrl = product.Image != null ?
+                   product.Image.Upload() :
+                   product.ImageUrl;
+                var newProduct = new Product
+                {
+                    Name = product.Name,
+                    Type = product.CategoryId,
+                    Summary = product.Summary,
+                    Code = product.Code,
+                    Image = product.ImageUrl,
+                    BrandId = product.BrandId,
+                    Country = product.Country,
+                    Store = product.Store,
+                    Manufacturer = product.ManufacturerId,                   
+                    AccountId = 0,
+                    Number =product.Number,
+                    Unit1 = product.Unit,
+                    Weight = product.Weight,
+                    Quantity = product.Quantity,
+                    Npp = Convert.ToDouble(product.Npp) ,
+                    Width = product.Width,
+                    Height = product.Height,
+                    Depth =  product.Depth,
+                    Detail =  product.Detail,
+                    WarrantyTime = product.WarrantyTime,
+                    ExpireDate = product.ExpireDate,
+                    Title =  product.MetaTitle,
+                    Keyword = product.MetaKeyword,
+                    Description = product.MetaDescription,
+                    Price = product.Price,
+                    Transport1 =  product.Transport1,
+                    Transport2 = product.Transport2,
+                    Status = false
+                };
+                var result =ProductService.Insert(newProduct);               
+
+                //Tao cac anh Slide va properties
+                if (product.ProductImages != null && product.ProductImages.Length>0)
+                {
+                    ProductImageService.Insert(newProduct.ID, product.Name, product.ProductImages);
                 }
                 //Tao cac gia tri thuoc tinh
-                if (pNamePro != null)
+                if (product.AttrLabel != null && product.AttrLabel.Length >0)
                 {
-                    if (pNamePro.Any())
-                    {
-                        //lay danh sach cac thuoc tinh cu
-                        var mProductAttributeList = ProductsService.LayProductAttributeTheoIDProduct(mProduct.ID);
-                        //xoa cac anh cu nay
-                        foreach (ProductAttribute it in mProductAttributeList)
-                        {
-                            MpStartEntities.DeleteObject(it);
-                        }
-                        //luu ket qua
-                        MpStartEntities.SaveChanges();
-                        foreach (string it in pNamePro)
-                        {
-                            if (!String.IsNullOrEmpty(it))
-                            {
-                                var mProductAttribute = new ProductAttribute() { Name = pNamePro[i], Value = pValuePro[i], ProductID = mProduct.ID };
-                                MpStartEntities.AddToProductAttribute(mProductAttribute);
-                            }
-                            i++;
-                        }
-                        //luu ket qua
-                        MpStartEntities.SaveChanges();
-                    }
+                    ProductAttributeService.Insert(newProduct.ID, product.AttrLabel, product.AttrDesc);
                 }
-                MpStartEntities.SaveChanges();
-                return Json(new { code = 1, message = "Sửa sản phẩm thành công." });
+                //Tao saleOff
+                if (!string.IsNullOrWhiteSpace(product.Percent))
+                {
+                    ProductSaleOffService.Insert(new ProductSaleOff
+                    {
+                        ProductID = newProduct.ID,
+                        Percent = Convert.ToDouble(product.Percent),
+                        StartTime = Convert.ToDateTime(product.StartDate),
+                        EndTime = Convert.ToDateTime(product.EndDate)
+                    });
+                }
+                //Tao kich co
+                if (product.Size != null && product.Size.Length > 0)
+                {
+                    ProductSizeService.Insert(newProduct.ID, product.Size);                    
+                }
+                //Tao mau sac
+                if (product.Color != null && product.Color.Length > 0)
+                {
+                    ProductColorService.Insert(newProduct.ID, product.Color);                 
+                }               
+                SetFlashMessage(result== Result.Ok?
+                    $"Thêm sản phẩm '{product.Name}' thành công.":
+                    "Lỗi khi thêm mới sản phẩm");
+                if (product.SaveList)
+                {
+                    return RedirectToAction("Index");
+                }
+                ViewBag.ListCategory = BuildListCategory();
+                ViewBag.ListBrand = ProductBrandService.GetAll();
+                ViewBag.ListCountry = CountryService.GetAll();
+                ViewBag.ListStore = ProductStoreService.GetAll();
+                ViewBag.ListManufacturer = ProductManufacturerService.GetAll();              
+                ViewBag.ListUnit = UnitService.GetAll();
+                ViewBag.ListColor = BuildListColor(product.Color);
+                ViewBag.ListSize = BuildListSize(product.Size);
+                ViewBag.ListHour = DataHelper.ListHour;
+                ModelState.Clear();
+                return View("Create", product.ResetValue());
+
             }
-            return Json(new { code = 0, message = "Không tìm thấy sản phẩm để sửa." });
+            ViewBag.ListCategory = BuildListCategory();
+            ViewBag.ListBrand = ProductBrandService.GetAll();
+            ViewBag.ListCountry = CountryService.GetAll();
+            ViewBag.ListStore = ProductStoreService.GetAll();
+            ViewBag.ListManufacturer = ProductManufacturerService.GetAll();            
+            ViewBag.ListUnit = UnitService.GetAll();
+            ViewBag.ListColor = BuildListColor(product.Color);
+            ViewBag.ListSize = BuildListSize(product.Size);
+            ViewBag.ListHour = DataHelper.ListHour;
+            
+            return View("Create", product);
+        }
+        [CheckPermission(2, "Sửa")]       
+        public ActionResult Edit(int id)
+        {
+            var product = ProductService.FindToModify(id);
+            if (product == null)
+            {
+                return RedirectToAction("Index");
+
+            }
+            var modelEdit = new ProductModels
+            {
+                Id = product.ID,
+                Name = product.Name,
+                ImageUrl = product.Image,
+                CategoryId = product.Type ?? 0,
+                Code = product.Code,
+                BrandId = product.BrandId,
+                Store = product.Store,
+                Country = product.Country,
+                ManufacturerId = product.Manufacturer,
+                AccountId = product.AccountId,
+                Number = product.Number ?? 0,
+                Unit = product.Unit1,
+                Quantity = product.Quantity,
+                Weight = product.Weight,
+                Npp = product.Npp?.ToString() ?? "",
+                Width = product.Width,
+                Height = product.Height,
+                Depth = product.Depth,
+                Summary = product.Summary,
+                Detail = product.Detail,
+                WarrantyTime = product.WarrantyTime,
+                ExpireDate = product.ExpireDate,
+                Transport1 = product.Transport1 ?? 0,
+                Transport2 = product.Transport2 ?? 0,
+                MetaTitle = product.Title,
+                MetaDescription = product.Description,
+                MetaKeyword = product.Keyword,
+                Price = (int) (product.Price ?? 0),
+                ListProductImages = product.ProductImages?.ToList() ?? new List<ProductImage>(),
+                ListProductAttribute = product.ProductAttribute?.ToList() ?? new List<ProductAttribute>(),
+            };
+
+            if (product.ProductSaleOff != null && product.ProductSaleOff.Count>0)
+            {
+                var saleOffItem = product.ProductSaleOff.FirstOrDefault();
+                modelEdit.Percent = saleOffItem.Percent?.ToString() ?? "";
+                modelEdit.StartDate = saleOffItem.StartTime?.ToString() ?? "";
+                modelEdit.EndDate = saleOffItem.EndTime?.ToString() ?? "";
+            }
+
+            ViewBag.ListCategory = BuildListCategory();
+            ViewBag.ListBrand = ProductBrandService.GetAll();
+            ViewBag.ListCountry = CountryService.GetAll();
+            ViewBag.ListStore = ProductStoreService.GetAll();
+            ViewBag.ListManufacturer = ProductManufacturerService.GetAll();
+            ViewBag.ListUnit = UnitService.GetAll();
+            ViewBag.ListColor = BuildListColor(
+                product.ProductColor?.Select(item => item.ColorCode).ToArray());
+            ViewBag.ListSize =
+                BuildListSize(product.ProductSize?.Select(item => item.Size).ToArray());         
+            ViewBag.ListHour = DataHelper.ListHour;
+
+            return View("Edit", modelEdit);
+        }
+        [HttpPost]
+        [CheckPermission(2, "Sửa")]       
+        [ActionName("Edit")]
+        [ValidateInput(false)]
+        [ValidateAntiForgeryToken]
+        public ActionResult OnEdit(ProductModels product)
+        {
+            var productUpdate = ProductService.Find(product.Id);
+            if (productUpdate != null)
+            {
+
+                if (string.IsNullOrWhiteSpace(product.Code))
+                {
+                    product.Code = $"MP-{DateTime.Now.Ticks.GetHashCode()}";
+                }
+                product.ImageUrl = product.Image != null ?
+                                   product.Image.Upload() :
+                                   product.ImageUrl.ToImageOriginalPath();
+                productUpdate.Name = product.Name;
+                productUpdate.Type = product.CategoryId;
+                productUpdate.Summary = product.Summary;
+                productUpdate.Code = product.Code;
+                productUpdate.Image = product.ImageUrl;
+                productUpdate.BrandId = product.BrandId;
+                productUpdate.Country = product.Country;
+                productUpdate.Store = product.Store;
+                productUpdate.Manufacturer = product.ManufacturerId;
+                productUpdate.AccountId = product.AccountId;
+                productUpdate.Number = product.Number;
+                productUpdate.Unit1 = product.Unit;
+                productUpdate.Weight = product.Weight;
+                productUpdate.Quantity = product.Quantity;
+                productUpdate.Npp = Convert.ToDouble(product.Npp);
+                productUpdate.Width = product.Width;
+                productUpdate.Height = product.Height;
+                productUpdate.Depth = product.Depth;
+                productUpdate.Detail = product.Detail;
+                productUpdate.WarrantyTime = product.WarrantyTime;
+                productUpdate.ExpireDate = product.ExpireDate;
+                productUpdate.Title = product.MetaTitle;
+                productUpdate.Keyword = product.MetaKeyword;
+                productUpdate.Description = product.MetaDescription;
+                productUpdate.Price = product.Price;
+                productUpdate.Transport1 = product.Transport1;
+                productUpdate.Transport2 = product.Transport2;
+                var result = ProductService.Update(productUpdate);
+                //Tao cac anh san pham
+                if (product.ProductImages != null && product.ProductImages.Length > 0)
+                {
+                    ProductImageService.Insert(productUpdate.ID, product.Name, product.ProductImages);                   
+                }
+                //Tao cac gia tri thuoc tinh
+                if (product.AttrLabel != null && product.AttrLabel.Length > 0)
+                {
+                    ProductAttributeService.Insert(productUpdate.ID, product.AttrLabel, product.AttrDesc);                   
+                }
+                //Tao saleOff
+                if (!string.IsNullOrWhiteSpace(product.Percent))
+                {
+                    ProductSaleOffService.Insert(new ProductSaleOff
+                    {
+                        ProductID = productUpdate.ID,
+                        Percent = Convert.ToDouble(product.Percent),
+                        StartTime = Convert.ToDateTime(product.StartDate),
+                        EndTime = Convert.ToDateTime(product.EndDate)
+                    });
+
+                }
+                //Tao kich co
+                if (product.Size != null && product.Size.Length > 0)
+                {
+                    ProductSizeService.Insert(productUpdate.ID, product.Size);
+                }
+                //Tao mau sac
+                if (product.Color != null && product.Color.Length > 0)
+                {
+                    ProductColorService.Insert(productUpdate.ID, product.Color);
+                }           
+              
+                SetFlashMessage(result == Result.Ok?
+                    $"Cập nhật sản phẩm '{product.Name}' thành công.":
+                    "Lỗi khi cập nhật sản phẩm '{product.Name}'"
+                    );
+                if (product.SaveList)
+                {
+                    return RedirectToAction("Index");
+                }
+                ViewBag.ListCategory = BuildListCategory();
+                ViewBag.ListBrand = ProductBrandService.GetAll();
+                ViewBag.ListCountry = CountryService.GetAll();
+                ViewBag.ListStore = ProductStoreService.GetAll();
+                ViewBag.ListManufacturer = ProductManufacturerService.GetAll();
+                ViewBag.ListUnit = UnitService.GetAll();
+                ViewBag.ListColor = BuildListColor(product.Color);
+                ViewBag.ListSize = BuildListSize(product.Size);
+                ViewBag.ListHour = DataHelper.ListHour;
+                return View("Edit", product);
+            }
+            ViewBag.ListBrand = ProductBrandService.GetAll();
+            ViewBag.ListCountry = CountryService.GetAll();
+            ViewBag.ListStore = ProductStoreService.GetAll();
+            ViewBag.ListManufacturer = ProductManufacturerService.GetAll();
+            ViewBag.ListUnit = UnitService.GetAll();
+            ViewBag.ListColor = BuildListColor(product.Color);
+            ViewBag.ListSize = BuildListSize(product.Size);
+            ViewBag.ListHour = DataHelper.ListHour;
+            return View("Edit",product);
+
+        }
+        [HttpPost]
+        [CheckPermission(3, "Xóa")]       
+        [ActionName("Delete")]
+        public ActionResult OnDelete(int id)
+        {
+            var result = ProductService.Delete(id);
+            SetFlashMessage(result == Result.Ok
+                ? "Xóa sản phẩm thành công."
+                : "Không tìm thấy sản phẩm cần xóa.");
+
+            return RedirectToAction("Index");
+
         }      
+        [HttpPost]
+        [CheckPermission(4, "Thay đổi trạng thái")]
+      
+        public ActionResult ChangeStatus(int id)
+        {
+            var result = ProductService.ChangeStatus(id);
+            SetFlashMessage(result == Result.Ok
+                ? $"Thay đổi trạng thái sản phẩm thành công."
+                : "Không tìm thấy sản phẩm cần thay đổi trạng thái.");
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        [CheckPermission(5, "Cập nhật thứ tự")]        
+        public ActionResult UpdateProductOrder(int id, string order)
+        {
+            int orderValue;
+            int.TryParse(order, out orderValue);
+            var result = ProductService.UpdateOrder(id, orderValue);
+            if (result == Result.NotExists)
+            {
+                return Json(new { message = "Không tìm thấy sản phẩm để cập nhật thứ tự" });
+            }
+            return Json(new { message = "Cập nhật thứ tự của sản phẩm " + result + " thành công." });
+        }
+        [HttpPost]
+        [CheckPermission(6, "Cập nhật số lượng")]       
+        public ActionResult UpdateProductQuantity(int id, string quantity)
+        {
+            int quantityValue;
+            int.TryParse(quantity, out quantityValue);
+            var result = ProductService.UpdateQuantity(id, quantityValue);
+            if (result == Result.NotExists)
+            {
+                return Json(new { message = "Không tìm thấy sản phẩm để cập nhật số lượng" });
+            }
+            return Json(new { message = "Cập nhật số lượng của sản phẩm " + result + " thành công." });
+        }
+        [HttpPost]
+        [CheckPermission(7, "Cập nhật giá")]        
+        public ActionResult UpdatePrice(int id, string price)
+        {
+            double priceValue;
+            double.TryParse(price, out priceValue);
+            var result = ProductService.UpdatePrice(id, priceValue);
+            if (result == Result.NotExists)
+            {
+                return Json(new { message = "Không tìm thấy sản phẩm để cập nhật giá." });
+            }
+            return Json(new { message = "Cập nhật giá của sản phẩm " + result + " thành công." });
+        }
+        [HttpPost]
+        [CheckPermission(8, "Cập nhật Npp")]       
+        public ActionResult UpdateNpp(int id, string npp)
+        {
+            double nppValue;
+            double.TryParse(npp, out nppValue);
+            var result = ProductService.UpdateNpp(id, nppValue);
+            if (result == Result.NotExists)
+            {
+                return Json(new { message = "Không tìm thấy sản phẩm để cập nhật chiết khấu." });
+            }
+            return Json(new { message = "Cập nhật chiết khấu của sản phẩm " + result + " thành công." });
+        }
+        [HttpPost]
+        [CheckPermission(9, "Cập nhật Mã sản phẩm")]        
+        public ActionResult UpdateCode(int id, string code)
+        {
+
+            var result = ProductService.UpdateCode(id, code);
+            if (result == Result.NotExists)
+            {
+                return Json(new { message = "Không tìm thấy sản phẩm để cập nhật mã" });
+            }
+            return Json(new { message = "Cập nhật mã của sản phẩm " + result + " thành công." });
+        }
+        [HttpPost]
+        [CheckPermission(10, "Xóa nhiều sản phẩm lựa chọn")]                   
+        public ActionResult DeleteAll(string listId)
+        {
+            if (!string.IsNullOrWhiteSpace(listId))
+            {
+                var result = ProductService.DeleteAll(listId);
+               
+                return Json(new { code = (result == Result.Ok? "ok":result), message = "Xóa sản phẩm thành công." });
+            }
+            return Json(new {code = "not_exists"});
+
+
+        }
+        [CheckPermission(11, "Ẩn nhiều sản phẩm lựa chọn")]
+        [HttpPost]
+        public ActionResult HideAll(string listId)
+        {
+            if (!string.IsNullOrWhiteSpace(listId))
+            {
+                var ressult = ProductService.HideAll(listId);
+              
+                return Json(new { code = (ressult == Result.Ok ? "ok" : ressult), message = "Ẩn sản phầm lựa chọn thành công." });
+            }
+            return Json(new { code = "not_exists" });
+        }
+       
+       
     }
 }

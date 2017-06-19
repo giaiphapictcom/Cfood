@@ -1,0 +1,15 @@
+﻿@model V308CMS.Admin.Models.SizeModels
+@using V308CMS.Admin.Helpers
+@using V308CMS.Admin.Helpers.Url
+@{
+    ViewBag.Title = "Thêm mới kích cỡ";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+<div class="panel panel-primary">
+    <div class="panel-body">
+        <form method="post" role="form" action="@Url.SizeCreateUrl()">
+            @Html.Partial("_SizeForm", Model)
+        </form>
+    </div>
+
+</div>

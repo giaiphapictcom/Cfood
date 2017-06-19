@@ -1,0 +1,47 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@model  V308CMS.Admin.Models.ProductColorModels
+@{
+    var listState = (List<SelectListItem>)ViewBag.ListState;
+}
+<link rel="stylesheet" href="~/Content/vendor/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css"/>
+<script type="text/javascript" src="~/Content/vendor/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
+@Html.HiddenFor(color => color.Id)
+@Html.AntiForgeryToken()
+<div class="row">
+    @Html.ValidationSummary(true)
+    <div class="col-lg-6">
+        <div class="form-group">
+            @Html.LabelFor(color => color.Name)
+            @Html.TextBoxFor(color => color.Name, new {@class = "form-control", placeholder = "Tên màu"})
+            @Html.ValidationMessageFor(color => color.Name)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(color => color.Code)
+            @Html.TextBoxFor(color => color.Code, new {@class = "color form-control", placeholder = "Mã màu"})
+            @Html.ValidationMessageFor(color => color.Code)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(color => color.Description)
+            @Html.TextAreaFor(color => color.Description, new {@class = "form-control", placeholder = "Mô tả"})
+            @Html.ValidationMessageFor(color => color.Code)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(color => color.State)
+            @Html.DropDownListFor(color => color.State, listState, new
+            {
+                @class = "form-control",
+                placeholder = "Trạng thái"
+            })
+            @Html.ValidationMessageFor(color => color.State)
+        </div>
+
+        @Html.Partial("UI/_FormAction")
+        <a href="@Url.ProductColorIndexUrl()" title="Danh sách Màu" class="btn btn-link">Danh sách</a>
+
+    </div>
+</div>
+<script>
+    $(function () {
+        $('.color').colorpicker();
+    });
+</script>

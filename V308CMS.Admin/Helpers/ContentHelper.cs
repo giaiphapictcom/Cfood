@@ -1,7 +1,11 @@
+
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+
+﻿using V308CMS.Data.Enum;
+
 
 namespace V308CMS.Admin.Helpers
 {
@@ -15,6 +19,21 @@ namespace V308CMS.Admin.Helpers
             }
             return title.Length > limit ? title.Substring(0, limit) + limitText : title;
 
+        }
+
+        public static string ToPositionName(this byte position)
+        {
+            switch (position)
+            {
+                case (byte)PositionEnum.Top:
+                    return "Đầu";
+                case (byte)PositionEnum.Center:
+                    return "Giữa";
+                case (byte)PositionEnum.Bottom:
+                    return "Dưới";
+                default:
+                    return "";
+            }
 
         }
     }

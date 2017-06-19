@@ -1,0 +1,45 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@using V308CMS.Admin.Models.UI
+@model  V308CMS.Admin.Models.ProductDistributorModels
+@Html.HiddenFor(distributor => Model.Id)
+@Html.AntiForgeryToken()
+<div class="row">
+    @Html.ValidationSummary(true)
+    <div class="col-lg-6">
+        <div class="form-group">
+            @Html.LabelFor(distributor => distributor.Name)
+            @Html.TextBoxFor(distributor => distributor.Name, new {@class = "form-control", placeholder = "Tên"})
+            @Html.ValidationMessageFor(distributor => distributor.Name)
+        </div>
+        @Html.Partial("UI/_ImageSelectPreview", new ImageSelectPreviewModels
+        {
+           Id = Model.Id,
+           Name = "Image",
+           ImageUrl = Model.ImageUrl,
+           ImageUrlHiddenName = "ImageUrl"
+        })
+
+        <div class="form-group">
+            @Html.LabelFor(distributor => distributor.Detail)
+            @Html.TextBoxFor(distributor => distributor.Detail, new { @class = "form-control", placeholder = "Mô tả" })
+            @Html.ValidationMessageFor(distributor => distributor.Detail)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(distributor => distributor.Order)
+            @Html.TextBoxFor(distributor => distributor.Order, new { @class = "form-control", placeholder = "Thứ tự" })
+            @Html.ValidationMessageFor(distributor => distributor.Order)
+        </div>
+        
+        <div class="form-group">
+
+            <div class="checkbox">
+                @Html.CheckBoxFor(distributor => distributor.Status, new { @checked = (Model.Status ? "checked" : "") })
+                @Html.LabelFor(distributor=> distributor.Status)
+            </div>
+        </div>
+
+       @Html.Partial("UI/_FormAction")
+        <a href="@Url.ProductDistributorIndexUrl()" title="Danh sách nhà cung cấp" class="btn btn-link">Danh sách</a>
+
+    </div>
+</div>

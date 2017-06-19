@@ -1,0 +1,77 @@
+﻿@using V308CMS.Admin.Helpers
+@using V308CMS.Admin.Helpers.Url
+@using V308CMS.Admin.Models.UI
+@using V308CMS.Common
+@model List<V308CMS.Data.Contact>
+@{
+    ViewBag.Title = "Thông tin Liên hệ";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+@if (Model.Any())
+{
+    <div class="panel panel-default">
+        <!-- /.panel-heading -->
+        <div class="panel-body">
+            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Họ tên</th>
+                        <th>Email</th>
+                        <th>Số điện thoại</th>                     
+                        <th>Tin nhắn</th>                      
+                        <th>Ngày gửi</th>                     
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                        var contact = Model[i];
+                        <tr>
+                            <td style="text-align: center">
+                                @(i + 1)
+                            </td>
+                            <td>
+                                <a title="Cập nhật thông tin liên hệ @contact.FullName" class="btn btn-link" href="@Url.ContactEditUrl(new {contact.ID})">
+                                    @contact.FullName
+                                </a>
+                            </td>
+                            <td>
+                                @contact.Email
+                            </td>
+                            <td>@contact.Phone</td>
+                            <td>@contact.Message.ToTitle()</td>
+                            <td>@contact.CreatedDate.ToDdmmyyyy()</td>
+                         
+                            <td style="width: 200px">
+                                @Html.Partial("UI/_EditButton", new ButtonModels
+                               {
+                                   Id = string.Format("contact_{0}", contact.ID),
+                                   Href = Url.ContactEditUrl(new { contact.ID }),
+                                   Title = "Cập nhật thông tin  liên hệ " + contact.FullName
+                               })
+                                @Html.Partial("UI/_DeleteForm", new DeleteFormModels
+                               {
+                                   NameOfId = "Id",
+                                   ValueOfId = contact.ID,
+                                   IsConfirm = true,
+                                   Url = Url.ContactDeleteUrl()
+                               })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#dataTables-example').DataTable({
+            responsive: true
+        });
+    });
+</script>

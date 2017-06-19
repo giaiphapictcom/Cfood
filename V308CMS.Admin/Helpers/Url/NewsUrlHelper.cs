@@ -15,5 +15,17 @@ namespace V308CMS.Admin.Helpers.Url
             return helper.Action(action, controller, routeValue);
         }
 
+        public static string NewsEditUrl(this UrlHelper helper, object routeValue = null, string controller = "news",
+        string action = "edit")
+        {
+            return helper.Action(action, controller, routeValue);
+        }
+        public static string NewsDeleteUrl(this UrlHelper helper, object routeValue = null, string controller = "news",
+        string action = "delete")
+        {
+            return helper.Action(action, controller, routeValue);
+        }
+
+
     }
 }

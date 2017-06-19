@@ -1,9 +1,11 @@
+
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace V308CMS.Admin.Helpers
+
+﻿namespace V308CMS.Admin.Helpers
 {
     public class Result
     {

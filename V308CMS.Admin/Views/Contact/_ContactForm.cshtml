@@ -1,0 +1,34 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@model V308CMS.Admin.Models.ContactModels
+@Html.HiddenFor(contact => contact.Id)
+@Html.AntiForgeryToken()
+<div class="row">
+    @Html.ValidationSummary(true)
+    <div class="col-lg-6">
+
+        <div class="form-group">
+            @Html.LabelFor(contact => contact.FullName)
+            @Html.TextBoxFor(contact => contact.FullName, new { @class = "form-control", placeholder = "Nhập Họ và tên" })
+            @Html.ValidationMessageFor(contact => contact.FullName)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(contact => contact.Email)
+            @Html.TextBoxFor(contact => contact.Email, new { @class = "form-control", placeholder = "Nhập địa chỉ Email" })
+            @Html.ValidationMessageFor(contact => contact.Email)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(contact => contact.Phone)
+            @Html.TextBoxFor(contact => contact.Phone, new { @class = "form-control", placeholder = "Nhập số điện thoại" })
+            @Html.ValidationMessageFor(contact => contact.Phone)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(contact => contact.Message)
+            @Html.TextAreaFor(contact => contact.Message, new { @class = "form-control", placeholder = "Nhập nội dung tin nhắn" })
+            @Html.ValidationMessageFor(contact => contact.Message)
+        </div>
+        @Html.Partial("UI/_FormAction")
+        <a></a>
+        <a href="@Url.ContactIndexUrl()" title="Danh sách thông tin liên hệ" class="btn btn-link">Danh sách</a>
+
+    </div>
+</div>

@@ -7,86 +7,177 @@ namespace V308CMS.Respository
 {
     public interface IPermissionRespository
     {
-        
+        List<Permission> GetAllByRoleId(int roleId);
+        string DeleteAllByRoleId(int roleId);
+        string CreateOrUpdate(Permission data);
+        int GetPermissionValueByGroupAndRole(string groupPermission, int roleId);
     }
     public class PermissionRespository: IBaseRespository<Permission>, IPermissionRespository
     {
-        private readonly V308CMSEntities _entities;
-
-        public PermissionRespository(V308CMSEntities entities)
+        public PermissionRespository()
         {
-            _entities = entities;
+           
+           
         }
-      
         public Permission Find(int id)
         {
-            return (from permission in _entities.Permission
-                where permission.Id == id
-                select permission
-                ).FirstOrDefault();
+            using (var entities = new V308CMSEntities())
+            {
+                return (from permission in entities.Permission
+                        where permission.Id == id
+                        select permission
+               ).FirstOrDefault();
+            }
+           
         }
 
         public string Delete(int id)
         {
-            var permissionDelete = (from permission in _entities.Permission
-                              where permission.Id == id
-                              select permission
-                ).FirstOrDefault();
-            if (permissionDelete != null)
+            using (var entities = new V308CMSEntities())
             {
-                _entities.Permission.Remove(permissionDelete);
-                _entities.SaveChanges();
-                return "ok";
+                var permissionDelete = (from permission in entities.Permission
+                                        where permission.Id == id
+                                        select permission
+                   ).FirstOrDefault();
+                if (permissionDelete != null)
+                {
+                    entities.Permission.Remove(permissionDelete);
+                    entities.SaveChanges();
+                    return "ok";
+                }
+                return "not_exists";
+
             }
-            return "not_exists";
+            
         }
 
         public string Update(Permission data)
         {
-            var permissionUpdate = (from permission in _entities.Permission
-                                    where permission.Id == data.Id
-                                    select permission
-               ).FirstOrDefault();
-            if (permissionUpdate != null)
+            using (var entities = new V308CMSEntities())
             {
-                permissionUpdate.GroupId = data.GroupId;
-                permissionUpdate.Action = data.Action;
-                permissionUpdate.Value = data.Value;
-                permissionUpdate.Status = data.Status;
-                permissionUpdate.CreatedAt = data.CreatedAt;
-                permissionUpdate.UpdatedAt = data.UpdatedAt;
-                _entities.SaveChanges();
-                return "ok";
+                var permissionUpdate = (from permission in entities.Permission
+                                        where permission.Id == data.Id
+                                        select permission
+              ).FirstOrDefault();
+                if (permissionUpdate != null)
+                {
+                    permissionUpdate.GroupPermission = data.GroupPermission;
+                    permissionUpdate.Value = data.Value;
+                    permissionUpdate.RoleId = data.RoleId;
+                    entities.SaveChanges();
+                    return "ok";
+                }
+                return "not_exists";
             }
-            return "not_exists";
+           
         }
 
         public string Insert(Permission data)
         {
-            var permissionInsert= (from permission in _entities.Permission
-                                    where permission.GroupId == data.GroupId
-                                    orderby permission.Value descending 
-                                    select permission
-                ).FirstOrDefault();
-            if (permissionInsert == null)
+            using (var entities = new V308CMSEntities())
             {
-                data.Value = 1;
+                var permissionInsert = (from permission in entities.Permission
+                                        where permission.GroupPermission == data.GroupPermission                                       
+                                        select permission
+               ).FirstOrDefault();
+                if (permissionInsert == null){
+                    entities.Permission.Add(data);
+                    entities.SaveChanges();
+                    return "ok";
+                }
+                return "exists";
+
             }
-            else
-            {
-                data.Value = permissionInsert.Value*2;
-            }
-            _entities.Permission.Add(data);
-            _entities.SaveChanges();
-            return "ok";
         }
 
         public List<Permission> GetAll()
         {
-            return (from permission in _entities.Permission
-                orderby permission.UpdatedAt descending
-                select permission
-                ).ToList();
+            using (var entities = new V308CMSEntities())
+            {
+                return (from permission in entities.Permission
+                        orderby permission.Id descending
+                        select permission
+              ).ToList();
+            }
+          
+        }
+
+        public List<Permission> GetAllByRoleId(int roleId)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return (from permission in entities.Permission
+                        where permission.RoleId == roleId
+                        orderby permission.Id descending
+                        select permission
+              ).ToList();
+            }
+
+        }
+
+        public string DeleteAllByRoleId(int roleId)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                var listPermission = (from permission in entities.Permission
+                        where permission.RoleId == roleId
+                        orderby permission.Id descending
+                        select permission
+              ).ToList();
+                if (listPermission.Count > 0)
+                {
+                    foreach (var permission in listPermission)
+                    {
+                        entities.Permission.Remove(permission);
+                        entities.SaveChanges();
+                    }
+                    return "ok";
+                }
+                return "not_exists";
+            }
+        }
+
+        public string CreateOrUpdate(Permission data)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                var permissionUpdate = (from permission in entities.Permission
+                                        where permission.GroupPermission == data.GroupPermission
+                                        && permission.RoleId == data.RoleId
+                                        select permission
+                ).FirstOrDefault();
+                if (permissionUpdate != null)
+                {                    
+                    if (permissionUpdate.Value != data.Value)
+                    {
+                        permissionUpdate.Value = data.Value;
+                        entities.SaveChanges();
+                        return "update_ok";
+                    }                  
+                    return "update_exists";
+                }
+                else
+                {
+                  string insertResult = Insert(data);
+                  //return $"create_{insertResult}";
+                  return string.Format("create_{0}", insertResult);
+                }               
+            }
+        }
+
+        public int GetPermissionValueByGroupAndRole(string groupPermission, int roleId)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                var permissionItem = (from permission in entities.Permission
+                                      where permission.GroupPermission == groupPermission
+                                      && permission.RoleId == roleId
+                                      select permission
+                ).FirstOrDefault();
+                //return permissionItem?.Value ?? 0;
+                return permissionItem.Value;
+            }
+            
         }
     }
 }

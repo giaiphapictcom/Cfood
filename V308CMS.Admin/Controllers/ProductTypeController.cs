@@ -1,179 +1,196 @@
-﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using V308CMS.Admin.Attributes;
+using V308CMS.Admin.Helpers;
+using V308CMS.Admin.Helpers.Url;
 using V308CMS.Admin.Models;
+using V308CMS.Admin.Models.UI;
 using V308CMS.Common;
-using V308CMS.Data;
+using V308CMS.Data.Enum;
 
 namespace V308CMS.Admin.Controllers
 {
-   
-    [CustomAuthorize]
+    [Authorize]
+    [CheckGroupPermission(true, "Nhóm sản phẩm")]
     public class ProductTypeController : BaseController
-    {
-        private const int PageSize = 30;
-        #region LOAI SAN PHAM
-        [CheckAdminAuthorize(1)]
-        public ActionResult Index(int pType=0, int pPage=1, string keyword="", int rootId = 0, int parentId = 0, int childId = 0)
-        {           
-            ProductPage mProductPage = new ProductPage();
-            ProductType mProductTypeDetail = new ProductType() { Parent = 0 };
-            string mLevel = "";
-            pType = (int)GetState("pType",pType, 0);
-            pPage = (int) GetState("pPage",pPage, 1);
-            rootId = (int)GetState("rootId",rootId, 0);
-            parentId = (int)GetState("parentId",parentId, 0);
-            childId = (int)GetState("childId",childId, 0);
-            keyword =(string)GetState("keyword",keyword, "");           
-            #endregion
-            //lay Level cua Type
-            if (pType != 0)
+    {       
+        [CheckPermission(0, "Danh sách")]
+        public ActionResult Index(int rootId =0, int parentId =0, int childId =0)
+        {
+            ViewBag.ListRoot = ProductTypeService.GetListByType((int)ProductCategoryLevelEnum.Root, 0);
+            ViewBag.ListParent = ProductTypeService.GetListByType((int)ProductCategoryLevelEnum.Parent, rootId);
+            ViewBag.ListChild = ProductTypeService.GetListByType((int)ProductCategoryLevelEnum.Child, parentId);
+            var data = ProductTypeService.GetList(rootId, parentId, childId);
+            var model = new ProductTypeViewModels
             {
-                mProductTypeDetail = ProductsService.LayProductTypeTheoId((int)pType);
-                if (mProductTypeDetail != null)
-                    mLevel = mProductTypeDetail.Level.Trim();
-            }
-            /*Lay danh sach cac tin theo page*/
-            /*Lay danh sach cac tin theo page*/
-            var mProductType = ProductTypeService.GetList(keyword,pType, mLevel,rootId,parentId,childId,(int)pPage, PageSize);
-            //Lay tat ca cac nhom
-            var mProductTypeAll = ProductsService.LayProductTypeAll();
-            var mProductTypeChildList = ProductsService.LayProductTypeTheoParentId((int)pType);
-            if (mProductType.Count < PageSize)
-                mProductPage.IsEnd = true;
-            //Tao Html cho danh sach tin nay
-            mProductPage.Html = V308HTMLHELPER.TaoDanhSachProductType(mProductType, (int)pPage);
-            mProductPage.HtmlNhom = V308HTMLHELPER.TaoDanhSachProductTypeHome2(mProductTypeAll, (int)pPage, (int)pType);
-            mProductPage.Page = (int)pPage;
-            mProductPage.TypeId = (int)pType;
-            mProductPage.ProductTypeLt = mProductTypeChildList;
-            mProductPage.pProductType = mProductTypeDetail;
-            mProductPage.Keyword = keyword;
-            mProductPage.RootId = rootId;
-            mProductPage.ListProductTypeRoot = ProductTypeService.GetListRoot();
-            mProductPage.ParentId = parentId;
-            mProductPage.ListProductTypeParent = ProductTypeService.GetListParent(rootId);
-            mProductPage.ChildId = childId;
-            mProductPage.ListProductTypeChild = ProductTypeService.GetListParent(parentId);
-            return View("Index", mProductPage);
-        }     
-        [CheckAdminJson(1)]
-        [HttpPost]       
-        public JsonResult OnDelete(int pId = 0)
-        {           
-            var mProductType = ProductsService.LayProductTypeTheoId(pId);
-            if (mProductType != null)
-            {
-                MpStartEntities.DeleteObject(mProductType);
-                MpStartEntities.SaveChanges();
-                return Json(new { code = 1, message = "Xóa thành công!" });
-            }
-            return Json(new { code = 0, message = "Không tìm thấy tin cần xóa." });
-
-        }     
-        [CheckAdminAuthorize(1)]
+                RootId = rootId,
+                ParentId = parentId,
+                ChildId = childId,
+                Data = data
+            };
+            return View("Index", model);
+        }      
+        [CheckPermission(1, "Thêm mới")]
         public ActionResult Create()
-        {           
-            ProductPage mProductPage = new ProductPage();
-            var mProductType = ProductsService.LayProductTypeAll();
-            //Tao danh sach cac nhom tin
-            mProductPage.HtmlNhom = V308HTMLHELPER.TaoDanhSachProductType2(mProductType, 0);
-            return View("Create", mProductPage);
+        {
+            ViewBag.ListCategory = BuildListCategory();
+            return View("Create", new ProductTypeModels());
         }
-        [HttpPost]      
-        [CheckAdminJson(1)]
-        [ValidateInput(false)]      
-        public JsonResult OnCreate(string pTieuDe, int? pGroupId, string pSummary, int? pKichHoat, int? pUuTien, string pImageUrl, string pImageBanner, string pDescription)
-        {         
-            ProductType mProductType;
-            string[] mLevelArray;
-            int mLevel = 0;
-            if (pGroupId == 0)
+        [HttpPost]
+        [CheckPermission(1, "Thêm mới")]
+        [ActionName("Create")]
+        [ValidateAntiForgeryToken]        
+        public ActionResult OnCreate(ProductTypeModels productType)
+        {
+            if (ModelState.IsValid)
             {
-                //Tinh gia tri Level moi cho Group nay
-                //1- Lay tat ca cac Group me
-                //2- Convert gia tri Level de lay gia tri lon nhat
-                //3- Tao gia tri moi lon hon gia tri lon nhat
-                mLevelArray = (from p in MpStartEntities.ProductType
-                               where p.Parent == 0
-                               select p.Level).ToArray();
-                mLevel = mLevelArray.Select(p => Convert.ToInt32(p)).ToArray().Max();
-                mLevel = (mLevel + 1);
-                mProductType = new ProductType() { Date = DateTime.Now, Number = pUuTien, Level = mLevel.ToString(), Status = true, Name = pTieuDe, Parent = pGroupId, Detail = pSummary, Image = pImageUrl, ImageBanner = pImageBanner, Description = pDescription };
-                MpStartEntities.AddToProductType(mProductType);
-                MpStartEntities.SaveChanges();
-            }
-            else
-            {
-                //lay level cua nhom me
-                var mProductTypeParent = ProductsService.LayProductTypeTheoId((int)pGroupId);
-                if (mProductTypeParent != null)
+                productType.ImageUrl = productType.Image != null ?
+                    productType.Image.Upload() :
+                    productType.ImageUrl;
+                productType.ImageBannerUrl = productType.ImageBanner != null ?
+                    productType.ImageBanner.Upload() :
+                    productType.ImageBannerUrl;
+                var result = ProductTypeService.Insert(
+                    productType.Name,
+                    productType.ParentId,
+                    productType.Icon,
+                    productType.Description,
+                    productType.ImageUrl,
+                    productType.ImageBannerUrl,
+                    productType.Number,
+                    productType.CreatedDate,
+                    productType.Status,
+                    productType.IsHome
+                    );
+                if (result == Result.Exists)
                 {
-                    mLevelArray = (from p in MpStartEntities.ProductType
-                                   where (p.Level.Substring(0, mProductTypeParent.Level.Length).Equals(mProductTypeParent.Level)) && (p.Level.Length == (mProductTypeParent.Level.Length + 5))
-                                   select p.Level).ToArray();
-                    if (mLevelArray.Any())
-                    {
-                        mLevel = mLevelArray.Select(p => Convert.ToInt32(p)).ToArray().Max();
-                        mLevel = (mLevel + 1);
-                    }
-                    else
-                    {
-                        mLevel = Convert.ToInt32(mProductTypeParent.Level.ToString().Trim() + "10001");
-                    }
-                    mProductType = new ProductType() { Date = DateTime.Now, Number = pUuTien, Level = mLevel.ToString(), Status = true, Name = pTieuDe, Parent = pGroupId, Detail = pSummary, Image = pImageUrl, Description = pDescription };
-                    MpStartEntities.AddToProductType(mProductType);
-                    MpStartEntities.SaveChanges();
+                    ModelState.AddModelError("", string.Format("Loại sản phẩm '{productType.Name}' đã tồn tại trên hệ thống.") );
+                    ViewBag.ListCategory = BuildListCategory();
+                    return View("Create", productType);
+
                 }
-                else
+                SetFlashMessage( string.Format("Thêm loại sản phẩm '{productType.Name}' thành công.") );
+                if (productType.SaveList)
                 {
-                    return Json(new { code = 0, message = "Không tìm thấy nhóm sản phẩm." });
+                    return RedirectToAction("Index");
                 }
+                ViewBag.ListCategory = BuildListCategory();
+                ModelState.Clear();
+                return View("Create", productType.ResetValue());
             }
-            return Json(new { code = 1, message = "Lưu loại sản phẩm thành công." });
+            ViewBag.ListCategory = BuildListCategory();
+            return View("Create", productType);
 
-        }     
-        [CheckAdminAuthorize(1)]
-        public ActionResult Edit(int pId = 0)
-        {            
-            ProductPage mProductPage = new ProductPage();
-            var mProductType = ProductsService.LayProductTypeTheoId(pId);
-            if (mProductType != null)
+        }      
+        [CheckPermission(2, "Sửa")]
+        public ActionResult Edit(int id)
+        {
+            var productTypeItem = ProductTypeService.Find(id);
+            if (productTypeItem == null)
             {
-                var mListProductType = ProductsService.LayProductTypeAll();
-                //Tao danh sach cac nhom tin
-                mProductPage.HtmlNhom = V308HTMLHELPER.TaoDanhSachProductType3(mListProductType, (int)mProductType.Parent);
-                mProductPage.pProductType = mProductType;
+                return RedirectToAction("Index");
             }
-            else
+            ViewBag.ListCategory = BuildListCategory();
+            var productTypeModel = new ProductTypeModels
             {
-                mProductPage.Html = "Không tìm thấy tin tức cần sửa.";
-            }
-            return View("Edit", mProductPage);
+                Id = productTypeItem.ID,
+                Name = productTypeItem.Name,
+                ParentId = productTypeItem.Parent ?? 0,
+                Number = productTypeItem.Number ?? 0,
+                Status = productTypeItem.Status.HasValue && productTypeItem.Status.Value,
+                ImageUrl = productTypeItem.Image,
+                ImageBannerUrl = productTypeItem.ImageBanner,
+                Icon = productTypeItem.Icon,
+                Description = productTypeItem.Description
+
+            };
+            return View("Edit", productTypeModel);
         }
-        [HttpPost]      
-        [CheckAdminJson(1)]
-        [ValidateInput(false)]       
-        public JsonResult OnEdit(int pId, string pTieuDe, int? pGroupId, string pSummary, int? pKichHoat, int? pUuTien, string pImageUrl, string pImageBanner, string pDescription)
-        {            
-            var mProductType = ProductsService.LayProductTypeTheoId(pId);
-            if (mProductType != null)
+        [HttpPost]
+        [CheckPermission(2, "Sửa")]
+        [ActionName("Edit")]
+        [ValidateAntiForgeryToken]       
+        public ActionResult OnEdit(ProductTypeModels productType)
+        {
+            if (ModelState.IsValid)
             {
-                mProductType.Name = pTieuDe;
-                mProductType.Date = DateTime.Now;
-                mProductType.Number = pUuTien;
-                mProductType.Parent = pGroupId;
-                mProductType.Detail = pSummary;
-                mProductType.Image = pImageUrl;
-                mProductType.ImageBanner = pImageBanner;
-                mProductType.Description = pDescription;
-                MpStartEntities.SaveChanges();
-                return Json(new { code = 1, message = "Sủa loại sản phẩm thành công." });
+                productType.ImageUrl = productType.Image != null ?
+                    productType.Image.Upload() :
+                    productType.ImageUrl.ToImageOriginalPath();
+
+                productType.ImageBannerUrl = productType.ImageBanner != null ?
+                  productType.ImageBanner.Upload() :
+                  productType.ImageBannerUrl.ToImageOriginalPath();
+
+                var result = ProductTypeService.Update(
+                    productType.Id,
+                    productType.Name,
+                    productType.ParentId,
+                    productType.Icon,
+                    productType.Description,
+                    productType.ImageUrl,
+                    productType.ImageBannerUrl,
+                    productType.Number,
+                    productType.CreatedDate,
+                    productType.Status,
+                    productType.IsHome
+                    );
+                if (result == Result.NotExists)
+                {
+                    ModelState.AddModelError("", "Loại sản phẩm không tồn tại trên hệ thống.");
+                    ViewBag.ListCategory = BuildListCategory();
+                    return View("Edit", productType);
+                }
+                SetFlashMessage( string.Format("Cập nhật loại sản phẩm '{productType.Name}' thành công.") );
+                if (productType.SaveList)
+                {
+                    return RedirectToAction("Index");
+                }
+                ViewBag.ListCategory = BuildListCategory();
+                return View("Edit", productType);
+
             }
-            return Json(new { code = 0, message = "Không tìm thấy loại sản phẩm để sửa." });
+            ViewBag.ListCategory = BuildListCategory();
+            return View("Edit", productType);
+        }
+        [HttpPost]
+        [CheckPermission(3, "Xóa")]
+        [ActionName("Delete")]
+        public ActionResult OnDelete(int id)
+        {
+            var result = ProductTypeService.Delete(id);
+            SetFlashMessage(result == Result.Ok ? "Xóa Loại sản phẩm thành công." :
+                "Loại sản phẩm không tồn tại trên hệ thống.");
+            return RedirectToAction("Index");
 
         }
+        [HttpPost]
+        [CheckPermission(4, "Thay đổi trạng thái")]        
+        [ActionName("ChangeState")]
+        public ActionResult OnChangeState(int id)
+        {
+            var result = ProductTypeService.ChangeState(id);
+            SetFlashMessage(result == Result.Ok ?
+                "Thay đổi trạng thái Loại sản phẩm thành công." :
+                "Loại sản phẩm không tồn tại trên hệ thống.");
+            return RedirectToAction("Index");
+
+        }
+        [NonAction]
+        private List<MutilCategoryItem> BuildListCategory()
+        {
+            return ProductTypeService.GetAll().Select
+                (
+                    cate => new MutilCategoryItem
+                    {
+                        Name = cate.Name,
+                        Id = cate.ID,
+                        ParentId = cate.Parent
+                    }
+                ).ToList();
+        }
+       
+        
     }
 }

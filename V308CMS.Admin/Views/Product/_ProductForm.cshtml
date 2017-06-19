@@ -1,0 +1,636 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@using V308CMS.Admin.Models.UI
+@using V308CMS.Data
+@using V308CMS.Data.Models
+@model V308CMS.Admin.Models.ProductModels
+@{
+    var listCategory = (List<MutilCategoryItem>)ViewBag.ListCategory;
+    var listBrand = (List<Brand>)ViewBag.ListBrand;
+    var listCountry = (List<Country>)ViewBag.ListCountry;
+    var listStore = (List<Store>)ViewBag.ListStore;
+    var listManufacturer = (List<ProductManufacturer>)ViewBag.ListManufacturer;
+    var listUnit = (List<Unit>)ViewBag.ListUnit;
+    var listColor = (List<SelectListItem>)ViewBag.ListColor;
+    var listSize = (List<SelectListItem>)ViewBag.ListSize;
+    var listHour = (List<SelectListItem>)ViewBag.ListHour;
+}
+<link rel="stylesheet" href="~/Content/vendor/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css" />
+<link rel="stylesheet" href="~/Content/vendor/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" />
+<link rel="stylesheet" href="~/Content/vendor/dropzone/dist/dropzone.css" />
+
+<script type="text/javascript" src="~/Content/vendor/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js"></script>
+<script type="text/javascript" src="~/Content/vendor/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="~/Content/vendor/dropzone/dist/dropzone.js"></script>
+@section Header {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            CKEDITOR.replace('editor1',
+            {
+                filebrowserBrowseUrl: '/Content/Plugins/ckfinder/ckfinder.html',
+                filebrowserImageBrowseUrl: '/Content/Plugins/ckfinder/ckfinder.html?type=Images',
+                filebrowserFlashBrowseUrl: '/Content/Plugins/ckfinder/ckfinder.html?type=Flash',
+                filebrowserUploadUrl: '/Content/Plugins/ckfinder/core/connector/asp/connector.asp?command=QuickUpload&type=Files',
+                filebrowserImageUploadUrl: '/Content/Plugins/ckfinder/core/connector/asp/connector.asp?command=QuickUpload&type=Images',
+                filebrowserFlashUploadUrl: '/Content/Plugins/ckfinder/core/connector/asp/connector.asp?command=QuickUpload&type=Flash',
+                filebrowserWindowWidth: '100%',
+                filebrowserWindowHeight: '700',
+                height: '400px'
+            });
+        });
+    </script>
+
+}
+@Html.HiddenFor(product => product.Id)
+@Html.AntiForgeryToken()
+<div class="container">
+    <div>
+        <div class="Product_Button col-lg-offset-6">
+            @Html.Partial("UI/_FormAction")
+            <a href="@Url.ProductIndexUrl()" class="btn btn-primary">
+                <i class=""></i><strong>Sản phẩm</strong>
+            </a>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="row">
+        @Html.ValidationSummary(true)
+        @foreach (ModelState modelState in ViewData.ModelState.Values)
+        {
+            foreach (ModelError error in modelState.Errors)
+            {
+                <p>@error.ErrorMessage</p>
+            }
+        }
+        <div>
+            <ul class="nav nav-tabs col-lg-12" role="tablist">
+                <li class="active"><a href="#Product_main" role="tab" data-toggle="tab">Thông tin chính</a></li>
+                <li class=""><a href="#Product_Options" role="tab" data-toggle="tab">Thuộc tính bổ sung</a></li>
+                <li class=""><a href="#Product_Images" role="tab" data-toggle="tab">Ảnh sản phẩm</a></li>
+                <li class=""><a href="#Product_Summary" role="tab" data-toggle="tab">Mô tả & Nội dung</a></li>
+                <li class=""><a href="#Product_Desc" role="tab" data-toggle="tab">Giao hàng & Bảo hành</a></li>
+                <li class=""><a href="#Product_Mappings" role="tab" data-toggle="tab">SEO</a></li>
+                <li class=""><a href="#Product_StoreMapping" role="tab" data-toggle="tab">Giá & Giảm giá</a></li>
+
+            </ul>
+        </div>
+        <div class="clearfix"></div>
+        <div class="Product_Content tab-content">
+            <div id="Product_main" class="tab-pane active">
+                <h2>Thông tin chính</h2>
+                <fieldset>
+
+                    <div class="col-lg-12 form-group margin50">
+                        @Html.LabelFor(product => product.Name, new { @class = "col-lg-2" })
+                        <div class="col-lg-6">
+                            @Html.TextBoxFor(product => product.Name, new { @class = "form-control name", placeholder = "Nhập tên sản phẩm" })
+                        </div>
+                        @Html.ValidationMessageFor(product => product.Name)
+                    </div>
+                    <div class="col-lg-12 form-group">
+                        <label class="col-lg-2" for="@Model.Image">@(string.IsNullOrWhiteSpace(Model.ImageUrl) ? "Ảnh đại diện" : "Ảnh khác") </label>
+                        <div class="col-lg-6">
+                            @Html.Partial("UI/_ImageSelectPreview", new ImageSelectPreviewModels
+                            {
+                                Id = Model.Id,
+                                Name = "Image",
+                                ImageUrl = Model.ImageUrl,
+                                ImageUrlHiddenName = "ImageUrl",
+                                AutoGenerateLabel = false
+                            })
+                        </div>
+                    </div>
+                    <div class="col-lg-12 form-group">
+                        @Html.LabelFor(product => product.CategoryId, new { @class = "col-lg-2" })
+                        <div class="col-lg-4">
+                            @Html.Partial("UI/_MutilDropDownlist", new MutilDropDownlistModels
+                            {
+                               Name = "CategoryId",
+                               Data = listCategory,
+                               PlaceHolder = "Chọn loại sản phẩm",
+                               ParentId = Model.CategoryId
+                            })
+                            <div class="form-group">
+                                @Html.ValidationMessageFor(type => Model.CategoryId)
+                            </div>
+                            <p class="help-block">
+                                <a title="Thêm mới loại sản phẩm" href="@Url.ProductTypeCreateUrl()">Thêm mới</a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12 form-group">
+                        @Html.LabelFor(product => product.Code, new { @class = "col-lg-2" })
+                        <div class="col-lg-4">
+                            @Html.TextBoxFor(product => product.Code, new { @class = "form-control name", placeholder = "Nhập Mã sản phẩm hoặc Hệ thống tự tạo" })
+
+                        </div>
+                    </div>
+                    <div class="col-lg-12 form-group">
+                        @Html.LabelFor(product => product.BrandId, new { @class = "col-lg-2" })
+                        <div class="col-lg-4">
+                            @Html.DropDownListFor(product => product.BrandId, new SelectList(listBrand, "id", "name", Model.BrandId), "Chọn thương hiệu", new { @class = "select2" })
+                            <p class="help-block">
+                                <a href="@Url.ProductBrandCreateUrl()" title="Thêm mới thương hiệu">Thêm mới</a>
+                            </p>
+                        </div>
+                        @Html.ValidationMessageFor(product => product.BrandId)
+                    </div>
+
+                    <div class="col-lg-12 form-group">
+                        @Html.LabelFor(product => product.Store, new { @class = "col-lg-2" })
+                        <div class="col-lg-4">
+                            @Html.DropDownListFor(product => product.Store, new SelectList(listStore, "name", "name", Model.Store), "Chọn kho hàng", new { @class = "select2" })
+                            <p class="help-block">
+                                <a href="@Url.ProductStoreCreateUrl()" title="Thêm mới Kho hàng">Thêm mới</a>
+                            </p>
+                        </div>
+                        @Html.ValidationMessageFor(product => product.Store)
+                    </div>
+                    <div class="col-lg-12 form-group">
+                        @Html.LabelFor(product => product.Country, new { @class = "col-lg-2" })
+                        <div class="col-lg-4">
+                            @Html.DropDownListFor(product => product.Country, new SelectList(listCountry, "name", "name", Model.Country), "Chọn nước sản xuất", new { @class = "select2" })
+                            <p class="help-block">
+                                <a href="@Url.CountryCreateUrl()" title="Thêm mới nước sản xuất">Thêm mới</a>
+                            </p>
+                        </div>
+                        @Html.ValidationMessageFor(product => product.Country)
+                    </div>
+                    <div class="col-lg-12 form-group">
+                        @Html.LabelFor(product => product.ManufacturerId, new { @class = "col-lg-2" })
+                        <div class="col-lg-4">
+                            @Html.DropDownListFor(product => product.ManufacturerId, new SelectList(listManufacturer, "id", "name", Model.ManufacturerId), "Chọn nhà sản xuất", new { @class = "select2" })
+                            <p class="help-block">
+                                <a href="@Url.ProductManufacturerCreateUrl()" title="Thêm mới nhà sản xuất">Thêm mới</a>
+                            </p>
+                        </div>
+                        @Html.ValidationMessageFor(product => product.ManufacturerId)
+                    </div>
+                    <div class="col-lg-12 form-group">
+                        @Html.LabelFor(product => product.ProviderId, new { @class = "col-lg-2" })
+                        <div class="col-lg-4">
+                            @Html.TextBoxFor(product => product.ProviderId, new { @class = "form-control name" })
+                        </div>
+                        @Html.ValidationMessageFor(product => product.ProviderId)
+                    </div>
+                    <h2>Thông tin khác</h2>
+                    <div class="col-lg-12 form-group">
+                        @Html.LabelFor(product => product.Number, new { @class = "col-lg-2" })
+                        <div class="col-lg-4">
+                            @Html.TextBoxFor(product => product.Number, new { placeholder = "Nhập số thứ tự", @class = "spin-number form-control sale-price" })
+                        </div>
+                        @Html.ValidationMessageFor(product => product.Number)
+                    </div>
+
+                    <div class="col-lg-12 form-group">
+                        @Html.LabelFor(product => product.Unit, new { @class = "col-lg-2" })
+                        <div class="col-lg-4">
+                            @Html.DropDownListFor(product => product.Unit, new SelectList(listUnit, "id", "name", Model.Unit), "Chọn đơn vị tính", new { @class = "select2" })
+                            <p class="help-block">
+                                <a href="@Url.ProductUnitCreateUrl()" title="Thêm mới đơn vị tính">Thêm mới</a>
+                            </p>
+                        </div>
+                        @Html.ValidationMessageFor(product => product.Unit)
+                    </div>
+                    <div class="col-lg-12 form-group">
+                        @Html.LabelFor(product => product.Quantity, new { @class = "col-lg-2" })
+                        <div class="col-lg-4">
+                            @Html.TextBoxFor(product => product.Quantity, new { @class = "spin-number form-control quantity" })
+                        </div>
+                        @Html.ValidationMessageFor(product => product.Quantity)
+                    </div>
+                    <div class="col-lg-12 form-group">
+                        @Html.LabelFor(product => product.Weight, new { @class = "col-lg-2" })
+                        <div class="col-lg-4">
+                            @Html.TextBoxFor(product => product.Weight, new { @class = "form-control name" })
+                        </div>
+                        @Html.ValidationMessageFor(product => product.Weight)
+                    </div>
+                    <div class="col-lg-12 form-group">
+                        @Html.LabelFor(product => product.Color, new { @class = "col-lg-2" })
+                        <div class="col-lg-4">
+                            @Html.DropDownListFor(product => product.Color, listColor, "Chọn màu sắc", new { @class = "select2", multiple = "multiple" })
+                            <p class="help-block">
+                                <a href="@Url.ProductColorCreateUrl()" title="Thêm mới màu sắc">Thêm mới</a>
+                            </p>
+                        </div>
+                        @Html.ValidationMessageFor(product => product.Color)
+                    </div>
+                    <div class="col-lg-12 form-group">
+                        @Html.LabelFor(product => product.Npp, new { @class = "col-lg-2" })
+                        <div class="col-lg-4">
+                            @Html.TextBoxFor(product => product.Npp, new { @class = "spin-percent form-control npp" })
+                        </div>
+                        @Html.ValidationMessageFor(product => product.Npp)
+                    </div>
+                    <div class="col-lg-12 form-group">
+                        @Html.LabelFor(product => product.Size, new { @class = "col-lg-2" })
+                        <div class="col-lg-4">
+                            @Html.DropDownListFor(product => product.Size, listSize, "Chọn kích cỡ", new { @class = "select2", multiple = "multiple" })
+                            <p class="help-block">
+                                <a href="@Url.SizeCreateUrl()" title="Thêm mới kích cỡ">Thêm mới</a>
+                            </p>
+                        </div>
+                        @Html.ValidationMessageFor(product => product.Size)
+                    </div>
+                    <div class="col-lg-12 form-group">
+                        <label class="col-lg-2" for="Dimentions">Kích thước(Rộng x Cao X Độ dày)</label>
+                        <div class="col-lg-10">
+                            <div class="col-lg-3">
+                                @Html.TextBoxFor(product => product.Width, new { placeholder = "Nhập chiều rộng", @class = "form-control dimentions-width", style = "margin-left:-15px;" }) <span>X</span>
+                            </div>
+                            @Html.ValidationMessageFor(product => product.Width)
+                            <div class="col-lg-3">
+                                @Html.TextBoxFor(product => product.Height, new { placeholder = "Nhập chiều cao", @class = "form-control dimentions-height", style = "margin-left:-45px;" }) <span>X</span>
+                            </div>
+                            @Html.ValidationMessageFor(product => product.Height)
+                            <div class="col-lg-3">
+                                @Html.TextBoxFor(product => product.Depth, new { placeholder = "Nhập độ dày", @class = "form-control dimentions-depth", style = "margin-left:-75px;" })
+                            </div>
+                            @Html.ValidationMessageFor(product => product.Depth)
+                        </div>
+                    </div>
+
+                </fieldset>
+            </div>
+            <div id="Product_Images" class="tab-pane">
+                <span>Click vào Chọn ảnh để upload</span>
+                <div id="list_image" class="dropzone" style="height: 250px;">
+                    <div class="dz-message" data-dz-message><span>Chọn ảnh để upload</span></div>
+                </div>
+                @Html.HiddenFor(m => m.ProductImages)
+                @if (Model.ListProductImages != null && Model.ListProductImages.Count > 0)
+                {
+                    <div class="col-lg-12 form-group margin50">
+                        @foreach (var image in Model.ListProductImages)
+                        {
+                            if (!string.IsNullOrWhiteSpace(image.Name))
+                            {
+                                <div id="image-@image.ID" class="col-lg-2 col-sm-3 col-xs-5">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+                                            <a href="#">
+                                                <img style="margin-left:15px" src="@image.Name.ToImageUrl()" class="image-product img-circle img-responsive">
+                                            </a>
+                                        </div>
+                                        <div class="panel-footer">
+                                            <button data-id="@image.ID" title="Xóa ảnh" name="btnDelete" style="margin-left: 27px;" type="submit"
+                                                    class="clear-image btn btn-circle btn-danger">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                            <a id="id" class="btn btn-circle btn-primary" href="@Url.ProductImageEditUrl(new {id =image.ID, productId=image.ProductID})" title="Thay ảnh khác">
+                                                <i class="fa fa-pencil"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clear"></div>
+                            }
+
+                        }
+                    </div>
+                }
+            </div>
+            <div id="Product_Summary" class="tab-pane">
+                <div class="col-lg-12 form-group margin50">
+                    @Html.LabelFor(product => product.Summary, new { @class = "col-lg-2" })
+                    <div class="col-lg-12">
+                        @Html.TextAreaFor(product => product.Summary, new { rows = "5", @class = "form-control", placeholder = "Nhập nội dung mô tả ngắn" })
+                    </div>
+                    @Html.ValidationMessageFor(product => product.Summary)
+                </div>
+                <div class="col-lg-12 form-group">
+                    @Html.LabelFor(product => product.Detail, new { @class = "col-lg-2" })
+                    <div class="col-lg-12">
+                        @Html.TextAreaFor(product => product.Detail, new { rows = "100", id = "editor1", @class = "ckeditor form-control", style = "height: 500px" })
+                    </div>
+                    @Html.ValidationMessageFor(product => product.Detail)
+                </div>
+            </div>
+            <div id="Product_Desc" class="tab-pane">
+                <div class="col-lg-12 form-group margin50">
+                    @Html.LabelFor(product => product.WarrantyTime, new { @class = "col-lg-2" })
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(product => product.WarrantyTime, new { placeholder = "Nhập thời gian bảo hành", @class = "form-control" })
+                    </div>
+                    @Html.ValidationMessageFor(product => product.WarrantyTime)
+                </div>
+                <div class="col-lg-12 form-group">
+                    @Html.LabelFor(product => product.ExpireDate, new { @class = "col-lg-2" })
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(product => product.ExpireDate, new { placeholder = "Nhập hạn sử dụng", @class = "form-control" })
+                    </div>
+                    @Html.ValidationMessageFor(product => product.ExpireDate)
+                </div>
+                <div class="col-lg-12 form-group">
+                    <label class="col-lg-2">Thời gian giao hàng</label>
+                    <div class="col-lg-4">
+                        @Html.DropDownListFor(product => product.Transport1, listHour, new
+                   {
+                       @class = "form-control",
+                       placeholder = "Chọn thời gian giao hàng"
+                   })
+                        @Html.ValidationMessageFor(product => product.Transport1)
+                        @Html.DropDownListFor(product => product.Transport2, listHour, new
+                   {
+                       @class = "form-control",
+                       placeholder = "Chọn thời gian giao hàng"
+                   })
+
+                    </div>
+
+                    @Html.ValidationMessageFor(product => product.Transport2)
+                </div>
+            </div>
+            <div id="Product_Mappings" class="tab-pane">
+                <div class="col-lg-12 form-group margin50">
+                    @Html.LabelFor(product => product.MetaTitle, new { @class = "col-lg-2" })
+                    <div class="col-lg-8">
+                        @Html.TextBoxFor(product => product.MetaTitle, new { placeholder = "Nhập tiêu đề", @class = "form-control" })
+                    </div>
+                    @Html.ValidationMessageFor(product => product.MetaTitle)
+                </div>
+
+                <div class="col-lg-12 form-group">
+                    @Html.LabelFor(product => product.MetaKeyword, new { @class = "col-lg-2" })
+                    <div class="col-lg-8">
+                        @Html.TextBoxFor(product => product.MetaKeyword, new { placeholder = "Nhập từ khóa", @class = "form-control" })
+                    </div>
+                    @Html.ValidationMessageFor(product => product.MetaKeyword)
+                </div>
+                <div class="col-lg-12 form-group">
+                    @Html.LabelFor(product => product.MetaDescription, new { @class = "col-lg-2" })
+                    <div class="col-lg-8">
+                        @Html.TextAreaFor(product => product.MetaDescription, new { placeholder = "Nhập nội dung mô tả", @class = "form-control", style = "height:500px" })
+                    </div>
+                    @Html.ValidationMessageFor(product => product.MetaDescription)
+                </div>
+            </div>
+            <div id="Product_StoreMapping" class="tab-pane">
+                <div class="col-lg-12 form-group margin50">
+                    @Html.LabelFor(product => product.Price, new { @class = "col-lg-2" })
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(product => product.Price, new { placeholder = "Nhập giá sản phẩm", @class = "spin-price form-control price" })
+                    </div>
+                    @Html.ValidationMessageFor(product => product.Price)
+                </div>
+                <div class="col-lg-12 form-group margin-4">
+                    @Html.LabelFor(product => product.Percent, new { @class = "col-lg-2" })
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(product => product.Percent, new { placeholder = "Nhập phần trăm giảm giá", @class = "spin-percent form-control price" })
+
+                    </div>
+                    @Html.ValidationMessageFor(product => product.Percent)
+                </div>
+                <div class="col-lg-12 form-group">
+                    @Html.LabelFor(product => product.StartDate, new { @class = "col-lg-2" })
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(product => product.StartDate, new { placeholder = "Chọn Ngày bắt đầu giảm giá", @class = "date form-control name" })
+                    </div>
+                    @Html.ValidationMessageFor(product => product.StartDate)
+                </div>
+                <div class="col-lg-12 form-group">
+                    @Html.LabelFor(product => product.EndDate, new { @class = "col-lg-2" })
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(product => product.EndDate, new { placeholder = "Chọn Ngày kết thúc giảm giá", @class = "date form-control name" })
+                    </div>
+                    @Html.ValidationMessageFor(product => product.EndDate)
+                </div>
+            </div>
+            <div id="Product_Options" class="tab-pane">
+                <h3>Thuộc tính bổ sung</h3>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th style="width: 300px;">Tên thuộc tính</th>
+                            <th>Giá trị</th>
+                            <th class="text-center" style="width: 90px;">
+                                <button type="button" class="btn-add btn btn-success btn-xs" title="Thêm thuộc tính">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </button>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="container-items tableForm">
+
+                        @if (Model.ListProductAttribute != null && Model.ListProductAttribute.Count > 0)
+                        {
+                            <tr class="controls">
+                                <td class="vcenter">
+                                    <div class="form-group required">
+                                        <input type="text" class="form-control" name="AttrLabel" placeholder="Nhập tên thuộc tính" maxlength="255">
+                                        <p class="help-block help-block-error"></p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group required">
+                                        <textarea class="form-control" rows="2" name="AttrDesc" placeholder="Nhập giá trị thuộc tính"></textarea>
+                                    </div>
+                                </td>
+                                <td class="text-center vcenter" style="width: 90px;">
+                                    <button type="button" class="btn-remove btn btn-danger btn-xs" title="Xóa thuộc tính">
+                                        <span class="glyphicon glyphicon-minus"></span>
+                                    </button>
+                                </td>
+                            </tr>
+                            foreach (var attr in Model.ListProductAttribute)
+                            {
+                                if (attr.ID > 0 && !string.IsNullOrWhiteSpace(attr.Name))
+                                {
+                                    <tr class="controls">
+                                        <td class="vcenter">
+                                            <div class="form-group required">
+                                                <input value="@attr.Name" type="text" class="form-control" name="AttrLabel" placeholder="Nhập tên thuộc tính" maxlength="255">
+                                                <p class="help-block help-block-error"></p>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group required">
+                                                <textarea class="form-control" rows="2" name="AttrDesc" placeholder="Nhập giá trị thuộc tính">
+                                                    @attr.Value
+                                                </textarea>
+                                            </div>
+                                        </td>
+                                        <td class="text-center vcenter" style="width: 90px;">
+                                            <button data-id="@attr.ID" type="button" class="btn-remove btn btn-danger btn-xs" title="Xóa thuộc tính">
+                                                <span class="glyphicon glyphicon-minus"></span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                }
+
+                            }
+
+                        }
+                        else
+                        {
+                            if (Model.AttrLabel != null && Model.AttrLabel.Length > 0)
+                            {
+                                <tr class="controls">
+                                    <td class="vcenter">
+                                        <div class="form-group required">
+                                            <input type="text" class="form-control" name="AttrLabel" placeholder="Nhập tên thuộc tính" maxlength="255">
+                                            <p class="help-block help-block-error"></p>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group required">
+                                            <textarea class="form-control" rows="2" name="AttrDesc" placeholder="Nhập giá trị thuộc tính"></textarea>
+                                        </div>
+                                    </td>
+                                    <td class="text-center vcenter" style="width: 90px;">
+                                        <button type="button" class="btn-remove btn btn-danger btn-xs" title="Xóa thuộc tính">
+                                            <span class="glyphicon glyphicon-minus"></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                                for (int i = 0; i < Model.AttrLabel.Length; i++)
+                                {
+                                    <tr class="controls">
+                                        <td class="vcenter">
+                                            <div class="form-group required">
+                                                <input value="@Model.AttrLabel[i]" type="text" class="form-control" name="AttrLabel" placeholder="Nhập tên thuộc tính" maxlength="255">
+                                                <p class="help-block help-block-error"></p>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group required">
+                                                <textarea class="form-control" rows="2" name="AttrDesc" placeholder="Nhập giá trị thuộc tính">
+                                                    @Model.AttrDesc[i]
+                                                </textarea>
+                                            </div>
+                                        </td>
+                                        <td class="text-center vcenter" style="width: 90px;">
+                                            <button type="button" class="btn-remove btn btn-danger btn-xs" title="Xóa thuộc tính">
+                                                <span class="glyphicon glyphicon-minus"></span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    i++;
+                                }
+                            }
+                            else
+                            {
+                                <tr class="controls">
+                                    <td class="vcenter">
+                                        <div class="form-group required">
+                                            <input type="text" class="form-control" name="AttrLabel" placeholder="Nhập tên thuộc tính" maxlength="255">
+                                            <p class="help-block help-block-error"></p>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group required">
+                                            <textarea class="form-control" rows="2" name="AttrDesc" placeholder="Nhập giá trị thuộc tính"></textarea>
+                                        </div>
+                                    </td>
+                                    <td class="text-center vcenter" style="width: 90px;">
+                                        <button type="button" class="btn-remove btn btn-danger btn-xs" title="Xóa thuộc tính">
+                                            <span class="glyphicon glyphicon-minus"></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="Product_Button col-lg-offset-6">
+            @Html.Partial("UI/_FormAction")
+            <a href="@Url.ProductIndexUrl()" class="btn btn-primary">
+                <i class=""></i><strong>Sản phẩm</strong>
+            </a>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+
+    $(function () {
+        $("button.clear-image").click(function (e) {
+            e.preventDefault();
+            var id = $(this).data("id");
+            if (id !== '') {
+                $.post("@Url.ProductImageDeleteUrl()", { id }, function (response) {
+                    if (response.code === 'ok') {
+                        $("#image-" + id).remove();
+                    }
+                });
+            }
+
+        });
+        $(".select2").select2({ width: '100%' });
+        $("input.spin-price").TouchSpin({
+            min: 0,
+            max: 1000000000,
+            stepinterval: 50,
+            maxboostedstep: 10000000,
+            postfix: 'VNĐ'
+
+        });
+        $("input.spin-number").TouchSpin({
+            min: 0,
+            max: 10000,
+            stepinterval: 50,
+            maxboostedstep: 10000000
+
+        });
+        $("input.spin-percent").TouchSpin({
+            min: 0,
+            max: 100,
+            step: 0.1,
+            decimals: 2,
+            boostat: 5,
+            maxboostedstep: 10,
+            postfix: '%'
+        });
+        $('.date').datetimepicker({ format: 'MM/DD/YYYY' });
+        $(document).on('click', '.btn-add', function (e) {
+            e.preventDefault();
+
+            var controlForm = $('.tableForm'),
+                currentEntry = controlForm.find('.controls:first'),
+                newEntry = $(currentEntry.clone()).appendTo(controlForm);
+
+            newEntry.find('.form-control').val('');
+        }).on('click', '.btn-remove', function (e) {
+            var id = $(this).attr('data-id');
+
+            var thisControl = $(this).parents('tr.controls');
+            if (thisControl.siblings().length > 0) {
+                if (id !== "") {
+                    $.post("@Url.ProductAttributeDeleteUrl()", { id }, function (response) {
+                        if (response.code === 'ok') {
+                            thisControl.remove();
+                        }
+                    });
+                }
+            }
+            else
+                alert('Cannot remove the default');
+            e.preventDefault();
+            return false;
+        });
+
+    });
+
+    Dropzone.autoDiscover = false;
+    var myDropzone = new Dropzone("div#list_image",
+    {
+        url: "/upload/index"
+
+    });
+    myDropzone.on('success', function (file, response) {
+        file.previewElement.classList.add("dz-success");
+
+        var imageItem = "<input type='hidden' value='" + response.Message + "' name='ProductImages' />";
+        $("input[name='ProductImages']").last().after(imageItem);
+    });
+    myDropzone.on('error', function (file, response) {
+        file.previewElement.classList.add("dz-error");
+        $(file.previewElement).find('.dz-error-message').text(response);
+    });
+</script>

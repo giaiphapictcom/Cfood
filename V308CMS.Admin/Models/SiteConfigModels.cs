@@ -2,7 +2,9 @@
 
 namespace V308CMS.Admin.Models
 {
-    public class SiteConfigModels
+
+    public class SiteConfigModels:BaseModels
+
     {
         [Required(ErrorMessage = "Vui lòng nhập tên cấu hình.")]
         [Display(Name = "Tên thuộc tính : ")]

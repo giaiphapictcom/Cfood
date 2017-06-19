@@ -1,0 +1,31 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@model V308CMS.Admin.Models.UI.ImageSelectPreviewModels
+@if (!string.IsNullOrWhiteSpace(Model.ImageUrl))
+{
+    <input type="hidden" name="@Model.ImageUrlHiddenName" value="@Model.ImageUrl" />    
+    <div class="form-group">
+        <img class="image-brand img-circle img-responsive" src="@Model.ImageUrl.ToImageUrl()" alt="Ảnh đại diện" />
+    </div>    
+}
+@if (Model.AutoGenerateLabel)
+{
+    <div class="form-group">
+        <label for="@Model.Name">@(!string.IsNullOrWhiteSpace(Model.ImageUrl) ? "Chọn ảnh khác" : "Ảnh đại diện")</label>
+    </div>
+}
+<div class="input-group image-preview" id="@(string.Format("imagePreview{0}Container",Model.Name))">
+    <!-- don't give a name === doesn't send on POST/GET -->
+    <input type="text" class="form-control image-preview-filename" disabled="disabled" id="@string.Format("imagePreviewFilename{0}",Model.Name)">
+    <span class="input-group-btn">
+        <!-- image-preview-clear button -->
+        <button type="button" class="btn btn-default image-preview-clear" style="display: none;" id="@string.Format("btnClearImage{0}", Model.Name)">
+            <span class="glyphicon glyphicon-remove"></span> Xóa
+        </button>
+        <!-- image-preview-input -->
+        <div class="btn btn-default image-preview-input" id="@string.Format("imagePreviewInput{0}",Model.Name)">
+            <span class="glyphicon glyphicon-folder-open"></span>
+            <span class="image-preview-input-title">Duyệt</span>
+            <input type="file" accept="image/png, image/jpeg, image/gif" name="@Model.Name" id="@Model.Name" />
+        </div>
+    </span>
+</div>

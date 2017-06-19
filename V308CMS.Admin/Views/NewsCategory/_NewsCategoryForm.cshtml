@@ -1,0 +1,51 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@using V308CMS.Admin.Models.UI
+@model V308CMS.Admin.Models.NewsCategoryModels
+@{
+    var listCategory = (List<MutilCategoryItem>) ViewData["ListCategory"];
+}
+@Html.AntiForgeryToken()
+@Html.HiddenFor(category => category.Id)
+<div class="row">
+    @Html.ValidationSummary(true)
+    <div class="col-lg-6">
+        <div class="form-group">
+            @Html.LabelFor(category => category.Name)
+            @Html.TextBoxFor(category => category.Name, new {@class = "form-control", placeholder = "Nhập tên chuyên mục"})
+            @Html.ValidationMessageFor(category => category.Name)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(category => category.ParentId)
+            @Html.Partial("UI/_MutilDropDownlist", new MutilDropDownlistModels
+            {
+                Name = "ParentId",
+                Data = listCategory,
+                ParentId = Model.ParentId,
+                PlaceHolder = "Chọn Danh mụch cha",
+
+            })
+            @Html.ValidationMessageFor(category => category.ParentId)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(category => category.Number)
+            @Html.TextBoxFor(category => category.Number, new {@class = "form-control", placeholder = "Nhập thứ tự hiển thị nếu bạn muốn sắp xếp"})
+            @Html.ValidationMessageFor(category => category.Number)
+        </div>
+        <div class="form-group">
+            <div class="checkbox">
+                @Html.CheckBoxFor(category => category.State, new {@checked = (Model.State ? "checked" : "")})
+                @Html.LabelFor(category=>category.State)                
+            </div>
+        </div>
+
+        @Html.Partial("UI/_FormAction")
+        <a href="@Url.NewsCategoryIndexUrl()" title="Danh sách Chuyên mục tin tức" class="btn btn-link">Danh sách</a>
+
+    </div>
+</div>
+<script type="text/javascript">
+    $(function() {
+        $(".select-2").select2();
+    });
+
+</script>

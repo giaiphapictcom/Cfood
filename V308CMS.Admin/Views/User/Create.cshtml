@@ -1,0 +1,15 @@
+﻿@model V308CMS.Admin.Models.UserModels
+@using V308CMS.Admin.Helpers
+@using V308CMS.Admin.Helpers.Url
+@{
+    ViewBag.Title = "Thêm mới khách hàng";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+<div class="panel panel-primary">
+    <div class="panel-body">
+        <form method="post" role="form" action="@Url.UserCreateUrl()">
+            @Html.Partial("_UserForm", Model)
+        </form>
+    </div>
+
+</div>

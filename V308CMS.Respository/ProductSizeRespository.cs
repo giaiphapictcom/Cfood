@@ -8,99 +8,143 @@ namespace V308CMS.Respository
     public interface IProductSizeRespository
     {
         string DeleteByProductId(int productId);
+        string Insert(int productId, string[] listSize);
         List<ProductSize> GetAllByProductId(int productId);
     }
     public class ProductSizeRespository: IBaseRespository<ProductSize>, IProductSizeRespository
-    {
-        private readonly V308CMSEntities _entities;
+    {     
 
-        public ProductSizeRespository(V308CMSEntities entities)
+        public ProductSizeRespository()
         {
-            _entities = entities;
+         
 
         }
         public ProductSize Find(int id)
         {
-            return (from size in _entities.ProductSize
-                    where size.Id == id
-                    select size).FirstOrDefault();
+            using (var entities = new V308CMSEntities())
+            {
+                return (from size in entities.ProductSize
+                        where size.Id == id
+                        select size).FirstOrDefault();
+            }
+           
         }
 
         public string Delete(int id)
         {
-            var sizeItem = (from size in _entities.ProductSize
-                             where size.Id == id
-                             select size).FirstOrDefault();
-            if (sizeItem != null)
+            using (var entities = new V308CMSEntities())
             {
-                _entities.ProductSize.Remove(sizeItem);
-                _entities.SaveChanges();
-                return "ok";
+                var sizeItem = (from size in entities.ProductSize
+                                where size.Id == id
+                                select size).FirstOrDefault();
+                if (sizeItem != null)
+                {
+                    entities.ProductSize.Remove(sizeItem);
+                    entities.SaveChanges();
+                    return "ok";
+                }
+                return "not_exists";
             }
-            return "not_exists";
+            
         }
 
         public string Update(ProductSize data)
         {
-            var sizeItem = (from size in _entities.ProductSize
-                             where size.Id == data.Id
-                             select size).FirstOrDefault();
-            if (sizeItem != null)
+            using (var entities = new V308CMSEntities())
             {
-                sizeItem.Size = data.Size;
-                sizeItem.ProductId = data.ProductId;             
-                _entities.SaveChanges();
-                return "ok";
+                var sizeItem = (from size in entities.ProductSize
+                                where size.Id == data.Id
+                                select size).FirstOrDefault();
+                if (sizeItem != null)
+                {
+                    sizeItem.Size = data.Size;
+                    sizeItem.ProductId = data.ProductId;
+                    entities.SaveChanges();
+                    return "ok";
+                }
+                return "not_exists";
             }
-            return "not_exists";
+            
         }
 
+        public string Insert(int productId,string[] listSize)
+        {
+            foreach (var size in listSize)
+            {
+                if (!string.IsNullOrWhiteSpace(size))
+                {
+                    Insert(new ProductSize
+                    {
+                        Size = size,
+                        ProductId = productId
+                    });
+                }
+            }
+            return "ok";
+        }
         public string Insert(ProductSize data)
         {
-            var sizeItem = (from size in _entities.ProductSize
-                             where size.Size == data.Size
-                             && size.ProductId ==data.ProductId
-                             select size).FirstOrDefault();
-            if (sizeItem == null)
+            using (var entities = new V308CMSEntities())
             {
-                _entities.ProductSize.Add(data);
-                _entities.SaveChanges();
-                return "ok";
+                var sizeItem = (from size in entities.ProductSize
+                                where size.Size == data.Size
+                                && size.ProductId == data.ProductId
+                                select size).FirstOrDefault();
+                if (sizeItem == null)
+                {
+                    entities.ProductSize.Add(data);
+                    entities.SaveChanges();
+                    return "ok";
+                }
+                return "exists";
+
             }
-            return "exists";
+          
         }
 
         public List<ProductSize> GetAll()
         {
-            return (from size in _entities.ProductSize
-                    orderby size.Id descending
-                    select size).ToList();
+            using (var entities = new V308CMSEntities())
+            {
+                return (from size in entities.ProductSize
+                        orderby size.Id descending
+                        select size).ToList();
+            }
+           
         }
 
       
         public string DeleteByProductId(int productId)
         {
-            var listSize = (from size in _entities.ProductSize
-                             where size.ProductId == productId
-                select size).ToList();
-            if (listSize.Any())
+            using (var entities = new V308CMSEntities())
             {
-                foreach (var size in listSize)
+                var listSize = (from size in entities.ProductSize
+                                where size.ProductId == productId
+                                select size).ToList();
+                if (listSize.Any())
                 {
-                    _entities.ProductSize.Remove(size);
-                    _entities.SaveChanges();
-                    return "ok";
+                    foreach (var size in listSize)
+                    {
+                        entities.ProductSize.Remove(size);
+                        entities.SaveChanges();
+                        return "ok";
+                    }
                 }
+                return "not_exists";
             }
-            return "not_exists";
+            
         }
 
         public List<ProductSize> GetAllByProductId(int productId)
         {
-            return (from size in _entities.ProductSize
-                    where size.ProductId == productId
-                    orderby size.Id descending
-                    select size).ToList();
+            using (var entities = new V308CMSEntities())
+            {
+                return (from size in entities.ProductSize
+                        where size.ProductId == productId
+                        orderby size.Id descending
+                        select size).ToList();
+            }
+           
         }
     }
 }

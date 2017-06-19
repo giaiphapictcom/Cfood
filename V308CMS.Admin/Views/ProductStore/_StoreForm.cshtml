@@ -1,0 +1,47 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@model  V308CMS.Admin.Models.ProductStoreModels
+@{
+    var listState = (List<SelectListItem>)ViewBag.ListState;   
+}
+@Html.HiddenFor(store => store.Id)
+@Html.AntiForgeryToken()
+<div class="row">
+    @Html.ValidationSummary(true)
+    <div class="col-lg-6">
+        <div class="form-group">
+            @Html.LabelFor(store => store.Name)
+            @Html.TextBoxFor(store => store.Name, new { @class = "form-control", placeholder = "Tên kho hàng" })
+            @Html.ValidationMessageFor(store => store.Name)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(store => store.Phone)
+            @Html.TextBoxFor(store => store.Phone, new { @class = "form-control", placeholder = "Số điện thoại liên hệ" })
+            @Html.ValidationMessageFor(store => store.Phone)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(store => store.Manager)
+            @Html.TextBoxFor(store => store.Manager, new {@class = "form-control", placeholder = "Người quản lý kho hàng"})
+            @Html.ValidationMessageFor(store => store.Manager)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(store => store.Address)
+            @Html.TextAreaFor(store => store.Address, new { @class = "form-control", placeholder = "Địa chỉ kho hàng" })
+            @Html.ValidationMessageFor(store => store.Address)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(store => store.State)
+            @Html.DropDownListFor(store => store.State, listState, new
+           {
+               @class = "form-control",
+               placeholder = "Trạng thái"
+           })
+            @Html.ValidationMessageFor(store => store.State)
+        </div>
+
+        @Html.Partial("UI/_FormAction")
+        <a href="@Url.ProductStoreIndexUrl()" title="Danh sách cửa hàng" class="btn btn-link">Danh sách</a>
+
+    </div>
+</div>

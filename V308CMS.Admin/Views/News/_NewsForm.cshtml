@@ -1,0 +1,125 @@
+﻿@model V308CMS.Admin.Models.NewsModels
+@Html.AntiForgeryToken()
+@Html.HiddenFor(category => category.Id)
+@using V308CMS.Admin.Helpers.Url
+@using V308CMS.Admin.Models.UI
+@{
+    var listCategory = (List<MutilCategoryItem>)ViewBag.ListCategory;
+    var listSite = (List<SelectListItem>)ViewBag.ListSite;
+   
+}
+@section Header {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            CKEDITOR.replace('editor1',
+            {
+                filebrowserBrowseUrl: '/Content/Plugins/ckfinder/ckfinder.html',
+                filebrowserImageBrowseUrl: '/Content/Plugins/ckfinder/ckfinder.html?type=Images',
+                filebrowserFlashBrowseUrl: '/Content/Plugins/ckfinder/ckfinder.html?type=Flash',
+                filebrowserUploadUrl: '/Content/Plugins/ckfinder/core/connector/asp/connector.asp?command=QuickUpload&type=Files',
+                filebrowserImageUploadUrl: '/Content/Plugins/ckfinder/core/connector/asp/connector.asp?command=QuickUpload&type=Images',
+                filebrowserFlashUploadUrl: '/Content/Plugins/ckfinder/core/connector/asp/connector.asp?command=QuickUpload&type=Flash',
+                filebrowserWindowWidth: '100%',
+                filebrowserWindowHeight: '700',
+                height: '650px'
+            });
+           
+        });
+    </script>
+
+}
+<div class="row">
+    @Html.ValidationSummary(true)
+    <div class="col-lg-10">
+        <div class="form-group">
+            @Html.LabelFor(news => news.Site)
+            @Html.DropDownListFor(news => news.Site, listSite, "Chọn Website", new
+            {
+               @class = "form-control",
+               placeholder = "Chọn Website"
+            })
+            @Html.ValidationMessageFor(news => news.Site)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(news => Model.Title)
+            @Html.TextBoxFor(news => Model.Title, new {@class = "form-control", placeholder = "Nhập tiêu đề tin", @required = "require"})
+            @Html.ValidationMessageFor(news => Model.Title)
+
+        </div>
+      
+         @Html.Partial("UI/_ImageSelectPreview", new ImageSelectPreviewModels
+        {
+            Id = Model.Id,
+            Name = "Image",
+            ImageUrl = Model.ImageUrl,
+            ImageUrlHiddenName = "ImageUrl"
+        })
+        <div class="form-group">
+            @Html.LabelFor(category => category.CategoryId)
+            @Html.Partial("UI/_MutilDropDownlist", new MutilDropDownlistModels
+            {
+                Name = "CategoryId",
+                Data = listCategory,
+                ParentId = Model.CategoryId,
+                PlaceHolder = "Chọn chuyên mục"
+            })
+            @Html.ValidationMessageFor(category => category.CategoryId)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(news => news.Summary)
+            @Html.TextAreaFor(news => news.Summary, new {rows = "3", @class = "form-control", placeholder = "Nhập Nội dung tóm tắt", @required = "require"})
+            @Html.ValidationMessageFor(news => news.Summary)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(news => news.Detail)
+            @Html.TextAreaFor(news => news.Detail, new {id = "editor1", @class = "ckeditor form-control", placeholder = "Nhập Nội dung tin"})
+            @Html.ValidationMessageFor(news => news.Detail)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(news => news.Keyword)
+            @Html.TextBoxFor(news => news.Keyword, new {@class = "tag form-control", placeholder = "Nhập từ khóa seo phân cách nhua bởi ,"})
+            @Html.ValidationMessageFor(news => news.Keyword)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(news => news.Description)
+            @Html.TextAreaFor(news => news.Description, new {@class = "form-control", rows = 3, placeholder = "Nhập nội dung mô tả(SEO)"})
+            @Html.ValidationMessageFor(news => news.Description)
+        </div>
+        <div class="form-group">
+            <div class="checkbox">
+                @Html.CheckBoxFor(news => news.IsHot, new {@checked = (Model.IsHot ? "checked" : "")})
+                @Html.LabelFor(news => news.IsHot)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="checkbox">
+                @Html.CheckBoxFor(news => news.IsFast, new {@checked = (Model.IsFast ? "checked" : "")})
+                @Html.LabelFor(news => news.IsFast)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="checkbox">
+                @Html.CheckBoxFor(news => news.IsFeatured, new {@checked = (Model.IsFeatured ? "checked" : "")})
+                @Html.LabelFor(news => news.IsFeatured)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="checkbox">
+                @Html.CheckBoxFor(news => news.Status, new {@checked = (Model.Status ? "checked" : "")})
+                @Html.LabelFor(news => news.Status)
+            </div>
+        </div>
+        @Html.Partial("UI/_FormAction")
+        <a href="@Url.NewsIndexUrl()" title="Danh sách tin tức" class="btn btn-link">Danh sách</a>
+
+    </div>
+
+    </div>
+
+<script>
+    $(function() {
+        $(".select-2").select2();
+    })
+</script>

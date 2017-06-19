@@ -3853,14 +3853,14 @@ namespace V308CMS.Sale.Controllers
                                 Email = pEmail,
                                 UserName = pAccount,
                                 Password = EncryptionMD5.ToMd5(pPassword1.Trim()),
-                                PSanPham = (psanpham),
-                                PFileUpload = (pupload),
-                                PHeThong = (phethong),
-                                PHinhAnh = (phinhanh),
-                                PKhachHang = (pkhachhang),
-                                PTaiKhoan = (ptaikhoan),
-                                PThungRac = (pthungrac),
-                                PTinTuc = (ptintuc)
+                                //PSanPham = (psanpham),
+                                //PFileUpload = (pupload),
+                                //PHeThong = (phethong),
+                                //PHinhAnh = (phinhanh),
+                                //PKhachHang = (pkhachhang),
+                                //PTaiKhoan = (ptaikhoan),
+                                //PThungRac = (pthungrac),
+                                //PTinTuc = (ptintuc)
                             };
                             mEntities.AddToAdmin(mAdmin);
                             mEntities.SaveChanges();
@@ -3944,14 +3944,14 @@ namespace V308CMS.Sale.Controllers
                     mAdmin.Role = pGroupId;
                     mAdmin.Email = pEmail;
                     mAdmin.Status = (pActive);
-                    mAdmin.PSanPham = (psanpham);
-                    mAdmin.PFileUpload = (pupload);
-                    mAdmin.PHeThong = (phethong);
-                    mAdmin.PHinhAnh = (phinhanh);
-                    mAdmin.PKhachHang = (pkhachhang);
-                    mAdmin.PTaiKhoan = (ptaikhoan);
-                    mAdmin.PThungRac = (pthungrac);
-                    mAdmin.PTinTuc = (ptintuc);
+                    //mAdmin.PSanPham = (psanpham);
+                    //mAdmin.PFileUpload = (pupload);
+                    //mAdmin.PHeThong = (phethong);
+                    //mAdmin.PHinhAnh = (phinhanh);
+                    //mAdmin.PKhachHang = (pkhachhang);
+                    //mAdmin.PTaiKhoan = (ptaikhoan);
+                    //mAdmin.PThungRac = (pthungrac);
+                    //mAdmin.PTinTuc = (ptintuc);
                     mEntities.SaveChanges();
                     return Json(new { code = 1, message = "Hoàn thành sửa thông tin." });
                 }

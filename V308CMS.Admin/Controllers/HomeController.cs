@@ -2,18 +2,23 @@
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using V308CMS.Admin.Attributes;
 using V308CMS.Admin.Helpers;
 using V308CMS.Admin.Models;
 using V308CMS.Common;
 
 namespace V308CMS.Admin.Controllers
 {
+
+    [CheckGroupPermission(false)]
     public class HomeController : BaseController
     {
         // GET: Home
-        
+        [Authorize]
         public ActionResult Index()
         {
+
+
             return View("IndexV2");
         }
         // GET: Account
@@ -28,30 +33,28 @@ namespace V308CMS.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var mEtLogin = AccountService.CheckDangNhap(login.Username, login.Password);
+                var result = AdminAccountService.CheckAccount(login.Username, login.Password);
 
-                if (mEtLogin.code == 1){
-                    
-                    AuthenticationHelper.SignIn(new MyUser
-                    {
-                        UserId = mEtLogin.Admin.ID,
-                        UserName = mEtLogin.Admin.UserName,
-                        Role = mEtLogin.Admin.Role ?? 0,
-                        Admin = mEtLogin.Admin
-                    });
-                    return RedirectToAction("Index");
+                if (result == null)
+                {
+                    ModelState.AddModelError("", "Sai tên tài khoản hoặc mật khẩu.");
+                    return View("Login", login);
+
                 }
-                ModelState.AddModelError("", "Sai tên tài khoản hoặc mật khẩu.");
+                var myUser = new MyUser
+                {
+                    UserName = login.Username,
+                    UserId = result.ID,
+                    RoleId = result.Role ?? 0
+                };
+                AuthenticationHelper.SignIn(myUser, login.Remember);
+                return RedirectToAction("Index");
             }
-            return View("Login",login);
-  
+            return View("Login", login);
+
         }
-        [CustomAuthorize]
-        public ActionResult ChucNang()
-        {
-            return View();
-        }
-        [CustomAuthorize]
+
+        [Authorize]
         public ActionResult LogOut()
         {
             FormsAuthentication.SignOut();
@@ -61,9 +64,11 @@ namespace V308CMS.Admin.Controllers
                 Expires = DateTime.Now.AddYears(-1)
             };
             Response.Cookies.Add(cookie1);
-            HttpCookie cookie2 = new HttpCookie("ASP.NET_SessionId", "") {Expires = DateTime.Now.AddYears(-1)};
+            HttpCookie cookie2 = new HttpCookie("ASP.NET_SessionId", "") { Expires = DateTime.Now.AddYears(-1) };
             Response.Cookies.Add(cookie2);
             return RedirectToAction("Login");
         }
+
+
     }
 }

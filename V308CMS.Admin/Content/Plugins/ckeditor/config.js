@@ -17,4 +17,9 @@ CKEDITOR.editorConfig = function( config ) {
     config.filebrowserFlashUploadUrl = '/Content/Plugins/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash';
     config.filebrowserWindowWidth = '1000';
     config.filebrowserWindowHeight = '700';
+<<<<<<< HEAD
+=======
+    config.extraPlugins = 'youtube';
+
+>>>>>>> toai-neal
 };

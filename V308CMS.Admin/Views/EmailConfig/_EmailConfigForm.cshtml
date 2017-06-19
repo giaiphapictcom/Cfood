@@ -1,0 +1,61 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@model V308CMS.Admin.Models.EmailConfigModels
+@{
+    var listEmailType = (List<SelectListItem>)ViewData["ListEmailType"];
+    var listState = (List<SelectListItem>)ViewData["ListState"];
+}
+@Html.HiddenFor(config => config.Id)
+@Html.AntiForgeryToken()
+<div class="row">
+    @Html.ValidationSummary(true)
+    <div class="col-lg-6">
+
+        <div class="form-group">
+            @Html.LabelFor(config => config.Name)
+            @Html.TextBoxFor(config => config.Name, new { @class = "form-control", placeholder = "Nhập tên cấu hình Email" })
+            @Html.ValidationMessageFor(config => config.Name)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(config => config.Type)
+            @Html.DropDownListFor(config => config.Type, listEmailType, new
+            {
+                @class = "form-control",
+                placeholder = "Loại Email"
+            })
+            @Html.ValidationMessageFor(config => config.Type)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(config => config.Host)
+            @Html.TextBoxFor(config => config.Host, new {@class = "form-control", placeholder = "Nhập thông tin host"})
+            @Html.ValidationMessageFor(config => config.Host)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(config => config.Port)
+            @Html.TextBoxFor(config => config.Port, new {@class = "form-control", placeholder = "Nhập thông tin port"})
+            @Html.ValidationMessageFor(config => config.Port)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(config => config.UserName)
+            @Html.TextBoxFor(config => config.UserName, new {@class = "form-control", placeholder = "Nhập tên tài khoản"})
+            @Html.ValidationMessageFor(config => config.UserName)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(config => config.Password)
+            @Html.TextBoxFor(config => config.Password, new { @class = "form-control", placeholder = "Nhập mật khẩu" })
+            @Html.ValidationMessageFor(config => config.Password)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(config => config.State)
+            @Html.DropDownListFor(config => config.State, listState, "Chọn Trạng thái", new
+           {
+               @class = "form-control",
+               placeholder = "Trạng thái"
+           })
+            @Html.ValidationMessageFor(config => config.State)
+        </div>
+
+        @Html.Partial("UI/_FormAction")
+        <a href="@Url.EmailConfigIndexUrl()" title="Danh sách cấu hình Email" class="btn btn-link">Danh sách</a>
+
+    </div>
+</div>

@@ -11,67 +11,85 @@ namespace V308CMS.Respository
     }
     public  class SizeRespository: IBaseRespository<Size>, ISizeRespository
     {
-        private readonly V308CMSEntities _entities;
-        public SizeRespository(V308CMSEntities entities)
+       
+        public SizeRespository()
         {
-            _entities = entities;
+          
+          
         }
         public Size Find(int id)
         {
-            return (from size in _entities.Size
-                    where size.Id == id
-                    select size).FirstOrDefault();
+            using (var entities = new V308CMSEntities())
+            {
+                return (from size in entities.Size
+                        where size.Id == id
+                        select size).FirstOrDefault();
+            }
+           
         }
 
         public string Delete(int id)
         {
-            var sizeItem = (from size in _entities.Size
-                               where size.Id == id
-                               select size).FirstOrDefault();
-            if (sizeItem != null)
+            using (var entities = new V308CMSEntities())
             {
-                _entities.Size.Remove(sizeItem);
-                _entities.SaveChanges();
-                return "ok";
+                var sizeItem = (from size in entities.Size
+                                where size.Id == id
+                                select size).FirstOrDefault();
+                if (sizeItem != null)
+                {
+                    entities.Size.Remove(sizeItem);
+                    entities.SaveChanges();
+                    return  "ok";
+                }
+                return "not_exists";
             }
-            return "not_exists";
+           
         }
 
         public string Update(Size data)
         {
-            var sizeItem = (from size in _entities.Size
-                            where size.Id == data.Id
-                               select size).FirstOrDefault();
-            if (sizeItem != null)
+            using (var entities = new V308CMSEntities())
             {
-                sizeItem.Name = data.Name;
-                sizeItem.Description = data.Description;
-                _entities.SaveChanges();
-                return "ok";
+                var sizeItem = (from size in entities.Size
+                                where size.Id == data.Id
+                                select size).FirstOrDefault();
+                if (sizeItem != null)
+                {
+                    sizeItem.Name = data.Name;
+                    sizeItem.Description = data.Description;
+                    entities.SaveChanges();
+                    return "ok";
+                }
+                return "not_exists";
             }
-            return "not_exists";
+           
         }
 
         public string Insert(Size data)
         {
-            var sizeItem = (from size in _entities.Size
-                               where size.Name == data.Name
-                               select size).FirstOrDefault();
-            if (sizeItem == null)
+            using (var entities = new V308CMSEntities())
             {
-                _entities.Size.Add(data);
-                _entities.SaveChanges();
-                return "ok";
+                var sizeItem = (from size in entities.Size
+                                where size.Name == data.Name
+                                select size).FirstOrDefault();
+                if (sizeItem == null)
+                {
+                    entities.Size.Add(data);
+                    entities.SaveChanges();
+                    return "ok";
+                }
+                return "exists";
             }
-            return "exists";
         }
-
-       
         public List<Size> GetAll()
         {
-            return (from size in _entities.Size
-                orderby size.Id descending
-                select size).ToList();
+            using (var entities = new V308CMSEntities())
+            {
+                return (from size in entities.Size
+                        orderby size.Id descending
+                        select size).ToList();
+            }
+          
         }
     }
 

@@ -1,168 +1,139 @@
-﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using V308CMS.Admin.Attributes;
+using V308CMS.Admin.Helpers;
 using V308CMS.Admin.Models;
-using V308CMS.Common;
-using V308CMS.Data;
+using V308CMS.Admin.Models.UI;
 
 namespace V308CMS.Admin.Controllers
 {
-    [CustomAuthorize]
+    [Authorize]
+    [CheckGroupPermission(true, "Nhóm tin")]
     public class NewsCategoryController : BaseController
     {
-       
-        private const int  PageSize =30;
-        [CheckAdminAuthorize(2)]
-        public ActionResult Index(string keyword, int rootId = 0, int parentId = 0, int childId = 0, int pPage =1)
-        {            
-            NewsGroupPage mNewsGroupPage = new NewsGroupPage();           
-            var mNewsGroupsList = NewsGroupService.GetList(keyword, rootId, parentId, childId,pPage, PageSize);
-            if (mNewsGroupsList.Count < PageSize)
-                mNewsGroupPage.IsEnd = true;
-            //Tao Html cho danh sach tin nay
-            mNewsGroupPage.Html = V308HTMLHELPER.TaoDanhSachCacNhomTinTuc(mNewsGroupsList, pPage);
-            mNewsGroupPage.Page = (int)pPage;
-            mNewsGroupPage.Keyword = keyword;
-            mNewsGroupPage.RootId = rootId;
-            mNewsGroupPage.ListNewsGroupRoot = NewsGroupService.GetListRoot();
-            mNewsGroupPage.ParentId = parentId;
-            mNewsGroupPage.ListNewsGroupParent = NewsGroupService.GetListParent(rootId);
-            mNewsGroupPage.ChildId = childId;
-            mNewsGroupPage.ListNewsGroupChild = NewsGroupService.GetListParent(parentId);
-            return View("Index",mNewsGroupPage);
-        }       
-        [CheckAdminJson(2)]
-        [HttpPost]      
-        public JsonResult OnDelete(int pId = 0)
+        [NonAction]
+        private List<MutilCategoryItem> BuildListCategory()
         {
-           
-           
-            var mNewsGroups = NewsService.LayTheLoaiTinTheoId(pId);
-            if (mNewsGroups != null)
+            return NewsGroupService.GetAll().Select
+                (
+                    cate => new MutilCategoryItem
+                    {
+                        Name = cate.Name,
+                        Id = cate.ID,
+                        ParentId = cate.Parent
+                    }
+                ).ToList();
+        }        
+        [CheckPermission(0, "Danh sách")]
+        public ActionResult Index()
+        {            
+            return View("Index",NewsGroupService.GetAll(false));
+        }        
+        [CheckPermission(1, "Thêm mới")]
+        public ActionResult Create()
+        {
+            AddViewData("ListCategory", BuildListCategory());         
+            return View("Create", new NewsCategoryModels());
+        }
+        [HttpPost]
+        [CheckPermission(1, "Thêm mới")]      
+        [ActionName("Create")]
+        public ActionResult OnCreate(NewsCategoryModels category)
+        {
+            if (ModelState.IsValid)
             {
-                MpStartEntities.DeleteObject(mNewsGroups);
-                MpStartEntities.SaveChanges();
-                return Json(new { code = 1, message = "Xóa thành công!" });
+                var result = NewsGroupService.Insert
+                    (
+                       category.Name,
+                       category.ParentId,
+                       category.Number,
+                       category.State,
+                       category.CreatedDate
+                    );
+                if (result == "exists")
+                {
+                    ModelState.AddModelError("", string.Format("Chuyên mục '{0}' đã tồn tại trên hệ thống.",category.Name) );
+                    AddViewData("ListCategory", BuildListCategory());
+                    return View("Create", category);
+
+                }
+
+                SetFlashMessage(string.Format("Thêm chuyên mục tin '{0}' thành công.",category.Name) );
+                return RedirectToAction("Index");
             }
-            return Json(new { code = 0, message = "Không tìm thấy tin cần xóa." });
+            AddViewData("ListCategory", BuildListCategory());
+            return View("Create", category);
+        }      
+        [CheckPermission(2, "Sửa")]
+        public ActionResult Edit(int id)
+        {
+            var categoryItem = NewsGroupService.Find(id);
+            if (categoryItem == null)
+            {
+                return RedirectToAction("Index");
+            }
+            AddViewData("ListCategory", BuildListCategory());
+            var categoryModel = new NewsCategoryModels
+            {
+                Id = categoryItem.ID,
+                Name = categoryItem.Name,
+                ParentId = categoryItem.Parent ?? 0,
+                Number = categoryItem.Number ?? 0,
+                State = categoryItem.Status.HasValue && categoryItem.Status.Value
+            };
+            return View("Edit", categoryModel);
+        }
+        [HttpPost]
+        [CheckPermission(2, "Sửa")]       
+        [ActionName("Edit")]       
+        [ValidateAntiForgeryToken]      
+        public ActionResult OnEdit(NewsCategoryModels category)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = NewsGroupService.Update(
+                    category.Id,category.Name,
+                    category.ParentId,category.Number,
+                    category.State,category.CreatedDate);
+                if (result == "not_exists")
+                {
+                    ModelState.AddModelError("", "Id không tồn tại trên hệ thống.");
+                    AddViewData("ListCategory", BuildListCategory());
+                    return View("Edit", category);
+                }
+                SetFlashMessage( string.Format("Sửa chuyên mục '{0}' thành công.",category.Name) );
+                return RedirectToAction("Index");
+            }
+            AddViewData("ListCategory", BuildListCategory());
+            return View("Edit", category);
+
+        }      
+        [HttpPost]
+        [CheckPermission(3, "Thay đổi trạng thái")]
+        [ActionName("ChangeState")]
+        public ActionResult OnChangeState(int id)
+        {
+            var result = NewsGroupService.ChangeState(id);
+            SetFlashMessage(result == "ok" ? 
+                "Thay đổi trạng thái Chuyên mục thành công." :
+                "Chuyên mục không tồn tại trên hệ thống.");
+            return RedirectToAction("Index");
 
         }       
-        [CheckAdminJson(2)]
-        [HttpPost]      
-        public JsonResult OnChangeStatus(int pId = 0)
-        {                    
-            var mNewsGroups = NewsService.LayTheLoaiTinTheoId(pId);
-            if (mNewsGroups != null)
-            {
-                mNewsGroups.Status = !mNewsGroups.Status;
-                MpStartEntities.SaveChanges();
-                return Json(new { code = 1, message =(mNewsGroups.Status == true? "Hiện thể loại tin thành công!": "Ẩn thể loại tin thành công!")  });
-            }
-            return Json(new { code = 0, message = "Không tìm thấy thể loại tin cần ẩn." });
-
-
-        }               
-        
-        [CheckAdminAuthorize(2)]
-        public ActionResult Create()
-        {           
-            NewsGroupPage mNewsGroupPage = new NewsGroupPage();
-            var mListNewsGroup = NewsService.LayNhomTinAll();
-            //Tao danh sach cac nhom tin
-            mNewsGroupPage.HtmlNhomTin = V308HTMLHELPER.TaoDanhSachNhomTin2(mListNewsGroup, 0);
-            return View("Create", mNewsGroupPage);
+        [HttpPost]
+        [CheckPermission(4, "Xóa")]
+        [ActionName("Delete")]
+        public ActionResult OnDelete(int id)
+        {
+            var result = NewsGroupService.Delete(id);
+            SetFlashMessage(result == "ok" ? 
+                "Xóa chuyên mục thành công." :
+                "Chuyên mục không tồn tại trên hệ thống.");
+            return RedirectToAction("Index");
         }
-        [HttpPost]      
-        [CheckAdminJson(2)]
-        [ValidateInput(false)]       
-        public JsonResult OnCreate(string pTieuDe, string pLink, int? pKichHoat, int? pUuTien, int? pGroupId = 0)
-        {          
-            NewsGroups mNewsGroups;
-            string[] mLevelArray;
-            long mLevel = 0;
-            if (pGroupId == 0)
-            {
-                //Tinh gia tri Level moi cho Group nay
-                //1- Lay tat ca cac Group me
-                //2- Convert gia tri Level de lay gia tri lon nhat
-                //3- Tao gia tri moi lon hon gia tri lon nhat
-                mLevelArray = (from p in MpStartEntities.NewsGroups
-                               where p.Parent == 0
-                               select p.Level).ToArray();
-                mLevel = mLevelArray.Select(p => Convert.ToInt64(p)).ToArray().Max();
-                mLevel = (mLevel + 1);
-                mNewsGroups = new NewsGroups() { Link = pLink, Date = DateTime.Now, Number = pUuTien, Status = true, Name = pTieuDe, Parent = pGroupId, Level = mLevel.ToString() };
-                MpStartEntities.AddToNewsGroups(mNewsGroups);
-                MpStartEntities.SaveChanges();
-            }
-            else
-            {
-                //lay level cua nhom me
-                NewsGroups mNewsGroupsParent = NewsService.LayTheLoaiTinTheoId((int)pGroupId);
-                if (mNewsGroupsParent != null)
-                {
-                    mLevelArray = (from p in MpStartEntities.NewsGroups
-                                   where (p.Level.Substring(0, mNewsGroupsParent.Level.Length).Equals(mNewsGroupsParent.Level)) && (p.Level.Length == (mNewsGroupsParent.Level.Length + 5))
-                                   select p.Level).ToArray();
-                    if (mLevelArray.Any())
-                    {
-                        mLevel = mLevelArray.Select(p => Convert.ToInt64(p)).ToArray().Max();
-                        mLevel = (mLevel + 1);
-                    }
-                    else
-                    {
-                        mLevel = Convert.ToInt64(mNewsGroupsParent.Level.ToString().Trim() + "10001");
-                    }
-                    mNewsGroups = new NewsGroups() { Date = DateTime.Now, Number = pUuTien, Status = true, Name = pTieuDe, Parent = pGroupId, Level = mLevel.ToString() };
-                    MpStartEntities.AddToNewsGroups(mNewsGroups);
-                    MpStartEntities.SaveChanges();
-                }
-                else
-                {
-                    return Json(new { code = 0, message = "Không tìm thấy nhóm tin." });
-                }
-            }
-            return Json(new { code = 1, message = "Lưu tin tức thành công." });
 
-        }
-        [CustomAuthorize]
-        [CheckAdminAuthorize(2)]      
-        public ActionResult Edit(int pId = 0)
-        {         
-            NewsGroupPage mNewsGroupPage = new NewsGroupPage();
-            var mNewsGroups = NewsService.LayTheLoaiTinTheoId(pId);
-            if (mNewsGroups != null)
-            {
-                var mListNewsGroup = NewsService.LayNhomTinAll();
-                //Tao danh sach cac nhom tin
-                mNewsGroupPage.HtmlNhomTin = V308HTMLHELPER.TaoDanhSachNhomTin3(mListNewsGroup, (int)mNewsGroups.Parent);
-                mNewsGroupPage.pNewsGroups = mNewsGroups;
-            }
-            else
-            {
-                mNewsGroupPage.Html = "Không tìm thấy tin tức cần sửa.";
-            }
-            return View("Edit", mNewsGroupPage);
-        }
-        [HttpPost]       
-        [CheckAdminJson(2)]
-        [ValidateInput(false)]        
-        public JsonResult OnEdit(int pId, string pTieuDe, string pLink, int? pGroupId, int? pKichHoat, int? pUuTien)
-        {           
-            var mNewsGroups = NewsService.LayTheLoaiTinTheoId(pId);
-            if (mNewsGroups != null)
-            {
-                mNewsGroups.Name = pTieuDe;
-                mNewsGroups.Date = DateTime.Now;
-                mNewsGroups.Number = pUuTien;
-                mNewsGroups.Parent = pGroupId;
-                mNewsGroups.Link = pLink;
-                MpStartEntities.SaveChanges();
-                return Json(new { code = 1, message = "Sủa thể loại tin thành công." });
-            }
-            return Json(new { code = 0, message = "Không tìm thấy loại tin tức để sửa." });
+       
 
-        }
-        
     }
 }

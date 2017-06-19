@@ -111,6 +111,7 @@
     <Compile Include="AuthorizeAttribute.cs" />
     <Compile Include="Base64Helper.cs" />
     <Compile Include="BootstrapHelper.cs" />
+
     <Compile Include="CloneObjectHelper.cs" />
     <Compile Include="Configs.cs" />
     <Compile Include="ConverterUlti.cs" />

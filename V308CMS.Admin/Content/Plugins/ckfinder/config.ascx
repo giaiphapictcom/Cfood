@@ -1,5 +1,9 @@
 <%@ Control Language="C#" EnableViewState="false" AutoEventWireup="false" Inherits="CKFinder.Settings.ConfigFile" %>
 <%@ Import Namespace="CKFinder.Settings" %>
+<<<<<<< HEAD
+=======
+<%@ Import Namespace="V308CMS.Admin.Helpers" %>
+>>>>>>> toai-neal
 <script runat="server">
 
 	/**
@@ -32,10 +36,19 @@
 
 		// The base URL used to reach files in CKFinder through the browser.
         BaseUrl = "/Content/Images/Upload/";
+<<<<<<< HEAD
 
 		// The phisical directory in the server where the file will end up. If
 		// blank, CKFinder attempts to resolve BaseUrl.
         BaseDir = HttpContext.Current.Server.MapPath("~/Content/Images/Upload/");
+=======
+	   
+
+		// The phisical directory in the server where the file will end up. If
+		// blank, CKFinder attempts to resolve BaseUrl.
+        //BaseDir = HttpContext.Current.Server.MapPath("~/Content/Images/Upload/");
+	    BaseDir = ConfigHelper.UploadFolder;
+>>>>>>> toai-neal
 
 		// Optional: enable extra plugins (remember to copy .dll files first).
 		Plugins = new string[] {
@@ -58,7 +71,11 @@
 		// Thumbnail settings.
 		// "Url" is used to reach the thumbnails with the browser, while "Dir"
 		// points to the physical location of the thumbnail files in the server.
+<<<<<<< HEAD
 		Thumbnails.Url = BaseUrl + "_thumbs/";
+=======
+		Thumbnails.Url = ConfigHelper.ImageDomain + BaseUrl + "_thumbs/";
+>>>>>>> toai-neal
 		if ( BaseDir != "" ) {
 			Thumbnails.Dir = BaseDir + "_thumbs/";
 		}
@@ -164,21 +181,33 @@
 		ResourceType type;
 
 		type = ResourceType.Add( "Files" );
+<<<<<<< HEAD
 		type.Url = BaseUrl + "files/";
+=======
+		type.Url = ConfigHelper.ImageDomain + BaseUrl + "files/";
+>>>>>>> toai-neal
 		type.Dir = BaseDir == "" ? "" : BaseDir + "files/";
 		type.MaxSize = 0;
 		type.AllowedExtensions = new string[] { "7z", "aiff", "asf", "avi", "bmp", "csv", "doc", "docx", "fla", "flv", "gif", "gz", "gzip", "jpeg", "jpg", "mid", "mov", "mp3", "mp4", "mpc", "mpeg", "mpg", "ods", "odt", "pdf", "png", "ppt", "pptx", "pxd", "qt", "ram", "rar", "rm", "rmi", "rmvb", "rtf", "sdc", "sitd", "swf", "sxc", "sxw", "tar", "tgz", "tif", "tiff", "txt", "vsd", "wav", "wma", "wmv", "xls", "xlsx", "zip" };
 		type.DeniedExtensions = new string[] { };
 
 		type = ResourceType.Add( "Images" );
+<<<<<<< HEAD
 		type.Url = BaseUrl + "images/";
+=======
+		type.Url = ConfigHelper.ImageDomain + BaseUrl + "images/";
+>>>>>>> toai-neal
 		type.Dir = BaseDir == "" ? "" : BaseDir + "images/";
 		type.MaxSize = 0;
 		type.AllowedExtensions = new string[] { "bmp", "gif", "jpeg", "jpg", "png" };
 		type.DeniedExtensions = new string[] { };
 
 		type = ResourceType.Add( "Flash" );
+<<<<<<< HEAD
 		type.Url = BaseUrl + "flash/";
+=======
+		type.Url = ConfigHelper.ImageDomain + BaseUrl + "flash/";
+>>>>>>> toai-neal
 		type.Dir = BaseDir == "" ? "" : BaseDir + "flash/";
 		type.MaxSize = 0;
 		type.AllowedExtensions = new string[] { "swf", "flv" };

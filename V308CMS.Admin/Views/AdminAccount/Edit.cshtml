@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿@using V308CMS.Admin.Helpers.Url
 @model V308CMS.Data.AccountPage
 @{
@@ -82,4 +83,19 @@
         </div>
         <hr />
     </div>
+=======
+﻿@model V308CMS.Admin.Models.AdminModels
+@using V308CMS.Admin.Helpers.Url
+@{
+    ViewBag.Title = "Cập nhật thông tin tài khoản hệ thống.";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+<div class="panel panel-primary">
+    <div class="panel-body">
+        <form method="post" role="form" action="@Url.AdminAccountEditUrl()" enctype="multipart/form-data">
+            @Html.Partial("_AdminForm", Model)
+        </form>
+    </div>
+
+>>>>>>> toai-neal
 </div>

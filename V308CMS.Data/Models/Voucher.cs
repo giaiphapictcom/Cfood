@@ -22,8 +22,9 @@ namespace V308CMS.Data.Models
         public string Description { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
-        public DateTime? StartDate { get; set; }
-        public DateTime? EndDate { get; set; }
+        public  DateTime? ExpireDate { get; set; }
+        public byte DiscountType { get; set; }  
+        public double Value { get; set; }      
         public byte State { get; set; }
         
     }

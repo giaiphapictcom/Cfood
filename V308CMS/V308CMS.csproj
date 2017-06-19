@@ -143,10 +143,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\ThemesViewActionFilter.cs" />
-    <Compile Include="Controllers\AccountAddressController.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AccountWishListController.cs" />
-    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BlockController.cs" />
     <Compile Include="Controllers\CaptchaController.cs" />
@@ -183,7 +179,6 @@
     <Compile Include="Helpers\Url\MpstartUrlHelper.cs" />
     <Compile Include="Helpers\Url\NewsUrlHelper.cs" />
     <Compile Include="Models\AccountModels.cs" />
-    <Compile Include="Models\Authenicate.cs" />
     <Compile Include="Models\CaptchaModel.cs" />
     <Compile Include="Models\CartItem.cs" />
     <Compile Include="Models\ContactModels.cs" />
@@ -1564,6 +1559,8 @@
     <Content Include="Content\themes\myshopify\js\jquery.history.js" />
     <Content Include="Content\themes\myshopify\js\jquery.revolution.tools.js" />
     <Content Include="Content\themes\myshopify\js\jquery.themepunch.revolution.js" />
+    <Content Include="Content\themes\myshopify\js\jquery.validate.min.js" />
+    <Content Include="Content\themes\myshopify\js\jquery.validate.unobtrusive.min.js" />
     <Content Include="Content\themes\myshopify\js\modernizr.custom.js" />
     <Content Include="Content\themes\myshopify\js\option_selection-f3dd7ba25bddfb6b0fe9addc0cae11dc709eeb6a469ec7f66f49e3abc4ce8c81.js" />
     <Content Include="Content\themes\myshopify\js\owl.carousel.js" />
@@ -1894,17 +1891,17 @@
     <Content Include="Views\themes\myshopify\Banner\CategoryAdv.cshtml" />
     <Content Include="Views\themes\myshopify\Pages\contact.cshtml" />
     <Content Include="Views\themes\myshopify\Pages\News.Detail.cshtml" />
-    <Content Include="Views\themes\myshopify\Pages\Account.Active.cshtml">
+    <Content Include="Views\themes\myshopify\Pages\Member.Active.cshtml">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="Views\themes\myshopify\Pages\Account.Addresses.cshtml" />
-    <Content Include="Views\themes\myshopify\Pages\Account.ChangePassword.cshtml" />
-    <Content Include="Views\themes\myshopify\Pages\Account.ForgotPassword.cshtml" />
-    <Content Include="Views\themes\myshopify\Pages\Account.GetToken.cshtml" />
-    <Content Include="Views\themes\myshopify\Pages\Account.InvalidToken.cshtml" />
-    <Content Include="Views\themes\myshopify\Pages\Account.Login.cshtml" />
-    <Content Include="Views\themes\myshopify\Pages\Account.Profile.cshtml" />
-    <Content Include="Views\themes\myshopify\Pages\Account.Register.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Member.Addresses.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Member.ChangePassword.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\MemberForgotPassword.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Member.GetToken.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Member.InvalidToken.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Member.Login.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Member.Profile.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Member.Register.cshtml" />
     <Content Include="Views\themes\myshopify\Pages\Cart.Checkout.cshtml">
       <SubType>Code</SubType>
     </Content>

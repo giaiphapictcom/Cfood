@@ -7,84 +7,128 @@ namespace V308CMS.Respository
     public interface IProductImageRespository
     {
         List<ProductImage> GetByProductId(int productId);
+        string Insert(int productId, string productName, string[] imageUrl, int number);
     }
     public class ProductImageRespository : IBaseRespository<ProductImage>, IProductImageRespository
     {
-        private readonly V308CMSEntities _entities;
       
-        public ProductImageRespository(V308CMSEntities entities)
+      
+        public ProductImageRespository()
         {
-            _entities = entities;
+           
         }
         public ProductImage Find(int id)
         {
-            return (from image in _entities.ProductImage
-                where image.ID == id
-                select image
+            using (var entities = new V308CMSEntities())
+            {
+                return (from image in entities.ProductImage
+                        where image.ID == id
+                        select image
                 ).FirstOrDefault();
+            }
+            
         }
 
         public string Delete(int id)
         {
-            var imageItem = (from image in _entities.ProductImage
-                            where image.ID == id
-                            select image).FirstOrDefault();
-            if (imageItem != null)
+            using (var entities = new V308CMSEntities())
             {
-                _entities.ProductImage.Remove(imageItem);
-                _entities.SaveChanges();
-                return "ok";
+                var imageItem = (from image in entities.ProductImage
+                                 where image.ID == id
+                                 select image).FirstOrDefault();
+                if (imageItem != null)
+                {
+                    entities.ProductImage.Remove(imageItem);
+                    entities.SaveChanges();
+                    return "ok";
+                }
+                return "not_exists";
             }
-            return "not_exists";
+           
         }
 
         public string Update(ProductImage data)
         {
-            var imageItem = (from image in _entities.ProductImage
-                             where image.ID == data.ID
-                             select image).FirstOrDefault();
-            if (imageItem != null)
+            using (var entities = new V308CMSEntities())
             {
-                imageItem.ProductID = data.ProductID;
-                imageItem.Title = data.Title;
-                imageItem.Number = data.Number;
-                imageItem.Name = data.Name;
-                _entities.SaveChanges();
-                return "ok";
+                var imageItem = (from image in entities.ProductImage
+                                 where image.ID == data.ID
+                                 select image).FirstOrDefault();
+                if (imageItem != null)
+                {
+                    imageItem.ProductID = data.ProductID;
+                    imageItem.Title = data.Title;
+                    imageItem.Number = data.Number;
+                    imageItem.Name = data.Name;
+                    entities.SaveChanges();
+                    return "ok";
+                }
+                return "not_exists";
             }
-            return "not_exists";
+            
         }
 
         public string Insert(ProductImage data)
         {
-            var imageItem = (from image in _entities.ProductImage
-                             where image.ID == data.ID && image.Title == data.Title
-                             select image).FirstOrDefault();
-            if (imageItem == null)
+            using (var entities = new V308CMSEntities())
             {
-                _entities.ProductImage.Add(data);
-                _entities.SaveChanges();
-                return "ok";
+
+                var imageItem = (from image in entities.ProductImage
+                                 where image.ID == data.ID && image.Title == data.Title
+                                 select image).FirstOrDefault();
+                if (imageItem == null)
+                {
+                    entities.ProductImage.Add(data);
+                    entities.SaveChanges();
+                    return "ok";
+                }
+                return "exists";
             }
-            return "exists";
+
 
         }
 
         public List<ProductImage> GetAll()
         {
-            return (from image in _entities.ProductImage
-                    orderby image.ID descending
-                    select image
+            using (var entities = new V308CMSEntities())
+            {
+                return (from image in entities.ProductImage
+                        orderby image.ID descending
+                        select image
                  ).ToList();
+            }
+            
         }
 
         public List<ProductImage> GetByProductId(int productId)
         {
-            return (from image in _entities.ProductImage
-                where image.ProductID == productId
-                orderby  image.ID descending 
-                select image
+            using (var entities = new V308CMSEntities())
+            {
+                return (from image in entities.ProductImage
+                        where image.ProductID == productId
+                        orderby image.ID descending
+                        select image
                 ).ToList();
+            }
+            
+        }
+
+        public string Insert(int productId, string productName, string[] listImage, int number =1)
+        {
+            foreach (var image in listImage)
+            {
+                if (!string.IsNullOrEmpty(image))
+                {
+                     Insert(new ProductImage
+                     {
+                        Name = image,
+                        Number = number,
+                        ProductID = productId,
+                        Title = productName
+                     });
+                }
+            }
+            return "ok";
         }
     }
 }

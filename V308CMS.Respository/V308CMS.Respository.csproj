@@ -57,7 +57,7 @@
     <Compile Include="ColorRespository.cs" />
     <Compile Include="CountryRespository.cs" />
     <Compile Include="EmailConfigRepository.cs" />
-    <Compile Include="GroupPermissionRespository.cs" />
+ 
     <Compile Include="IBaseRespository.cs" />
     <Compile Include="MenuConfigRespository.cs" />
     <Compile Include="PermissionRespository.cs" />

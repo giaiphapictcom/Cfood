@@ -780,16 +780,31 @@ namespace V308CMS.Data
             return entities.News.FirstOrDefault(news => news.ID == id);
         }
 
-        public List<News> GetList(int cateoryId = 0)
+        public List<News> GetList(int categoryId = 0, int site =0)
         {
-            return cateoryId > 0 ? (from news in entities.News.Include("NewsGroup")
-                                    where news.TypeID == cateoryId
-                                    orderby news.Date.Value descending
-                                    select news
-                ).ToList() : (from news in entities.News.Include("NewsGroup")
-                              orderby news.Date.Value descending
-                              select news
+            var listNews = (from news in entities.News.Include("NewsGroup")
+                            orderby news.Date.Value descending
+                            select news
                 ).ToList();
+            if (categoryId > 0)
+            {
+                listNews = (from news in listNews
+                            where news.TypeID == categoryId
+                            orderby news.Date.Value descending
+                            select news
+                ).ToList();
+            }
+            if (site > 0)
+            {
+                listNews = (from news in listNews
+                            where news.Site == site
+                            orderby news.Date.Value descending
+                            select news
+                ).ToList();
+            }
+            return listNews;
+
+
         }
 
         public List<News> GetVideos(int pcurrent, int psize, int pTypeID)
@@ -870,6 +885,7 @@ namespace V308CMS.Data
                 newsItem.Fast = data.Fast;
                 newsItem.Featured = data.Featured;
                 newsItem.Status = data.Status;
+                newsItem.Site = data.Site;
                 entities.SaveChanges();
                 return "ok";
             }

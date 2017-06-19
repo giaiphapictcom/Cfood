@@ -10,69 +10,109 @@ namespace V308CMS.Respository
     }
     public class SiteConfigRespository: IBaseRespository<SiteConfig>, ISiteConfigRespository
     {
-        private readonly V308CMSEntities _entities;
+        private V308CMSEntities _entities;
         public SiteConfigRespository(V308CMSEntities entities)
         {
-            _entities = entities;
+           this._entities = entities;
         }
      
         public SiteConfig Find(int id)
         {
+
             return (from config in _entities.SiteConfig
                 where config.id == id
                 select config).FirstOrDefault();
+
+            using (var entities = new V308CMSEntities())
+            {
+                return (from config in entities.SiteConfig
+                        where config.id == id
+                        select config).FirstOrDefault();
+            }
+            
+
         }
 
         public string Delete(int id)
         {
-            var configItem = (from config in _entities.SiteConfig
-                    where config.id == id
-                    select config).FirstOrDefault();
-            if (configItem != null)
+
+            //var configItem = (from config in _entities.SiteConfig
+            //        where config.id == id
+            //        select config).FirstOrDefault();
+            //if (configItem != null)
+
+            using (var entities = new V308CMSEntities())
+
             {
-                _entities.SiteConfig.Remove(configItem);
-                _entities.SaveChanges();
-                return "ok";
+                var configItem = (from config in entities.SiteConfig
+                                  where config.id == id
+                                  select config).FirstOrDefault();
+                if (configItem != null)
+                {
+                    entities.SiteConfig.Remove(configItem);
+                    entities.SaveChanges();
+                    return "ok";
+                }
+                return "not_exists";
+
             }
-            return "not_exists";
+          
         }
 
         public string Update(SiteConfig data)
         {
-            var configItem = (from config in _entities.SiteConfig
-                              where config.id == data.id
-                              select config).FirstOrDefault();
-            if (configItem != null)
+
+
+            using (var entities = new V308CMSEntities())
             {
-                configItem.name = data.name;
-                configItem.content = data.content;
-                _entities.SaveChanges();
-                return "ok";
+                var configItem = (from config in entities.SiteConfig
+                                  where config.id == data.id
+                                  select config).FirstOrDefault();
+                if (configItem != null)
+                {
+                    configItem.name = data.name;
+                    configItem.content = data.content;
+                    entities.SaveChanges();
+                    return "ok";
+                }
+                return "not_exists";
+
             }
-            return "not_exists";
+           
         }
 
         public string Insert(SiteConfig data)
         {
-            var configItem = (from config in _entities.SiteConfig
-                              where config.name == data.name
-                              select config).FirstOrDefault();
-            if (configItem == null)
+
+            using (var entities = new V308CMSEntities())
+
             {
-                _entities.SiteConfig.Add(data);
-                _entities.SaveChanges();
-                return "ok";
+                var configItem = (from config in entities.SiteConfig
+                                  where config.name == data.name
+                                  select config).FirstOrDefault();
+                if (configItem == null)
+                {
+                    entities.SiteConfig.Add(data);
+                    entities.SaveChanges();
+                    return "ok";
+                }
+                return "exists";
             }
-            return "exists";
+           
         }
 
         public List<SiteConfig> GetAll()
         {
-            return (from config in _entities.SiteConfig
-                    
-                    orderby config.id descending
-                    select config
+
+            using (var entities = new V308CMSEntities())
+            {
+                return (from config in entities.SiteConfig
+
+                        orderby config.id descending
+                        select config
                 ).ToList();
+            }
+            
         }
     }
 }

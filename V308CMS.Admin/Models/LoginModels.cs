@@ -13,6 +13,8 @@ namespace V308CMS.Admin.Models
 
         [Required(ErrorMessage = "Vui lòng nhập mật khẩu.")]
         public string Password { get; set; }
-        public int Remember { get; set; }
+
+        public bool Remember { get; set; }
+
     }
 }
