@@ -4,6 +4,11 @@ namespace V308CMS.Admin.Helpers.Url
 {
     public static class ProductUrlHelper
     {
+        public static string ProductIndexUrl(string controller = "product",
+          string action = "index")
+        {
+            return string.Format("/{0}/{1}", controller, action);
+        }
         public static string ProductIndexUrl(this UrlHelper helper, object routeValue = null, string controller = "product",
            string action = "index")
         {
