@@ -26,6 +26,7 @@ namespace V308CMS.Respository
         string UpdateCode(int productId, string code);
         string HideAll(string listId);
         string DeleteAll(string listId);
+        int Count();
 
     }
     public class ProductRespository: IBaseRespository<Product>, IProductRespository
@@ -390,6 +391,14 @@ namespace V308CMS.Respository
                     return "ok";
                 }
                 return "not_exists";
+            }
+        }
+
+        public int Count()
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return entities.Product.Count();
             }
         }
 

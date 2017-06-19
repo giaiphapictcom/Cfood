@@ -20,6 +20,7 @@ namespace V308CMS.Admin.Controllers
         }
         public PartialViewResult CountContactAsync()
         {
+             
             return PartialView("_CountContact");
         }
 

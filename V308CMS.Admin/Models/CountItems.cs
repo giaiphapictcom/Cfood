@@ -1,4 +1,4 @@
-﻿namespace V308CMS.Data
+﻿namespace V308CMS.Admin.Models
 {
     public class CountItems
     {

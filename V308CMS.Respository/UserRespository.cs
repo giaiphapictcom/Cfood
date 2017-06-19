@@ -14,7 +14,7 @@ namespace V308CMS.Respository
 
         string ChangeStatus(int id);
 
-
+        int Count();
     }
 
 
@@ -211,6 +211,12 @@ namespace V308CMS.Respository
            
         }
 
-
+        public int Count()
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return entities.Account.Count();
+            }
+        }
     }
 }
