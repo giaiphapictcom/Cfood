@@ -19,6 +19,7 @@ namespace V308CMS.Data
         List<Contact> GetAll();
         Contact Find(int id);
         int Count();
+        List<Contact> Take(int count =10);
     }
     public class ContactRepository: IContactRepository
     {
@@ -56,6 +57,17 @@ namespace V308CMS.Data
             using (var entities = new V308CMSEntities())
             {
                 return entities.Contact.Count();
+            }
+        }
+
+        public List<Contact> Take(int count = 10)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return (from contact in entities.Contact
+                        orderby contact.CreatedDate descending
+                        select contact
+                    ).Take(count).ToList();
             }
         }
 

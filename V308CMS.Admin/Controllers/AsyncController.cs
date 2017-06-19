@@ -50,11 +50,11 @@ namespace V308CMS.Admin.Controllers
 
         public PartialViewResult LoadLastestUserAsync()
         {
-            return PartialView("_LastestUser");
+            return PartialView("_LastestUser", UserService.Take());
         }
         public PartialViewResult LoadLastestContactAsync()
         {
-            return PartialView("_LastestContact");
+            return PartialView("_LastestContact", ContactService.Take());
         }
 
 
