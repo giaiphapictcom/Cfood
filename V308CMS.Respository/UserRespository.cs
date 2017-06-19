@@ -13,6 +13,10 @@ namespace V308CMS.Respository {
 
         string ChangeStatus(int id);
 
+<<<<<<< HEAD
+=======
+        int Count();
+>>>>>>> toai-neal
     }
 
 
@@ -215,6 +219,12 @@ namespace V308CMS.Respository {
            
         }
 
-
+        public int Count()
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return entities.Account.Count();
+            }
+        }
     }
 }

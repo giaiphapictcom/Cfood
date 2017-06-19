@@ -18,6 +18,7 @@ namespace V308CMS.Data
         string Delete(int id);
         List<Contact> GetAll();
         Contact Find(int id);
+        int Count();
     }
     public class ContactRepository: IContactRepository
     {
@@ -48,6 +49,14 @@ namespace V308CMS.Data
 
             }
             
+        }
+
+        public int Count()
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return entities.Contact.Count();
+            }
         }
 
         public string Insert(string fullName, string email, string phone, string message, DateTime createdDate)
