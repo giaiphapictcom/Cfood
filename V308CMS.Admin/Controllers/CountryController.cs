@@ -32,10 +32,10 @@ namespace V308CMS.Admin.Controllers
                 var result = CountryService.Insert(country.CloneTo<Country>());
                 if (result == Result.Exists)
                 {
-                    ModelState.AddModelError("", $"Quốc gia {country.Name} đã tồn tại trên hệ thống.");
+                    ModelState.AddModelError("", string.Format("Quốc gia {1} đã tồn tại trên hệ thống.",country.Name) );
                     return View("Create", country);
                 }
-                SetFlashMessage($"Thêm Quốc gia '{country.Name}' thành công.");
+                SetFlashMessage( string.Format("Thêm Quốc gia '{0}' thành công.",country.Name) );
                 if (country.SaveList)
                 {
                     return RedirectToAction("Index");

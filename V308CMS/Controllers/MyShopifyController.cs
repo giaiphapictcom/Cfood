@@ -13,16 +13,16 @@ namespace V308CMS.Controllers
         #region Repository
         static V308CMSEntities mEntities;
         ImagesRepository ImageRepos;
-        ProductTypeRepository ProductTypeRepos;
+        V308CMS.Data.ProductTypeRepository ProductTypeRepos;
         ProductRepository ProductRepos;
-        MenuConfigRespository MenuConfigRepos;
+        V308CMS.Respository.MenuConfigRespository MenuConfigRepos;
         NewsRepository NewsRepos;
 
         private void CreateRepos()
         {
             mEntities = new V308CMSEntities();
             ImageRepos = new ImagesRepository(mEntities);
-            ProductTypeRepos = new ProductTypeRepository(mEntities);
+            ProductTypeRepos = new V308CMS.Data.ProductTypeRepository(mEntities);
             ProductRepos = new ProductRepository(mEntities);
             NewsRepos = new NewsRepository(mEntities);
             MenuConfigRepos = new MenuConfigRespository(mEntities);

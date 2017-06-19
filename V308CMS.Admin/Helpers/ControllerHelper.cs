@@ -128,10 +128,7 @@ namespace V308CMS.Admin.Helpers {
             }
             return -1;
         }
-<<<<<<< HEAD
 
-=======
->>>>>>> toai-neal
         public static List<SelectListItem> GetListActionByController(string controller, string prefix = "On")
         {
             var fullControllerName = (controller + "controller").ToLower();

@@ -11,27 +11,33 @@ namespace V308CMS.Admin.Controllers
     {
         protected virtual new CustomPrincipal User => HttpContext.User as CustomPrincipal;
 
+        private static V308CMSEntities _mEntities;
+        private static V308CMSEntities EnsureV308CmsEntitiesNotNull()
+        {
+            return _mEntities ?? (_mEntities = new V308CMSEntities());
+        }
+
         protected BaseController()
         {                      
             NewsService = new NewsRepository();
             NewsGroupService = new NewsGroupRepository();
             AccountService = new AccountRepository();             
-            ContactService = new ContactRepository();          
+            ContactService = new ContactRepository(_mEntities);          
             ProductTypeService = new Respository.ProductTypeRepository();
-            SiteConfigService = new SiteConfigRespository();
+            SiteConfigService = new Respository.SiteConfigRespository(_mEntities);
             EmailConfigService= new EmailConfigRepository();
-            MenuConfigService = new MenuConfigRespository();
+            MenuConfigService = new MenuConfigRespository(_mEntities);
             ProductBrandService = new ProductBrandRespository();
             ProductManufacturerService = new ProductManufacturerRespository();
             ProductDistributorService = new ProductDistributorRespository();
             ProductStoreService = new StoreRespository();
             UnitService = new UnitRespository();
-            ColorService = new ColorRespository();
+            ColorService = new ColorRespository(_mEntities);
             CountryService = new CountryRespository();
             SizeService =  new SizeRespository();
             ProductAttributeService = new ProductAttributeRespository();
             ProductImageService = new ProductImageRespository();
-            UserService = new UserRespository();
+            UserService = new UserRespository(_mEntities);
             RoleService = new RoleRespository();
             PermissionService = new PermissionRespository();
             ProductSizeService = new ProductSizeRespository();
@@ -46,53 +52,53 @@ namespace V308CMS.Admin.Controllers
         public BannerRespository BannerService { get; set; }
         public AdminRespository AdminAccountService { get; set; }
         public ProductRespository ProductService { get; set; }
-        public ProductSaleOffRespository ProductSaleOffService { get; }
-        public ProductColorRespository ProductColorService { get; }
-        public ProductSizeRespository ProductSizeService { get; }       
-        public ProductDistributorRespository ProductDistributorService { get; }
+        public ProductSaleOffRespository ProductSaleOffService { get;set; }
+        public ProductColorRespository ProductColorService { get;set; }
+        public ProductSizeRespository ProductSizeService { get;set; }       
+        public ProductDistributorRespository ProductDistributorService { get; set;}
 
-        public ProductManufacturerRespository ProductManufacturerService { get; }
+        public ProductManufacturerRespository ProductManufacturerService { get;set; }
 
-        public ProductBrandRespository ProductBrandService { get; }
-        public ProductImageRespository ProductImageService { get; }
+        public ProductBrandRespository ProductBrandService { get; set;}
+        public ProductImageRespository ProductImageService { get; set;}
 
-        public ProductAttributeRespository ProductAttributeService { get; }
+        public ProductAttributeRespository ProductAttributeService { get; set;}
 
-        public PermissionRespository PermissionService { get; }
-        public RoleRespository RoleService { get; }
+        public PermissionRespository PermissionService { get; set;}
+        public RoleRespository RoleService { get; set;}
 
-        public UserRespository UserService { get; }
+        public UserRespository UserService { get; set;}
 
-        public SizeRespository SizeService { get; }
+        public SizeRespository SizeService { get; set;}
 
-        public CountryRespository CountryService { get; }
+        public CountryRespository CountryService { get; set;}
 
-        public ColorRespository ColorService { get; }
+        public ColorRespository ColorService { get; set;}
 
-        public UnitRespository UnitService { get; }
+        public UnitRespository UnitService { get; set;}
 
-        public StoreRespository ProductStoreService { get; }
-        public MenuConfigRespository MenuConfigService { get; }
+        public StoreRespository ProductStoreService { get; set;}
+        public MenuConfigRespository MenuConfigService { get; set;}
 
-        public EmailConfigRepository EmailConfigService { get; }
+        public EmailConfigRepository EmailConfigService { get; set;}
 
-        public SiteConfigRespository SiteConfigService { get; }
+        public Respository.SiteConfigRespository SiteConfigService { get; set;}
 
-        public Respository.ProductTypeRepository ProductTypeService { get; }
+        public Respository.ProductTypeRepository ProductTypeService { get; set;}
 
-        public NewsGroupRepository NewsGroupService { get; }
+        public NewsGroupRepository NewsGroupService { get; set;}
 
-        protected ContactRepository ContactService { get; }
+        protected ContactRepository ContactService { get; set;}
 
        
-        protected NewsRepository NewsService { get; }     
+        public NewsRepository NewsService { get; set; }     
 
-        protected AccountRepository AccountService { get; }
+        protected AccountRepository AccountService { get; set; }
 
         protected object GetState(string name,object value,object defaultValue)
         {
             var controller = ControllerContext.RouteData.Values["controller"].ToString();
-            var sessionName = $"{controller}{name}";
+            var sessionName = string.Format("{0}{1}",controller,name);
             if (value == null){
                 value = Session[sessionName] != null ? Session[sessionName].ToString() : defaultValue;
             }

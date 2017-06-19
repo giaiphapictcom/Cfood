@@ -22,7 +22,7 @@ namespace V308CMS.Controllers
         private readonly MarketRepository _marketRepository;
         private readonly IContactRepository _contactRepository;
         private readonly MenuConfigRespository _meuMenuConfigRespository;
-        private readonly ProductTypeRepository _productTypeRepository;
+        private readonly V308CMS.Data.ProductTypeRepository _productTypeRepository;
         private readonly CartRepository _CartRepository;
         private readonly CartItemRepository _CartItemRepository;
 
@@ -48,8 +48,8 @@ namespace V308CMS.Controllers
             _CartRepository = new CartRepository(_mEntities);
             _CartItemRepository = new CartItemRepository(_mEntities);
 
-            _meuMenuConfigRespository = new MenuConfigRespository(_mEntities);
-            _productTypeRepository = new ProductTypeRepository(_mEntities);
+            _meuMenuConfigRespository = new V308CMS.Respository.MenuConfigRespository(_mEntities);
+            _productTypeRepository = new V308CMS.Data.ProductTypeRepository(_mEntities);
         }
 
         //public ProductTypeRepository ProductTypeService {
@@ -59,8 +59,8 @@ namespace V308CMS.Controllers
         //    //_productTypeRepository = new Data.ProductTypeRepository();
         //}
 
-        
-        public ProductTypeRepository ProductTypeService
+
+        public V308CMS.Data.ProductTypeRepository ProductTypeService
         {
             get
             {

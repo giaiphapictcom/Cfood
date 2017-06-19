@@ -379,6 +379,12 @@ namespace V308CMS.Data
             get;
             set;
         }
+        public DbSet<GroupPermission> GroupPermission
+        {
+            get;
+            set;
+        }
+        
 
         #endregion
         #region AddTo Methods
