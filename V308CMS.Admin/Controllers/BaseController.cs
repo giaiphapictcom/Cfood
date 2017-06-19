@@ -1,4 +1,4 @@
-﻿﻿using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using V308CMS.Admin.Attributes;
 using V308CMS.Admin.Helpers;
 using V308CMS.Data;
@@ -85,14 +85,14 @@ namespace V308CMS.Admin.Controllers
         protected ContactRepository ContactService { get; }
 
        
-        public NewsRepository NewsService { get; }     
+        protected NewsRepository NewsService { get; }     
 
         protected AccountRepository AccountService { get; }
 
         protected object GetState(string name,object value,object defaultValue)
         {
             var controller = ControllerContext.RouteData.Values["controller"].ToString();
-            var sessionName = string.Format("{0}{1}",controller,name);
+            var sessionName = $"{controller}{name}";
             if (value == null){
                 value = Session[sessionName] != null ? Session[sessionName].ToString() : defaultValue;
             }
