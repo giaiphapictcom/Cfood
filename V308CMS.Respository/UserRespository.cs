@@ -12,17 +12,10 @@ namespace V308CMS.Respository {
             );
 
         string ChangeStatus(int id);
-<<<<<<< HEAD
-
-<<<<<<< HEAD
-=======
-        int Count();
->>>>>>> toai-neal
-=======
         
         int Count();
         List<Account> Take(int count = 10);
->>>>>>> toai-neal
+
     }
 
 
