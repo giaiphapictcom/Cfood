@@ -1,0 +1,32 @@
+﻿@model V308CMS.Data.NewsPage
+@using V308CMS.Common
+@using V308CMS.Data
+@{
+    Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
+}
+<div class="row">
+    <!-- Begin sidebar -->
+    <div class="col-xs-12 col-sm-5 col-md-3 sidebar">
+        @Html.Action("WidgetLeftHotProducts", "MyShopify")
+        
+    </div>
+    <!-- End sidebar -->
+
+    <div class="col-xs-12 col-md-9 col-sm-9 blog-detail col-main">
+        <header class="page-header">
+            <h1>@Model.pNews.Title</h1>
+
+            @if (@Model.pNews.Image.Trim().Length > 0) { 
+                <div class="block-images">
+                    <img src="@Model.pNews.Image" alt="@Model.pNews.Title" />
+                </div>
+            }
+            
+        </header>
+
+        <div class="rte">
+            <p>@Model.pNews.Summary</p>
+            @Model.pNews.Detail
+        </div>
+    </div>
+</div>

@@ -1,0 +1,131 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@using V308CMS.Admin.Models.UI
+@model  V308CMS.Admin.Models.UserModels
+@Html.HiddenFor(user => Model.Id)
+@Html.AntiForgeryToken()
+<div class="row">
+    @Html.ValidationSummary(true)
+    <div class="col-lg-6">
+        <div class="form-group">
+            @Html.LabelFor(user => Model.Username)
+            @Html.TextBoxFor(user => Model.Username, new {@class = "form-control", placeholder = "Nhập tên tài khoản"})
+            @Html.ValidationMessageFor(user => user.Username)
+        </div>
+        <div class="form-group">
+            <label for="@Model.Avatar">@(Model.Id > 0 ? "Ảnh đại diện hiện tại" : "Ảnh đại diện")</label>
+        </div>
+        @if (!string.IsNullOrWhiteSpace(Model.AvatarUrl))
+        {
+            @Html.HiddenFor(avatarUrl => Model.AvatarUrl)
+            <div class="form-group">
+                <img class="image-brand img-circle img-responsive" src="@Model.AvatarUrl.ToImageUrl()" alt="@Model.FullName" />
+            </div>
+            <div class="form-group">
+                <label for="@Model.AvatarUrl">Đổi ảnh đại diện:</label>
+            </div>
+        }
+        @Html.Partial("UI/_ImageSelectPreview", new ImageSelectPreviewModels
+       {
+           Id = Model.Id,
+           Name = "Avatar"
+       })
+
+        <div class="form-group">
+            @Html.LabelFor(user => Model.Email)
+            @Html.TextBoxFor(user => Model.Email, new {@class = "form-control", placeholder = "Nhập địa chỉ email"})
+            @Html.ValidationMessageFor(user => user.Email)
+        </div>
+            @if (Model.Id == 0)
+            {
+                <div class="form-group">
+                    @Html.LabelFor(user => Model.Password)
+                    @Html.PasswordFor(user => Model.Password, new {@class = "form-control", placeholder = "Nhập mật khẩu"})
+                    @Html.ValidationMessageFor(user => user.Password)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(user => Model.ConfirmPassword)
+                    @Html.PasswordFor(user => Model.ConfirmPassword, new {@class = "form-control", placeholder = "Nhập mật khẩu xác nhận"})
+                    @Html.ValidationMessageFor(user => user.ConfirmPassword)
+                </div>
+            }
+            else
+            {
+                <div class="form-group">
+                    <a class="btn btn-danger" href="@Url.UserChangePasswordUrl(new {id =Model.Id})" title="Đổi mật khẩu tài khoản @Model.Username">
+                        Đổi mật khẩu
+                        <i class="fa fa-key"></i>
+                    </a>
+                </div>
+             }
+
+                <div class="form-group">
+                    @Html.LabelFor(user => Model.FullName)
+                    @Html.TextBoxFor(user => Model.FullName, new { @class = "form-control", placeholder = "Nhập họ và tên" })
+                    @Html.ValidationMessageFor(user => user.FullName)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(user => Model.Phone)
+                    @Html.TextBoxFor(user => Model.Phone, new { @class = "form-control", placeholder = "Nhập số điện thoại" })
+                    @Html.ValidationMessageFor(user => user.Phone)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(user => Model.Address)
+                    @Html.TextAreaFor(user => Model.Address, new { @class = "form-control", placeholder = "Nhập địa chỉ", rows = "3" })
+                    @Html.ValidationMessageFor(user => user.Address)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(user => Model.BirthDay)
+                    @Html.TextBoxFor(user => Model.BirthDay, new { @class = "date form-control", placeholder = "Nhập ngày sinh" })
+                    @Html.ValidationMessageFor(user => user.BirthDay)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(user => Model.Gender)
+                </div>
+                <div class="btn-group" data-toggle="buttons" style="padding-bottom:10px">
+                    <label class="btn @(Model.Gender?"active":"")">
+                        @Html.RadioButtonFor(model => model.Gender, true, new { name = "Gender" }) Nam
+                    </label>
+                    <label class="btn @(Model.Gender == false?"active":"")">
+                        @Html.RadioButtonFor(model => model.Gender, false, new { name = "Gender" }) Nữ
+                    </label>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        @Html.CheckBoxFor(user => Model.Status, new { @checked = (Model.Status ? "checked" : "") })
+                        @Html.LabelFor(user => Model.Status)
+                    </div>
+                </div>
+
+                @Html.Partial("UI/_FormAction")
+                <a href="@Url.UserIndexUrl()" title="Danh sách Khách hàng" class="btn btn-link">Danh sách</a>
+            </div>
+</div>
+<script type="text/javascript">
+    $(function() {
+        $('.date').datetimepicker({ format: 'MM/DD/YYYY' });
+    });
+    $("input[name='Email'").change(function () {
+        var id = $("input[name='id']").val();
+        if (id === '') {
+            var email = $(this).val();
+            if (email !== '') {
+                $.post('@Url.UserCheckEmailUrl()', { "email": email }, function (response) {
+                    if (response === 'exist') {
+                        if ($('#UserName-Exist-error').length > 0) {
+                            $('#UserName-Exist-error').text('Email này đã được sử dụng để đăng ký tài khoản.');
+                            $('#UserName-Exist-error').show();
+                        } else {
+                            $("input[name='Email'").after("<span class='field-validation-error' data-valmsg-for='UserName' data-valmsg-replace='true'><span id='UserName-Exist-error' class=''>Email này đã được sử dụng để đăng ký tài khoản.</span></span>");
+                        }
+                    } else {
+                        $('#UserName-Exist-error').hide();
+                    }
+                });
+
+            }
+        }
+        
+    });
+
+
+</script>

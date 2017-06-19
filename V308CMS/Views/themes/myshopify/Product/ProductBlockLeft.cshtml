@@ -1,0 +1,62 @@
+﻿@model  V308CMS.Data.Product
+@using V308CMS.Data;
+@using V308CMS.Common;
+@using V308CMS.Helpers
+<div class="item-poduct">
+    <div class="grid-3  grid-item product-item product-hover product-review">
+        <div class="product-image ">
+            <div class="product-label">
+                <label class="label">Sale</label>
+            </div>
+            <a href="@url.productURL(Model.Name, Model.ID)" class="grid-image">
+                <img class="feature-images" src="@ImageUrlHelper.ToUrl(Model.Image, 105,150)" alt="@Model.Name">
+
+                <span class="product-hover" >
+                    <img class="img-responsive" alt="@Model.Name" src="@ImageUrlHelper.ToUrl(Model.Image, 105,150)">
+                </span>
+            </a>
+            <div class="quickview-button">
+                <a href="javascript:void(0)" id="clear-view-cover-case-to-galasy" data-toggle="tooltip" data-placement="top" title="Quick View" class="sca-qv-button btn">Xem nhanh</a>
+            </div>
+
+        </div>
+        <div class="product-content">
+            <h3><a class="product-title" href="@url.productURL(Model.Name, Model.ID)">@Model.Name</a></h3>
+            <div class="price-box">
+
+                <p class="sale">
+                    <span class="special-price">
+                        @if (Model.Price > 0)
+                        {
+                            <span class="money">@String.Format("{0: 0,0}", (Model.Price)) @ViewBag.MoneyShort</span>
+                        }
+                    </span>
+                    @if (Model.SaleOff > 0)
+                    { 
+                        <span class="old-price">
+                            <span class="money">@String.Format("{0: 0,0}", Model.Price - (Model.Price / 100) * Model.SaleOff) ) @ViewBag.MoneyShort</span>
+                        </span>
+                    }
+                    
+                </p>
+
+            </div>
+
+            @*<span class="shopify-product-reviews-badge" ></span>*@
+
+            <div class="add-to-link">
+
+                <div class="add-to-cart">
+
+                    <form action="/cart/add" method="post" class="variants" id="product-actions-7824329673" enctype="multipart/form-data" style="padding: 0px;">
+                        <span>
+                            <input class="btn" type="button" title="Select options" onclick="window.location.href = '/products/clear-view-cover-case-to-galasy'" value="Select options" /></span>
+                    </form>
+                </div>
+                <a class="wishlist btn" href="/account/login" data-toggle="tooltip" data-placement="top" title="Add to wishlist"><span><i class="fa fa-heart" aria-hidden="true"></i></span></a>
+
+            </div>
+        </div>
+
+    </div>
+</div>

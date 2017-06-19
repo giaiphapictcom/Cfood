@@ -1,0 +1,65 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@model V308CMS.Data.SupportPage
+@{
+    ViewBag.Title = "Hỗ trợ";
+    ViewBag.LinkBack = "<li><a href="+ @Url.SupportEditUrl()+">Sửa Hỗ Trợ</a> </li>";
+    ViewBag.MenuValue = 7;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <div>
+        <h3>Sửa hỗ trợ mới</h3>
+        <hr />
+        <div style="width: 100%;">
+            <input type="hidden" value="@Model.pSupport.ID" id="pId" />
+            <div id="v308inputContent" class="RadGrid RadGrid_MetroTouch table table-striped table-bordered table-hover dataTable" tabindex="0">
+                <table>
+                    <tr>
+                        <td>Tên</td>
+                        <td>
+                            <input type="text" id="pTitleId" name="pTitle" value="@Model.pSupport.Name" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Nhóm</td>
+                        <td>
+                            @Html.Raw(@Model.HtmlNhom)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Nick</td>
+                        <td>
+                            <input type="text" id="pNickId" name="pNick" value="@Model.pSupport.Nick" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Mobile</td>
+                        <td>
+                            <input type="text" id="pMobileId" name="pMobile" value="@Model.pSupport.Phone" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td>
+                            <input type="text" id="pEmailId" name="pEmail" value="@Model.pSupport.Email" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Thứ Tự</td>
+                        <td>
+                            <input type="text" id="pOrderId" name="pOrder" value="0" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <a class="mbutton" href="javascript:Admin_Support_ThucHienLuuSua();">Lưu sửa</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <hr />
+    </div>
+</div>

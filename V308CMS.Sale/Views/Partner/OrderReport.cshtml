@@ -1,0 +1,83 @@
+﻿@using V308CMS.Common;
+@model V308CMS.Data.OrdersReportByDaysPage
+@{
+    Layout = "~/Views/Affiliate/Layout/Backend.cshtml";
+    string PageTitle = "Báo cáo hiệu quả";
+
+  
+}
+@section header {
+    <title>@PageTitle</title>
+    <script type="text/javascript" src="/Content/js/highcharts.js"></script>
+
+
+
+}
+<h4>@PageTitle</h4>
+
+<div class="row">
+    <div class="col-md-12">
+        <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+    </div>
+</div>
+<script type="text/javascript">
+
+Highcharts.chart('container', {
+    chart: {
+        type: 'areaspline'
+    },
+    title: {
+        text: 'Hiệu quả đơn đặt hàng 7 ngày'
+    },
+    legend: {
+        layout: 'vertical',
+        align: 'left',
+        verticalAlign: 'top',
+        x: 150,
+        y: 100,
+        floating: true,
+        borderWidth: 1,
+        backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+    },
+    xAxis: {
+        categories: [
+            @foreach( DateTime d in Model.days ){
+                string name = "'" + StringHelper.DaynameVN(d.DayOfWeek.ToString()) + " (" + String.Format("{0:d/MM}", d) + ")'";
+                if( !d.Equals(Model.days.Last()) ){
+                    name += ",";
+                }
+                @Html.Raw(name)
+            }
+
+        ]
+    },
+    yAxis: {
+        title: {
+            text: 'Số Lượng'
+        }
+    },
+    tooltip: {
+        shared: true,
+        valueSuffix: ' đơn hàng'
+    },
+    credits: {
+        enabled: false
+    },
+    plotOptions: {
+        areaspline: {
+            fillOpacity: 0.5
+        }
+    },
+    series: [{
+        name: 'Khách hàng của @Session["UserName"]',
+        data: [@foreach( var rep in Model.report ){
+                string qty = rep.Total.ToString();
+                if (!rep.Equals(Model.report.Last()))
+                {
+                    qty += ",";
+                }
+                @Html.Raw(qty)
+            }]
+    }]
+});
+		</script>

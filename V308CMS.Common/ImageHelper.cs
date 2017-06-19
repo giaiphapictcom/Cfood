@@ -22,6 +22,8 @@ namespace V308CMS.Common
                 height = width;
             }
 
+            string extension = Path.GetExtension(img);
+            string filenameEncode = Base64Encode(img) + extension;
 
             var appSettings = ConfigurationManager.AppSettings;
             string uploadPath = appSettings["imgUpload"];
@@ -30,7 +32,7 @@ namespace V308CMS.Common
 
             if (uploadPath.Count() < 1 | !Directory.Exists(imgThumbPath))
             {
-                imgThumbPath = HttpContext.Current.Server.MapPath("~/Content/thumb/");
+                //imgThumbPath = HttpContext.Current.Server.MapPath("~/Content/thumb/");
                 imgThumbUrl = "/Content/thumb/";
             }
             string thumbPath = imgThumbPath + "/" + width+"x"+height + "/";
@@ -39,30 +41,45 @@ namespace V308CMS.Common
                 Directory.CreateDirectory(thumbPath);
             }
 
+            if (System.IO.File.Exists(thumbPath + filenameEncode)) {
+                return imgThumbUrl + width + "x" + height + "/" + filenameEncode;
+            }
 
             if (uploadPath.Count() > 0 & Directory.Exists(uploadPath))
             {
                 string imgRealPath = uploadPath + img;
-                if ( System.IO.File.Exists(imgRealPath) ) {
-                    string extension = Path.GetExtension(imgRealPath);
-                    string filenameEncode = Base64Encode(img) + extension;
-
+                if (System.IO.File.Exists(imgRealPath))
+                {
+                    extension = Path.GetExtension(imgRealPath);
                     if (!System.IO.File.Exists(thumbPath + filenameEncode))
                     {
                         CropImage(width, height, imgRealPath, thumbPath + filenameEncode);
-                    }
-
-                    if (!System.IO.File.Exists(thumbPath + filenameEncode)) {
                         imgPath = imgThumbUrl + width + "x" + height + "/" + filenameEncode;
                     }
-                    
                 }
+                else {
+                    imgRealPath = HttpContext.Current.Server.MapPath("~") + img;
+                    if (System.IO.File.Exists(imgRealPath))
+                    {
+                        extension = Path.GetExtension(imgRealPath);
+
+                        if (!System.IO.File.Exists(thumbPath + filenameEncode))
+                        {
+                            CropImage(width, height, imgRealPath, thumbPath + filenameEncode);
+                            imgPath = imgThumbUrl + width + "x" + height + "/" + filenameEncode;
+                        }
+                    }
+                }
+
+
             }
             return imgPath;
         }
 
         static void CropImage(int Width, int Height, string sourceFilePath, string saveFilePath)
         {
+            if (saveFilePath.Length > 248)
+                return;
             // variable for percentage resize 
             float percentageResize = 0;
             float percentageResizeW = 0;

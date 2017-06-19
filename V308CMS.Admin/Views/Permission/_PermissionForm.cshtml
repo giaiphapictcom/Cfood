@@ -1,0 +1,53 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@model V308CMS.Admin.Models.PermissionModels
+@{
+    var listState = (List<SelectListItem>)ViewBag.ListState;
+    var listGroup = (List<SelectListItem>)ViewBag.ListGroup;
+    var listAction = (List<SelectListItem>)ViewBag.ListAction;
+}
+@Html.HiddenFor(user => Model.Id)
+@Html.AntiForgeryToken()
+<div class="row">
+    @Html.ValidationSummary(true)
+    <div class="col-lg-6">
+        <div class="form-group">
+            @Html.LabelFor(gp => Model.GroupCode)
+            @Html.DropDownListFor(gp => Model.GroupCode, listGroup, "Chọn Nhóm quyền", new
+           {
+               @class = "form-control",
+               placeholder = "Chọn Nhóm quyền",
+               @onchange = "ChangeGroup(this.value)"
+
+           })
+            @Html.ValidationMessageFor(gp => gp.GroupCode)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(gp => gp.Action)
+            @Html.DropDownListFor(gp => gp.Action, listAction, "Chọn Quyền", new
+       {
+           @class = "form-control",
+           placeholder = "Chọn Quyền"
+
+       })
+            @Html.ValidationMessageFor(gp => gp.Action)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(gp => gp.Status)
+            @Html.DropDownListFor(gp => gp.Status, listState, new
+            {
+                @class = "form-control",
+                placeholder = "Trạng thái"
+            })
+            @Html.ValidationMessageFor(gp => gp.Status)
+        </div>
+
+        @Html.Partial("UI/_FormAction")
+        <a href="@Url.PermissionIndexUrl()" title="Danh sách Quyền" class="btn btn-link">Danh sách</a>
+
+    </div>
+</div>
+<script type="text/javascript">
+    function ChangeGroup(val) {
+        window.location.href = "/Permission/Create?group=" + val;
+    }
+</script>

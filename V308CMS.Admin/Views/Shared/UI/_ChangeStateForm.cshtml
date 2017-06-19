@@ -1,0 +1,13 @@
+﻿@using V308CMS.Admin.Helpers.UI
+@model V308CMS.Admin.Models.UI.ChangeStateFormModels
+<form method="post" action="@Model.Url" style="display: inline-block;">
+    @Html.Hidden(Model.NameOfId, Model.ValueOfId)
+    @if (Model.IsConfirm)
+    {
+        <button title="Thay đổi trạng thái" name="btnDelete" onclick="return confirm('Bạn muốn thay đổi trạng thái của mục này ?');" 
+                style="margin-left: 5px;" type="submit" class="btn @(Model.State.HasValue && Model.State.Value?"btn-success" :"btn-danger")">
+            <i class="fa @(Model.State.HasValue && Model.State.Value?"fa-unlock" : "fa-lock")"></i>
+        </button>
+    }
+   
+</form>

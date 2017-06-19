@@ -1,0 +1,17 @@
+﻿@using V308CMS.Data
+@using V308CMS.Common
+@model V308CMS.Data.News
+
+<div class="item">
+    <div class="blog-item">
+        <div class="content-blog">
+            <a class="image video" href="@url.videoURL(Model.Title, Model.ID)">
+                <img src="https://i.ytimg.com/vi/@Model.Summary/maxresdefault.jpg" alt="@Model.Title">
+                <span class="mask-play"><i class="fa fa-play"></i></span>
+            </a>
+            <div class="blog-meta">
+                <h6 class="p10">@url.VideoAnchor(Model.Title, Model.ID)</h6>
+            </div>
+        </div>
+    </div>
+</div>

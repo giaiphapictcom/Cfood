@@ -1,0 +1,48 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@model V308CMS.Admin.Models.RoleModels
+@{
+    var listState = (List<SelectListItem>)ViewBag.ListState;
+}
+@Html.HiddenFor(role => role.Id)
+@Html.AntiForgeryToken()
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        Thông tin Nhóm tài khoản
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            @Html.ValidationSummary(true)
+            <div class="col-lg-6">
+                <div class="form-group">
+                    @Html.LabelFor(role => role.Name)
+                    @Html.TextBoxFor(role => role.Name, new {@class = "form-control", placeholder = "Nhập tên quyền"})
+                    @Html.ValidationMessageFor(role => role.Name)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(role => role.Description)
+                    @Html.TextAreaFor(role => role.Description, new {@class = "form-control", placeholder = "Nhập mô tả quyền", rows = "3"})
+                    @Html.ValidationMessageFor(role => role.Description)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(role => role.Status)
+                    @Html.DropDownListFor(role => role.Status, listState, new
+                    {
+                        @class = "form-control",
+                        placeholder = "Trạng thái"
+                    })
+                    @Html.ValidationMessageFor(role => role.Status)
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+@(Model.Id > 0 ? Html.Partial("_RolePermissionEdit", Model) : Html.Partial("_RolePermissionCreate", Model))
+<div style="margin-bottom: 20px">
+    @Html.Partial("UI/_FormAction")
+    <a href="@Url.RoleIndexUrl()" title="Danh sách nhóm tài khoản" class="btn btn-link">Danh sách</a>
+</div>
+
+

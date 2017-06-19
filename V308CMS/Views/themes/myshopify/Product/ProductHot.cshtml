@@ -1,0 +1,123 @@
+﻿@model  List<V308CMS.Data.ProductDetail>
+@using V308CMS.Common
+@using V308CMS.Helpers
+@if (Model != null && Model.Count > 0)
+{
+    <div class="shopify-section index-section">
+        <div class="product-main-home product-deal" style="margin: 50px 0px 50px 0px">
+            <div class="container">
+                <div class="home-product-deal">
+                    <div class="module-title">
+                        <h2><i class="fa fa-bolt" aria-hidden="true" style="margin-right:10px;"></i>Sản phẩm mới</h2>
+                    </div>
+
+                    <div class="box-content">
+                        <div id="1475766547020" class="product-height">
+                            @foreach (V308CMS.Data.ProductDetail item in Model)
+                            {
+                                <div class="item-poduct">
+
+                                    <div class="grid-3  grid-item product-item product-hover product-review" id="product-@item.Product.ID">
+                                        <div class="product-image ">
+
+                                            @if (item.Product.SaleOff > 0)
+                                            {
+                                                <div class="product-label"><label class="label">Giảm giá</label></div>
+                                            }
+                                            <a href="@url.productURL(item.Product.Name,item.Product.ID)" class="grid-image">
+                                                <img class="feature-images" src="@ImageUrlHelper.ToUrl(@item.Product.Image, 250,250)" alt="@item.Product.Name">
+
+                                                @if (item.Images.Any())
+                                                {
+                                                    <span class="product-hover" data-idproduct="@item.Product.ID">
+
+                                                        <img class="img-responsive" alt="@item.Product.Name" src="@ImageUrlHelper.ToUrl(@item.Images.First().Name, 250,250)">
+                                                    </span>
+                                                }
+
+                                            </a>
+
+                                            <div class="quickview-button">
+                                                <a href="javascript:void(0)"  data-toggle="tooltip" data-placement="top" title="@item.Product.Name" class="sca-qv-button btn" id="@item.Product.ID">
+                                                    @ViewBag.ProductViewText
+                                                </a>
+                                            </div>
+
+                                        </div>
+                                        <div class="product-content">
+                                            <h3><a class="product-title" href="@url.productURL(item.Product.Name,item.Product.ID)">@item.Product.Name</a></h3>
+                                            <div class="price-box">
+
+                                                <p class="sale">
+                                                    @if (item.Product.Price > 0)
+                                                    {
+                                                        <span class="special-price"><span class="money">@String.Format("{0: 0,0}", (item.Product.Price)) @ViewBag.MoneyShort</span></span>
+                                                    }
+                                                    @if (item.Product.SaleOff > 0)
+                                                    {
+                                                        <span class="old-price"><span class="money">@String.Format("{0: 0,0}", item.Product.Price - (item.Product.Price / 100) * item.Product.SaleOff) ) @ViewBag.MoneyShort</span></span>
+                                                    }
+
+                                                </p>
+
+                                            </div>
+
+                                            <span class="shopify-product-reviews-badge" data-id="8747959625"></span>
+
+                                            <div class="add-to-link">
+
+                                                <div class="add-to-cart">
+                                                    <a href="javascript:void(0);" class="btn add-to-cart-btn" add-cart="@item.Product.ID" title="Thêm vào giỏ hàng">Thêm vào giỏ hàng</a>
+                                                </div>
+                                                <a data-id="@item.Product.ID" class="wishlist btn" href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="Yêu thích"><span><i class="fa fa-heart" aria-hidden="true"></i></span></a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        jQuery(document).ready(function () {
+
+            jQuery("#1475766547020").owlCarousel({
+                itemsCustom: [
+                [300, 2],
+                [360, 2],
+                [480, 2],
+                [600, 2],
+                [800, 3],
+                [1000, 3],
+                [1200, 5],
+                [1400, 5],
+                [1600, 5]
+                ],
+                stopOnHover: true,
+                autoPlay: true,
+
+                lazyLoad: true,
+               
+                pagination: false,
+
+                // Navigation
+                navigation: true,
+                navigationText: ['<i class="fa fa-angle-left" aria-hidden="true"></i>', '<i class="fa fa-angle-right" aria-hidden="true"></i>'],
+                rewindNav: true,
+                scrollPerPage: false,
+
+            });
+
+        })
+
+    </script>
+
+}

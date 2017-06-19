@@ -1,0 +1,149 @@
+.leftmenu {
+    border-right: 1px solid #ddd;
+    padding: 0;
+}
+
+form .notification-red::after {
+    content :"(*)";
+}
+ul.adminmenu {
+
+}
+
+
+.adminmenu > li > a {
+    font-weight: bold;
+    font-size: 13px;
+    color : #fd393d;
+    text-transform: uppercase;
+    line-height: 30px;
+}
+.adminmenu li {
+    border-bottom: 1px solid #ddd;
+    padding: 3px 0;
+    margin-bottom: 0;
+}
+.adminmenu li.noborder {
+     border: 0;
+}
+.adminmenu > li > a span {
+    color: #ff7e00;
+    width: 15px;
+    margin-right: 5px;
+    margin-left: 10px;
+    font-size: 17px;
+    padding-right: 25px;
+}
+
+.adminmenu li > ul {
+    list-style: none;
+    margin-top: 5px;
+}
+
+.adminmenu li.noborder li:first-child {
+     border-top: 1px solid #ddd;
+}
+
+.adminmenu li > ul a {
+    margin-left: 40px;
+    line-height: 30px;
+    font-size: 14px;
+    color: #626262;
+}
+.adminmenu li > ul a::before {
+    font-family: 'FontAwesome';
+    content: "\f105";
+    margin-right: 15px;
+    color: #ff7e00;
+    font-weight: bold;
+}
+.adminmenu li.selected,
+.adminmenu li li.selected {
+    background-color: #ffe4c9;
+}
+
+.main-content h4 {
+    color: #fd393d;
+    margin-bottom: 35px;
+    margin-top: 25px;
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.pagination {
+    margin: 0;
+}
+
+.form-group {
+    margin-bottom: 0;
+}
+.form-group label {
+    color: #646464;
+}
+
+
+form .form-group {
+    margin-bottom: 1rem;
+}
+.border-radius-0 .form-control {
+    border-radius: 0;
+}
+.border-radius-0 .input-group-addon {
+    border-radius: 0;
+}
+
+
+.placenote {
+    color: #999999;
+    padding: 15px;
+}
+
+
+form hr {
+    margin: 5px 0;
+}
+
+.table thead th {
+    background-color: #ffe4c9;
+    text-transform: none;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.form-group-inline .form-group {
+    display: inline-block;
+}
+.form-group-inline .btn {
+    height: 33px;
+    line-height: 33px;
+}
+.btn.activated,
+.form-control.activated {
+    background-color:#fd393d !important;
+    color: white !important;
+    border: 1px solid #666 !important;
+}
+/*
+ * update style
+ */
+.textright {
+    text-align: right;
+}
+
+table .btn {
+    line-height: 20px;
+    height: 20px;
+    padding: 0 5px;
+}
+
+img.w50 {
+    width: 50px;
+    height: auto;
+}
+
+
+.itemview [class^="col-"] h5 {
+    color: #81aacb;
+    margin-bottom:0;
+}

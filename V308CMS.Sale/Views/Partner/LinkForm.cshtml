@@ -1,0 +1,46 @@
+﻿@using V308CMS.Common;
+@model V308CMS.Data.AffiliateLinkFormPage
+@{
+    Layout = "~/Views/Affiliate/Layout/Backend.cshtml";
+    string PageTitle = "Tạo link phân phối";
+
+    string url = "";
+    if (Model.url != null && Model.url.Length > 1)
+    {
+        url = Model.url;
+    }
+}
+@section header {
+    <title>@PageTitle</title>
+
+}
+<h4>@PageTitle</h4>
+<form style="width: 60%; margin: 0 auto;" action="/link/tao-moi" method="post" >
+    <div class="row">
+        <div class="col-md-12">
+            @BootstrapHelper.InputTextarea("url", "Url", "",url,true,"Xem danh sách tên miền hỗ trợ")
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-12 placenote">Thông tin thêm (không bắt buộc)</div>
+
+        <div class="col-md-6">
+            @BootstrapHelper.InputText("source", "Nguồn chiến dịch", "VD: google, facebook")
+        </div>
+        <div class="col-md-6">
+            @BootstrapHelper.InputText("taget", "Cách tiếp thị", "VD: cpc, banner, email")
+        </div>
+        <div class="col-md-12">
+            @BootstrapHelper.InputText("name", "CáchTên chiến dịch", "VD: tên sản phẩm, Chương trình, Sự kiện")
+        </div>
+        <div class="col-md-12">
+            @BootstrapHelper.InputTextarea("summary", "Nội dung sự kiện", "Nội dung chiến dịch dùng để phân biệt các quảng cáo")
+            @*<div class="form-group">
+                <label for="exampleInputPassword1">Nội dung sự kiện</label>
+                <textarea class="form-control" id="exampleTextarea" rows="3" placeholder="Nội dung chiến dịch dùng để phân biệt các quảng cáo"></textarea>
+            </div>*@
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success">Tạo Link</button>
+</form>

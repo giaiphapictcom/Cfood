@@ -1,0 +1,13 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@model V308CMS.Admin.Models.ProductColorModels
+@{
+    ViewBag.Title = "Thêm mới Màu sắc sản phẩm";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+<div class="panel panel-primary">
+    <div class="panel-body">
+        <form method="post" role="form" action="@Url.ProductColorCreateUrl()">
+            @Html.Partial("_ColorForm", Model)
+        </form>
+    </div>
+</div>

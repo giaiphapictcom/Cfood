@@ -11,3 +11,53 @@ V308CMS/obj/Release/
 V308CMS.Sale/obj/Release/
 V308CMS.Revenue/obj/Release
 V308CMS.Data/obj/Release/
+V308CMS/Content/thumb/
+V308CMS/bin/*.xml
+V308CMS.Data/bin/*.xml
+<<<<<<< HEAD
+V308CMS.Common/bin/*
+
+V308CMS/db/account.sql
+V308CMS/db/contact.sql
+V308CMS.Sale/Content/thumb/100x100/
+=======
+V308CMS.Common/bin/System.Web.*
+V308CMS.Common/bin/Newtonsoft.Json.xml
+V308CMS.Common/bin/System.Net.Http.Formatting.xml
+<<<<<<< HEAD
+V308CMS.Sale/Content/thumb/100x100
+>>>>>>> toai-neal
+=======
+V308CMS.Sale/Content/thumb/100x100/
+>>>>>>> quannh-0529
+V308CMS.Sale/Content/thumb/160x99/
+<<<<<<< HEAD
+V308CMS.Sale/Content/thumb/300x170/
+V308CMS.Sale/Content/thumb/536x271/
+=======
+V308CMS.Sale/Content/thumb/536x271
+V308CMS.Sale/Content/thumb/300x170/
+>>>>>>> toai-neal
+V308CMS.Respository/obj/Debug/
+V308CMS.Static/bin/Newtonsoft.Json.xml
+V308CMS.Static/bin/ImageResizer.xml
+V308CMS.Static/bin/ImageResizer.Plugins.PrettyGifs.xml
+V308CMS.Static/bin/ImageResizer.Plugins.FriendlyUrls.xml
+V308CMS.Static/bin/ImageResizer.Plugins.DiskCache.xml
+V308CMS.Static/bin/ImageResizer.Plugins.AnimatedGifs.xml
+V308CMS.Static/obj/Debug/V308CMS.Static.csproj.FileListAbsolute.txt
+V308CMS/Content/Plugins/OwlCarousel/js/.jshintrc
+V308CMS/Content/Plugins/OwlCarousel/js/.jscsrc
+V308CMS.Respository/obj/Release/
+V308CMS.Static/obj/Release/
+_UpgradeReport_Files/UpgradeReport_Information.png
+_UpgradeReport_Files/UpgradeReport_Error.png
+_UpgradeReport_Files/UpgradeReport.xslt
+_UpgradeReport_Files/UpgradeReport.css
+UpgradeLog2.htm
+UpgradeLog2.XML
+UpgradeLog.XML
+_UpgradeReport_Files/UpgradeReport_Success.png
+_UpgradeReport_Files/UpgradeReport_Warning.png
+V308CMS.Admin/bin/V308CMS.Admin.dll.config
+V308CMS.Admin/obj/Debug/V308CMS.Admin.csproj.FileListAbsolute.txt

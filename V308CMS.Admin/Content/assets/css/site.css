@@ -1,0 +1,94 @@
+﻿#UpdateProgress1 {
+    width:100%;
+    height:100%;
+    position:absolute;
+    top:0px;
+    left:0px;
+}
+.area {
+    background:#0094ff;
+    width:100%;
+    height:100%;
+    position:absolute;
+    opacity:0.3;
+}
+.form-loading {
+<<<<<<< HEAD
+    background:url(/Images/loading-tlr.gif) center center no-repeat;
+=======
+    background:url(/Content/Images/loading-tlr.gif) center center no-repeat;
+>>>>>>> toai-neal
+    width:100%;
+    height:100%;
+    position:absolute;
+}
+<<<<<<< HEAD
+=======
+.image-brand {
+    width: 80px;
+    height: 80px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    
+}
+.image-product {
+    width: 100px;
+    height: 100px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    
+}
+
+.Product_Button
+{
+    padding:20px;
+    border:1px solid #fff;
+}
+.margin50{
+    margin-top:50px
+}
+.productbtn:after {
+    font-family: "Glyphicons Halflings";
+    content: "\e114";
+    float: right;
+    margin-left: 15px;
+  }
+  /* Icon when the collapsible content is hidden */
+  .productbtn.collapsed:after {
+    content: "\e080";
+  }
+  .width450
+  {
+      width:450px
+  }
+  .margin50 {
+    margin-top:50px;   
+}
+input[type=radio], input[type=checkbox]
+{
+    margin:4px !important;
+}
+.dimentions-width, .dimentions-height
+{
+    width:90%;
+    display:initial;
+}
+.btn-colorselector {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-color: #DDD;
+  vertical-align: middle;
+  border-radius: 0;
+}
+.gallery
+{
+    display: inline-block;
+    margin-top: 20px;
+}
+.blur {
+    -webkit-filter: blur(4px)
+}
+
+
+>>>>>>> toai-neal

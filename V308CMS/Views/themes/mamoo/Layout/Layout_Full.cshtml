@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    @RenderSection("header",false)
+    @Html.Action("Resources", "Block")
+</head>
+<body>
+    <header>
+            @Html.Action("Header", "Block")
+    </header>
+    <nav class="navbar-toggleable-md  bg-mpstart">
+	    <div class="container">
+	        <div class="collapse navbar-collapse">@Html.Action("MainMenu", "Block")</div>
+	    </div>
+    </nav>
+    <div class="main-content">
+	    <div class="container">
+
+            @RenderBody()
+
+        </div>
+    </div>
+    @Html.Action("Footer", "Block")
+</body>
+</html>

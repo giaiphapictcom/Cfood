@@ -1,0 +1,146 @@
+﻿@using V308CMS.Admin.Helpers.Url
+<<<<<<< HEAD
+@model V308CMS.Data.NewsGroupPage
+@{
+    ViewBag.Title = "Thể Loại Tin Tức";
+    ViewBag.LinkBack = "<li><a href=" + Url.NewsCategoryIndexUrl()+">Thể Loại Tin Tức</a> </li>";
+    ViewBag.MenuValue = 2;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div>
+    <div>
+
+        <div id="close" class="mheader">
+            <a href="@Url.NewsCategoryCreateUrl()" title="Thêm mới">
+                <img src="@Url.CreateNewImageUrl()" alt="Thêm mới"/>
+            </a>
+        </div>
+        <form name="form_search" method="GET" action="@Url.NewsCategoryIndexUrl()">
+            <div style="margin-top: 16px;">
+               @*@Html.Raw(Model.HtmlNhomTin)*@
+               @Html.DropDownList("RootId",new SelectList(Model.ListNewsGroupRoot,"ID","Name",Model.RootId),"Tất cả", new
+               {
+                   onchange= "jvascript:Admin_NewsGroup_ChangeRooId()"
+               })
+
+               @Html.DropDownList("ParentId", new SelectList(Model.ListNewsGroupParent, "ID", "Name", Model.ParentId), "Danh mục cha", new
+              {
+                  onchange = "jvascript:Admin_NewsGroup_ChangeParentId()"
+              })
+                @Html.DropDownList("ChildId", new SelectList(Model.ListNewsGroupChild, "ID", "Name", Model.ChildId), "Danh mục con", new
+               {
+                   onchange = "jvascript:Admin_NewsGroup_ChangeChildId()"
+               })
+                <input value="@Model.Keyword" type="text" name="keyword" placeholder="Nhập từ khóa cần tìm kiếm"/>
+                <input type="submit" value="Tìm kiếm" name="btnSearch" style="margin-bottom: 10px;" />
+            </div>           
+            <hr/>
+        </form>
+
+        <div style="width: 100%;">
+            <div class="RadGrid RadGrid_MetroTouch table table-striped table-bordered table-hover dataTable" tabindex="0">
+                @Html.Raw(Model.Html)
+            </div>
+        </div>
+        <div class="wpmn_page_navi">
+            <a href="@Url.NewsCategoryIndexUrl(new {pPage = Model.BackPage, pType = Model.TypeId})">Back</a>
+            <span class="current">@Model.Page</span>
+            <a href="@Url.NewsCategoryIndexUrl(new {pPage = Model.NextPage, pType = Model.TypeId})">Next</a>
+        </div>
+        <hr/>
+    </div>
+    <div style="display: none;" role="status" aria-hidden="true">
+        <div class="area"></div>
+        <div class="form-loading"></div>
+    </div>
+</div>
+=======
+@using V308CMS.Admin.Models.UI
+@using V308CMS.Common
+@using V308CMS.Data
+@model List<NewsGroups>
+@{
+    ViewBag.Title = "Danh sách Chuyên mục Tin tức";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+@helper ShowListMenu(
+            List<NewsGroups> data = null,
+            int parentId = 0,
+            string strLimit = "")
+{
+    if (Model.Any())
+    {
+        foreach (var category in Model)
+        {
+            if (category.Parent == parentId)
+            {
+                <tr>
+                    <td>
+                        <a class="btn btn-link" href="@Url.NewsCategoryEditUrl(new {category.ID})" title="Cập nhật chuyên mục tin">
+                            @strLimit@category.Name
+                        </a>                            
+                    </td>
+                    <td>@category.Date.ToDdmmyyyy()</td>
+                    <td>
+                        @Html.Partial("UI/_ChangeStateForm", new ChangeStateFormModels
+                       {
+                           NameOfId = "Id",
+                           ValueOfId = category.ID,
+                           IsConfirm = true,
+                           State = category.Status,
+                           Url = Url.NewsCategoryChangeStateUrl()
+                       })
+                    </td>
+                    <td style='width: 200px'>
+                        @Html.Partial("UI/_EditButton", new ButtonModels
+                        {
+                            Id = string.Format("category_{0}", category.ID),
+                            Href = Url.NewsCategoryEditUrl(new {category.ID}),
+                            Title = "Cập nhật thông tin chuyên mục " + category.Name
+                        })
+                        @Html.Partial("UI/_DeleteForm", new DeleteFormModels
+                        {
+                            NameOfId = "Id",
+                            ValueOfId = category.ID,
+                            IsConfirm = true,
+                            Url = Url.NewsCategoryDeleteUrl()
+                        })
+                    </td>
+                </tr>
+                @ShowListMenu(Model, category.ID, strLimit + "---|")                
+            }
+        }
+    }
+}
+@Html.Partial("UI/_AddNewButton", Url.NewsCategoryCreateUrl())
+@if (Model.Any())
+{
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                <thead>
+                    <tr>
+                        <th>Tên</th>
+                        <th>Ngày tạo</th>
+                        <th>Trạng thái</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @ShowListMenu(Model)
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#dataTables-example').DataTable({
+            responsive: true
+        });
+    });
+</script>
+
+>>>>>>> toai-neal

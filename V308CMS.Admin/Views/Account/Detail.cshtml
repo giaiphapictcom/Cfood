@@ -1,0 +1,56 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@model V308CMS.Data.AccountPage
+@{
+    ViewBag.Title = "Tài khoản khách hàng";
+    ViewBag.LinkBack = "<li><a href="+ Url.AccountIndexUrl() +">Tài khoản khách hàng</a> </li>";
+    ViewBag.MenuValue = 6;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<form id="formtaomoi">
+    <div>
+        <div>
+            <h3>Thông tin chi tiết</h3>
+            <hr />
+            <div style="width: 100%;">
+                <div id="v308inputContent" class="RadGrid RadGrid_MetroTouch table table-striped table-bordered table-hover dataTable" tabindex="0">
+                    <table style="min-width:400px;">
+                        <tr>
+                            <td>Full Name</td>
+                            <td>
+                                @Model.pAccount.FullName
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Tài khoản</td>
+                            <td>@Html.Raw(@Model.pAccount.UserName)</td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td>
+                                @Model.pAccount.Email
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Mobile</td>
+                            <td>
+                                @Model.pAccount.Phone
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Địa chỉ</td>
+                            <td>
+                                @Model.pAccount.Address
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                @*  <a class="mbutton" href="javascript:Admin_Product_XacNhan(@Model.pProductOrder.ID);">Xác Nhận</a></td>*@
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <hr />
+        </div>
+    </div>
+</form>

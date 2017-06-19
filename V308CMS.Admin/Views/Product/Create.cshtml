@@ -1,0 +1,519 @@
+﻿@using V308CMS.Admin.Helpers.Url
+<<<<<<< HEAD
+@model V308CMS.Data.ProductPage
+@{
+    ViewBag.Title = "Sản phẩm";
+    ViewBag.LinkBack = "<li><a href=" + Url.ProductIndexUrl()+ ">Sản phẩm</a> </li>";
+    ViewBag.MenuValue = 1;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Header {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            CKEDITOR.replace('editor1',
+
+   {
+       filebrowserBrowseUrl: '/Content/Plugins/ckfinder/ckfinder.html',
+       filebrowserImageBrowseUrl: '/Content/Plugins/ckfinder/ckfinder.html?type=Images',
+       filebrowserFlashBrowseUrl: '/Content/Plugins/ckfinder/ckfinder.html?type=Flash',
+       filebrowserUploadUrl: '/Content/Plugins/ckfinder/core/connector/asp/connector.asp?command=QuickUpload&type=Files',
+       filebrowserImageUploadUrl: '/Content/Plugins/ckfinder/core/connector/asp/connector.asp?command=QuickUpload&type=Images',
+       filebrowserFlashUploadUrl: '/Content/Plugins/ckfinder/core/connector/asp/connector.asp?command=QuickUpload&type=Flash',
+       filebrowserWindowWidth: '100%',
+       filebrowserWindowHeight: '700', height: '400px'
+   });
+            //
+            CKEDITOR.replace('pUnit1Id',
+
+   {
+       filebrowserBrowseUrl: '/Content/Plugins/ckfinder/ckfinder.html',
+       filebrowserImageBrowseUrl: '/Content/Plugins/ckfinder/ckfinder.html?type=Images',
+       filebrowserFlashBrowseUrl: '/Content/Plugins/ckfinder/ckfinder.html?type=Flash',
+       filebrowserUploadUrl: '/Content/Plugins/ckfinder/core/connector/asp/connector.asp?command=QuickUpload&type=Files',
+       filebrowserImageUploadUrl: '/Content/Plugins/ckfinder/core/connector/asp/connector.asp?command=QuickUpload&type=Images',
+       filebrowserFlashUploadUrl: '/Content/Plugins/ckfinder/core/connector/asp/connector.asp?command=QuickUpload&type=Flash',
+       filebrowserWindowWidth: '30%',
+       filebrowserWindowHeight: '300', height: '300px'
+   });
+            //
+            CKEDITOR.replace('pUnit2Id',
+
+   {
+       filebrowserBrowseUrl: '/Content/Plugins/ckfinder/ckfinder.html',
+       filebrowserImageBrowseUrl: '/Content/Plugins/ckfinder/ckfinder.html?type=Images',
+       filebrowserFlashBrowseUrl: '/Content/Plugins/ckfinder/ckfinder.html?type=Flash',
+       filebrowserUploadUrl: '/Content/Plugins/ckfinder/core/connector/asp/connector.asp?command=QuickUpload&type=Files',
+       filebrowserImageUploadUrl: '/Content/Plugins/ckfinder/core/connector/asp/connector.asp?command=QuickUpload&type=Images',
+       filebrowserFlashUploadUrl: '/Content/Plugins/ckfinder/core/connector/asp/connector.asp?command=QuickUpload&type=Flash',
+       filebrowserWindowWidth: '30%',
+       filebrowserWindowHeight: '300', height: '300px'
+   });
+            //
+            CKEDITOR.replace('pUnit3Id',
+
+   {
+       filebrowserBrowseUrl: '/Content/Plugins/ckfinder/ckfinder.html',
+       filebrowserImageBrowseUrl: '/Content/Plugins/ckfinder/ckfinder.html?type=Images',
+       filebrowserFlashBrowseUrl: '/Content/Plugins/ckfinder/ckfinder.html?type=Flash',
+       filebrowserUploadUrl: '/Content/Plugins/ckfinder/core/connector/asp/connector.asp?command=QuickUpload&type=Files',
+       filebrowserImageUploadUrl: '/Content/Plugins/ckfinder/core/connector/asp/connector.asp?command=QuickUpload&type=Images',
+       filebrowserFlashUploadUrl: '/Content/Plugins/ckfinder/core/connector/asp/connector.asp?command=QuickUpload&type=Flash',
+       filebrowserWindowWidth: '30%',
+       filebrowserWindowHeight: '300', height: '300px'
+   });
+        });
+    </script>
+    <script type="text/javascript">
+        var iv308 = 0;
+        $(document).ready(function () {
+            $("#btnSelectImg").click(function () {
+                var finder = new CKFinder();
+                finder.selectActionFunction = function (fileUrl) {
+                    $('#ImageUrl').val(fileUrl);
+                    $("#anhdaidien").html('<img style="width:100px;height:60px;margin-left:10px;" src="' + fileUrl + '" />');
+
+                };
+                finder.popup();
+            });
+
+            $("#btnSelectImgSlide").click(function () {
+                var finder = new CKFinder();
+                finder.selectActionFunction = SetFileFieldSlide;
+                finder.popup();
+            });
+
+
+        });
+
+        function CloseButton(classname) {
+            $('#' + classname).remove();
+
+        }
+        function slidepropertiesCloseButton(classname) {
+            $('#' + classname).remove();
+        }
+        function SetFileField(fileUrl) {
+            $('#ImageUrl').val(fileUrl);
+        }
+
+        function SetFileFieldSlide(fileUrl) {
+            $("#slidegalaxy").append('<div class="slidegalaxyittem" id="slidegalaxyittemid_' + iv308 + '"><div class="slidegalaxyclosebutton" onclick="javascript:CloseButton(\'slidegalaxyittemid_' + iv308 + '\');"></div><img style="width:100px;height:60px;margin-left:10px;" src="' + fileUrl + '" /><input type="hidden" value="' + fileUrl + '" name="imageslide"/><div>');
+            iv308 = (iv308 + 1);
+        }
+        function ThemThuocTinh() {
+            $("#slideproperties").append('<div class="slidepropertiesittem"  id="slidepropertiesittemid_' + iv308 + '"><div class="slidepropertiesclosebutton" onclick="javascript:slidepropertiesCloseButton(\'slidepropertiesittemid_' + iv308 + '\');"></div><input placeholder="Tên thuộc tính" style="min-width:40px;" type="text" name="pNamePro" /><input  placeholder="Giá trị"   style="min-width:40px;"  type="text" name="pValuePro" /></div>');
+            iv308 = (iv308 + 1);
+        }
+    </script>
+}
+
+<div class="panel panel-primary">
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-lg-6">
+                <form method="post" role="form" action="{{ path_for('accounts_handle_create')  }}">
+                    <div class="form-group">
+                        <label for="name">Tài khoản :</label>
+                        <input type="text" id="name" name="name" class="form-control" placeholder="Tên tài khoản" value="{{ account.name }}" />
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Mật khẩu :</label>
+                        <input type="password" id="password" name="password" class="form-control" placeholder="Mật khẩu" value="" />
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Xác nhận mật khẩu :</label>
+                        <input type="password" id="confirm_password" name="confirm_password" class="form-control" placeholder="Xác nhận Mật khẩu" value="" />
+                    </div>
+                    <div class="form-group">
+                        <label for="type">Phân loại :</label>
+                        <select class="form-control" id="type" name="type">
+                            <option value="0" selected="selected">Mặc định</option>
+                            <option value="1">Đối tác</option>
+                           
+
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="type">Nhóm :</label>
+                        <select class="form-control" id="role_id" name="role_id">
+                            <option value="{{ role.id  }}" selected="selected">{{ role.name }}</option>
+                        </select>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                {% if account.status|length>0 %}
+                                {% if account.status ==1 %}
+                                <input name="status" id="status" type="checkbox" value="{{account.status }}" checked="checked">Kích hoạt
+                                {%  else %}
+                                <input name="status" id="status" type="checkbox" value="{{account.status }}">Kích hoạt
+                                {% endif %}
+                                {% else %}
+                                <input name="status" id="status" type="checkbox" value="1" checked="checked">Kích hoạt
+                                {% endif %}
+
+                            </label>
+                        </div>
+                    </div>
+                    <button id="btnSubmit" type="submit" class="btn btn-success">Đồng ý</button>
+                    <a href="{{ path_for('accounts_index') }}" title="Danh sách tài khoản" class="btn btn-link">Hủy bỏ</a>
+                </form>
+            </div>
+        </div>
+        <!-- /.row (nested) -->
+    </div>
+
+    <script type="text/javascript">
+            $(function() {
+                $('#status').change(function(){
+                    $('#status').prop('checked',$('#status').is(":checked"));
+                    $("#status").prop('value',$('#status').is(":checked")?1:0);
+
+                });
+                function validateUsername(userName){
+                    var regex_userName =/^[a-zA-Z0-9-_]{3,15}$/;
+                    return regex_userName.test(userName);
+                }
+                $("#name").blur(function(){
+                  $.post("{{ path_for('accounts_check_name') }}",{'name' :$("#name").val()},function(result){
+                    if(result =='exist'){
+                        toastr.error("Tài khoản này đã được sử dụng, vui lòng chọn tên khác");
+                        $("#name").focus();
+                    }
+                  });
+                });
+                $('#btnSubmit').click(function() {
+                    var name = $("#name");
+                    var password = $("#password");
+                    var confirmPassword = $("#confirm_password");
+                    var role = $("#role");
+                    toastr.options = {"closeButton": true};
+                    if (name.val() == '') {
+                        toastr.error("Tên tài khoản không được để trống.");
+                        name.focus();
+                        return false;
+                    }
+
+                    else if(!validateUsername(name.val())){
+                        toastr.error("Tên tài khoản chỉ chứa các ký tự [A-Za-z0-9-_] và có độ dài từ 3 đến 15 ký tự");
+                        name.focus();
+                        return false;
+                    }
+                    else if (password.val().length <6) {
+                        toastr.error("Mật khẩu tài khoản chứa ít nhất 6 ký tự");
+                        password.focus();
+                        return false;
+                    }
+                    else if (confirmPassword.val() !==password.val()) {
+                        toastr.error("Mật khẩu xác nhận không đúng");
+                        confirmPassword.focus();
+                        return false;
+                    }
+                    else if(role.val()==''){
+                        toastr.error("Chọn Nhóm của tài khoản");
+                        role.focus();
+                        return false;
+                    }
+                    else {
+                        return true;
+                    }
+                });
+
+                });
+    </script>
+</div>
+<form id="formtaomoi">
+    <div>
+        <div>
+            <a class="mbutton" href="javascript:Admin_Product_ThucHienLuuMoi();" style="float: right;">Lưu mới</a><h3>Thêm sản phẩm mới</h3>
+            <hr />
+            <div style="width: 100%;">
+                <div id="v308inputContent" class="RadGrid RadGrid_MetroTouch table table-striped table-bordered table-hover dataTable" tabindex="0">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td>Tên</td>
+                            <td>
+                                <input type="text" id="pTitleId" name="pTitle" />
+                            </td>
+                            <td>Hình Ảnh</td>
+                            <td>
+                                <div id="anhdaidien"></div>
+                                <input id="ImageUrl" type="text" name="pImage" style="min-width: 269px;" /><a id="btnSelectImg" class="mbutton" href="javascript:void(0);" style="padding: 0px; margin: 0px; line-height: 21px; margin-left: 8px;">Chọn ảnh</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Nhóm sản phẩm</td>
+                            <td>@Html.Raw(Model.HtmlNhom)</td>
+                            <td>Siêu thị</td>
+                            <td>@Html.Raw(Model.HtmlNhom4)</td>
+                        </tr>
+                        <tr style="display: none;">
+                            <td>Nhà phân phối</td>
+                            <td>@Html.Raw(Model.HtmlNhom2)</td>
+                            <td>Nhà sản xuất</td>
+                            <td>@Html.Raw(@Model.HtmlNhom3)</td>
+                        </tr>
+
+                        <tr>
+                            <td>Số Seri</td>
+                            <td>
+                                <input type="text" id="pSeriId" name="pSeri" />
+                            </td>
+                            <td>Thứ Tự</td>
+                            <td>
+                                <input type="text" id="pOrderId" name="pOrder" value="0" />
+                            </td>
+                        </tr>
+                        <tr></tr>
+                        <tr>
+                            <td>Hình Ảnh Slide</td>
+                            <td>
+                                <div id="slidegalaxy"></div>
+                                <a id="btnSelectImgSlide" class="mbutton" href="javascript:void(0);">Chọn ảnh</a>
+                            </td>
+                            <td>Thêm trường còn thiếu theo nhu cầu</td>
+                            <td>
+                                <div id="slideproperties">
+                                    @* <div class="slidepropertiesittem">
+                                            <div class="slidepropertiesclosebutton" onclick="javascript:slidepropertiesCloseButton();"></div>
+                                            <input placeholder="Tên thuộc tính" style="min-width: 40px;" type="text" name="pNamePro" /><input placeholder="Giá trị" style="min-width: 40px;" type="text" name="pValuePro" />
+                                        </div>*@
+                                </div>
+                                <a id="btnProperties" class="mbutton" href="javascript:ThemThuocTinh();">Thêm</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Khuyến Mãi (%)</td>
+                            <td>
+                                <input type="text" id="pSaleOffId" name="pSaleOff" />
+                            </td>
+                            <td>Bảo Hành (tháng)</td>
+                            <td>
+                                <input type="text" id="pBaoHanhId" name="pBaoHanh" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Khối lượng</td>
+                            <td>
+                                <input type="text" id="pSizeId" name="pSize" />
+                            </td>
+                            <td>Công suất</td>
+                            <td>
+                                <input type="text" id="pPowerId" name="pPower" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Thời gian giao hàng</td>
+                            <td>
+                                <select name="pTransport1" style="width: 186px;">
+                                    <option value="0">Chọn giờ giao hàng</option>
+                                    <option value="1">1H00</option>
+                                    <option value="2">2H00</option>
+                                    <option value="3">3H00</option>
+                                    <option value="4">4H00</option>
+                                    <option value="5">5H00</option>
+                                    <option value="6">6H00</option>
+                                    <option value="7">7H00</option>
+                                    <option value="8">8H00</option>
+                                    <option value="9">9H00</option>
+                                    <option value="10">10H00</option>
+                                    <option value="11">11H00</option>
+                                    <option value="12">12H00</option>
+                                    <option value="13">13H00</option>
+                                    <option value="14">14H00</option>
+                                    <option value="15">15H00</option>
+                                    <option value="16">16H00</option>
+                                    <option value="17">17H00</option>
+                                    <option value="18">18H00</option>
+                                    <option value="19">19H00</option>
+                                    <option value="20">20H00</option>
+                                    <option value="21">21H00</option>
+                                    <option value="22">22H00</option>
+                                    <option value="23">23H00</option>
+                                    <option value="24">24H00</option>
+                                </select>
+                                Tới:<select name="pTransport12" style="width: 186px; margin-left: 15px;">
+                                    <option value="0">Chọn giờ giao hàng</option>
+                                    <option value="1">1H00</option>
+                                    <option value="2">2H00</option>
+                                    <option value="3">3H00</option>
+                                    <option value="4">4H00</option>
+                                    <option value="5">5H00</option>
+                                    <option value="6">6H00</option>
+                                    <option value="7">7H00</option>
+                                    <option value="8">8H00</option>
+                                    <option value="9">9H00</option>
+                                    <option value="10">10H00</option>
+                                    <option value="11">11H00</option>
+                                    <option value="12">12H00</option>
+                                    <option value="13">13H00</option>
+                                    <option value="14">14H00</option>
+                                    <option value="15">15H00</option>
+                                    <option value="16">16H00</option>
+                                    <option value="17">17H00</option>
+                                    <option value="18">18H00</option>
+                                    <option value="19">19H00</option>
+                                    <option value="20">20H00</option>
+                                    <option value="21">21H00</option>
+                                    <option value="22">22H00</option>
+                                    <option value="23">23H00</option>
+                                    <option value="24">24H00</option>
+                                </select>
+                            <td>Thời gian áp dụng</td>
+                            <td>
+                                <select name="pTransport2" style="width: 186px;">
+                                    <option value="0">Chọn giờ áp dụng</option>
+                                    <option value="1">1H00</option>
+                                    <option value="2">2H00</option>
+                                    <option value="3">3H00</option>
+                                    <option value="4">4H00</option>
+                                    <option value="5">5H00</option>
+                                    <option value="6">6H00</option>
+                                    <option value="7">7H00</option>
+                                    <option value="8">8H00</option>
+                                    <option value="9">9H00</option>
+                                    <option value="10">10H00</option>
+                                    <option value="11">11H00</option>
+                                    <option value="12">12H00</option>
+                                    <option value="13">13H00</option>
+                                    <option value="14">14H00</option>
+                                    <option value="15">15H00</option>
+                                    <option value="16">16H00</option>
+                                    <option value="17">17H00</option>
+                                    <option value="18">18H00</option>
+                                    <option value="19">19H00</option>
+                                    <option value="20">20H00</option>
+                                    <option value="21">21H00</option>
+                                    <option value="22">22H00</option>
+                                    <option value="23">23H00</option>
+                                    <option value="24">24H00</option>
+                                </select>
+                                Tới:<select name="pTransport22" style="width: 186px; margin-left: 15px;">
+                                    <option value="0">Chọn giờ áp dụng</option>
+                                    <option value="1">1H00</option>
+                                    <option value="2">2H00</option>
+                                    <option value="3">3H00</option>
+                                    <option value="4">4H00</option>
+                                    <option value="5">5H00</option>
+                                    <option value="6">6H00</option>
+                                    <option value="7">7H00</option>
+                                    <option value="8">8H00</option>
+                                    <option value="9">9H00</option>
+                                    <option value="10">10H00</option>
+                                    <option value="11">11H00</option>
+                                    <option value="12">12H00</option>
+                                    <option value="13">13H00</option>
+                                    <option value="14">14H00</option>
+                                    <option value="15">15H00</option>
+                                    <option value="16">16H00</option>
+                                    <option value="17">17H00</option>
+                                    <option value="18">18H00</option>
+                                    <option value="19">19H00</option>
+                                    <option value="20">20H00</option>
+                                    <option value="21">21H00</option>
+                                    <option value="22">22H00</option>
+                                    <option value="23">23H00</option>
+                                    <option value="24">24H00</option>
+                                </select>
+                        </tr>
+                        <tr>
+                            <td>Định lượng</td>
+                            <td>
+                                <select name="pMotoGroup">
+                                    <option value="0">Chọn định lượng sản phẩm</option>
+                                    <option value="1">Kg</option>
+                                    <option value="2">Đĩa</option>
+                                    <option value="3">Mớ</option>
+                                    <option value="4">Gói</option>
+                                    <option value="5">Túi</option>
+                                    <option value="6">Hộp</option>
+                                    <option value="7">Cái</option>
+                                    <option value="8">Món</option>
+                                    <option value="9">Nồi</option>
+                                    <option value="10">Xuất</option>
+                                    <option value="11">Tô</option>
+                                    <option value="12">Quả</option>
+                                    <option value="13">Lon</option>
+                                    <option value="14">Chiếc</option>
+                                    <option value="15">Gram</option>
+                                </select>
+                            <td>Kích Hoạt</td>
+                            <td>
+                                <input type="checkbox" id="pActiveId" name="pActive" checked="checked" style="width: 40px !important;" />
+                            </td>
+                        </tr>
+                        <tr>
+
+                            <td>Mô Tả</td>
+                            <td colspan="3">
+                                <textarea cols="160" id="pSummaryId" name="pSummary" rows="3" style="margin: 0px 0px 10px; width: 98%; height: 60px;"></textarea>
+                            </td>
+                        </tr>
+                        <tr style="display: none;">
+                            <td>Mô tả ngắn</td>
+                            <td colspan="3">
+                                <input type="text" name="pDapAn1" placeholder="Mô tả ngắn 1" style="width: 40px !important; display: block;" />
+                                <input type="text" name="pDapAn2" placeholder="Mô tả ngắn 2" style="width: 40px !important; display: block;" />
+                                <input type="text" name="pDapAn3" placeholder="Mô tả ngắn 3" style="width: 40px !important; display: block;" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Description(SEO)</td>
+                            <td>
+                                <input type="text" id="pDescriptionId" name="pDescription" value="" />
+                            </td>
+                            <td>KeyWord(SEO)</td>
+                            <td>
+                                <input type="text" id="pKeyWordId" name="pKeyWord" value="" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Giá</td>
+                            <td colspan="3">
+                                <input type="text" id="pPriceId" name="pPrice" placeholder="Giá 1" style="display: inline-block; width: 300px; min-width: 300px;" />
+                                <input type="text" id="pPrice2Id" name="pPrice2" placeholder="Giá 2 (dành cho phần sơ chế)" style="display: inline-block; width: 310px; min-width: 310px;" />
+                                <input type="text" id="pPrice3Id" name="pPrice3" placeholder="Giá 3 (dành cho phần sơ chế" style="display: inline-block; width: 323px; min-width: 323px;" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Định lượng</td>
+                            <td colspan="3">
+                                <textarea cols="80" id="pUnit1Id" name="pUnit1" placeholder="Định lượng chỉ dành cho sản phẩm sơ chế" rows="6" style="display: inline-block; width: 300px; min-width: 300px;"></textarea>
+                                <textarea cols="80" id="pUnit2Id" name="pUnit2" placeholder="Định lượng chỉ dành cho sản phẩm sơ chế" rows="6" style="display: inline-block; width: 310px; min-width: 310px;"></textarea>
+                                <textarea cols="80" id="pUnit3Id" name="pUnit3" placeholder="Định lượng chỉ dành cho sản phẩm sơ chế" rows="6" style="display: inline-block; width: 322px; min-width: 322px;"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Nội Dung</td>
+                            <td colspan="3">
+                                <textarea class="ckeditor" id="editor1" name="editor1" cols="80" rows="20" style="width: 600px;"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Lưu mới</td>
+                            <td colspan="3">
+                                <a class="mbutton" href="javascript:Admin_Product_ThucHienLuuMoi();">Lưu mới</a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <hr />
+        </div>
+    </div>
+</form>
+=======
+@model V308CMS.Admin.Models.ProductModels
+@{
+    ViewBag.Title = "Thêm mới Sản phẩm";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+<div class="panel panel-primary">
+    <div class="panel-body">
+        <form method="post" role="form" action="@Url.ProductCreateUrl()" enctype = "multipart/form-data">
+            @Html.Partial("_ProductForm", Model)
+        </form>
+    </div>
+</div>
+>>>>>>> toai-neal

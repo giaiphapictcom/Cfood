@@ -1,0 +1,77 @@
+﻿@using V308CMS.Admin.Helpers.UI
+@using V308CMS.Admin.Helpers.Url
+@using V308CMS.Admin.Models.UI
+@using V308CMS.Common
+@model List<V308CMS.Data.Models.Unit>
+@{
+    ViewBag.Title = "Danh sách Đơn vị tính";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+@Html.Partial("UI/_AddNewButton", Url.ProductUnitCreateUrl())
+@if (Model.Any())
+{
+    <div class="panel panel-default">     
+        <div class="panel-body">
+            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Tên</th>
+                        <th>Ngày tạo</th>
+                        <th>Ngày cập nhật</th>
+                        <th>Trạng thái</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                        var unit = Model[i];
+                        <tr>
+                            <td style="text-align: center">
+                                @(i + 1)
+                            </td>
+                            <td>
+                                <a title="Cập nhật Đơn vị tính @unit.Name" class="btn btn-link" href="@Url.ProductUnitEditUrl(new {unit.Id})">
+                                    @unit.Name
+                                </a>
+                            </td>
+
+                            <td>
+                                @unit.CreatedAt.ToDdmmyyyy()
+                            </td>
+                            <td>
+                                @unit.UpdatedAt.ToDdmmyyyy()
+                            </td>
+                            <td>@unit.State.ToStateLabelHtml()</td>
+                            <td style="width: 200px">
+                                @Html.Partial("UI/_EditButton", new ButtonModels
+                               {
+                                   Id = string.Format("unit_{0}", unit.Id),
+                                   Href = Url.ProductUnitEditUrl(new { unit.Id }),
+                                   Title = "Cập nhật thông tin Đơn vị tính " + unit.Name
+                               })
+                                @Html.Partial("UI/_DeleteForm", new DeleteFormModels
+                               {
+                                   NameOfId = "Id",
+                                   ValueOfId = unit.Id,
+                                   IsConfirm = true,
+                                   Url = Url.ProductUnitDeleteUrl()
+                               })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#dataTables-example').DataTable({
+            responsive: true
+        });
+    });
+</script>
+

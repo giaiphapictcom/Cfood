@@ -1,0 +1,98 @@
+﻿@model V308CMS.Data.ShopCartPage
+@{
+    Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout_Full.cshtml";
+}
+
+@section header {
+    <title>@ViewBag.sitename</title>
+}
+<div class="row">
+
+    <div class="col-md-8 col-sm-12">
+        <div class="box-items box-shadow mt-0">
+        <h4>Thông tin giao nhận</h4>
+            <form>
+                <div class="form-group row">
+                    <label for="deliver_date" class="col-3 col-form-label">Ngày giao</label>
+                    <div class="col-9">
+                        <input class="form-control" type="date" value="" id="deliver_date" name="val[deliver_date][date]">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="deliver_time" class="col-3 col-form-label">Giờ giao</label>
+                    <div class="col-9">
+                        <input class="form-control" type="time" value="" id="deliver_time" name="val[deliver_time][date]">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="deliver_fullname" class="col-3 col-form-label">Người nhận</label>
+                    <div class="col-9">
+                        <input class="form-control" type="text" id="deliver_fullname" name="val[deliver_time][date]" value="@if (Model.ShopCart != null && Model.ShopCart.Account != null)
+                                                                                                                            { @Model.ShopCart.Account.FullName;
+                                                                                                                        }">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="deliver_phone" class="col-3 col-form-label">Số điện thoại</label>
+                    <div class="col-9">
+                        <input class="form-control" type="tel" id="deliver_phone" name="val[deliver_time][date]" value="@if (Model.ShopCart != null && Model.ShopCart.Account != null)
+                                                                                                                        { @Model.ShopCart.Account.Phone }">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="deliver_email" class="col-3 col-form-label">Email</label>
+                    <div class="col-9">
+                        <input class="form-control" type="email" id="deliver_email" name="val[deliver_time][date]" value="@if (Model.ShopCart != null && Model.ShopCart.Account != null)
+                                                                                                                          { @Model.ShopCart.Account.Email }">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="deliver_city" class="col-3 col-form-label">Thành phố</label>
+                    <div class="col-9">
+                        <select id="deliver_city" name="val[deliver_person][city]" class="form-control custom-select" aria-hidden="true">
+                            <option value="1" selected="">Hà Nội</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="deliver_district" class="col-3 col-form-label">Quận/Huyện</label>
+                    <div class="col-9">
+                        <select id="deliver_district" name="val[deliver_person][district]" class="form-control custom-select" aria-hidden="true">
+                            <option value="1" selected="">Hà Nội</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="deliver_address" class="col-3 col-form-label">Số nhà & Tên đường</label>
+                    <div class="col-9">
+                        <input class="form-control" type="email" id="deliver_address" name="val[deliver_address]" value="@if (Model.ShopCart != null && Model.ShopCart.Account != null)
+                                                                                                                         { @Model.ShopCart.Account.Address }">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="deliver_note" class="col-3 col-form-label">Thông tin thêm</label>
+                    <div class="col-9">
+                        <textarea class="form-control" id="deliver_note" name="val[deliver_address]"></textarea>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+    
+    <div class="col-md-4 col-sm-12">
+        <div class="box-items box-shadow  mt-0">
+        <h4>Thông tin đơn hàng</h4>
+        </div>
+    </div>
+    
+
+</div>

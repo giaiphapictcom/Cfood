@@ -1,0 +1,81 @@
+﻿@model V308CMS.Data.ProductItemsPage
+@using V308CMS.Data;
+@{
+    Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
+    int pageTotal = 0;
+    if (Model.total > ProductHelper.ProductShowLimit)
+    {
+        pageTotal = (int)Math.Ceiling((float)Model.total / (float)ProductHelper.ProductShowLimit);
+    }
+}
+@section header {
+    <title>@Model.Name - @ViewBag.SiteName</title>
+}
+
+
+<div class="row col-sidebar-right">
+    <div class="col-fillter-product">
+        <div class="col-md-3 col-sm-12 col-xs-12 block-megamenu col-left">
+            @if (Model.BestSeller != null && Model.BestSeller.Count > 0)
+            {
+                <div class="bestseller-sidebar bestseller-homepage">
+                    <div class="module-title">
+                        <h5>Bán chạy</h5>
+                    </div>
+                    <div class="item-poduct">
+                        @foreach (Product prod in Model.BestSeller)
+                        {
+                            @Html.Action("ProductBlockLeft", "MyShopify", prod)
+                        }
+                    </div>
+                </div>
+            }
+            @Html.Action("LeftProductAdv", "MyShopify")
+            
+        </div>
+    </div>
+    <div class="col-md-9 col-sm-12 col-xs-12 col-main display-toolbar no-sidebar collection-page no-padding-lr">
+        @Html.Action("CategoryAdv", "MyShopify")
+        
+        <div class="toolbar ">
+
+            <div class="toolbar-mode row">
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.Action("FillerProductList", "MyShopify")
+                </div>
+                <div class="col-md-6 total-page ">
+                    @if (pageTotal > 0)
+                    { 
+                        <div class="page-total">
+                            <span>Hiển thị</span> từ <span>@(ProductHelper.ProductShowLimit * (Model.Page - 1) + 1) đến @( (pageTotal == Model.Page) ? Model.total : ProductHelper.ProductShowLimit * Model.Page) trong tổng số @Model.total sản phẩm</span>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+
+        <div class="products-grids product-grid-item">
+            @if (Model.Products != null && Model.Products.Count > 0)
+            {
+                <div class="row">
+                    @foreach (V308CMS.Data.Product prod in Model.Products)
+                     {
+                    @Html.Action("ProductBlockType1_4", "Block", prod)
+                     }
+                    
+                </div>
+            }
+
+        </div>
+
+        
+    </div>
+    <div class="overlay-filter"></div>
+</div>
+
+
+
+     
+     
+ 

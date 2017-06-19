@@ -1,0 +1,50 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@model  V308CMS.Admin.Models.MenuConfigModels
+@{
+    var listState = (List<SelectListItem>)ViewData["ListState"];
+}
+@Html.HiddenFor(menu => Model.Id)
+@Html.AntiForgeryToken()
+<div class="row">
+    @Html.ValidationSummary(true)
+    <div class="col-lg-6">
+        <div class="form-group">
+            @Html.LabelFor(menu => Model.Name)
+            @Html.TextBoxFor(menu => Model.Name, new { @class = "form-control", placeholder = "Tên Menu" })
+            @Html.ValidationMessageFor(menu => Model.Name)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(menu => Model.Description)
+            @Html.TextAreaFor(menu => Model.Description, new { @class = "form-control", placeholder = "Mô tả Menu" })
+            @Html.ValidationMessageFor(menu => Model.Description)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(menu => Model.Code)
+            @Html.TextBoxFor(menu => Model.Code, new {@class = "form-control", placeholder = "Mã Menu"})
+            @Html.ValidationMessageFor(menu => Model.Code)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(menu => Model.Link)
+            @Html.TextBoxFor(menu => Model.Link, new {@class = "form-control", placeholder = "Liên kết"})
+            @Html.ValidationMessageFor(menu => Model.Link)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(menu => Model.Order)
+            @Html.TextBoxFor(menu => Model.Order, new { @class = "form-control", placeholder = "Thứ tự" })
+            @Html.ValidationMessageFor(menu => Model.Order)
+        </div>    
+        <div class="form-group">
+            @Html.LabelFor(config => Model.State)
+            @Html.DropDownListFor(config => Model.State, listState, new
+            {
+                @class = "form-control",
+                placeholder = "Trạng thái"
+            })
+            @Html.ValidationMessageFor(config => Model.State)
+        </div>
+
+        @Html.Partial("UI/_FormAction")
+        <a href="@Url.MenuConfigIndexUrl()" title="Danh sách Menu" class="btn btn-link">Danh sách</a>
+
+    </div>
+</div>

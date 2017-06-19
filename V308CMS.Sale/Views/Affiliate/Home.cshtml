@@ -1,0 +1,204 @@
+﻿@model V308CMS.Data.AffiliateHomePage
+@using V308CMS.Data;
+@using System.Text.RegularExpressions;
+@using V308CMS.Common
+@{
+    Layout = "~/Views/" + @ViewContext.RouteData.Values["controller"] + "/Layout/Default.cshtml";
+}
+@section header {
+    <title>@ViewBag.SiteName</title>
+}
+
+<div class="shopify-section index-section index-section--flush">
+    <div class="container-block m-0" data-section-id="1475814045391" data-section-type="slideshow-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12 banner-slide">
+                    @Html.Action("HomeSlides", "Theme")
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@if (Model.VideoCategory != null && Model.Videos != null && Model.Videos.Count() > 0)
+{
+    News videoPlay = Model.Videos.First();
+    
+    <div class="shopify-section mt-2">
+        <div class="container-block m-0">
+            <div class="container border-col">
+                <div class="row" style="padding-top: 25px;">
+                    <div class="col-md-6 col-sm-12 col-xs-12 video-play">
+                        <iframe src="https://www.youtube.com/embed/@videoPlay.Summary?autoplay=0" frameborder="0" allowFullScree style="height:auto; width: 100%; min-height: 300px;" ></iframe>
+                    </div>
+                    <div class="col-md-6 col-sm-12 col-xs-12 videos-thumb">
+                        <p>@Html.Raw(Model.VideoCategory.Description)</p>
+                        @if (Model.Videos != null && Model.Videos.Count() > 0)
+                        {
+                            <ul class="youtubevideo">
+                                @foreach (News video in Model.Videos)
+                                {
+                                    string selected = null;
+                                    if (video == videoPlay)
+                                    {
+                                        selected = "class=selected";
+                                    }
+                                    <li @selected vid="@video.Summary" ><img src="https://i.ytimg.com/vi/@video.Summary/mqdefault.jpg" alt="@video.Title">@video.Title</li>
+                                }
+
+                            </ul>
+                            
+                        }
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+
+@if (Model.Articles != null && Model.Articles.Count() > 0)
+{
+    
+    int i = 0;
+    <div class="shopify-section ">
+        <div class="container-block m-0">
+            <div class="container border-col">
+                <div class="row">
+                @foreach (News article in Model.Articles.Take(3))
+                {
+                    i++;
+                    string articleClass = "col-md-6 col-sm-12 col-xs-12 article-home";
+                    if( i > 2 ){
+                        articleClass = "col-md-12 col-sm-12 col-xs-12 article-home-full";
+                    }
+                    <div class="@articleClass">
+                        <h3><span>@article.Title</span></h3>
+                        @if (i == 3) { 
+                            <i class="line-red"></i>
+                        }
+                        @if (article.Summary.ToString().Length > 0) { 
+                            <p>
+                                @if (article.Image.ToString().Length > 0) { 
+                                    <img alt="" src="@article.Image" class="thumb">
+                                }
+                                @article.Summary
+
+                            </p>
+                        }
+                        @if (article.Detail.ToString().Length > 0) {
+
+                            <p>@Html.Raw(article.Detail)</p>
+                        }
+                    </div>
+        
+                }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (Model.Testimonial != null && Model.Testimonial.Count() > 0) {
+    var commentFirst = Model.Testimonial.First();
+    <div class="shopify-section">
+        <div class="container-block m-0">
+            <div class="container border-col" style="padding-top: 20px;">
+                <div class="row">
+                    <div class="col-md-12 article-home-full" style="margin-bottom: 40px;"><h3 ><span>NHẬN XÉT CỦA CÁC AFFILIATE THÀNH CÔNG VỚI MP START</span></h3></div>
+                    @foreach (Testimonial Comment in Model.Testimonial)
+                    {
+                        string actived = Comment == commentFirst ? "actived" : null;
+                        <a href="javascript:void(0)" class="col-md-3 testimonial usercomment @actived" taget="@Comment.id">
+                            <span class="avatar"><img alt="" src="/Content/Images/avatar/@Comment.avartar" class="img-circle"></span>
+                            <p class="fullname">@Comment.fullname</p>
+                            <p>@Comment.mobile</p>
+                        </a>
+                    }
+                </div>
+                <div class="row" style="margin-top:20px;">
+                    @foreach (Testimonial Comment in Model.Testimonial)
+                    {
+                        string actived = Comment == commentFirst ? "show" : "hidden";
+                        <div class="col-md-12 testimonial-content contentcomment @actived" comment="@Comment.id">
+                            <p>@Comment.content</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (Model.Brands != null && Model.Brands.Count() > 0)
+{
+    <div class="shopify-section">
+        <div class="container-block m-0">
+            <div class="container border-col" style="padding-top: 20px;">
+                <div class="row">
+                    <div class="col-md-12 article-home-full" style="margin-bottom: 20px;"><h3 ><span>Thương hiệu đồng hành cùng mp start</span></h3></div>
+                    @foreach (Brand brand in Model.Brands)
+                    { 
+                        <div class="col-md-2">
+                            <img src="@ImageHelper.Crop(brand.image,160,99)" class="brandlogo" />
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    
+}
+
+@if (Model.Categorys != null && Model.Categorys.Count() > 0)
+{
+    int index = 0;
+    <div class="shopify-section" >
+        <div class="container-block m-0" >
+            <div class="container border-col" style="padding-top: 20px; padding-bottom: 50px;">
+                <div class="row">
+                    <div class="col-md-12 article-home-full" style="margin-bottom: 20px;"><h3 ><span>ngành hàng phong phú, sản phẩm đa dạng</span></h3></div>
+                 </div>
+                    @foreach (Categorys cate in Model.Categorys)
+                    {
+                        
+                        string BorderRemove = (float)index % 4 == 0 ? "" : "border-left-0";
+                        float itemIndex = (float)index % 4;
+                        string cateHref = cate.link.Length > 0 ? cate.link : "javascript:void(0)";
+                        if (itemIndex < 1)
+                        { 
+                            @Html.Raw("<div class=\"row\">");
+                        }
+                        <a class="col-md-3 category-listall @BorderRemove index-@index" check="@Html.Raw(itemIndex)" href="@cateHref" target="_blank">
+                            <img src="/Content/Images/category/@cate.image" />
+                            <h3>@cate.name</h3>
+                            <p>&nbsp;@cate.summary</p>
+                        </a>
+
+                        if (itemIndex == 3 || cate == Model.Categorys.Last())
+                        { 
+                            @Html.Raw("</div>");
+                        }
+                        index++;
+                    }
+               
+                <div class="row" style="margin-top: 40px;">
+                    <a class="col-md-6 stock-button" href="/san-pham">
+                        <span class="img"></span>
+                        <h3>Kho Sản Phẩm</h3>
+                        
+                    </a>
+                    <a class="col-md-6 shop-button" href="/san-pham">
+                        <span class="img"></span>
+                        <h3>Hệ Thống AFFILIATE</h3>
+                        
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+}

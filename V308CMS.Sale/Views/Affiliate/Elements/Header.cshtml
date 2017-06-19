@@ -1,0 +1,162 @@
+﻿@using V308CMS.Common;
+<header id="header-content" class="">
+    <div class="header">
+        <div class="header-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-4 toggle-menu">
+                        <button class="navbar-toggle btn-menu-canvas" data-toggle="offcanvas" data-target="#off-canvas-nav">
+                            <i class="icon_menu"></i>
+                        </button>
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-4 ">
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 menu-none">
+                        <div id="search-top">
+                            <div class="icon-search search-header">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </div>
+                            <div class="search-form" style="display: none">
+                                <div class="search-close">
+                                    <i class="icon_close"></i>
+                                </div>
+
+                                <form action="/search" method="get" class="input-group search-bar">
+
+                                    <input type="hidden" name="type" value="product">
+
+                                    <input type="text" name="q" value="" placeholder="Tìm kiếm" class="input-group-field" aria-label="Search Site" autocomplete="off">
+                                    <span class="input-group-btn">
+                                        <input type="submit" class="btn" value="Tìm">
+                                    </span>
+                                </form>
+
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-4 search-right">
+
+                        <div id="search-top2" class="search-none search-header">
+                            <div class="icon-search">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </div>
+                            <div class="search-close">
+                                <i class="icon_close"></i>
+                            </div>
+                            <div class="search-form" style="display: none">
+
+                                <form action="/search" method="get" class="input-group search-bar">
+
+                                    <input type="hidden" name="type" value="product">
+
+                                    <input type="text" name="q" value="" placeholder="Search" class="input-group-field" aria-label="Search Site" autocomplete="off">
+                                    <span class="input-group-btn">
+                                        <input type="submit" class="btn" value="Search">
+                                    </span>
+                                </form>
+
+                            </div>
+                        </div>
+
+                        <div class="header-top-right">
+                            @if (Model.IsAuthenticated == true && Model.Account != null)
+                            {
+                                <a href="/dashboard" class="btn-login">
+                                    <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+                                    @Model.Account.FullName
+                                </a>
+                            }
+                            else
+                            { 
+                                <a href="/dang-nhap" class="btn-login">
+                                    <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+                                    Đăng Nhập
+                                </a>
+                            }
+                            
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3 col-sm-12 col-xs-12 block-megamenu">
+                        <div class="logo-container">
+                            <div class="logo-sticky">
+                                <a href="/">
+                                    <img src="@ViewBag.ThemesPath/images/logo.png" alt="@ViewBag.SiteName" style="height: 50px;" /></a>
+                            </div>
+                            <div class="logo">
+
+                                <h1 style="text-align: center;"><a href="/">
+                                    <img src="@ViewBag.ThemesPath/images/logo.png"
+                                    srcset="@ViewBag.ThemesPath/images/logo.png 1x, @ViewBag.ThemesPath/images/logo800.png 2x"
+                                    alt="@ViewBag.SiteName"
+                                    itemprop="logo"></a></h1>
+
+                                <h1 style="display: none"><a href="/">@ViewBag.SiteName</a></h1>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div class="top-menu" id="header-menu">
+                            <div class="menu-top">
+                                <div class="menu-action">
+                                    <!--Top Menu -->
+
+                                    <div class="megamenu">
+                                        <ul class="navbar-nav site-nav">
+                                            @if (Model.menu != null && Model.menu.Count > 0)
+                                            {
+                                                foreach (V308CMS.Data.Models.MenuConfig menu in Model.menu)
+                                                {
+                                                    if (!menu.Name.ToLower().Equals("footer"))
+                                                    {
+                                                <li class="menu-dropdown level-top active">
+                                                    @url.anchor_menu(menu.Name,menu.Link,"dropdown-toggle has-category")
+                                                </li>
+
+                                                    }
+
+                                                }
+                                            }
+
+                                        </ul>
+                                    </div>
+
+                                    <script>
+                                        jQuery(window).scroll(function () {
+                                            var scroll = jQuery(window).scrollTop();
+                                            if (scroll > 500) {
+                                                jQuery("#header-content .header").addClass("is-ticky");
+                                            } else {
+                                                jQuery("#header-content .header").removeClass("is-ticky");
+                                            }
+                                        });
+                                        jQuery(".megamenu .menu-dropdown > i").click(function () {
+                                            if (jQuery(this).next().is(":visible")) {
+                                                jQuery(this).addClass("accordion-show");
+                                            } else {
+                                                jQuery(this).removeClass("accordion-show");
+                                            }
+                                            jQuery(this).next().toggle(400);
+                                        });
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</header>

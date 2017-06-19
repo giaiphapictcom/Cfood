@@ -1,0 +1,95 @@
+﻿@model V308CMS.Data.AffiliateLinksPage
+@using V308CMS.Data
+@using V308CMS.Common
+@{
+    Layout = "~/Views/Affiliate/Layout/Backend.cshtml";
+    string PageTitle = "Quản lý Link đã tạo";
+}
+@section header {
+    <title>@PageTitle</title>
+
+}
+<h4>Link đã tạo</h4>
+<div class="row">
+    <div class="col-md-5">
+        <a href="/link/tao-moi" class="btn btn-green">Tạo link phân phối</a>
+    </div>
+    <div class="col-md-4">
+        <div class="input-group border-radius-0">
+            <input type="text" class="form-control" placeholder="Tìm kiếm" aria-describedby="tablesearch">
+            <span class="input-group-addon btn-green"><i class="fa fa-search"></i></span>
+        </div>
+
+    </div>
+    <div class="col-md-3">
+        <div class="form-group border-radius-0 bg-secondary">
+
+            <select class="form-control" id="exampleSelect1">
+                <option>Hiển thị : 10</option>
+                <option>Hiển thị : 30</option>
+                <option>Hiển thị : 50</option>
+                <option>Hiển thị : 100</option>
+            </select>
+        </div>
+    </div>
+
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-10 textright">
+        @Html.Action("BlockPagination", "Theme",new {ProductTotal=Model.LinkTotal})
+
+    </div>
+    <div class="col-md-2 textright" style="margin-bottom: 15px;">
+        <button type="button" class="btn btn-secondary border-radius-0">Xuất excel</button>
+    </div>
+</div>
+<table class="table table-bordered table-responsive">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Thời gian</th>
+            <th>Link</th>
+            <th>Click</th>
+            <th>Tên CP</th>
+            <th>Nguồn CP</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Links != null && Model.Links.Count() > 0)
+        {
+            string link_href = "";
+            foreach (AffiliateLink l in Model.Links)
+            {
+                link_href = "http://" + ViewBag.linkDomain + "/link/" + l.code;
+                
+                <tr>
+                <th scope="row">@l.code</th>
+                <td>@String.Format("{0:d}", l.created)</td>
+                <td>
+                    <div class="input-group">
+                        <input type="text" class="form-control" disabled="disabled" value="@link_href">
+                        <a class="input-group-addon link_href_copy"><i class="fa fa-copy"></i></a>
+                        <a class="input-group-addon" target="_blank" href="@link_href"><i class="fa fa-external-link"></i></a>
+
+                    </div>
+                    <small class="form-text text-muted">@StringClearFormat.LTrim(l.url,50)</small>
+
+                </td>
+                <td class="text-center">@l.click</td>
+                <td>@l.name</td>
+                <td>@l.source</td>
+            </tr>
+             }
+            
+        }
+        else
+        { 
+            <tr>
+                <td colspan="6" class="text-center">Không có liên kết nào</td>
+            </tr>
+        }
+
+    </tbody>
+</table>

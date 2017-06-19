@@ -32,13 +32,13 @@ namespace V308CMS.Data
                         mStr.Append("<td>" + it.Views + " lượt</td>");
                         mStr.Append("<td>" + ConverterUlti.GetNgayDangByDateTime(it.Date.Value) + "</td>");
                         mStr.Append("<td><input type=\"checkbox\" name=\"pcheckbox\"></td>");
-                        mStr.Append("<td><a class=\"green\" href=\"/Admin/TinTucSua?pId=" + it.ID + "\">");
-                        mStr.Append("<img class=\"micon\" src=\"/Content/Admin/Images/Edit-icon.png\" /></a>");
+                        mStr.Append("<td><a class=\"green\" href=\"/News/Edit?pId=" + it.ID + "\">");
+                        mStr.Append("<img class=\"micon\" src=\"/Content/Images/Edit-icon.png\" /></a>");
                         if (it.Status == true)
-                            mStr.Append("<a href=\"javascript:Admin_News_HienThiPopUpAnTinTuc('Bạn có thực sự muốn ẩn tin này ?'," + it.ID + "," + pPage + ");\" class=\"blue\"><img class=\"micon\" src=\"/Content/Admin/Images/hidenicon.png\" /></a>");
+                            mStr.Append("<a href=\"javascript:Admin_News_HienThiPopUpAnTinTuc('Bạn có thực sự muốn ẩn tin này ?'," + it.ID + "," + pPage + ");\" class=\"blue\"><img class=\"micon\" src=\"/Content/Images/hidenicon.png\" /></a>");
                         else
-                            mStr.Append("<a href=\"javascript:Admin_News_HienThiPopUpHienTinTuc('Bạn có thực sự muốn hiện tin này ?'," + it.ID + "," + pPage + ");\" class=\"blue\"><img class=\"micon\" src=\"/Content/Admin/Images/hidenicon2.png\" /></a>");
-                        mStr.Append("<a href=\"javascript:Admin_News_HienThiPopUp('Bạn có thực sự muốn xóa tin này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Admin/Images/DeleteRed.png\" /></a>");
+                            mStr.Append("<a href=\"javascript:Admin_News_HienThiPopUpHienTinTuc('Bạn có thực sự muốn hiện tin này ?'," + it.ID + "," + pPage + ");\" class=\"blue\"><img class=\"micon\" src=\"/Content/Images/hidenicon2.png\" /></a>");
+                        mStr.Append("<a href=\"javascript:Admin_News_HienThiPopUp('Bạn có thực sự muốn xóa tin này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Images/DeleteRed.png\" /></a>");
                         mStr.Append("</td>");
                         mStr.Append("</tr>");
                     }
@@ -51,13 +51,13 @@ namespace V308CMS.Data
                         mStr.Append("<td>" + it.Views + " lượt</td>");
                         mStr.Append("<td>" + ConverterUlti.GetNgayDangByDateTime(it.Date.Value) + "</td>");
                         mStr.Append("<td><input type=\"checkbox\" name=\"pcheckbox\"></td>");
-                        mStr.Append("<td><a class=\"green\" href=\"/Admin/TinTucSua?pId=" + it.ID + "\">");
-                        mStr.Append("<img class=\"micon\" src=\"/Content/Admin/Images/Edit-icon.png\" /></a>");
+                        mStr.Append("<td><a class=\"green\" href=\"/News/Edit?pId=" + it.ID + "\">");
+                        mStr.Append("<img class=\"micon\" src=\"/Content/Images/Edit-icon.png\" /></a>");
                         if (it.Status == true)
-                            mStr.Append("<a href=\"javascript:Admin_News_HienThiPopUpAnTinTuc('Bạn có thực sự muốn ẩn tin này ?'," + it.ID + "," + pPage + ");\" class=\"blue\"><img class=\"micon\" src=\"/Content/Admin/Images/hidenicon.png\" /></a>");
+                            mStr.Append("<a href=\"javascript:Admin_News_HienThiPopUpAnTinTuc('Bạn có thực sự muốn ẩn tin này ?'," + it.ID + "," + pPage + ");\" class=\"blue\"><img class=\"micon\" src=\"/Content/Images/hidenicon.png\" /></a>");
                         else
-                            mStr.Append("<a href=\"javascript:Admin_News_HienThiPopUpHienTinTuc('Bạn có thực sự muốn hiện tin này ?'," + it.ID + "," + pPage + ");\" class=\"blue\"><img class=\"micon\" src=\"/Content/Admin/Images/hidenicon2.png\" /></a>");
-                        mStr.Append("<a href=\"javascript:Admin_News_HienThiPopUp('Bạn có thực sự muốn xóa tin này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Admin/Images/DeleteRed.png\" /></a>");
+                            mStr.Append("<a href=\"javascript:Admin_News_HienThiPopUpHienTinTuc('Bạn có thực sự muốn hiện tin này ?'," + it.ID + "," + pPage + ");\" class=\"blue\"><img class=\"micon\" src=\"/Content/Images/hidenicon2.png\" /></a>");
+                        mStr.Append("<a href=\"javascript:Admin_News_HienThiPopUp('Bạn có thực sự muốn xóa tin này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Images/DeleteRed.png\" /></a>");
                         mStr.Append("</td>");
                         mStr.Append("</tr>");
                     }
@@ -95,13 +95,13 @@ namespace V308CMS.Data
                         mStr.Append("<td>" + it.Name + "</td>");
                         mStr.Append("<td>" + ConverterUlti.GetNgayDangByDateTime(it.Date.Value) + "</td>");
                         mStr.Append("<td><input type=\"checkbox\" name=\"pcheckbox\"></td>");
-                        mStr.Append("<td><a class=\"green\" href=\"/Admin/TheLoaiTinTucSua?pId=" + it.ID + "\">");
-                        mStr.Append("<img class=\"micon\" src=\"/Content/Admin/Images/Edit-icon.png\" /></a>");
+                        mStr.Append("<td><a class=\"green\" href=\"/NewsCategory/Edit?pId=" + it.ID + "\">");
+                        mStr.Append("<img class=\"micon\" src=\"/Content/Images/Edit-icon.png\" /></a>");
                         if (it.Status == true)
-                            mStr.Append("<a href=\"javascript:Admin_NewsGroup_HienThiPopUpAnTinTuc('Bạn có thực sự muốn ẩn loại tin này ?'," + it.ID + "," + pPage + ");\" class=\"blue\"><img class=\"micon\" src=\"/Content/Admin/Images/hidenicon.png\" /></a>");
+                            mStr.Append("<a href=\"javascript:Admin_NewsGroup_HienThiPopUpAnTinTuc('Bạn có thực sự muốn ẩn loại tin này ?'," + it.ID + "," + pPage + ");\" class=\"blue\"><img class=\"micon\" src=\"/Content/Images/hidenicon.png\" /></a>");
                         else
-                            mStr.Append("<a href=\"javascript:Admin_NewsGroup_HienThiPopUpHienTinTuc('Bạn có thực sự muốn hiện loại tin này ?'," + it.ID + "," + pPage + ");\" class=\"blue\"><img class=\"micon\" src=\"/Content/Admin/Images/hidenicon2.png\" /></a>");
-                        mStr.Append("<a href=\"javascript:Admin_NewsGroup_HienThiPopUp('Bạn có thực sự muốn xóa loại tin này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Admin/Images/DeleteRed.png\" /></a>");
+                            mStr.Append("<a href=\"javascript:Admin_NewsGroup_HienThiPopUpHienTinTuc('Bạn có thực sự muốn hiện loại tin này ?'," + it.ID + "," + pPage + ");\" class=\"blue\"><img class=\"micon\" src=\"/Content/Images/hidenicon2.png\" /></a>");
+                        mStr.Append("<a href=\"javascript:Admin_NewsGroup_HienThiPopUp('Bạn có thực sự muốn xóa loại tin này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Images/DeleteRed.png\" /></a>");
                         mStr.Append("</td>");
                         mStr.Append("</tr>");
                     }
@@ -112,13 +112,13 @@ namespace V308CMS.Data
                         mStr.Append("<td>" + it.Name + "</td>");
                         mStr.Append("<td>" + ConverterUlti.GetNgayDangByDateTime(it.Date.Value) + "</td>");
                         mStr.Append("<td><input type=\"checkbox\" name=\"pcheckbox\"></td>");
-                        mStr.Append("<td><a class=\"green\" href=\"/Admin/TheLoaiTinTucSua?pId=" + it.ID + "\">");
-                        mStr.Append("<img class=\"micon\" src=\"/Content/Admin/Images/Edit-icon.png\" /></a>");
+                        mStr.Append("<td><a class=\"green\" href=\"/NewsCategory/Edit?pId=" + it.ID + "\">");
+                        mStr.Append("<img class=\"micon\" src=\"/Content/Images/Edit-icon.png\" /></a>");
                         if (it.Status == true)
-                            mStr.Append("<a href=\"javascript:Admin_NewsGroup_HienThiPopUpAnTinTuc('Bạn có thực sự muốn ẩn loại tin này ?'," + it.ID + "," + pPage + ");\" class=\"blue\"><img class=\"micon\" src=\"/Content/Admin/Images/hidenicon.png\" /></a>");
+                            mStr.Append("<a href=\"javascript:Admin_NewsGroup_HienThiPopUpAnTinTuc('Bạn có thực sự muốn ẩn loại tin này ?'," + it.ID + "," + pPage + ");\" class=\"blue\"><img class=\"micon\" src=\"/Content/Images/hidenicon.png\" /></a>");
                         else
-                            mStr.Append("<a href=\"javascript:Admin_NewsGroup_HienThiPopUpHienTinTuc('Bạn có thực sự muốn hiện loại tin này ?'," + it.ID + "," + pPage + ");\" class=\"blue\"><img class=\"micon\" src=\"/Content/Admin/Images/hidenicon2.png\" /></a>");
-                        mStr.Append("<a href=\"javascript:Admin_NewsGroup_HienThiPopUp('Bạn có thực sự muốn xóa loại tin này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Admin/Images/DeleteRed.png\" /></a>");
+                            mStr.Append("<a href=\"javascript:Admin_NewsGroup_HienThiPopUpHienTinTuc('Bạn có thực sự muốn hiện loại tin này ?'," + it.ID + "," + pPage + ");\" class=\"blue\"><img class=\"micon\" src=\"/Content/Images/hidenicon2.png\" /></a>");
+                        mStr.Append("<a href=\"javascript:Admin_NewsGroup_HienThiPopUp('Bạn có thực sự muốn xóa loại tin này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Images/DeleteRed.png\" /></a>");
                         mStr.Append("</td>");
                         mStr.Append("</tr>");
                     }
@@ -660,9 +660,9 @@ namespace V308CMS.Data
                         mStr.Append("<td>" + it.Name + "</td>");
                         mStr.Append("<td>" + ConverterUlti.GetNgayDangByDateTime(it.Date.Value) + "</td>");
                         mStr.Append("<td>" + it.Size + "</td>");
-                        mStr.Append("<td><a class=\"green\" href=\"/Admin/TheLoaiAnhSua?pId=" + it.ID + "\">");
-                        mStr.Append("<img class=\"micon\" src=\"/Content/Admin/Images/Edit-icon.png\" /></a>");
-                        mStr.Append("<a href=\"javascript:Admin_ImagesGroup_HienThiPopUp('Bạn có thực sự muốn xóa loại ảnh này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Admin/Images/DeleteRed.png\" /></a>");
+                        mStr.Append("<td><a class=\"green\" href=\"/ImageType/Edit?pId=" + it.ID + "\">");
+                        mStr.Append("<img class=\"micon\" src=\"/Content/Images/Edit-icon.png\" /></a>");
+                        mStr.Append("<a href=\"javascript:Admin_ImagesGroup_HienThiPopUp('Bạn có thực sự muốn xóa loại ảnh này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Images/DeleteRed.png\" /></a>");
                         mStr.Append("</td>");
                         mStr.Append("</tr>");
                     }
@@ -673,9 +673,9 @@ namespace V308CMS.Data
                         mStr.Append("<td>" + it.Name + "</td>");
                         mStr.Append("<td>" + ConverterUlti.GetNgayDangByDateTime(it.Date.Value) + "</td>");
                         mStr.Append("<td>" + it.Size + "</td>");
-                        mStr.Append("<td><a class=\"green\" href=\"/Admin/TheLoaiAnhSua?pId=" + it.ID + "\">");
-                        mStr.Append("<img class=\"micon\" src=\"/Content/Admin/Images/Edit-icon.png\" /></a>");
-                        mStr.Append("<a href=\"javascript:Admin_ImagesGroup_HienThiPopUp('Bạn có thực sự muốn xóa loại ảnh này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Admin/Images/DeleteRed.png\" /></a>");
+                        mStr.Append("<td><a class=\"green\" href=\"/ImageType/Edit?pId=" + it.ID + "\">");
+                        mStr.Append("<img class=\"micon\" src=\"/Content/Images/Edit-icon.png\" /></a>");
+                        mStr.Append("<a href=\"javascript:Admin_ImagesGroup_HienThiPopUp('Bạn có thực sự muốn xóa loại ảnh này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Images/DeleteRed.png\" /></a>");
                         mStr.Append("</td>");
                         mStr.Append("</tr>");
                     }
@@ -965,9 +965,9 @@ namespace V308CMS.Data
                         mStr.Append("<td>" + it.Name + "</td>");
                         mStr.Append("<td>" + ConverterUlti.GetNgayDangByDateTime(it.Date.Value) + "</td>");
                         mStr.Append("<td><img class=\"adminimage\" src=\"" + it.LinkImage + "\"/></td>");
-                        mStr.Append("<td><a class=\"green\" href=\"/Admin/AnhSua?pId=" + it.ID + "\">");
-                        mStr.Append("<img class=\"micon\" src=\"/Content/Admin/Images/Edit-icon.png\" /></a>");
-                        mStr.Append("<a href=\"javascript:Admin_Images_HienThiPopUp('Bạn có thực sự muốn xóa ảnh này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Admin/Images/DeleteRed.png\" /></a>");
+                        mStr.Append("<td><a class=\"green\" href=\"/Image/Edit?pId=" + it.ID + "\">");
+                        mStr.Append("<img class=\"micon\" src=\"/Content/Images/Edit-icon.png\" /></a>");
+                        mStr.Append("<a href=\"javascript:Admin_Images_HienThiPopUp('Bạn có thực sự muốn xóa ảnh này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Images/DeleteRed.png\" /></a>");
                         mStr.Append("</td>");
                         mStr.Append("</tr>");
                     }
@@ -978,9 +978,9 @@ namespace V308CMS.Data
                         mStr.Append("<td>" + it.Name + "</td>");
                         mStr.Append("<td>" + ConverterUlti.GetNgayDangByDateTime(it.Date.Value) + "</td>");
                         mStr.Append("<td><img class=\"adminimage\" src=\"" + it.LinkImage + "\"/></td>");
-                        mStr.Append("<td><a class=\"green\" href=\"/Admin/AnhSua?pId=" + it.ID + "\">");
-                        mStr.Append("<img class=\"micon\" src=\"/Content/Admin/Images/Edit-icon.png\" /></a>");
-                        mStr.Append("<a href=\"javascript:Admin_Images_HienThiPopUp('Bạn có thực sự muốn xóa  ảnh này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Admin/Images/DeleteRed.png\" /></a>");
+                        mStr.Append("<td><a class=\"green\" href=\"/Image/Edit?pId=" + it.ID + "\">");
+                        mStr.Append("<img class=\"micon\" src=\"/Content/Images/Edit-icon.png\" /></a>");
+                        mStr.Append("<a href=\"javascript:Admin_Images_HienThiPopUp('Bạn có thực sự muốn xóa  ảnh này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Images/DeleteRed.png\" /></a>");
                         mStr.Append("</td>");
                         mStr.Append("</tr>");
                     }
@@ -1018,9 +1018,9 @@ namespace V308CMS.Data
                         mStr.Append("<td>" + it.ID + "</td>");
                         mStr.Append("<td>" + it.Name + "</td>");
                         mStr.Append("<td>" + ConverterUlti.GetNgayDangByDateTime(it.Date.Value) + "</td>");
-                        mStr.Append("<td><a class=\"green\" href=\"/Admin/TheLoaiFileSua?pId=" + it.ID + "\">");
-                        mStr.Append("<img class=\"micon\" src=\"/Content/Admin/Images/Edit-icon.png\" /></a>");
-                        mStr.Append("<a href=\"javascript:Admin_FileGroup_HienThiPopUp('Bạn có thực sự muốn xóa loại File này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Admin/Images/DeleteRed.png\" /></a>");
+                        mStr.Append("<td><a class=\"green\" href=\"/ImageType/Edit?pId=" + it.ID + "\">");
+                        mStr.Append("<img class=\"micon\" src=\"/Content/Images/Edit-icon.png\" /></a>");
+                        mStr.Append("<a href=\"javascript:Admin_FileGroup_HienThiPopUp('Bạn có thực sự muốn xóa loại File này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Images/DeleteRed.png\" /></a>");
                         mStr.Append("</td>");
                         mStr.Append("</tr>");
                     }
@@ -1030,9 +1030,9 @@ namespace V308CMS.Data
                         mStr.Append("<td>" + it.ID + "</td>");
                         mStr.Append("<td>" + it.Name + "</td>");
                         mStr.Append("<td>" + ConverterUlti.GetNgayDangByDateTime(it.Date.Value) + "</td>");
-                        mStr.Append("<td><a class=\"green\" href=\"/Admin/TheLoaiFileSua?pId=" + it.ID + "\">");
-                        mStr.Append("<img class=\"micon\" src=\"/Content/Admin/Images/Edit-icon.png\" /></a>");
-                        mStr.Append("<a href=\"javascript:Admin_FileGroup_HienThiPopUp('Bạn có thực sự muốn xóa loại File này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Admin/Images/DeleteRed.png\" /></a>");
+                        mStr.Append("<td><a class=\"green\" href=\"/ImageType/Edit?pId=" + it.ID + "\">");
+                        mStr.Append("<img class=\"micon\" src=\"/Content/Images/Edit-icon.png\" /></a>");
+                        mStr.Append("<a href=\"javascript:Admin_FileGroup_HienThiPopUp('Bạn có thực sự muốn xóa loại File này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Images/DeleteRed.png\" /></a>");
                         mStr.Append("</td>");
                         mStr.Append("</tr>");
                     }
@@ -1322,9 +1322,9 @@ namespace V308CMS.Data
                         mStr.Append("<td>" + it.FileName + "</td>");
                         mStr.Append("<td>" + ConverterUlti.GetNgayDangByDateTime(it.Date.Value) + "</td>");
                         mStr.Append("<td>" + it.Value + "</td>");
-                        mStr.Append("<td><a class=\"green\" href=\"/Admin/FileSua?pId=" + it.ID + "\">");
-                        mStr.Append("<img class=\"micon\" src=\"/Content/Admin/Images/Edit-icon.png\" /></a>");
-                        mStr.Append("<a href=\"javascript:Admin_File_HienThiPopUp('Bạn có thực sự muốn xóa File này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Admin/Images/DeleteRed.png\" /></a>");
+                        mStr.Append("<td><a class=\"green\" href=\"/File/Edit?pId=" + it.ID + "\">");
+                        mStr.Append("<img class=\"micon\" src=\"/Content/Images/Edit-icon.png\" /></a>");
+                        mStr.Append("<a href=\"javascript:Admin_File_HienThiPopUp('Bạn có thực sự muốn xóa File này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Images/DeleteRed.png\" /></a>");
                         mStr.Append("</td>");
                         mStr.Append("</tr>");
                     }
@@ -1335,9 +1335,9 @@ namespace V308CMS.Data
                         mStr.Append("<td>" + it.FileName + "</td>");
                         mStr.Append("<td>" + ConverterUlti.GetNgayDangByDateTime(it.Date.Value) + "</td>");
                         mStr.Append("<td>" + it.Value + "</td>");
-                        mStr.Append("<td><a class=\"green\" href=\"/Admin/FileSua?pId=" + it.ID + "\">");
-                        mStr.Append("<img class=\"micon\" src=\"/Content/Admin/Images/Edit-icon.png\" /></a>");
-                        mStr.Append("<a href=\"javascript:Admin_File_HienThiPopUp('Bạn có thực sự muốn File  ảnh này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Admin/Images/DeleteRed.png\" /></a>");
+                        mStr.Append("<td><a class=\"green\" href=\"/File/Edit?pId=" + it.ID + "\">");
+                        mStr.Append("<img class=\"micon\" src=\"/Content/Images/Edit-icon.png\" /></a>");
+                        mStr.Append("<a href=\"javascript:Admin_File_HienThiPopUp('Bạn có thực sự muốn File  ảnh này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Images/DeleteRed.png\" /></a>");
                         mStr.Append("</td>");
                         mStr.Append("</tr>");
                     }
@@ -1544,9 +1544,9 @@ namespace V308CMS.Data
                         mStr.Append("<td>" + it.Name + "</td>");
                         mStr.Append("<td>" + ConverterUlti.GetNgayDangByDateTime(it.Date.Value) + "</td>");
                         mStr.Append("<td><img class=\"adminimage\" src=\"" + it.Image + "\"/></td>");
-                        mStr.Append("<td><a class=\"green\" href=\"/Admin/SanPhamNhaPhanPhoiSua?pId=" + it.ID + "\">");
-                        mStr.Append("<img class=\"micon\" src=\"/Content/Admin/Images/Edit-icon.png\" /></a>");
-                        mStr.Append("<a href=\"javascript:Admin_ProductDistributor_HienThiPopUp('Bạn có thực sự muốn xóa nhà phân phối này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Admin/Images/DeleteRed.png\" /></a>");
+                        mStr.Append("<td><a class=\"green\" href=\"/ProductDistributor/Edit?pId=" + it.ID + "\">");
+                        mStr.Append("<img class=\"micon\" src=\"/Content/Images/Edit-icon.png\" /></a>");
+                        mStr.Append("<a href=\"javascript:Admin_ProductDistributor_HienThiPopUp('Bạn có thực sự muốn xóa nhà phân phối này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Images/DeleteRed.png\" /></a>");
                         mStr.Append("</td>");
                         mStr.Append("</tr>");
                     }
@@ -1557,9 +1557,9 @@ namespace V308CMS.Data
                         mStr.Append("<td>" + it.Name + "</td>");
                         mStr.Append("<td>" + ConverterUlti.GetNgayDangByDateTime(it.Date.Value) + "</td>");
                         mStr.Append("<td><img class=\"adminimage\" src=\"" + it.Image + "\"/></td>");
-                        mStr.Append("<td><a class=\"green\" href=\"/Admin/SanPhamNhaPhanPhoiSua?pId=" + it.ID + "\">");
-                        mStr.Append("<img class=\"micon\" src=\"/Content/Admin/Images/Edit-icon.png\" /></a>");
-                        mStr.Append("<a href=\"javascript:Admin_ProductDistributor_HienThiPopUp('Bạn có thực sự muốn xóa nhà phân phối này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Admin/Images/DeleteRed.png\" /></a>");
+                        mStr.Append("<td><a class=\"green\" href=\"/ProductDistributor/Edit?pId=" + it.ID + "\">");
+                        mStr.Append("<img class=\"micon\" src=\"/Content/Images/Edit-icon.png\" /></a>");
+                        mStr.Append("<a href=\"javascript:Admin_ProductDistributor_HienThiPopUp('Bạn có thực sự muốn xóa nhà phân phối này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Images/DeleteRed.png\" /></a>");
                         mStr.Append("</td>");
                         mStr.Append("</tr>");
                     }
@@ -1596,9 +1596,9 @@ namespace V308CMS.Data
                         mStr.Append("<td>" + it.Name + "</td>");
                         mStr.Append("<td>" + ConverterUlti.GetNgayDangByDateTime(it.Date.Value) + "</td>");
                         mStr.Append("<td><img class=\"adminimage\" src=\"" + it.Image + "\"/></td>");
-                        mStr.Append("<td><a class=\"green\" href=\"/Admin/SanPhamNhaSanXuatSua?pId=" + it.ID + "\">");
-                        mStr.Append("<img class=\"micon\" src=\"/Content/Admin/Images/Edit-icon.png\" /></a>");
-                        mStr.Append("<a href=\"javascript:Admin_ProductManufacturer_HienThiPopUp('Bạn có thực sự muốn xóa nhà sản xuất này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Admin/Images/DeleteRed.png\" /></a>");
+                        mStr.Append("<td><a class=\"green\" href=\"/ProductManufacturer/Edit?pId=" + it.ID + "\">");
+                        mStr.Append("<img class=\"micon\" src=\"/Content/Images/Edit-icon.png\" /></a>");
+                        mStr.Append("<a href=\"javascript:Admin_ProductManufacturer_HienThiPopUp('Bạn có thực sự muốn xóa nhà sản xuất này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Images/DeleteRed.png\" /></a>");
                         mStr.Append("</td>");
                         mStr.Append("</tr>");
                     }
@@ -1609,9 +1609,9 @@ namespace V308CMS.Data
                         mStr.Append("<td>" + it.Name + "</td>");
                         mStr.Append("<td>" + ConverterUlti.GetNgayDangByDateTime(it.Date.Value) + "</td>");
                         mStr.Append("<td><img class=\"adminimage\" src=\"" + it.Image + "\"/></td>");
-                        mStr.Append("<td><a class=\"green\" href=\"/Admin/SanPhamNhaSanXuatSua?pId=" + it.ID + "\">");
-                        mStr.Append("<img class=\"micon\" src=\"/Content/Admin/Images/Edit-icon.png\" /></a>");
-                        mStr.Append("<a href=\"javascript:Admin_ProductManufacturer_HienThiPopUp('Bạn có thực sự muốn xóa nhà sản xuất này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Admin/Images/DeleteRed.png\" /></a>");
+                        mStr.Append("<td><a class=\"green\" href=\"/ProductManufacturer/Edit?pId=" + it.ID + "\">");
+                        mStr.Append("<img class=\"micon\" src=\"/Content/Images/Edit-icon.png\" /></a>");
+                        mStr.Append("<a href=\"javascript:Admin_ProductManufacturer_HienThiPopUp('Bạn có thực sự muốn xóa nhà sản xuất này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Images/DeleteRed.png\" /></a>");
                         mStr.Append("</td>");
                         mStr.Append("</tr>");
                     }
@@ -1649,9 +1649,9 @@ namespace V308CMS.Data
                         mStr.Append("<td>" + it.Description + "</td>");
                         mStr.Append("<td>" + ConverterUlti.GetNgayDangByDateTime(it.Date.Value) + "</td>");
 
-                        mStr.Append("<td><a class=\"green\" href=\"/Admin/SanPhamLoaiSanPhamSua?pId=" + it.ID + "\">");
-                        mStr.Append("<img class=\"micon\" src=\"/Content/Admin/Images/Edit-icon.png\" /></a>");
-                        mStr.Append("<a href=\"javascript:Admin_ProductType_HienThiPopUp('Bạn có thực sự muốn xóa loại sản phẩm này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Admin/Images/DeleteRed.png\" /></a>");
+                        mStr.Append("<td><a class=\"green\" href=\"/ProductType/Edit?pId=" + it.ID + "\">");
+                        mStr.Append("<img class=\"micon\" src=\"/Content/Images/Edit-icon.png\" /></a>");
+                        mStr.Append("<a href=\"javascript:Admin_ProductType_HienThiPopUp('Bạn có thực sự muốn xóa loại sản phẩm này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Images/DeleteRed.png\" /></a>");
                         mStr.Append("</td>");
                         mStr.Append("</tr>");
                     }
@@ -1663,9 +1663,9 @@ namespace V308CMS.Data
                         mStr.Append("<td>" + it.Description + "</td>");
                         mStr.Append("<td>" + ConverterUlti.GetNgayDangByDateTime(it.Date.Value) + "</td>");
 
-                        mStr.Append("<td><a class=\"green\" href=\"/Admin/SanPhamLoaiSanPhamSua?pId=" + it.ID + "\">");
-                        mStr.Append("<img class=\"micon\" src=\"/Content/Admin/Images/Edit-icon.png\" /></a>");
-                        mStr.Append("<a href=\"javascript:Admin_ProductType_HienThiPopUp('Bạn có thực sự muốn xóa loại sản phẩm này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Admin/Images/DeleteRed.png\" /></a>");
+                        mStr.Append("<td><a class=\"green\" href=\"/ProductType/Edit?pId=" + it.ID + "\">");
+                        mStr.Append("<img class=\"micon\" src=\"/Content/Images/Edit-icon.png\" /></a>");
+                        mStr.Append("<a href=\"javascript:Admin_ProductType_HienThiPopUp('Bạn có thực sự muốn xóa loại sản phẩm này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Images/DeleteRed.png\" /></a>");
                         mStr.Append("</td>");
                         mStr.Append("</tr>");
                     }
@@ -1896,13 +1896,13 @@ namespace V308CMS.Data
                         mStr.Append("<td><input type=\"checkbox\" " + ConverterUlti.ConvertLogicToString(it.Visible) + " name=\"pBestSale\"  value=\"\"/></td>");
                         mStr.Append("<td><input type=\"checkbox\"" + ConverterUlti.ConvertLogicToString(it.Status) + "  name=\"pHide\"  value=\"true\"/></td>");
                         mStr.Append("<td><input type=\"checkbox\"name=\"pDelete\"  value=\"\"/></td>");
-                        mStr.Append("<td><a class=\"green\" href=\"/Admin/SanPhamSua?pId=" + it.ID + "\">");
-                        mStr.Append("<img class=\"micon\" src=\"/Content/Admin/Images/Edit-icon.png\" /></a>");
+                        mStr.Append("<td><a class=\"green\" href=\"/Product/Edit?pId=" + it.ID + "\">");
+                        mStr.Append("<img class=\"micon\" src=\"/Content/Images/Edit-icon.png\" /></a>");
                         if (it.Status == true)
-                            mStr.Append("<a href=\"javascript:Admin_Product_HienThiPopUpAn('Bạn có thực sự muốn ẩn sản phẩm này ?'," + it.ID + "," + pPage + ");\" class=\"blue\"><img class=\"micon\" src=\"/Content/Admin/Images/hidenicon.png\" /></a>");
+                            mStr.Append("<a href=\"javascript:Admin_Product_HienThiPopUpAn('Bạn có thực sự muốn ẩn sản phẩm này ?'," + it.ID + "," + pPage + ");\" class=\"blue\"><img class=\"micon\" src=\"/Content/Images/hidenicon.png\" /></a>");
                         else
-                            mStr.Append("<a href=\"javascript:Admin_Product_HienThiPopUpHien('Bạn có thực sự muốn hiện sản phẩm này ?'," + it.ID + "," + pPage + ");\" class=\"blue\"><img class=\"micon\" src=\"/Content/Admin/Images/hidenicon2.png\" /></a>");
-                        mStr.Append("<a href=\"javascript:Admin_Product_HienThiPopUp('Bạn có thực sự muốn xóa sản phẩm này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Admin/Images/DeleteRed.png\" /></a>");
+                            mStr.Append("<a href=\"javascript:Admin_Product_HienThiPopUpHien('Bạn có thực sự muốn hiện sản phẩm này ?'," + it.ID + "," + pPage + ");\" class=\"blue\"><img class=\"micon\" src=\"/Content/Images/hidenicon2.png\" /></a>");
+                        mStr.Append("<a href=\"javascript:Admin_Product_HienThiPopUp('Bạn có thực sự muốn xóa sản phẩm này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Images/DeleteRed.png\" /></a>");
                         mStr.Append("</td>");
                         mStr.Append("</tr>");
                     }
@@ -1921,13 +1921,13 @@ namespace V308CMS.Data
                         mStr.Append("<td><input type=\"checkbox\" " + ConverterUlti.ConvertLogicToString(it.Visible) + " name=\"pBestSale\"  value=\"\"/></td>");
                         mStr.Append("<td><input type=\"checkbox\"" + ConverterUlti.ConvertLogicToString(it.Status) + "  name=\"pHide\"  value=\"true\"/></td>");
                         mStr.Append("<td><input type=\"checkbox\" name=\"pDelete\"  value=\"\"/></td>");
-                        mStr.Append("<td><a class=\"green\" href=\"/Admin/SanPhamSua?pId=" + it.ID + "\">");
-                        mStr.Append("<img class=\"micon\" src=\"/Content/Admin/Images/Edit-icon.png\" /></a>");
+                        mStr.Append("<td><a class=\"green\" href=\"/Product/Edit?pId=" + it.ID + "\">");
+                        mStr.Append("<img class=\"micon\" src=\"/Content/Images/Edit-icon.png\" /></a>");
                         if (it.Status == true)
-                            mStr.Append("<a href=\"javascript:Admin_Product_HienThiPopUpAn('Bạn có thực sự muốn ẩn sản phẩm này ?'," + it.ID + "," + pPage + ");\" class=\"blue\"><img class=\"micon\" src=\"/Content/Admin/Images/hidenicon.png\" /></a>");
+                            mStr.Append("<a href=\"javascript:Admin_Product_HienThiPopUpAn('Bạn có thực sự muốn ẩn sản phẩm này ?'," + it.ID + "," + pPage + ");\" class=\"blue\"><img class=\"micon\" src=\"/Content/Images/hidenicon.png\" /></a>");
                         else
-                            mStr.Append("<a href=\"javascript:Admin_Product_HienThiPopUpHien('Bạn có thực sự muốn hiện sản phẩm này ?'," + it.ID + "," + pPage + ");\" class=\"blue\"><img class=\"micon\" src=\"/Content/Admin/Images/hidenicon2.png\" /></a>");
-                        mStr.Append("<a href=\"javascript:Admin_Product_HienThiPopUp('Bạn có thực sự muốn xóa sản phẩm này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Admin/Images/DeleteRed.png\" /></a>");
+                            mStr.Append("<a href=\"javascript:Admin_Product_HienThiPopUpHien('Bạn có thực sự muốn hiện sản phẩm này ?'," + it.ID + "," + pPage + ");\" class=\"blue\"><img class=\"micon\" src=\"/Content/Images/hidenicon2.png\" /></a>");
+                        mStr.Append("<a href=\"javascript:Admin_Product_HienThiPopUp('Bạn có thực sự muốn xóa sản phẩm này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Images/DeleteRed.png\" /></a>");
                         mStr.Append("</td>");
                         mStr.Append("</tr>");
                     }
@@ -2279,9 +2279,9 @@ namespace V308CMS.Data
                         mStr.Append("<td>" + it.ID + "</td>");
                         mStr.Append("<td>" + it.Name + "</td>");
                         mStr.Append("<td>" + ConverterUlti.GetNgayDangByDateTime(it.Date.Value) + "</td>");
-                        mStr.Append("<td><a class=\"green\" href=\"/Admin/HoTroLoaiHoTroSua?pId=" + it.ID + "\">");
-                        mStr.Append("<img class=\"micon\" src=\"/Content/Admin/Images/Edit-icon.png\" /></a>");
-                        mStr.Append("<a href=\"javascript:Admin_SupportType_HienThiPopUp('Bạn có thực sự muốn xóa kiểu hỗ trợ này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Admin/Images/DeleteRed.png\" /></a>");
+                        mStr.Append("<td><a class=\"green\" href=\"/SupportType/Edit?pId=" + it.ID + "\">");
+                        mStr.Append("<img class=\"micon\" src=\"/Content/Images/Edit-icon.png\" /></a>");
+                        mStr.Append("<a href=\"javascript:Admin_SupportType_HienThiPopUp('Bạn có thực sự muốn xóa kiểu hỗ trợ này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Images/DeleteRed.png\" /></a>");
                         mStr.Append("</td>");
                         mStr.Append("</tr>");
                     }
@@ -2291,9 +2291,9 @@ namespace V308CMS.Data
                         mStr.Append("<td>" + it.ID + "</td>");
                         mStr.Append("<td>" + it.Name + "</td>");
                         mStr.Append("<td>" + ConverterUlti.GetNgayDangByDateTime(it.Date.Value) + "</td>");
-                        mStr.Append("<td><a class=\"green\" href=\"/Admin/HoTroLoaiHoTroSua?pId=" + it.ID + "\">");
-                        mStr.Append("<img class=\"micon\" src=\"/Content/Admin/Images/Edit-icon.png\" /></a>");
-                        mStr.Append("<a href=\"javascript:Admin_SupportType_HienThiPopUp('Bạn có thực sự muốn xóa kiểu hỗ trợ này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Admin/Images/DeleteRed.png\" /></a>");
+                        mStr.Append("<td><a class=\"green\" href=\"/SupportType/Edit?pId=" + it.ID + "\">");
+                        mStr.Append("<img class=\"micon\" src=\"/Content/Images/Edit-icon.png\" /></a>");
+                        mStr.Append("<a href=\"javascript:Admin_SupportType_HienThiPopUp('Bạn có thực sự muốn xóa kiểu hỗ trợ này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Images/DeleteRed.png\" /></a>");
                         mStr.Append("</td>");
                         mStr.Append("</tr>");
                     }
@@ -2332,9 +2332,9 @@ namespace V308CMS.Data
                         mStr.Append("<td>" + it.Nick + "</td>");
                         mStr.Append("<td>" + it.Phone + "</td>");
                         mStr.Append("<td>" + it.Email + "</td>");
-                        mStr.Append("<td><a class=\"green\" href=\"/Admin/HoTroSua?pId=" + it.ID + "\">");
-                        mStr.Append("<img class=\"micon\" src=\"/Content/Admin/Images/Edit-icon.png\" /></a>");
-                        mStr.Append("<a href=\"javascript:Admin_Support_HienThiPopUp('Bạn có thực sự muốn xóa hỗ trợ này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Admin/Images/DeleteRed.png\" /></a>");
+                        mStr.Append("<td><a class=\"green\" href=\"/Support/Edit?pId=" + it.ID + "\">");
+                        mStr.Append("<img class=\"micon\" src=\"/Content/Images/Edit-icon.png\" /></a>");
+                        mStr.Append("<a href=\"javascript:Admin_Support_HienThiPopUp('Bạn có thực sự muốn xóa hỗ trợ này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Images/DeleteRed.png\" /></a>");
                         mStr.Append("</td>");
                         mStr.Append("</tr>");
                     }
@@ -2347,9 +2347,9 @@ namespace V308CMS.Data
                         mStr.Append("<td>" + it.Nick + "</td>");
                         mStr.Append("<td>" + it.Phone + "</td>");
                         mStr.Append("<td>" + it.Email + "</td>");
-                        mStr.Append("<td><a class=\"green\" href=\"/Admin/HoTroSua?pId=" + it.ID + "\">");
-                        mStr.Append("<img class=\"micon\" src=\"/Content/Admin/Images/Edit-icon.png\" /></a>");
-                        mStr.Append("<a href=\"javascript:Admin_Support_HienThiPopUp('Bạn có thực sự muốn xóa hỗ trợ này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Admin/Images/DeleteRed.png\" /></a>");
+                        mStr.Append("<td><a class=\"green\" href=\"/Support/Edit?pId=" + it.ID + "\">");
+                        mStr.Append("<img class=\"micon\" src=\"/Content/Images/Edit-icon.png\" /></a>");
+                        mStr.Append("<a href=\"javascript:Admin_Support_HienThiPopUp('Bạn có thực sự muốn xóa hỗ trợ này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Images/DeleteRed.png\" /></a>");
                         mStr.Append("</td>");
                         mStr.Append("</tr>");
                     }
@@ -2918,13 +2918,13 @@ namespace V308CMS.Data
                         mStr.Append("<td>" + it.Price + "</td>");
                         mStr.Append("<td>" + it.Detail + "</td>");
                         mStr.Append("<td>" + it.Address + "</td>");
-                        mStr.Append("<td><a class=\"green\" href=\"/Admin/OrderChiTiet?pId=" + it.ID + "\">");
-                        mStr.Append("<img class=\"micon\" src=\"/Content/Admin/Images/Edit-icon.png\" /></a>");
+                        mStr.Append("<td><a class=\"green\" href=\"/ProductOrder/Detail?pId=" + it.ID + "\">");
+                        mStr.Append("<img class=\"micon\" src=\"/Content/Images/Edit-icon.png\" /></a>");
                         if (it.Status == 0)
-                            mStr.Append("<a href=\"javascript:void(0);\" class=\"blue\"><img class=\"micon\" src=\"/Content/Admin/Images/hidenicon.png\" /></a>");
+                            mStr.Append("<a href=\"javascript:void(0);\" class=\"blue\"><img class=\"micon\" src=\"/Content/Images/hidenicon.png\" /></a>");
                         else
-                            mStr.Append("<a href=\"javascript:void(0);\" class=\"blue\"><img class=\"micon\" src=\"/Content/Admin/Images/hidenicon2.png\" /></a>");
-                        mStr.Append("<a href=\"javascript:Admin_Order_HienThiPopUp('Bạn có thực sự muốn xóa đơn hàng này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Admin/Images/DeleteRed.png\" /></a>");
+                            mStr.Append("<a href=\"javascript:void(0);\" class=\"blue\"><img class=\"micon\" src=\"/Content/Images/hidenicon2.png\" /></a>");
+                        mStr.Append("<a href=\"javascript:Admin_Order_HienThiPopUp('Bạn có thực sự muốn xóa đơn hàng này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Images/DeleteRed.png\" /></a>");
                         mStr.Append("</td>");
                         mStr.Append("</tr>");
                     }
@@ -2938,13 +2938,13 @@ namespace V308CMS.Data
                         mStr.Append("<td>" + String.Format("{0:0,0}", it.Price) + "</td>");
                         mStr.Append("<td>" + it.Detail + "</td>");
                         mStr.Append("<td>" + it.Address + "</td>");
-                        mStr.Append("<td><a class=\"green\" href=\"/Admin/OrderChiTiet?pId=" + it.ID + "\">");
-                        mStr.Append("<img class=\"micon\" src=\"/Content/Admin/Images/Edit-icon.png\" /></a>");
+                        mStr.Append("<td><a class=\"green\" href=\"/ProductOrder/Detail?pId=" + it.ID + "\">");
+                        mStr.Append("<img class=\"micon\" src=\"/Content/Images/Edit-icon.png\" /></a>");
                         if (it.Status == 1)
-                            mStr.Append("<a href=\"javascript:void(0);\" class=\"blue\"><img class=\"micon\" src=\"/Content/Admin/Images/hidenicon.png\" /></a>");
+                            mStr.Append("<a href=\"javascript:void(0);\" class=\"blue\"><img class=\"micon\" src=\"/Content/Images/hidenicon.png\" /></a>");
                         else
-                            mStr.Append("<a href=\"javascript:void(0);\" class=\"blue\"><img class=\"micon\" src=\"/Content/Admin/Images/hidenicon2.png\" /></a>");
-                        mStr.Append("<a href=\"javascript:Admin_Order_HienThiPopUp('Bạn có thực sự muốn xóa đơn hàng này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Admin/Images/DeleteRed.png\" /></a>");
+                            mStr.Append("<a href=\"javascript:void(0);\" class=\"blue\"><img class=\"micon\" src=\"/Content/Images/hidenicon2.png\" /></a>");
+                        mStr.Append("<a href=\"javascript:Admin_Order_HienThiPopUp('Bạn có thực sự muốn xóa đơn hàng này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Images/DeleteRed.png\" /></a>");
                         mStr.Append("</td>");
                         mStr.Append("</tr>");
                     }
@@ -3073,9 +3073,9 @@ namespace V308CMS.Data
                         mStr.Append("<td>" + it.FullName + "</td>");
                         mStr.Append("<td>" + ConverterUlti.GetNgayDangByDateTime(it.Date.Value) + "</td>");
                         mStr.Append("<td>" + it.UserName + "</td>");
-                        mStr.Append("<td><a class=\"green\" href=\"/Admin/AdminAccountSua?pId=" + it.ID + "\">");
-                        mStr.Append("<img class=\"micon\" src=\"/Content/Admin/Images/Edit-icon.png\" /></a>");
-                        mStr.Append("<a href=\"javascript:Admin_AdminAccount_HienThiPopUp('Bạn có thực sự muốn xóa tài khoản này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Admin/Images/DeleteRed.png\" /></a>");
+                        mStr.Append("<td><a class=\"green\" href=\"/AdminAccount/Edit?pId=" + it.ID + "\">");
+                        mStr.Append("<img class=\"micon\" src=\"/Content/Images/Edit-icon.png\" /></a>");
+                        mStr.Append("<a href=\"javascript:Admin_AdminAccount_HienThiPopUp('Bạn có thực sự muốn xóa tài khoản này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Images/DeleteRed.png\" /></a>");
                         mStr.Append("</td>");
                         mStr.Append("</tr>");
                     }
@@ -3086,9 +3086,9 @@ namespace V308CMS.Data
                         mStr.Append("<td>" + it.FullName + "</td>");
                         mStr.Append("<td>" + ConverterUlti.GetNgayDangByDateTime(it.Date.Value) + "</td>");
                         mStr.Append("<td>" + it.UserName + "</td>");
-                        mStr.Append("<td><a class=\"green\" href=\"/Admin/AdminAccountSua?pId=" + it.ID + "\">");
-                        mStr.Append("<img class=\"micon\" src=\"/Content/Admin/Images/Edit-icon.png\" /></a>");
-                        mStr.Append("<a href=\"javascript:Admin_AdminAccount_HienThiPopUp('Bạn có thực sự muốn xóa  tài khoản này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Admin/Images/DeleteRed.png\" /></a>");
+                        mStr.Append("<td><a class=\"green\" href=\"/AdminAccount/Edit?pId=" + it.ID + "\">");
+                        mStr.Append("<img class=\"micon\" src=\"/Content/Images/Edit-icon.png\" /></a>");
+                        mStr.Append("<a href=\"javascript:Admin_AdminAccount_HienThiPopUp('Bạn có thực sự muốn xóa  tài khoản này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Images/DeleteRed.png\" /></a>");
                         mStr.Append("</td>");
                         mStr.Append("</tr>");
                     }
@@ -3125,14 +3125,14 @@ namespace V308CMS.Data
                         mStr.Append("<td>" + it.FullName + "</td>");
                         mStr.Append("<td>" + ConverterUlti.GetNgayDangByDateTime(it.Date.Value) + "</td>");
                         mStr.Append("<td>" + it.UserName + "</td>");
-                        mStr.Append("<td><a class=\"green\" href=\"/Admin/AccountChiTiet?pId=" + it.ID + "\">");
-                        mStr.Append("<img class=\"micon\" src=\"/Content/Admin/Images/Edit-icon.png\" /></a>");
+                        mStr.Append("<td><a class=\"green\" href=\"/Account/Detail?pId=" + it.ID + "\">");
+                        mStr.Append("<img class=\"micon\" src=\"/Content/Images/Edit-icon.png\" /></a>");
                         if (it.Status == true)
-                            mStr.Append("<a href=\"javascript:Admin_Account_HienThiPopUpAn('Bạn có thực sự muốn khóa tài khoản này ?'," + it.ID + "," + pPage + ");\" class=\"blue\"><img class=\"micon\" src=\"/Content/Admin/Images/hidenicon.png\" /></a>");
+                            mStr.Append("<a href=\"javascript:Admin_Account_HienThiPopUpAn('Bạn có thực sự muốn khóa tài khoản này ?'," + it.ID + "," + pPage + ");\" class=\"blue\"><img class=\"micon\" src=\"/Content/Images/hidenicon.png\" /></a>");
                         else
-                            mStr.Append("<a href=\"javascript:Admin_Account_HienThiPopUpHien('Bạn có thực sự muốn khóa tài khoản này ?'," + it.ID + "," + pPage + ");\" class=\"blue\"><img class=\"micon\" src=\"/Content/Admin/Images/hidenicon2.png\" /></a>");
+                            mStr.Append("<a href=\"javascript:Admin_Account_HienThiPopUpHien('Bạn có thực sự muốn khóa tài khoản này ?'," + it.ID + "," + pPage + ");\" class=\"blue\"><img class=\"micon\" src=\"/Content/Images/hidenicon2.png\" /></a>");
 
-                        mStr.Append("<a href=\"javascript:Admin_Account_HienThiPopUp('Bạn có thực sự muốn xóa tài khoản này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Admin/Images/DeleteRed.png\" /></a>");
+                        mStr.Append("<a href=\"javascript:Admin_Account_HienThiPopUp('Bạn có thực sự muốn xóa tài khoản này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Images/DeleteRed.png\" /></a>");
                         mStr.Append("</td>");
                         mStr.Append("</tr>");
                     }
@@ -3143,14 +3143,14 @@ namespace V308CMS.Data
                         mStr.Append("<td>" + it.FullName + "</td>");
                         mStr.Append("<td>" + ConverterUlti.GetNgayDangByDateTime(it.Date.Value) + "</td>");
                         mStr.Append("<td>" + it.UserName + "</td>");
-                        mStr.Append("<td><a class=\"green\" href=\"/Admin/AccountChiTiet?pId=" + it.ID + "\">");
-                        mStr.Append("<img class=\"micon\" src=\"/Content/Admin/Images/Edit-icon.png\" /></a>");
+                        mStr.Append("<td><a class=\"green\" href=\"/Account/Detail?pId=" + it.ID + "\">");
+                        mStr.Append("<img class=\"micon\" src=\"/Content/Images/Edit-icon.png\" /></a>");
                         if (it.Status == true)
-                            mStr.Append("<a href=\"javascript:Admin_Account_HienThiPopUpAn('Bạn có thực sự muốn khóa tài khoản này ?'," + it.ID + "," + pPage + ");\" class=\"blue\"><img class=\"micon\" src=\"/Content/Admin/Images/hidenicon.png\" /></a>");
+                            mStr.Append("<a href=\"javascript:Admin_Account_HienThiPopUpAn('Bạn có thực sự muốn khóa tài khoản này ?'," + it.ID + "," + pPage + ");\" class=\"blue\"><img class=\"micon\" src=\"/Content/Images/hidenicon.png\" /></a>");
                         else
-                            mStr.Append("<a href=\"javascript:Admin_Account_HienThiPopUpHien('Bạn có thực sự muốn kích hoạt lại tài khoản này ?'," + it.ID + "," + pPage + ");\" class=\"blue\"><img class=\"micon\" src=\"/Content/Admin/Images/hidenicon2.png\" /></a>");
+                            mStr.Append("<a href=\"javascript:Admin_Account_HienThiPopUpHien('Bạn có thực sự muốn kích hoạt lại tài khoản này ?'," + it.ID + "," + pPage + ");\" class=\"blue\"><img class=\"micon\" src=\"/Content/Images/hidenicon2.png\" /></a>");
 
-                        mStr.Append("<a href=\"javascript:Admin_Account_HienThiPopUp('Bạn có thực sự muốn xóa  tài khoản này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Admin/Images/DeleteRed.png\" /></a>");
+                        mStr.Append("<a href=\"javascript:Admin_Account_HienThiPopUp('Bạn có thực sự muốn xóa  tài khoản này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Images/DeleteRed.png\" /></a>");
                         mStr.Append("</td>");
                         mStr.Append("</tr>");
                     }
@@ -3187,14 +3187,14 @@ namespace V308CMS.Data
                         mStr.Append("<td>" + it.FullName + "</td>");
                         mStr.Append("<td>" + ConverterUlti.GetNgayDangByDateTime(it.Date.Value) + "</td>");
                         mStr.Append("<td>" + it.UserName + "</td>");
-                        mStr.Append("<td><a class=\"green\" href=\"/Admin/MarketSua?pId=" + it.ID + "\">");
-                        mStr.Append("<img class=\"micon\" src=\"/Content/Admin/Images/Edit-icon.png\" /></a>");
+                        mStr.Append("<td><a class=\"green\" href=\"/Market/Edit?pId=" + it.ID + "\">");
+                        mStr.Append("<img class=\"micon\" src=\"/Content/Images/Edit-icon.png\" /></a>");
                         if (it.Status == true)
-                            mStr.Append("<a href=\"javascript:Admin_Market_HienThiPopUpAn('Bạn có thực sự muốn khóa tài khoản này ?'," + it.ID + "," + pPage + ");\" class=\"blue\"><img class=\"micon\" src=\"/Content/Admin/Images/hidenicon.png\" /></a>");
+                            mStr.Append("<a href=\"javascript:Admin_Market_HienThiPopUpAn('Bạn có thực sự muốn khóa tài khoản này ?'," + it.ID + "," + pPage + ");\" class=\"blue\"><img class=\"micon\" src=\"/Content/Images/hidenicon.png\" /></a>");
                         else
-                            mStr.Append("<a href=\"javascript:Admin_Market_HienThiPopUpHien('Bạn có thực sự muốn khóa tài khoản này ?'," + it.ID + "," + pPage + ");\" class=\"blue\"><img class=\"micon\" src=\"/Content/Admin/Images/hidenicon2.png\" /></a>");
+                            mStr.Append("<a href=\"javascript:Admin_Market_HienThiPopUpHien('Bạn có thực sự muốn khóa tài khoản này ?'," + it.ID + "," + pPage + ");\" class=\"blue\"><img class=\"micon\" src=\"/Content/Images/hidenicon2.png\" /></a>");
 
-                        mStr.Append("<a href=\"javascript:Admin_Market_HienThiPopUp('Bạn có thực sự muốn xóa tài khoản này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Admin/Images/DeleteRed.png\" /></a>");
+                        mStr.Append("<a href=\"javascript:Admin_Market_HienThiPopUp('Bạn có thực sự muốn xóa tài khoản này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Images/DeleteRed.png\" /></a>");
                         mStr.Append("</td>");
                         mStr.Append("</tr>");
                     }
@@ -3205,14 +3205,14 @@ namespace V308CMS.Data
                         mStr.Append("<td>" + it.FullName + "</td>");
                         mStr.Append("<td>" + ConverterUlti.GetNgayDangByDateTime(it.Date.Value) + "</td>");
                         mStr.Append("<td>" + it.UserName + "</td>");
-                        mStr.Append("<td><a class=\"green\" href=\"/Admin/MarketSua?pId=" + it.ID + "\">");
-                        mStr.Append("<img class=\"micon\" src=\"/Content/Admin/Images/Edit-icon.png\" /></a>");
+                        mStr.Append("<td><a class=\"green\" href=\"/Market/Edit?pId=" + it.ID + "\">");
+                        mStr.Append("<img class=\"micon\" src=\"/Content/Images/Edit-icon.png\" /></a>");
                         if (it.Status == true)
-                            mStr.Append("<a href=\"javascript:Admin_Market_HienThiPopUpAn('Bạn có thực sự muốn khóa tài khoản này ?'," + it.ID + "," + pPage + ");\" class=\"blue\"><img class=\"micon\" src=\"/Content/Admin/Images/hidenicon.png\" /></a>");
+                            mStr.Append("<a href=\"javascript:Admin_Market_HienThiPopUpAn('Bạn có thực sự muốn khóa tài khoản này ?'," + it.ID + "," + pPage + ");\" class=\"blue\"><img class=\"micon\" src=\"/Content/Images/hidenicon.png\" /></a>");
                         else
-                            mStr.Append("<a href=\"javascript:Admin_Market_HienThiPopUpHien('Bạn có thực sự muốn kích hoạt lại tài khoản này ?'," + it.ID + "," + pPage + ");\" class=\"blue\"><img class=\"micon\" src=\"/Content/Admin/Images/hidenicon2.png\" /></a>");
+                            mStr.Append("<a href=\"javascript:Admin_Market_HienThiPopUpHien('Bạn có thực sự muốn kích hoạt lại tài khoản này ?'," + it.ID + "," + pPage + ");\" class=\"blue\"><img class=\"micon\" src=\"/Content/Images/hidenicon2.png\" /></a>");
 
-                        mStr.Append("<a href=\"javascript:Admin_Market_HienThiPopUp('Bạn có thực sự muốn xóa  tài khoản này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Admin/Images/DeleteRed.png\" /></a>");
+                        mStr.Append("<a href=\"javascript:Admin_Market_HienThiPopUp('Bạn có thực sự muốn xóa  tài khoản này ?'," + it.ID + "," + pPage + ");\" class=\"btred\"><img class=\"micon\" src=\"/Content/Images/DeleteRed.png\" /></a>");
                         mStr.Append("</td>");
                         mStr.Append("</tr>");
                     }

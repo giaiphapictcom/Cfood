@@ -1,0 +1,17 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@model  V308CMS.Admin.Models.CountryModels
+@Html.HiddenFor(country => country.Id)
+@Html.AntiForgeryToken()
+<div class="row">
+    @Html.ValidationSummary(true)
+    <div class="col-lg-6">
+        <div class="form-group">
+            @Html.LabelFor(country => country.Name)
+            @Html.TextBoxFor(country => country.Name, new { @class = "form-control", placeholder = "Nhập tên quốc gia" })
+            @Html.ValidationMessageFor(country => country.Name)
+        </div>       
+        @Html.Partial("UI/_FormAction")
+        <a href="@Url.CountryIndexUrl()" title="Danh sách Quốc gia" class="btn btn-link">Danh sách</a>
+
+    </div>
+</div>

@@ -5,7 +5,7 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using ServiceStack.Text;
+//using ServiceStack.Text;
 using V308CMS.Common;
 using V308CMS.Data;
 
@@ -471,7 +471,9 @@ namespace V308CMS.Sale.Controllers
                         mProductOrder.Phone = pMobile;
                         mProductOrder.Status = 0;
                         //mProductOrder.ProductDetail = V308HTMLHELPER.TaoDanhSachSanPhamGioHang(mList);
-                        mProductOrder.ProductDetail = JsonSerializer.SerializeToString<ShopCart>(mShopCart);
+                        
+                        //mProductOrder.ProductDetail = JsonSerializer.SerializeToString<ShopCart>(mShopCart);
+
                         mProductOrder.Price = mShopCart.getTotalPrice();
                         mEntities.AddToProductOrder(mProductOrder);
                         mEntities.SaveChanges();
@@ -864,14 +866,14 @@ namespace V308CMS.Sale.Controllers
                                 Email = pEmail,
                                 UserName = pEmail,
                                 Password = EncryptionMD5.ToMd5(pPassWord.Trim()),
-                                PSanPham = (true),
-                                PFileUpload = (true),
-                                PHeThong = (true),
-                                PHinhAnh = (true),
-                                PKhachHang = (true),
-                                PTaiKhoan = (true),
-                                PThungRac = (true),
-                                PTinTuc = (true),
+                                //PSanPham = (true),
+                                //PFileUpload = (true),
+                                //PHeThong = (true),
+                                //PHinhAnh = (true),
+                                //PKhachHang = (true),
+                                //PTaiKhoan = (true),
+                                //PThungRac = (true),
+                                //PTinTuc = (true),
                                 Status=false
                             };
                             mEntities.AddToAdmin(mAdmin);

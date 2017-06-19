@@ -1,0 +1,10 @@
+﻿@model V308CMS.Data.News
+<div class="item-type-1">
+    <div class="thumb video">
+        <a href="@V308CMS.Common.url.videoURL(Model.Title, Model.ID)">
+            <img class="img-fluid mx-auto d-block" alt="@Model.Title" src="https://i.ytimg.com/vi/@Model.Summary/hqdefault.jpg" />
+            <div class="layout"></div>
+            <span class="play"><i class="icon-play"></i></span>
+        </a>
+    </div>
+</div>

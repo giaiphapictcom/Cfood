@@ -1,0 +1,35 @@
+﻿@model List<V308CMS.Data.Models.MenuConfig>
+<ul class="navbar-nav site-nav">
+    @{
+        var controller = Request.RequestContext.RouteData.Values["Controller"].ToString().ToLower();
+        if (Model.Any())
+        {
+            foreach (var menu in Model)
+            {
+
+                var activeCss = "";
+                if (menu.Link.Contains("/video") && controller == "video")
+                {
+                    activeCss = "active";
+                }
+                if (menu.Link.Contains("/tin-tuc") && controller == "news")
+                {
+                    activeCss = "active";
+                }
+                if (menu.Link.Contains("/lien-he") && controller == "contact")
+                {
+                    activeCss = "active";
+                }
+                string taget = menu.Target != null ? menu.Target : "_self";
+                
+                <li class="menu-dropdown level-top @activeCss">
+                    <a class="dropdown-toggle" href="@menu.Link" title="@menu.Name" target="@taget" >
+                        <span class="">@menu.Name</span>
+                    </a>
+                </li>
+
+            }
+        }
+
+    }
+</ul>

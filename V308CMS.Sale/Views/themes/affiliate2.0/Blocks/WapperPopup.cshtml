@@ -1,0 +1,685 @@
+﻿<script type="text/javascript">// <![CDATA[
+    jQuery(document).ready(function () {    //
+        var $popupwapper = jQuery('#wapper-popup'),
+            popupnewsletter = jQuery('#popup-newsletter'),
+            popuppage = window.location.pathname;
+
+
+        $popupwapper.css({ 'position': 'relative' });
+        jQuery('.wrapper #popup-newsletter').remove();
+        $popupwapper.append(popupnewsletter);
+
+        if (jQuery.cookie('emailpopup') != 'closed') {
+            openpopup();
+        };
+
+        jQuery('#popup-newsletter .btn.close').click(function (e) {
+            e.preventDefault();
+            closepopup();
+        });
+        jQuery('body').keydown(function (e) {
+            if (e.which == 27) {
+                closepopup();
+                jQuery('body').unbind('keydown');
+            }
+        });
+        jQuery('#mc_embed_signup form').submit(function () {
+            if (jQuery('#mc_embed_signup .email').val() != '') {
+                closepopup();
+            }
+        });
+
+        function closepopup() {
+            jQuery('#popup-newsletter .popupnewsletter').fadeOut(600, function () {
+                jQuery('#popup-newsletter .popup-overlay').fadeOut(600, function () {
+                    jQuery('#popup-newsletter').hide();
+                    jQuery.cookie('emailpopup', 'closed', { expires: 1, path: '/' });
+                });
+            })
+        }
+        function openpopup() {
+            jQuery('#popup-newsletter').fadeIn(600, function () {
+                jQuery('#popup-newsletter .popupnewsletter').fadeIn(600);
+            });
+        }
+        jQuery(document).mouseup(function (e) {
+
+            var container = jQuery(".popupnewsletter");
+
+            if (!container.is(e.target)
+                && container.has(e.target).length === 0) {
+                e.preventDefault();
+                closepopup();
+            }
+
+        });
+
+    });
+    // ]]></script>
+<div id="wapper-popup">
+    <div id="popup-newsletter" style="display: none;">
+        <div class="popup-overlay"></div>
+        <div class="popupnewsletter" style="display: none;">
+            <div class="newsletter-popup">
+                <div class="newsletter-content">
+                    <a class="btn close" title="Close"><span aria-hidden="true">Close</span></a>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="img-popup-nl">
+                                <img src="/Content/Images/Upload/adv/bg_newsletter.jpg" alt="" />
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="content-popups-nl">
+                                <h1 class="title">WELCOME <span>BIGSALE</span>
+
+                                </h1>
+                                <p class="sub-title">
+                                    You Deserve The Best!
+                               
+                                </p>
+                                <div class="content-popup-nl">
+
+                                    <h3>Special Things That You'll Get The First</h3>
+                                    <ul>
+                                        <li>Super promotional programs from BIGSALE</li>
+                                        <li>Gratitude to customers & receive gifts from the latest item</li>
+                                        <li>The best brands & today’s trends sale off up to 50%</li>
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="email-subscibe">
+                        <div id="mc_embed_signup">
+                            <p class="text-form-nl">
+                                SUBSCIRBE NOW TO GET STARTED WITH OUR BEST OFFERS AT ALL YOUR TIME
+                
+                            </p>
+
+                            <form action="" method="post" name="mc-embedded-subscribe-form" target="_blank" class="input-group">
+                                <input type="email" value="" placeholder="youremail@domain.com" name="EMAIL" class="input-group-field" aria-label="Email Address">
+                                <span class="input-group-btn">
+                                    <input type="submit" class="btn" value="Subscribe" name="subscribe">
+                                </span>
+                            </form>
+                        </div>
+                        <!--End mc_embed_signup-->
+                    </div>
+
+                    <div class="popup-isocal">
+                        <span>Or connect with:</span>
+                        <ul>
+
+                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+
+
+                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+
+
+                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+
+
+                            <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+
+
+                            <li><a href="#"><i class="fa fa-rss"></i></a></li>
+
+                        </ul>
+                    </div>
+
+                    <h2 class="message"></h2>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="back-top" style="display: none;"><a class="" href="#top"><i class="fa fa-angle-up"></i></a></div>
+
+
+
+
+<section id="offcanvas" class="megamenu-canvas">
+    <nav class="offcanvas-mainnav">
+        <div id="off-canvas-button">
+
+            <span class="off-canvas-nav"><i class="icon_close"></i></span>
+        </div>
+        <ul class="nav navbar-nav megamenu">
+
+            <li class="parent dropdown active">
+                <h3>
+                    <i class="icon_plus"></i>
+                    <a class="dropdown-toggle has-category" href="/" title="Home">
+                        <span class="">Home
+                                                                         
+                        </span>
+                    </a>
+                </h3>
+                <ul class="level-1">
+
+
+                    <li class="">
+                        <a class="" href="http://bigsale-01.myshopify.com/?preview_theme_id=158713545" title="Home Page 1">
+                            <span class="">Home Page 1
+                                                                          
+                            </span>
+                        </a>
+                    </li>
+
+
+
+                    <li class="">
+                        <a class="" href="http://bigsale-01.myshopify.com/?preview_theme_id=147445129" title="Home Page 2">
+                            <span class="">Home Page 2
+                                                                          
+                            </span>
+                        </a>
+                    </li>
+
+
+
+                    <li class="">
+                        <a class="" href="http://bigsale-01.myshopify.com/?preview_theme_id=148512393" title="Home Page 3">
+                            <span class="">Home Page 3
+                                                                          
+                            </span>
+                        </a>
+                    </li>
+
+
+
+                    <li class="">
+                        <a class="" href="http://bigsale-01.myshopify.com/?preview_theme_id=152685577" title="Home Page 4">
+                            <span class="">Home Page 4
+                                                                          
+                            </span>
+                        </a>
+                    </li>
+
+
+
+                    <li class="">
+                        <a class="" href="http://bigsale-01.myshopify.com/?preview_theme_id=154377929" title="Home Page 5">
+                            <span class="">Home Page 5
+                                                                          
+                            </span>
+                        </a>
+                    </li>
+
+
+
+                    <li class="">
+                        <a class="" href="http://bigsale-01.myshopify.com/?preview_theme_id=156176649" title="Home Page 6">
+                            <span class="">Home Page 6
+                                                                          
+                            </span>
+                        </a>
+                    </li>
+
+
+
+                    <li class="">
+                        <a class="" href="http://bigsale-01.myshopify.com/?preview_theme_id=163926409" title="Home page 7">
+                            <span class="">Home page 7
+                                                                          
+                            </span>
+                        </a>
+                    </li>
+
+
+                </ul>
+
+            </li>
+
+
+
+
+
+
+
+
+
+
+            <li class="parent dropdown ">
+                <h3>
+                    <i class="icon_plus"></i>
+                    <a class="dropdown-toggle has-category" href="/collections/all" title="On Sale">
+                        <span class="">On Sale
+                                                                         
+                        </span>
+                    </a>
+                </h3>
+                <ul class="level-1">
+
+
+                    <li class="parent dropdown-submenu active">
+                        <h3><i class="icon_plus"></i>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="/" title="Accessories">
+                                <span class="">Accessories
+                                                                             
+                                </span>
+                            </a>
+                        </h3>
+                        <ul class="level-2">
+
+
+                            <li class="">
+                                <a class="" href="/collections/electronics" title="Shoes & Boots">
+                                    <span class="">Shoes & Boots
+                                                                                            
+                                    </span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="">
+                                <a class="" href="/collections/fashion" title="Bags & Hats">
+                                    <span class="">Bags & Hats
+                                                                                            
+                                    </span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="">
+                                <a class="" href="/collections/furniture" title="Sunglasess">
+                                    <span class="">Sunglasess
+                                                                                            
+                                    </span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="">
+                                <a class="" href="/collections/furniture" title="Scarves">
+                                    <span class="">Scarves
+                                                                                            
+                                    </span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="">
+                                <a class="" href="/collections/fashion" title="For Hair">
+                                    <span class="">For Hair
+                                                                                            
+                                    </span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="">
+                                <a class="" href="/collections/health-beauty" title="Gloves">
+                                    <span class="">Gloves
+                                                                                            
+                                    </span>
+                                </a>
+                            </li>
+
+
+                        </ul>
+                    </li>
+
+
+
+                    <li class="parent dropdown-submenu active">
+                        <h3><i class="icon_plus"></i>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="/" title="Categories 1">
+                                <span class="">Categories 1
+                                                                             
+                                </span>
+                            </a>
+                        </h3>
+                        <ul class="level-2">
+
+
+                            <li class="">
+                                <a class="" href="/collections/electronics" title="Earrings & Necklaces">
+                                    <span class="">Earrings & Necklaces
+                                                                                            
+                                    </span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="">
+                                <a class="" href="/collections/fashion" title="Diamonds">
+                                    <span class="">Diamonds
+                                                                                            
+                                    </span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="">
+                                <a class="" href="/collections/furniture" title="Gold & Silver">
+                                    <span class="">Gold & Silver
+                                                                                            
+                                    </span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="">
+                                <a class="" href="/collections/health-beauty" title="Bracelets & Cufflinks">
+                                    <span class="">Bracelets & Cufflinks
+                                                                                            
+                                    </span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="">
+                                <a class="" href="/collections/electronics" title="Gemstones">
+                                    <span class="">Gemstones
+                                                                                            
+                                    </span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="">
+                                <a class="" href="/collections/fashion" title="Pearls">
+                                    <span class="">Pearls
+                                                                                            
+                                    </span>
+                                </a>
+                            </li>
+
+
+                        </ul>
+                    </li>
+
+
+
+                    <li class="parent dropdown-submenu active">
+                        <h3><i class="icon_plus"></i>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="/" title="Categories 2">
+                                <span class="">Categories 2
+                                                                             
+                                </span>
+                            </a>
+                        </h3>
+                        <ul class="level-2">
+
+
+                            <li class="">
+                                <a class="" href="/collections/electronics" title="Disney Couture">
+                                    <span class="">Disney Couture
+                                                                                            
+                                    </span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="">
+                                <a class="" href="/collections/fashion" title="Emporio Armani">
+                                    <span class="">Emporio Armani
+                                                                                            
+                                    </span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="">
+                                <a class="" href="/collections/furniture" title="Daisy London">
+                                    <span class="">Daisy London
+                                                                                            
+                                    </span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="">
+                                <a class="" href="/collections/health-beauty" title="Chrysalis">
+                                    <span class="">Chrysalis
+                                                                                            
+                                    </span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="">
+                                <a class="" href="/collections/fashion" title="Canadian Diamonds">
+                                    <span class="">Canadian Diamonds
+                                                                                            
+                                    </span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="">
+                                <a class="" href="/collections/health-beauty" title="Links of London">
+                                    <span class="">Links of London
+                                                                                            
+                                    </span>
+                                </a>
+                            </li>
+
+
+                        </ul>
+                    </li>
+
+
+
+                    <li class="parent dropdown-submenu active">
+                        <h3><i class="icon_plus"></i>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="/" title="Categories 3">
+                                <span class="">Categories 3
+                                                                             
+                                </span>
+                            </a>
+                        </h3>
+                        <ul class="level-2">
+
+
+                            <li class="">
+                                <a class="" href="/collections/electronics" title="Jewellery Box Essentials">
+                                    <span class="">Jewellery Box Essentials
+                                                                                            
+                                    </span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="">
+                                <a class="" href="/collections/fashion" title="Latest Additions">
+                                    <span class="">Latest Additions
+                                                                                            
+                                    </span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="">
+                                <a class="" href="/collections/furniture" title="Online Only Jewellery">
+                                    <span class="">Online Only Jewellery
+                                                                                            
+                                    </span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="">
+                                <a class="" href="/collections/health-beauty" title="Canadian Diamonds">
+                                    <span class="">Canadian Diamonds
+                                                                                            
+                                    </span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="">
+                                <a class="" href="/collections/furniture" title="Engravable Jewellery">
+                                    <span class="">Engravable Jewellery
+                                                                                            
+                                    </span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="">
+                                <a class="" href="/collections/electronics" title="Wedding">
+                                    <span class="">Wedding
+                                                                                            
+                                    </span>
+                                </a>
+                            </li>
+
+
+                        </ul>
+                    </li>
+
+
+                </ul>
+
+            </li>
+
+
+
+
+
+
+
+
+
+
+            <li class="">
+                <a class="" href="/blogs/news" title="Latest" target="_self">
+                    <span class="">Latest
+                                                                        
+                    </span>
+                </a>
+            </li>
+
+
+
+
+
+
+
+
+
+
+            <li class="parent dropdown ">
+                <h3>
+                    <i class="icon_plus"></i>
+                    <a class="dropdown-toggle has-category" href="/pages/about-us" title="Featured">
+                        <span class="">Featured
+                                                                         
+                        </span>
+                    </a>
+                </h3>
+                <ul class="level-1">
+
+
+                    <li class="">
+                        <a class="" href="#" title="Collection Layout">
+                            <span class="">Collection Layout
+                                                                          
+                            </span>
+                        </a>
+                    </li>
+
+
+
+                    <li class="parent dropdown-submenu ">
+                        <h3><i class="icon_plus"></i>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="Product Layout">
+                                <span class="">Product Layout
+                                                                             
+                                </span>
+                            </a>
+                        </h3>
+                        <ul class="level-2">
+
+
+                            <li class="">
+                                <a class="" href="https://bigsale-01.myshopify.com/products/smartphone-6s-32gb-lte?variant=25220547913" title="Product - Left Sidebar">
+                                    <span class="">Product - Left Sidebar
+                                                                                            
+                                    </span>
+                                </a>
+                            </li>
+
+
+                        </ul>
+                    </li>
+
+
+                </ul>
+
+            </li>
+
+
+
+
+
+
+
+
+
+
+            <li class="">
+                <a class="" href="/blogs/news" title="Blog" target="_self">
+                    <span class="">Blog
+                                                                        
+                    </span>
+                </a>
+            </li>
+
+
+
+
+
+
+
+
+
+
+            <li class="active">
+                <a class="" href="/" title="Pages" target="_self">
+                    <span class="">Pages
+                                                                        
+                    </span>
+                </a>
+            </li>
+            <li class="">
+                <a class="" href="/pages/contact" title="Contact" target="_self">
+                    <span class="">Contact
+                                                                        
+                    </span>
+                </a>
+            </li>
+
+
+
+        </ul>
+    </nav>
+</section>

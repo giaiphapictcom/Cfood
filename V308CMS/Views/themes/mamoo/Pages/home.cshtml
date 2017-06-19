@@ -1,0 +1,45 @@
+﻿@model V308CMS.Data.IndexPageContainer
+@{
+    Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
+}
+@section header {
+    <title>@ViewBag.SiteName</title>
+}
+
+
+@Html.Action("HomeSlides", "Block")
+
+@if (Model.ProductLastest != null && Model.ProductLastest.Count > 0)
+{ 
+    <div class="box-items box-shadow">
+	    <div class="container">
+		    <h4>Sản Phẩm Mới
+		        <a class="next icon-right-open" href="#"></a>
+		        <a class="pre icon-left-open" href="#"></a>
+		    </h4>
+		    <div class="row">
+            @foreach (V308CMS.Data.Product prod in Model.ProductLastest)
+            {
+                @Html.Action("ProductBlockType1_4", "Block",prod)
+            }
+            </div>
+        </div>
+    </div>
+}
+@Html.Action("HomeAdsProduct", "Block")
+@if (Model.BestBuyList != null && Model.BestBuyList.Count > 0) { 
+    <div class="box-items box-shadow">
+	    <div class="container">
+		    <h4>Sản Phẩm Bán Chạy
+		        <a class="next icon-right-open" href="#"></a>
+		        <a class="pre icon-left-open" href="#"></a>
+		    </h4>
+		    <div class="row">
+            @foreach (V308CMS.Data.Product prod in Model.BestBuyList)
+            {
+                @Html.Action("ProductBlockType1_4", "Block",prod)
+            }
+            </div>
+        </div>
+    </div>
+}

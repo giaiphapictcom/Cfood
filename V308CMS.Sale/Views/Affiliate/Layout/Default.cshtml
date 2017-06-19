@@ -1,0 +1,39 @@
+﻿<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if IE 9 ]><html class="ie9 no-js"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="shortcut icon" href="@ViewBag.ThemesPath/images/favicon.png" type="image/png">
+    <link rel="icon" href="@ViewBag.ThemesPath/images/favicon.png" type="image/png" />
+    @RenderSection("header", false)
+    @Html.Action("Resources", "Theme")
+</head>
+<body 
+    @if (@Request.RequestContext.RouteData.Values["Action"] == "Index")
+    { 
+        @:class="template-index" 
+    }
+    else
+    { 
+        @:id="facial-cleansing-pad" class="template-product"
+    }
+>
+    <div class="wrapper ">
+        <div id="shopify-section-header" class="shopify-section">
+            @Html.Action("Header", "Theme")
+        </div>
+
+        <main class="container main-content">
+            @RenderBody()
+        </main>
+
+        @Html.Action("Footer", "Theme")
+    </div>
+</body>
+</html>

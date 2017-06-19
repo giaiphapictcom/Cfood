@@ -1,0 +1,29 @@
+﻿@using V308CMS.Admin.Models.UI
+@model V308CMS.Admin.Models.ProductImageModels
+@Html.HiddenFor(image => Model.Id)
+@Html.HiddenFor(image => Model.ProductId)
+@Html.AntiForgeryToken()
+<div class="row">
+    @Html.ValidationSummary(true)
+    <div class="col-lg-6">
+        <div class="form-group">
+            @Html.LabelFor(image => image.Title)
+            @Html.TextBoxFor(image => image.Title, new {@class = "form-control", placeholder = "Nhập tiêu đề ảnh"})
+            @Html.ValidationMessageFor(image => image.Title)
+        </div>       
+        @Html.Partial("UI/_ImageSelectPreview", new ImageSelectPreviewModels
+        {
+           Id = Model.Id,
+           Name = "Name",
+           ImageUrl = Model.ImageUrl,
+           ImageUrlHiddenName = "ImageUrl"
+        })
+        <div class="form-group">
+            @Html.LabelFor(image => image.Number)
+            @Html.TextBoxFor(image => image.Number, new { @class = "form-control", placeholder = "Nhập số thứ tự" })
+            @Html.ValidationMessageFor(image => image.Number)
+        </div>
+        @Html.Partial("UI/_FormAction")       
+
+    </div>
+</div>

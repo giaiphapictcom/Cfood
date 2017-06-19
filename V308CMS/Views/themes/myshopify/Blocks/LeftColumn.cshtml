@@ -1,0 +1,62 @@
+﻿<ul class="nav nav-pills flex-column categorys box-shadow">
+    <li class="nav-item title bg-yellow">
+        <span class="nav-link" ><i class="icon-menu"></i> Danh Mục Sản Phẩm</span>
+    </li>
+    @if (Model.LinkCategorys != null && Model.LinkCategorys.Count > 0)
+    {
+        foreach (V308CMS.Data.ProductTypePage ca in Model.LinkCategorys)
+        {
+        <li class="nav-item">
+            <a class="nav-link" href="/@V308CMS.Common.Ultility.LocDau(@ca.Name)-t@(@ca.Id).html" title="@ca.Name"><i class="@ca.Icon"></i> @ca.Name</a>
+        </li>
+        }
+    }
+
+</ul>
+@if (Model.PromotionHot != null && Model.PromotionHot.Count > 0)
+{
+    <div class="box-items box-shadow">
+        <h4>Khuyến Mại Sốc
+        <a class="next icon-right-open" href="#"></a>
+        <a class="pre icon-left-open" href="#"></a>
+    </h4>
+    @foreach (V308CMS.Data.Product prod in Model.PromotionHot)
+    {
+        @Html.Action("ProductBlockType1", "Block",prod)
+    }
+    </div>
+}
+
+@if (@Request.RequestContext.RouteData.Values["Action"] == "Index") {
+    if (Model.Recommend != null && Model.Recommend.Count > 0)
+    {
+        <div class="box-items box-shadow">
+            <h4>Gợi Ý
+            <a class="next icon-right-open" href="#"></a>
+            <a class="pre icon-left-open" href="#"></a>
+        </h4>
+        @foreach (V308CMS.Data.Product prod in Model.Recommend)
+        {
+            @Html.Action("ProductBlockType2", "Block",prod)
+        }
+        </div>
+    }
+
+    if (Model.News != null && Model.News.Count > 0)
+    {
+        <div class="box-items box-shadow pt-0">
+        @foreach (V308CMS.Data.News video in Model.News)
+        {
+            @Html.Action("YoutubeBlock", "Block",video)
+        }
+        </div>
+    }
+}
+
+
+@if (ViewBag.FacebookPage != null & ViewBag.FacebookPage is string) {
+    <div class="box-items box-shadow">
+
+        @Html.Raw("<iframe src=\"http://www.facebook.com/plugins/likebox.php?profile=1&width=300&height=170&connections=10&stream=true&header=true&id=" + ViewBag.FacebookPage + "\" scrolling='no' frameborder='0' allowtransparency='true' style='border: none; overflow: hidden; width: 256px; height: 120px'></iframe>")
+    </div>
+}

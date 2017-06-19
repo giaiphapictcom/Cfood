@@ -1,0 +1,46 @@
+﻿@model V308CMS.Data.IndexPageContainer
+@{
+    Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
+}
+@section header {
+    <title>@ViewBag.SiteName</title>
+}
+<div class="shopify-section index-section index-section--flush">
+    <div class="container-block m-0" data-section-id="1475814045391" data-section-type="slideshow-section" style="background-color: #daedfc">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9 col-sm-12 col-xs-12 col-md-offset-3 banner-slide">
+                    @Html.Action("HomeSlides", "Block")
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        jQuery(document).ready(function () {
+            jQuery('.tp-caption').hide();
+            jQuery(window).load(function () {
+                setTimeout(function () { jQuery('.tp-caption').show(); }, 1000);
+            });
+        });
+    </script>
+</div>
+@Html.Action("ProductMost", "MyShopify")
+@Html.Action("ProductHot", "MyShopify")
+
+@if (Model.ProductTypeList != null & Model.ProductTypeList.Count() > 0) {
+    foreach (V308CMS.Data.ProductType cate in Model.ProductTypeList) { 
+        @Html.Action("ProductHomeCategory", "MyShopify",cate)
+    }
+}
+
+
+@Html.Action("HomeYoutube", "MyShopify")
+@Html.Action("HomeFooter", "MyShopify")
+<script>
+    jQuery('.item-poduct').addClass('product-loading');
+    jQuery(window).load(function () {
+        jQuery('.item-poduct').removeClass('product-loading');
+    });
+    jQuery('.main-content').removeClass('container');
+</script>

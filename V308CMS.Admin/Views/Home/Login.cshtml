@@ -1,0 +1,85 @@
+﻿@model V308CMS.Admin.Models.LoginModels
+@{
+    Layout = null;
+}
+@using V308CMS.Admin.Helpers.Url
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="admin.mpstart.vn" />
+    <meta name="author" content="toaihv" />
+    <title>Đăng nhập hệ thống</title>
+    <link href="/Content/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/Content/vendor/metisMenu/metisMenu.min.css" rel="stylesheet" />
+    <link href="/Content/vendor/morrisjs/morris.css" rel="stylesheet" />
+    <link href="/Content/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet"
+          type="text/css" />
+    <link href="/Content/vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="/Content/vendor/datatables-responsive/dataTables.responsive.css"
+          rel="stylesheet">
+    <link href="/Content/assets/css/sb-admin-2.css" rel="stylesheet"/>
+    <link href="/Content/assets/css/validation.css" rel="stylesheet" />
+    <script src="/Content/assets/js/html5shiv.js"></script>
+    <script src="/Content/assets/js/respond.min.js"></script>
+</head>
+
+
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="login-panel panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Đăng nhập hệ thống</h3>
+                </div>
+                <div class="panel-body">
+                    @Html.ValidationSummary(true)
+                    <form role="form" method="post" action="@Url.HomeLoginUrl()">
+                        <fieldset>
+                            <div class="form-group">
+                                @Html.TextBoxFor(login => login.Username, new {placeholder = "Tên tài khoản", @class = "form-control"})
+                                @Html.ValidationMessageFor(login => login.Username)
+                            </div>
+                            <div class="form-group">
+                                @Html.PasswordFor(login => login.Password, new {placeholder = "Mật khẩu", @class = "form-control"})
+                                @Html.ValidationMessageFor(login => login.Password)
+                            </div>
+                            <div class="checkbox">
+                                <label>
+<<<<<<< HEAD
+                                    <input id="remember" name="remember" type="checkbox" value="1">Ghi nhớ
+=======
+                                    @Html.CheckBoxFor(login=>login.Remember)
+                                    Ghi nhớ
+>>>>>>> toai-neal
+                                </label>
+                            </div>
+                            <button name="btnLogin" class="btn btn-lg btn-success btn-block">Đăng nhập</button>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/Content/vendor/jquery/jquery.min.js"></script>
+<script src="/Content/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="/Content/vendor/metisMenu/metisMenu.min.js"></script>
+<script src="/Content/assets/js/sb-admin-2.js"></script>
+<script type="text/javascript">
+    $('#remember').change(function () {
+        $('#remember').prop('checked', $('#status').is(":checked"));
+        $("#remember").prop('value', $('#status').is(":checked") ? 1 : 0);
+
+    });
+</script>
+</body>
+
+</html>
+
+
+

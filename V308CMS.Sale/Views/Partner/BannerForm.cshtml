@@ -1,0 +1,55 @@
+﻿@using V308CMS.Common;
+@{
+    Layout = "~/Views/Affiliate/Layout/Backend.cshtml";
+    string PageTitle = "Tạo Banner Quảng Cáo";
+}
+@section header {
+    <title>@PageTitle</title>
+
+}
+<h4>@PageTitle</h4>
+<form style="width: 80%; margin: 0 auto;" action="" method="post">
+    <div class="row">
+        <div class="col-md-12">
+           
+            <div class="form-group">
+                <label>Url ảnh Banner (<a href="#" class="upload-button">Upload</a>)</label>
+                <input type="text" class="form-control" placeholder="http://website.com/img.jpg" name="image">
+                <span class="hit">Kích thước chuẩn : 720x280</span>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            @BootstrapHelper.InputTextarea("title", "Tiêu đề")
+        </div>
+        <div class="col-md-12">
+            @BootstrapHelper.InputTextarea("summary", "Mô tả ngắn")
+        </div>
+
+        <div class="col-md-12">
+             @BootstrapHelper.InputTextarea("url", "URL sản phẩm hoặc URL danh mục sản phẩm")
+        </div>
+
+        <div class="col-md-12">
+            <div class="form-group">
+                <input type="checkbox" />
+                <label>Tự động tạo link phân phối từ URL (chỉ áp dụng đối với những tền miền được hỗ trợ)</label>
+            </div>
+        </div>
+    </div>
+
+    <hr />
+    <div class="row bannerpreview">
+        <div class="col-md-12">
+            <div class="banner">
+                <div class="img">
+                    <img src="/Content/images/no-image.png" />
+                </div>
+                <h4 class="title">Tiêu đề</h4>
+                <p>Mô tả ngắn</p>
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-success">Tạo Link</button>
+</form>

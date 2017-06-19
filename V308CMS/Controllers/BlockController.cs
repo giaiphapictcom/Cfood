@@ -5,100 +5,111 @@ using System.Web;
 using System.Web.Mvc;
 using V308CMS.Common;
 using V308CMS.Data;
+using V308CMS.Models;
 
 namespace V308CMS.Controllers
 {
-    public class BlockController : Controller
+    public class BlockController : BaseController
     {
-        static V308CMSEntities mEntities = new V308CMSEntities();
-        ImagesRepository imagesRepos = new ImagesRepository(mEntities);
-        NewsRepository NewsRepos = new NewsRepository(mEntities);
-        ProductRepository ProductRepos = new ProductRepository(mEntities);
-        
-
+       
         #region Common actions for all Pages
         public ActionResult Resources()
-        {
-            string view = "~/Views/themes/" + Theme.domain + "/Layout/Resources.cshtml";
-            return View(view);
+        {         
+            return View("Resources");
         }
 
         public ActionResult MainMenu()
         {
-            var menu = NewsRepos.GetNewsGroup();
-            string view = "~/Views/themes/" + Theme.domain + "/Blocks/MainMenu.cshtml";
-            return View(view, menu);
+          
+
+            return View("MainMenu", NewsService.GetNewsGroup());
         }
 
         public ActionResult LeftColumn()
         {
-            PageLeftColControl Model = new PageLeftColControl();
-            List<ProductTypePage> CategoryPages = new List<ProductTypePage>();
 
-            List<ProductType> catetorys = ProductRepos.getProductTypeParent();
-            
-            if (catetorys.Count() > 0) {
-                foreach (ProductType cate in catetorys)
+            var model = new PageLeftColControl();
+            var categoryPages = new List<ProductTypePage>();
+
+            var catetorys = ProductsService.getProductTypeParent();
+
+            if (catetorys.Any())
+            {
+                categoryPages.AddRange(catetorys.Select(cate => new ProductTypePage
                 {
-                    ProductTypePage categoryPage = new ProductTypePage();
-                    categoryPage.Id = cate.ID;
-                    categoryPage.Image = cate.ImageBanner;
-                    categoryPage.Name = cate.Name;
-                    categoryPage.Icon = cate.Icon;
-
-                    CategoryPages.Add(categoryPage);
-                }
+                    Id = cate.ID,
+                    Image = cate.ImageBanner,
+                    Name = cate.Name,
+                    Icon = cate.Icon
+                }));
             }
-            Model.LinkCategorys = CategoryPages;
-            Model.PromotionHot = ProductRepos.LaySanPhamKhuyenMai();
-            Model.Recommend = ProductRepos.getProductsRandom(5);
+            model.LinkCategorys = categoryPages;
+            model.PromotionHot = ProductsService.LaySanPhamKhuyenMai(1, 3);
+            model.Recommend = ProductsService.getProductsRandom(9);
 
-            NewsGroups videoGroup = NewsRepos.SearchNewsGroup("video");
-            if (videoGroup != null) {
-                Model.News = NewsRepos.LayTinTheoGroupId(videoGroup.ID);
-            }
-            
-
-            string view = "~/Views/themes/" + Theme.domain + "/Blocks/LeftColumn.cshtml";
-            return View(view, Model);
+            NewsGroups videoGroup = NewsService.SearchNewsGroup("video");
+            if (videoGroup != null)
+            {
+                model.News = NewsService.LayTinTheoGroupId(videoGroup.ID);
+            }                     
+            return View("LeftColumn", model);
+          
         }
         public ActionResult Header()
         {
-            string view = "~/Views/themes/" + Theme.domain + "/Blocks/Header.cshtml";
-            return View(view);
+            var shoppingCart = ShoppingCart.Instance;
+            var result = new ShoppingCartModels
+            {
+                item_count = shoppingCart.Items.Count,
+                items = shoppingCart.Items.Select(product => new ProductsCartModels
+                {
+                    Id = product.ProductItem.Id,
+                    Url = url.productURL(product.ProductItem.Name, product.ProductItem.Id),
+                    Title = product.ProductItem.Name,
+                    Quanity = product.Quantity,
+                    Image = product.ProductItem.Avatar,
+                    Price = product.ProductItem.Price.ToString("N0")
+                }).ToList(),
+                total_price = shoppingCart.SubTotal
+
+            };                        
+            return View("Header", result);
         }
-        
         public ActionResult Footer()
         {
-            PageFooterControl Model = new PageFooterControl();
-            List<NewsGroupPage> NewsCategorys = new List<NewsGroupPage>(); ;
+            var model = new PageFooterControl();
+            var newsCategorys = new List<NewsGroupPage>(); ;
 
-            NewsGroups footerCate = NewsRepos.SearchNewsGroup("footer");
-            if( footerCate.ID > 0 ){
-                List<NewsGroups> categorys = NewsRepos.GetNewsGroup(footerCate.ID, true, 3);
-                if (categorys.Count() > 0) {
-                    foreach (NewsGroups cate in categorys) { 
-                        NewsGroupPage NewsCategory = new NewsGroupPage();
-                        NewsCategory.Name = cate.Name;
-                        NewsCategory.NewsList = NewsRepos.LayDanhSachTinMoiNhatTheoGroupId(5,cate.ID);
-                        NewsCategorys.Add(NewsCategory);
-                    }
+            var footerCate = NewsService.SearchNewsGroup("footer");
+            if (footerCate.ID > 0)
+            {
+                var categorys = NewsService.GetNewsGroup(footerCate.ID, true, 3);
+                if (categorys.Any())
+                {
+                    newsCategorys.AddRange(categorys.Select(cate => new NewsGroupPage
+                    {
+                        Name = cate.Name, NewsList = NewsService.LayDanhSachTinMoiNhatTheoGroupId(5, cate.ID)
+                    }));
                 }
             }
-            Model.NewsCategorys = NewsCategorys;
+            model.NewsCategorys = newsCategorys;
 
-            NewsGroups WhoSale = NewsRepos.LayNhomTinAn(29);
-            if (WhoSale.ID > 0) {
-                NewsGroupPage WhoSalePage = new NewsGroupPage();
-                WhoSalePage.Name = WhoSale.Name;
-                WhoSalePage.NewsList = NewsRepos.LayDanhSachTinMoiNhatTheoGroupId(5, WhoSale.ID);
+            var whoSale = NewsService.LayNhomTinAn(29);
+            if (whoSale.ID > 0)
+            {
+                var whoSalePage = new NewsGroupPage();
+                whoSalePage.Name = whoSale.Name;
+                whoSalePage.NewsList = NewsService.LayDanhSachTinMoiNhatTheoGroupId(5, whoSale.ID);
 
-                Model.CategoryWhoSale = WhoSalePage;
+                model.CategoryWhoSale = whoSalePage;
             }
 
-            string view = "~/Views/themes/" + Theme.domain + "/Blocks/Footer.cshtml";
-            
-            return View(view, Model);
+            var  menusFooter = NewsService.SearchNewsGroup("MenusFooter");
+            if (menusFooter != null && menusFooter.ID > 0)
+            {
+                model.MenusFooter = NewsService.GetNewsGroup(menusFooter.ID, true, 6);
+            }                
+            return View("Footer", model);
         }
         
         #endregion
@@ -106,20 +117,18 @@ namespace V308CMS.Controllers
         #region Action for Home Page
         
         public ActionResult HomeSlides()
-        {
-            string view = "~/Views/themes/" + Theme.domain + "/Blocks/HomeSlides.cshtml";
-            return View(view);
+        {                
+            return View("HomeSlides");
         }
         public ActionResult HomeAdsProduct()
         {
-            var images = imagesRepos.GetImagesByGroupAlias("home-product", 2);
-            string view = "~/Views/themes/" + Theme.domain + "/Ads/HomeProduct.cshtml";
-            return View(view, images);
+            var images = ImagesService.GetImagesByGroupAlias("home-product", 2);
+            // ReSharper disable once Mvc.ViewNotResolved            
+            return View("HomeProduct", images);
         }
-        public ActionResult YoutubeBlock(V308CMS.Data.News video)
+        public ActionResult VideoItemBlock(V308CMS.Data.News video)
         {
-            string view = "~/Views/themes/" + Theme.domain + "/Product_div/Youtube.cshtml";
-            return View(view, video);
+            return View("VideoItemBlock", video);
         }
         
         #endregion
@@ -142,19 +151,16 @@ namespace V308CMS.Controllers
         }
         public ActionResult ProductDetailSlide(Product pro)
         {
-            ProductSlideShow ProductImages = new ProductSlideShow();
+            ProductSlideShow productImages = new ProductSlideShow();
 
             if (pro.ID > 0)
             {
-                ProductImages.Images = ProductRepos.LayProductImageTheoIDProduct(pro.ID);
+                productImages.Images = ProductsService.LayProductImageTheoIDProduct(pro.ID);
             }
-            
+
             string view = "~/Views/themes/" + Theme.domain + "/Product_div/SlideShowDetail.cshtml";
-            return View(view, ProductImages);
+            return View(view, productImages);
         }
-        
-        
-        
         
         #endregion
 

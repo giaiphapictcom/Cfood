@@ -1,0 +1,10 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@model V308CMS.Admin.Models.RoleModels
+@{
+    ViewBag.Title = "Thêm mới nhóm quyền";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+
+<form method="post" role="form" action="@Url.RoleCreateUrl()">
+    @Html.Partial("_RoleForm", Model)
+</form>

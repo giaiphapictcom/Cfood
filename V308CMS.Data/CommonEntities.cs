@@ -82,7 +82,7 @@ namespace V308CMS.Data
         bool _IsEnd;
         int _TypeId;
         public NewsGroups NewsGroups { get; set; }
-        public List<News> List { get; set; }
+        public List<News> List { get; set; }        
         public int TypeId
         {
             get { return _TypeId; }
@@ -205,13 +205,19 @@ namespace V308CMS.Data
         private string _HtmlNhomTin;
         private NewsGroups _pNewsGroups;
         public List<News> NewsList;
+        public int RootId { get; set; }
+        public int ParentId { get; set; }
+        public int ChildId { get; set; }
         public string Name;
+        public string Keyword { get; set; }
         int _Page;
         int _NextPage;
         int _BackPage;
         bool _IsEnd;
         int _TypeId;
-
+        public List<NewsGroups> ListNewsGroupRoot { get; set; }
+        public List<NewsGroups> ListNewsGroupParent { get; set; }
+        public List<NewsGroups> ListNewsGroupChild { get; set; }
         public int TypeId
         {
             get { return _TypeId; }
@@ -695,6 +701,26 @@ namespace V308CMS.Data
         private ProductManufacturer _pProductManufacturer;
         private ProductType _pProductType;
         private ProductOrder _pProductOrder;
+
+        public List<ProductType> ListProductTypeRoot { get; set; }
+        public int RootId
+        {
+            get; set;
+
+        }
+        public List<ProductType> ListProductTypeParent { get; set; }
+        public int ParentId
+        {
+            get; set;
+
+        }
+        public List<ProductType> ListProductTypeChild { get; set; }
+        public string Keyword { get; set; }
+        public int ChildId
+        {
+            get; set;
+
+        }
         int _Page;
         int _NextPage;
         int _BackPage;
@@ -1200,6 +1226,7 @@ namespace V308CMS.Data
     public class ProductTypePage
     {
         public List<ProductType> List { get; set; }
+        public List<ProductType> CategorySub { get; set; }
         public string Name { get; set; }
         public int Id { get; set; }
         public string Image { get; set; }
@@ -1297,11 +1324,16 @@ namespace V308CMS.Data
         public List<ProductCategoryPage> List { get; set; }
         public List<ProductType> ProductTypeList { get; set; }
         public List<Product> ProductList { get; set; }
+        public List<Product> Products { get; set; }
+        public List<Product> BestSeller { get; set; }
+        public List<Brand> Brands { get; set; }
+        
         public ProductType ProductType { get; set; }
         public string Name { get; set; }
         public int Id { get; set; }
         public string Image { get; set; }
         public string Value { get; set; }
+        public int ProductTotal { get; set; }
         ///
         int _Page;
         int _NextPage;
@@ -1373,6 +1405,13 @@ namespace V308CMS.Data
             }
         }
     }
+
+    
+    public class CategoryPage{
+         public List<Product> Products { get; set; }
+         public int ProductTotal { get; set; }
+        
+    }
     public class ProductCategoryPageBox
     {
         public List<ProductCategoryPage> List { get; set; }
@@ -1394,6 +1433,8 @@ namespace V308CMS.Data
         public string Image { get; set; }
         public List<ProductType> ProductTypeList { get; set; }
         public List<Product> ProductLastest { get; set; }
+        public List<ProductImage> Images { get; set; }
+
         
     }
     public class ProductSlideShow
@@ -1872,6 +1913,39 @@ namespace V308CMS.Data
         }
     }
 
+    public class ProductItemsPage
+    {
+        int _Page;
+        public string Name { get; set; }
+        public List<Product> Products { get; set; }
+        public List<Product> BestSeller { get; set; }
+        public int total { get; set; }
+        public ProductItemsPage()
+        {
+            _Page = 0;
+        }
+       
+        public int Page
+        {
+            get
+            {
+                if (_Page >= 1)
+                {
+                    return _Page;
+                }
+                else
+                {
+                    return 1;
+                }
+            }
+            set
+            {
+                _Page = value;
+            }
+        }
+       
+    }
+
     /*
      * QuanNH Add 2017-01
      */
@@ -1890,9 +1964,168 @@ namespace V308CMS.Data
         public NewsGroupPage CategoryWhoSale { get; set; }
         //public List<News> ArticleWhoSale { get; set; }
         public List<NewsGroupPage> NewsCategorys { get; set; }
-        
-        
-        
-        
+        public List<NewsGroups> MenusFooter { get; set; }
+    }
+
+    public class ProductDetail
+    {
+        public Product Product { get; set; }
+        public List<ProductImage> Images { get; set; }
+    }
+
+    /*
+     * QuanNH add 2017-0-8
+     */
+    public class AffiliateHomePage {
+        public NewsGroups VideoCategory { get; set; }
+        public List<News> Videos { get; set; }
+        public List<News> Articles { get; set; }
+        public List<Testimonial> Testimonial { get; set; }
+        public string[] BrandImages { get; set; }
+        public List<Categorys> Categorys { get; set; }
+        public List<Brand> Brands { get; set; }
+    }
+    public class NewsDetailPageContainer
+    {
+        public News NewsItem { get; set; }
+        public News NextNewsItem { get; set; }
+        public News PreviousNewsItem { get; set; }
+        public List<News> ListNewsMostView { get; set; }
+        public string PageTitle { get; set; }
+    
+    }
+    public class NewsIndexPageContainer
+    {
+        public string PageTitle { get; set; }
+        public NewsGroups NewsGroups { get; set; }
+        public List<News> ListNews { get; set; }
+        public List<News> ListNewsMostView { get; set; }
+        public int TotalPage { get; set; }
+        int _Page;
+        int _NextPage;
+        int _BackPage;
+        bool _IsEnd;
+        public bool IsEnd
+        {
+            get
+            {
+                return _IsEnd;
+            }
+            set
+            {
+                _IsEnd = value;
+            }
+        }
+        public int Page
+        {
+            get
+            {
+                if (_Page >= 1)
+                {
+                    return _Page;
+                }
+                else
+                {
+                    return 1;
+                }
+            }
+            set
+            {
+                _Page = value;
+            }
+        }
+        public int NextPage
+        {
+            get
+            {
+                if (_IsEnd)
+                {
+                    return _Page;
+                }
+                else
+                {
+                    return (_Page + 1);
+                }
+            }
+            set
+            {
+                _NextPage = value;
+            }
+        }
+        public int BackPage
+        {
+            get
+            {
+                if (_Page <= 1)
+                {
+                    return 1;
+                }
+                else
+                {
+                    return (_Page - 1);
+                }
+            }
+            set
+            {
+                _BackPage = value;
+            }
+        }
+
+    }
+
+    
+
+    /*
+     * QuanNH add Affiliate
+     */
+    public class AffiliateProductPage
+    {
+        public List<Product> Products { get; set; }
+        public int ProductTotal { get; set; }
+        public int Page { get; set; }
+
+    }
+
+    public class AffiliateLinkFormPage
+    {
+        public string url { get; set; }
+
+    }
+
+    public class AffiliateLinksPage
+    {
+        public List<AffiliateLink> Links { get; set; }
+        public int LinkTotal { get; set; }
+        public int Page { get; set; }
+
+    }
+
+    public class CouponsPage
+    {
+        public List<Counpon> Coupons { get; set; }
+        public int Total { get; set; }
+        public int Page { get; set; }
+
+    }
+
+    public class OrdersPage
+    {
+        public List<ProductOrder> Items { get; set; }
+        public int Total { get; set; }
+        public int Page { get; set; }
+
+    }
+
+    public class OrdersReportByDaysPage
+    {
+        public List<OrdersReportByDay> report { get; set; }
+        public List<DateTime> days { get; set; }
+
+    }
+    public class OrdersReportByDay
+    {
+        public DateTime date { get; set; }
+        public int Total { get; set; }
+        public float Price { get; set; }
     }
 }

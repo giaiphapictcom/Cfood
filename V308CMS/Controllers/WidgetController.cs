@@ -52,7 +52,7 @@ namespace V308CMS.Controllers
                     ViewBag.locationname = "Hà Nội";
                 }
                 //
-                return View(mHeaderPage);
+                return View("Header",mHeaderPage);
             }
             catch (Exception ex)
             {

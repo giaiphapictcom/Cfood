@@ -1,0 +1,66 @@
+﻿<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if IE 9 ]><html class="ie9 no-js"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="shortcut icon" href="@ViewBag.ThemesPath/images/favicon.png" type="image/png">
+    <link rel="icon" href="@ViewBag.ThemesPath/images/favicon.png" type="image/png"/>
+    <meta content="website" property="og:type"/>
+    <meta content="@ViewBag.SiteName" property="og:site_name" />
+     
+    @RenderSection("header", false)
+    @Html.Action("Resources", "Block")
+    <script>(function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.8&appId=1657297111243555";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+</head>
+
+@{
+    var BodyNews = new List<string>();
+    BodyNews.Add("News");
+    BodyNews.Add("Video");
+    }
+<body
+    @if( BodyNews.Contains(  Request.RequestContext.RouteData.Values["Controller"].ToString() )){
+         @:id="news" class="template-blog" 
+    }
+    else if (@Request.RequestContext.RouteData.Values["Action"].ToString() == "Index")
+    { 
+        @:id="bigsale-01" class="template-index" 
+    }
+ 
+    else
+    {
+        @:id="facial-cleansing-pad" class="template-product"
+    }
+>
+    <div class="wrapper ">
+        <div id="shopify-section-header" class="shopify-section">
+            @Html.Action("Header", "Block")
+        </div>
+
+        @RenderSection("Breadcrumb",false)
+        
+
+        <main class="container main-content">
+            @RenderBody()
+        </main>
+
+        @Html.Action("Footer", "Block")
+
+        @Html.Action("QuickView", "MyShopify")
+        @Html.Action("OffCanvas", "MyShopify")
+        @*@Html.Action("WapperPopup", "MyShopify")*@
+    </div>
+</body>
+</html>

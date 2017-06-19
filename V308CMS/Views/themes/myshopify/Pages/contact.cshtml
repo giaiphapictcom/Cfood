@@ -1,0 +1,121 @@
+﻿@using V308CMS.Helpers.Url
+@model V308CMS.Models.ContactModels
+@{
+    Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
+
+}
+@section header {
+    <title>@ViewBag.SiteName - Liên hệ</title>
+
+}
+@section Breadcrumb{
+    <div class="clearfix breadcrumb-wrap">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="breadcrumb">
+                        <h2></h2>
+                        <a href="/" title="Back to the frontpage">Trang chủ</a>
+                        <span class="icon"><i class="fa fa-circle"></i></span>
+                        <strong>
+                            Liên hệ
+                        </strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<div class="map">
+
+    <iframe width="100%" height="470" frameborder="0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3723.9166151084783!2d105.8204490154866!3d21.036022185994444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ab0c87ee439b%3A0x8d79c6656de5cf64!2zTmfDtSAyMDkgxJDhu5lpIEPhuqVuLCBOZ-G7jWMgSMOgLCBCYSDEkMOsbmgsIEjDoCBO4buZaSwgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1495335392579" marginwidth="0" marginheight="0" scrolling="no" style="pointer-events: none;"></iframe>
+
+</div>
+
+<div class="contactus-page">
+    <div class="container">
+
+        <div class="rte">
+
+        </div>
+
+
+        <div class="col-md-4 col-sm-4 col-xs-12">
+
+            <h3>
+
+                Thông tin liên hệ @ViewBag.SiteName
+
+            </h3>
+
+            <div class="content-left">
+
+                @ViewBag.CompanyFullname
+
+            </div>
+
+
+            <div class="content-left">
+
+                <ul>
+                    <li><span>Địa chỉ :</span> @ViewBag.CompanyHeaderAddress</li>
+                    <li><span>Phone:</span> <a href="tel:@ViewBag.Hotline">@ViewBag.Hotline</a></a></li>
+                    <li><span>Email:</span> <a href="mailto:@ViewBag.CompanyEmail">ViewBag.CompanyEmail</a></li>
+                    
+                </ul>
+
+            </div>
+
+        </div>
+        <div class="col-md-8 col-sm-8 col-sx-12">
+
+            <form method="post" action="@Url.ContactIndexUrl()" id="contact_form" class="contact-form" accept-charset="UTF-8">
+                <input type="hidden" value="contact" name="form_type"><input type="hidden" name="utf8" value="✓">
+                @Html.AntiForgeryToken()
+                <div class="note form-error">
+                    <span style="margin-left: 5px;" class="success-message">
+                        @Html.Raw(ViewBag.Message)
+                    </span>
+                    
+                </div>
+
+                <div id="contactFormWrapper" class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+
+                    <div class="col-md-6 col-sm-6 col-sx-12">
+                        <label for="contactFormName"><span>Họ tên</span><em>*</em></label>
+                        @Html.TextBoxFor(m=>m.Name, new { autocapitalize = "words",placeholder = "Nhập họ tên" })
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        @Html.ValidationMessageFor(m=>m.Name)
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-sx-12">
+                        <label for="contactFormEmail"><span>Email</span><em>*</em></label>
+                        @Html.TextBoxFor(m => m.Email, new { autocorrect = "off", autocapitalize = "off", placeholder = "Nhập địa chỉ Email" })
+                        <i class="fa fa-envelope" aria-hidden="true"></i>
+                        @Html.ValidationMessageFor(m => m.Email)
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-sx-12">
+                        <label for="contactFormCompany"><span>Số điện thoại</span><em>*</em></label>
+                        @Html.TextBoxFor(m => m.Phone, new { placeholder = "Số điện thoại" })
+                        <i class="fa fa-phone" aria-hidden="true"></i>
+                        @Html.ValidationMessageFor(m => m.Phone)
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-sx-12">
+                        <label for="contactFormMessage"><span>Lời nhắn</span><em>*</em></label>
+                        @Html.TextAreaFor(m=>m.Message, new { rows = "10", placeholder = "Lời nhắn" })
+                        <i class="fa fa-eyedropper" aria-hidden="true"></i>
+                        @Html.ValidationMessageFor(m => m.Message)
+                    </div>
+                    <div class="button col-md-12 col-sm-12 col-sx-12">
+                        <input type="submit" class="btn left" value="Gửi">
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    jQuery('.main-content').removeClass('container');
+    jQuery('body').addClass('contactus');
+    jQuery('#verticalmenu').hide();
+</script>

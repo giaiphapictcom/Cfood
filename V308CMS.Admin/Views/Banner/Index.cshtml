@@ -1,0 +1,96 @@
+﻿@using V308CMS.Admin.Helpers
+@using V308CMS.Admin.Helpers.UI
+@using V308CMS.Admin.Helpers.Url
+@using V308CMS.Admin.Models.UI
+@using V308CMS.Common
+@model List<V308CMS.Data.Models.Banner>
+@{
+    ViewBag.Title = "Danh sách Banner";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+@Html.Partial("UI/_AddNewButton", Url.BannerCreateUrl())
+@if (Model.Any())
+{
+    <div class="panel panel-default">
+        <!-- /.panel-heading -->
+        <div class="panel-body">
+            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Tên</th>
+                        <th>Ảnh</th>
+                        <th>Mô tả</th>
+                        <th>Vị trí</th>
+                        <th>Rộng</th>
+                        <th>Cao</th>
+                        <th>Ngày bắt đầu</th>
+                        <th>Ngày kết thúc</th>
+                        <th>Trạng thái</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                        var banner = Model[i];
+                        <tr>
+                            <td style="text-align: center">
+                                @(i + 1)
+                            </td>
+                            <td>
+                                <a title="Cập nhật Banner @banner.Name" class="btn btn-link" href="@Url.BannerEditUrl(new {banner.Id})">
+                                    @banner.Name
+                                </a>
+                            </td>
+                            <td>
+                                <img class="image-brand img-circle" src="@banner.ImageUrl.ToImageUrl()" alt="@banner.Name" />
+                            </td>
+                            <td>
+                                @banner.Description.ToTitle()
+                            </td>
+                            <td>@banner.Position.ToPositionName()</td>
+                            <td>@banner.Width</td>
+                            <td>@banner.Height</td>
+                            <td>@banner.StartDate.ToDdmmyyyy()</td>
+                            <td>@banner.EndDate.ToDdmmyyyy()</td>
+                            <td>@Html.Partial("UI/_ChangeStateForm", new ChangeStateFormModels
+                                {
+                                    NameOfId = "Id",
+                                    ValueOfId = banner.Id,
+                                    IsConfirm = true,
+                                    State = banner.Status,
+                                    Url = Url.BannerChangeStatusUrl()
+                                })</td>
+                            <td style="width: 200px">
+                                @Html.Partial("UI/_EditButton", new ButtonModels
+                                {
+                                   Id = string.Format("banner_{0}", banner.Id),
+                                   Href = Url.BannerEditUrl(new { banner.Id }),
+                                   Title = "Cập nhật thông tin Banner" + banner.Name
+                                })
+                                @Html.Partial("UI/_DeleteForm", new DeleteFormModels
+                               {
+                                   NameOfId = "Id",
+                                   ValueOfId = banner.Id,
+                                   IsConfirm = true,
+                                   Url = Url.BannerDeleteUrl()
+                               })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#dataTables-example').DataTable({
+            responsive: true
+        });
+    });
+</script>
+

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
+using V308CMS.Helpers;
 
 namespace V308CMS
 {
@@ -19,6 +20,8 @@ namespace V308CMS
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            ViewEngines.Engines.Clear();
+            ViewEngines.Engines.Add(new MpStartViewEngine());
         }
     }
 }

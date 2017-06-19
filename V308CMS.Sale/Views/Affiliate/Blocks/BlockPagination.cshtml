@@ -1,0 +1,58 @@
+﻿@using V308CMS.Data;
+@using V308CMS.Common;
+
+<ul class="pagination">
+
+    @{
+        Boolean showSpacePrev = false;
+        Boolean showSpaceNext = false;
+        int pageTotal = 0;
+        if (Model.ProductTotal > ProductHelper.ProductShowLimit)
+        {
+            pageTotal = (int)Math.Ceiling((float)Model.ProductTotal / (float)ProductHelper.ProductShowLimit);
+        }
+    }
+    @if (Model.Page > 1 && pageTotal > 0)
+    { 
+        <li class="page-item"><a href="@Request.Url.Fragment?p=@(Model.Page - 1)" title="trang trước" class="page-link">&laquo;</a></li>
+    }
+    @for (int i = 1; i <= pageTotal; i++)
+    {
+
+
+        if (i == Model.Page)
+        {
+        @:<li class="active page-item" ><span>@i</span></li>
+                }
+        else
+        {
+            if (i <= Model.Page - 2 & i != 1)
+            {
+                if (showSpacePrev != true)
+                { 
+        @:<li><a href="javascript:void(0);">...</a></li>
+                            showSpacePrev = true;
+                }
+            }
+            else if (i >= Model.Page + 2 & i != pageTotal)
+            {
+                if (showSpaceNext != true)
+                { 
+        @:<li><a href="javascript:void(0);">...</a></li>
+                            showSpaceNext = true;
+                }
+            }
+            else
+            {
+        @:<li><a href="@Request.Url.Fragment?p=@i" class="page-link">@i</a></li>
+                    }
+
+        }
+
+
+    }
+    @if (Model.Page < pageTotal)
+    { 
+        <li><a href="@Request.Url.Fragment?p=@(Model.Page + 1)" title="trang tiếp theo"><span aria-hidden="true">&raquo;</span></a></li>
+    }
+</ul>

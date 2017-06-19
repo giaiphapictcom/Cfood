@@ -1,0 +1,98 @@
+﻿@using V308CMS.Admin.Helpers
+@using V308CMS.Admin.Helpers.Url
+@using V308CMS.Admin.Models.UI
+@model List<V308CMS.Data.Account>
+@{
+    ViewBag.Title = "Danh sách khác hàng";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+@Html.Partial("UI/_AddNewButton", Url.UserCreateUrl())
+@if (Model.Any())
+{
+    <div class="panel panel-default">
+        <div class="panel-body">
+          
+            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Tài khoản</th>
+                    <th>Họ tên</th>
+                    <th>Email</th>
+                    <th>SĐT</th>
+                    <th>Địa chỉ</th>
+                    <th>Giới tính</th>
+                    <th>Trạng thái</th>
+                    <th>Hành động</th>
+                </tr>
+                </thead>
+                <tbody>
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    var user = Model[i];
+                    <tr>
+                        <td style="text-align: center">
+                            @(i + 1)
+                        </td>
+                        <td>
+                            <a title="Cập nhật thông tin khách hàng @user.FullName" class="btn btn-link" href="@Url.UserEditUrl(new {user.ID})">
+                                @user.UserName
+                            </a>
+                        </td>
+
+                        <td>
+                            @user.FullName
+                        </td>
+                        <td>
+                            @user.Email
+                        </td>
+
+                        <td>
+                            @user.Phone
+                        </td>
+                        <td>
+                            @user.Address.ToTitle()
+                        </td>
+                        <td>
+                            @(user.Gender == false ? "Nam" : "Nữ")
+                        </td>
+                        <td style="text-align: center">
+                            <form id="frm-change-status" action="@Url.UserChangeStatusUrl()" method="POST">
+                                <input type="hidden" value="@user.ID" name="id" />
+                                <button style="@(user.Status == true ? " background-color:#5cb85c;color:#FFFFFF;padding: 5px;border-radius: 5px" : "background-color:#d9534f;color:#FFFFFF;padding: 5px;border-radius: 5px" )" onclick="return confirm('Bạn chắc chắn muốn thay đổi trạng thái sản phẩm này?')">
+                                    <i class="fa  @(user.Status == true ? " fa-unlock" : "fa-lock" )"></i>
+                                </button>
+                            </form>
+                        </td>
+                        <td style="width: 200px">
+                            @Html.Partial("UI/_EditButton", new ButtonModels
+                            {
+                                Id = string.Format("user_{0}", user.ID),
+                                Href = Url.UserEditUrl(new {user.ID}),
+                                Title = "Cập nhật thông tin khách hàng " + user.FullName
+                            })
+                            @Html.Partial("UI/_DeleteForm", new DeleteFormModels
+                            {
+                                NameOfId = "Id",
+                                ValueOfId = user.ID,
+                                IsConfirm = true,
+                                Url = Url.UserDeleteUrl()
+                            })
+                            <a class="btn btn-circle btn-primary" title="Đổi mật khẩu khách hàng" href="@Url.UserChangePasswordUrl(new { id= user.ID})">
+                                <i class="fa fa-key"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+     </div>
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#dataTables-example').DataTable({
+            responsive: true
+        });
+    });
+</script>

@@ -1,0 +1,41 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@model V308CMS.Data.SupportPage
+@{
+    ViewBag.Title = "Loại Hỗ trợ";
+    ViewBag.LinkBack = "<li><a href=" + Url.SupportTypeEditUrl()+">Sửa Loại Hỗ Trợ</a> </li>";
+    ViewBag.MenuValue = 7;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <div>
+        <h3>Sửa loại hỗ trợ mới</h3>
+        <hr />
+        <div style="width: 100%;">
+            <input type="hidden" value="@Model.pSupportType.ID" id="pId" />
+            <div id="v308inputContent" class="RadGrid RadGrid_MetroTouch table table-striped table-bordered table-hover dataTable" tabindex="0">
+                <table>
+                    <tr>
+                        <td>Tên</td>
+                        <td>
+                            <input type="text" id="pTitleId" name="pTitle" value="@Model.pSupportType.Name" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Thứ Tự</td>
+                        <td>
+                            <input type="text" id="pOrderId" name="pOrder" value="@Model.pSupportType.Number" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <a class="mbutton" href="javascript:Admin_SupportType_ThucHienLuuSua();">Lưu sửa</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <hr />
+    </div>
+</div>

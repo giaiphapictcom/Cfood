@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using V308CMS.Common;
+using V308CMS.Data.Enum;
 
 namespace V308CMS.Data
 {
@@ -77,16 +79,17 @@ namespace V308CMS.Data
                 throw;
             }
         }
-        public List<Product> getProductsRandom(int psize = 5)
+        public List<Product> getProductsRandom(int psize = 5,int category_id=0)
         {
             try
             {
-
                 var products = from p in entities.Product
                                where p.Status == true
                                
                                select p;
-
+                if (category_id > 0) { 
+                    products = from p in products where p.Type == category_id select p;
+                }
                 return products.ToList().OrderBy(x => Guid.NewGuid()).Take(psize).ToList();
             }
             catch (Exception ex)
@@ -115,7 +118,7 @@ namespace V308CMS.Data
             }
             return countTotal;
         }
-        public List<Product> LayTheoTrangAndType(int pcurrent, int psize, int pType, string pLevel)
+        public List<Product> LayTheoTrangAndType(int pcurrent, int psize, int pType, string pLevel, bool includeProductImages = false)
         {
             List<Product> mList = null;
             int[] mIdGroup;
@@ -126,18 +129,32 @@ namespace V308CMS.Data
                     mIdGroup = (from p in entities.ProductType
                                 where p.Level.Substring(0, pLevel.Length).Equals(pLevel)
                                 select p.ID).ToArray();
+                    mList =
+                        includeProductImages ?
 
-                    mList = (from p in entities.Product
+                            (from p in entities.Product.Include("ProductImages")
                              where mIdGroup.Contains(p.Type.Value)
                              orderby p.ID descending
                              select p).Skip((pcurrent - 1) * psize)
-                             .Take(psize).ToList();
+                             .Take(psize).ToList() :
+
+                            (from p in entities.Product
+                             where mIdGroup.Contains(p.Type.Value)
+                             orderby p.ID descending
+                             select p).Skip((pcurrent - 1) * psize)
+                            .Take(psize).ToList();
                 }
                 else if (pType == 0)
                 {
-                    mList = (from p in entities.Product
+                    mList = includeProductImages ?
+                            (from p in entities.Product.Include("ProductImages")
                              orderby p.ID descending
                              select p).Skip((pcurrent - 1) * psize)
+                                .Take(psize).ToList()
+                            :
+                             (from p in entities.Product
+                              orderby p.ID descending
+                              select p).Skip((pcurrent - 1) * psize)
                             .Take(psize).ToList();
                 }
                 return mList;
@@ -168,6 +185,20 @@ namespace V308CMS.Data
                 Console.Write(ex);
                 throw;
             }
+        }
+
+        public Product GetById(int id, bool includeDetail = true)
+        {
+            return includeDetail
+                ? (from p in entities.Product.Include("ProductManufacturer").Include("ProductImages")
+                    where p.ID == id
+                    select p).FirstOrDefault()
+                : (from p in entities.Product
+                    where p.ID == id
+                    select p).FirstOrDefault();
+
+
+
         }
         public List<Product> LayTheoTrang(int pcurrent, int psize)
         {
@@ -445,17 +476,23 @@ namespace V308CMS.Data
             }
         }
 
-        public List<Product> LayDanhSachSanPhamLienQuan(int pType, int pSize)
+        public List<Product> LayDanhSachSanPhamLienQuan(int pType, int pSize, bool includeProductImages =false)
         {
             List<Product> mList = null;
             string mGuid = Guid.NewGuid().ToString();
             try
             {
                 //lay danh sach tin moi dang nhat
-                mList = (from p in entities.Product
-                         where p.Type == pType
-                         orderby mGuid
-                         select p)
+                mList = includeProductImages?
+                        (from p in entities.Product.Include("ProductImages")
+                             where p.Type == pType
+                             orderby mGuid
+                             select p)
+                             .Take(pSize).ToList(): 
+                         (from p in entities.Product
+                                                 where p.Type == pType
+                                                 orderby mGuid
+                                                 select p)
                          .Take(pSize).ToList();
                 return mList;
             }
@@ -680,6 +717,48 @@ namespace V308CMS.Data
                 throw;
             }
         }
+        public List<Product> getProductsByCategory(int CategoryID, int Limit = 20, int Page =1)
+        {
+            List<Product> mList = null;
+            try
+            {
+                var CategoryIDs = (from c in entities.ProductType
+                                   where c.Parent == CategoryID
+                                   select c.ID).ToList();
+                CategoryIDs.Add(CategoryID);
+
+                var items = (from p in entities.Product
+                            where CategoryIDs.Any(c => c == p.Type)
+                             orderby p.ID descending
+                             select p).Skip((Page - 1) * Limit);
+                mList = items.Take(Limit).ToList();
+                return mList;
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+                throw;
+            }
+        }
+
+        public int getProductTotalByCategory(int CategoryID)
+        {
+            int countTotal = 0;
+            if (CategoryID > 0)
+            {
+                var CategoryIDs = (from c in entities.ProductType
+                                   where c.Parent == CategoryID
+                                   select c.ID).ToList();
+                CategoryIDs.Add(CategoryID);
+
+                var mList = from p in entities.Product
+                            where CategoryIDs.Any(c => c == p.Type)
+                            select p;
+
+                countTotal = mList.Count();
+            }
+            return countTotal;
+        }
 
         public List<ProductType> LayNhomSanPhamAll()
         {
@@ -706,6 +785,7 @@ namespace V308CMS.Data
                 //lay danh sach tin moi dang nhat
                 mList = (from p in entities.ProductType
                          where p.Parent == 0
+                         orderby p.Number ascending
                          select p).ToList();
                 return mList;
             }
@@ -715,7 +795,7 @@ namespace V308CMS.Data
                 throw;
             }
         }
-        public List<ProductType> getProductTypeByParent(int pParent)
+        public List<ProductType> getProductTypeByParent(int pParent, int limit = 10)
         {
             List<ProductType> mList = null;
             try
@@ -723,7 +803,8 @@ namespace V308CMS.Data
                 //lay danh sach tin moi dang nhat
                 mList = (from p in entities.ProductType
                          where p.Parent == pParent
-                         select p).ToList();
+                         orderby p.Number descending
+                         select p).Take(limit).ToList();
                 return mList;
             }
             catch (Exception ex)
@@ -803,16 +884,16 @@ namespace V308CMS.Data
                 throw;
             }
         }
-
-        public List<ProductType> getProductTypeByProductType(int pProductType)
+        public List<ProductType> getProductTypeByProductType(int pProductType, int Limit=10)
         {
             List<ProductType> mList = null;
             try
             {
-                //lay danh sach tin moi dang nhat
-                mList = (from p in entities.ProductType
+                var categorys = from p in entities.ProductType
                          where p.Parent == pProductType
-                         select p).ToList();
+                         orderby p.Number ascending
+                         select p;
+                mList = categorys.Take(Limit).ToList();
                 return mList;
             }
             catch (Exception ex)
@@ -874,6 +955,7 @@ namespace V308CMS.Data
                 throw;
             }
         }
+        
         public List<ProductDistributor> LayProductDistributorTheoTrang(int pcurrent, int psize)
         {
             List<ProductDistributor> mList = null;
@@ -1307,6 +1389,409 @@ namespace V308CMS.Data
                 Console.Write(ex);
                 throw;
             }
+        }
+
+        public List<Brand> getRandomBrands(int CategoryID=0, int Limit = 1)
+        {
+
+            List<Brand> brands = new List<Brand>();
+            try
+            {
+                var items = from b in entities.Brand where b.status.Equals(1)
+                            select b;
+                if (CategoryID > 0) {
+                    items = items.Where(b=> b.category_default == CategoryID);
+                }
+                brands = items.ToList().OrderBy(x => Guid.NewGuid()).Take(Limit).ToList();
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+            }
+            return brands;
+
+        }
+
+        public List<Product> GetListProductWishlist(string listWishlist)
+        {
+            if (!string.IsNullOrWhiteSpace(listWishlist))
+            {
+                if (listWishlist.Contains(";"))
+                {
+                    return (from item in entities.Product.AsEnumerable()
+                            where listWishlist.Contains(item.ID + ";") || listWishlist.Contains(";" + item.ID)
+                            orderby item.ID descending
+                            select item
+                        ).ToList();
+                }
+                else
+                {
+                    var productId = Convert.ToInt32(listWishlist.Trim());
+                    return (from item in entities.Product
+                            where item.ID == productId
+                            orderby item.ID descending
+                            select item
+                      ).ToList();
+                }
+            }
+
+            return default(List<Product>);
+
+
+        }
+
+
+        public int PageSize = 20;
+        public List<Product> GetItems(int pcurrent=1)
+        {
+            List<Product> mList = null;
+            try
+            {
+                var products = from p in entities.Product
+                         orderby p.ID descending
+                         select p;
+                mList = products.Skip((pcurrent - 1) * PageSize)
+                         .Take(PageSize).ToList();
+                return mList;
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+                throw;
+            }
+        }
+        public int GetItemsTotal() {
+            try {
+                var products = from p in entities.Product
+                               orderby p.ID descending
+                               select p;
+                return products.Count();
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+                throw;
+            }
+        }
+
+        public OrdersPage GetOrdersAffiliatePage(int PageCurrent = 0,int PartnerID=0)
+        {
+            OrdersPage ModelPage = new OrdersPage();
+            try
+            {
+                var items = from p in entities.ProductOrder
+                            //join m in entities.ProductOrderMap on p.AccountID equals m.uid into map
+                            //    from m in map.DefaultIfEmpty()
+                            
+                            //where m.partner_id.Equals(PartnerID)
+                            orderby p.ID descending
+                            select p;
+
+                ModelPage.Total = items.Count();
+                ModelPage.Page = PageCurrent;
+                ModelPage.Items = items.Skip((PageCurrent - 1) * PageSize).Take(PageSize).ToList();
+                return ModelPage;
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+                throw;
+            }
+        }
+        public OrdersReportByDaysPage GetOrderReport7DayPage(int PageCurrent = 0, int PartnerID = 0)
+        {
+            OrdersReportByDaysPage ModelPage = new OrdersReportByDaysPage();
+            List<OrdersReportByDay> ReportDays = new List<OrdersReportByDay>();
+            try
+            {
+                DateTime today = DateTime.Today;
+                DateTime begin = today.AddDays(-6);
+                var dates = Enumerable.Range(0, 7).Select(days => begin.AddDays(days)).ToList();
+                foreach( DateTime d in dates ){
+                    OrdersReportByDay ReportDay = new OrdersReportByDay();
+
+                    var items = from p in entities.ProductOrder
+                                //join m in entities.ProductOrderMap on p.AccountID equals m.uid into map
+                                //    from m in map.DefaultIfEmpty()
+
+                                //where m.partner_id.Equals(PartnerID)
+                                where p.Date <= d
+                                select p;
+
+
+                    ReportDay.date = d;
+                    ReportDay.Total = items.Count();
+
+                    ReportDays.Add(ReportDay);
+                }
+                ModelPage.report = ReportDays;
+                ModelPage.days = dates;
+                return ModelPage;
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+                throw;
+            }
+        }
+        
+
+        public string ChangeStatus(int id)
+        {
+            var product = (from item in entities.Product
+                           where item.ID == id
+                           select item
+                ).FirstOrDefault();
+            if (product != null)
+            {
+                product.Status = !product.Status;
+                entities.SaveChanges();
+                return "ok";
+            }
+            return "not_exists";
+        }
+        public List<Product> GetListProductInListId(string listId, bool includeData = true)
+        {
+            return includeData ? (from item in entities.Product.
+                      Include("ProductImages").
+                      Include("ProductColor").
+                      Include("ProductSize").
+                      Include("ProductAttribute").
+                      Include("ProductSaleOff").AsEnumerable()
+                                  where listId.Contains(item.ID.ToString())
+                                  select item
+                ).ToList() :
+                (from item in entities.Product.AsEnumerable()
+                 where listId.Contains(item.ID.ToString())
+                 select item
+                ).ToList();
+        }
+        public Product FindToModify(int id)
+        {
+            return (from item in entities.Product.
+                    Include("ProductImages").
+                    Include("ProductColor").
+                    Include("ProductSize").
+                    Include("ProductAttribute").
+                    Include("ProductSaleOff")
+                    where item.ID == id
+                    select item
+                ).FirstOrDefault();
+
+        }
+        public string UpdateQuantity(int productId, int quantity)
+        {
+            var productQuantity = (from product in entities.Product
+                                   where product.ID == productId
+                                   select product
+                ).FirstOrDefault();
+            if (productQuantity != null)
+            {
+                productQuantity.Quantity = quantity;
+                entities.SaveChanges();
+                return productQuantity.Name;
+            }
+            return "not_exists";
+        }
+        public string UpdateCode(int productId, string code)
+        {
+            var productCode = (from product in entities.Product
+                               where product.ID == productId
+                               select product
+                ).FirstOrDefault();
+            if (productCode != null)
+            {
+                productCode.Code = code;
+                entities.SaveChanges();
+                return productCode.Name;
+            }
+            return "not_exists";
+        }
+        public string UpdateNpp(int productId, double npp)
+        {
+            var productNpp = (from product in entities.Product
+                              where product.ID == productId
+                              select product
+                ).FirstOrDefault();
+            if (productNpp != null)
+            {
+                productNpp.Npp = npp;
+                entities.SaveChanges();
+                return productNpp.Name;
+            }
+            return "not_exists";
+        }
+        public string UpdatePrice(int productId, double price)
+        {
+            var productPrice = (from product in entities.Product
+                                where product.ID == productId
+                                select product
+                ).FirstOrDefault();
+            if (productPrice != null)
+            {
+                productPrice.Price = price;
+                entities.SaveChanges();
+                return productPrice.Name;
+            }
+            return "not_exists";
+        }
+
+        public string UpdateOrder(int productId, int order)
+        {
+            var productOrder = (from product in entities.Product
+                                where product.ID == productId
+                                select product
+                ).FirstOrDefault();
+            if (productOrder != null)
+            {
+                productOrder.Number = order;
+                entities.SaveChanges();
+                return productOrder.Name;
+            }
+            return "not_exists";
+        }
+
+        public List<ProductItem> GetList(
+            out int totalRecord, int categoryId = 0,
+            int quantity = 0, int state = 0,
+            int brand = 0, int manufact = 0,
+            int provider = 0,
+            string keyword = "",
+            int page = 1, int pageSize = 15)
+        {
+
+            IEnumerable<Product> data = (from product in entities.Product.Include("ProductType")
+                                         select product
+                                         ).ToList();
+
+            if (!string.IsNullOrWhiteSpace(keyword))
+            {
+                var keywordLower = Ultility.LocDau(keyword.ToLower());
+                data = (from product in entities.Product.AsEnumerable()
+                        where Ultility.LocDau(product.Code.ToLower()).Contains(keywordLower) ||
+                               Ultility.LocDau(product.Name.ToLower()).Contains(keywordLower)
+
+                        select product
+                    ).ToList();
+            }
+            if (categoryId > 0)
+            {
+                data = (from product in data
+                        where product.Type == categoryId
+                        select product
+                  ).ToList();
+
+            }
+            if (quantity > 0)
+            {
+                data = quantity == 1 ? (from product in data
+                                        where product.Quantity > 0
+                                        select product
+                 ).ToList() : (from product in data
+                               where product.Quantity == 0
+                               select product
+                 ).ToList();
+            }
+            if (state > 0)
+            {
+                if (state == (int) StateFilterEnum.Active)
+                {
+                    data = (from product in data
+                        where product.Status == true
+                        select product
+                        ).ToList();
+                }
+                if (state == (int)StateFilterEnum.Pending)
+                {
+                    data = (from product in data
+                        where product.Status == false
+                        select product).ToList();
+                }
+                if (state == (int)StateFilterEnum.PriceEmpty)
+                {
+                    data = (from product in data
+                            where ((product.Price.HasValue == false) || (product.Price.Value == 0))
+                            select product).ToList();
+                }
+
+            }
+
+            if (manufact > 0)
+            {
+                data = (from product in data
+                        where product.Manufacturer == manufact
+                        select product
+                 ).ToList();
+            }
+            if (brand > 0)
+            {
+                data = (from product in data
+                        where product.BrandId == brand
+                        select product
+                 ).ToList();
+            }
+            if (provider > 0)
+            {
+                data = (from product in data
+                        where product.AccountId == provider
+                        select product
+                 ).ToList();
+            }
+            totalRecord = data.Count();
+            return (from product in data
+                    orderby product.Date.Value descending
+                    select new ProductItem
+                    {
+                        Id = product.ID,
+                        Name = product.Name,
+                        CategoryId = product.Type,
+                        CategoryName = product.ProductType.Name,
+                        Quantity = product.Quantity,
+                        Code = product.Code,
+                        CreatedDate = product.Date.Value,
+                        Status = product.Status,
+                        Image = product.Image,
+                        Price = product.Price,
+                        Npp = product.Npp,
+                        Order = product.Number.HasValue ? product.Number.Value : 0
+                    }
+                )
+                .Skip((page - 1) * pageSize).Take(pageSize).ToList();
+        }
+
+
+
+        public ProductItems GetItemsBySaleoff(int page=0, float? SaleOffValue = 0,string StrOperator=">" ){
+            ProductItems ReturnValue = new ProductItems();
+            try
+            {
+                var items = from p in entities.Product
+                            //where (StrOperator == "<") ? float.Parse(p.SaleOff.ToString()) >= SaleOffValue : float.Parse(p.SaleOff.ToString()) >= SaleOffValue
+                            where p.SaleOff >= SaleOffValue
+                            orderby p.SaleOff descending
+                            select p;
+
+                ReturnValue.Products = items.Skip((page - 1) * PageSize).Take(PageSize).ToList();
+                ReturnValue.total = items.Count();
+                ReturnValue.page = page;
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+            }
+
+            return ReturnValue;
+           
+
+        }
+
+        public class ProductItems
+        {
+           
+            public List<Product> Products { get; set; }
+            public int total { get; set; }
+            public int page { get; set; }
+
         }
     }
 }

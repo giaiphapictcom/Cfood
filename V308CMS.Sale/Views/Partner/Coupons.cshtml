@@ -1,0 +1,77 @@
+﻿@model V308CMS.Data.CouponsPage
+@using V308CMS.Data
+@using V308CMS.Common
+
+@{
+    
+    Layout = "~/Views/Affiliate/Layout/Backend.cshtml";
+    string PageTitle = "Mã giảm giá"; 
+}
+@section header {
+    <title>@PageTitle</title>
+
+}
+<h4>@PageTitle</h4>
+<div class="row">
+    <div class="col-md-12 form-group-inline">
+        <a href="/ma-giam-gia" class="btn btn-green border-radius-0 activated">Tất cả sản phẩm</a>
+        <a href="/ma-giam-gia?time=leftoneweek" class="btn btn-green border-radius-0">Sắp hết hạn</a>
+        <div class="form-group border-radius-0 bg-secondary">
+
+            <select class="form-control " >
+                <option>Shop : Tất cả</option>
+            </select>
+        </div>
+        <div class="form-group border-radius-0 bg-secondary">
+
+            <select class="form-control" >
+                <option>Mã giảm giá: tất cả</option>
+            </select>
+        </div>
+        
+    </div>
+ 
+</div>
+<hr />
+<div class="row">
+    
+    <div class="col-md-3">
+        <div class="form-group border-radius-0 bg-secondary">
+
+            <select class="form-control" id="exampleSelect1">
+                <option>Hiển thị : 10</option>
+                <option>Hiển thị : 30</option>
+                <option>Hiển thị : 50</option>
+                <option>Hiển thị : 100</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-md-9 text-right">
+        @Html.Action("BlockPagination", "Theme",new {ProductTotal=Model.Total})
+
+    </div>
+
+</div>
+<hr />
+@if (Model.Coupons != null && Model.Coupons.Count() > 0)
+{
+
+    foreach (Counpon c in Model.Coupons)
+    { 
+            <div class="row itemview">
+                <div class="col-md-4"><img src="@ImageHelper.Crop(c.image,300,170)" class="img-responsive" /></div>
+                <div class="col-md-8">
+                    <h5>@c.title</h5>
+                    <p>@c.summary</p>
+                    <p class="text-red">Ngày hết hạn: @String.Format("{0:dd/MM/yyyy}", c.end_date)</p>
+                    <p>Coupon Code : <strong>@c.code</strong></p>
+                </div>
+            </div>
+            <hr />
+        }
+    
+}
+
+<div class="row"><div class="col-md-12 text-center">
+    @Html.Action("BlockPagination", "Theme",new {ProductTotal=Model.Total})
+</div></div>

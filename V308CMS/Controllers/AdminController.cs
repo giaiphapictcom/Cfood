@@ -15,6 +15,10 @@ namespace V308CMS.Controllers
 {
     public class AdminController : Controller
     {
+        public AdminController() {
+            ViewEngines.Engines.Clear();
+            ViewEngines.Engines.Add(new V308CMS.Helpers.MpStartViewEngine(true));
+        }
         #region VUNG CAC CONTROLER CHUNG
         [CustomAuthorize]
         public ActionResult Index()
@@ -2014,6 +2018,7 @@ namespace V308CMS.Controllers
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return Content("Xảy ra lỗi hệ thống ! Vui lòng thử lại.");
             }
             finally

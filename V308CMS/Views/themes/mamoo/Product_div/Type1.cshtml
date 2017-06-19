@@ -1,0 +1,26 @@
+﻿@using V308CMS.Common;
+@if (Model != null) { 
+    <div class="item-type-1">
+	    <div class="thumb">
+            <a href="/@Ultility.LocDau(@Model.Name)-d@(@Model.ID).html">
+            <img src="@ImageHelper.Crop(@Model.Image,235)" class="img-fluid mx-auto d-block" alt="@Model.Name" />
+            </a>
+	    </div>
+	    <div class="name"><a href="/@Ultility.LocDau(@Model.Name)-d@(@Model.ID).html">@Model.Name</a></div>
+        @if (Model.Price > 0) { 
+            <div class="price">
+                <a href="/@Ultility.LocDau(@Model.Name)-d@(@Model.ID).html">
+                @if (Model.SaleOff > 0)
+                {
+                    <span class="sale">@String.Format("{0: 0,0}", Model.Price - (Model.Price / 100) * Model.SaleOff) ) @ViewBag.MoneyShort</span>
+	                <span class="discount float-right">@String.Format("{0: 0,0}", (Model.Price)) @ViewBag.MoneyShort</span>
+                }
+                else
+                {
+                    <span class="sale">@String.Format("{0: 0,0}", (Model.Price)) @ViewBag.MoneyShort</span>
+                }
+                </a>
+	        </div>
+        }
+	</div>
+}

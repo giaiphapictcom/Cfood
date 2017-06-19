@@ -11,9 +11,7 @@ namespace V308CMS.Data
     {
         public  static string domain = ConfigurationManager.AppSettings["domain"];
         static public string viewPage(string file=null){
-            var appSettings = ConfigurationManager.AppSettings;
-            string domain = appSettings["domain"];
-
+          
             string themePath = "~/Views/themes/" + domain;
             string themeRealPath = HttpContext.Current.Server.MapPath(themePath);
 

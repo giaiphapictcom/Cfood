@@ -1,0 +1,101 @@
+<<<<<<< HEAD
+﻿@using V308CMS.Admin.Helpers.Url
+@model V308CMS.Data.AccountPage
+@{
+    ViewBag.Title = "Tài khoản quản trị";
+    ViewBag.LinkBack = "<li><a href=" + Url.AdminAccountIndexUrl()+">Tài khoản quản trị</a> </li>";
+    ViewBag.MenuValue = 6;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div>
+    <div>
+        <h3>Sửa Tài khoản quản trị mới</h3>
+        <hr />
+        <div style="width: 100%;">
+            <div id="v308inputContent" class="RadGrid RadGrid_MetroTouch table table-striped table-bordered table-hover dataTable" tabindex="0">
+                <input type="hidden" value="@Model.pAdmin.ID" id="pId" name="pIdId" />
+                <table>
+                    <tr>
+                        <td>FullName</td>
+                        <td>
+                            <input type="text" id="pTitleId" name="pTitle" value="@Model.pAdmin.FullName" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Phân quyền</td>
+                        <td>
+                            <select name="pGroup" id="pGroupId">
+                                <option @V308CMS.Common.Ultility.CheckSeclectSelected(0, Model.TypeId) value="0">Chọn Quyền cho tài khoản</option>
+                                <option @V308CMS.Common.Ultility.CheckSeclectSelected(1, Model.TypeId) value="1">Administrator</option>
+                                <option @V308CMS.Common.Ultility.CheckSeclectSelected(2, Model.TypeId) value="2">Member</option>
+                                <option @V308CMS.Common.Ultility.CheckSeclectSelected(3, Model.TypeId) value="3">Guest</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Trang truy cập</td>
+                        <td>
+                            <table>
+                                <tr>
+                                    <td><input @V308CMS.Common.Ultility.CheckBoxchecked(Model.pAdmin.PSanPham) type="checkbox" id="psanpham" /><span class="mspancheckbox">Sản phẩm</span></td>
+                                    <td><input @V308CMS.Common.Ultility.CheckBoxchecked(Model.pAdmin.PTinTuc) type="checkbox" id="ptintuc" /><span class="mspancheckbox">Tin tức</span></td>
+                                    <td><input @V308CMS.Common.Ultility.CheckBoxchecked(Model.pAdmin.PKhachHang) type="checkbox" id="pkhachhang" /><span class="mspancheckbox">Khách hàng</span></td>
+                                </tr>
+                                <tr>
+                                    <td><input @V308CMS.Common.Ultility.CheckBoxchecked(Model.pAdmin.PHinhAnh) type="checkbox" id="phinhanh" /><span class="mspancheckbox">Hình ảnh</span></td>
+                                    <td><input @V308CMS.Common.Ultility.CheckBoxchecked(Model.pAdmin.PFileUpload) type="checkbox" id="pupload" /><span class="mspancheckbox">File upload</span></td>
+                                    <td><input @V308CMS.Common.Ultility.CheckBoxchecked(Model.pAdmin.PTaiKhoan) type="checkbox" id="ptaikhoan" /><span class="mspancheckbox">Tài khoản</span></td>
+                                </tr>
+                                <tr>
+                                    <td><input @V308CMS.Common.Ultility.CheckBoxchecked(Model.pAdmin.PHeThong) type="checkbox" id="phethong" /><span class="mspancheckbox">Hệ thống</span></td>
+                                    <td><input @V308CMS.Common.Ultility.CheckBoxchecked(Model.pAdmin.PThungRac) type="checkbox" id="pthungrac" /><span class="mspancheckbox">Thùng rác</span></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Tài khoản</td>
+                        <td>
+                            <input type="text" id="pAccountId" readonly name="pAccount" value="@Model.pAdmin.UserName" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td>
+                            <input type="text" id="pEmailId" name="pEmail" value="@Model.pAdmin.Email" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Kích Hoạt</td>
+                        <td>
+                            <input type="checkbox" id="pActiveId" name="pActive" checked="checked" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <a class="mbutton" href="javascript:Admin_AdminAccount_ThucHienLuuSua();">Xác Nhận</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <hr />
+    </div>
+=======
+﻿@model V308CMS.Admin.Models.AdminModels
+@using V308CMS.Admin.Helpers.Url
+@{
+    ViewBag.Title = "Cập nhật thông tin tài khoản hệ thống.";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+<div class="panel panel-primary">
+    <div class="panel-body">
+        <form method="post" role="form" action="@Url.AdminAccountEditUrl()" enctype="multipart/form-data">
+            @Html.Partial("_AdminForm", Model)
+        </form>
+    </div>
+
+>>>>>>> toai-neal
+</div>

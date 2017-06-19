@@ -1,0 +1,30 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@model  V308CMS.Admin.Models.ProductUnitModels
+@{
+    var listState = (List<SelectListItem>)ViewBag.ListState;
+}
+@Html.HiddenFor(unit => unit.Id)
+@Html.AntiForgeryToken()
+<div class="row">
+    @Html.ValidationSummary(true)
+    <div class="col-lg-6">
+        <div class="form-group">
+            @Html.LabelFor(unit => unit.Name)
+            @Html.TextBoxFor(unit => unit.Name, new { @class = "form-control", placeholder = "Tên đơn vị tính" })
+            @Html.ValidationMessageFor(unit => unit.Name)
+        </div>       
+        <div class="form-group">
+            @Html.LabelFor(unit => unit.State)
+            @Html.DropDownListFor(unit => unit.State, listState, new
+           {
+               @class = "form-control",
+               placeholder = "Trạng thái"
+           })
+            @Html.ValidationMessageFor(unit => unit.State)
+        </div>
+
+        @Html.Partial("UI/_FormAction")
+        <a href="@Url.ProductUnitIndexUrl()" title="Danh sách Đơn vị tính" class="btn btn-link">Danh sách</a>
+
+    </div>
+</div>

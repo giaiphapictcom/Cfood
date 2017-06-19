@@ -209,6 +209,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 throw;
             }
         }
@@ -216,19 +217,22 @@ namespace V308CMS.Data
         #region Adv
         public List<Image> GetImagesByGroupAlias(string ImgTypeAlias="",int Limit=2)
         {
+            List<Image>  imgs = null;
             try
             {
                 var images = from img in entities.Image
                              join type in entities.ImageType on img.TypeID equals type.ID
                              where type.Alias.Equals(ImgTypeAlias)
                              select img;
-                 return images.Take(Limit).ToList();
+                imgs = images.Take(Limit).ToList();
+                return imgs;
             }
             catch (Exception ex)
             {
                 Console.Write(ex);
                 throw;
             }
+            return imgs;
         }
         #endregion Adv
     }

@@ -1,0 +1,471 @@
+﻿@using V308CMS.Common
+@using V308CMS.Helpers
+@model V308CMS.Models.ShoppingCart
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="no-js multi-step windows chrome desktop page--no-banner page--logo-main page--show  card-fields">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height, minimum-scale=1.0, user-scalable=0">
+    <meta name="referrer" content="origin">
+
+    <title>@ViewBag.SiteName - Checkout</title>
+
+    <!--[if lt IE 9]>
+    <link rel="stylesheet" media="all" href="//cdn.shopify.com/app/services/14982346/assets/158713545/checkout_stylesheet/v2-ltr-edge-2fb6ca2c2ac44cb97965799c4a298fed-7400122826340964516/oldie" />
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <link rel="stylesheet" media="all" href="//cdn.shopify.com/app/services/14982346/assets/158713545/checkout_stylesheet/v2-ltr-edge-2fb6ca2c2ac44cb97965799c4a298fed-7400122826340964516" />
+    <!--<![endif]-->
+
+    <meta data-browser="chrome" data-browser-major="58">
+    <meta data-body-font-family="Helvetica Neue" data-body-font-type="system">
+    <meta id="shopify-digital-wallet" name="shopify-digital-wallet" content="/14982346/digital_wallets/dialog" />
+
+
+    <script src="//cdn.shopify.com/s/assets/checkout-b677f13d7a17215b7c3210e32bbd8e477d8ca5080890b810faa01425cbe1abdd.js"></script>
+
+    <meta name="shopify-checkout-authorization-token" content="860a971c6ed2a87989c89c736c123729" />
+
+    <script src="//cdn.shopify.com/app/services/14982346/javascripts/countries/158713545/en/countries-163f7410df696f7feeccdfa6e52b242bb7da9acc-1485145186.js"></script>
+
+
+
+    <script src="https://cdn.shopify.com/s/javascripts/shopify_stats.js?v=6" type="text/javascript" async="async"></script>
+
+
+
+
+
+</head>
+<body>
+    <div class="banner" data-header>
+        <div class="wrap">
+
+            <a href="/" class="logo logo--left">
+                <h1 class="logo__text">@ViewBag.SiteName</h1>
+            </a>
+
+        </div>
+    </div>
+
+    <button class="order-summary-toggle order-summary-toggle--show" data-drawer-toggle="[data-order-summary]">
+        <div class="wrap">
+            <div class="order-summary-toggle__inner">
+                <div class="order-summary-toggle__icon-wrapper">
+                    <svg width="20" height="19" xmlns="http://www.w3.org/2000/svg" class="order-summary-toggle__icon">
+                        <path d="M17.178 13.088H5.453c-.454 0-.91-.364-.91-.818L3.727 1.818H0V0h4.544c.455 0 .91.364.91.818l.09 1.272h13.45c.274 0 .547.09.73.364.18.182.27.454.18.727l-1.817 9.18c-.09.455-.455.728-.91.728zM6.27 11.27h10.09l1.454-7.362H5.634l.637 7.362zm.092 7.715c1.004 0 1.818-.813 1.818-1.817s-.814-1.818-1.818-1.818-1.818.814-1.818 1.818.814 1.817 1.818 1.817zm9.18 0c1.004 0 1.817-.813 1.817-1.817s-.814-1.818-1.818-1.818-1.818.814-1.818 1.818.814 1.817 1.818 1.817z" />
+                    </svg>
+                </div>
+                <div class="order-summary-toggle__text order-summary-toggle__text--show">
+                    <span>Show order summary</span>
+                    <svg width="11" height="6" xmlns="http://www.w3.org/2000/svg" class="order-summary-toggle__dropdown" fill="#000">
+                        <path d="M.504 1.813l4.358 3.845.496.438.496-.438 4.642-4.096L9.504.438 4.862 4.534h.992L1.496.69.504 1.812z" />
+                    </svg>
+                </div>
+                <div class="order-summary-toggle__text order-summary-toggle__text--hide">
+                    <span>Hide order summary</span>
+                    <svg width="11" height="7" xmlns="http://www.w3.org/2000/svg" class="order-summary-toggle__dropdown" fill="#000">
+                        <path d="M6.138.876L5.642.438l-.496.438L.504 4.972l.992 1.124L6.138 2l-.496.436 3.862 3.408.992-1.122L6.138.876z" />
+                    </svg>
+                </div>
+                <div class="order-summary-toggle__total-recap total-recap" data-order-summary-section="toggle-total-recap">
+                    <span class="total-recap__final-price" data-checkout-payment-due-target="12900">$129.00</span>
+                </div>
+            </div>
+        </div>
+    </button>
+
+
+    <div class="content" data-content>
+        <div class="wrap">
+            <div class="sidebar" role="complementary">
+                <div class="sidebar__header">
+
+                    <a href="/" class="logo logo--left">
+                        <h1 class="logo__text">@ViewBag.SiteName</h1>
+                    </a>
+
+                </div>
+                <div class="sidebar__content">
+                    <div class="order-summary order-summary--is-collapsed" data-order-summary>
+                        <h2 class="visually-hidden">Order summary</h2>
+
+                        <div class="order-summary__sections">
+                            <div class="order-summary__section order-summary__section--product-list">
+                                <div class="order-summary__section__content">
+                                    <table class="product-table">
+                                        <caption class="visually-hidden">Shopping cart</caption>
+                                        <thead>
+                                            <tr>
+                                                <th scope="col"><span class="visually-hidden">Product image</span></th>
+                                                <th scope="col"><span class="visually-hidden">Description</span></th>
+                                                <th scope="col"><span class="visually-hidden">Quantity</span></th>
+                                                <th scope="col"><span class="visually-hidden">Price</span></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody data-order-summary-section="line-items">
+                                            @foreach (var cart in Model.Items)
+                                            { 
+                                                <tr class="product" data-product-id="7824318409" data-variant-id="25221476489" data-product-type="">
+                                                    <td class="product__image">
+                                                        <div class="product-thumbnail">
+                                                            <div class="product-thumbnail__wrapper">
+                                                                <a href="@url.productURL(cart.ProductItem.Name, cart.ProductItem.Id)" title="Xem chi tiết sản phẩm @cart.ProductItem.Name">
+                                                                    <img src="@cart.ProductItem.Avatar.ToUrl(152, 160)" alt="@cart.ProductItem.Name">
+                                                                </a>
+                                                            </div>
+                                                            <span class="product-thumbnail__quantity" aria-hidden="true">1</span>
+                                                        </div>
+
+                                                    </td>
+                                                    <td class="product__description">
+                                                        <span class="product__description__name order-summary__emphasis">
+                                                            <a href="@url.productURL(cart.ProductItem.Name, cart.ProductItem.Id)" title="Xem chi tiết sản phẩm @cart.ProductItem.Name">
+                                                                <strong>
+                                                                    @cart.ProductItem.Name
+                                                                </strong>
+
+                                                            </a>
+                                                        </span>
+                                                        <span class="product__description__variant order-summary__small-text"></span>
+
+                                                    </td>
+                                                    <td class="product__quantity visually-hidden">1
+                                                    </td>
+                                                    <td class="product__price">
+                                                        <span class="order-summary__emphasis">@cart.UnitPrice.ToString("N0") đ</span>
+                                                    </td>
+                                                </tr>
+                                            }
+
+                                        </tbody>
+                                    </table>
+
+                                    <div class="order-summary__scroll-indicator">
+                                        Scroll for more items
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="12" viewBox="0 0 10 12">
+                                            <path d="M9.817 7.624l-4.375 4.2c-.245.235-.64.235-.884 0l-4.375-4.2c-.244-.234-.244-.614 0-.848.245-.235.64-.235.884 0L4.375 9.95V.6c0-.332.28-.6.625-.6s.625.268.625.6v9.35l3.308-3.174c.122-.117.282-.176.442-.176.16 0 .32.06.442.176.244.234.244.614 0 .848" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="order-summary__section order-summary__section--total-lines" data-order-summary-section="payment-lines">
+                                <table class="total-line-table">
+                                    <caption class="visually-hidden">Cost summary</caption>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col"><span class="visually-hidden">Description</span></th>
+                                            <th scope="col"><span class="visually-hidden">Price</span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="total-line-table__tbody">
+                                        <tr class="total-line total-line--subtotal">
+                                            <td class="total-line__name">Tổng tiền</td>
+                                            <td class="total-line__price">
+                                                <span class="order-summary__emphasis" data-checkout-subtotal-price-target="@Model.SubTotal">
+                                                    @Model.SubTotal.ToString("N0") đ
+                                                </span>
+                                            </td>
+                                        </tr>
+
+
+                                        <tr class="total-line total-line--shipping">
+                                            <td class="total-line__name">Phí vận chuyển</td>
+                                            <td class="total-line__price">
+                                                <span class="order-summary__emphasis" data-checkout-total-shipping-target="@Model.ShipPrice">—
+                                                </span>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="total-line total-line--taxes hidden" data-checkout-taxes>
+                                            <td class="total-line__name">Thuế</td>
+                                            <td class="total-line__price">
+                                                <span class="order-summary__emphasis" data-checkout-total-taxes-target="0">$0.00</span>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                    <tfoot class="total-line-table__footer">
+                                        <tr class="total-line">
+                                            <td class="total-line__name payment-due-label">
+                                                <span class="payment-due-label__total">Thành tiền</span>
+                                            </td>
+                                            <td class="total-line__price payment-due">
+                                                <span class="payment-due__currency">VNĐ</span>
+                                                <span class="payment-due__price" data-checkout-payment-due-target="@Model.SubTotal">
+                                                    @Model.SubTotal.ToString("N0") đ
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="main" role="main">
+                <div class="main__header">
+
+                    <a href="/" class="logo logo--left">
+                        <h1 class="logo__text">@ViewBag.SiteName</h1>
+                    </a>
+
+                    <ul class="breadcrumb ">
+                        <li class="breadcrumb__item breadcrumb__item--completed">
+                            <a class="breadcrumb__link" href="https://bigsale-01.myshopify.com/cart">Giỏ hàng</a>
+                            <svg class="icon-svg icon-svg--size-10 breadcrumb__chevron-icon rtl-flip" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
+                                <path d="M2 1l1-1 4 4 1 1-1 1-4 4-1-1 4-4" />
+                            </svg>
+                        </li>
+
+
+                        <li class="breadcrumb__item breadcrumb__item--blank">
+                            <span class="breadcrumb__text">Nhập thông tin mua hàng</span>
+                        </li>
+                    </ul>
+
+                    <div data-alternative-payments>
+                    </div>
+
+                </div>
+                <div class="main__content">
+                    <div class="step" data-step="contact_information">
+                        <form novalidate="novalidate" class="edit_checkout" data-customer-information-form="true" accept-charset="UTF-8" action="@Url.SendOrderCartUrl()" method="post" >
+                            <input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="_method" value="patch" /><input type="hidden" name="authenticity_token" value="" />
+
+                            <input type="hidden" name="previous_step" id="previous_step" value="contact_information" />
+                            <input type="hidden" name="step" value="shipping_method" />
+
+                            <div class="step__sections">
+                                @if (AuthenticationHelper.IsAuthenticate != false & AuthenticationHelper.CurrentUser != null)
+                                { 
+                                <div class="section section--contact-information">
+                                    <div class="section__header">
+                                        <div class="layout-flex layout-flex--tight-vertical layout-flex--loose-horizontal layout-flex--wrap">
+                                            <h2 class="section__title layout-flex__item layout-flex__item--stretch">Thông tin khách hàng</h2>
+
+                                        </div>
+                                    </div>
+                                    <div class="section__content" data-section="customer-information">
+                                        
+                                            <input value="toaihv@gmail.com" size="30" type="hidden" name="checkout[email]" id="checkout_email" />
+                                            <div class="logged-in-customer-information">
+                                                <div class="logged-in-customer-information__avatar-wrapper">
+                                                    <div class="logged-in-customer-information__avatar gravatar" style="background-image: url(//proxy.shopifycdn.com/90d0613dff5e4065b926fe15fd35d6c253578ff44ee5d5341fa975fa69bd5ac1/www.gravatar.com/avatar/668d4f705efdd081975d651796dbd82a.jpg?s=100&amp;d=blank); filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=&#39; //proxy.shopifycdn.com/90d0613dff5e4065b926fe15fd35d6c253578ff44ee5d5341fa975fa69bd5ac1/www.gravatar.com/avatar/668d4f705efdd081975d651796dbd82a.jpg?s=100&amp; d=blank&#39; , sizingMethod=&#39; scale&#39; )" role="img" aria-label="Avatar"></div>
+                                                </div>
+
+                                                <p class="logged-in-customer-information__paragraph">
+                                                    <span class="page-main__emphasis">toai hoang van</span>
+                                                    <span data-rtl-ensure>(toaihv@gmail.com)</span>
+                                                    <br>
+                                                    <a href="https://bigsale-01.myshopify.com/account/logout?return_url=https%3A%2F%2Fcheckout.shopify.com%2F14982346%2Fcheckouts%2F819f674a463255a4798dbe5a6c0984c4%3Fstep%3Dcontact_information">Log out</a>
+                                                </p>
+                                            </div>
+                                        
+
+                                    </div>
+                                </div>
+                                }
+
+                                <div class="section section--shipping-address" data-shipping-address
+                                    data-update-order-summary>
+
+                                    <div class="section__header">
+                                        <h2 class="section__title">Thông tin đặt hàng</h2>
+                                    </div>
+
+                                    <div class="section__content">
+                                        <div class="fieldset" data-address-fields>
+
+                                            <input class="visually-hidden" autocomplete="shipping given-name" tabindex="-1" data-autocomplete-field="first_name" size="30" type="text" name="checkout[shipping_address][first_name]" />
+                                            <input class="visually-hidden" autocomplete="shipping family-name" tabindex="-1" data-autocomplete-field="last_name" size="30" type="text" name="checkout[shipping_address][last_name]" />
+
+                                            <input class="visually-hidden" autocomplete="shipping address-line1" tabindex="-1" data-autocomplete-field="address1" size="30" type="text" name="checkout[shipping_address][address1]" />
+                                            <input class="visually-hidden" autocomplete="shipping address-line2" tabindex="-1" data-autocomplete-field="address2" size="30" type="text" name="checkout[shipping_address][address2]" />
+                                            <input class="visually-hidden" autocomplete="shipping address-level2" tabindex="-1" data-autocomplete-field="city" size="30" type="text" name="checkout[shipping_address][city]" />
+                                            <input class="visually-hidden" autocomplete="shipping country" tabindex="-1" data-autocomplete-field="country" size="30" type="text" name="checkout[shipping_address][country]" />
+                                            <input class="visually-hidden" autocomplete="shipping address-level1" tabindex="-1" data-autocomplete-field="province" size="30" type="text" name="checkout[shipping_address][province]" />
+                                            <input class="visually-hidden" autocomplete="shipping postal-code" tabindex="-1" data-autocomplete-field="zip" size="30" type="text" name="checkout[shipping_address][zip]" />
+
+
+
+                                            <div class="field--half field field--optional" data-address-field="first_name">
+                                                <label class="field__label" for="checkout_shipping_address_first_name">Họ</label>
+                                                <div class="field__input-wrapper">
+                                                    <input placeholder="Họ" autocomplete="shipping given-name" data-backup="first_name" class="field__input" size="30" type="text" value="" name="first_name" id="checkout_shipping_address_first_name" />
+                                                </div>
+                                            </div>
+                                            <div class="field--half field field--required" data-address-field="last_name">
+                                                <label class="field__label" for="checkout_shipping_address_last_name">Tên</label>
+                                                <div class="field__input-wrapper">
+                                                    <input placeholder="Tên" autocomplete="shipping family-name" data-backup="last_name" class="field__input" size="30" type="text" value="" name="last_name" id="checkout_shipping_address_last_name" />
+                                                </div>
+                                            </div>
+
+                                            <div class="field--two-thirds field field--required" data-address-field="address1" data-google-places="true">
+                                                <label class="field__label" for="checkout_shipping_address_address1">Địa chỉ nhận hàng</label>
+                                                <div class="field__input-wrapper">
+                                                    <input placeholder="Địa chỉ" autocomplete="shipping address-line1" data-backup="address1" class="field__input" size="30" type="text" name="address" id="checkout_shipping_address_address1" />
+                                                </div>
+                                            </div>
+
+                                            <div data-address-field="city" data-google-places="true" class="field field--required">
+                                                <label class="field__label" for="checkout_shipping_address_city">Thành Phố</label>
+                                                <div class="field__input-wrapper">
+                                                    <input placeholder="Thành phố" autocomplete="shipping address-level2" data-backup="city" class="field__input" size="30" type="text" name="checkout[shipping_address][city]" id="checkout_shipping_address_city" />
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="step__footer" data-step-footer>
+                                @if (AuthenticationHelper.IsAuthenticate != false & AuthenticationHelper.CurrentUser != null)
+                                {
+                                <button name="button" type="submit" class="step__footer__continue-btn btn ">
+                                    <span class="btn__content">Đặt hàng</span>
+                                    <i class="btn__spinner icon icon--button-spinner"></i>
+                                </button>
+                                } else {
+                                    <a href="" class="step__footer__continue-btn btn ">
+                                    <span class="btn__content">Đăng ký thành viên</span>
+                                    
+                                </a>
+                                }
+                                <a class="step__footer__previous-link" href="/cart/viewcart">
+                                    <svg class="icon-svg icon-svg--color-accent icon-svg--size-10 previous-link__icon rtl-flip" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
+                                        <path d="M8 1L7 0 3 4 2 5l1 1 4 4 1-1-4-4" />
+                                    </svg>
+                                    <span class="step__footer__previous-link-content">Quay lại giỏ hàng</span>
+                                </a>
+                            </div>
+
+
+                        </form>
+
+                    </div>
+
+                </div>
+                <div class="main__footer">
+                    <div class="modals">
+                    </div>
+
+
+                    <div role="contentinfo" aria-label="Footer">
+                       
+                        <address class="copyright-text" >©@DateTime.Now.Year.ToString() Copyright. Đã đăng ký bản quyền</address>
+                    </div>
+
+                    <div id="dialog-close-title" class="hidden">Close</div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <script type="text/javascript" class="analytics">
+
+
+
+        (function () {
+            var customDocumentWrite = function (content) {
+                var jquery = null;
+
+                if (window.jQuery) {
+                    jquery = window.jQuery;
+                } else if (window.Checkout && window.Checkout.$) {
+                    jquery = window.Checkout.$;
+                }
+
+                if (jquery) {
+                    jquery('body').append(content);
+                }
+            };
+
+            var trekkie = window.ShopifyAnalytics.lib = window.trekkie = window.trekkie || [];
+            if (trekkie.integrations) {
+                return;
+            }
+            trekkie.methods = [
+              'identify',
+              'page',
+              'ready',
+              'track',
+              'trackForm',
+              'trackLink'
+            ];
+            trekkie.factory = function (method) {
+                return function () {
+                    var args = Array.prototype.slice.call(arguments);
+                    args.unshift(method);
+                    trekkie.push(args);
+                    return trekkie;
+                };
+            };
+            for (var i = 0; i < trekkie.methods.length; i++) {
+                var key = trekkie.methods[i];
+                trekkie[key] = trekkie.factory(key);
+            }
+            trekkie.load = function (config) {
+                trekkie.config = config;
+                var script = document.createElement('script');
+                script.type = 'text/javascript';
+                script.onerror = function (e) {
+                    (new Image()).src = '//v.shopify.com/internal_errors/track?error=trekkie_load';
+                };
+                script.async = true;
+                script.src = 'https://cdn.shopify.com/s/javascripts/tricorder/trekkie.storefront.min.js?v=2017.03.29.1';
+                var first = document.getElementsByTagName('script')[0];
+                first.parentNode.insertBefore(script, first);
+            };
+            trekkie.load(
+              { "Trekkie": { "appName": "checkout", "development": false, "defaultAttributes": { "shopId": 14982346, "isMerchantRequest": null, "themeId": 158713545, "themeCityHash": 12278893959013367840, "checkoutToken": "819f674a463255a4798dbe5a6c0984c4" } }, "Performance": { "navigationTimingApiMeasurementsEnabled": true, "navigationTimingApiMeasurementsSampleRate": 0.1 }, "Clickstream": {}, "Session Attribution": {} }
+            );
+
+            var loaded = false;
+            trekkie.ready(function () {
+                if (loaded) return;
+                loaded = true;
+
+                window.ShopifyAnalytics.lib = window.trekkie;
+
+
+                var originalDocumentWrite = document.write;
+                document.write = customDocumentWrite;
+                try { window.ShopifyAnalytics.merchantGoogleAnalytics.call(this); } catch (error) { };
+                document.write = originalDocumentWrite;
+
+
+                window.ShopifyAnalytics.lib.page(
+                  "Checkout - Contact information",
+                  { "path": "\/checkout\/contact_information", "search": "", "url": "https:\/\/checkout.shopify.com\/14982346\/checkouts\/819f674a463255a4798dbe5a6c0984c4?sid=4f1548ac70b937f9f1ad97ba20a8c0c4" }
+                );
+
+
+            });
+
+
+            var eventsListenerScript = document.createElement('script');
+            eventsListenerScript.async = true;
+            eventsListenerScript.src = "//cdn.shopify.com/s/assets/shop_events_listener-9410288c486c406bc38edb97003bb123d375112c2b7e037d65afabae7c905e02.js";
+            document.getElementsByTagName('head')[0].appendChild(eventsListenerScript);
+
+        })();
+    </script>
+
+</body>
+</html>

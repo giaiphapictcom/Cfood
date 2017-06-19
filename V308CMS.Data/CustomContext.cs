@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Web;
+using V308CMS.Data.Mapping;
+using V308CMS.Data.Models;
 
 namespace V308CMS.Data
 {
@@ -25,11 +24,117 @@ namespace V308CMS.Data
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+
             modelBuilder.Ignore<IncludeMetadataConvention>();
+
+            modelBuilder.Configurations.Add(new SiteConfigMap());
+            modelBuilder.Configurations.Add(new EmailConfigMap());
+            modelBuilder.Configurations.Add(new MenuConfigMap());
+            modelBuilder.Configurations.Add(new ProductBrandMap());
+            modelBuilder.Configurations.Add(new StoreMap());
+            modelBuilder.Configurations.Add(new UnitMap());
+            modelBuilder.Configurations.Add(new ColorMap());
+            modelBuilder.Configurations.Add(new CountryMap());
+            modelBuilder.Configurations.Add(new SizeMap());
+            modelBuilder.Configurations.Add(new ProductColorMap());
+            modelBuilder.Configurations.Add(new ProductSizeMap());          
+            modelBuilder.Configurations.Add(new PermissionMap());
+            modelBuilder.Configurations.Add(new BannerMap());
+            modelBuilder.Entity<News>()
+             .HasRequired(p => p.NewsGroup)
+             .WithMany(p => p.ListNews)
+             .HasForeignKey(p => p.TypeID);
+
+            modelBuilder.Entity<ProductImage>()
+            .HasRequired(p => p.Product)
+            .WithMany(p => p.ProductImages)
+            .HasForeignKey(p => p.ProductID);
+
+            modelBuilder.Entity<Product>()
+           .HasRequired(p => p.ProductManufacturer)
+           .WithMany()
+           .HasForeignKey(p => p.Manufacturer);
+
+            modelBuilder.Entity<Product>()
+            .HasRequired(p => p.ProductType)
+            .WithMany(p => p.ListProduct)
+            .HasForeignKey(p => p.Type);
+
+            modelBuilder.Entity<Brand>()
+            .HasRequired(p => p.ProductType)
+            .WithMany(p => p.ListProductBrand)
+            .HasForeignKey(p => p.category_default);
+
+
+            modelBuilder.Entity<Admin>()
+           .HasRequired(p => p.RoleInfo)
+           .WithMany(p => p.AdminAccounts)
+           .HasForeignKey(p => p.Role);
+
+
+           modelBuilder.Entity<Permission>()
+          .HasRequired(p => p.RoleInfo)
+          .WithMany(p => p.Permissions)
+          .HasForeignKey(p => p.RoleId);
+
         }
         #endregion
         #region ObjectSet Properties
-
+        public DbSet<Banner> Banner
+        {
+            get;
+            set;
+        }
+        public DbSet<Permission> Permission
+        {
+            get;
+            set;
+        }      
+        public DbSet<ProductSize> ProductSize
+        {
+            get;
+            set;
+        }
+        public DbSet<ProductColor> ProductColor
+        {
+            get;
+            set;
+        }
+        public DbSet<Size> Size
+        {
+            get;
+            set;
+        }
+        public DbSet<Country> Country
+        {
+            get;
+            set;
+        }
+        public DbSet<Color> Color
+        {
+            get;
+            set;
+        }
+        public DbSet<Unit> Unit
+        {
+            get;
+            set;
+        }
+        public DbSet<Store> Store
+        {
+            get;
+            set;
+        }
+        public DbSet<MenuConfig> MenuConfig
+        {
+            get;
+            set;
+        }
+        public DbSet<EmailConfig> EmailConfig
+        {
+            get;
+            set;
+        }
         public DbSet<Account> Account
         {
             get;
@@ -130,6 +235,12 @@ namespace V308CMS.Data
             get;
             set;
         }
+        public DbSet<Contact> Contact
+        {
+            get;
+            set;
+        }
+
         public DbSet<ProductDistributor> ProductDistributor
         {
             get;
@@ -146,6 +257,16 @@ namespace V308CMS.Data
             set;
         }
         public DbSet<ProductOrder> ProductOrder
+        {
+            get;
+            set;
+        }
+        public DbSet<ProductOrderMap> ProductOrderMap
+        {
+            get;
+            set;
+        }
+        public DbSet<productorder_detail> ProductOrderItem
         {
             get;
             set;
@@ -202,6 +323,58 @@ namespace V308CMS.Data
         }
 
         public DbSet<SiteConfig> SiteConfig
+        {
+            get;
+            set;
+        }
+
+        public DbSet<Testimonial> Testimonial
+        {
+            get;
+            set;
+        }
+
+        public DbSet<Categorys> Categorys
+        {
+            get;
+            set;
+        }
+
+        public DbSet<Brand> Brand
+        {
+            get;
+            set;
+        }
+        public DbSet<ProductWishlist> ProductWishlist
+        {
+            get;
+            set;
+        }
+       
+
+        public DbSet<AffiliateBanner> AffiliateBanner
+        {
+            get;
+            set;
+        }
+        public DbSet<AffiliateLink> AffiliateLink
+        {
+            get;
+            set;
+        }
+        public DbSet<Ticket> TicketRepository
+        {
+            get;
+            set;
+        }
+
+        public DbSet<Counpon> CounponTbl
+        {
+            get;
+            set;
+        }
+
+        public DbSet<Visister> VisisterTbl
         {
             get;
             set;
@@ -458,6 +631,14 @@ namespace V308CMS.Data
         public void AddToProductType(ProductType ProductType)
         {
             this.ProductType.Add(ProductType);
+        }
+        public void AddToProductSize(ProductSize productSize)
+        {
+            this.ProductSize.Add(productSize);
+        }
+        public void AddToProductColor(ProductColor productColor)
+        {
+            this.ProductColor.Add(productColor);
         }
         public void AddToQuestion(Question Question)
         {

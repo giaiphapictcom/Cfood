@@ -1,0 +1,121 @@
+<<<<<<< HEAD
+﻿@using V308CMS.Admin.Helpers.Url
+@model V308CMS.Data.ProductPage
+@{
+    ViewBag.Title = "Nhà Sản Xuất";
+    ViewBag.LinkBack = "<li><a href=" + Url.ProductManufacturerCreateUrl()+">Nhà Sản Xuất</a> </li>";
+    ViewBag.MenuValue = 1;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div>
+    <div>
+        <div id="close" class="mheader">
+            <a href="@Url.ProductManufacturerCreateUrl()" title="Thêm mới">
+                <img src="@Url.CreateNewImageUrl()" title="Thêm mới" />
+            </a>
+        </div>
+        <hr />
+        <div style="width: 100%;">
+            <div class="RadGrid RadGrid_MetroTouch table table-striped table-bordered table-hover dataTable" tabindex="0">
+                @Html.Raw(Model.Html)
+            </div>
+        </div>
+        <div class="wpmn_page_navi">
+            <a href="@Url.ProductManufacturerIndexUrl(new {pPage =Model.BackPage})">Back</a>
+                <span class="current">@Model.Page</span>
+            <a href="@Url.ProductManufacturerIndexUrl(new {pPage =Model.NextPage})">Next</a>
+        </div>
+        <hr />
+    </div>
+    <div style="display: none;" role="status" aria-hidden="true">
+        <div class="area"></div>
+        <div class="form-loading"></div>
+    </div>
+</div>
+=======
+﻿@using V308CMS.Admin.Helpers
+@using V308CMS.Admin.Helpers.UI
+@using V308CMS.Admin.Helpers.Url
+@using V308CMS.Admin.Models.UI
+@using V308CMS.Common
+@model List<V308CMS.Data.ProductManufacturer>
+@{
+    ViewBag.Title = "Danh sách Nhà sản xuất";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+@Html.Partial("UI/_AddNewButton", Url.ProductManufacturerCreateUrl())
+@if (Model.Any())
+{
+    <div class="panel panel-default">
+        <!-- /.panel-heading -->
+        <div class="panel-body">
+            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Tên</th>
+                        <th>Ảnh</th>
+                        <th>Mô tả</th>
+                        <th>Ngày tạo</th>
+                        <th>Trạng thái</th>
+                        <th>Thứ tự</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                        var manufacturer = Model[i];
+                        <tr>
+                            <td style="text-align: center">
+                                @(i + 1)
+                            </td>
+                            <td>
+                                <a title="Cập nhật Nhà sản xuất @manufacturer.Name" class="btn btn-link" href="@Url.ProductManufacturerEditUrl(new {manufacturer.ID})">
+                                    @manufacturer.Name
+                                </a>
+                            </td>
+                            <td>
+                                <img class="image-brand img-circle" src="@manufacturer.Image.ToImageUrl()" alt="@manufacturer.Name" />
+                            </td>
+                            <td>
+                                @manufacturer.Detail.ToTitle()
+                            </td>
+                            <td>
+                                @manufacturer.Date.ToDdmmyyyy()
+                            </td>
+                            <td>
+                                @manufacturer.Number
+                            </td>
+                            <td>@manufacturer.Status.ToStateLabelHtml()</td>
+                            <td style="width: 200px">
+                                @Html.Partial("UI/_EditButton", new ButtonModels
+                               {
+                                   Id = string.Format("manufacturer_{0}", manufacturer.ID),
+                                   Href = Url.ProductManufacturerEditUrl(new { manufacturer.ID }),
+                                   Title = "Cập nhật thông tin Nhà sản xuất " + manufacturer.Name
+                               })
+                                @Html.Partial("UI/_DeleteForm", new DeleteFormModels
+                               {
+                                   NameOfId = "Id",
+                                   ValueOfId = manufacturer.ID,
+                                   IsConfirm = true,
+                                   Url = Url.ProductManufacturerDeleteUrl()
+                               })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#dataTables-example').DataTable({
+            responsive: true
+        });
+    });
+</script>
+
+>>>>>>> toai-neal

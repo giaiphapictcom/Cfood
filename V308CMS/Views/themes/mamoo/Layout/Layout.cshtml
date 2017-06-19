@@ -1,0 +1,39 @@
+﻿<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if IE 9 ]><html class="ie9 no-js"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<head>
+     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    @RenderSection("header",false)
+    @Html.Action("Resources", "Block")
+
+</head>
+<body>
+    <header>
+            @Html.Action("Header", "Block")
+    </header>
+    <nav class="navbar-toggleable-md  bg-mpstart">
+	    <div class="container">
+	        <div class="collapse navbar-collapse">@Html.Action("MainMenu", "Block")</div>
+	    </div>
+    </nav>
+    <div class="main-content">
+	    <div class="container">
+		    <div class="row">
+                <div class="col-lg-3 col-md-12 col-12 mb-4">
+                    <div id="leftcol"> @Html.Action("LeftColumn", "Block")</div>
+                </div>
+                <div class="col-lg-9 col-md-12 col-12 ">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+    </div>
+    @Html.Action("Footer", "Block")
+</body>
+</html>

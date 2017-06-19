@@ -1,0 +1,84 @@
+.group-red .block-title h2 {
+    background-color: #ef5350
+}
+.group-red .title-container {
+    border-bottom: 1px solid #ef5350;
+}
+
+.group-red .nav-tabs > li {
+    border: 1px solid transparent;
+    border-bottom: 0;
+}
+
+.group-red .nav-tabs > li.active {
+    border: 1px solid #ef5350;
+    border-bottom: 0;
+}
+
+.group-red .nav-tabs > li.active a {
+    color: #ef5350;
+}
+
+.group-red .block-title h2 > i {
+    border: 2px solid #ef5350;
+    color: #ef5350;
+}
+
+
+/*
+    Blue
+ */
+.group-blue .block-title h2 {
+    background-color: #00c2bb
+}
+.group-blue .title-container {
+    border-bottom: 1px solid #00c2bb;
+}
+
+.group-blue .nav-tabs > li {
+    border: 1px solid transparent;
+    border-bottom: 0;
+}
+
+.group-blue .nav-tabs > li.active {
+    border: 1px solid #00c2bb;
+    border-bottom: 0;
+}
+
+.group-blue .nav-tabs > li.active a {
+    color: #00c2bb;
+}
+
+.group-blue .block-title h2 > i {
+    border: 2px solid #00c2bb;
+    color: #00c2bb;
+}
+
+/*
+    Green
+ */
+.group-green .block-title h2 {
+    background-color: #00a360
+}
+.group-green .title-container {
+    border-bottom: 1px solid #00a360;
+}
+
+.group-green .nav-tabs > li {
+    border: 1px solid transparent;
+    border-bottom: 0;
+}
+
+.group-green .nav-tabs > li.active {
+    border: 1px solid #00a360;
+    border-bottom: 0;
+}
+
+.group-green .nav-tabs > li.active a {
+    color: #00a360;
+}
+
+.group-green .block-title h2 > i {
+    border: 2px solid #00a360;
+    color: #00a360;
+}

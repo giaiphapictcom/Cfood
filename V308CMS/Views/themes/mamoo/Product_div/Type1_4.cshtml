@@ -1,0 +1,40 @@
+﻿@using V308CMS.Common;
+@if (Model != null) { 
+    <div class="item-type-1 col-12 col-md-6 col-lg-4">
+        <div class="special">
+            @if (Model.Hot == true) { 
+                <span class="hot">Hot</span>
+            }
+            @* <span class="new">New</span> *@
+            
+        </div>
+        
+	    <div class="thumb">
+            <a href="/@Ultility.LocDau(@Model.Name)-d@(@Model.ID).html">
+            <img src="@ImageHelper.Crop(@Model.Image,235)" class="img-fluid mx-auto d-block" alt="@Model.Name" />
+            </a>
+	    </div>
+	    <div class="name"><a href="/@Ultility.LocDau(@Model.Name)-d@(@Model.ID).html">@Model.Name</a></div>
+        @if (Model.Price > 0) { 
+            <div class="price">
+            @if (Model.SaleOff > 0)
+            {
+                <span class="sale">@String.Format("{0: 0,0}", Model.Price - (Model.Price / 100) * Model.SaleOff) ) @ViewBag.MoneyShort</span>
+	            <span class="discount float-right">@String.Format("{0: 0,0}", (Model.Price)) @ViewBag.MoneyShort</span>
+            }
+            else
+            {
+                <span class="sale">@String.Format("{0: 0,0}", (Model.Price)) @ViewBag.MoneyShort</span>
+            }
+	        </div>
+        }
+
+        <div class="detail">
+		    <p>
+			    <a href="#" class="like"><i class="icon-heart"></i></a>
+			    <a href="javascript:void(0);" class="buy ml-3" add-cart="@Model.ID"><i class="icon-basket"></i></a>
+            </p>
+			<p class="pt-3"><a href="/@V308CMS.Common.Ultility.LocDau(@Model.Name)-d@(@Model.ID).html" class="btn ">Xem chi tiết</a></p>
+        </div>
+	</div>
+}
