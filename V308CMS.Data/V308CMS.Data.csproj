@@ -213,6 +213,7 @@
     <Compile Include="Theme.cs" />
     <Compile Include="TicketRepository.cs" />
     <Compile Include="V308HTMLHELPER.cs" />
+    <Compile Include="VisisterRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="bin\EntityFramework.dll" />

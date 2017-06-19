@@ -372,6 +372,12 @@ namespace V308CMS.Data
             set;
         }
 
+        public DbSet<Visister> VisisterTbl
+        {
+            get;
+            set;
+        }
+
         #endregion
         #region AddTo Methods
 

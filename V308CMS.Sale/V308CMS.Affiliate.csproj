@@ -1587,6 +1587,10 @@
       <Project>{4f5528a8-75f6-4b33-b254-2eaa5f916f12}</Project>
       <Name>V308CMS.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\V308CMS.Respository\V308CMS.Respository.csproj">
+      <Project>{4540f1d2-c7ac-4bc4-9e2d-f2271279aeac}</Project>
+      <Name>V308CMS.Respository</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

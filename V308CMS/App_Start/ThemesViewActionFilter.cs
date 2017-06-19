@@ -13,6 +13,9 @@ namespace V308CMS
         {
             V308CMSEntities mEntities = new V308CMSEntities();
             SiteRepository config = new SiteRepository(mEntities);
+            VisisterRepository visister = new VisisterRepository(mEntities);
+            visister.update();
+
             dynamic viewBag = filterContext.Controller.ViewBag;
 
             try {

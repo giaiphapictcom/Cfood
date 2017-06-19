@@ -1,4 +1,5 @@
-﻿<header id="header-content" class="">
+﻿@using V308CMS.Common;
+<header id="header-content" class="">
     <div class="header">
         <div class="header-body">
             <div class="container">
@@ -113,23 +114,14 @@
 
                                     <div class="megamenu">
                                         <ul class="navbar-nav site-nav">
-
-                                            <li class="menu-dropdown  level-top   active">
-                                                <a class="dropdown-toggle has-category" href="/" title="@ViewBag.SiteName">
-                                                    <span>Trang Chủ</span>
-                                                </a>
-                                            </li>
                                             @if (Model.menu != null && Model.menu.Count > 0)
                                             {
-                                                foreach (V308CMS.Data.NewsGroups menu in Model.menu)
+                                                foreach (V308CMS.Data.Models.MenuConfig menu in Model.menu)
                                                 {
                                                     if (!menu.Name.ToLower().Equals("footer"))
                                                     {
                                                 <li class="menu-dropdown level-top active">
-                                                    @V308CMS.Common.url.anchor_menu(menu.Name,menu.Link,"dropdown-toggle has-category")
-                                                    @*<a class="dropdown-toggle has-category" href="@V308CMS.Common.url.menu_src(menu.Link)" title="@menu.Name">
-                                                        <span class="">@menu.Name</span>
-                                                    </a>*@
+                                                    @url.anchor_menu(menu.Name,menu.Link,"dropdown-toggle has-category")
                                                 </li>
 
                                                     }

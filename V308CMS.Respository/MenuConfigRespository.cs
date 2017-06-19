@@ -137,12 +137,30 @@ namespace V308CMS.Respository
                     select item
                 ).Skip((page - 1) * pageSize).Take(pageSize).ToList();
         }
-        public List<MenuConfig> GetAll()
+        public List<MenuConfig> GetAll(string site = "")
         {
-            return (from item in _entities.MenuConfig
-                orderby item.Order
-                select item
-                ).ToList();
+            List<MenuConfig> items = new List<MenuConfig>();
+            try {
+                var menus = from item in _entities.MenuConfig
+                            where item.Site == "" || item.Site.ToLower() == "home"
+                            orderby item.Order
+                            select item;
+                if ((site.Length > 0)) {
+                    menus = from item in _entities.MenuConfig
+                            where item.Site.ToLower() == site.ToLower()
+                            orderby item.Order
+                            select item;
+                }
+                if (menus.Count() > 0) {
+                    items = menus.ToList();
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+            }
+            return items;
         }
 
 

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using V308CMS.Common;
 using V308CMS.Data;
+using V308CMS.Respository;
 
 namespace V308CMS.Sale.Controllers
 {
@@ -22,6 +23,7 @@ namespace V308CMS.Sale.Controllers
         ImagesRepository imagesRepos;
         NewsRepository NewsRepos;
         AccountRepository accountRepos;
+        MenuConfigRespository MenuRepos;
 
         private void CreateRepos()
         {
@@ -30,6 +32,7 @@ namespace V308CMS.Sale.Controllers
             imagesRepos = new ImagesRepository(mEntities);
             NewsRepos = new NewsRepository(mEntities);
             accountRepos = new AccountRepository(mEntities);
+            MenuRepos = new MenuConfigRespository(mEntities);
 
         }
         private void DisposeRepos()
@@ -39,7 +42,9 @@ namespace V308CMS.Sale.Controllers
             imagesRepos.Dispose();
             NewsRepos.Dispose();
             accountRepos.Dispose();
+            MenuRepos.Dispose();
             mEntities.Dispose();
+
         }
         #endregion
 
@@ -94,21 +99,26 @@ namespace V308CMS.Sale.Controllers
         {
             public Account Account { get; set; }
             public bool IsAuthenticated { get; set; }
-            public List<NewsGroups> menu { get; set; }
+            public List<V308CMS.Data.Models.MenuConfig> menu { get; set; }
         }
 
         public ActionResult Header()
         {
-            CreateRepos();
+            
             try
             {
+                CreateRepos();
                 //var menu = NewsRepos.GetNewsGroup();
                 HeaderPage Model = new HeaderPage();
-                NewsGroups MenuCategory = NewsRepos.SearchNewsGroup("menu-affiliate");
-                if (MenuCategory != null)
-                {
-                    Model.menu = NewsRepos.GetNewsGroup(MenuCategory.ID, true, 6);
-                }
+                
+                Model.menu = MenuRepos.GetAll("affiliate");
+
+                //NewsGroups MenuCategory = NewsRepos.SearchNewsGroup("menu-affiliate");
+                //if (MenuCategory != null)
+                //{
+                //    //Model.menu = NewsRepos.GetNewsGroup(MenuCategory.ID, true, 6);
+                    
+                //}
                 if (HttpContext.User.Identity.IsAuthenticated == true && Session["UserId"] != null)
                 {
                     //lay thong tin chi tiet user

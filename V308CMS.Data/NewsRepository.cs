@@ -720,7 +720,7 @@ namespace V308CMS.Data
                 }
             }
 
-            public NewsGroups SearchNewsGroupByAlias(string alias)
+            public NewsGroups SearchNewsGroupByAlias(string alias, string site="")
             {
                 try
                 {

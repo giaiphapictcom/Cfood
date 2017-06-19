@@ -62,28 +62,35 @@ namespace V308CMS.Common
 
             string target = "";
             string src_return = "";
-            if (src.Length > 0)
+            if (src != null && src.Length > 0)
             {
-                Uri myUri = new Uri(src);
-                string host = myUri.Host;
-                if (host != domain)
+                if (Uri.IsWellFormedUriString(src, UriKind.Absolute))
                 {
-                    target = "target=\"_blank\"";
-                }
-
-                if (host.Length < 1)
-                {
-                    src_return = "//" + host;
-                    if (port != 80)
+                    Uri myUri = new Uri(src);
+                    string host = myUri.Host;
+                    if (host != domain)
                     {
-                        src_return += ":" + port.ToString();
+                        target = "target=\"_blank\"";
                     }
-                    src_return += "/" + src;
+
+                    if (host.Length < 1)
+                    {
+                        src_return = "//" + host;
+                        if (port != 80)
+                        {
+                            src_return += ":" + port.ToString();
+                        }
+                        src_return += "/" + src;
+                    }
+                    else
+                    {
+                        src_return = src;
+                    }
                 }
-                else
-                {
+                else {
                     src_return = src;
                 }
+                
             }
             else {
                 src_return = "/";

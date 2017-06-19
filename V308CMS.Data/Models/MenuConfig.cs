@@ -23,6 +23,9 @@ namespace V308CMS.Data.Models
         private string _Target;
         public string Target { get { if (String.IsNullOrEmpty(_Target)) return ""; else return _Target; } set { _Target = value; } }
 
+        private string _Site;
+        public string Site { get { if (String.IsNullOrEmpty(_Site)) return "home"; else return _Site; } set { _Site = value; } }
+
         public byte State { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
