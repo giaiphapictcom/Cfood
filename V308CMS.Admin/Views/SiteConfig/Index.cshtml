@@ -16,7 +16,7 @@
                         <th>#</th>
                         <th>Tên</th>
                         <th>Giá trị</th>
-                        <th>Hành động</th>
+                        <th style="text-align: center">Hành động</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,7 +35,7 @@
                             <td>
                                 @config.Content.ToTitle()
                             </td>
-                            <td style="width: 200px">
+                            <td style="width: 200px; text-align: center">
                                 @Html.Partial("UI/_EditButton", new ButtonModels
                                {
                                    Id = string.Format("config_{0}", config.Id),

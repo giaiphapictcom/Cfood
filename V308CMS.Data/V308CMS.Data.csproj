@@ -133,8 +133,11 @@
     <Compile Include="AccountRepository.cs" />
     <Compile Include="EmailRepository.cs" />
     <Compile Include="Enum\AccountType.cs" />
+    <Compile Include="Enum\DiscountTypeEnum.cs" />
     <Compile Include="Enum\EmailType.cs" />
     <Compile Include="Enum\NewsSiteEnum.cs" />
+    <Compile Include="Enum\OrderSearchTypeEnum.cs" />
+    <Compile Include="Enum\OrderStatusEnum.cs" />
     <Compile Include="Enum\PositionEnum.cs" />
     <Compile Include="Enum\ProductCategoryLevelEnum.cs" />
     <Compile Include="Enum\QuantityFilterEnum.cs" />

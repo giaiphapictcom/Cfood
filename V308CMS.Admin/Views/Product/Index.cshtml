@@ -149,16 +149,14 @@
                         <th>Tên</th>
                         <th>Ảnh</th>
                         <th>Mã</th>
-                        <th>
-                            Ck
-                        </th>
+                        <th>Ck</th>
                         <th>Chuyên mục</th>
                         <th>Giá</th>
                         <th>SL</th>
                         <th>Thứ tự</th>
                         <th>Ngày đăng</th>
-                        <th>Trạng thái</th>
-                        <th>Hành động</th>
+                        <th style="text-align: center">Trạng thái</th>
+                        <th style="text-align: center">Hành động</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -203,13 +201,13 @@
                             <td style="text-align: center">
                                 <form id="frm-change-status" action="@Url.ProductChangeStatusUrl()" method="POST">
                                     <input type="hidden" value="@product.Id" name="id" />
-                                    <button style="@(product.Status == true ? " background-color:#5cb85c;color:#FFFFFF;padding: 5px;border-radius: 5px" : "background-color:#d9534f;color:#FFFFFF;padding: 5px;border-radius: 5px" )" onclick="return confirm('Bạn chắc chắn muốn thay đổi trạng thái sản phẩm này?')">
+                                    <button class="@(product.Status == true ? "btn-active" : "btn-lock" )" onclick="return confirm('Bạn chắc chắn muốn thay đổi trạng thái sản phẩm này?')">
                                         <i class="fa  @(product.Status == true ? " fa-unlock" : "fa-lock" )"></i>
                                     </button>
 
                                 </form>
                             </td>
-                            <td style="width: 100px">
+                            <td style="width: 100px;text-align: center">
                                 @Html.Partial("UI/_EditButton", new ButtonModels
                                {
                                    Id = string.Format("product_{0}", product.Id),

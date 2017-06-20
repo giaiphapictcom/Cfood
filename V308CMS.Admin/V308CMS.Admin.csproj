@@ -166,6 +166,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Attributes\SkipCheckPermissionAttribute.cs" />
     <Compile Include="Controllers\AdminAccountController.cs" />
+    <Compile Include="Controllers\AsyncController.cs" />
     <Compile Include="Controllers\BannerController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
@@ -215,9 +216,11 @@
     <Compile Include="Helpers\Result.cs" />
     <Compile Include="Helpers\UI\DisplayColorHelper.cs" />
     <Compile Include="Helpers\UI\NewsCategoryUIHelper.cs" />
+    <Compile Include="Helpers\UI\OrderStateHelper.cs" />
     <Compile Include="Helpers\UI\StateLabelHelper.cs" />
     <Compile Include="Helpers\Url\AccountUrlHelper.cs" />
     <Compile Include="Helpers\Url\AdminAccountUrlHelper.cs" />
+    <Compile Include="Helpers\Url\AsyncUrlHelper.cs" />
     <Compile Include="Helpers\Url\BannerUrlHelper.cs" />
     <Compile Include="Helpers\Url\ContactUrlHelper.cs" />
     <Compile Include="Helpers\Url\CountryUrlHelper.cs" />
@@ -257,6 +260,8 @@
     <Compile Include="Attributes\CheckGroupPermissionAttribute.cs" />
     <Compile Include="Models\AdminChangePassworModels.cs" />
     <Compile Include="Models\BannerModels.cs" />
+    <Compile Include="Models\CountBoxType.cs" />
+    <Compile Include="Models\CountItems.cs" />
     <Compile Include="Models\ProfileViewModels.cs" />
     <Compile Include="Models\UserChangePassworModels.cs" />
     <Compile Include="Models\AdminModels.cs" />
@@ -309,6 +314,7 @@
     <Content Include="Content\assets\css\chosen.css" />
     <Content Include="Content\assets\css\colorbox.css" />
     <Content Include="Content\assets\css\colorpicker.css" />
+    <Content Include="Content\assets\css\dashboard.css" />
     <Content Include="Content\assets\css\datepicker.css" />
     <Content Include="Content\assets\css\daterangepicker.css" />
     <Content Include="Content\assets\css\font-awesome-ie7.min.css" />
@@ -316,6 +322,7 @@
     <Content Include="Content\assets\css\fullcalendar.css" />
     <Content Include="Content\assets\css\jquery-ui-1.10.3.custom.min.css" />
     <Content Include="Content\assets\css\jquery.gritter.css" />
+    <Content Include="Content\assets\css\kendo.default.min.css" />
     <Content Include="Content\assets\css\login.css" />
     <Content Include="Content\assets\css\prettify.css" />
     <Content Include="Content\assets\css\sb-admin-2.css" />
@@ -1345,6 +1352,7 @@
     <Content Include="Content\Plugins\ckfinder\skins\v1\skin.js" />
     <Content Include="Content\Plugins\ckfinder\skins\v1\uipanel.css" />
     <Content Include="Content\Plugins\ckfinder\translations.txt" />
+    <Content Include="Content\Scripts\app.js" />
     <Content Include="Content\Scripts\enhance.js" />
     <Content Include="Content\Scripts\excanvas.js" />
     <Content Include="Content\Scripts\functions.js" />
@@ -1888,7 +1896,6 @@
     <Content Include="Views\Contact\Index.cshtml" />
     <Content Include="Views\Contact\Edit.cshtml" />
     <Content Include="Views\Contact\_ContactForm.cshtml" />
-    <Content Include="Views\Email\Create.cshtml" />
     <Content Include="Views\Email\Index.cshtml" />
     <Content Include="Views\Role\Index.cshtml" />
     <Content Include="Views\Role\Create.cshtml" />
@@ -1915,6 +1922,12 @@
     <Content Include="Views\Banner\Index.cshtml" />
     <Content Include="Views\Banner\Edit.cshtml" />
     <Content Include="Views\Banner\_BannerForm.cshtml" />
+    <Content Include="Views\Email\Send.cshtml" />
+    <Content Include="Views\Email\_EmailForm.cshtml" />
+    <Content Include="Views\Async\_CountBox.cshtml" />
+    <Content Include="Views\Async\_LastestOrder.cshtml" />
+    <Content Include="Views\Async\_LastestUser.cshtml" />
+    <Content Include="Views\Async\_LastestContact.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -22,9 +22,9 @@
                         <th>Ảnh</th>
                         <th>Mô tả</th>
                         <th>Ngày tạo</th>
-                        <th>Trạng thái</th>
                         <th>Thứ tự</th>
-                        <th>Hành động</th>
+                        <th style="text-align: center">Trạng thái</th>                       
+                        <th style="text-align: center">Hành động</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -52,8 +52,8 @@
                             <td>
                                 @manufacturer.Number
                             </td>
-                            <td>@manufacturer.Status.ToStateLabelHtml()</td>
-                            <td style="width: 200px">
+                            <td style="text-align: center">@manufacturer.Status.ToStateLabelHtml()</td>
+                            <td style="width: 200px;text-align: center">
                                 @Html.Partial("UI/_EditButton", new ButtonModels
                                {
                                    Id = string.Format("manufacturer_{0}", manufacturer.ID),

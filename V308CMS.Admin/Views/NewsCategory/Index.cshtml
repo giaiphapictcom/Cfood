@@ -25,7 +25,7 @@
                         </a>                            
                     </td>
                     <td>@category.Date.ToDdmmyyyy()</td>
-                    <td>
+                    <td style="text-align: center">
                         @Html.Partial("UI/_ChangeStateForm", new ChangeStateFormModels
                        {
                            NameOfId = "Id",
@@ -35,7 +35,7 @@
                            Url = Url.NewsCategoryChangeStateUrl()
                        })
                     </td>
-                    <td style='width: 200px'>
+                    <td style='width: 200px;text-align: center'>
                         @Html.Partial("UI/_EditButton", new ButtonModels
                         {
                             Id = string.Format("category_{0}", category.ID),
@@ -66,8 +66,8 @@
                     <tr>
                         <th>Tên</th>
                         <th>Ngày tạo</th>
-                        <th>Trạng thái</th>
-                        <th>Hành động</th>
+                        <th style="text-align: center">Trạng thái</th>
+                        <th style="text-align: center">Hành động</th>
                     </tr>
                 </thead>
                 <tbody>

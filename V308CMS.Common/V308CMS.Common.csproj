@@ -118,6 +118,7 @@
     <Compile Include="EmailSender.cs" />
     <Compile Include="Emotions.cs" />
     <Compile Include="EncryptionMD5.cs" />
+    <Compile Include="EnumHelper.cs" />
     <Compile Include="FilterChat.cs" />
     <Compile Include="ImageHelper.cs" />
     <Compile Include="ListExtensions.cs" />

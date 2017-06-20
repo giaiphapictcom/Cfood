@@ -358,7 +358,6 @@
                 }
                 @if (IsHasPermission(listRolePermission, "Product", 1))
                 {
-
                     <li>
                         <a href="@Url.ProductCreateUrl()" title="Loại sản phẩm">Thêm mới</a>
                     </li>
@@ -550,8 +549,7 @@
                         <a href="@Url.SiteConfigCreateUrl()">Thêm mới</a>
                     </li>
 
-                }
-                }
+                }                
                 @if (IsHasPermission(listRolePermission, "EmailConfig", 0) || IsHasPermission(listRolePermission, "EmailConfig", 1))
                 {
 

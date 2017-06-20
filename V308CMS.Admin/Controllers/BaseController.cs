@@ -40,9 +40,9 @@ namespace V308CMS.Admin.Controllers
             ProductService = new ProductRespository();
             AdminAccountService = new AdminRespository();
             BannerService = new BannerRespository();
-           
-          
+            OrderService = new ProductOrderRespository();
         }
+        public ProductOrderRespository OrderService { get; set; }
         public BannerRespository BannerService { get; set; }
         public AdminRespository AdminAccountService { get; set; }
         public ProductRespository ProductService { get; set; }

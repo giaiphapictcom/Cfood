@@ -18,6 +18,11 @@ namespace V308CMS.Admin.Helpers.Url
         {
             return helper.Action(action, controller, routeValue);
         }
+        public static string ProductOrderEditUrl(this UrlHelper helper, object routeValue = null, string controller = "productorder",
+           string action = "edit")
+        {
+            return helper.Action(action, controller, routeValue);
+        }
         public static string ProductOrderExportToExcelUrl(this UrlHelper helper, object routeValue = null, string controller = "productorder",
            string action = "orderexporttoexcel")
         {
