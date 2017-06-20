@@ -8,11 +8,11 @@ namespace V308CMS.Admin.Models
     {
         [Required(ErrorMessage = "Vui lòng nhập tên cấu hình.")]
         [Display(Name = "Tên thuộc tính : ")]
-        public string Name { get; set; }
+        public string name { get; set; }
         [Required(ErrorMessage = "Vui lòng nhập giá trị cấu hình.")]
         [Display(Name = "Giá trị :")]
-        public string Content { get; set; }
+        public string content { get; set; }
         [Required(ErrorMessage = "Id trống.")]
-        public int Id { get; set; }
+        public int id { get; set; }
     }
 }

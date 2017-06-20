@@ -36,10 +36,10 @@ namespace V308CMS.Admin.Controllers
 
                 if (result == "exists")
                 {
-                    ModelState.AddModelError("", string.Format("Tên cấu hình {0} đã tồn tại trên hệ thống.",config.Name) );
+                    ModelState.AddModelError("", string.Format("Tên cấu hình {0} đã tồn tại trên hệ thống.",config.name) );
                     return View("Create", config);
                 }
-                SetFlashMessage( string.Format("Thêm cấu hình '{0}' thành công.",config.Name) );
+                SetFlashMessage( string.Format("Thêm cấu hình '{0}' thành công.",config.name) );
                 if (config.SaveList)
                 {
                     return RedirectToAction("Index");
@@ -77,7 +77,7 @@ namespace V308CMS.Admin.Controllers
                     ModelState.AddModelError("", "Cấu hình không tồn tại trên hệ thống.");
                     return View("Edit", config);
                 }
-                SetFlashMessage( string.Format("Sửa cấu hình '{0}' thành công.",config.Name) );
+                SetFlashMessage( string.Format("Sửa cấu hình '{0}' thành công.",config.name) );
                 if (config.SaveList)
                 {
                     return RedirectToAction("Index");

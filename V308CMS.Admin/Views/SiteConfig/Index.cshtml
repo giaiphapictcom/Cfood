@@ -29,24 +29,24 @@
                                 @(i + 1)
                             </td>
                             <td>
-                                <a title="Cập nhật thông tin cấu hình @config.Name" class="btn btn-link" href="@Url.SiteConfigEditUrl(new {config.Id})">
-                                    @config.Name
+                                <a title="Cập nhật thông tin cấu hình @config.name" class="btn btn-link" href="@Url.SiteConfigEditUrl(new {config.id})">
+                                    @config.name
                                 </a>
                             </td>
                             <td>
-                                @config.Content.ToTitle()
+                                @config.content.ToTitle()
                             </td>
                             <td style="width: 200px; text-align: center">
                                 @Html.Partial("UI/_EditButton", new ButtonModels
                                {
-                                   Id = string.Format("config_{0}", config.Id),
-                                   Href = Url.SiteConfigEditUrl(new { config.Id }),
-                                   Title = "Cập nhật thông tin cấu hình " + config.Name
+                                   Id = string.Format("config_{0}", config.id),
+                                   Href = Url.SiteConfigEditUrl(new { config.id }),
+                                   Title = "Cập nhật thông tin cấu hình " + config.name
                                })
                                 @Html.Partial("UI/_DeleteForm", new DeleteFormModels
                                {
                                    NameOfId = "Id",
-                                   ValueOfId = config.Id,
+                                   ValueOfId = config.id,
                                    IsConfirm = true,
                                    Url = Url.SiteConfigDeleteUrl()
                                })
