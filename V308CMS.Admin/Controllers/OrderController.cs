@@ -7,6 +7,33 @@ namespace V308CMS.Admin.Controllers
     [CheckGroupPermission(true, "Đơn hàng")]
     public class OrderController : BaseController
     {
+        public ActionResult Index()
+        {
+            return View("Index");
+        }
+
+        public ActionResult Detail(int id)
+        {
+            return View("Detail");
+        }
+
+        public ActionResult OnUpdate()
+        {
+            return View("Edit");
+
+        }
+
+        public ActionResult OnChangeStatus()
+        {
+            return Content("Ok");
+        }
+        [HttpPost]
+        public ActionResult OnDelete()
+        {
+            return Content("Ok");
+        }
+
+
        // #region ORDER
         
        // [CheckAdminAuthorize(3)]
