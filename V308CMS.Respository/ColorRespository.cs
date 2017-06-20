@@ -13,7 +13,6 @@ namespace V308CMS.Respository
 {
     public interface IColorRespository
     {        
-
         string Insert(
             string name, string code,
             string description, DateTime createdAt,

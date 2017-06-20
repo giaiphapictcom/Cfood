@@ -21,7 +21,7 @@
                         <th>Số điện thoại</th>                     
                         <th>Tin nhắn</th>                      
                         <th>Ngày gửi</th>                     
-                        <th>Hành động</th>
+                        <th style="text-align: center">Hành động</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -44,7 +44,7 @@
                             <td>@contact.Message.ToTitle()</td>
                             <td>@contact.CreatedDate.ToDdmmyyyy()</td>
                          
-                            <td style="width: 200px">
+                            <td style="width: 200px;text-align: center">
                                 @Html.Partial("UI/_EditButton", new ButtonModels
                                {
                                    Id = string.Format("contact_{0}", contact.ID),

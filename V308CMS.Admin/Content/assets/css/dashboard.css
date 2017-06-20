@@ -272,3 +272,22 @@ span.grid-report-item {
     background-color: #00c0ef;
     border-color: #00acd6;
 }
+.w50-column {
+    width: 50px;
+    
+}
+.w250-column {
+    width: 250px;
+    
+}
+.w200-column {
+    width: 200px;
+    
+}
+.w500-column {
+    width: 500px;
+    
+}
+.w100-column {
+   width: 100px;
+}

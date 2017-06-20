@@ -19,8 +19,8 @@
                         <th>Tên</th>
                         <th>Ngày tạo</th>
                         <th>Ngày cập nhật</th>
-                        <th>Trạng thái</th>
-                        <th>Hành động</th>
+                        <th style="text-align: center">Trạng thái</th>
+                        <th style="text-align: center">Hành động</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,8 +43,8 @@
                             <td>
                                 @unit.UpdatedAt.ToDdmmyyyy()
                             </td>
-                            <td>@unit.State.ToStateLabelHtml()</td>
-                            <td style="width: 200px">
+                            <td style="text-align: center">@unit.State.ToStateLabelHtml()</td>
+                            <td style="width: 200px; text-align: center">
                                 @Html.Partial("UI/_EditButton", new ButtonModels
                                {
                                    Id = string.Format("unit_{0}", unit.Id),

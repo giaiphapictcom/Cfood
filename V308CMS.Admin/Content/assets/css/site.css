@@ -89,6 +89,12 @@ input[type=radio], input[type=checkbox]
 .blur {
     -webkit-filter: blur(4px)
 }
+.btn-active {
+    background-color:#5cb85c;color:#FFFFFF;padding: 5px;border-radius: 5px;width: 50px;
+}
+.btn-lock {
+    background-color:#d9534f;color:#FFFFFF;padding: 5px;border-radius: 5px;width: 50px;
+}
 
 
 >>>>>>> toai-neal

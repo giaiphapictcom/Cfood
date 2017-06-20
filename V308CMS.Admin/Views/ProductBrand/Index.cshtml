@@ -20,8 +20,8 @@
                         <th>Tên</th>
                         <th>Ảnh</th>
                         <th>Loại sản phẩm</th>
-                        <th>Trạng thái</th>
-                        <th>Hành động</th>
+                        <th style="text-align: center">Trạng thái</th>
+                        <th style="text-align: center">Hành động</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,8 +43,8 @@
                             <td>
                                 @brand.ProductType.Name.ToTitle()
                             </td>
-                            <td>@brand.status.ToStateLabel()</td>
-                            <td style="width: 200px">
+                            <td style="text-align: center">@brand.status.ToStateLabel()</td>
+                            <td style="width: 200px;text-align: center">
                                 @Html.Partial("UI/_EditButton", new ButtonModels
                                {
                                    Id = string.Format("brand_{0}", brand.id),

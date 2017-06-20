@@ -25,8 +25,8 @@
                         <th>Tài khoản</th>
                         <th>Mật khẩu</th>
                         <th>Ngày tạo</th>
-                        <th>Trạng thái</th>
-                        <th>Hành động</th>
+                        <th style="text-align: center">Trạng thái</th>
+                        <th style="text-align: center">Hành động</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -50,8 +50,8 @@
                             <td>@email.UserName</td>
                             <td>@email.Password</td>
                             <td>@email.CreatedDate.ToDdmmyyyy()</td>
-                            <td>@email.State.ToStateLabelHtml()</td>
-                            <td style="width: 200px">
+                            <td style="text-align: center">@email.State.ToStateLabelHtml()</td>
+                            <td style="width: 200px; text-align: center">
                                 @Html.Partial("UI/_EditButton", new ButtonModels
                                {
                                    Id = string.Format("email_{0}", email.Id),

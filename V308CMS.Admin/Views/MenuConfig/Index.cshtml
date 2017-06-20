@@ -23,11 +23,8 @@
                         <th>Mã</th>
                         <th>Link</th>
                         <th>Thứ tự</th>
-                        <th>Trạng thái</th>
-                        <th>Ngày tạo</th>
-                        <th>Ngày cập nhật</th>
-                       
-                        <th>Hành động</th>
+                        <th style="text-align: center">Trạng thái</th>                                                          
+                        <th style="text-align: center">Hành động</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -53,11 +50,8 @@
                                 </a>
                             </td>
                             <td>@menu.Order</td>
-                            <td>@Html.Raw(menu.State.ToStateLabelHtml())</td>
-                            <td>@menu.CreatedAt.ToDdmmyyyy()</td>
-                            <td>@menu.UpdatedAt.ToDdmmyyyy()</td>
-                           
-                            <td style="width: 200px">
+                            <td style="text-align: center">@Html.Raw(menu.State.ToStateLabelHtml())</td>                                                    
+                            <td style="width: 200px; text-align: center">
                                 @Html.Partial("UI/_EditButton", new ButtonModels
                                {
                                    Id = string.Format("config_{0}", menu.Id),

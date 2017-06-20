@@ -176,6 +176,7 @@
     <Compile Include="Controllers\SupportTypeController.cs" />
     <Compile Include="Attributes\SkipCheckPermissionAttribute.cs" />
     <Compile Include="Controllers\AdminAccountController.cs" />
+    <Compile Include="Controllers\AsyncController.cs" />
     <Compile Include="Controllers\BannerController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
@@ -225,6 +226,7 @@
     <Compile Include="Helpers\Result.cs" />
     <Compile Include="Helpers\UI\DisplayColorHelper.cs" />
     <Compile Include="Helpers\UI\NewsCategoryUIHelper.cs" />
+    <Compile Include="Helpers\UI\OrderStateHelper.cs" />
     <Compile Include="Helpers\UI\StateLabelHelper.cs" />
     <Compile Include="Helpers\Url\AccountUrlHelper.cs" />
     <Compile Include="Helpers\Url\AdminAccountUrlHelper.cs" />
@@ -1362,6 +1364,7 @@
     <Content Include="Content\Plugins\ckfinder\skins\v1\skin.js" />
     <Content Include="Content\Plugins\ckfinder\skins\v1\uipanel.css" />
     <Content Include="Content\Plugins\ckfinder\translations.txt" />
+    <Content Include="Content\Scripts\app.js" />
     <Content Include="Content\Scripts\enhance.js" />
     <Content Include="Content\Scripts\excanvas.js" />
     <Content Include="Content\Scripts\functions.js" />
@@ -1958,7 +1961,6 @@
     <Content Include="Views\Contact\Index.cshtml" />
     <Content Include="Views\Contact\Edit.cshtml" />
     <Content Include="Views\Contact\_ContactForm.cshtml" />
-    <Content Include="Views\Email\Create.cshtml" />
     <Content Include="Views\Email\Index.cshtml" />
     <Content Include="Views\Role\Index.cshtml" />
     <Content Include="Views\Role\Create.cshtml" />
@@ -1985,6 +1987,7 @@
     <Content Include="Views\Banner\Index.cshtml" />
     <Content Include="Views\Banner\Edit.cshtml" />
     <Content Include="Views\Banner\_BannerForm.cshtml" />
+<<<<<<< HEAD
     <Content Include="Views\Home\IndexV2.cshtml" />
     <Content Include="Views\Async\_CountBox.cshtml" />
     <Content Include="Views\Async\_CountContact.cshtml" />
@@ -1994,6 +1997,14 @@
     <Content Include="Views\Async\_LastestContact.cshtml" />
     <Content Include="Views\Async\_LastestOrder.cshtml" />
     <Content Include="Views\Async\_LastestUser.cshtml" />
+=======
+    <Content Include="Views\Email\Send.cshtml" />
+    <Content Include="Views\Email\_EmailForm.cshtml" />
+    <Content Include="Views\Async\_CountBox.cshtml" />
+    <Content Include="Views\Async\_LastestOrder.cshtml" />
+    <Content Include="Views\Async\_LastestUser.cshtml" />
+    <Content Include="Views\Async\_LastestContact.cshtml" />
+>>>>>>> toai-neal
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

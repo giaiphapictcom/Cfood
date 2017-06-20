@@ -16,7 +16,7 @@
                     <tr>
                         <th>#</th>
                         <th>Tên</th>
-                        <th>Hành động</th>
+                        <th style="text-align: center">Hành động</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -33,7 +33,7 @@
                                 </a>
                             </td>
 
-                            <td style="width: 200px">
+                            <td style="width: 200px; text-align: center">
                                 @Html.Partial("UI/_EditButton", new ButtonModels
                                {
                                    Id = string.Format("country_{0}", country.Id),

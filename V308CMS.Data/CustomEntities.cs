@@ -1085,6 +1085,10 @@ namespace V308CMS.Data
     [Table("productorder")]
     public class ProductOrder
     {
+        public ProductOrder()
+        {
+            OrderDetail = new List<productorder_detail>();
+        }
 
         #region[Declare variables]
         private int _ID;
@@ -1122,6 +1126,8 @@ namespace V308CMS.Data
         public double? Price { get { if (_Price == null || _Price < 0) return 0; else return _Price; } set { if (_Price != value) { if (_Price < 0) _Price = 0; else _Price = value; } } }
         public string ProductDetail { get { if (String.IsNullOrEmpty(_ProductDetail)) return ""; else return _ProductDetail; } set { _ProductDetail = value; } }
 
+        public virtual ICollection<productorder_detail> OrderDetail { get; set; }
+
         #endregion
 
     }
@@ -1147,8 +1153,10 @@ namespace V308CMS.Data
         public string item_name { get { if (String.IsNullOrEmpty(ItemName)) return ""; else return ItemName; } set { ItemName = value; } }
         public double? item_price { get { if (ItemPrice == null || ItemPrice < 0) return 0; else return ItemPrice; } set { if (ItemPrice != value) { if (ItemPrice < 0) ItemPrice = 0; else ItemPrice = value; } } }
         public int? item_qty { get { if (ItemQty == null || ItemQty < 0) return 0; else return ItemQty; } set { if (ItemQty != value) { if (ItemQty < 0) ItemQty = 0; else ItemQty = value; } } }
+        [ForeignKey("order_id")]
+        [Required]
+        public virtual ProductOrder Order { get; set; }
 
-       
         #endregion
 
     }
