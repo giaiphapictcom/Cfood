@@ -40,6 +40,11 @@ namespace V308CMS.Data
             modelBuilder.Configurations.Add(new ProductSizeMap());          
             modelBuilder.Configurations.Add(new PermissionMap());
             modelBuilder.Configurations.Add(new BannerMap());
+            modelBuilder.Entity<productorder_detail>()
+            .HasRequired(p => p.Order)
+            .WithMany(p => p.OrderDetail)
+            .HasForeignKey(p => p.order_id);
+
             modelBuilder.Entity<News>()
              .HasRequired(p => p.NewsGroup)
              .WithMany(p => p.ListNews)
