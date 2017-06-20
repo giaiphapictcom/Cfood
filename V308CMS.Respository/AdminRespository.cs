@@ -18,7 +18,7 @@ namespace V308CMS.Respository
             using (var entities = new V308CMSEntities())
             {
                var checkAdmin = (from admin in entities.Admin
-                          where admin.UserName.Equals(userName) || admin.Email.Equals(password)
+                          where admin.UserName.Equals(userName) || admin.Email.Equals(userName)
                           select admin).FirstOrDefault();
                 if (checkAdmin == null)
                 {
