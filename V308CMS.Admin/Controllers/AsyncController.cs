@@ -45,7 +45,7 @@ namespace V308CMS.Admin.Controllers
         }
         public PartialViewResult LoadLastestOrderAsync()
         {
-            return PartialView("_LastestOrder");
+            return PartialView("_LastestOrder",OrderService.Take());
         }
 
         public PartialViewResult LoadLastestUserAsync()

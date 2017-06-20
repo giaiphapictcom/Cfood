@@ -34,9 +34,8 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\EntityFramework.dll</HintPath>
+    <Reference Include="EntityFramework">
+      <HintPath>..\V308CMS\Bin\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data.Entity, Version=6.9.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
     <Reference Include="System" />
@@ -70,6 +69,7 @@
     <Compile Include="ProductDistributorRespository.cs" />
     <Compile Include="ProductImageRespository.cs" />
     <Compile Include="ProductManufacturerRespository.cs" />
+    <Compile Include="ProductOrderDetailRespository.cs" />
     <Compile Include="ProductRespository.cs" />
     <Compile Include="ProductSaleOffRespository.cs" />
     <Compile Include="ProductSizeRespository.cs" />

@@ -24,8 +24,8 @@
                         <th>Địa chỉ</th>
                         <th>Ngày tạo</th>
                         <th>Ngày cập nhật</th>
-                        <th>Trạng thái</th>
-                        <th>Hành động</th>
+                        <th style="text-align: center">Trạng thái</th>
+                        <th style="text-align: center">Hành động</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -56,8 +56,8 @@
                             <td>
                                 @store.UpdatedAt.ToDdmmyyyy()
                             </td>
-                            <td>@store.State.ToStateLabelHtml()</td>
-                            <td style="width: 200px">
+                            <td style="text-align: center">@store.State.ToStateLabelHtml()</td>
+                            <td style="width: 200px; text-align: center">
                                 @Html.Partial("UI/_EditButton", new ButtonModels
                                {
                                    Id = string.Format("store_{0}", store.Id),

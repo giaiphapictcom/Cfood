@@ -88,7 +88,7 @@
             </a>
         </td>
         <td>@category.Date.ToDdmmyyyy()</td>
-        <td>
+        <td style="text-align: center">
             @Html.Partial("UI/_ChangeStateForm", new ChangeStateFormModels
                    {
                        NameOfId = "Id",
@@ -98,7 +98,7 @@
                        Url = Url.ProductTypeChangeStateUrl()
                    })
         </td>
-        <td style='width: 200px'>
+        <td style='width: 200px;text-align: center'>
             @Html.Partial("UI/_EditButton", new ButtonModels
            {
                Id = string.Format("category_{0}", category.ID),
@@ -120,33 +120,30 @@
             int parentId = 0,string parentName="",
             string strLimit = "")
 {
-if (data != null && data.Any())
-{
-    int level = 0;
-    if (Model.ParentId > 0)
+    if (data != null && data.Any())
     {
-        level = 1;
-    }
-    foreach (var productType in data)
-    {
-        if (level > 0)
+        int level = 0;
+        if (Model.ParentId > 0)
         {
-            @ShowCategoryItem(productType, parentId, parentName, strLimit)
+            level = 1;
         }
-        else
+        foreach (var productType in data)
         {
-            if (productType.Parent == parentId)
+            if (level > 0)
             {
                 @ShowCategoryItem(productType, parentId, parentName, strLimit)
-                @ShowListMenu(Model.Data, productType.ID, productType.Name, strLimit + productType.Name +"--->")
             }
+            else
+            {
+                if (productType.Parent == parentId)
+                {
+                    @ShowCategoryItem(productType, parentId, parentName, strLimit)
+                    @ShowListMenu(Model.Data, productType.ID, productType.Name, strLimit + productType.Name +"--->")
+                }
 
+            }
         }
-
-
-
     }
-}
 }
 @Html.Partial("UI/_AddNewButton", Url.ProductTypeCreateUrl())
 <div class="row">
@@ -192,8 +189,8 @@ if (data != null && data.Any())
                         <tr>
                             <th>Tên</th>
                             <th>Ngày tạo</th>
-                            <th>Trạng thái</th>
-                            <th>Hành động</th>
+                            <th style="text-align: center">Trạng thái</th>
+                            <th style="text-align: center">Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
