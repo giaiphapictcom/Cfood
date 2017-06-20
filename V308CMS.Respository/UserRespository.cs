@@ -4,7 +4,8 @@ using System.Linq;
 using V308CMS.Common;
 using V308CMS.Data;
 
-namespace V308CMS.Respository {
+namespace V308CMS.Respository
+{
     public interface IUserRespository
     {
          List<Account> GetList(
@@ -15,21 +16,15 @@ namespace V308CMS.Respository {
         
         int Count();
         List<Account> Take(int count = 10);
-
     }
 
 
     public class UserRespository: IBaseRespository<Account>, IUserRespository
     {
-
-        //private readonly V308CMSEntities _entities;
-        private V308CMSEntities _entities;
-        public UserRespository(V308CMSEntities entities)
+     
+        public UserRespository()
         {
-            //_entities = entities;
-            this._entities = entities;
-
-
+           
         }
         public Account Find(int id)
         {
@@ -151,8 +146,7 @@ namespace V308CMS.Respository {
         }
         private string HashPassword(string password, string salt)
         {
-            //return EncryptionMD5.ToMd5($"{password}|{salt}");
-            return EncryptionMD5.ToMd5( string.Format("{password}|{salt}") );
+            return EncryptionMD5.ToMd5($"{password}|{salt}");
         }
         public string ChangePassword(int id, string currentPassword, string newPassword)
         {

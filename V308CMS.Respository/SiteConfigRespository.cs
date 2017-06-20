@@ -10,19 +10,14 @@ namespace V308CMS.Respository
     }
     public class SiteConfigRespository: IBaseRespository<SiteConfig>, ISiteConfigRespository
     {
-        private V308CMSEntities _entities;
-        public SiteConfigRespository(V308CMSEntities entities)
+       
+        public SiteConfigRespository()
         {
-           this._entities = entities;
+           
         }
      
         public SiteConfig Find(int id)
         {
-
-            return (from config in _entities.SiteConfig
-                where config.id == id
-                select config).FirstOrDefault();
-
             using (var entities = new V308CMSEntities())
             {
                 return (from config in entities.SiteConfig
@@ -30,19 +25,11 @@ namespace V308CMS.Respository
                         select config).FirstOrDefault();
             }
             
-
         }
 
         public string Delete(int id)
         {
-
-            //var configItem = (from config in _entities.SiteConfig
-            //        where config.id == id
-            //        select config).FirstOrDefault();
-            //if (configItem != null)
-
             using (var entities = new V308CMSEntities())
-
             {
                 var configItem = (from config in entities.SiteConfig
                                   where config.id == id
@@ -61,8 +48,6 @@ namespace V308CMS.Respository
 
         public string Update(SiteConfig data)
         {
-
-
             using (var entities = new V308CMSEntities())
             {
                 var configItem = (from config in entities.SiteConfig
@@ -76,16 +61,13 @@ namespace V308CMS.Respository
                     return "ok";
                 }
                 return "not_exists";
-
             }
            
         }
 
         public string Insert(SiteConfig data)
         {
-
             using (var entities = new V308CMSEntities())
-
             {
                 var configItem = (from config in entities.SiteConfig
                                   where config.name == data.name
@@ -103,7 +85,6 @@ namespace V308CMS.Respository
 
         public List<SiteConfig> GetAll()
         {
-
             using (var entities = new V308CMSEntities())
             {
                 return (from config in entities.SiteConfig

@@ -18,16 +18,14 @@ namespace V308CMS.Respository
             using (var entities = new V308CMSEntities())
             {
                var checkAdmin = (from admin in entities.Admin
-                          where admin.UserName.Equals(userName) || admin.Email.Equals(userName)
+                          where admin.UserName.Equals(userName) || admin.Email.Equals(password)
                           select admin).FirstOrDefault();
                 if (checkAdmin == null)
                 {
                     return null;
-                }
-                var hashPassword = EncryptionMD5.ToMd5(password.Trim());            
-                if (checkAdmin.Password.Trim().Equals(hashPassword))
+                }                
+                if (checkAdmin.Password.Trim().Equals(EncryptionMD5.ToMd5(password.Trim())))
                 {
-                    
                     return checkAdmin;
                 }
                 return null;
