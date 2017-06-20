@@ -1,83 +1,5 @@
 ﻿@using V308CMS.Admin.Helpers
 @using V308CMS.Admin.Helpers.Url
-<<<<<<< HEAD
-@model List<V308CMS.Data.SiteConfig>
-@{
-    ViewBag.Title = "Cấu hình Website";
-    Layout = "~/Views/Shared/_LayoutV2.cshtml";
-    var message = ViewContext.GetFlashMessage();
-}
-@section Error
-{
-   @if (!string.IsNullOrWhiteSpace(message))
-   {
-        <div class="alert alert-dismissable alert-success">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            @message
-        </div>
-   }
-    
-}
-<a href="@Url.SiteConfigCreateUrl()" title="Thêm cấu hình">
-    <span style="margin-bottom: 2px;" class="btn btn-circle btn-success">
-            <i class="fa fa-plus"></i>
-        </span>
-    <span>
-            Thêm mới
-        </span>
-</a>
-<div class="panel panel-default">
-    <!-- /.panel-heading -->
-    <div class="panel-body">
-        @if (Model.Any())
-        {
-            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Tên</th>
-                    <th>Giá trị</th>
-                    <th>Hành động</th>
-                </tr>
-                </thead>
-                <tbody>
-                @for (int i = 0; i < Model.Count; i++)
-                {
-                    var config = Model[i];
-                    <tr>
-                        <td style="text-align: center">
-                            @(i + 1)
-                        </td>
-                        <td>
-                            <a title="Cập nhật thông tin cấu hình @config.name" class="btn btn-link" href="@Url.SiteConfigIndexUrl(new {config.id})">
-                                @config.name
-                            </a>
-                        </td>
-                        <td>
-                            @config.content.ToTitle()
-                        </td>
-                        <td style="width: 200px">
-                            <a class="btn btn-circle btn-primary" href="@Url.SiteConfigEditUrl(new {config.id})" title="Cập nhật thông tin cấu hình @config.name">
-                                <i class="fa fa-pencil"></i>
-                            </a>
-                            <form method="post" action="@Url.SiteConfigDeleteUrl()" style="display: inline-block;">
-                                @Html.Hidden("id", config.id)
-                                <button title="Xóa cấu hình @config.name" name="btnDelete" onclick="return confirm('Bạn muốn xóa cấu hình này ?');" style="margin-left: 5px;" type="submit" class="btn btn-circle btn-danger">
-                                    <i class="fa fa-trash"></i>
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                }
-
-
-                </tbody>
-            </table>
-        }
-
-    </div>
-</div>
-=======
 @using V308CMS.Admin.Models.UI
 @model List<V308CMS.Data.SiteConfig>
 @{
@@ -86,7 +8,8 @@
 }
 @Html.Partial("UI/_AddNewButton", Url.SiteConfigCreateUrl())
 @if (Model.Any())
-{<div class="panel panel-default">     
+{
+    <div class="panel panel-default">     
         <div class="panel-body">
             <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
                 <thead>
@@ -136,8 +59,6 @@
     </div>
 
 }
-
->>>>>>> toai-neal
 <script type="text/javascript">
     $(document).ready(function () {
         $('#dataTables-example').DataTable({
