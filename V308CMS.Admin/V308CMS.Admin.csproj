@@ -165,6 +165,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AsyncController.cs" />
     <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\FileTypeController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
@@ -323,6 +324,7 @@
     <Content Include="Content\assets\css\chosen.css" />
     <Content Include="Content\assets\css\colorbox.css" />
     <Content Include="Content\assets\css\colorpicker.css" />
+    <Content Include="Content\assets\css\dashboard.css" />
     <Content Include="Content\assets\css\datepicker.css" />
     <Content Include="Content\assets\css\daterangepicker.css" />
     <Content Include="Content\assets\css\font-awesome-ie7.min.css" />
@@ -330,6 +332,7 @@
     <Content Include="Content\assets\css\fullcalendar.css" />
     <Content Include="Content\assets\css\jquery-ui-1.10.3.custom.min.css" />
     <Content Include="Content\assets\css\jquery.gritter.css" />
+    <Content Include="Content\assets\css\kendo.default.min.css" />
     <Content Include="Content\assets\css\login.css" />
     <Content Include="Content\assets\css\prettify.css" />
     <Content Include="Content\assets\css\sb-admin-2.css" />
@@ -1982,6 +1985,15 @@
     <Content Include="Views\Banner\Index.cshtml" />
     <Content Include="Views\Banner\Edit.cshtml" />
     <Content Include="Views\Banner\_BannerForm.cshtml" />
+    <Content Include="Views\Home\IndexV2.cshtml" />
+    <Content Include="Views\Async\_CountBox.cshtml" />
+    <Content Include="Views\Async\_CountContact.cshtml" />
+    <Content Include="Views\Async\_CountOrder.cshtml" />
+    <Content Include="Views\Async\_CountProduct.cshtml" />
+    <Content Include="Views\Async\_CountUser.cshtml" />
+    <Content Include="Views\Async\_LastestContact.cshtml" />
+    <Content Include="Views\Async\_LastestOrder.cshtml" />
+    <Content Include="Views\Async\_LastestUser.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
