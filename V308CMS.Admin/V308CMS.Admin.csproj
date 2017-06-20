@@ -164,16 +164,6 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AsyncController.cs" />
-    <Compile Include="Controllers\FileController.cs" />
-    <Compile Include="Controllers\FileTypeController.cs" />
-    <Compile Include="Controllers\ImageController.cs" />
-    <Compile Include="Controllers\ImageTypeController.cs" />
-    <Compile Include="Controllers\MarketController.cs" />
-    <Compile Include="Controllers\ProductOrderController.cs" />
-    <Compile Include="Controllers\SupportController.cs" />
-    <Compile Include="Controllers\SupportTypeController.cs" />
     <Compile Include="Attributes\SkipCheckPermissionAttribute.cs" />
     <Compile Include="Controllers\AdminAccountController.cs" />
     <Compile Include="Controllers\AsyncController.cs" />
@@ -269,15 +259,13 @@
     <Compile Include="Middlewares\CheckPermissionMiddleware.cs" />
     <Compile Include="Attributes\CheckGroupPermissionAttribute.cs" />
     <Compile Include="Models\AdminChangePassworModels.cs" />
-    <Compile Include="Models\Authenicate.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Models\BannerModels.cs" />
     <Compile Include="Models\CountBoxType.cs" />
     <Compile Include="Models\CountItems.cs" />
     <Compile Include="Models\ProfileViewModels.cs" />
     <Compile Include="Models\UserChangePassworModels.cs" />
     <Compile Include="Models\AdminModels.cs" />
+    <Compile Include="Models\Authenicate.cs" />
     <Compile Include="Models\BaseModels.cs" />
     <Compile Include="Models\ContactModels.cs" />
     <Compile Include="Models\CountryModels.cs" />
@@ -312,7 +300,6 @@
     <Compile Include="Models\UserModels.cs" />
     <Compile Include="Models\UserViewModels.cs" />
     <Compile Include="Models\VoucherModels.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\assets\css\ace-ie.min.css" />
@@ -1453,9 +1440,6 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
-    <Content Include="Content\vendor\bootstrap-datetimepicker\css\bootstrap-datetimepicker.min.css" />
-    <Content Include="Content\vendor\bootstrap-datetimepicker\js\bootstrap-datetimepicker.min.js" />
-    <Content Include="Content\vendor\bootstrap-social\bootstrap-social.css" />
     <Content Include="Content\vendor\bootstrap-colorpicker\.gitignore" />
     <Content Include="Content\vendor\bootstrap-colorpicker\dist\css\bootstrap-colorpicker.css" />
     <Content Include="Content\vendor\bootstrap-colorpicker\dist\css\bootstrap-colorpicker.min.css" />
@@ -1688,26 +1672,6 @@
       <Project>{4F5528A8-75F6-4B33-B254-2EAA5F916F12}</Project>
       <Name>V308CMS.Data</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Account\Detail.cshtml" />
-    <Content Include="Views\Account\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\AdminAccount\Create.cshtml" />
-    <Content Include="Views\AdminAccount\Edit.cshtml" />
-    <Content Include="Views\AdminAccount\Index.cshtml" />
-    <Content Include="Views\AdminAccount\Info.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\File\Create.cshtml" />
-    <Content Include="Views\File\Edit.cshtml" />
-    <Content Include="Views\File\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\FileType\Create.cshtml" />
-    <Content Include="Views\FileType\Edit.cshtml" />
-    <Content Include="Views\FileType\Index.cshtml" />
     <ProjectReference Include="..\V308CMS.Respository\V308CMS.Respository.csproj">
       <Project>{8FC8706C-8F72-4B7E-8779-5AA694CAD443}</Project>
       <Name>V308CMS.Respository</Name>
@@ -1722,39 +1686,9 @@
     <Content Include="Views\Home\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Image\Create.cshtml" />
-    <Content Include="Views\Image\Edit.cshtml" />
-    <Content Include="Views\Image\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ImageType\Create.cshtml" />
-    <Content Include="Views\ImageType\Edit.cshtml" />
-    <Content Include="Views\ImageType\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Market\Create.cshtml" />
-    <Content Include="Views\Market\Edit.cshtml" />
-    <Content Include="Views\Market\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\News\Create.cshtml" />
-    <Content Include="Views\News\Edit.cshtml" />
-    <Content Include="Views\News\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\NewsCategory\Create.cshtml" />
     <Content Include="Views\NewsCategory\Edit.cshtml" />
     <Content Include="Views\NewsCategory\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Product\Create.cshtml" />
-    <Content Include="Views\Product\Edit.cshtml" />
-    <Content Include="Views\Product\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ProductDistributor\Create.cshtml" />
-    <Content Include="Views\ProductDistributor\Edit.cshtml" />
-    <Content Include="Views\ProductDistributor\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\ProductManufacturer\Create.cshtml" />
@@ -1769,16 +1703,6 @@
     <Content Include="Views\ProductType\Create.cshtml" />
     <Content Include="Views\ProductType\Edit.cshtml" />
     <Content Include="Views\ProductType\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Support\Create.cshtml" />
-    <Content Include="Views\Support\Edit.cshtml" />
-    <Content Include="Views\Support\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\SupportType\Create.cshtml" />
-    <Content Include="Views\SupportType\Edit.cshtml" />
-    <Content Include="Views\SupportType\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\ChucNang.cshtml" />
@@ -1894,6 +1818,16 @@
     <Content Include="Content\vendor\bootstrap-editable\LICENSE-MIT" />
     <Content Include="Content\vendor\bootstrap-editable\README.md" />
     <None Include="Properties\PublishProfiles\ToaiHVV308Cms.pubxml" />
+    <None Include="Properties\PublishProfiles\V308Cms.pubxml" />
+    <Content Include="Views\Shared\_LayoutV2.cshtml" />
+    <Content Include="Views\Shared\_Header.cshtml" />
+    <Content Include="Views\Shared\_Stylesheet.cshtml" />
+    <Content Include="Views\Shared\_Navigation.cshtml" />
+    <Content Include="Views\Home\IndexV2.cshtml" />
+    <Content Include="Views\Shared\_Js.cshtml" />
+    <Content Include="Views\SiteConfig\Index.cshtml" />
+    <Content Include="Views\SiteConfig\Create.cshtml" />
+    <Content Include="Views\SiteConfig\Edit.cshtml" />
     <Content Include="Views\EmailConfig\Index.cshtml" />
     <Content Include="Views\EmailConfig\Create.cshtml" />
     <Content Include="Views\EmailConfig\Edit.cshtml" />
@@ -1987,24 +1921,13 @@
     <Content Include="Views\Banner\Index.cshtml" />
     <Content Include="Views\Banner\Edit.cshtml" />
     <Content Include="Views\Banner\_BannerForm.cshtml" />
-<<<<<<< HEAD
-    <Content Include="Views\Home\IndexV2.cshtml" />
-    <Content Include="Views\Async\_CountBox.cshtml" />
-    <Content Include="Views\Async\_CountContact.cshtml" />
-    <Content Include="Views\Async\_CountOrder.cshtml" />
-    <Content Include="Views\Async\_CountProduct.cshtml" />
-    <Content Include="Views\Async\_CountUser.cshtml" />
-    <Content Include="Views\Async\_LastestContact.cshtml" />
-    <Content Include="Views\Async\_LastestOrder.cshtml" />
-    <Content Include="Views\Async\_LastestUser.cshtml" />
-=======
     <Content Include="Views\Email\Send.cshtml" />
     <Content Include="Views\Email\_EmailForm.cshtml" />
     <Content Include="Views\Async\_CountBox.cshtml" />
     <Content Include="Views\Async\_LastestOrder.cshtml" />
     <Content Include="Views\Async\_LastestUser.cshtml" />
     <Content Include="Views\Async\_LastestContact.cshtml" />
->>>>>>> toai-neal
+    <Content Include="Views\Order\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
