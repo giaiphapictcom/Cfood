@@ -11,24 +11,10 @@ namespace V308CMS.Admin.Controllers
     {
         protected virtual new CustomPrincipal User => HttpContext.User as CustomPrincipal;
         
-
-        private static V308CMSEntities _mEntities;
-        public static V308CMSEntities MpStartEntities;
-        
-        private static V308CMSEntities EnsureV308CmsEntitiesNotNull()
-        {
-            return _mEntities ?? (_mEntities = new V308CMSEntities());
-        }
-
         protected BaseController()
         {
-            var User = new CustomPrincipal();
-            if (HttpContext != null)
-            {
-                User.UserName = HttpContext.User.ToString();
-            }
-            
-            MpStartEntities = _mEntities;
+         
+        
 
             NewsService = new NewsRepository();
             NewsGroupService = new NewsGroupRepository();
