@@ -37,12 +37,11 @@ namespace V308CMS.Admin.Controllers
                 banner.ImageUrl = banner.Image != null ?
                     banner.Image.Upload() :
                     banner.ImageUrl;
-                //var newBanner = banner.CloneTo<Banner>(new[] {
-                //    nameof(banner.Image),
-                //    nameof(banner.StartDate),
-                //    nameof(banner.EndDate) 
-                //});
-                var newBanner = banner.CloneTo<Banner>();
+                var newBanner = banner.CloneTo<Banner>(new[] {
+                   "Image",
+                   "StartDate",
+                   "EndDate"
+                });
                 newBanner.StartDate = banner.StartDate;
                 newBanner.EndDate = banner.EndDate;
 
@@ -92,13 +91,10 @@ namespace V308CMS.Admin.Controllers
                 banner.ImageUrl = banner.Image != null ?
                    banner.Image.Upload() :
                    banner.ImageUrl.ToImageOriginalPath();
-                //var bannerUpdate = banner.CloneTo<Banner>(new[] {
-                //    nameof(banner.Image),
-                //    nameof(banner.StartDate),
-                //    nameof(banner.EndDate) });
-                var bannerUpdate = banner.CloneTo<Banner>();
-                   
-
+                var bannerUpdate = banner.CloneTo<Banner>(new[] {
+                "Image",
+                "StartDate",
+                "EndDate" });
                 bannerUpdate.StartDate = banner.StartDate;
                 bannerUpdate.EndDate = banner.EndDate;
                 var result = BannerService.Update(bannerUpdate);
