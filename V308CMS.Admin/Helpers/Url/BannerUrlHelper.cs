@@ -9,6 +9,13 @@ namespace V308CMS.Admin.Helpers.Url
         {
             return helper.Action(action, controller, routeValue);
         }
+
+        public static string Banners4SiteIndexUrl(this UrlHelper helper, object routeValue = null, string controller = "banner",
+           string action = "Index4Site")
+        {
+            return helper.Action(action, controller, routeValue);
+        }
+
         public static string BannerCreateUrl(this UrlHelper helper, object routeValue = null, string controller = "banner",
            string action = "create")
         {

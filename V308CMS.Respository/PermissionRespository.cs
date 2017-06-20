@@ -104,14 +104,19 @@ namespace V308CMS.Respository
 
         public List<Permission> GetAllByRoleId(int roleId)
         {
+            List<Permission> roles = new List<Permission>();
             using (var entities = new V308CMSEntities())
             {
-                return (from permission in entities.Permission
+                var role = from permission in entities.Permission
                         where permission.RoleId == roleId
                         orderby permission.Id descending
-                        select permission
-              ).ToList();
+                        select permission;
+                if (role.Count() > 0)
+                {
+                    roles =  role.ToList();
+                }
             }
+            return roles;
 
         }
 
@@ -175,7 +180,8 @@ namespace V308CMS.Respository
                                       select permission
                 ).FirstOrDefault();
                 //return permissionItem?.Value ?? 0;
-                return permissionItem.Value;
+
+                return permissionItem!= null ? permissionItem.Value : 0;
             }
             
         }

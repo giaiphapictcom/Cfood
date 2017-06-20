@@ -615,6 +615,38 @@
             <!-- /.nav-second-level -->
         </li>
     }
+
+    @if ((IsHasPermission(listRolePermission, "Affiliate", 0) || IsHasPermission(listRolePermission, "Affiliate", 1)) && 1==0)
+    {
+        <li>
+            @if (IsHasPermission(listRolePermission, "Affiliate", 0))
+            {
+                <a href="@Url.BannerIndexUrl()" title="">
+                    <i class="fa  fa-bullhorn fa-fw"></i> Affiliate
+                    <span class="fa arrow"></span>
+                </a>
+            }
+
+            <ul class="nav nav-second-level collapse">
+                @if (IsHasPermission(listRolePermission, "AffiliateBanner", 0))
+                {
+                    <li>
+                        <a href="@Url.Banners4SiteIndexUrl()" title="">Banner Trang Chủ</a>
+                    </li>
+
+                }
+                @if (IsHasPermission(listRolePermission, "AffiliateNews", 0))
+                {
+                    <li>
+                        <a href="@Url.BannerCreateUrl()" title="Thêm mới">Bài Viết Affiliate</a>
+                    </li>
+
+                }
+
+
+            </ul>
+        </li>
+    }
     </ul>
         </div>
         <!-- /.sidebar-collapse -->

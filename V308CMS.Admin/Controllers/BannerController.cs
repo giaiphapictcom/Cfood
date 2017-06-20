@@ -20,6 +20,13 @@ namespace V308CMS.Admin.Controllers
         {
             return View("Index",BannerService.GetList(position));
         }
+
+        public ActionResult Index4Site(byte position = 0)
+        {
+            return Index(position);
+        }
+        
+
         [CheckPermission(1, "Thêm mới")]
         public ActionResult Create()
         {
