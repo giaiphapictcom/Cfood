@@ -52,7 +52,7 @@ namespace V308CMS.Admin.Controllers
             var country = CountryService.Find(id);
             if (country == null)
             {
-                SetFlashMessage($"Không tìm thấy Quốc gia cần cập nhật.");
+                SetFlashMessage("Không tìm thấy Quốc gia cần cập nhật.");
                 return RedirectToAction("Index");
 
             }
@@ -75,7 +75,7 @@ namespace V308CMS.Admin.Controllers
                     return View("Edit", country);
                 }
 
-                SetFlashMessage($"Cập nhật Quốc gia '{country.Name}' thành công.");
+                SetFlashMessage( string.Format("Cập nhật Quốc gia '{0}' thành công.",country.Name) );
                 if (country.SaveList)
                 {
                     return RedirectToAction("Index");

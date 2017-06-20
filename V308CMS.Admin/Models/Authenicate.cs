@@ -19,7 +19,7 @@ namespace V308CMS.Admin.Models
             if (!(filterContext.HttpContext.Session["Admin"] == null))
             {
                 Data.Admin mAdmin = (Data.Admin)filterContext.HttpContext.Session["Admin"];
-<<<<<<< HEAD
+
                 if (mAdmin.PSanPham != true && pId==1)
                 {
                     RedirectResult mRS = new RedirectResult("/Home/ChucNang");
@@ -60,48 +60,9 @@ namespace V308CMS.Admin.Models
                     RedirectResult mRS = new RedirectResult("/Home/ChucNang");
                     filterContext.Result = mRS;
                 }
-=======
-                //if (mAdmin.PSanPham != true && pId==1)
-                //{
-                //    RedirectResult mRS = new RedirectResult("/Home/ChucNang");
-                //    filterContext.Result = mRS;
-                //}
-                //else if (mAdmin.PTinTuc != true && pId == 2)
-                //{
-                //    RedirectResult mRS = new RedirectResult("/Home/ChucNang");
-                //    filterContext.Result = mRS;
-                //}
-                //else if (mAdmin.PKhachHang != true && pId == 3)
-                //{
-                //    RedirectResult mRS = new RedirectResult("/Home/ChucNang");
-                //    filterContext.Result = mRS;
-                //}
-                //else if (mAdmin.PHinhAnh != true && pId == 4)
-                //{
-                //    RedirectResult mRS = new RedirectResult("/Home/ChucNang");
-                //    filterContext.Result = mRS;
-                //}
-                //else if (mAdmin.PFileUpload != true && pId == 5)
-                //{
-                //    RedirectResult mRS = new RedirectResult("/Home/ChucNang");
-                //    filterContext.Result = mRS;
-                //}
-                //else if (mAdmin.PTaiKhoan != true && pId == 6)
-                //{
-                //    RedirectResult mRS = new RedirectResult("/Home/ChucNang");
-                //    filterContext.Result = mRS;
-                //}
-                //else if (mAdmin.PHeThong != true && pId == 7)
-                //{
-                //    RedirectResult mRS = new RedirectResult("/Home/ChucNang");
-                //    filterContext.Result = mRS;
-                //}
-                //else if (mAdmin.PThungRac != true && pId == 8)
-                //{
-                //    RedirectResult mRS = new RedirectResult("/Home/ChucNang");
-                //    filterContext.Result = mRS;
-                //}
->>>>>>> toai-neal
+
+                
+
             }
             else
             {
@@ -126,7 +87,7 @@ namespace V308CMS.Admin.Models
             if (filterContext.HttpContext.Session["Admin"] != null)
             {
                 Data.Admin mAdmin = (Data.Admin)filterContext.HttpContext.Session["Admin"];
-<<<<<<< HEAD
+
                 if (mAdmin.PSanPham != true && pId == 1)
                 {
                     JsonResult mCR = new JsonResult();
@@ -175,7 +136,7 @@ namespace V308CMS.Admin.Models
                     mCR.Data = new { code = 0, message = "Bạn không có quyền truy cập chức năng này." };
                     filterContext.Result = mCR;
                 }
-=======
+
                 //if (mAdmin.PSanPham != true && pId == 1)
                 //{
                 //    JsonResult mCR = new JsonResult();
@@ -224,7 +185,7 @@ namespace V308CMS.Admin.Models
                 //    mCR.Data = new { code = 0, message = "Bạn không có quyền truy cập chức năng này." };
                 //    filterContext.Result = mCR;
                 //}
->>>>>>> toai-neal
+
             }
             else
             {

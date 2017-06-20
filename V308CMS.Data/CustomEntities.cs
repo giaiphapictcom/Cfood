@@ -207,12 +207,12 @@ namespace V308CMS.Data
         private bool? _Status;
         private bool? _PSanPham;
         private bool? _PTinTuc;
-        //private bool? _PKhachHang;
-        //private bool? _PHinhAnh;
-        //private bool? _PFileUpload;
-        //private bool? _PTaiKhoan;
-        //private bool? _PHeThong;
-        //private bool? _PThungRac;
+        private bool? _PKhachHang;
+        private bool? _PHinhAnh;
+        private bool? _PFileUpload;
+        private bool? _PTaiKhoan;
+        private bool? _PHeThong;
+        private bool? _PThungRac;
         private byte? _Type;
         #endregion
         #region[Public Properties]
@@ -231,6 +231,19 @@ namespace V308CMS.Data
 
         public Byte? Type { get { return Byte.Parse(_Type.ToString()); } set { _Type = value; } }
         public string Avatar { get; set; }
+
+        public bool? PSanPham { get { if (_PSanPham == null) return false; else return _PSanPham; } set { if (_PSanPham != value) { _PSanPham = value; } } }
+        public bool? PTinTuc { get { if (_PTinTuc == null) return false; else return _PTinTuc; } set { if (_PTinTuc != value) { _PTinTuc = value; } } }
+        public bool? PKhachHang { get { if (_PKhachHang == null) return false; else return _PKhachHang; } set { if (_PKhachHang != value) { _PKhachHang = value; } } }
+        public bool? PHinhAnh { get { if (_PHinhAnh == null) return false; else return _PHinhAnh; } set { if (_PHinhAnh != value) { _PHinhAnh = value; } } }
+        public bool? PFileUpload { get { if (_PFileUpload == null) return false; else return _PFileUpload; } set { if (_PFileUpload != value) { _PFileUpload = value; } } }
+
+        public bool? PTaiKhoan { get { if (_PTaiKhoan == null) return false; else return _PTaiKhoan; } set { if (_PTaiKhoan != value) { _PTaiKhoan = value; } } }
+        public bool? PHeThong { get { if (_PHeThong == null) return false; else return _PHeThong; } set { if (_PHeThong != value) { _PHeThong = value; } } }
+        public bool? PThungRac { get { if (_PThungRac == null) return false; else return _PThungRac; } set { if (_PThungRac != value) { _PThungRac = value; } } }
+
+
+
 
         [ForeignKey("Role")]
         public Role RoleInfo { get; set; }

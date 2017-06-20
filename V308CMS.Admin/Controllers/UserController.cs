@@ -56,7 +56,7 @@ namespace V308CMS.Admin.Controllers
                         ? user.Avatar.Upload()
                         : user.AvatarUrl
                 };
-                newAccount.Password = EncryptionMD5.ToMd5($"{user.Password}|{newAccount.Salt }");
+                newAccount.Password = EncryptionMD5.ToMd5( string.Format("{0}|{1 }",user.Password,newAccount.Salt) );
                 newAccount.Address = user.Address;
                 newAccount.Gender = user.Gender;
                 newAccount.Date = user.CreateDate;
@@ -68,7 +68,7 @@ namespace V308CMS.Admin.Controllers
                 var result = UserService.Insert(newAccount);
                 if (result == Result.Exists)
                 {
-                    ModelState.AddModelError("", $"Khách hàng {user.Email} đã được sử dụng để đăng ký.");
+                    ModelState.AddModelError("", string.Format("Khách hàng {0} đã được sử dụng để đăng ký.",user.Email) );
                     return View("Create", user);
                 }
                 SetFlashMessage("Thêm khách hàng thành công.");
@@ -102,7 +102,8 @@ namespace V308CMS.Admin.Controllers
                 Address = user.Address,
                 Phone = user.Phone,
                 Gender = user.Gender.HasValue && user.Gender.Value,
-                BirthDay = user.BirthDay?.ToString("dd/MM/yyyy") ?? "",
+                //BirthDay = user.BirthDay?.ToString("dd/MM/yyyy") ?? "",
+                BirthDay = string.Format("dd/MM/yyyy", user.BirthDay),
                 Status = user.Status ?? false,
                 AvatarUrl = user.Avata
             };
@@ -139,7 +140,7 @@ namespace V308CMS.Admin.Controllers
                 var result = UserService.Update(userUpdate);
                 if (result == Result.NotExists)
                 {
-                    ModelState.AddModelError("", $"Tài khoản {user.Email} không tồn tại trên hệ thống.");
+                    ModelState.AddModelError("", string.Format("Tài khoản {0} không tồn tại trên hệ thống.",user.Email) );
                     return View("Edit", user);
                 }
                 SetFlashMessage("Cập nhật tài khoản thành công.");
@@ -173,7 +174,7 @@ namespace V308CMS.Admin.Controllers
         {
             var result = UserService.ChangeStatus(id);
             SetFlashMessage(result == Result.Ok
-                ? $"Thay đổi trạng thái khách hàng thành công."
+                ? string.Format("Thay đổi trạng thái khách hàng thành công.")
                 : "Không tìm thấy khách hàng cần thay đổi trạng thái.");
             return RedirectToAction("Index");
 

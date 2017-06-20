@@ -196,9 +196,7 @@ namespace V308CMS.Admin.Controllers
                 {
                     ProductColorService.Insert(newProduct.ID, product.Color);                 
                 }               
-                SetFlashMessage(result== Result.Ok?
-                    $"Thêm sản phẩm '{product.Name}' thành công.":
-                    "Lỗi khi thêm mới sản phẩm");
+                SetFlashMessage(result== Result.Ok? string.Format("Thêm sản phẩm '{0}' thành công.",product.Name): "Lỗi khi thêm mới sản phẩm");
                 if (product.SaveList)
                 {
                     return RedirectToAction("Index");
@@ -251,9 +249,10 @@ namespace V308CMS.Admin.Controllers
                 AccountId = product.AccountId,
                 Number = product.Number ?? 0,
                 Unit = product.Unit1,
-                Quantity = product.Quantity,
+                Quantity = int.Parse(product.Quantity.ToString()),
                 Weight = product.Weight,
-                Npp = product.Npp?.ToString() ?? "",
+                //Npp = product.Npp?.ToString() ?? "",
+                Npp = product.Npp.ToString(),
                 Width = product.Width,
                 Height = product.Height,
                 Depth = product.Depth,
@@ -267,16 +266,21 @@ namespace V308CMS.Admin.Controllers
                 MetaDescription = product.Description,
                 MetaKeyword = product.Keyword,
                 Price = (int) (product.Price ?? 0),
-                ListProductImages = product.ProductImages?.ToList() ?? new List<ProductImage>(),
-                ListProductAttribute = product.ProductAttribute?.ToList() ?? new List<ProductAttribute>(),
+                //ListProductImages = product.ProductImages?.ToList() ?? new List<ProductImage>(),
+                ListProductImages = product.ProductImages.ToList(),
+                //ListProductAttribute = product.ProductAttribute?.ToList() ?? new List<ProductAttribute>(),
+                ListProductAttribute = product.ProductAttribute.ToList() 
             };
 
             if (product.ProductSaleOff != null && product.ProductSaleOff.Count>0)
             {
                 var saleOffItem = product.ProductSaleOff.FirstOrDefault();
-                modelEdit.Percent = saleOffItem.Percent?.ToString() ?? "";
-                modelEdit.StartDate = saleOffItem.StartTime?.ToString() ?? "";
-                modelEdit.EndDate = saleOffItem.EndTime?.ToString() ?? "";
+                //modelEdit.Percent = saleOffItem.Percent?.ToString() ?? "";
+                //modelEdit.StartDate = saleOffItem.StartTime?.ToString() ?? "";
+                //modelEdit.EndDate = saleOffItem.EndTime?.ToString() ?? "";
+                modelEdit.Percent = saleOffItem.Percent.ToString();
+                modelEdit.StartDate = saleOffItem.StartTime.ToString();
+                modelEdit.EndDate = saleOffItem.EndTime.ToString();
             }
 
             ViewBag.ListCategory = BuildListCategory();
@@ -286,9 +290,14 @@ namespace V308CMS.Admin.Controllers
             ViewBag.ListManufacturer = ProductManufacturerService.GetAll();
             ViewBag.ListUnit = UnitService.GetAll();
             ViewBag.ListColor = BuildListColor(
-                product.ProductColor?.Select(item => item.ColorCode).ToArray());
+                //product.ProductColor?.Select(item => item.ColorCode).ToArray()
+                product.ProductColor.Select(item => item.ColorCode).ToArray()
+            );
             ViewBag.ListSize =
-                BuildListSize(product.ProductSize?.Select(item => item.Size).ToArray());         
+                BuildListSize(
+                //product.ProductSize?.Select(item => item.Size).ToArray()
+                  product.ProductSize.Select(item => item.Size).ToArray()
+            );
             ViewBag.ListHour = DataHelper.ListHour;
 
             return View("Edit", modelEdit);
@@ -306,7 +315,7 @@ namespace V308CMS.Admin.Controllers
 
                 if (string.IsNullOrWhiteSpace(product.Code))
                 {
-                    product.Code = $"MP-{DateTime.Now.Ticks.GetHashCode()}";
+                    product.Code = string.Format("MP-{0}",DateTime.Now.Ticks.GetHashCode());
                 }
                 product.ImageUrl = product.Image != null ?
                                    product.Image.Upload() :
@@ -373,8 +382,8 @@ namespace V308CMS.Admin.Controllers
                 }           
               
                 SetFlashMessage(result == Result.Ok?
-                    $"Cập nhật sản phẩm '{product.Name}' thành công.":
-                    "Lỗi khi cập nhật sản phẩm '{product.Name}'"
+                    string.Format("Cập nhật sản phẩm '{0}' thành công.",product.Name):
+                    string.Format("Lỗi khi cập nhật sản phẩm '{0}'",product.Name)
                     );
                 if (product.SaveList)
                 {
@@ -422,7 +431,7 @@ namespace V308CMS.Admin.Controllers
         {
             var result = ProductService.ChangeStatus(id);
             SetFlashMessage(result == Result.Ok
-                ? $"Thay đổi trạng thái sản phẩm thành công."
+                ? "Thay đổi trạng thái sản phẩm thành công."
                 : "Không tìm thấy sản phẩm cần thay đổi trạng thái.");
             return RedirectToAction("Index");
         }

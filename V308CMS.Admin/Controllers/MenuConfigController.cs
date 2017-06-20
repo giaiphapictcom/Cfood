@@ -38,10 +38,10 @@ namespace V308CMS.Admin.Controllers
                 if (result == Result.Exists)
                 {
                     AddViewData("ListState", DataHelper.ListEnumType<StateEnum>());                   
-                    ModelState.AddModelError("", $"Tên Menu '{config.Name}' đã tồn tại trên hệ thống.");
+                    ModelState.AddModelError("", string.Format("Tên Menu '{0}' đã tồn tại trên hệ thống.",config.Name) );
                     return View("Create", config);
                 }
-                SetFlashMessage($"Thêm Menu '{config.Name}' thành công.");
+                SetFlashMessage( string.Format("Thêm Menu '{0}' thành công.",config.Name) );
                 if (config.SaveList)
                 {
                     return RedirectToAction("Index");
@@ -85,7 +85,7 @@ namespace V308CMS.Admin.Controllers
                     AddViewData("ListState", DataHelper.ListEnumType<StateEnum>());
                     return View("Edit", config);
                 }
-                SetFlashMessage($"Cập nhật Menu '{config.Name}' thành công.");
+                SetFlashMessage( string.Format("Cập nhật Menu '{0}' thành công.",config.Name) );
                 if (config.SaveList)
                 {
                     return RedirectToAction("Index");

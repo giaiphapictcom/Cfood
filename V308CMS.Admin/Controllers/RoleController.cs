@@ -35,7 +35,8 @@ namespace V308CMS.Admin.Controllers
             {
                 RoleId = roleId,
                 GroupPermission = groupPermission,
-                Value = listPermission?.Sum() ?? 0
+                //Value = listPermission?.Sum() ?? 0
+                Value = listPermission.Sum()
             };
             if (isAddOrUpdate)
             {
@@ -49,40 +50,46 @@ namespace V308CMS.Admin.Controllers
         [NonAction]
         private int BindGroupValuePermission(ICollection<Permission> listPermission, string group)
         {
-            
+            int value = 0;
             var permissionItem = listPermission.
                 FirstOrDefault(permission => permission.GroupPermission == group);
-            return permissionItem?.Value ?? 0;
+            //return permissionItem?.Value ?? 0;
+            if (permissionItem != null) {
+                value = permissionItem.Value;
+            }
+
+            return value;
         }
 
         private void AddOrUpdateAllGroupPermission(RoleModels role, int roleId, bool isAddOrUpdate = false)
         {
             AddOrUpdateGroupPermission(roleId, isAddOrUpdate,
-                    nameof(role.AdminAccountPermission), role.AdminAccountPermission,
-                    nameof(role.RolePermission), role.RolePermission,
-                    nameof(role.ContactPermission), role.ContactPermission,
-                    nameof(role.SiteConfigPermission), role.SiteConfigPermission,
-                    nameof(role.CountryPermission), role.CountryPermission,
-                    nameof(role.EmailConfigPermission), role.EmailConfigPermission,
-                    nameof(role.EmailPermission), role.EmailPermission,
-                    nameof(role.MenuConfigPermission), role.MenuConfigPermission,
-                    nameof(role.NewsCategoryPermission), role.NewsCategoryPermission,
-                    nameof(role.NewsPermission), role.NewsPermission,
-                    nameof(role.OrderPermission), role.OrderPermission,
-                    nameof(role.ProductAttributePermission), role.ProductAttributePermission,
-                    nameof(role.ProductBrandPermission), role.ProductBrandPermission,
-                    nameof(role.ProductColorPermission), role.ProductColorPermission,
-                    nameof(role.ProductImagePermission), role.ProductImagePermission,
-                    nameof(role.ProductManufacturerPermission), role.ProductManufacturerPermission,
-                    nameof(role.ProductUnitPermission), role.ProductUnitPermission,
-                    nameof(role.SizePermission), role.SizePermission,
-                    nameof(role.ProductDistributorPermission), role.ProductDistributorPermission,
-                    nameof(role.ProductTypePermission), role.ProductTypePermission,
-                    nameof(role.ProductPermission), role.ProductPermission,
-                    nameof(role.VoucherPermission), role.VoucherPermission,
-                    nameof(role.UserPermission), role.UserPermission,
-                    nameof(role.BannerPermission), role.BannerPermission,
-                    nameof(role.ProductStorePermission), role.ProductStorePermission
+                    "int", role.AdminAccountPermission,
+                    "int", role.RolePermission,
+                    "int", role.ContactPermission,
+                    role.SiteConfigPermission.GetType(), role.SiteConfigPermission,
+                    role.CountryPermission.GetType(), role.CountryPermission,
+                    role.EmailConfigPermission.GetType(), role.EmailConfigPermission,
+                    role.EmailPermission.GetType(), role.EmailPermission,
+                    role.MenuConfigPermission.GetType(), role.MenuConfigPermission,
+                    role.NewsCategoryPermission.GetType(), role.NewsCategoryPermission,
+                    role.NewsPermission.GetType(), role.NewsPermission,
+                    role.OrderPermission.GetType(), role.OrderPermission,
+                    role.ProductAttributePermission.GetType(), role.ProductAttributePermission,
+                    role.ProductBrandPermission.GetType(), role.ProductBrandPermission,
+                    role.ProductColorPermission.GetType(), role.ProductColorPermission,
+                    role.ProductImagePermission.GetType(), role.ProductImagePermission,
+                    role.ProductManufacturerPermission.GetType(), role.ProductManufacturerPermission,
+                    role.ProductUnitPermission.GetType(), role.ProductUnitPermission,
+                    role.SizePermission.GetType(), role.SizePermission,
+                    role.ProductDistributorPermission.GetType(), role.ProductDistributorPermission,
+                    role.ProductTypePermission.GetType(), role.ProductTypePermission,
+                    role.ProductPermission.GetType(), role.ProductPermission,
+                    role.VoucherPermission.GetType(), role.VoucherPermission,
+                    role.UserPermission.GetType(), role.UserPermission,
+                    role.BannerPermission.GetType(), role.BannerPermission,
+                    role.ProductStorePermission.GetType(), 
+                    role.ProductStorePermission
 
                     );
         }      
@@ -111,12 +118,12 @@ namespace V308CMS.Admin.Controllers
                var roleId = RoleService.InsertAndReturnId(role.Name, role.Description,role.Status);
                 if (roleId == 0)
                 {
-                    ModelState.AddModelError("", $"Nhóm tài khoản '{role.Name}' đã tồn tại trên hệ thống.");
+                    ModelState.AddModelError("", string.Format("Nhóm tài khoản '{0}' đã tồn tại trên hệ thống.",role.Name) );
                     ViewBag.ListState = DataHelper.ListEnumType<StateEnum>();                    
                     return View("Create", role);
                 }
                 AddOrUpdateAllGroupPermission(role, roleId);                                                                
-                SetFlashMessage($"Thêm thông Nhóm tài khoản '{role.Name}' thành công.");
+                SetFlashMessage( string.Format("Thêm thông Nhóm tài khoản '{0}' thành công.",role.Name) );
                 if (role.SaveList)
                 {
                     return RedirectToAction("Index");
@@ -136,31 +143,57 @@ namespace V308CMS.Admin.Controllers
         {
             if (listPermission != null && listPermission.Count > 0)
             {
-                model.AdminAccountPermissionAll = BindGroupValuePermission(listPermission, nameof(model.AdminAccountPermission));
-                model.RolePermissionAll = BindGroupValuePermission(listPermission, nameof(model.RolePermission));
-                model.ContactPermissionAll = BindGroupValuePermission(listPermission, nameof(model.ContactPermission));
-                model.SiteConfigPermissionAll = BindGroupValuePermission(listPermission, nameof(model.SiteConfigPermission));
-                model.CountryPermissionAll = BindGroupValuePermission(listPermission, nameof(model.CountryPermission));
-                model.EmailConfigPermissionAll = BindGroupValuePermission(listPermission, nameof(model.EmailConfigPermission));
-                model.EmailPermissionAll = BindGroupValuePermission(listPermission, nameof(model.EmailPermission));
-                model.MenuConfigPermissionAll = BindGroupValuePermission(listPermission, nameof(model.MenuConfigPermission));
-                model.NewsCategoryPermissionAll = BindGroupValuePermission(listPermission, nameof(model.NewsCategoryPermission));
-                model.NewsPermissionAll = BindGroupValuePermission(listPermission, nameof(model.NewsPermission));
-                model.OrderPermissionAll = BindGroupValuePermission(listPermission, nameof(model.OrderPermission));
-                model.ProductAttributePermissionAll = BindGroupValuePermission(listPermission, nameof(model.ProductAttributePermission));
-                model.ProductBrandPermissionAll = BindGroupValuePermission(listPermission, nameof(model.ProductBrandPermission));
-                model.ProductColorPermissionAll = BindGroupValuePermission(listPermission, nameof(model.ProductColorPermission));
-                model.ProductImagePermissionAll = BindGroupValuePermission(listPermission, nameof(model.ProductImagePermission));
-                model.ProductManufacturerPermissionAll = BindGroupValuePermission(listPermission, nameof(model.ProductManufacturerPermission));
-                model.ProductUnitPermissionAll = BindGroupValuePermission(listPermission, nameof(model.ProductUnitPermission));
-                model.SizePermissionAll = BindGroupValuePermission(listPermission, nameof(model.SizePermission));
-                model.ProductDistributorPermissionAll = BindGroupValuePermission(listPermission, nameof(model.ProductDistributorPermission));
-                model.ProductTypePermissionAll = BindGroupValuePermission(listPermission, nameof(model.ProductTypePermission));
-                model.ProductPermissionAll = BindGroupValuePermission(listPermission, nameof(model.ProductPermission));
-                model.VoucherPermissionAll = BindGroupValuePermission(listPermission, nameof(model.VoucherPermission));
-                model.UserPermissionAll = BindGroupValuePermission(listPermission, nameof(model.UserPermission));
-                model.BannerPermissionAll = BindGroupValuePermission(listPermission, nameof(model.BannerPermission));
-                model.ProductStorePermissionAll = BindGroupValuePermission(listPermission, nameof(model.ProductStorePermission));
+                //model.AdminAccountPermissionAll = BindGroupValuePermission(listPermission, nameof(model.AdminAccountPermission));
+                //model.RolePermissionAll = BindGroupValuePermission(listPermission, nameof(model.RolePermission));
+                //model.ContactPermissionAll = BindGroupValuePermission(listPermission, nameof(model.ContactPermission));
+                //model.SiteConfigPermissionAll = BindGroupValuePermission(listPermission, nameof(model.SiteConfigPermission));
+                //model.CountryPermissionAll = BindGroupValuePermission(listPermission, nameof(model.CountryPermission));
+                //model.EmailConfigPermissionAll = BindGroupValuePermission(listPermission, nameof(model.EmailConfigPermission));
+                //model.EmailPermissionAll = BindGroupValuePermission(listPermission, nameof(model.EmailPermission));
+                //model.MenuConfigPermissionAll = BindGroupValuePermission(listPermission, nameof(model.MenuConfigPermission));
+                //model.NewsCategoryPermissionAll = BindGroupValuePermission(listPermission, nameof(model.NewsCategoryPermission));
+                //model.NewsPermissionAll = BindGroupValuePermission(listPermission, nameof(model.NewsPermission));
+                //model.OrderPermissionAll = BindGroupValuePermission(listPermission, nameof(model.OrderPermission));
+                //model.ProductAttributePermissionAll = BindGroupValuePermission(listPermission, nameof(model.ProductAttributePermission));
+                //model.ProductBrandPermissionAll = BindGroupValuePermission(listPermission, nameof(model.ProductBrandPermission));
+                //model.ProductColorPermissionAll = BindGroupValuePermission(listPermission, nameof(model.ProductColorPermission));
+                //model.ProductImagePermissionAll = BindGroupValuePermission(listPermission, nameof(model.ProductImagePermission));
+                //model.ProductManufacturerPermissionAll = BindGroupValuePermission(listPermission, nameof(model.ProductManufacturerPermission));
+                //model.ProductUnitPermissionAll = BindGroupValuePermission(listPermission, nameof(model.ProductUnitPermission));
+                //model.SizePermissionAll = BindGroupValuePermission(listPermission, nameof(model.SizePermission));
+                //model.ProductDistributorPermissionAll = BindGroupValuePermission(listPermission, nameof(model.ProductDistributorPermission));
+                //model.ProductTypePermissionAll = BindGroupValuePermission(listPermission, nameof(model.ProductTypePermission));
+                //model.ProductPermissionAll = BindGroupValuePermission(listPermission, nameof(model.ProductPermission));
+                //model.VoucherPermissionAll = BindGroupValuePermission(listPermission, nameof(model.VoucherPermission));
+                //model.UserPermissionAll = BindGroupValuePermission(listPermission, nameof(model.UserPermission));
+                //model.BannerPermissionAll = BindGroupValuePermission(listPermission, nameof(model.BannerPermission));
+                //model.ProductStorePermissionAll = BindGroupValuePermission(listPermission, nameof(model.ProductStorePermission));
+
+                model.AdminAccountPermissionAll = BindGroupValuePermission(listPermission, model.AdminAccountPermission.GetType().ToString() );
+                model.RolePermissionAll = BindGroupValuePermission(listPermission, model.RolePermission.GetType().ToString() );
+                model.ContactPermissionAll = BindGroupValuePermission(listPermission, model.ContactPermission.GetType().ToString() );
+                model.SiteConfigPermissionAll = BindGroupValuePermission(listPermission, model.SiteConfigPermission.GetType().ToString() );
+                model.CountryPermissionAll = BindGroupValuePermission(listPermission, model.CountryPermission.GetType().ToString() );
+                model.EmailConfigPermissionAll = BindGroupValuePermission(listPermission, model.EmailConfigPermission.GetType().ToString() );
+                model.EmailPermissionAll = BindGroupValuePermission(listPermission, model.EmailPermission.GetType().ToString() );
+                model.MenuConfigPermissionAll = BindGroupValuePermission(listPermission, model.MenuConfigPermission.GetType().ToString() );
+                model.NewsCategoryPermissionAll = BindGroupValuePermission(listPermission, model.NewsCategoryPermission.GetType().ToString() );
+                model.NewsPermissionAll = BindGroupValuePermission(listPermission, model.NewsPermission.GetType().ToString());
+                model.OrderPermissionAll = BindGroupValuePermission(listPermission, model.OrderPermission.GetType().ToString());
+                model.ProductAttributePermissionAll = BindGroupValuePermission(listPermission, model.ProductAttributePermission.GetType().ToString());
+                model.ProductBrandPermissionAll = BindGroupValuePermission(listPermission, model.ProductBrandPermission.GetType().ToString());
+                model.ProductColorPermissionAll = BindGroupValuePermission(listPermission, model.ProductColorPermission.GetType().ToString());
+                model.ProductImagePermissionAll = BindGroupValuePermission(listPermission, model.ProductImagePermission.GetType().ToString());
+                model.ProductManufacturerPermissionAll = BindGroupValuePermission(listPermission, model.ProductManufacturerPermission.GetType().ToString());
+                model.ProductUnitPermissionAll = BindGroupValuePermission(listPermission, model.ProductUnitPermission.GetType().ToString());
+                model.SizePermissionAll = BindGroupValuePermission(listPermission, model.SizePermission.GetType().ToString());
+                model.ProductDistributorPermissionAll = BindGroupValuePermission(listPermission, model.ProductDistributorPermission.GetType().ToString());
+                model.ProductTypePermissionAll = BindGroupValuePermission(listPermission, model.ProductTypePermission.GetType().ToString());
+                model.ProductPermissionAll = BindGroupValuePermission(listPermission, model.ProductPermission.GetType().ToString());
+                model.VoucherPermissionAll = BindGroupValuePermission(listPermission, model.VoucherPermission.GetType().ToString());
+                model.UserPermissionAll = BindGroupValuePermission(listPermission, "int");
+                model.BannerPermissionAll = BindGroupValuePermission(listPermission, model.BannerPermission.ToString() );
+                model.ProductStorePermissionAll = BindGroupValuePermission(listPermission, model.ProductStorePermission.ToString() );
             }
 
         }      
@@ -198,8 +231,8 @@ namespace V308CMS.Admin.Controllers
                 if (listPermission == null)
                 {
                     return RedirectToAction("Index");
-                }                             
-                 SetFlashMessage($"Cập nhật nhóm tài khoản '{role.Name}' thành công.");
+                }
+                SetFlashMessage(string.Format("Cập nhật nhóm tài khoản '{0}' thành công.", role.Name));
                 if (role.SaveList)
                 {
                     return RedirectToAction("Index");

@@ -56,9 +56,7 @@
     <Reference Include="EntityFramework">
       <HintPath>..\V308CMS\Bin\EntityFramework.dll</HintPath>
     </Reference>
-
     <Reference Include="Microsoft.CSharp" />
-
     <Reference Include="ServiceStack.Text, Version=3.9.59.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\ServiceStack.Text.dll</HintPath>
@@ -166,18 +164,15 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\FileTypeController.cs" />
-
     <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\ImageTypeController.cs" />
     <Compile Include="Controllers\MarketController.cs" />
     <Compile Include="Controllers\ProductOrderController.cs" />
     <Compile Include="Controllers\SupportController.cs" />
     <Compile Include="Controllers\SupportTypeController.cs" />
-
     <Compile Include="Attributes\SkipCheckPermissionAttribute.cs" />
     <Compile Include="Controllers\AdminAccountController.cs" />
     <Compile Include="Controllers\BannerController.cs" />
@@ -215,14 +210,12 @@
     <Compile Include="DataAnnotations\EmailAttribute.cs" />
     <Compile Include="DataAnnotations\PhoneAttribute.cs" />
     <Compile Include="DataAnnotations\UserNameAttribute.cs" />
-
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\AuthenticationHelper.cs" />
     <Compile Include="Helpers\ConfigHelper.cs" />
     <Compile Include="Helpers\ContentHelper.cs" />
-
     <Compile Include="Helpers\ControllerHelper.cs" />
     <Compile Include="Helpers\CustomPrincipal.cs" />
     <Compile Include="Helpers\EnumTypeHelper.cs" />
@@ -234,6 +227,7 @@
     <Compile Include="Helpers\UI\StateLabelHelper.cs" />
     <Compile Include="Helpers\Url\AccountUrlHelper.cs" />
     <Compile Include="Helpers\Url\AdminAccountUrlHelper.cs" />
+    <Compile Include="Helpers\Url\AsyncUrlHelper.cs" />
     <Compile Include="Helpers\Url\BannerUrlHelper.cs" />
     <Compile Include="Helpers\Url\ContactUrlHelper.cs" />
     <Compile Include="Helpers\Url\CountryUrlHelper.cs" />
@@ -241,12 +235,10 @@
     <Compile Include="Helpers\Url\FileTypeUrlHelper.cs" />
     <Compile Include="Helpers\Url\FileUrlHelper.cs" />
     <Compile Include="Helpers\Url\GroupPermissionUrlHelper.cs" />
-
     <Compile Include="Helpers\Url\HomeUrlHelper.cs" />
     <Compile Include="Helpers\Url\ImageTypeUrlHelper.cs" />
     <Compile Include="Helpers\Url\ImageUrlHelper.cs" />
     <Compile Include="Helpers\Url\MarketUrlHelper.cs" />
-
     <Compile Include="Helpers\Url\MenuConfigUrlHelper.cs" />
     <Compile Include="Helpers\Url\NewsCategoryUrlHelper.cs" />
     <Compile Include="Helpers\Url\NewsUrlHelper.cs" />
@@ -257,12 +249,10 @@
     <Compile Include="Helpers\Url\ProductImageUrlHelper.cs" />
     <Compile Include="Helpers\Url\ProductUnitUrlHelper.cs" />
     <Compile Include="Helpers\Url\ProductStoreUrlHelper.cs" />
-
     <Compile Include="Helpers\Url\ProductManufacturerUrlHelper.cs" />
     <Compile Include="Helpers\Url\ProductOrderUrlHelper.cs" />
     <Compile Include="Helpers\Url\ProductTypeUrlHelper.cs" />
     <Compile Include="Helpers\Url\ProductUrlHelper.cs" />
-
     <Compile Include="Helpers\Url\ProductBrandUrlHelper.cs" />
     <Compile Include="Helpers\Url\RoleUrlHelper.cs" />
     <Compile Include="Helpers\Url\SiteConfigUrlHelper.cs" />
@@ -276,11 +266,15 @@
     <Compile Include="Middlewares\CheckPermissionMiddleware.cs" />
     <Compile Include="Attributes\CheckGroupPermissionAttribute.cs" />
     <Compile Include="Models\AdminChangePassworModels.cs" />
+    <Compile Include="Models\Authenicate.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Models\BannerModels.cs" />
+    <Compile Include="Models\CountBoxType.cs" />
+    <Compile Include="Models\CountItems.cs" />
     <Compile Include="Models\ProfileViewModels.cs" />
     <Compile Include="Models\UserChangePassworModels.cs" />
     <Compile Include="Models\AdminModels.cs" />
-    <Compile Include="Models\Authenicate.cs" />
     <Compile Include="Models\BaseModels.cs" />
     <Compile Include="Models\ContactModels.cs" />
     <Compile Include="Models\CountryModels.cs" />
@@ -315,7 +309,6 @@
     <Compile Include="Models\UserModels.cs" />
     <Compile Include="Models\UserViewModels.cs" />
     <Compile Include="Models\VoucherModels.cs" />
-
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -337,9 +330,7 @@
     <Content Include="Content\assets\css\fullcalendar.css" />
     <Content Include="Content\assets\css\jquery-ui-1.10.3.custom.min.css" />
     <Content Include="Content\assets\css\jquery.gritter.css" />
-
     <Content Include="Content\assets\css\login.css" />
-
     <Content Include="Content\assets\css\prettify.css" />
     <Content Include="Content\assets\css\sb-admin-2.css" />
     <Content Include="Content\assets\css\select2.css" />
@@ -360,9 +351,7 @@
     <Content Include="Content\assets\js\respond.min.js" />
     <Content Include="Content\assets\js\sb-admin-2.js" />
     <Content Include="Content\assets\js\script.js" />
-
     <Content Include="Content\assets\js\image-select-with-preview.js" />
-
     <Content Include="Content\data\flot-data.js" />
     <Content Include="Content\data\morris-data.js" />
     <Content Include="Content\Images\avatar.png" />
@@ -749,7 +738,6 @@
     <Content Include="Content\Plugins\ckeditor\plugins\youtube\lang\vi.js" />
     <Content Include="Content\Plugins\ckeditor\plugins\youtube\lang\zh.js" />
     <Content Include="Content\Plugins\ckeditor\plugins\youtube\plugin.js" />
-
     <Content Include="Content\Plugins\ckeditor\samples\ajax.html" />
     <Content Include="Content\Plugins\ckeditor\samples\api.html" />
     <Content Include="Content\Plugins\ckeditor\samples\appendto.html" />
@@ -1459,11 +1447,9 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
-
     <Content Include="Content\vendor\bootstrap-datetimepicker\css\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\vendor\bootstrap-datetimepicker\js\bootstrap-datetimepicker.min.js" />
     <Content Include="Content\vendor\bootstrap-social\bootstrap-social.css" />
-
     <Content Include="Content\vendor\bootstrap-colorpicker\.gitignore" />
     <Content Include="Content\vendor\bootstrap-colorpicker\dist\css\bootstrap-colorpicker.css" />
     <Content Include="Content\vendor\bootstrap-colorpicker\dist\css\bootstrap-colorpicker.min.css" />
@@ -1527,7 +1513,6 @@
     <Content Include="Content\vendor\bootstrap-touchspin\Gruntfile.js" />
     <Content Include="Content\vendor\bootstrap-touchspin\src\jquery.bootstrap-touchspin.css" />
     <Content Include="Content\vendor\bootstrap-touchspin\src\jquery.bootstrap-touchspin.js" />
-
     <Content Include="Content\vendor\bootstrap\css\bootstrap.css" />
     <Content Include="Content\vendor\bootstrap\css\bootstrap.min.css" />
     <Content Include="Content\vendor\bootstrap\js\bootstrap.js" />
@@ -1578,7 +1563,6 @@
     <Content Include="Content\vendor\datatables\js\jquery.datatables.js" />
     <Content Include="Content\vendor\datatables\js\jquery.datatables.min.js" />
     <Content Include="Content\vendor\datatables\js\jquery.js" />
-
     <Content Include="Content\vendor\dropzone\.gitignore" />
     <Content Include="Content\vendor\dropzone\dist\basic.css" />
     <Content Include="Content\vendor\dropzone\dist\dropzone-amd-module.js" />
@@ -1592,7 +1576,6 @@
     <Content Include="Content\vendor\dropzone\test\test.html" />
     <Content Include="Content\vendor\dropzone\test\test.js" />
     <Content Include="Content\vendor\editable-table\mindmup-editabletable.js" />
-
     <Content Include="Content\vendor\flot-tooltip\jquery.flot.tooltip.js" />
     <Content Include="Content\vendor\flot-tooltip\jquery.flot.tooltip.min.js" />
     <Content Include="Content\vendor\flot-tooltip\jquery.flot.tooltip.source.js" />
@@ -1699,7 +1682,6 @@
       <Project>{4F5528A8-75F6-4B33-B254-2EAA5F916F12}</Project>
       <Name>V308CMS.Data</Name>
     </ProjectReference>
-
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\Detail.cshtml" />
@@ -1720,12 +1702,10 @@
     <Content Include="Views\FileType\Create.cshtml" />
     <Content Include="Views\FileType\Edit.cshtml" />
     <Content Include="Views\FileType\Index.cshtml" />
-
     <ProjectReference Include="..\V308CMS.Respository\V308CMS.Respository.csproj">
       <Project>{8FC8706C-8F72-4B7E-8779-5AA694CAD443}</Project>
       <Name>V308CMS.Respository</Name>
     </ProjectReference>
-
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\Error.cshtml" />
@@ -1736,7 +1716,6 @@
     <Content Include="Views\Home\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
-
     <Content Include="Views\Image\Create.cshtml" />
     <Content Include="Views\Image\Edit.cshtml" />
     <Content Include="Views\Image\Index.cshtml" />
@@ -1757,13 +1736,11 @@
     <Content Include="Views\News\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-
     <Content Include="Views\NewsCategory\Create.cshtml" />
     <Content Include="Views\NewsCategory\Edit.cshtml" />
     <Content Include="Views\NewsCategory\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-
     <Content Include="Views\Product\Create.cshtml" />
     <Content Include="Views\Product\Edit.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
@@ -1774,7 +1751,6 @@
     <Content Include="Views\ProductDistributor\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-
     <Content Include="Views\ProductManufacturer\Create.cshtml" />
     <Content Include="Views\ProductManufacturer\Edit.cshtml" />
     <Content Include="Views\ProductManufacturer\Index.cshtml" />
@@ -1789,7 +1765,6 @@
     <Content Include="Views\ProductType\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-
     <Content Include="Views\Support\Create.cshtml" />
     <Content Include="Views\Support\Edit.cshtml" />
     <Content Include="Views\Support\Index.cshtml" />
@@ -1800,7 +1775,6 @@
     <Content Include="Views\SupportType\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-
     <Content Include="Views\Home\ChucNang.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -1853,7 +1827,6 @@
     <Content Include="Content\vendor\font-awesome\scss\_stacked.scss" />
     <Content Include="Content\vendor\font-awesome\scss\_variables.scss" />
     <Content Include="Content\vendor\images\sorting icons.psd" />
-
     <Content Include="Content\vendor\bootstrap-touchspin\.editorconfig" />
     <Content Include="Content\vendor\bootstrap-touchspin\.jshintrc" />
     <Content Include="Content\vendor\bootstrap-touchspin\.travis.yml" />
@@ -1915,7 +1888,6 @@
     <Content Include="Content\vendor\bootstrap-editable\LICENSE-MIT" />
     <Content Include="Content\vendor\bootstrap-editable\README.md" />
     <None Include="Properties\PublishProfiles\ToaiHVV308Cms.pubxml" />
-
     <Content Include="Views\EmailConfig\Index.cshtml" />
     <Content Include="Views\EmailConfig\Create.cshtml" />
     <Content Include="Views\EmailConfig\Edit.cshtml" />
@@ -2010,7 +1982,6 @@
     <Content Include="Views\Banner\Index.cshtml" />
     <Content Include="Views\Banner\Edit.cshtml" />
     <Content Include="Views\Banner\_BannerForm.cshtml" />
-
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

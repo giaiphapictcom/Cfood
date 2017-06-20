@@ -33,10 +33,10 @@ namespace V308CMS.Admin.Controllers
                 var result = SizeService.Insert(size.CloneTo<Size>());
                 if (result == Result.Exists)
                 {
-                    ModelState.AddModelError("", $"Kích cỡ {size.Name} đã tồn tại trên hệ thống.");
+                    ModelState.AddModelError("", string.Format("Kích cỡ {0} đã tồn tại trên hệ thống.",size.Name) );
                     return View("Create", size);
                 }
-                SetFlashMessage($"Thêm Kích cỡ '{size.Name}' thành công.");
+                SetFlashMessage( string.Format("Thêm Kích cỡ '{0}' thành công.",size.Name) );
                 if (size.SaveList){
                     return RedirectToAction("Index");
                 }
@@ -72,7 +72,7 @@ namespace V308CMS.Admin.Controllers
                     ModelState.AddModelError("", "Id không tồn tại trên hệ thống.");
                     return View("Edit", size);
                 }
-                SetFlashMessage($"Sửa Kích cỡ '{size.Name}' thành công.");
+                SetFlashMessage(string.Format("Sửa Kích cỡ '{0}' thành công.", size.Name));
                 if (size.SaveList)
                 {
                     return RedirectToAction("Index");

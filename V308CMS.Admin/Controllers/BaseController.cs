@@ -9,16 +9,27 @@ namespace V308CMS.Admin.Controllers
     [CheckGroupPermission(false)]
     public abstract class BaseController : Controller
     {
-        protected virtual new CustomPrincipal User => HttpContext.User as CustomPrincipal;
+        //protected virtual new CustomPrincipal User => HttpContext.User as CustomPrincipal;
+        
 
         private static V308CMSEntities _mEntities;
+        public static V308CMSEntities MpStartEntities;
+        
         private static V308CMSEntities EnsureV308CmsEntitiesNotNull()
         {
             return _mEntities ?? (_mEntities = new V308CMSEntities());
         }
 
         protected BaseController()
-        {                      
+        {
+            var User = new CustomPrincipal();
+            if (HttpContext != null)
+            {
+                User.UserName = HttpContext.User.ToString();
+            }
+            
+            MpStartEntities = _mEntities;
+
             NewsService = new NewsRepository();
             NewsGroupService = new NewsGroupRepository();
             AccountService = new AccountRepository();             
@@ -46,6 +57,12 @@ namespace V308CMS.Admin.Controllers
             ProductService = new ProductRespository();
             AdminAccountService = new AdminRespository();
             BannerService = new BannerRespository();
+
+            SupportService = new SupportRepository();
+            ProductsService = new ProductRepository();
+            MarketService = new MarketRepository();
+            ImagesService = new ImagesRepository();
+            FileService = new FileRepository();
            
           
         }
@@ -89,8 +106,14 @@ namespace V308CMS.Admin.Controllers
         public NewsGroupRepository NewsGroupService { get; set;}
 
         protected ContactRepository ContactService { get; set;}
+        public SupportRepository SupportService { get; set; }
+        public ProductRepository ProductsService { get;set;}
+        public MarketRepository MarketService { get; set; }
+        public ImagesRepository ImagesService { get; set; }
+        public FileRepository FileService { get; set; }
 
-       
+
+
         public NewsRepository NewsService { get; set; }     
 
         protected AccountRepository AccountService { get; set; }

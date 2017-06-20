@@ -64,12 +64,12 @@ namespace V308CMS.Admin.Controllers
                 });
                 if (result == Result.Exists)
                 {
-                    ModelState.AddModelError("", $"Tài khoản '{model.UserName}' đã tồn tại trên hệ thống.");
+                    ModelState.AddModelError("", string.Format("Tài khoản '{0}' đã tồn tại trên hệ thống.",model.UserName) );
                     ViewBag.ListRole = RoleService.GetAll();
                     ViewBag.ListAccountType = DataHelper.ListEnumType<AccountType>();
                     return View("Create", model);
                 }
-                SetFlashMessage($"Thêm tài khoản '{model.UserName}' thành công.");
+                SetFlashMessage( string.Format("Thêm tài khoản '{0}' thành công.",model.UserName) );
                 if (model.SaveList)
                 {
                     return RedirectToAction("Index");
@@ -139,7 +139,7 @@ namespace V308CMS.Admin.Controllers
                     ViewBag.ListAccountType = DataHelper.ListEnumType<AccountType>();
                     return View("Edit", model);
                 }
-                SetFlashMessage($"Sửa tài khoản '{model.FullName}' thành công.");
+                SetFlashMessage(string.Format("Sửa tài khoản '{0}' thành công.", model.FullName));
                 if (model.SaveList)
                 {
                     return RedirectToAction("Index");
