@@ -48,7 +48,8 @@ namespace V308CMS.Data
         {
             using (var entities = new V308CMSEntities())
             {
-                return state ? (from category in entities.NewsGroups
+                return state ? 
+                    (from category in entities.NewsGroups
                                 orderby category.Date.Value descending
                                 where category.Status == true
                                 select category).ToList() :

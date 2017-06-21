@@ -54,9 +54,15 @@ namespace V308CMS.Admin.Controllers
             return View("Index", model);
         }
 
-        public ActionResult Detail(int id)
+        public ActionResult Edit(int id)
         {
-            return View("Detail");
+            var order = OrderService.FindToEdit(id);
+            if (order == null)
+            {
+                return RedirectToAction("Index");
+            }
+            ViewBag.ListStatus = DataHelper.ListEnumType<OrderStatusEnum>();
+            return View("Edit", order.CloneTo<OrderModels>());
         }
 
         public ActionResult OnUpdate()
