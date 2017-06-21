@@ -21,7 +21,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
-	<TargetFrameworkProfile />
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -153,6 +153,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\HtmlAffiliate.cs" />
+    <Compile Include="Helpers\ImageUrlHelper.cs" />
     <Compile Include="Models\Authenicate.cs" />
     <Compile Include="Models\CaptchaModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

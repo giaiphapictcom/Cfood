@@ -70,6 +70,7 @@
     <Compile Include="ProductImageRespository.cs" />
     <Compile Include="ProductManufacturerRespository.cs" />
     <Compile Include="ProductOrderDetailRespository.cs" />
+    <Compile Include="ProductOrderRespository.cs" />
     <Compile Include="ProductRespository.cs" />
     <Compile Include="ProductSaleOffRespository.cs" />
     <Compile Include="ProductSizeRespository.cs" />

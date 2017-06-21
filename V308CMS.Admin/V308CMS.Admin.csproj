@@ -165,6 +165,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Attributes\SkipCheckPermissionAttribute.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminAccountController.cs" />
     <Compile Include="Controllers\AsyncController.cs" />
     <Compile Include="Controllers\BannerController.cs" />
@@ -174,7 +175,12 @@
     <Compile Include="Controllers\EmailConfigController.cs" />
     <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\FileController.cs" />
+    <Compile Include="Controllers\FileTypeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImageController.cs" />
+    <Compile Include="Controllers\ImageTypeController.cs" />
+    <Compile Include="Controllers\MarketController.cs" />
     <Compile Include="Controllers\MenuConfigController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\NewsCategoryController.cs" />
@@ -186,12 +192,15 @@
     <Compile Include="Controllers\ProductManufacturerController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\ProductOrderController.cs" />
     <Compile Include="Controllers\ProductUnitController.cs" />
     <Compile Include="Controllers\ProductStoreController.cs" />
     <Compile Include="Controllers\ProductTypeController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\SiteConfigController.cs" />
     <Compile Include="Controllers\SizeController.cs" />
+    <Compile Include="Controllers\SupportController.cs" />
+    <Compile Include="Controllers\SupportTypeController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
@@ -1923,14 +1932,28 @@
     <Content Include="Views\Banner\_BannerForm.cshtml" />
     <Content Include="Views\Email\Send.cshtml" />
     <Content Include="Views\Email\_EmailForm.cshtml" />
-<<<<<<< HEAD
-=======
     <Content Include="Views\Async\_CountBox.cshtml" />
     <Content Include="Views\Async\_LastestOrder.cshtml" />
     <Content Include="Views\Async\_LastestUser.cshtml" />
     <Content Include="Views\Async\_LastestContact.cshtml" />
     <Content Include="Views\Order\Index.cshtml" />
->>>>>>> ed35e19838df9443048a4c7ac98fb515e75fb477
+    <Content Include="Views\Account\Detail.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\FileType\Create.cshtml" />
+    <Content Include="Views\FileType\Edit.cshtml" />
+    <Content Include="Views\FileType\Index.cshtml" />
+    <Content Include="Views\File\Create.cshtml" />
+    <Content Include="Views\File\Edit.cshtml" />
+    <Content Include="Views\File\Index.cshtml" />
+    <Content Include="Views\ImageType\Create.cshtml" />
+    <Content Include="Views\ImageType\Edit.cshtml" />
+    <Content Include="Views\ImageType\Index.cshtml" />
+    <Content Include="Views\Image\Create.cshtml" />
+    <Content Include="Views\Image\Edit.cshtml" />
+    <Content Include="Views\Image\Index.cshtml" />
+    <Content Include="Views\Market\Create.cshtml" />
+    <Content Include="Views\Market\Edit.cshtml" />
+    <Content Include="Views\Market\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
