@@ -144,12 +144,13 @@ namespace V308CMS.Respository
                 //    );
                 var items =  from banner in entities.Banner
                      where banner.Position == position && banner.Site == site.Trim()
-                     orderby banner.UpdatedAt descending
+                     //orderby banner.UpdatedAt descending
+                             orderby banner.Order ascending
                      select banner;
                 if (withImg) {
                     items = from banner in entities.Banner
                             where banner.Position == position && banner.Site == site.Trim() && banner.ImageUrl.Length > 0
-                            orderby banner.UpdatedAt descending
+                            orderby banner.Order ascending
                             select banner;
                 }
                 if (items.Count() > 0) {

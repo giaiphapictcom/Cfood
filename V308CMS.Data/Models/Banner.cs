@@ -31,6 +31,7 @@ namespace V308CMS.Data.Models
         public bool Status { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+        public int Order { get; set; }
 
       
     }

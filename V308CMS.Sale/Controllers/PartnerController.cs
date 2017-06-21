@@ -106,6 +106,44 @@ namespace V308CMS.Sale.Controllers
         {
             return View();
         }
+        [HttpPost, ActionName("Register")]
+        public ActionResult RegisterPost()
+        {
+            try {
+                CreateRepos();
+                string email = Request["email"];
+                string fullname = Request["fullname"];
+                string mobile = Request["mobile"];
+                string password = Request["password"];
+                AccountRepos.InsertAffiliate(email, password, fullname, mobile);
+
+                //var body =
+                //        string.Format(
+                //            "Cảm ơn bạn đã đăng ký tài khoản trên hệ thống của {0}. Mã kích hoạt tài khoản của bạn là {1}. Click vào <a style='color: #007FF0' href='{2}' title='Kích hoạt tài khoản'> đây</a> để kích hoạt tài khoản của bạn.",
+                //            ViewBag.SiteName, token, activeAccountUrl);
+                //InternalSendEmail(email, "Đăng ký tài khoản", body);
+
+                return Redirect("/dang-nhap");
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+                return Content("Xảy ra lỗi hệ thống ! Vui lòng thử lại.");
+            }
+
+        }
+
+        //private string InternalSendEmail(string to, string subject, string body)
+        //{
+        //    var emailSender = new EmailSender(
+        //         ConfigHelper.GMailUserName,
+        //         ConfigHelper.GMailPassword,
+        //         ConfigHelper.GmailSmtpServer,
+        //         ConfigHelper.GMailPort
+        //        );
+        //    return emailSender.SendMail(ConfigHelper.GMailUserName, to,
+        //         subject, body);
+        //}
 
 
         #region Support Send

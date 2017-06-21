@@ -2,6 +2,7 @@
 @using System.Text.RegularExpressions
 @using V308CMS.Common
 @using V308CMS.Data.Models
+@using V308CMS.Sale.Helpers
 @model V308CMS.Data.AffiliateHomePage
 @{
     Layout = "~/Views/" + @ViewContext.RouteData.Values["controller"] + "/Layout/Default.cshtml";
@@ -125,7 +126,7 @@ else if (Model.Banners != null && Model.Banners.Count() > 0)
                         
                         @if (img.ImageUrl.ToString().Length > 0) {
 
-                            <p><img src="@img.ImageUrl" alt="@img.Name"/></p>
+                            <p><img src="@ImageUrlHelper.ToUrl(img.ImageUrl)" alt="@img.Name"/></p>
                         }
                     </div>
         

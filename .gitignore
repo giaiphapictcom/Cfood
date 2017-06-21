@@ -1930,3 +1930,5 @@ UpgradeLog.XML
 >>>>>>> toai-neal
 >>>>>>> ed35e19838df9443048a4c7ac98fb515e75fb477
 V308CMS.Admin/bin/
+V308CMS.Static/image-cache/*.jpg
+V308CMS.Static/image-cache/affiliate/*

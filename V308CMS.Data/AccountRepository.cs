@@ -163,6 +163,45 @@ namespace V308CMS.Data
 
         }
 
+        public string InsertAffiliate(string email, string password, string fullname, string mobile="")
+        {
+            var accounts = from p in entities.Account
+                           where p.Email.Equals(email) || p.UserName.Equals(email)
+                           select p;
+
+            if (accounts != null || accounts.Count() < 1)
+            {
+                return "exist";
+            }
+            else
+            {
+                var salt = StringHelper.GenerateString(6);
+                var token = getToken(email);
+
+                var mAccount = new Account()
+                {
+                    Email = email,
+                    UserName = email,
+                    FullName = fullname,
+                    Phone = mobile,
+                    Password = HashPassword(password, salt),
+                    Salt = salt,
+                    Token = token,
+                    TokenExpireDate = DateTime.Now.AddDays(1),
+                    Status = false
+                };
+                entities.Account.Add(mAccount);
+                entities.SaveChanges();
+                return "ok";
+            }
+
+        }
+
+        private string getToken(string email, bool forForgotPassword = false)
+        {
+            return forForgotPassword ? EncryptionMD5.ToMd5(string.Format("{0}|{1}|forgot-die", email, DateTime.Now.Ticks)) : EncryptionMD5.ToMd5(string.Format("{0}|{1}", email, DateTime.Now.Ticks));
+        }
+
         public string UpdateToken(string email, string token,DateTime tokenExpireDate)
         {
             var checkAccount = (from p in entities.Account
