@@ -4,6 +4,7 @@
     var listState = (List<SelectListItem>)ViewData["ListState"];
 }
 @Html.HiddenFor(menu => Model.Id)
+@Html.HiddenFor(menu => Model.Site)
 @Html.AntiForgeryToken()
 <div class="row">
     @Html.ValidationSummary(true)

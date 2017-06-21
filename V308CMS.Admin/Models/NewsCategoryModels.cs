@@ -12,6 +12,7 @@ namespace V308CMS.Admin.Models
         }
        
         public int Id { get; set; }
+        public string Site { get; set; }
         [Required(ErrorMessage = "Vui lòng nhập Tên chuyên mục.")]
         [Display(Name = "Tên chuyên mục")]
         public string Name { get; set; }

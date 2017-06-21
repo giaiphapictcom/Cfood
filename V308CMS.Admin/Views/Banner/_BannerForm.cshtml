@@ -5,6 +5,7 @@
         var listPosition = (List<SelectListItem>)ViewBag.ListPosition;
 }
 @Html.HiddenFor(menu => Model.Id)
+@Html.HiddenFor(menu => Model.Site)
 @Html.AntiForgeryToken()
 <div class="row">
     @Html.ValidationSummary(true)

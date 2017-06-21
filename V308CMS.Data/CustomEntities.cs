@@ -624,7 +624,7 @@ namespace V308CMS.Data
         public bool? Slider { get { if (_Slider == null) return false; else return _Slider; } set { if (_Slider != value) { _Slider = value; } } }
         public bool? Hot { get { if (_Hot == null) return false; else return _Hot; } set { if (_Hot != value) { _Hot = value; } } }
         public bool? Fast { get { if (_Fast == null) return false; else return _Fast; } set { if (_Fast != value) { _Fast = value; } } }
-        public  byte Site { get; set; }
+        public  string Site { get; set; }
         [ForeignKey("TypeID")]
         [Required]
         public virtual NewsGroups NewsGroup { get; set; }

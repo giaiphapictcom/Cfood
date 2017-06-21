@@ -9,7 +9,7 @@ namespace V308CMS.Respository
     public interface IBannerRespository
     {
         string ChangeStatus(int id);
-        List<Banner> GetList(byte position = 0);
+        List<Banner> GetList(byte position = 0, string site = "", bool withImg = false);
     }
     public class BannerRespository: IBaseRespository<Banner>, IBannerRespository
     {
@@ -77,8 +77,16 @@ namespace V308CMS.Respository
                     ).FirstOrDefault();
                 if (bannerInsert == null)
                 {
-                    entities.Banner.Add(data);
-                    entities.SaveChanges();
+                    try
+                    {
+                        entities.Banner.Add(data);
+                        entities.SaveChanges();
+                    }
+                    catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+                    {
+                        Console.Write(dbEx);
+                    }
+                    
                     return "ok";
                 }
                 return "not_exists";
@@ -117,20 +125,38 @@ namespace V308CMS.Respository
         
         }
 
-        public List<Banner> GetList(byte position = 0)
+        public List<Banner> GetList(byte position = 0,string site="",bool withImg = false)
         {
+            var banners = new List<Banner>();
             using (var entities = new V308CMSEntities())
             {
-                return position>0?
-                    (from banner in entities.Banner
-                                   where  banner.Position == position
-                        orderby banner.UpdatedAt descending
-                        select banner
-                    ).ToList() : (from banner in entities.Banner
-                                  orderby banner.UpdatedAt descending
-                                  select banner
-                    ).ToList();
+                //var items = position > 0 ?
+                //    (from banner in entities.Banner
+                //     where banner.Position == position && banner.Site == site.Trim()
+                //     orderby banner.UpdatedAt descending
+                //     select banner
+
+                //    ) : (from banner in entities.Banner
+                //         where banner.Site == site.Trim()
+                //         orderby banner.UpdatedAt descending
+                //         select banner
+
+                //    );
+                var items =  from banner in entities.Banner
+                     where banner.Position == position && banner.Site == site.Trim()
+                     orderby banner.UpdatedAt descending
+                     select banner;
+                if (withImg) {
+                    items = from banner in entities.Banner
+                            where banner.Position == position && banner.Site == site.Trim() && banner.ImageUrl.Length > 0
+                            orderby banner.UpdatedAt descending
+                            select banner;
+                }
+                if (items.Count() > 0) {
+                    banners = items.ToList();
+                }
             }
+            return banners;
         }
     }
 }

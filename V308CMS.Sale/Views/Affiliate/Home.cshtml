@@ -1,7 +1,8 @@
-﻿@model V308CMS.Data.AffiliateHomePage
-@using V308CMS.Data;
-@using System.Text.RegularExpressions;
+﻿@using V308CMS.Data;
+@using System.Text.RegularExpressions
 @using V308CMS.Common
+@using V308CMS.Data.Models
+@model V308CMS.Data.AffiliateHomePage
 @{
     Layout = "~/Views/" + @ViewContext.RouteData.Values["controller"] + "/Layout/Default.cshtml";
 }
@@ -22,7 +23,7 @@
     </div>
 </div>
 
-@if (Model.VideoCategory != null && Model.Videos != null && Model.Videos.Count() > 0)
+@if (Model.VideoCategory != null && Model.Videos != null && Model.Videos.Count > 0)
 {
     News videoPlay = Model.Videos.First();
     
@@ -60,7 +61,7 @@
     </div>
 }
 
-@if (Model.Articles != null && Model.Articles.Count() > 0)
+@if (Model.Articles != null && Model.Articles.Count() > 0 && 1 == 0 )
 {
     
     int i = 0;
@@ -92,6 +93,39 @@
                         @if (article.Detail.ToString().Length > 0) {
 
                             <p>@Html.Raw(article.Detail)</p>
+                        }
+                    </div>
+        
+                }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else if (Model.Banners != null && Model.Banners.Count() > 0)
+{
+    
+    int i = 0;
+    <div class="shopify-section ">
+        <div class="container-block m-0">
+            <div class="container border-col">
+                <div class="row">
+                @foreach (Banner img in Model.Banners.Take(3))
+                {
+                    i++;
+                    string articleClass = "col-md-6 col-sm-12 col-xs-12 article-home";
+                    if( i > 2 ){
+                        articleClass = "col-md-12 col-sm-12 col-xs-12 article-home-full";
+                    }
+                    <div class="@articleClass">
+                        <h3><span>@img.Name</span></h3>
+                        @if (i == 3) { 
+                            <i class="line-red"></i>
+                        }
+                        
+                        @if (img.ImageUrl.ToString().Length > 0) {
+
+                            <p><img src="@img.ImageUrl" alt="@img.Name"/></p>
                         }
                     </div>
         

@@ -8,6 +8,6 @@ namespace V308CMS.Data
         string Delete(int id);
         string Update(T t);
         string Insert(T t);
-        List<T> GetList(int page = 1, int pageSize = 10);
+        List<T> GetList(int page = 1, int pageSize = 10,string site="");
     }
 }

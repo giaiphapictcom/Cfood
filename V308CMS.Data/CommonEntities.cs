@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
+
 namespace V308CMS.Data
 {
     public class ETLogin
@@ -1980,6 +1981,7 @@ namespace V308CMS.Data
         public NewsGroups VideoCategory { get; set; }
         public List<News> Videos { get; set; }
         public List<News> Articles { get; set; }
+        public List<V308CMS.Data.Models.Banner> Banners { get; set; }
         public List<Testimonial> Testimonial { get; set; }
         public string[] BrandImages { get; set; }
         public List<Categorys> Categorys { get; set; }

@@ -50,7 +50,7 @@ namespace V308CMS.Admin.Models
         public bool Status { get; set; }
         public DateTime CreatedAt { get; set; }
         [Display(Name = "Site")]
-        public byte Site { get; set; } 
+        public string Site { get; set; } 
 
     }
 }

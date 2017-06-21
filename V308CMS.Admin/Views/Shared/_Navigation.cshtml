@@ -10,12 +10,12 @@
     public bool IsHasPermission(List<Permission> listRolePermission, string group, int actionIndex)
     {
 
-        if(listRolePermission == null)
+        if (listRolePermission == null)
         {
             return false;
         }
         var permision = string.Format("{0}Permission", group);
-        var permissionItem =  listRolePermission.FirstOrDefault(item => item.GroupPermission == permision);
+        var permissionItem = listRolePermission.FirstOrDefault(item => item.GroupPermission == permision);
         if (permissionItem != null)
         {
             return (permissionItem.Value & (int)Math.Pow(2, actionIndex)) > 0;
@@ -24,628 +24,631 @@
     }
 }
 <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-<div class="navbar-header">
-    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-    </button>
-    <a class="navbar-brand" href="@Url.HomeIndexUrl()">MPSTART CMS</a>
-</div>
-<!-- /.navbar-header -->
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="@Url.HomeIndexUrl()">MPSTART CMS</a>
+    </div>
+    <!-- /.navbar-header -->
 
-<ul class="nav navbar-top-links navbar-right">
-    <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-            @User.UserName
-            <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
-        </a>
-        <ul class="dropdown-menu dropdown-user">
-            <li>
-                <a href="#"><i class="fa fa-user fa-fw"></i>User Profile</a>
-            </li>
-            <li>
-                <a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-            </li>
-            <li class="divider"></li>
-            <li>
-                <a href="@Url.HomeLogoutUrl()"><i class="fa fa-sign-out fa-fw"></i> Đăng xuất</a>
-            </li>
-        </ul>
-    </li>
-</ul>
-<div class="navbar-default sidebar" role="navigation">
-<div class="sidebar-nav navbar-collapse">
-<ul class="nav in" id="side-menu">
-    <li>
-        <a href="@Url.HomeIndexUrl()" title="Tổng quan">
-            <i class="fa fa-dashboard fa-fw"></i> Tổng quan
-        </a>
-    </li>
-    <li>
-        <a href="@Url.ProductOrderIndexUrl()" title="Đơn hàng">
-            <i class="fa fa-shopping-basket fa-fw"></i>Đơn hàng
-            <span class="fa arrow"></span>
-        </a>
-    </li>
-    @if (IsHasPermission(listRolePermission, "Contact", 0))
-    {
-        <li>
-            <a href="@Url.ContactIndexUrl()" title="">
-                <i class="fa fa-user-md fa-fw"></i> Thông tin Liên hệ
-                <span class="fa arrow"></span>
+    <ul class="nav navbar-top-links navbar-right">
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                @User.UserName
+                <i class="fa fa-user fa-fw"></i><i class="fa fa-caret-down"></i>
             </a>
-            <ul class="nav nav-second-level collapse">
+            <ul class="dropdown-menu dropdown-user">
                 <li>
-                    <a href="@Url.ContactIndexUrl()" title="Danh sách Liên hệ">Danh sách</a>
+                    <a href="#"><i class="fa fa-user fa-fw"></i>User Profile</a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-gear fa-fw"></i>Settings</a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                    <a href="@Url.HomeLogoutUrl()"><i class="fa fa-sign-out fa-fw"></i>Đăng xuất</a>
                 </li>
             </ul>
         </li>
-    }
-
-    <li>
-        <a href="#" title="Catalog">
-            <i class="fa fa-list-alt fa-fw"></i>Catalog
+    </ul>
+    <div class="navbar-default sidebar" role="navigation">
+        <div class="sidebar-nav navbar-collapse">
+            <ul class="nav in" id="side-menu">
+                <li>
+                    <a href="@Url.HomeIndexUrl()" title="Tổng quan">
+                        <i class="fa fa-dashboard fa-fw"></i>Tổng quan
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.ProductOrderIndexUrl()" title="Đơn hàng">
+                        <i class="fa fa-shopping-basket fa-fw"></i>Đơn hàng
             <span class="fa arrow"></span>
-        </a>
-        <ul class="nav nav-second-level collapse">
-            @if (IsHasPermission(listRolePermission, "ProductType", 0) || IsHasPermission(listRolePermission, "ProductType", 1))
-            {
-                <li>
-                    @if (IsHasPermission(listRolePermission, "ProductType", 0))
-                    {
-                        <a title="Danh mục Sản phẩm" href="#">
-                            Danh mục sản phẩm
-                            <span class="fa arrow"></span>
+                    </a>
+                </li>
+                @if (IsHasPermission(listRolePermission, "Contact", 0))
+                {
+                    <li>
+                        <a href="@Url.ContactIndexUrl()" title="">
+                            <i class="fa fa-user-md fa-fw"></i>Thông tin Liên hệ
+                <span class="fa arrow"></span>
                         </a>
-                    }
-                    <ul class="nav nav-third-level">
-                        @if (IsHasPermission(listRolePermission, "ProductType", 0))
+                        <ul class="nav nav-second-level collapse">
+                            <li>
+                                <a href="@Url.ContactIndexUrl()" title="Danh sách Liên hệ">Danh sách</a>
+                            </li>
+                        </ul>
+                    </li>
+                }
+
+                <li>
+                    <a href="#" title="Catalog">
+                        <i class="fa fa-list-alt fa-fw"></i>Catalog
+            <span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level collapse">
+                        @if (IsHasPermission(listRolePermission, "ProductType", 0) || IsHasPermission(listRolePermission, "ProductType", 1))
                         {
                             <li>
-                                <a href="@Url.ProductTypeIndexUrl()" title="Danh mục Sản phẩm">Danh sách</a>
+                                @if (IsHasPermission(listRolePermission, "ProductType", 0))
+                                {
+                                    <a title="Danh mục Sản phẩm" href="#">Danh mục sản phẩm
+                            <span class="fa arrow"></span>
+                                    </a>
+                                }
+                                <ul class="nav nav-third-level">
+                                    @if (IsHasPermission(listRolePermission, "ProductType", 0))
+                                    {
+                                        <li>
+                                            <a href="@Url.ProductTypeIndexUrl()" title="Danh mục Sản phẩm">Danh sách</a>
+                                        </li>
+                                    }
+                                    @if (IsHasPermission(listRolePermission, "ProductType", 1))
+                                    {
+                                        <li>
+                                            <a title="Thêm mới" href="@Url.ProductTypeCreateUrl()">Thêm mới</a>
+                                        </li>
+                                    }
+
+                                </ul>
+                            </li>
+
+                        }
+                        @if (IsHasPermission(listRolePermission, "ProductBrand", 0) || IsHasPermission(listRolePermission, "ProductBrand", 1))
+                        {
+                            <li>
+                                @if (IsHasPermission(listRolePermission, "ProductBrand", 0))
+                                {
+                                    <a title="Danh sách Thương hiệu" href="@Url.ProductBrandIndexUrl()">Thương hiệu
+                            <span class="fa arrow"></span>
+                                    </a>
+                                }
+
+                                <ul class="nav nav-third-level">
+                                    @if (IsHasPermission(listRolePermission, "ProductBrand", 0))
+                                    {
+                                        <li>
+                                            <a href="@Url.ProductBrandIndexUrl()" title="Danh sách thương hiệu">Danh sách</a>
+                                        </li>
+                                    }
+                                    @if (IsHasPermission(listRolePermission, "ProductBrand", 1))
+                                    {
+                                        <li>
+                                            <a title="Thêm mới" href="@Url.ProductBrandCreateUrl()">Thêm mới</a>
+                                        </li>
+                                    }
+                                </ul>
                             </li>
                         }
-                        @if (IsHasPermission(listRolePermission, "ProductType", 1))
+                        @if (IsHasPermission(listRolePermission, "ProductManufacturer", 0) || IsHasPermission(listRolePermission, "ProductManufacturer", 1))
                         {
                             <li>
-                                <a title="Thêm mới" href="@Url.ProductTypeCreateUrl()">Thêm mới</a>
+                                @if (IsHasPermission(listRolePermission, "ProductManufacturer", 0))
+                                {
+                                    <a title="Danh sách Nhà sản xuất" href="@Url.ProductManufacturerIndexUrl()">Nhà sản xuất
+                            <span class="fa arrow"></span>
+                                    </a>
+                                }
+                                <ul class="nav nav-third-level">
+                                    @if (IsHasPermission(listRolePermission, "ProductManufacturer", 0))
+                                    {
+                                        <li>
+                                            <a href="@Url.ProductManufacturerIndexUrl()" title="Danh sách Nhà sản xuất">Danh sách</a>
+                                        </li>
+                                    }
+                                    @if (IsHasPermission(listRolePermission, "ProductManufacturer", 1))
+                                    {
+                                        <li>
+                                            <a title="Thêm mới" href="@Url.ProductManufacturerCreateUrl()">Thêm mới</a>
+                                        </li>
+                                    }
+                                </ul>
+                            </li>
+                        }
+                        @if (IsHasPermission(listRolePermission, "ProductDistributor", 0) || IsHasPermission(listRolePermission, "ProductDistributor", 1))
+                        {
+                            <li>
+                                @if (IsHasPermission(listRolePermission, "ProductDistributor", 0))
+                                {
+                                    <a title="Danh sách Nhà phân phối" href="@Url.ProductDistributorIndexUrl()">Nhà phân phối
+                            <span class="fa arrow"></span>
+                                    </a>
+                                }
+
+                                <ul class="nav nav-third-level">
+                                    @if (IsHasPermission(listRolePermission, "ProductDistributor", 0))
+                                    {
+                                        <li>
+                                            <a href="@Url.ProductDistributorIndexUrl()" title="Danh sách Nhà phân phối">Danh sách</a>
+                                        </li>
+                                    }
+                                    @if (IsHasPermission(listRolePermission, "ProductDistributor", 1))
+                                    {
+                                        <li>
+                                            <a title="Thêm mới" href="@Url.ProductDistributorCreateUrl()">Thêm mới</a>
+                                        </li>
+                                    }
+                                </ul>
                             </li>
                         }
 
+                        @if (IsHasPermission(listRolePermission, "ProductStore", 0) || IsHasPermission(listRolePermission, "ProductStore", 1))
+                        {
+                            <li>
+                                @if (IsHasPermission(listRolePermission, "ProductStore", 0))
+                                {
+                                    <a title="Danh sách Kho hàng" href="@Url.ProductStoreIndexUrl()">Kho hàng
+                            <span class="fa arrow"></span>
+                                    </a>
+                                }
+
+                                <ul class="nav nav-third-level">
+                                    @if (IsHasPermission(listRolePermission, "ProductStore", 0))
+                                    {
+                                        <li>
+                                            <a href="@Url.ProductStoreIndexUrl()" title="Danh sách kho hàng">Danh sách</a>
+                                        </li>
+                                    }
+                                    @if (IsHasPermission(listRolePermission, "ProductStore", 1))
+                                    {
+                                        <li>
+                                            <a title="Thêm mới" href="@Url.ProductStoreCreateUrl()">Thêm mới</a>
+                                        </li>
+
+                                    }
+                                </ul>
+                            </li>
+                        }
+                        @if (IsHasPermission(listRolePermission, "ProductUnit", 0) || IsHasPermission(listRolePermission, "ProductUnit", 1))
+                        {
+                            <li>
+                                @if (IsHasPermission(listRolePermission, "ProductUnit", 0))
+                                {
+                                    <a title="Danh sách Đơn vị tính" href="@Url.ProductUnitIndexUrl()">Đơn vị tính
+                            <span class="fa arrow"></span>
+                                    </a>
+                                }
+
+                                <ul class="nav nav-third-level">
+                                    @if (IsHasPermission(listRolePermission, "ProductUnit", 0))
+                                    {
+                                        <li>
+                                            <a href="@Url.ProductUnitIndexUrl()" title="Danh sách Đơn vị tính">Danh sách</a>
+                                        </li>
+                                    }
+                                    @if (IsHasPermission(listRolePermission, "ProductUnit", 1))
+                                    {
+                                        <li>
+                                            <a title="Thêm mới" href="@Url.ProductUnitCreateUrl()">Thêm mới</a>
+                                        </li>
+
+                                    }
+                                </ul>
+                            </li>
+                        }
+                        @if (IsHasPermission(listRolePermission, "ProductColor", 0) || IsHasPermission(listRolePermission, "ProductColor", 1))
+                        {
+                            <li>
+                                @if (IsHasPermission(listRolePermission, "ProductColor", 0))
+                                {
+                                    <a title="Danh sách Màu sắc" href="@Url.ProductColorIndexUrl()">Màu sắc
+                            <span class="fa arrow"></span>
+                                    </a>
+                                }
+                                <ul class="nav nav-third-level">
+                                    @if (IsHasPermission(listRolePermission, "ProductColor", 0))
+                                    {
+                                        <li>
+                                            <a href="@Url.ProductColorIndexUrl()" title="Danh sách Màu sắc">Danh sách</a>
+                                        </li>
+                                    }
+                                    @if (IsHasPermission(listRolePermission, "ProductColor", 1))
+                                    {
+                                        <li>
+                                            <a title="Thêm mới" href="@Url.ProductColorCreateUrl()">Thêm mới</a>
+                                        </li>
+                                    }
+                                </ul>
+                            </li>
+                        }
+                        @if (IsHasPermission(listRolePermission, "Size", 0) || IsHasPermission(listRolePermission, "Size", 1))
+                        {
+                            <li>
+                                @if (IsHasPermission(listRolePermission, "Size", 0))
+                                {
+                                    <a title="Danh sách Kích cỡ" href="@Url.SizeIndexUrl()">Kích cỡ
+                            <span class="fa arrow"></span>
+                                    </a>
+                                }
+
+                                <ul class="nav nav-third-level">
+                                    @if (IsHasPermission(listRolePermission, "Size", 0))
+                                    {
+                                        <li>
+                                            <a href="@Url.SizeIndexUrl()" title="Danh sách Kích cỡ">Danh sách</a>
+                                        </li>
+                                    }
+                                    @if (IsHasPermission(listRolePermission, "Size", 1))
+                                    {
+                                        <li>
+                                            <a title="Thêm mới" href="@Url.SizeCreateUrl()">Thêm mới</a>
+                                        </li>
+                                    }
+                                </ul>
+                            </li>
+                        }
+                        @if (IsHasPermission(listRolePermission, "Country", 0) || IsHasPermission(listRolePermission, "Country", 1))
+                        {
+                            <li>
+                                @if (IsHasPermission(listRolePermission, "Country", 0))
+                                {
+                                    <a title="Danh sách Quốc gia" href="@Url.CountryIndexUrl()">Quốc gia
+                            <span class="fa arrow"></span>
+                                    </a>
+                                }
+
+                                <ul class="nav nav-third-level">
+                                    @if (IsHasPermission(listRolePermission, "Country", 0))
+                                    {
+                                        <li>
+                                            <a href="@Url.CountryIndexUrl()" title="Danh sách Quốc gia">Danh sách</a>
+                                        </li>
+                                    }
+                                    @if (IsHasPermission(listRolePermission, "Country", 1))
+                                    {
+                                        <li>
+                                            <a title="Thêm mới" href="@Url.CountryCreateUrl()">Thêm mới</a>
+                                        </li>
+                                    }
+                                </ul>
+                            </li>
+                        }
                     </ul>
                 </li>
-
-            }
-            @if (IsHasPermission(listRolePermission, "ProductBrand", 0) || IsHasPermission(listRolePermission, "ProductBrand", 1))
-            {
-                <li>
-                    @if (IsHasPermission(listRolePermission, "ProductBrand", 0))
-                    {
-                        <a title="Danh sách Thương hiệu" href="@Url.ProductBrandIndexUrl()">
-                            Thương hiệu
-                            <span class="fa arrow"></span>
-                        </a>
-                    }
-
-                    <ul class="nav nav-third-level">
-                        @if (IsHasPermission(listRolePermission, "ProductBrand", 0))
+                @if (IsHasPermission(listRolePermission, "Product", 0) || IsHasPermission(listRolePermission, "Product", 1))
+                {
+                    <li>
+                        @if (IsHasPermission(listRolePermission, "Product", 0))
                         {
-                            <li>
-                                <a href="@Url.ProductBrandIndexUrl()" title="Danh sách thương hiệu">Danh sách</a>
-                            </li>
-                        }
-                        @if (IsHasPermission(listRolePermission, "ProductBrand", 1))
-                        {
-                            <li>
-                                <a title="Thêm mới" href="@Url.ProductBrandCreateUrl()">Thêm mới</a>
-                            </li>
-                        }
-                    </ul>
-                </li>
-            }
-            @if (IsHasPermission(listRolePermission, "ProductManufacturer", 0) || IsHasPermission(listRolePermission, "ProductManufacturer", 1))
-            {
-                <li>
-                    @if (IsHasPermission(listRolePermission, "ProductManufacturer", 0))
-                    {
-                        <a title="Danh sách Nhà sản xuất" href="@Url.ProductManufacturerIndexUrl()">
-                            Nhà sản xuất
-                            <span class="fa arrow"></span>
-                        </a>
-                    }
-                    <ul class="nav nav-third-level">
-                        @if (IsHasPermission(listRolePermission, "ProductManufacturer", 0))
-                        {
-                            <li>
-                                <a href="@Url.ProductManufacturerIndexUrl()" title="Danh sách Nhà sản xuất">Danh sách</a>
-                            </li>
-                        }
-                        @if (IsHasPermission(listRolePermission, "ProductManufacturer", 1))
-                        {
-                            <li>
-                                <a title="Thêm mới" href="@Url.ProductManufacturerCreateUrl()">Thêm mới</a>
-                            </li>
-                        }
-                    </ul>
-                </li>
-            }
-            @if (IsHasPermission(listRolePermission, "ProductDistributor", 0) || IsHasPermission(listRolePermission, "ProductDistributor", 1))
-            {
-                <li>
-                    @if (IsHasPermission(listRolePermission, "ProductDistributor", 0))
-                    {
-                        <a title="Danh sách Nhà phân phối" href="@Url.ProductDistributorIndexUrl()">
-                            Nhà phân phối
-                            <span class="fa arrow"></span>
-                        </a>
-                    }
-
-                    <ul class="nav nav-third-level">
-                        @if (IsHasPermission(listRolePermission, "ProductDistributor", 0))
-                        {
-                            <li>
-                                <a href="@Url.ProductDistributorIndexUrl()" title="Danh sách Nhà phân phối">Danh sách</a>
-                            </li>
-                        }
-                        @if (IsHasPermission(listRolePermission, "ProductDistributor", 1))
-                        {
-                            <li>
-                                <a title="Thêm mới" href="@Url.ProductDistributorCreateUrl()">Thêm mới</a>
-                            </li>
-                        }
-                    </ul>
-                </li>
-            }
-
-            @if (IsHasPermission(listRolePermission, "ProductStore", 0) || IsHasPermission(listRolePermission, "ProductStore", 1))
-            {
-                <li>
-                    @if (IsHasPermission(listRolePermission, "ProductStore", 0))
-                    {
-                        <a title="Danh sách Kho hàng" href="@Url.ProductStoreIndexUrl()">
-                            Kho hàng
-                            <span class="fa arrow"></span>
-                        </a>
-                    }
-
-                    <ul class="nav nav-third-level">
-                        @if (IsHasPermission(listRolePermission, "ProductStore", 0))
-                        {
-                            <li>
-                                <a href="@Url.ProductStoreIndexUrl()" title="Danh sách kho hàng">Danh sách</a>
-                            </li>
-                        }
-                        @if (IsHasPermission(listRolePermission, "ProductStore", 1))
-                        {
-                            <li>
-                                <a title="Thêm mới" href="@Url.ProductStoreCreateUrl()">Thêm mới</a>
-                            </li>
-
-                        }
-                    </ul>
-                </li>
-            }
-            @if (IsHasPermission(listRolePermission, "ProductUnit", 0) || IsHasPermission(listRolePermission, "ProductUnit", 1))
-            {
-                <li>
-                    @if (IsHasPermission(listRolePermission, "ProductUnit", 0))
-                    {
-                        <a title="Danh sách Đơn vị tính" href="@Url.ProductUnitIndexUrl()">
-                            Đơn vị tính
-                            <span class="fa arrow"></span>
-                        </a>
-                    }
-
-                    <ul class="nav nav-third-level">
-                        @if (IsHasPermission(listRolePermission, "ProductUnit", 0))
-                        {
-                            <li>
-                                <a href="@Url.ProductUnitIndexUrl()" title="Danh sách Đơn vị tính">Danh sách</a>
-                            </li>
-                        }
-                        @if (IsHasPermission(listRolePermission, "ProductUnit", 1))
-                        {
-                            <li>
-                                <a title="Thêm mới" href="@Url.ProductUnitCreateUrl()">Thêm mới</a>
-                            </li>
-
-                        }
-                    </ul>
-                </li>
-            }
-            @if (IsHasPermission(listRolePermission, "ProductColor", 0) || IsHasPermission(listRolePermission, "ProductColor", 1))
-            {
-                <li>
-                    @if (IsHasPermission(listRolePermission, "ProductColor", 0))
-                    {
-                        <a title="Danh sách Màu sắc" href="@Url.ProductColorIndexUrl()">
-                            Màu sắc
-                            <span class="fa arrow"></span>
-                        </a>
-                    }
-                    <ul class="nav nav-third-level">
-                        @if (IsHasPermission(listRolePermission, "ProductColor", 0))
-                        {
-                            <li>
-                                <a href="@Url.ProductColorIndexUrl()" title="Danh sách Màu sắc">Danh sách</a>
-                            </li>
-                        }
-                        @if (IsHasPermission(listRolePermission, "ProductColor", 1))
-                        {
-                            <li>
-                                <a title="Thêm mới" href="@Url.ProductColorCreateUrl()">Thêm mới</a>
-                            </li>
-                        }
-                    </ul>
-                </li>
-            }
-            @if (IsHasPermission(listRolePermission, "Size", 0) || IsHasPermission(listRolePermission, "Size", 1))
-            {
-                <li>
-                    @if (IsHasPermission(listRolePermission, "Size", 0))
-                    {
-                        <a title="Danh sách Kích cỡ" href="@Url.SizeIndexUrl()">
-                            Kích cỡ
-                            <span class="fa arrow"></span>
-                        </a>
-                    }
-
-                    <ul class="nav nav-third-level">
-                        @if (IsHasPermission(listRolePermission, "Size", 0))
-                        {
-                            <li>
-                                <a href="@Url.SizeIndexUrl()" title="Danh sách Kích cỡ">Danh sách</a>
-                            </li>
-                        }
-                        @if (IsHasPermission(listRolePermission, "Size", 1))
-                        {
-                            <li>
-                                <a title="Thêm mới" href="@Url.SizeCreateUrl()">Thêm mới</a>
-                            </li>
-                        }
-                    </ul>
-                </li>
-            }
-            @if (IsHasPermission(listRolePermission, "Country", 0) || IsHasPermission(listRolePermission, "Country", 1))
-            {
-                <li>
-                    @if (IsHasPermission(listRolePermission, "Country", 0))
-                    {
-                        <a title="Danh sách Quốc gia" href="@Url.CountryIndexUrl()">
-                            Quốc gia
-                            <span class="fa arrow"></span>
-                        </a>
-                    }
-
-                    <ul class="nav nav-third-level">
-                        @if (IsHasPermission(listRolePermission, "Country", 0))
-                        {
-                            <li>
-                                <a href="@Url.CountryIndexUrl()" title="Danh sách Quốc gia">Danh sách</a>
-                            </li>
-                        }
-                        @if (IsHasPermission(listRolePermission, "Country", 1))
-                        {
-                            <li>
-                                <a title="Thêm mới" href="@Url.CountryCreateUrl()">Thêm mới</a>
-                            </li>
-                        }
-                    </ul>
-                </li>
-            }
-        </ul>
-    </li>
-    @if (IsHasPermission(listRolePermission, "Product", 0) || IsHasPermission(listRolePermission, "Product", 1))
-    {
-        <li>
-            @if (IsHasPermission(listRolePermission, "Product", 0))
-            {
-                <a href="@Url.ProductIndexUrl()" title="">
-                    <i class="fa fa-book fa-fw"></i> Sản phẩm
+                            <a href="@Url.ProductIndexUrl()" title="">
+                                <i class="fa fa-book fa-fw"></i>Sản phẩm
                     <span class="fa arrow"></span>
-                </a>
-            }
+                            </a>
+                        }
 
-            <ul class="nav nav-second-level collapse">
-                @if (IsHasPermission(listRolePermission, "Product", 0))
+                        <ul class="nav nav-second-level collapse">
+                            @if (IsHasPermission(listRolePermission, "Product", 0))
+                            {
+                                <li>
+                                    <a href="@Url.ProductIndexUrl()" title="Sản phẩm">Danh sách</a>
+                                </li>
+
+                            }
+                            @if (IsHasPermission(listRolePermission, "Product", 1))
+                            {
+                                <li>
+                                    <a href="@Url.ProductCreateUrl()" title="Loại sản phẩm">Thêm mới</a>
+                                </li>
+                            }
+
+                        </ul>
+                        <!-- /.nav-second-level -->
+                    </li>
+                }
+                @if (IsHasPermission(listRolePermission, "Banner", 0) || IsHasPermission(listRolePermission, "Banner", 1))
                 {
                     <li>
-                        <a href="@Url.ProductIndexUrl()" title="Sản phẩm">Danh sách</a>
-                    </li>
-
-                }
-                @if (IsHasPermission(listRolePermission, "Product", 1))
-                {
-                    <li>
-                        <a href="@Url.ProductCreateUrl()" title="Loại sản phẩm">Thêm mới</a>
-                    </li>
-                }
-
-            </ul>
-            <!-- /.nav-second-level -->
-        </li>
-    }
-    @if (IsHasPermission(listRolePermission, "Banner", 0) || IsHasPermission(listRolePermission, "Banner", 1))
-    {
-        <li>
-            @if (IsHasPermission(listRolePermission, "Banner", 0))
-            {
-                <a href="@Url.BannerIndexUrl()" title="">
-                    <i class="fa  fa-bullhorn fa-fw"></i> Banner
+                        @if (IsHasPermission(listRolePermission, "Banner", 0))
+                        {
+                            <a href="@Url.BannerIndexUrl()" title="">
+                                <i class="fa  fa-bullhorn fa-fw"></i>Banner
                     <span class="fa arrow"></span>
-                </a>
-            }
+                            </a>
+                        }
 
-            <ul class="nav nav-second-level collapse">
-                @if (IsHasPermission(listRolePermission, "Banner", 0))
-                {
-                    <li>
-                        <a href="@Url.BannerIndexUrl()" title="Danh sách Cửa hàng">Danh sách</a>
+                        <ul class="nav nav-second-level collapse">
+                            @if (IsHasPermission(listRolePermission, "Banner", 0))
+                            {
+                                <li>
+                                    <a href="@Url.BannerIndexUrl()" title="Danh sách Cửa hàng">Danh sách</a>
+                                </li>
+
+                            }
+                            @if (IsHasPermission(listRolePermission, "Banner", 1))
+                            {
+                                <li>
+                                    <a href="@Url.BannerCreateUrl()" title="Thêm mới">Thêm mới</a>
+                                </li>
+
+                            }
+
+
+                        </ul>
                     </li>
-
                 }
-                @if (IsHasPermission(listRolePermission, "Banner", 1))
-                {
-                    <li>
-                        <a href="@Url.BannerCreateUrl()" title="Thêm mới">Thêm mới</a>
-                    </li>
-
-                }
-
-
-            </ul>
-        </li>
-    }
-    @if (    IsHasPermission(listRolePermission, "News", 0) ||
+                @if (IsHasPermission(listRolePermission, "News", 0) ||
              IsHasPermission(listRolePermission, "News", 1) ||
              IsHasPermission(listRolePermission, "NewsCategory", 0) ||
              IsHasPermission(listRolePermission, "NewsCategory", 1)
             )
-    {
-        <li>
-            @if (IsHasPermission(listRolePermission, "News", 0))
-            {
-                <a href="@Url.NewsIndexUrl()" title="">
-                    <i class="fa fa-newspaper-o fa-fw"></i> Tin tức
+                {
+                    <li>
+                        @if (IsHasPermission(listRolePermission, "News", 0))
+                        {
+                            <a href="@Url.NewsIndexUrl()" title="">
+                                <i class="fa fa-newspaper-o fa-fw"></i>Tin tức
                     <span class="fa arrow"></span>
-                </a>
-            }
+                            </a>
+                        }
 
-            <ul class="nav nav-second-level collapse">
-                @if (IsHasPermission(listRolePermission, "News", 0))
-                {
-                    <li>
-                        <a href="@Url.NewsIndexUrl()" title="Danh sách Cửa hàng">Danh sách</a>
-                    </li>
-                }
-                @if (IsHasPermission(listRolePermission, "News", 1))
-                {
-                    <li>
-                        <a href="@Url.NewsCreateUrl()" title="Thêm mới">Thêm mới</a>
-                    </li>
-                }
+                        <ul class="nav nav-second-level collapse">
+                            @if (IsHasPermission(listRolePermission, "News", 0))
+                            {
+                                <li>
+                                    <a href="@Url.NewsIndexUrl()" title="Danh sách Cửa hàng">Danh sách</a>
+                                </li>
+                            }
+                            @if (IsHasPermission(listRolePermission, "News", 1))
+                            {
+                                <li>
+                                    <a href="@Url.NewsCreateUrl()" title="Thêm mới">Thêm mới</a>
+                                </li>
+                            }
 
-                <li>
-                    @if (IsHasPermission(listRolePermission, "NewsCategory", 0))
-                    {
-                        <a title="Danh mục Tin tức" href="#">
-                            Danh mục Tin tức
+                            <li>
+                                @if (IsHasPermission(listRolePermission, "NewsCategory", 0))
+                                {
+                                    <a title="Danh mục Tin tức" href="#">Danh mục Tin tức
                             <span class="fa arrow"></span>
-                        </a>
-                   }
+                                    </a>
+                                }
 
-                    <ul class="nav nav-third-level">
-                        @if (IsHasPermission(listRolePermission, "NewsCategory", 0))
-                        {
-                            <li>
-                                <a href="@Url.NewsCategoryIndexUrl()" title="Danh mục Tin tức">Danh sách</a>
+                                <ul class="nav nav-third-level">
+                                    @if (IsHasPermission(listRolePermission, "NewsCategory", 0))
+                                    {
+                                        <li>
+                                            <a href="@Url.NewsCategoryIndexUrl()" title="Danh mục Tin tức">Danh sách</a>
+                                        </li>
+                                    }
+                                    @if (IsHasPermission(listRolePermission, "NewsCategory", 1))
+                                    {
+                                        <li>
+                                            <a title="Thêm mới" href="@Url.NewsCategoryCreateUrl()">Thêm mới</a>
+                                        </li>
+
+                                    }
+
+                                </ul>
                             </li>
-                        }
-                        @if (IsHasPermission(listRolePermission, "NewsCategory", 1))
-                        {
-                            <li>
-                                <a title="Thêm mới" href="@Url.NewsCategoryCreateUrl()">Thêm mới</a>
-                            </li>
-
-                        }
-
-                    </ul>
-                </li>
-            </ul>
-        </li>
-    }
-    @if (IsHasPermission(listRolePermission, "User", 0))
-    {
-        <li>
-            <a href="@Url.UserIndexUrl()" title="Khách hàng">
-                <i class="fa fa-users fa-fw"></i>Khách hàng
+                        </ul>
+                    </li>
+                }
+                @if (IsHasPermission(listRolePermission, "User", 0))
+                {
+                    <li>
+                        <a href="@Url.UserIndexUrl()" title="Khách hàng">
+                            <i class="fa fa-users fa-fw"></i>Khách hàng
                 <span class="fa arrow"></span>
-            </a>
-            <ul class="nav nav-second-level collapse">
-                <li>
-                    <a href="@Url.UserIndexUrl()" title="Danh sách Tài khoản">Danh sách</a>
-                </li>
-            </ul>
+                        </a>
+                        <ul class="nav nav-second-level collapse">
+                            <li>
+                                <a href="@Url.UserIndexUrl()" title="Danh sách Tài khoản">Danh sách</a>
+                            </li>
+                        </ul>
 
-        </li>
-    }
-    @if (IsHasPermission(listRolePermission, "AdminAccount", 0) ||
+                    </li>
+                }
+                @if (IsHasPermission(listRolePermission, "AdminAccount", 0) ||
              IsHasPermission(listRolePermission, "AdminAccount", 1) ||
              IsHasPermission(listRolePermission, "Role", 0) ||
              IsHasPermission(listRolePermission, "Role", 1))
-    {
-        <li>
-            @if (IsHasPermission(listRolePermission, "AdminAccount", 0))
-            {
-                <a href="@Url.AdminAccountIndexUrl()" title="Tài khoản">
-                    <i class="fa fa-user fa-fw"></i>Tài khoản
+                {
+                    <li>
+                        @if (IsHasPermission(listRolePermission, "AdminAccount", 0))
+                        {
+                            <a href="@Url.AdminAccountIndexUrl()" title="Tài khoản">
+                                <i class="fa fa-user fa-fw"></i>Tài khoản
                     <span class="fa arrow"></span>
-                </a>
-            }
+                            </a>
+                        }
 
-            <ul class="nav nav-second-level collapse">
-                @if (IsHasPermission(listRolePermission, "AdminAccount", 0))
-                {
-                    <li>
-                        <a href="@Url.AdminAccountIndexUrl()" title="Danh sách Tài khoản">Danh sách</a>
-                    </li>
-                }
-                @if (IsHasPermission(listRolePermission, "AdminAccount", 1))
-                {
-                    <li>
-                        <a href="@Url.AdminAccountCreateUrl()" title="Thêm mới">Thêm mới</a>
-                    </li>
-                }
-                <li>
-                    @if (IsHasPermission(listRolePermission, "Role", 0))
-                    {
-                        <a title="Danh sách Nhóm tài khoản" href="@Url.RoleIndexUrl()">
-                            Danh sách Nhóm tài khoản
+                        <ul class="nav nav-second-level collapse">
+                            @if (IsHasPermission(listRolePermission, "AdminAccount", 0))
+                            {
+                                <li>
+                                    <a href="@Url.AdminAccountIndexUrl()" title="Danh sách Tài khoản">Danh sách</a>
+                                </li>
+                            }
+                            @if (IsHasPermission(listRolePermission, "AdminAccount", 1))
+                            {
+                                <li>
+                                    <a href="@Url.AdminAccountCreateUrl()" title="Thêm mới">Thêm mới</a>
+                                </li>
+                            }
+                            <li>
+                                @if (IsHasPermission(listRolePermission, "Role", 0))
+                                {
+                                    <a title="Danh sách Nhóm tài khoản" href="@Url.RoleIndexUrl()">Danh sách Nhóm tài khoản
                             <span class="fa arrow"></span>
-                        </a>
-                    }
+                                    </a>
+                                }
 
-                    <ul class="nav nav-third-level">
-                        @if (IsHasPermission(listRolePermission, "Role", 0))
-                        {
-                            <li>
-                                <a href="@Url.RoleIndexUrl()" title="Danh sách Nhóm tài khoản">Danh sách</a>
+                                <ul class="nav nav-third-level">
+                                    @if (IsHasPermission(listRolePermission, "Role", 0))
+                                    {
+                                        <li>
+                                            <a href="@Url.RoleIndexUrl()" title="Danh sách Nhóm tài khoản">Danh sách</a>
+                                        </li>
+                                    }
+                                    @if (IsHasPermission(listRolePermission, "Role", 1))
+                                    {
+                                        <li>
+                                            <a title="Thêm mới" href="@Url.RoleCreateUrl()">Thêm mới</a>
+                                        </li>
+                                    }
+                                </ul>
                             </li>
-                        }
-                        @if (IsHasPermission(listRolePermission, "Role", 1))
-                        {
-                            <li>
-                                <a title="Thêm mới" href="@Url.RoleCreateUrl()">Thêm mới</a>
-                            </li>
-                        }
-                    </ul>
-                </li>
-            </ul>
-        </li>
-    }
-    @if (IsHasPermission(listRolePermission, "SiteConfig", 0) || IsHasPermission(listRolePermission, "SiteConfig", 1))
-    {
-        <li>
-            @if (IsHasPermission(listRolePermission, "SiteConfig", 0))
-            {
-                <a href="@Url.SiteConfigIndexUrl()">
-                    <i class="fa fa-wrench fa-fw"></i>Cấu hình hệ thống
-                    <span class="fa arrow"></span>
-                </a>
-            }
-
-            <ul class="nav nav-second-level collapse">
-                @if (IsHasPermission(listRolePermission, "SiteConfig", 0))
-                {
-                    <li>
-                        <a href="@Url.SiteConfigIndexUrl()">Danh sách</a>
-                    </li>
-                }
-                @if (IsHasPermission(listRolePermission, "SiteConfig", 1))
-                {
-                    <li>
-                        <a href="@Url.SiteConfigCreateUrl()">Thêm mới</a>
-                    </li>
-
-                }                
-                @if (IsHasPermission(listRolePermission, "EmailConfig", 0) || IsHasPermission(listRolePermission, "EmailConfig", 1))
-                {
-
-                    <li>
-                        @if (IsHasPermission(listRolePermission, "EmailConfig", 0))
-                        {
-                            <a title="Danh sách gửi Mail" href="@Url.EmailConfigIndexUrl()">
-                                Danh sách Email
-                                <span class="fa arrow"></span>
-                            </a>
-                        }
-
-                        <ul class="nav nav-third-level">
-                            @if (IsHasPermission(listRolePermission, "EmailConfig", 0))
-                            {
-                                <li>
-                                    <a href="@Url.EmailConfigIndexUrl()" title="Danh sách Email">Danh sách</a>
-                                </li>
-                            }
-                            @if (IsHasPermission(listRolePermission, "EmailConfig", 1))
-                            {
-                                <li>
-                                    <a title="Thêm mới" href="@Url.EmailConfigCreateUrl()">Thêm mới</a>
-                                </li>
-                            }
                         </ul>
                     </li>
                 }
-                @if (IsHasPermission(listRolePermission, "MenuConfig", 0) || IsHasPermission(listRolePermission, "MenuConfig", 1))
+                @if (IsHasPermission(listRolePermission, "SiteConfig", 0) || IsHasPermission(listRolePermission, "SiteConfig", 1))
                 {
                     <li>
-                        @if (IsHasPermission(listRolePermission, "MenuConfig", 0))
+                        @if (IsHasPermission(listRolePermission, "SiteConfig", 0))
                         {
-                            <a title="Danh sách Menu trang chủ" href="@Url.MenuConfigIndexUrl()">
-                                Menu Trang chủ
-                                <span class="fa arrow"></span>
+                            <a href="@Url.SiteConfigIndexUrl()">
+                                <i class="fa fa-wrench fa-fw"></i>Cấu hình hệ thống
+                    <span class="fa arrow"></span>
                             </a>
                         }
 
-                        <ul class="nav nav-third-level">
-                            @if (IsHasPermission(listRolePermission, "MenuConfig", 0))
+                        <ul class="nav nav-second-level collapse">
+                            @if (IsHasPermission(listRolePermission, "SiteConfig", 0))
                             {
                                 <li>
-                                    <a href="@Url.MenuConfigIndexUrl()" title="Danh sách Menu">Danh sách</a>
+                                    <a href="@Url.SiteConfigIndexUrl()">Danh sách</a>
                                 </li>
                             }
-                            @if (IsHasPermission(listRolePermission, "MenuConfig", 1))
+                            @if (IsHasPermission(listRolePermission, "SiteConfig", 1))
                             {
                                 <li>
-                                    <a title="Thêm mới" href="@Url.MenuConfigCreateUrl()">Thêm mới</a>
+                                    <a href="@Url.SiteConfigCreateUrl()">Thêm mới</a>
                                 </li>
 
                             }
+                            @if (IsHasPermission(listRolePermission, "EmailConfig", 0) || IsHasPermission(listRolePermission, "EmailConfig", 1))
+                            {
+
+                                <li>
+                                    @if (IsHasPermission(listRolePermission, "EmailConfig", 0))
+                                    {
+                                        <a title="Danh sách gửi Mail" href="@Url.EmailConfigIndexUrl()">Danh sách Email
+                                <span class="fa arrow"></span>
+                                        </a>
+                                    }
+
+                                    <ul class="nav nav-third-level">
+                                        @if (IsHasPermission(listRolePermission, "EmailConfig", 0))
+                                        {
+                                            <li>
+                                                <a href="@Url.EmailConfigIndexUrl()" title="Danh sách Email">Danh sách</a>
+                                            </li>
+                                        }
+                                        @if (IsHasPermission(listRolePermission, "EmailConfig", 1))
+                                        {
+                                            <li>
+                                                <a title="Thêm mới" href="@Url.EmailConfigCreateUrl()">Thêm mới</a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </li>
+                            }
+                            @if (IsHasPermission(listRolePermission, "MenuConfig", 0) || IsHasPermission(listRolePermission, "MenuConfig", 1))
+                            {
+                                <li>
+                                    @if (IsHasPermission(listRolePermission, "MenuConfig", 0))
+                                    {
+                                        <a title="Danh sách Menu trang chủ" href="@Url.MenuConfigIndexUrl()">Menu Trang chủ
+                                <span class="fa arrow"></span>
+                                        </a>
+                                    }
+
+                                    <ul class="nav nav-third-level">
+                                        @if (IsHasPermission(listRolePermission, "MenuConfig", 0))
+                                        {
+                                            <li>
+                                                <a href="@Url.MenuConfigIndexUrl()" title="Danh sách Menu">Danh sách</a>
+                                            </li>
+                                        }
+                                        @if (IsHasPermission(listRolePermission, "MenuConfig", 1))
+                                        {
+                                            <li>
+                                                <a title="Thêm mới" href="@Url.MenuConfigCreateUrl()">Thêm mới</a>
+                                            </li>
+
+                                        }
+
+                                    </ul>
+                                </li>
+                            }
+
+
+                        </ul>
+                        <!-- /.nav-second-level -->
+                    </li>
+                }
+
+                @if ((IsHasPermission(listRolePermission, "Affiliate", 0) || IsHasPermission(listRolePermission, "Affiliate", 1)))
+                {
+                    <li>
+                        @if (IsHasPermission(listRolePermission, "Affiliate", 0))
+                        {
+                            <a href="@Url.BannerIndexUrl()" title="">
+                                <i class="fa  fa-bullhorn fa-fw"></i>Affiliate
+                    <span class="fa arrow"></span>
+                            </a>
+                        }
+
+                        <ul class="nav nav-second-level collapse">
+                            @if (IsHasPermission(listRolePermission, "AffiliateBanner", 0))
+                            {
+                                <li>
+                                    <a href="@Url.BannersAffiliateIndexUrl()" title="">Banner Trang Chủ</a>
+                                </li>
+
+                            }
+                            @if (IsHasPermission(listRolePermission, "AffiliateNews", 0))
+                                    {
+                                        <li>
+                                            <a href="@Url.AffiliateCategoryIndexUrl()" title="Danh mục Tin tức">Danh Mục bài viết</a>
+                                        </li>
+                                    }
+
+                            @if (IsHasPermission(listRolePermission, "AffiliateNews", 0))
+                            {
+                                <li>
+                                    <a href="@Url.AffiliateNewsIndexUrl()" title="Thêm mới">Bài Viết</a>
+                                </li>
+
+                            }
+
+                            @if (IsHasPermission(listRolePermission, "AffiliateMenu", 0))
+                            {
+                                <li>
+                                <a title="Danh sách Menu trang chủ" href="@Url.MenusAffiliateIndexUrl()">
+                                    Menu
+                                </a>
+                                </li>
+                            }
+
 
                         </ul>
                     </li>
                 }
-
-
             </ul>
-            <!-- /.nav-second-level -->
-        </li>
-    }
-
-    @if ((IsHasPermission(listRolePermission, "Affiliate", 0) || IsHasPermission(listRolePermission, "Affiliate", 1)) && 1==0)
-    {
-        <li>
-            @if (IsHasPermission(listRolePermission, "Affiliate", 0))
-            {
-                <a href="@Url.BannerIndexUrl()" title="">
-                    <i class="fa  fa-bullhorn fa-fw"></i> Affiliate
-                    <span class="fa arrow"></span>
-                </a>
-            }
-
-            <ul class="nav nav-second-level collapse">
-                @if (IsHasPermission(listRolePermission, "AffiliateBanner", 0))
-                {
-                    <li>
-                        <a href="@Url.Banners4SiteIndexUrl()" title="">Banner Trang Chủ</a>
-                    </li>
-
-                }
-                @if (IsHasPermission(listRolePermission, "AffiliateNews", 0))
-                {
-                    <li>
-                        <a href="@Url.BannerCreateUrl()" title="Thêm mới">Bài Viết Affiliate</a>
-                    </li>
-
-                }
-
-
-            </ul>
-        </li>
-    }
-    </ul>
         </div>
         <!-- /.sidebar-collapse -->
     </div>

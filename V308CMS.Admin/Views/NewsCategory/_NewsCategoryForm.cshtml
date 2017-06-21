@@ -6,6 +6,7 @@
 }
 @Html.AntiForgeryToken()
 @Html.HiddenFor(category => category.Id)
+ @Html.HiddenFor(category => category.Site)
 <div class="row">
     @Html.ValidationSummary(true)
     <div class="col-lg-6">

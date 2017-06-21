@@ -14,6 +14,7 @@ namespace V308CMS.Admin.Models
             UpdatedAt = DateTime.Now;
         }
         public int Id { get; set; }
+        public string Site { get; set; }
         [Required(ErrorMessage = "Vui lòng nhập Tên menu.")]
         [StringLength(50, ErrorMessage = "Tên Menu không được vượt quá 50 ký tự.")]      
         [Display(Name = "Tên")]

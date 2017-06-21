@@ -27,7 +27,7 @@ namespace V308CMS.Admin.Middlewares
             if (checkPermission == null) return;
             var permissionService = new  PermissionRespository();
             var permission = permissionService.GetPermissionValueByGroupAndRole(controller+ "Permission", currentUser.RoleId);
-            if(((int)Math.Pow(2, checkPermission.Index) & permission) == 0)
+            if (((int)Math.Pow(2, checkPermission.Index) & permission) == 0)
             {
                 filterContext.Result = new RedirectToRouteResult(new
                      RouteValueDictionary(new { controller = "Error", action = "AccessDenied" }));

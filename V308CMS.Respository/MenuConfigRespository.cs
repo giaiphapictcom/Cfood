@@ -123,16 +123,21 @@ namespace V308CMS.Respository
                 if (menuConfig == null)
                 {
 
-                    entities.MenuConfig.Add(config);
-                    entities.SaveChanges();
+                    try
+                    {
+                        entities.MenuConfig.Add(config);
+                        entities.SaveChanges();
+                    }
+                    catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+                    {
+                        Console.Write(dbEx);
+                    }
                     return "ok";
                 }
                 return "exists";
             }
             
         }
-
-       
 
         public string Insert
             (
@@ -168,14 +173,17 @@ namespace V308CMS.Respository
             
         }
 
-        public List<MenuConfig> GetList(int page = 1, int pageSize = 10)
+        public List<MenuConfig> GetList(int page = 1, int pageSize = 10,string site="")
         {
             using (var entities = new V308CMSEntities())
             {
-                return (from item in entities.MenuConfig
-                        orderby item.CreatedAt descending
-                        select item
-                ).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+                var items = from m in entities.MenuConfig
+                            where m.Site == site
+
+                        orderby m.CreatedAt descending
+                        select m;
+                
+                return items.Skip((page - 1) * pageSize).Take(pageSize).ToList();
             }
             
         }

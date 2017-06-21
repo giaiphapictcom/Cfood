@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using System.Web;
 
 namespace V308CMS.Admin.Helpers.Url
 {
@@ -10,8 +11,8 @@ namespace V308CMS.Admin.Helpers.Url
             return helper.Action(action, controller, routeValue);
         }
 
-        public static string Banners4SiteIndexUrl(this UrlHelper helper, object routeValue = null, string controller = "banner",
-           string action = "Index4Site")
+        public static string BannersAffiliateIndexUrl(this UrlHelper helper, object routeValue = null, string controller = "banner",
+           string action = "affiliatebanner")
         {
             return helper.Action(action, controller, routeValue);
         }
@@ -19,6 +20,13 @@ namespace V308CMS.Admin.Helpers.Url
         public static string BannerCreateUrl(this UrlHelper helper, object routeValue = null, string controller = "banner",
            string action = "create")
         {
+
+            switch (HttpContext.Current.Request.RequestContext.RouteData.Values["action"].ToString())
+            {
+                case "affiliatebanner":
+                    action = "affiliateCreate";
+                    break;
+            }
             return helper.Action(action, controller, routeValue);
         }
         public static string BannerEditUrl(this UrlHelper helper, object routeValue = null, string controller = "banner",

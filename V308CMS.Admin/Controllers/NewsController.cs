@@ -17,9 +17,9 @@ namespace V308CMS.Admin.Controllers
     public class NewsController : BaseController
     {
         [NonAction]
-        private List<MutilCategoryItem> BuildListCategory()
+        private List<MutilCategoryItem> BuildListCategory(string site="")
         {
-            return NewsGroupService.GetAll().Select
+            return NewsGroupService.GetAll(true,site).Select
                 (
                     cate => new MutilCategoryItem
                     {
@@ -32,10 +32,13 @@ namespace V308CMS.Admin.Controllers
         //
         // GET: /News2/       
         [CheckPermission(0, "Danh sách")]
-        public ActionResult Index(int categoryId =0, int site =0)
+        public ActionResult Index(int categoryId =0, string site ="")
         {
             ViewBag.ListCategory = BuildListCategory();
             ViewBag.ListSite = DataHelper.ListEnumType<NewsSiteEnum>();
+            if (site.Length < 1) {
+                site = "home";
+            }
             var model = new NewsViewModels
             {
                 CategoryId = categoryId,
@@ -45,11 +48,16 @@ namespace V308CMS.Admin.Controllers
             return View("Index", model);
         }        
         [CheckPermission(1, "Thêm mới")]
-        public ActionResult Create()
+        public ActionResult Create(string site = "")
         {
-            ViewBag.ListCategory = BuildListCategory();
+            if (site.Length < 1) {
+                site = "home";
+            }
+            ViewBag.ListCategory = BuildListCategory(site);
             ViewBag.ListSite = DataHelper.ListEnumType<NewsSiteEnum>();
-            return View("Create", new NewsModels());
+            var Model = new NewsModels();
+
+            return View("Create", Model);
         }
         [HttpPost]
         [CheckPermission(1, "Thêm mới")]        
@@ -58,6 +66,10 @@ namespace V308CMS.Admin.Controllers
         [ValidateInput(false)]
         public ActionResult OnCreate(NewsModels news)
         {
+            var category = NewsService.LayTheLoaiTinTheoId(int.Parse(news.CategoryId.ToString()));
+            string formView = category.Site == "affiliate" ? "affiliateCreate" : "Create";
+            
+
             if (ModelState.IsValid)
             {
                 news.ImageUrl = news.Image != null ?
@@ -82,23 +94,29 @@ namespace V308CMS.Admin.Controllers
 
                 };
                 var result = NewsService.Insert(newsItem);
+
+                
+
                 if (result == Result.Exists)
                 {
                     ModelState.AddModelError("", string.Format("Tin tức '{0}' đã tồn tại trên hệ thống.",news.Title) );
                     ViewBag.ListCategory = BuildListCategory();
                     ViewBag.ListSite = DataHelper.ListEnumType<NewsSiteEnum>();
-                    return View("Create", news);
+                    return View(formView, news);
                 }
                 SetFlashMessage( string.Format("Thêm tin tức '{0}' thành công.",news.Title));
                 if (news.SaveList)
                 {
-                    return RedirectToAction("Index");
+                    string listViewAction = category.Site == "affiliate" ? "AffiliateIndex" : "Index";
+                    return RedirectToAction(listViewAction);
                 }
                 ModelState.Clear();
                 ViewBag.ListCategory = BuildListCategory();
                 ViewBag.ListSite = DataHelper.ListEnumType<NewsSiteEnum>();
-                return View("Create", news.ResetValue());
+                return RedirectToAction(formView);
+                //return View(formView, news.ResetValue());
             }
+
             ViewBag.ListCategory = NewsGroupService.GetAll().Select
                  (
                        cate => new MutilCategoryItem
@@ -108,7 +126,8 @@ namespace V308CMS.Admin.Controllers
                            ParentId = cate.Parent
                        }
                  ).ToList();
-            return View("Create", news);
+            return RedirectToAction(formView);
+            //return View("Create", news);
         }        
         [CheckPermission(2, "Sửa")]
         public ActionResult Edit(int id)
@@ -206,5 +225,19 @@ namespace V308CMS.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+
+        
+        #region affiliate
+        public ActionResult AffiliateIndex(int categoryId = 0)
+        {
+            return Index(categoryId, "affiliate");
+        }
+
+        [CheckPermission(1, "Thêm mới")]
+        public ActionResult affiliateCreate()
+        {
+            return Create("affiliate");
+        }
+        #endregion
     }
 }

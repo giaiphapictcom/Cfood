@@ -780,28 +780,35 @@ namespace V308CMS.Data
             return entities.News.FirstOrDefault(news => news.ID == id);
         }
 
-        public List<News> GetList(int categoryId = 0, int site =0)
+        public List<News> GetList(int categoryId = 0, string site ="")
         {
             var listNews = (from news in entities.News.Include("NewsGroup")
+                            where news.NewsGroup.Site == site
                             orderby news.Date.Value descending
                             select news
                 ).ToList();
             if (categoryId > 0)
             {
-                listNews = (from news in listNews
-                            where news.TypeID == categoryId
-                            orderby news.Date.Value descending
-                            select news
+                listNews = (from news in entities.News.Include("NewsGroup")
+                            where news.NewsGroup.Site == site && news.TypeID == categoryId
+                 orderby news.Date.Value descending
+                 select news
                 ).ToList();
+
+                //listNews = (from news in listNews
+                //            where news.TypeID == categoryId
+                //            orderby news.Date.Value descending
+                //            select news
+                //).ToList();
             }
-            if (site > 0)
-            {
-                listNews = (from news in listNews
-                            where news.Site == site
-                            orderby news.Date.Value descending
-                            select news
-                ).ToList();
-            }
+            //if (site > 0)
+            //{
+                //listNews = (from news in listNews
+                //            where news.Site == site
+                //            orderby news.Date.Value descending
+                //            select news
+                //).ToList();
+            //}
             return listNews;
 
 
@@ -843,8 +850,20 @@ namespace V308CMS.Data
                             select news).FirstOrDefault();
             if (newsItem == null)
             {
-                entities.News.Add(data);
-                entities.SaveChanges();
+                
+                try
+                {
+                    data.NewsGroup = new NewsGroups();
+                    if( data.TypeID > 1 ){
+                        data.NewsGroup = LayTheLoaiTinTheoId(int.Parse(data.TypeID.ToString()));
+                    }
+                    entities.News.Add(data);
+                    entities.SaveChanges();
+                }
+                catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+                {
+                    Console.Write(dbEx);
+                }
                 return "ok";
             }
             return "exists";

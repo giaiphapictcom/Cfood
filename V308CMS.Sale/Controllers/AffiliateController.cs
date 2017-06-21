@@ -15,6 +15,7 @@ namespace V308CMS.Sale.Controllers
         static V308CMSEntities mEntities;
         ProductRepository ProductRepos;
         ImagesRepository ImageRepos;
+        V308CMS.Respository.BannerRespository BannerRepos;
        
         AccountRepository AccountRepos;
         NewsRepository NewsRepos;
@@ -24,6 +25,7 @@ namespace V308CMS.Sale.Controllers
         {
             mEntities = new V308CMSEntities();
             ImageRepos = new ImagesRepository(mEntities);
+            BannerRepos = new V308CMS.Respository.BannerRespository();
 
             ProductRepos = new ProductRepository(mEntities);
             AccountRepos = new AccountRepository(mEntities);
@@ -35,6 +37,7 @@ namespace V308CMS.Sale.Controllers
         {
             mEntities.Dispose();
             ImageRepos.Dispose();
+            
 
             ProductRepos.Dispose();
             AccountRepos.Dispose();
@@ -55,11 +58,12 @@ namespace V308CMS.Sale.Controllers
                 {
                     Model.Videos = NewsRepos.LayDanhSachTinTheoGroupIdWithPage(5, Model.VideoCategory.ID);
                 }
-                NewsGroups NewsHomeCategory = NewsRepos.SearchNewsGroupByAlias("affiliate-news");
-                if (NewsHomeCategory != null)
-                {
-                    Model.Articles = NewsRepos.LayDanhSachTinTheoGroupIdWithPage(5, NewsHomeCategory.ID);
-                }
+                //NewsGroups NewsHomeCategory = NewsRepos.SearchNewsGroupByAlias("affiliate-news");
+                //if (NewsHomeCategory != null)
+                //{
+                //    Model.Articles = NewsRepos.LayDanhSachTinTheoGroupIdWithPage(5, NewsHomeCategory.ID);
+                //}
+                Model.Banners = BannerRepos.GetList(0,"affiliate",true);
                 Model.Testimonial = CommentRepo.GetRandom(4);
 
                 Model.BrandImages = Directory.GetFiles(Server.MapPath("/Content/Images/brand/"), "*.jpg", SearchOption.TopDirectoryOnly);

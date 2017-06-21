@@ -57,7 +57,6 @@ namespace V308CMS.Admin.Controllers
             ProductService = new ProductRespository();
             AdminAccountService = new AdminRespository();
             BannerService = new BannerRespository();
-<<<<<<< HEAD
 
             SupportService = new SupportRepository();
             ProductsService = new ProductRepository();
@@ -65,10 +64,8 @@ namespace V308CMS.Admin.Controllers
             ImagesService = new ImagesRepository();
             FileService = new FileRepository();
            
-          
-=======
             OrderService = new ProductOrderRespository();
->>>>>>> toai-neal
+
         }
         public ProductOrderRespository OrderService { get; set; }
         public BannerRespository BannerService { get; set; }

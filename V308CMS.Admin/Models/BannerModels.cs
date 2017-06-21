@@ -13,6 +13,8 @@ namespace V308CMS.Admin.Models
             Status = true;
         }
         public int Id { get; set; }
+        public string Site { get; set; }
+
         [Display(Name = "Tên*")]
         [Required(ErrorMessage = "Vui lòng nhập tên Banner.")]
         [StringLength(50,ErrorMessage = "Tên banner không được vượt quá 50 ký tự.")]

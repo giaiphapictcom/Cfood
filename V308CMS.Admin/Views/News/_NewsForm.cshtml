@@ -31,7 +31,7 @@
 <div class="row">
     @Html.ValidationSummary(true)
     <div class="col-lg-10">
-        <div class="form-group">
+        @*<div class="form-group">
             @Html.LabelFor(news => news.Site)
             @Html.DropDownListFor(news => news.Site, listSite, "Chọn Website", new
             {
@@ -39,8 +39,8 @@
                placeholder = "Chọn Website"
             })
             @Html.ValidationMessageFor(news => news.Site)
-        </div>
-
+        </div>*@
+        @Html.HiddenFor(news => news.Site)
         <div class="form-group">
             @Html.LabelFor(news => Model.Title)
             @Html.TextBoxFor(news => Model.Title, new {@class = "form-control", placeholder = "Nhập tiêu đề tin", @required = "require"})

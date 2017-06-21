@@ -14,15 +14,17 @@ namespace V308CMS.Admin.Controllers
     {
               
         [CheckPermission(0, "Danh sách")]
-        public ActionResult Index()
-        {         
-            return View("Index", MenuConfigService.GetList());
+        public ActionResult Index(string site= "")
+        {
+            return View("Index", MenuConfigService.GetList(1,10,site));
         }        
         [CheckPermission(1, "Thêm mới")]
-        public ActionResult Create()
+        public ActionResult Create(string site = "")
         {
-            AddViewData("ListState", DataHelper.ListEnumType<StateEnum>());                 
-            return View("Create", new MenuConfigModels());
+            AddViewData("ListState", DataHelper.ListEnumType<StateEnum>()); 
+            var Model = new MenuConfigModels();
+            Model.Site = site;
+            return View("Create",Model );
         }
         [HttpPost]
         [CheckPermission(1, "Thêm mới")]
@@ -32,9 +34,17 @@ namespace V308CMS.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = MenuConfigService.Insert(
-                   config.CloneTo<MenuConfig>()
-                    );
+                var menuAdd = new MenuConfig();
+                menuAdd.Id = config.Id;
+                menuAdd.Name = config.Name;
+                menuAdd.Site = config.Site;
+                menuAdd.Description = config.Description;
+                menuAdd.Link = config.Link;
+                menuAdd.Order = config.Order;
+
+
+                var result = MenuConfigService.Insert(menuAdd);
+
                 if (result == Result.Exists)
                 {
                     AddViewData("ListState", DataHelper.ListEnumType<StateEnum>());                   
@@ -44,7 +54,8 @@ namespace V308CMS.Admin.Controllers
                 SetFlashMessage( string.Format("Thêm Menu '{0}' thành công.",config.Name) );
                 if (config.SaveList)
                 {
-                    return RedirectToAction("Index");
+                    string actionReturn = config.Site == "affiliate" ? "affiliatemenu" : "Index";
+                    return RedirectToAction(actionReturn);
                 }
                 AddViewData("ListState", DataHelper.ListEnumType<StateEnum>());
                 ModelState.Clear();
@@ -109,5 +120,18 @@ namespace V308CMS.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+
+        #region Affiliate
+        [CheckPermission(0, "Danh sách")]
+        public ActionResult affiliatemenu()
+        {
+            return Index("affiliate");
+        }
+        [CheckPermission(1, "Thêm mới")]
+        public ActionResult affiliateCreate()
+        {
+            return Create("affiliate");
+        }
+        #endregion
     }
 }

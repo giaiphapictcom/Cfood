@@ -26,15 +26,17 @@ namespace V308CMS.Admin.Controllers
                 ).ToList();
         }        
         [CheckPermission(0, "Danh sách")]
-        public ActionResult Index()
-        {            
-            return View("Index",NewsGroupService.GetAll(false));
+        public ActionResult Index(string site="home")
+        {
+            return View("Index", NewsGroupService.GetAll(false, site));
         }        
         [CheckPermission(1, "Thêm mới")]
-        public ActionResult Create()
+        public ActionResult Create(string site = "home")
         {
-            AddViewData("ListCategory", BuildListCategory());         
-            return View("Create", new NewsCategoryModels());
+            AddViewData("ListCategory", BuildListCategory());   
+            var Model = new NewsCategoryModels();
+            Model.Site = site;
+            return View("Create", Model);
         }
         [HttpPost]
         [CheckPermission(1, "Thêm mới")]      
@@ -45,6 +47,7 @@ namespace V308CMS.Admin.Controllers
             {
                 var result = NewsGroupService.Insert
                     (
+                        category.Site,
                        category.Name,
                        category.ParentId,
                        category.Number,
@@ -60,8 +63,10 @@ namespace V308CMS.Admin.Controllers
                 }
 
                 SetFlashMessage(string.Format("Thêm chuyên mục tin '{0}' thành công.",category.Name) );
-                return RedirectToAction("Index");
+                string actionReturn = category.Site == "affiliate" ? "affiliatecategory" : "Index";
+                return RedirectToAction(actionReturn);
             }
+
             AddViewData("ListCategory", BuildListCategory());
             return View("Create", category);
         }      
@@ -133,7 +138,18 @@ namespace V308CMS.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-       
+        #region affiliate
+        [CheckPermission(1, "Thêm mới")]
+        public ActionResult affiliatecategory()
+        {
+            return Index("affiliate");
+        }
+
+        [CheckPermission(1, "Thêm mới")]
+        public ActionResult affiliateCreate() {
+            return Create("affiliate");
+        }
+        #endregion
 
     }
 }

@@ -13,19 +13,18 @@ namespace V308CMS.Admin.Controllers
     [CheckGroupPermission(true, "Banner")]
     public class BannerController : BaseController
     {
-        //
+        string CurrentAction = "";
+        public BannerController()
+        {
+            CurrentAction = System.Web.HttpContext.Current.Request.RequestContext.RouteData.Values["action"].ToString();
+        }
         // GET: /Banner/
         [CheckPermission(0, "Danh sách")]
-        public ActionResult Index(byte position=0)
+        public ActionResult Index(byte position=0,string site="")
         {
-            return View("Index",BannerService.GetList(position));
+            return View("Index",BannerService.GetList(position,site));
         }
 
-        public ActionResult Index4Site(byte position = 0)
-        {
-            return Index(position);
-        }
-        
 
         [CheckPermission(1, "Thêm mới")]
         public ActionResult Create()
@@ -33,6 +32,7 @@ namespace V308CMS.Admin.Controllers
             ViewBag.ListPosition = DataHelper.ListEnumType<PositionEnum>();
             return View("Create", new BannerModels());
         }
+
         [HttpPost]
         [CheckPermission(1, "Thêm mới")]
         [ActionName("Create")]
@@ -44,14 +44,12 @@ namespace V308CMS.Admin.Controllers
                 banner.ImageUrl = banner.Image != null ?
                     banner.Image.Upload() :
                     banner.ImageUrl;
-                //var newBanner = banner.CloneTo<Banner>(new[] {
-                //    nameof(banner.Image),
-                //    nameof(banner.StartDate),
-                //    nameof(banner.EndDate) 
-                //});
+
                 var newBanner = banner.CloneTo<Banner>();
                 newBanner.StartDate = banner.StartDate;
                 newBanner.EndDate = banner.EndDate;
+                newBanner.Name = banner.Name;
+                newBanner.Site = banner.Site;
 
                 var result = BannerService.Insert(newBanner);
                 if (result == Result.Exists)
@@ -63,7 +61,8 @@ namespace V308CMS.Admin.Controllers
                 SetFlashMessage( string.Format("Thêm banner '{0}' thành công.",banner.Name) );
                 if (banner.SaveList)
                 {
-                    return RedirectToAction("Index");
+                    string actionReturn = banner.Site == "affiliate" ? "affiliatebanner" : "Index";
+                    return RedirectToAction(actionReturn);
                 }
                 ModelState.Clear();
                 ViewBag.ListPosition = DataHelper.ListEnumType<PositionEnum>();
@@ -72,6 +71,32 @@ namespace V308CMS.Admin.Controllers
             ViewBag.ListPosition = DataHelper.ListEnumType<PositionEnum>();
             return View("Create", banner);
         }
+
+        #region Affiliate Site
+
+        public ActionResult affiliatebanner(byte position = 0)
+        {
+            return Index(position, "affiliate");
+        }
+
+        [CheckPermission(1, "Thêm mới")]
+        public ActionResult affiliateCreate()
+        {
+            ViewBag.ListPosition = DataHelper.ListEnumType<PositionEnum>();
+            var Model = new BannerModels();
+            Model.Site = "affiliate";
+            return View("Create", Model);
+        }
+        [HttpPost]
+        [CheckPermission(1, "Thêm mới")]
+        [ActionName("affiliateCreate")]
+        [ValidateAntiForgeryToken]
+        public ActionResult OnCreateAffiliate(BannerModels banner)
+        {
+            return OnCreate(banner);
+        }
+        #endregion
+
         [CheckPermission(2, "Sửa")]
         public ActionResult Edit(int id)
         {

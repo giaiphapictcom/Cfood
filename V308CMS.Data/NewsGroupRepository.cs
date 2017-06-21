@@ -44,15 +44,16 @@ namespace V308CMS.Data
            
         }
 
-        public List<NewsGroups> GetAll(bool state=true)
+        public List<NewsGroups> GetAll(bool state=true,string site = "")
         {
             using (var entities = new V308CMSEntities())
             {
                 return state ? (from category in entities.NewsGroups
                                 orderby category.Date.Value descending
-                                where category.Status == true
+                                where category.Status == true && category.Site == site
                                 select category).ToList() :
                    (from category in entities.NewsGroups
+                    where category.Site == site
                     orderby category.Date.Value descending
                     select category).ToList();
             }
@@ -87,12 +88,12 @@ namespace V308CMS.Data
            
         }
 
-        public string Insert(string name, int parentId,int number, bool state, DateTime date)
+        public string Insert(string site, string name, int parentId,int number, bool state, DateTime date)
         {
             using (var entities = new V308CMSEntities())
             {
                 var checkCategory = (from item in entities.NewsGroups
-                                     where item.Parent == parentId && item.Name == name
+                                     where item.Parent == parentId && item.Name == name && item.Site == site
                                      select item
                  ).FirstOrDefault();
                 if (checkCategory == null)
@@ -100,6 +101,7 @@ namespace V308CMS.Data
                     var newsCategory = new NewsGroups
                     {
                         Name = name,
+                        Site = site,
                         Parent = parentId,
                         Number = number,
                         Status = state,
@@ -346,7 +348,7 @@ namespace V308CMS.Data
        
 
        
-        public List<NewsGroups> GetList(int page = 1, int pageSize = 10)
+        public List<NewsGroups> GetList(int page = 1, int pageSize = 10,string site="")
         {
             using (var entities = new V308CMSEntities())
             {
