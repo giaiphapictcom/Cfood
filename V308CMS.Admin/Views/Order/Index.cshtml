@@ -104,7 +104,7 @@
                         <td>@order.Address.ToTitle()</td>
                         <td>@(order.Price.HasValue ? order.Price.Value.ToString("N0") : "0")</td>
                         <td>@(order.Date.HasValue ? order.Date.Value.ToDdmmyy() : "")</td>
-                        <td>
+                        <td style="text-align: center">
                             @order.Status.ToOrderStateTextHtml()
                         </td>
                         <td style="text-align: center">
