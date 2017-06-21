@@ -782,27 +782,24 @@ namespace V308CMS.Data
 
         public List<News> GetList(int categoryId = 0, int site =0)
         {
-            var listNews = (from news in entities.News.Include("NewsGroup")
-                            orderby news.Date.Value descending
-                            select news
-                ).ToList();
+            var listNews = (from news in entities.News               
+                select news
+                );
             if (categoryId > 0)
             {
                 listNews = (from news in listNews
-                            where news.TypeID == categoryId
-                            orderby news.Date.Value descending
-                            select news
-                ).ToList();
+                    where news.TypeID == categoryId                  
+                    select news
+                    );
             }
             if (site > 0)
             {
                 listNews = (from news in listNews
-                            where news.Site == site
-                            orderby news.Date.Value descending
-                            select news
-                ).ToList();
+                    where news.Site == site                 
+                    select news
+                    );
             }
-            return listNews;
+            return listNews.OrderByDescending(news=>news.Date.Value).ToList();
 
 
         }
