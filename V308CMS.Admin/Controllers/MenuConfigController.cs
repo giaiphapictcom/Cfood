@@ -21,15 +21,11 @@ namespace V308CMS.Admin.Controllers
         [CheckPermission(1, "Thêm mới")]
         public ActionResult Create(string site = "")
         {
-<<<<<<< HEAD
             AddViewData("ListState", DataHelper.ListEnumType<StateEnum>()); 
             var Model = new MenuConfigModels();
             Model.Site = site;
             return View("Create",Model );
-=======
-            AddViewData("ListState", DataHelper.ListEnumType<StateEnum>(), "ListSite", DataHelper.ListEnumType<SiteEnum>());
-            return View("Create", new MenuConfigModels());
->>>>>>> toai-0621
+
         }
         [HttpPost]
         [CheckPermission(1, "Thêm mới")]

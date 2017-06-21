@@ -146,7 +146,7 @@ namespace V308CMS.Respository
         }
         private string HashPassword(string password, string salt)
         {
-            return EncryptionMD5.ToMd5($"{password}|{salt}");
+            return EncryptionMD5.ToMd5(password.ToString() + "|" + salt.ToString());
         }
         public string ChangePassword(int id, string currentPassword, string newPassword)
         {

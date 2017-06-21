@@ -9,13 +9,19 @@ namespace V308CMS.Admin.Controllers
     [CheckGroupPermission(false)]
     public abstract class BaseController : Controller
     {
-        protected virtual new CustomPrincipal User => HttpContext.User as CustomPrincipal;
+        //protected virtual new CustomPrincipal User;
+        protected CustomPrincipal User;
         
         protected BaseController()
         {
-         
+            //User.UserName = HttpContext.User
+            if (HttpContext != null)
+            {
+                var user = HttpContext.User;
+            }
+            
+             //=> HttpContext.User as CustomPrincipal;
         
-
             NewsService = new NewsRepository();
             NewsGroupService = new NewsGroupRepository();
             AccountService = new AccountRepository();             
@@ -43,10 +49,7 @@ namespace V308CMS.Admin.Controllers
             ProductService = new ProductRespository();
             AdminAccountService = new AdminRespository();
             BannerService = new BannerRespository();
-<<<<<<< HEAD
 
-=======
->>>>>>> toai-0621
             SupportService = new SupportRepository();
             ProductsService = new ProductRepository();
             MarketService = new MarketRepository();
@@ -54,10 +57,7 @@ namespace V308CMS.Admin.Controllers
             FileService = new FileRepository();
            
             OrderService = new ProductOrderRespository();
-<<<<<<< HEAD
 
-=======
->>>>>>> toai-0621
         }
         public ProductOrderRespository OrderService { get; set; }
         public BannerRespository BannerService { get; set; }

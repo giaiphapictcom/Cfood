@@ -164,7 +164,7 @@ namespace V308CMS.Respository
                 else
                 {
                   string insertResult = Insert(data);
-                  return $"create_{insertResult}";
+                  return string.Format("create_{0}", insertResult);
                 }               
             }
         }
@@ -178,13 +178,7 @@ namespace V308CMS.Respository
                                       && permission.RoleId == roleId
                                       select permission
                 ).FirstOrDefault();
-<<<<<<< HEAD
-                //return permissionItem?.Value ?? 0;
-
                 return permissionItem!= null ? permissionItem.Value : 0;
-=======
-                return permissionItem?.Value ?? 0;
->>>>>>> toai-0621
             }
             
         }

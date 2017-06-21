@@ -45,16 +45,16 @@ namespace V308CMS.Admin.Controllers
                 banner.ImageUrl = banner.Image != null ?
                     banner.Image.Upload() :
                     banner.ImageUrl;
-<<<<<<< HEAD
 
-                var newBanner = banner.CloneTo<Banner>();
-=======
+
+                //var newBanner = banner.CloneTo<Banner>();
+
                 var newBanner = banner.CloneTo<Banner>(new[] {
                    "Image",
                    "StartDate",
                    "EndDate"
                 });
->>>>>>> toai-0621
+
                 newBanner.StartDate = banner.StartDate;
                 newBanner.EndDate = banner.EndDate;
                 newBanner.Name = banner.Name;

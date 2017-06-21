@@ -33,8 +33,6 @@ namespace V308CMS.Data.Models
         public DateTime UpdatedAt { get; set; }
         public int Order { get; set; }
 
-        public byte Site { get; set; }
-
       
     }
 }

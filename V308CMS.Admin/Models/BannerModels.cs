@@ -42,6 +42,5 @@ namespace V308CMS.Admin.Models
 
         public HttpPostedFileBase Image { get; set; }
 
-        public byte Site { get; set; }
     }
 }

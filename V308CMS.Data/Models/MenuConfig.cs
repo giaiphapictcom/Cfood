@@ -22,7 +22,7 @@ namespace V308CMS.Data.Models
        
         public string Target { get; set; }
        
-        public byte Site { get; set; }
+        public string Site { get; set; }
 
         public byte State { get; set; }
         public DateTime CreatedAt { get; set; }
