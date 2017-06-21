@@ -6,7 +6,6 @@ namespace V308CMS.Respository
 {
     public interface ISiteConfigRespository
     {
-       
     }
     public class SiteConfigRespository: IBaseRespository<SiteConfig>, ISiteConfigRespository
     {

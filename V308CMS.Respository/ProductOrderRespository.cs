@@ -11,6 +11,7 @@ namespace V308CMS.Respository
         List<ProductOrder> GetListOrder(byte searchType,string keyword,byte status,
             DateTime startDate, DateTime endDate, out int totalRecord, int page =1, int pageSize=25);
 
+        ProductOrder FindToEdit(int id);
         List<ProductOrder> Take(int count =10);
     }
     public  class ProductOrderRespository: IProductOrderRespository
@@ -96,6 +97,17 @@ namespace V308CMS.Respository
                     .ToList();
             }
             
+        }
+
+        public ProductOrder FindToEdit(int id)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return (from order in entities.ProductOrder.Include("OrderDetail")
+                    where order.ID == id
+                    select order
+                    ).FirstOrDefault();
+            }
         }
 
         public List<ProductOrder> Take(int count = 10)

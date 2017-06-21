@@ -1,0 +1,14 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@model V308CMS.Admin.Models.OrderModels
+@{
+    ViewBag.Title = "Chi tiết đơn hàng";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+<div class="panel panel-primary">
+    <div class="panel-body">
+        <form method="post" role="form" action="@Url.ProductOrderEditUrl()">
+            @Html.Partial("_OrderForm")
+        </form>
+    </div>
+</div>
+

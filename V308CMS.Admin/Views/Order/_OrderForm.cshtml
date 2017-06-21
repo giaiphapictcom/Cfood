@@ -1,0 +1,54 @@
+﻿<div class="container">
+
+    <div class="row">
+        @Html.ValidationSummary(true)
+        @foreach (ModelState modelState in ViewData.ModelState.Values)
+        {
+            foreach (ModelError error in modelState.Errors)
+            {
+                <p>@error.ErrorMessage</p>
+            }
+        }
+        <div>
+            <ul class="nav nav-tabs col-lg-12" role="tablist">
+                <li class="active"><a href="#order_main" role="tab" data-toggle="tab">Đơn hàng</a></li>
+                <li class=""><a href="#order_billing" role="tab" data-toggle="tab">Hóa đơn</a></li>
+                <li class=""><a href="#order_ship" role="tab" data-toggle="tab">Thông tin ship</a></li>
+                <li class=""><a href="#order_product" role="tab" data-toggle="tab">Sản phẩm</a></li>
+                <li class=""><a href="#order_note" role="tab" data-toggle="tab">Ghi chú</a></li>
+            </ul>
+        </div>
+        <div class="clearfix"></div>
+        <div class="Product_Content tab-content">
+            <div id="order_main" class="tab-pane active">
+                <fieldset>
+                    <div class="col-lg-12 form-group margin50">
+                        <label class="col-lg-2">Trạng thái</label>
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control name" placeholder="Trạng thái"/>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 form-group">
+                        @Html.LabelFor(product => product.Code, new { @class = "col-lg-2" })
+                        <div class="col-lg-4">
+                            @Html.TextBoxFor(product => product.Code, new { @class = "form-control name", placeholder = "Nhập Mã sản phẩm hoặc Hệ thống tự tạo" })
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div id="order_billing" class="tab-pane">
+
+            </div>
+            <div id="order_ship" class="tab-pane">
+
+            </div>
+            <div id="order_product" class="tab-pane">
+
+            </div>
+            <div id="order_note" class="tab-pane">
+
+            </div>
+
+        </div>
+   </div>
+</div>
