@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using V308CMS.Common;
 using V308CMS.Data;
@@ -407,26 +408,26 @@ namespace V308CMS.Respository
         {
             using (var entities = new V308CMSEntities())
             {
-                IEnumerable<Product> data = (from product in entities.Product.Include("ProductType")
+                IEnumerable<Product> data = (from product in entities.Product
                                              select product
-                                         ).ToList();
+                                            );
 
                 if (!string.IsNullOrWhiteSpace(keyword))
                 {
                     var keywordLower = Ultility.LocDau(keyword.ToLower());
-                    data = (from product in entities.Product.AsEnumerable()
-                            where Ultility.LocDau(product.Code.ToLower()).Contains(keywordLower) ||
-                                   Ultility.LocDau(product.Name.ToLower()).Contains(keywordLower)
+                    data = (from product in data.AsEnumerable()
+                        where Ultility.LocDau(product.Code.ToLower()).Contains(keywordLower) ||
+                              Ultility.LocDau(product.Name.ToLower()).Contains(keywordLower)
 
-                            select product
-                        ).ToList();
+                        select product
+                        );
                 }
                 if (categoryId > 0)
                 {
                     data = (from product in data
-                            where product.Type == categoryId
-                            select product
-                      ).ToList();
+                        where product.Type == categoryId
+                        select product
+                        );
 
                 }
                 if (quantity > 0)
@@ -434,10 +435,10 @@ namespace V308CMS.Respository
                     data = quantity == 1 ? (from product in data
                                             where product.Quantity > 0
                                             select product
-                     ).ToList() : (from product in data
+                     ) : (from product in data
                                    where product.Quantity == 0
                                    select product
-                     ).ToList();
+                     );
                 }
                 if (state > 0)
                 {
@@ -446,19 +447,19 @@ namespace V308CMS.Respository
                         data = (from product in data
                                 where product.Status == true
                                 select product
-                            ).ToList();
+                            );
                     }
                     if (state == (int)StateFilterEnum.Pending)
                     {
                         data = (from product in data
                                 where product.Status == false
-                                select product).ToList();
+                                select product);
                     }
                     if (state == (int)StateFilterEnum.PriceEmpty)
                     {
                         data = (from product in data
                                 where ((product.Price.HasValue == false) || (product.Price.Value == 0))
-                                select product).ToList();
+                                select product);
                     }
 
                 }
@@ -468,24 +469,24 @@ namespace V308CMS.Respository
                     data = (from product in data
                             where product.Manufacturer == manufact
                             select product
-                     ).ToList();
+                     );
                 }
                 if (brand > 0)
                 {
                     data = (from product in data
                             where product.BrandId == brand
                             select product
-                     ).ToList();
+                     );
                 }
                 if (provider > 0)
                 {
                     data = (from product in data
                             where product.AccountId == provider
                             select product
-                     ).ToList();
+                     );
                 }
                 totalRecord = data.Count();
-                return (from product in data
+                return (from product in data.AsQueryable().Include("ProductType")
                         orderby product.Date.Value descending
                         select new ProductItem
                         {

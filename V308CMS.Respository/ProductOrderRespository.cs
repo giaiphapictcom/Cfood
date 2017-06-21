@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using V308CMS.Data;
 using V308CMS.Data.Enum;
@@ -22,7 +21,7 @@ namespace V308CMS.Respository
         {
             using (var entities = new V308CMSEntities())
             {
-                var listOrder = (from order in entities.ProductOrder
+                IEnumerable<ProductOrder> listOrder = (from order in entities.ProductOrder
                     select order
                     );
                 if (status > 0)
@@ -56,7 +55,7 @@ namespace V308CMS.Respository
                     if (searchType == (byte)OrderSearchTypeEnum.All)
                     {
 
-                        listOrder = (from order in listOrder
+                        listOrder = (from order in listOrder.AsEnumerable()
                                      where order.FullName.ToLower().Contains(keywordLower) ||
                                      order.Phone.ToLower().Contains(keywordLower) ||
                                      order.Address.ToLower().Contains(keywordLower)
@@ -66,7 +65,7 @@ namespace V308CMS.Respository
                     if (searchType == (byte)OrderSearchTypeEnum.ByName)
                     {
 
-                        listOrder = (from order in listOrder
+                        listOrder = (from order in listOrder.AsEnumerable()
                                      where order.FullName.ToLower().Contains(keywordLower)                                  
                                      select order
                                );
@@ -74,7 +73,7 @@ namespace V308CMS.Respository
                     if (searchType == (byte)OrderSearchTypeEnum.ByPhone)
                     {
 
-                        listOrder = (from order in listOrder
+                        listOrder = (from order in listOrder.AsEnumerable()
                                      where order.Phone.ToLower().Contains(keywordLower)
                                      select order
                                );
@@ -82,7 +81,7 @@ namespace V308CMS.Respository
                     if (searchType == (byte)OrderSearchTypeEnum.ByAddress)
                     {
 
-                        listOrder = (from order in listOrder
+                        listOrder = (from order in listOrder.AsEnumerable()
                                      where order.Address.ToLower().Contains(keywordLower)
                                      select order
                                );
