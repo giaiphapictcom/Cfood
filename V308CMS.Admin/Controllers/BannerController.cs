@@ -79,7 +79,10 @@ namespace V308CMS.Admin.Controllers
             }
             ViewBag.ListPosition = DataHelper.ListEnumType<PositionEnum>();
             ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
-            var bannerEdit = banner.CloneTo<BannerModels>();
+            var bannerEdit = banner.CloneTo<BannerModels>(new[] {                 
+                   "StartDate",
+                   "EndDate"
+                });
 
             bannerEdit.StartDate = banner.StartDate;
             bannerEdit.EndDate = banner.EndDate;
