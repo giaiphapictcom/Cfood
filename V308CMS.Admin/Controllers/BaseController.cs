@@ -9,46 +9,32 @@ namespace V308CMS.Admin.Controllers
     [CheckGroupPermission(false)]
     public abstract class BaseController : Controller
     {
-        //protected virtual new CustomPrincipal User => HttpContext.User as CustomPrincipal;
+        protected virtual new CustomPrincipal User => HttpContext.User as CustomPrincipal;
         
-
-        private static V308CMSEntities _mEntities;
-        public static V308CMSEntities MpStartEntities;
-        
-        private static V308CMSEntities EnsureV308CmsEntitiesNotNull()
-        {
-            return _mEntities ?? (_mEntities = new V308CMSEntities());
-        }
-
         protected BaseController()
         {
-            var User = new CustomPrincipal();
-            if (HttpContext != null)
-            {
-                User.UserName = HttpContext.User.ToString();
-            }
-            
-            MpStartEntities = _mEntities;
+         
+        
 
             NewsService = new NewsRepository();
             NewsGroupService = new NewsGroupRepository();
             AccountService = new AccountRepository();             
-            ContactService = new ContactRepository(_mEntities);          
+            ContactService = new ContactRepository();          
             ProductTypeService = new Respository.ProductTypeRepository();
-            SiteConfigService = new Respository.SiteConfigRespository(_mEntities);
+            SiteConfigService = new Respository.SiteConfigRespository();
             EmailConfigService= new EmailConfigRepository();
-            MenuConfigService = new MenuConfigRespository(_mEntities);
+            MenuConfigService = new MenuConfigRespository();
             ProductBrandService = new ProductBrandRespository();
             ProductManufacturerService = new ProductManufacturerRespository();
             ProductDistributorService = new ProductDistributorRespository();
             ProductStoreService = new StoreRespository();
             UnitService = new UnitRespository();
-            ColorService = new ColorRespository(_mEntities);
+            ColorService = new ColorRespository();
             CountryService = new CountryRespository();
             SizeService =  new SizeRespository();
             ProductAttributeService = new ProductAttributeRespository();
             ProductImageService = new ProductImageRespository();
-            UserService = new UserRespository(_mEntities);
+            UserService = new UserRespository();
             RoleService = new RoleRespository();
             PermissionService = new PermissionRespository();
             ProductSizeService = new ProductSizeRespository();
@@ -57,7 +43,10 @@ namespace V308CMS.Admin.Controllers
             ProductService = new ProductRespository();
             AdminAccountService = new AdminRespository();
             BannerService = new BannerRespository();
+<<<<<<< HEAD
 
+=======
+>>>>>>> toai-0621
             SupportService = new SupportRepository();
             ProductsService = new ProductRepository();
             MarketService = new MarketRepository();
@@ -65,7 +54,10 @@ namespace V308CMS.Admin.Controllers
             FileService = new FileRepository();
            
             OrderService = new ProductOrderRespository();
+<<<<<<< HEAD
 
+=======
+>>>>>>> toai-0621
         }
         public ProductOrderRespository OrderService { get; set; }
         public BannerRespository BannerService { get; set; }

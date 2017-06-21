@@ -49,7 +49,7 @@ namespace V308CMS.Data
             if (configs != null && configs.Length>0)
             {
                 var configString = string.Join(";", configs);
-                listSiteConfig = entities.SiteConfig.Where(item => configString.Contains(item.name)).ToList();
+                listSiteConfig = entities.SiteConfig.Where(item => configString.Contains(item.Name)).ToList();
                
             }
             return listSiteConfig;
@@ -57,8 +57,8 @@ namespace V308CMS.Data
 
         public string ReadSiteConfig(List<SiteConfig> siteConfigs, string config,  string defaultValue ="")
         {
-            var siteConfig = siteConfigs.FirstOrDefault(item => item.name == config);
-            return siteConfig != null ? siteConfig.content : defaultValue;
+            var siteConfig = siteConfigs.FirstOrDefault(item => item.Name == config);
+            return siteConfig != null ? siteConfig.Content : defaultValue;
 
         }
 
@@ -66,9 +66,9 @@ namespace V308CMS.Data
         {
             string content = "";
             var config = (from p in entities.SiteConfig
-                          where p.name == name
+                          where p.Name == name
                           select p).FirstOrDefault();
-            if (config != null) return config.content;
+            if (config != null) return config.Content;
             else return content;
 
         }
@@ -79,7 +79,7 @@ namespace V308CMS.Data
             var config = (from p in entities.SiteConfig
                           select p).FirstOrDefault();
             if (config != null) 
-                return config.content;
+                return config.Content;
             else return content;
 
         }

@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using V308CMS.Admin.Attributes;
@@ -35,10 +35,14 @@ namespace V308CMS.Admin.Controllers
         public ActionResult Index(int categoryId =0, string site ="")
         {
             ViewBag.ListCategory = BuildListCategory();
+<<<<<<< HEAD
             ViewBag.ListSite = DataHelper.ListEnumType<NewsSiteEnum>();
             if (site.Length < 1) {
                 site = "home";
             }
+=======
+            ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
+>>>>>>> toai-0621
             var model = new NewsViewModels
             {
                 CategoryId = categoryId,
@@ -50,6 +54,7 @@ namespace V308CMS.Admin.Controllers
         [CheckPermission(1, "Thêm mới")]
         public ActionResult Create(string site = "")
         {
+<<<<<<< HEAD
             if (site.Length < 1) {
                 site = "home";
             }
@@ -58,6 +63,11 @@ namespace V308CMS.Admin.Controllers
             var Model = new NewsModels();
 
             return View("Create", Model);
+=======
+            ViewBag.ListCategory = BuildListCategory();
+            ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
+            return View("Create", new NewsModels());
+>>>>>>> toai-0621
         }
         [HttpPost]
         [CheckPermission(1, "Thêm mới")]        
@@ -101,8 +111,13 @@ namespace V308CMS.Admin.Controllers
                 {
                     ModelState.AddModelError("", string.Format("Tin tức '{0}' đã tồn tại trên hệ thống.",news.Title) );
                     ViewBag.ListCategory = BuildListCategory();
+<<<<<<< HEAD
                     ViewBag.ListSite = DataHelper.ListEnumType<NewsSiteEnum>();
                     return View(formView, news);
+=======
+                    ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
+                    return View("Create", news);
+>>>>>>> toai-0621
                 }
                 SetFlashMessage( string.Format("Thêm tin tức '{0}' thành công.",news.Title));
                 if (news.SaveList)
@@ -112,9 +127,14 @@ namespace V308CMS.Admin.Controllers
                 }
                 ModelState.Clear();
                 ViewBag.ListCategory = BuildListCategory();
+<<<<<<< HEAD
                 ViewBag.ListSite = DataHelper.ListEnumType<NewsSiteEnum>();
                 return RedirectToAction(formView);
                 //return View(formView, news.ResetValue());
+=======
+                ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
+                return View("Create", news.ResetValue());
+>>>>>>> toai-0621
             }
 
             ViewBag.ListCategory = NewsGroupService.GetAll().Select
@@ -157,7 +177,7 @@ namespace V308CMS.Admin.Controllers
                
             };
             ViewBag.ListCategory = BuildListCategory();
-            ViewBag.ListSite = DataHelper.ListEnumType<NewsSiteEnum>();
+            ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
             return View("Edit", newsEdit);
 
         }
@@ -196,7 +216,7 @@ namespace V308CMS.Admin.Controllers
                 {
                     ModelState.AddModelError("", "Tin tức không tồn tại trên hệ thống.");
                     ViewBag.ListCategory = BuildListCategory();
-                    ViewBag.ListSite = DataHelper.ListEnumType<NewsSiteEnum>();
+                    ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
                     return View("Edit", news);
                 }
                 SetFlashMessage( string.Format("Sửa tin tức '{0}' thành công.",news.Title) );
@@ -205,12 +225,12 @@ namespace V308CMS.Admin.Controllers
                     return RedirectToAction("Index");
                 }
                 ViewBag.ListCategory = BuildListCategory();
-                ViewBag.ListSite = DataHelper.ListEnumType<NewsSiteEnum>();
+                ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
                 return View("Edit", news);
 
             }
             ViewBag.ListCategory = BuildListCategory();
-            ViewBag.ListSite = DataHelper.ListEnumType<NewsSiteEnum>();
+            ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
             return View("Edit");
         }        
         [CheckPermission(3, "Xóa")]

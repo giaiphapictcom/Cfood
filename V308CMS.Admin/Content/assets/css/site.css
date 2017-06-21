@@ -1,4 +1,5 @@
-﻿#UpdateProgress1 {
+﻿
+#UpdateProgress1 {
     width:100%;
     height:100%;
     position:absolute;
@@ -13,17 +14,11 @@
     opacity:0.3;
 }
 .form-loading {
-<<<<<<< HEAD
-    background:url(/Images/loading-tlr.gif) center center no-repeat;
-=======
     background:url(/Content/Images/loading-tlr.gif) center center no-repeat;
->>>>>>> toai-neal
     width:100%;
     height:100%;
     position:absolute;
 }
-<<<<<<< HEAD
-=======
 .image-brand {
     width: 80px;
     height: 80px;
@@ -95,6 +90,3 @@ input[type=radio], input[type=checkbox]
 .btn-lock {
     background-color:#d9534f;color:#FFFFFF;padding: 5px;border-radius: 5px;width: 50px;
 }
-
-
->>>>>>> toai-neal

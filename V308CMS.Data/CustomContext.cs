@@ -77,10 +77,10 @@ namespace V308CMS.Data
            .HasForeignKey(p => p.Role);
 
 
-           modelBuilder.Entity<Permission>()
-          .HasRequired(p => p.RoleInfo)
-          .WithMany(p => p.Permissions)
-          .HasForeignKey(p => p.RoleId);
+            modelBuilder.Entity<Permission>()
+            .HasRequired(p => p.RoleInfo)
+            .WithMany(p => p.Permissions)
+            .HasForeignKey(p => p.RoleId);
 
         }
         #endregion
@@ -384,11 +384,7 @@ namespace V308CMS.Data
             get;
             set;
         }
-        public DbSet<GroupPermission> GroupPermission
-        {
-            get;
-            set;
-        }
+      
         
 
         #endregion

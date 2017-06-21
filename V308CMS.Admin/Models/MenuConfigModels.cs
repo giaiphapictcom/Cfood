@@ -33,5 +33,8 @@ namespace V308CMS.Admin.Models
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public int Order { get;set;}
+        public byte Site { get; set; }
+        [StringLength(50, ErrorMessage = "Targe không được vượt quá 50 ký tự.")]
+        public string Target { get; set; }
     }
 }

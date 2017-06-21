@@ -1,9 +1,9 @@
 using System.Web.Mvc;
 using V308CMS.Admin.Attributes;
-using V308CMS.Admin.Helpers;
 using V308CMS.Admin.Models;
 using V308CMS.Common;
 using V308CMS.Data;
+using V308CMS.Data.Enum;
 
 namespace V308CMS.Admin.Controllers
 {
@@ -21,6 +21,7 @@ namespace V308CMS.Admin.Controllers
         [CheckPermission(1, "Thêm mới")]
         public ActionResult Create()
         {
+            ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
             return View("Create", new SiteConfigModels());
         }
         [HttpPost]
@@ -36,7 +37,8 @@ namespace V308CMS.Admin.Controllers
 
                 if (result == "exists")
                 {
-                    ModelState.AddModelError("", string.Format("Tên cấu hình {0} đã tồn tại trên hệ thống.",config.Name) );
+                    ModelState.AddModelError("", string.Format("Tên cấu hình {0} đã tồn tại trên hệ thống.",config.Name));
+                    ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
                     return View("Create", config);
                 }
                 SetFlashMessage( string.Format("Thêm cấu hình '{0}' thành công.",config.Name) );
@@ -45,8 +47,10 @@ namespace V308CMS.Admin.Controllers
                     return RedirectToAction("Index");
                 }
                 ModelState.Clear();
+                ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
                 return View("Create", config.ResetValue());
             }
+            ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
             return View("Create", config);
         }     
         [CheckPermission(2, "Sửa")]
@@ -58,7 +62,8 @@ namespace V308CMS.Admin.Controllers
                 
                 return RedirectToAction("Index");
 
-            }        
+            }
+            ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
             return View("Edit", config.CloneTo<SiteConfigModels>());
 
         }
@@ -75,6 +80,7 @@ namespace V308CMS.Admin.Controllers
                 if (result == "not_exists")
                 {
                     ModelState.AddModelError("", "Cấu hình không tồn tại trên hệ thống.");
+                    ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
                     return View("Edit", config);
                 }
                 SetFlashMessage( string.Format("Sửa cấu hình '{0}' thành công.",config.Name) );
@@ -82,8 +88,10 @@ namespace V308CMS.Admin.Controllers
                 {
                     return RedirectToAction("Index");
                 }
+                ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
                 return View("Edit", config);
             }
+            ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
             return View("Edit", config);
 
         }

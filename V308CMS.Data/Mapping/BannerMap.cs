@@ -9,31 +9,32 @@ namespace V308CMS.Data.Mapping
         {
 
             // Primary Key
-            this.HasKey(t => t.Id);
+            HasKey(t => t.Id);
 
-            this.Property(t => t.Name)
+            Property(t => t.Name)
                 .IsRequired()
                 .HasMaxLength(50);
 
-            this.Property(t => t.Description)
+            Property(t => t.Description)
              .HasMaxLength(250);
 
-            this.Property(t => t.ImageUrl)
+            Property(t => t.ImageUrl)
              .HasMaxLength(2500);
 
-            this.ToTable("banner");
-            this.Property(t => t.Id).HasColumnName("id");
-            this.Property(t => t.Name).HasColumnName("name");
-            this.Property(t => t.Description).HasColumnName("description");
-            this.Property(t => t.Position).HasColumnName("position");
-            this.Property(t => t.Width).HasColumnName("width");
-            this.Property(t => t.Height).HasColumnName("height");
-            this.Property(t => t.StartDate).HasColumnName("start_date");
-            this.Property(t => t.EndDate).HasColumnName("end_date");
-            this.Property(t => t.ImageUrl).HasColumnName("image_url");
-            this.Property(t => t.Status).HasColumnName("status");
-            this.Property(t => t.CreatedAt).HasColumnName("created_at");
-            this.Property(t => t.UpdatedAt).HasColumnName("updated_at");
+            ToTable("banner");
+            Property(t => t.Id).HasColumnName("id");
+            Property(t => t.Name).HasColumnName("name");
+            Property(t => t.Description).HasColumnName("description");
+            Property(t => t.Position).HasColumnName("position");
+            Property(t => t.Width).HasColumnName("width");
+            Property(t => t.Height).HasColumnName("height");
+            Property(t => t.StartDate).HasColumnName("start_date");
+            Property(t => t.EndDate).HasColumnName("end_date");
+            Property(t => t.ImageUrl).HasColumnName("image_url");
+            Property(t => t.Status).HasColumnName("status");
+            Property(t => t.CreatedAt).HasColumnName("created_at");
+            Property(t => t.UpdatedAt).HasColumnName("updated_at");
+            Property(t => t.Site).HasColumnName("site");
         }
 
     }

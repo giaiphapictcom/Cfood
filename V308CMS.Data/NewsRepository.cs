@@ -782,6 +782,7 @@ namespace V308CMS.Data
 
         public List<News> GetList(int categoryId = 0, string site ="")
         {
+<<<<<<< HEAD
             var listNews = (from news in entities.News.Include("NewsGroup")
                             where news.NewsGroup.Site == site
                             orderby news.Date.Value descending
@@ -810,6 +811,26 @@ namespace V308CMS.Data
                 //).ToList();
             //}
             return listNews;
+=======
+            var listNews = (from news in entities.News               
+                select news
+                );
+            if (categoryId > 0)
+            {
+                listNews = (from news in listNews
+                    where news.TypeID == categoryId                  
+                    select news
+                    );
+            }
+            if (site > 0)
+            {
+                listNews = (from news in listNews
+                    where news.Site == site                 
+                    select news
+                    );
+            }
+            return listNews.OrderByDescending(news=>news.Date.Value).ToList();
+>>>>>>> toai-0621
 
 
         }

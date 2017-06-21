@@ -23,7 +23,7 @@ namespace V308CMS.Data
         public List<SiteConfig> GetList()
         {
             return (from item in _entities.SiteConfig
-                orderby item.id descending
+                orderby item.Id descending
                 select item
                 ).ToList();
         }
@@ -31,14 +31,14 @@ namespace V308CMS.Data
         public SiteConfig GetById(int id)
         {
             return (from config in _entities.SiteConfig
-                where config.id == id
+                where config.Id == id
                 select config).FirstOrDefault();
         }
 
         public string Delete(int id)
         {
             var configItem = (from config in _entities.SiteConfig
-                    where config.id == id
+                    where config.Id == id
                     select config).FirstOrDefault();
             if (configItem != null)
             {
@@ -52,12 +52,12 @@ namespace V308CMS.Data
         public string Update(int id, string name, string content)
         {
             var configItem = (from config in _entities.SiteConfig
-                              where config.id == id
+                              where config.Id == id
                               select config).FirstOrDefault();
             if (configItem != null)
             {
-                configItem.name = name;
-                configItem.content = content;
+                configItem.Name = name;
+                configItem.Content = content;
                 _entities.SaveChanges();
                 return "ok";
             }
@@ -67,14 +67,14 @@ namespace V308CMS.Data
         public string Insert(string name, string content)
         {
             var configItem = (from config in _entities.SiteConfig
-                              where config.name == name
+                              where config.Name == name
                               select config).FirstOrDefault();
             if (configItem == null)
             {
                 _entities.SiteConfig.Add(new SiteConfig
                 {
-                    name = name,
-                    content = content
+                    Name = name,
+                    Content = content
                 });
                 _entities.SaveChanges();
                 return "ok";

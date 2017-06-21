@@ -4,41 +4,11 @@
     ViewBag.Title = "Sửa cấu hình hệ thống";
     Layout = "~/Views/Shared/_LayoutV2.cshtml";
 }
-<<<<<<< HEAD
-<div class="panel panel-primary">
-    <div class="panel-body">
-        <form method="post" role="form" action="@Url.SiteConfigEditUrl()">
-            @Html.HiddenFor(config=>config.Id)
-            @Html.AntiForgeryToken()
-            <div class="row">
-                @Html.ValidationSummary(true)
-                <div class="col-lg-6">
-
-                    <div class="form-group">
-                        @Html.LabelFor(config => config.Name)
-                        @Html.TextBoxFor(config => config.Name, new {@class = "form-control", placeholder = "Tên thuộc tính"})
-                        @Html.ValidationMessageFor(config => config.Name)
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(config => config.Content)
-                        @Html.TextBoxFor(config => config.Content, new {@class = "form-control", placeholder = "Giá trị thuộc tính"})
-                        @Html.ValidationMessageFor(config => config.Content)
-                    </div>
-
-                    <button type="submit" class="btn btn-success">Đồng ý</button>
-                    <a href="@Url.SiteConfigIndexUrl()" title="Danh sách cấu hình" class="btn btn-link">Danh sách</a>
-
-                </div>
-            </div>
-=======
-
 <div class="panel panel-primary">
     <div class="panel-body">
         <form method="post" role="form" action="@Url.SiteConfigEditUrl()">
             @Html.Partial("_SiteConfigForm",Model)
->>>>>>> toai-neal
-        </form>
-        <!-- /.row (nested) -->
+        </form>        
     </div>
 
 </div>

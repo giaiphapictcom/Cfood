@@ -23,11 +23,9 @@ namespace V308CMS.Respository
                 if (checkAdmin == null)
                 {
                     return null;
-                }
-                var hashPassword = EncryptionMD5.ToMd5(password.Trim());            
-                if (checkAdmin.Password.Trim().Equals(hashPassword))
+                }                
+                if (checkAdmin.Password.Trim().Equals(EncryptionMD5.ToMd5(password.Trim())))
                 {
-                    
                     return checkAdmin;
                 }
                 return null;

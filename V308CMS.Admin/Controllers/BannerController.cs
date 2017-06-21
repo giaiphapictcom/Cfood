@@ -30,6 +30,7 @@ namespace V308CMS.Admin.Controllers
         public ActionResult Create()
         {
             ViewBag.ListPosition = DataHelper.ListEnumType<PositionEnum>();
+            ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
             return View("Create", new BannerModels());
         }
 
@@ -44,8 +45,16 @@ namespace V308CMS.Admin.Controllers
                 banner.ImageUrl = banner.Image != null ?
                     banner.Image.Upload() :
                     banner.ImageUrl;
+<<<<<<< HEAD
 
                 var newBanner = banner.CloneTo<Banner>();
+=======
+                var newBanner = banner.CloneTo<Banner>(new[] {
+                   "Image",
+                   "StartDate",
+                   "EndDate"
+                });
+>>>>>>> toai-0621
                 newBanner.StartDate = banner.StartDate;
                 newBanner.EndDate = banner.EndDate;
                 newBanner.Name = banner.Name;
@@ -55,6 +64,7 @@ namespace V308CMS.Admin.Controllers
                 if (result == Result.Exists)
                 {
                     ModelState.AddModelError("", string.Format("Banner '{0}' đã tồn tại trên hệ thống.",banner.Name) );
+                    ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
                     ViewBag.ListPosition = DataHelper.ListEnumType<PositionEnum>();                  
                     return View("Create", banner);
                 }
@@ -65,9 +75,11 @@ namespace V308CMS.Admin.Controllers
                     return RedirectToAction(actionReturn);
                 }
                 ModelState.Clear();
+                ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
                 ViewBag.ListPosition = DataHelper.ListEnumType<PositionEnum>();
                 return View("Create", banner.ResetValue());
             }
+            ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
             ViewBag.ListPosition = DataHelper.ListEnumType<PositionEnum>();
             return View("Create", banner);
         }
@@ -107,7 +119,11 @@ namespace V308CMS.Admin.Controllers
 
             }
             ViewBag.ListPosition = DataHelper.ListEnumType<PositionEnum>();
-            var bannerEdit = banner.CloneTo<BannerModels>();
+            ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
+            var bannerEdit = banner.CloneTo<BannerModels>(new[] {                 
+                   "StartDate",
+                   "EndDate"
+                });
 
             bannerEdit.StartDate = banner.StartDate;
             bannerEdit.EndDate = banner.EndDate;
@@ -124,19 +140,17 @@ namespace V308CMS.Admin.Controllers
                 banner.ImageUrl = banner.Image != null ?
                    banner.Image.Upload() :
                    banner.ImageUrl.ToImageOriginalPath();
-                //var bannerUpdate = banner.CloneTo<Banner>(new[] {
-                //    nameof(banner.Image),
-                //    nameof(banner.StartDate),
-                //    nameof(banner.EndDate) });
-                var bannerUpdate = banner.CloneTo<Banner>();
-                   
-
+                var bannerUpdate = banner.CloneTo<Banner>(new[] {
+                "Image",
+                "StartDate",
+                "EndDate" });
                 bannerUpdate.StartDate = banner.StartDate;
                 bannerUpdate.EndDate = banner.EndDate;
                 var result = BannerService.Update(bannerUpdate);
                 if (result == Result.NotExists)
                 {
                     ModelState.AddModelError("", "Banner không tồn tại trên hệ thống.");
+                    ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
                     ViewBag.ListPosition = DataHelper.ListEnumType<PositionEnum>();
                     return View("Edit", banner);
                 }
@@ -144,10 +158,12 @@ namespace V308CMS.Admin.Controllers
                 if (banner.SaveList)
                 {
                     return RedirectToAction("Index");
-                }             
+                }
+                ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
                 ViewBag.ListPosition = DataHelper.ListEnumType<PositionEnum>();
                 return View("Edit", banner);
             }
+            ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
             ViewBag.ListPosition = DataHelper.ListEnumType<PositionEnum>();
             return View("Edit", banner);
         }

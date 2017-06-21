@@ -7,22 +7,23 @@ namespace V308CMS.Data.Mapping
         public SiteConfigMap()
         {
             // Primary Key
-            this.HasKey(t => t.id);
+            this.HasKey(t => t.Id);
 
             // Properties
-            this.Property(t => t.name)
+            this.Property(t => t.Name)
                 .IsRequired()
                 .HasMaxLength(255);
 
-            this.Property(t => t.content)
+            this.Property(t => t.Content)
                 .IsRequired();
              
 
             // Table & Column Mappings
             this.ToTable("siteconfig");
-            this.Property(t => t.id).HasColumnName("id");
-            this.Property(t => t.name).HasColumnName("name");
-            this.Property(t => t.content).HasColumnName("content");
+            this.Property(t => t.Id).HasColumnName("id");
+            this.Property(t => t.Name).HasColumnName("name");
+            this.Property(t => t.Content).HasColumnName("content");
+            this.Property(t => t.Site).HasColumnName("site");
         }
     }
 }

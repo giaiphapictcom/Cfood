@@ -41,5 +41,7 @@ namespace V308CMS.Admin.Models
         public DateTime UpdatedAt { get; set; }
 
         public HttpPostedFileBase Image { get; set; }
+
+        public byte Site { get; set; }
     }
 }

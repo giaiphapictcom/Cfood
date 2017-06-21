@@ -1,0 +1,171 @@
+﻿@using V308CMS.Admin.Helpers
+@using V308CMS.Admin.Helpers.UI
+@using V308CMS.Admin.Helpers.Url
+@using V308CMS.Admin.Models
+@using V308CMS.Admin.Models.UI
+@using V308CMS.Common
+@model OrderViewModels
+@{
+    ViewBag.Title = "Danh sách Đơn hàng";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+    var listSearchType = (List<SelectListItem>)ViewBag.ListSearchType;
+    var listStatus = (List<SelectListItem>)ViewBag.ListStatus;
+}
+<div class="row" style="margin-bottom: 2px">
+    <form action="@Url.ProductOrderIndexUrl()" method="get">
+        <div class="col-md-2">
+            @Html.DropDownListFor(news => Model.SearchType, listSearchType, "Tất cả", new
+           {
+               @class = "form-control",
+               placeholder = "Tất cả",
+               style ="width :240px"
+           })
+        </div>
+
+        <div class="col-md-2">
+            <div class="input-group">
+                @Html.TextBoxFor(order => order.Keyword, new
+                {
+                    placeholder = "Nhập từ khóa",
+                    @class = "form-control",
+                    style = "width: 125%"
+                })
+            </div>
+        </div>
+        <div class="col-md-2">
+            @Html.DropDownListFor(news => Model.Status, listStatus, "Tất cả", new
+           {
+               @class = "form-control",
+               placeholder = "Tất cả",
+               style = "width :240px"
+           })
+        </div>
+        <div class="col-md-2">
+            <div class="input-group">
+                @Html.TextBoxFor(order => order.StartDate, new
+                {
+                    placeholder = "Ngày bắt đầu",
+                    @class = "date form-control",
+                    style = "width: 125%"
+                })
+            </div>          
+        </div>
+        <div class="col-md-2">           
+            <div class="input-group">
+                @Html.TextBoxFor(order => order.EndDate, new
+               {
+                   placeholder = "Ngày kết thúc",
+                   @class = "date form-control",
+                   style = "width: 125%"
+               })
+            </div>
+
+        </div>
+        <div class="col-md-2">
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-default">
+                        <i class="fa fa-search"></i>
+                        Tìm kiếm
+                    </button>
+                </span>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+
+
+@if (Model.Data.Any())
+{
+    <div class="panel panel-default">
+        <div class="panel-body">
+            @Html.Partial("UI/_Pagination", new PaginationModels
+           {
+               TotalPages = Model.TotalPages,
+               BaseUrl = Url.ProductOrderIndexUrl(new
+               {
+
+                   Model.SearchType,
+                   Model.Keyword,
+                   Model.Status,
+                   Model.EndDate,
+                   Model.StartDate,
+                   page = 1
+               }),
+               CurrentPage = Model.Page,
+               PageParamFormat = @"page=\d+",
+               RecordPerPages = 5
+           })
+            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Khách hàng</th>
+                    <th>SĐT</th>
+                    <th>Địa chỉ</th>
+                    <th>Tổng tiền</th>
+                    <th>Ngày tạo</th>
+                    <th style="text-align: center">Trạng thái</th>
+                    <th style="text-align: center">Hành động</th>
+                </tr>
+                </thead>
+                <tbody>
+                @for (int i = 0, total = Model.Data.Count; i < total; i++)
+                {
+                    var order = Model.Data[i];
+                    <tr>
+                        <td>@(i + 1)</td>
+                        <td>@order.FullName</td>
+                        <td>@order.Phone</td>
+                        <td>@order.Address.ToTitle()</td>
+                        <td>@(order.Price.HasValue ? order.Price.Value.ToString("N0") : "0")</td>
+                        <td>@(order.Date.HasValue ? order.Date.Value.ToDdmmyy() : "")</td>
+                        <td style="text-align: center">
+                            @order.Status.ToOrderStateTextHtml()
+                        </td>
+                        <td style="text-align: center">
+                            @Html.Partial("UI/_EditButton", new ButtonModels
+                            {
+                                Id = string.Format("order_{0}", order.ID),
+                                Href = Url.ProductOrderEditUrl(new {id = order.ID}),
+                                Title = "Cập nhật nội dung Đơn hàng " + order.ID
+                            })
+                            @Html.Partial("UI/_DeleteForm", new DeleteFormModels
+                            {
+                                NameOfId = "Id",
+                                ValueOfId = order.ID,
+                                IsConfirm = true,
+                                Url = Url.ProductOrderDeleteUrl()
+                            })
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+            @Html.Partial("UI/_Pagination", new PaginationModels
+            {
+                TotalPages = Model.TotalPages,
+                BaseUrl = Url.ProductOrderIndexUrl(new
+                {
+
+                    Model.SearchType,
+                    Model.Keyword,
+                    Model.Status,
+                    Model.EndDate,
+                    Model.StartDate,
+                    page = 1
+                }),
+                CurrentPage = Model.Page,
+                PageParamFormat = @"page=\d+",
+                RecordPerPages = 5
+            })
+        </div>
+    </div>
+}
+<script type="text/javascript">
+    $(function() {
+        $('.date').datetimepicker({ format: 'MM/DD/YYYY' });
+    });
+</script>
