@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using V308CMS.Data.Metadata;
 using V308CMS.Data.Models;
 
 namespace V308CMS.Data
@@ -1527,19 +1528,15 @@ namespace V308CMS.Data
     #endregion[ket thuc class tblVEmail]
 
     //#region[Bat dau tblSiteConfig]
-
+    [MetadataType(typeof(SiteConfigMetadata))]
     [Table("siteconfig")]
     public class SiteConfig
     {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Content { get; set; }
 
-        private int _Id { get; set; }
-        private string _Name { get; set; }
-        private string _Content { get; set; }
-
-        [Key]
-        public int id { get { return _Id; } set { _Id = value; } }
-        public string name { get { if (String.IsNullOrEmpty(_Name)) return ""; else return _Name; } set { _Name = value; } }
-        public string content { get { if (String.IsNullOrEmpty(_Content)) return ""; else return _Content; } set { _Content = value; } }
+        public byte Site { get; set; }
 
 
     }

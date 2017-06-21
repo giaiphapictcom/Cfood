@@ -21,7 +21,7 @@ namespace V308CMS.Admin.Controllers
         [CheckPermission(1, "Thêm mới")]
         public ActionResult Create()
         {
-            AddViewData("ListState", DataHelper.ListEnumType<StateEnum>());                 
+            AddViewData("ListState", DataHelper.ListEnumType<StateEnum>(), "ListSite", DataHelper.ListEnumType<SiteEnum>());
             return View("Create", new MenuConfigModels());
         }
         [HttpPost]
@@ -37,7 +37,7 @@ namespace V308CMS.Admin.Controllers
                     );
                 if (result == Result.Exists)
                 {
-                    AddViewData("ListState", DataHelper.ListEnumType<StateEnum>());                   
+                    AddViewData("ListState", DataHelper.ListEnumType<StateEnum>(), "ListSite", DataHelper.ListEnumType<SiteEnum>());              
                     ModelState.AddModelError("", string.Format("Tên Menu '{0}' đã tồn tại trên hệ thống.",config.Name) );
                     return View("Create", config);
                 }
@@ -46,12 +46,12 @@ namespace V308CMS.Admin.Controllers
                 {
                     return RedirectToAction("Index");
                 }
-                AddViewData("ListState", DataHelper.ListEnumType<StateEnum>());
+                AddViewData("ListState", DataHelper.ListEnumType<StateEnum>(), "ListSite", DataHelper.ListEnumType<SiteEnum>());
                 ModelState.Clear();
                 return View("Create", config.ResetValue());
 
             }
-            AddViewData("ListState", DataHelper.ListEnumType<StateEnum>());
+            AddViewData("ListState", DataHelper.ListEnumType<StateEnum>(), "ListSite", DataHelper.ListEnumType<SiteEnum>());
             return View("Create", config);
         }       
         [CheckPermission(2, "Sửa")]
@@ -64,7 +64,7 @@ namespace V308CMS.Admin.Controllers
                 return RedirectToAction("Index");
 
             }
-            AddViewData("ListState", DataHelper.ListEnumType<StateEnum>());
+            AddViewData("ListState", DataHelper.ListEnumType<StateEnum>(), "ListSite", DataHelper.ListEnumType<SiteEnum>());
             var data = config.CloneTo<MenuConfigModels>();
             return View("Edit", data);
 
@@ -82,7 +82,7 @@ namespace V308CMS.Admin.Controllers
                 if (result == Result.NotExists)
                 {
                     ModelState.AddModelError("", "Id không tồn tại trên hệ thống.");
-                    AddViewData("ListState", DataHelper.ListEnumType<StateEnum>());
+                    AddViewData("ListState", DataHelper.ListEnumType<StateEnum>(), "ListSite", DataHelper.ListEnumType<SiteEnum>());
                     return View("Edit", config);
                 }
                 SetFlashMessage( string.Format("Cập nhật Menu '{0}' thành công.",config.Name) );
@@ -90,10 +90,10 @@ namespace V308CMS.Admin.Controllers
                 {
                     return RedirectToAction("Index");
                 }
-                AddViewData("ListState", DataHelper.ListEnumType<StateEnum>());
+                AddViewData("ListState", DataHelper.ListEnumType<StateEnum>(), "ListSite", DataHelper.ListEnumType<SiteEnum>());
                 return View("Edit", config);
             }
-            AddViewData("ListState", DataHelper.ListEnumType<StateEnum>());
+            AddViewData("ListState", DataHelper.ListEnumType<StateEnum>(), "ListSite", DataHelper.ListEnumType<SiteEnum>());
             return View("Edit", config);
 
         }

@@ -21,7 +21,7 @@ namespace V308CMS.Respository
             using (var entities = new V308CMSEntities())
             {
                 return (from config in entities.SiteConfig
-                        where config.id == id
+                        where config.Id == id
                         select config).FirstOrDefault();
             }
             
@@ -32,7 +32,7 @@ namespace V308CMS.Respository
             using (var entities = new V308CMSEntities())
             {
                 var configItem = (from config in entities.SiteConfig
-                                  where config.id == id
+                                  where config.Id == id
                                   select config).FirstOrDefault();
                 if (configItem != null)
                 {
@@ -51,12 +51,12 @@ namespace V308CMS.Respository
             using (var entities = new V308CMSEntities())
             {
                 var configItem = (from config in entities.SiteConfig
-                                  where config.id == data.id
+                                  where config.Id == data.Id
                                   select config).FirstOrDefault();
                 if (configItem != null)
                 {
-                    configItem.name = data.name;
-                    configItem.content = data.content;
+                    configItem.Name = data.Name;
+                    configItem.Content = data.Content;
                     entities.SaveChanges();
                     return "ok";
                 }
@@ -70,7 +70,7 @@ namespace V308CMS.Respository
             using (var entities = new V308CMSEntities())
             {
                 var configItem = (from config in entities.SiteConfig
-                                  where config.name == data.name
+                                  where config.Name == data.Name
                                   select config).FirstOrDefault();
                 if (configItem == null)
                 {
@@ -89,7 +89,7 @@ namespace V308CMS.Respository
             {
                 return (from config in entities.SiteConfig
 
-                        orderby config.id descending
+                        orderby config.Id descending
                         select config
                 ).ToList();
             }

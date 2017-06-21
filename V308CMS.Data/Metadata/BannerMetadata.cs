@@ -23,5 +23,7 @@ namespace V308CMS.Data.Metadata
         public DateTime? CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
 
+        public bool Site { get; set; }
+
     }
 }

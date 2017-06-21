@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using V308CMS.Admin.Attributes;
@@ -35,7 +35,7 @@ namespace V308CMS.Admin.Controllers
         public ActionResult Index(int categoryId =0, int site =0)
         {
             ViewBag.ListCategory = BuildListCategory();
-            ViewBag.ListSite = DataHelper.ListEnumType<NewsSiteEnum>();
+            ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
             var model = new NewsViewModels
             {
                 CategoryId = categoryId,
@@ -48,7 +48,7 @@ namespace V308CMS.Admin.Controllers
         public ActionResult Create()
         {
             ViewBag.ListCategory = BuildListCategory();
-            ViewBag.ListSite = DataHelper.ListEnumType<NewsSiteEnum>();
+            ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
             return View("Create", new NewsModels());
         }
         [HttpPost]
@@ -86,7 +86,7 @@ namespace V308CMS.Admin.Controllers
                 {
                     ModelState.AddModelError("", string.Format("Tin tức '{0}' đã tồn tại trên hệ thống.",news.Title) );
                     ViewBag.ListCategory = BuildListCategory();
-                    ViewBag.ListSite = DataHelper.ListEnumType<NewsSiteEnum>();
+                    ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
                     return View("Create", news);
                 }
                 SetFlashMessage( string.Format("Thêm tin tức '{0}' thành công.",news.Title));
@@ -96,7 +96,7 @@ namespace V308CMS.Admin.Controllers
                 }
                 ModelState.Clear();
                 ViewBag.ListCategory = BuildListCategory();
-                ViewBag.ListSite = DataHelper.ListEnumType<NewsSiteEnum>();
+                ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
                 return View("Create", news.ResetValue());
             }
             ViewBag.ListCategory = NewsGroupService.GetAll().Select
@@ -138,7 +138,7 @@ namespace V308CMS.Admin.Controllers
                
             };
             ViewBag.ListCategory = BuildListCategory();
-            ViewBag.ListSite = DataHelper.ListEnumType<NewsSiteEnum>();
+            ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
             return View("Edit", newsEdit);
 
         }
@@ -177,7 +177,7 @@ namespace V308CMS.Admin.Controllers
                 {
                     ModelState.AddModelError("", "Tin tức không tồn tại trên hệ thống.");
                     ViewBag.ListCategory = BuildListCategory();
-                    ViewBag.ListSite = DataHelper.ListEnumType<NewsSiteEnum>();
+                    ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
                     return View("Edit", news);
                 }
                 SetFlashMessage( string.Format("Sửa tin tức '{0}' thành công.",news.Title) );
@@ -186,12 +186,12 @@ namespace V308CMS.Admin.Controllers
                     return RedirectToAction("Index");
                 }
                 ViewBag.ListCategory = BuildListCategory();
-                ViewBag.ListSite = DataHelper.ListEnumType<NewsSiteEnum>();
+                ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
                 return View("Edit", news);
 
             }
             ViewBag.ListCategory = BuildListCategory();
-            ViewBag.ListSite = DataHelper.ListEnumType<NewsSiteEnum>();
+            ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
             return View("Edit");
         }        
         [CheckPermission(3, "Xóa")]

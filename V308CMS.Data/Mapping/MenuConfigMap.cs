@@ -20,6 +20,8 @@ namespace V308CMS.Data.Mapping
                .HasMaxLength(50);
             this.Property(t => t.Link)
                .HasMaxLength(500);
+            this.Property(t => t.Target)
+              .HasMaxLength(50);
 
             // Table & Column Mappings
             this.ToTable("menu_config");
@@ -30,6 +32,8 @@ namespace V308CMS.Data.Mapping
             this.Property(t => t.Link).HasColumnName("link");
             this.Property(t => t.State).HasColumnName("state");
             this.Property(t => t.Order).HasColumnName("order");
+            this.Property(t => t.Target).HasColumnName("target");
+            this.Property(t => t.Site).HasColumnName("site");
             this.Property(t => t.CreatedAt).HasColumnName("created_at");
             this.Property(t => t.UpdatedAt).HasColumnName("updated_at");
 
