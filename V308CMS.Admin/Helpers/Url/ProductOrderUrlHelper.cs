@@ -8,18 +8,23 @@ namespace V308CMS.Admin.Helpers.Url
 {
     public static class ProductOrderUrlHelper
     {
-        public static string ProductOrderIndexUrl(this UrlHelper helper, object routeValue = null, string controller = "productorder",
+        public static string ProductOrderIndexUrl(this UrlHelper helper, object routeValue = null, string controller = "order",
             string action = "index")
         {
             return helper.Action(action, controller, routeValue);
         }
-        public static string ProductOrderCreateUrl(this UrlHelper helper, object routeValue = null, string controller = "productorder",
+        public static string ProductOrderCreateUrl(this UrlHelper helper, object routeValue = null, string controller = "order",
             string action = "create")
         {
             return helper.Action(action, controller, routeValue);
         }
-        public static string ProductOrderEditUrl(this UrlHelper helper, object routeValue = null, string controller = "productorder",
+        public static string ProductOrderEditUrl(this UrlHelper helper, object routeValue = null, string controller = "order",
            string action = "edit")
+        {
+            return helper.Action(action, controller, routeValue);
+        }
+        public static string ProductOrderDeleteUrl(this UrlHelper helper, object routeValue = null, string controller = "order",
+          string action = "delete")
         {
             return helper.Action(action, controller, routeValue);
         }

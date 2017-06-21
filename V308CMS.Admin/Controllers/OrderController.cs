@@ -1,5 +1,9 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using V308CMS.Admin.Attributes;
+using V308CMS.Admin.Models;
+using V308CMS.Common;
+using V308CMS.Data.Enum;
 
 namespace V308CMS.Admin.Controllers
 {
@@ -7,9 +11,47 @@ namespace V308CMS.Admin.Controllers
     [CheckGroupPermission(true, "Đơn hàng")]
     public class OrderController : BaseController
     {
-        public ActionResult Index()
+        public ActionResult Index(
+            byte searchType = (byte)OrderSearchTypeEnum.All,
+            byte status =0,
+            string keyword ="", 
+            string startDate = "", 
+            string endDate ="",
+            int page =1, 
+            int pageSize =25
+
+            )
         {
-            return View("Index");
+            DateTime startDateValue;
+            DateTime endDateValue;
+            DateTime.TryParse(startDate, out startDateValue);
+            DateTime.TryParse(endDate, out endDateValue);
+            int totalRecords;
+            int totalPages = 0;
+            var data = OrderService.GetListOrder(searchType, keyword, status, startDateValue, endDateValue, out totalRecords, page,pageSize);            
+            if (totalRecords > 0)
+            {
+
+                totalPages = totalRecords / pageSize;
+                if (totalRecords % pageSize > 0)
+                    totalPages += 1;
+            }
+            ViewBag.ListSearchType = DataHelper.ListEnumType<OrderSearchTypeEnum>();
+            ViewBag.ListStatus = DataHelper.ListEnumType<OrderStatusEnum>();
+            var model = new OrderViewModels
+            {
+                SearchType = searchType,
+                Keyword = keyword,
+                Status = status,
+                StartDate = startDate,
+                EndDate = endDate,
+                TotalPages = totalPages,
+                TotalRecords = totalRecords,
+                Page = page,
+                PageSize = pageSize,
+                Data = data
+            };
+            return View("Index", model);
         }
 
         public ActionResult Detail(int id)
