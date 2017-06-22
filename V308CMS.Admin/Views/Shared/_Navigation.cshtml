@@ -35,26 +35,52 @@
 </div>
 <!-- /.navbar-header -->
 
-<ul class="nav navbar-top-links navbar-right">
-    <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-            @User.UserName
-            <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
-        </a>
-        <ul class="dropdown-menu dropdown-user">
-            <li>
-                <a href="#"><i class="fa fa-user fa-fw"></i>User Profile</a>
-            </li>
-            <li>
-                <a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-            </li>
-            <li class="divider"></li>
-            <li>
-                <a href="@Url.HomeLogoutUrl()"><i class="fa fa-sign-out fa-fw"></i> Đăng xuất</a>
-            </li>
-        </ul>
-    </li>
-</ul>
+    <ul class="nav navbar-top-links navbar-right">
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                @User.UserName
+                @if (string.IsNullOrEmpty(User.Avatar))
+                {
+                    <i class="fa fa-user fa-fw"></i>
+                    <i class="fa fa-caret-down"></i>
+                }
+                else
+                {
+                    <img class="img-circle" src="@User.Avatar.ToImageUrl()" style="width:16px;height:16px">
+                    <i class="fa fa-caret-down"></i>
+                }
+
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+                @if (IsHasPermission(listRolePermission, "Profile", 0) || IsHasPermission(listRolePermission, "Profile", 1))
+            {
+                if (IsHasPermission(listRolePermission, "Profile", 0))
+                {
+                        <li>
+                            <a href="@Url.ProfileUpdateProfileUrl()" title="Thông tin tài khoản">
+                                <i class="fa fa-user fa-fw"></i>Thông tin tài khoản
+                            </a>
+                        </li>
+                    }
+                    if (IsHasPermission(listRolePermission, "Profile", 1))
+                    {
+                        <li>
+                            <a href="@Url.ProfileChangePasswordUrl()">
+                                <i class="fa fa-key fa-fw"></i>Đổi mật khẩu
+                            </a>
+                        </li>
+                    }
+                    <li class="divider"></li>
+                }
+
+
+
+                <li>
+                    <a href="@Url.HomeLogoutUrl()"><i class="fa fa-sign-out fa-fw"></i> Đăng xuất</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
 <div class="navbar-default sidebar" role="navigation">
 <div class="sidebar-nav navbar-collapse">
 <ul class="nav in" id="side-menu">

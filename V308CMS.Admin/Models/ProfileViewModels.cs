@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace V308CMS.Admin.Models
 {
@@ -25,6 +21,8 @@ namespace V308CMS.Admin.Models
         [Compare("NewPassword", ErrorMessage = "Mật khẩu xác nhận không khớp.")]
         [Display(Name = "Mật khẩu xác nhận")]
         public string ConfirmPassword { get; set; }
+
+        public int ChangePassword { get; set; }
     }
     public class ProfileViewModels
     {

@@ -12,10 +12,7 @@ namespace V308CMS.Admin.Controllers
         protected virtual new CustomPrincipal User => HttpContext.User as CustomPrincipal;
         
         protected BaseController()
-        {
-         
-        
-
+        {         
             NewsService = new NewsRepository();
             NewsGroupService = new NewsGroupRepository();
             AccountService = new AccountRepository();             

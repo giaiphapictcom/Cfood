@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace V308CMS.Admin.Helpers.Url
 {
@@ -13,13 +9,13 @@ namespace V308CMS.Admin.Helpers.Url
         {
             return helper.Action(action, controller, routeValue);
         }
-        public static string ProductOrderCreateUrl(this UrlHelper helper, object routeValue = null, string controller = "order",
-            string action = "create")
+        public static string ProductOrderUpdateDetailUrl(this UrlHelper helper, object routeValue = null, string controller = "order",
+            string action = "updatedetail")
         {
             return helper.Action(action, controller, routeValue);
         }
         public static string ProductOrderEditUrl(this UrlHelper helper, object routeValue = null, string controller = "order",
-           string action = "edit")
+           string action = "detail")
         {
             return helper.Action(action, controller, routeValue);
         }
@@ -28,8 +24,13 @@ namespace V308CMS.Admin.Helpers.Url
         {
             return helper.Action(action, controller, routeValue);
         }
-        public static string ProductOrderExportToExcelUrl(this UrlHelper helper, object routeValue = null, string controller = "productorder",
-           string action = "orderexporttoexcel")
+        public static string ProductOrderChangeStatusUrl(this UrlHelper helper, object routeValue = null, string controller = "order",
+           string action = "changestatus")
+        {
+            return helper.Action(action, controller, routeValue);
+        }
+        public static string ProductOrderCancelUrl(this UrlHelper helper, object routeValue = null, string controller = "order",
+           string action = "cancelorder")
         {
             return helper.Action(action, controller, routeValue);
         }

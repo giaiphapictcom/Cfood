@@ -12,6 +12,9 @@
         int permissionValue;
         switch (groupPermission)
         {
+            case "ProfilePermission":
+                permissionValue = role.ProfilePermissionAll;
+                break;
             case "ProductStorePermission":
                 permissionValue = role.ProductStorePermissionAll;
                 break;

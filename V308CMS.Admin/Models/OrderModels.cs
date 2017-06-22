@@ -9,7 +9,7 @@ namespace V308CMS.Admin.Models
     {
         [Display(Name = "Order #")]
         public int Id { get; set; }
-        [Display(Name = "Họ tên khách hàng")]
+        [Display(Name = "Khách hàng")]
         [StringLength(100, ErrorMessage = "Họ tên khách hàng không được vượt quá 100 ký tự.")]
         public string FullName { get; set; }
         [Display(Name = "Số điện thoại")]
@@ -21,7 +21,7 @@ namespace V308CMS.Admin.Models
         [StringLength(100, ErrorMessage = "Số điện thoại không được vượt quá 250 ký tự.")]
         public string Address { get; set; }
         [Display(Name = "Tổng tiền")]
-        public int TotalPrice { get; set; }
+        public int Price { get; set; }
         [Display(Name = "Ghi chú")]
         public string Detail { get; set; }
         [Display(Name = "Trạng thái")]

@@ -44,6 +44,7 @@ namespace V308CMS.Admin.Controllers
                 var myUser = new MyUser
                 {
                     UserName = login.Username,
+                    Avatar = result.Avatar,
                     UserId = result.ID,
                     RoleId = result.Role ?? 0
                 };
