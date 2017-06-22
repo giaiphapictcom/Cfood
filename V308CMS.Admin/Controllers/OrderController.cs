@@ -73,7 +73,7 @@ namespace V308CMS.Admin.Controllers
             var result = OrderService.Delete(id);
             return Json(new { code = result });
         }
-        [CheckPermission(2, "Thay đổi trạng thái")]
+        [CheckPermission(3, "Thay đổi trạng thái")]
         [HttpPost]
         [ActionName("ChangeStatus")]
         public ActionResult OnChangeStatus(int id, int status)
@@ -81,7 +81,7 @@ namespace V308CMS.Admin.Controllers
             var result = OrderService.ChangeStatus(id, status);
             return Json(new { code = result });
         }
-        [CheckPermission(3, "Hủy đơn hàng")]
+        [CheckPermission(4, "Hủy đơn hàng")]
         [HttpPost]
         [ActionName("CancelOrder")]
         public ActionResult OnCancelOrder(int id)
@@ -89,7 +89,7 @@ namespace V308CMS.Admin.Controllers
             var result = OrderService.ChangeStatus(id,(int) OrderStatusEnum.CancelledOrder);
             return Json(new { code = result });
         }
-        [CheckPermission(4, "Cập nhật ghi chú")]
+        [CheckPermission(5, "Cập nhật ghi chú")]
         [HttpPost]
         [ActionName("UpdateDetail")]
         public JsonResult OnUpdateDetail(int id,string detail)
