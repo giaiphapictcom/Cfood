@@ -60,6 +60,7 @@ namespace V308CMS.Respository
                     bannerUpdate.Status  = data.Status;
                     bannerUpdate.CreatedAt = data.CreatedAt;
                     bannerUpdate.UpdatedAt = data.UpdatedAt;
+                    bannerUpdate.Site = data.Site;
                     entities.SaveChanges();
                     return "ok";
                 }
