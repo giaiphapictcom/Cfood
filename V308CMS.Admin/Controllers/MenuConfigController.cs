@@ -42,6 +42,7 @@ namespace V308CMS.Admin.Controllers
                 menuAdd.Description = config.Description;
                 menuAdd.Link = config.Link;
                 menuAdd.Order = config.Order;
+                menuAdd.Target = config.Target;
 
 
                 var result = MenuConfigService.Insert(menuAdd);

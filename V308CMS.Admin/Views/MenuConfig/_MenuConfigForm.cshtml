@@ -1,4 +1,5 @@
 ﻿@using V308CMS.Admin.Helpers.Url
+@using V308CMS.Common
 @model  V308CMS.Admin.Models.MenuConfigModels
 @{
     var listState = (List<SelectListItem>)ViewData["ListState"];
@@ -43,7 +44,17 @@
         </div>
         <div class="form-group">
             @Html.LabelFor(menu => Model.Target)
-            @Html.TextBoxFor(menu => Model.Target, new { @class = "form-control", placeholder = "Target" })
+            
+            @Html.DropDownListFor(config => Model.Target, 
+            new List<SelectListItem> { 
+                       new SelectListItem { Value = "_self" , Text = "Mặc định" },
+                       new SelectListItem { Value = "_blank" , Text = "Trang mới" }
+                    }, new
+            {
+                @class = "form-control",
+                placeholder = "Target"
+            })
+
             @Html.ValidationMessageFor(menu => Model.Target)
         </div>
         <div class="form-group">

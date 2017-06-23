@@ -12,12 +12,35 @@ namespace V308CMS.Respository
     }
     public class MenuConfigRespository: Data.IBaseRespository<MenuConfig>, IMenuConfigRespository
     {
-      
 
-        public MenuConfigRespository()
+        private V308CMSEntities entities;
+        public MenuConfigRespository(V308CMSEntities mEntities = null)
         {
-            
+            if (mEntities == null){
+                mEntities = new V308CMSEntities();
+            }
+            this.entities = mEntities;
         }
+
+        #region["Vung cac thao tac Dispose"]
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (this.entities != null)
+                {
+                    this.entities.Dispose();
+                    this.entities = null;
+                }
+            }
+        }
+        #endregion
+
         public MenuConfig Find(int id)
         {
             using (var entities = new V308CMSEntities())
@@ -137,21 +160,28 @@ namespace V308CMS.Respository
             
         }
 
-        public List<MenuConfig> GetList(int page = 1, int pageSize = 10,string site="")
+        public List<MenuConfig> GetList(int page = 1, int pageSize = 10,string site="",byte status = 0)
         {
             using (var entities = new V308CMSEntities())
             {
                 var items = from m in entities.MenuConfig
-                            where m.Site == site
+                            where m.Site == site 
 
-                        orderby m.CreatedAt descending
+                        orderby m.Order ascending
                         select m;
+                if (status > 0) { 
+                     items = from m in entities.MenuConfig
+                                 where m.Site == site && m.State == status
+
+                        orderby m.Order ascending
+                        select m;
+                }
                 
                 return items.Skip((page - 1) * pageSize).Take(pageSize).ToList();
             }
             
         }
-        public List<MenuConfig> GetAll()
+        public List<MenuConfig> GetAll(string site="")
         {
             using (var entities = new V308CMSEntities())
             {

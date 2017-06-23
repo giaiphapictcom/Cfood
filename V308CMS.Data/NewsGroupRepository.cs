@@ -349,7 +349,7 @@ namespace V308CMS.Data
        
 
        
-        public List<NewsGroups> GetList(int page = 1, int pageSize = 10,string site="")
+        public List<NewsGroups> GetList(int page = 1, int pageSize = 10,string site="",byte status = 0)
         {
             using (var entities = new V308CMSEntities())
             {

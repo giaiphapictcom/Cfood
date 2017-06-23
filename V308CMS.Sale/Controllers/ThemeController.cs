@@ -110,8 +110,8 @@ namespace V308CMS.Sale.Controllers
                 CreateRepos();
                 //var menu = NewsRepos.GetNewsGroup();
                 HeaderPage Model = new HeaderPage();
-                
-                Model.menu = MenuRepos.GetAll("affiliate");
+
+                Model.menu = MenuRepos.GetList(1,5,"affiliate");
 
                 //NewsGroups MenuCategory = NewsRepos.SearchNewsGroup("menu-affiliate");
                 //if (MenuCategory != null)

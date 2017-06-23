@@ -137,6 +137,7 @@
     <Compile Include="AccountRepository.cs" />
     <Compile Include="EmailRepository.cs" />
     <Compile Include="Enum\AccountType.cs" />
+    <Compile Include="Enum\AnchorEnum.cs" />
     <Compile Include="Enum\DiscountTypeEnum.cs" />
     <Compile Include="Enum\EmailType.cs" />
     <Compile Include="Enum\OrderSearchTypeEnum.cs" />
