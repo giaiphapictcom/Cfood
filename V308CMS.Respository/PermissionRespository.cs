@@ -77,7 +77,8 @@ namespace V308CMS.Respository
             using (var entities = new V308CMSEntities())
             {
                 var permissionInsert = (from permission in entities.Permission
-                                        where permission.GroupPermission == data.GroupPermission                                       
+                                        where permission.GroupPermission == data.GroupPermission &&
+                                        permission.RoleId == data.RoleId                                
                                         select permission
                ).FirstOrDefault();
                 if (permissionInsert == null){
