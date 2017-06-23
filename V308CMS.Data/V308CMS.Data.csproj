@@ -155,6 +155,7 @@
     <Compile Include="Mapping\ColorMap.cs" />
     <Compile Include="Mapping\CountryMap.cs" />
     <Compile Include="Mapping\EmailConfigMap.cs" />
+    <Compile Include="Mapping\EmailLogMap.cs" />
     <Compile Include="Mapping\MenuConfigMap.cs" />
     <Compile Include="Mapping\PermissionMap.cs" />
     <Compile Include="Mapping\ProductBrandMap.cs" />
@@ -187,6 +188,7 @@
     <Compile Include="Models\Color.cs" />
     <Compile Include="Models\Country.cs" />
     <Compile Include="Models\EmailConfig.cs" />
+    <Compile Include="Models\EmailLog.cs" />
     <Compile Include="Models\MenuConfig.cs" />
     <Compile Include="Models\Permission.cs" />
     <Compile Include="Models\ProductColor.cs" />

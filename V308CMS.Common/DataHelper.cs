@@ -8,6 +8,7 @@ namespace V308CMS.Common
 {
     public class DataHelper
     {
+
         public static IEnumerable<SelectListItem> ListHour
         {
 
@@ -85,6 +86,17 @@ namespace V308CMS.Common
 
 
             }
+        }
+
+        public static List<SelectListItem> ListEnumTypeSepecial<T>()
+        {
+            var dictionary = (from object item in Enum.GetValues(typeof (T))
+                              let fi = item.GetType().GetField(item.ToString())
+                              let attributes = (DescriptionAttribute[]) fi.GetCustomAttributes(typeof (DescriptionAttribute), false)
+                              select (attributes.Length > 0) ? 
+                                attributes[0].Description : 
+                                item.ToString()).ToDictionary(description => description.ToUnsign().ToLower());
+            return new SelectList(dictionary, "Key", "Value", 1).ToList();
         }
         public static List<SelectListItem> ListEnumType<T>()
         {

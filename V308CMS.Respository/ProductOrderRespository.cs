@@ -13,6 +13,9 @@ namespace V308CMS.Respository
 
         ProductOrder FindToEdit(int id);
         List<ProductOrder> Take(int count =10);
+        string UpdateDetail(int id, string detail);
+        string ChangeStatus(int id, int status);
+        string Delete(int id);
     }
     public  class ProductOrderRespository: IProductOrderRespository
     {
@@ -123,6 +126,69 @@ namespace V308CMS.Respository
            
         }
 
+        public string UpdateDetail(int id, string detail)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                var orderUpdateDetail = (from order in entities.ProductOrder
+                                         where order.ID == id
+                        select order
+                    ).FirstOrDefault();
+                if (orderUpdateDetail != null)
+                {
+                    orderUpdateDetail.Detail = detail;
+                    entities.SaveChanges();
+                    return "ok";
+                }
+                return "not_exists";
+            }
+        }
 
+        public string ChangeStatus(int id, int status)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                var orderUpdateDetail = (from order in entities.ProductOrder
+                                         where order.ID == id
+                                         select order
+                                         ).FirstOrDefault();
+                if (orderUpdateDetail != null)
+                {
+                    orderUpdateDetail.Status = status;
+                    entities.SaveChanges();
+                    return "ok";
+                }
+                return "not_exists";
+
+            }
+        }
+
+        public string Delete(int id)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                var orderDelete = (from order in entities.ProductOrder.Include("OrderDetail")
+                                   where order.ID == id
+                                         select order
+                                        ).FirstOrDefault();
+                if (orderDelete != null)
+                {
+                    if (orderDelete.OrderDetail != null)
+                    {
+                        foreach (var orderItem in orderDelete.OrderDetail)
+                        {
+                            orderDelete.OrderDetail.Remove(orderItem);
+                            entities.SaveChanges();
+                        }
+                        
+                        
+                    }
+                    entities.ProductOrder.Remove(orderDelete);
+                    entities.SaveChanges();
+                    return "ok";
+                }
+                return "not_exists";
+            }
+        }
     }
 }

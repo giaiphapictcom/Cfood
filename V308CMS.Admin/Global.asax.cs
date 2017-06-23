@@ -19,7 +19,6 @@ namespace V308CMS.Admin
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-
         }
 
         private void SetCustomUser()
@@ -37,7 +36,8 @@ namespace V308CMS.Admin
                     {
                         UserId = userData.UserId,
                         UserName = userData.UserName,
-                        RoleId = userData.RoleId
+                        RoleId = userData.RoleId,
+                        Avatar = userData.Avatar
                     };
                     HttpContext.Current.User = principal;
                 }

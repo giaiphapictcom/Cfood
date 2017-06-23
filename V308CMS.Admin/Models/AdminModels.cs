@@ -49,7 +49,7 @@ namespace V308CMS.Admin.Models
         public byte Type { get; set; }
         [Display(Name = "Ảnh đại diện")]
         public string AvatarUrl { get; set; }
-        public HttpPostedFileBase AvatarFile { get; set; }
+        public HttpPostedFileBase AvatarFile { get; set; }        
 
     }
 }

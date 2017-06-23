@@ -6,8 +6,7 @@ using V308CMS.Data.Metadata;
 namespace V308CMS.Data.Models
 {
     [MetadataType(typeof(BannerMetadata))]
-    [Table("banner")]
-   
+    [Table("banner")]   
     public class Banner
     {
         public Banner()
@@ -31,8 +30,8 @@ namespace V308CMS.Data.Models
         public bool Status { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
-        public int Order { get; set; }
 
+        public int Order { get; set; }
       
     }
 }

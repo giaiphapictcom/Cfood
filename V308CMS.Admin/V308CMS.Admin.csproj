@@ -247,6 +247,7 @@
     <Compile Include="Helpers\Url\ProductTypeUrlHelper.cs" />
     <Compile Include="Helpers\Url\ProductUrlHelper.cs" />
     <Compile Include="Helpers\Url\ProductBrandUrlHelper.cs" />
+    <Compile Include="Helpers\Url\ProfileUrlHelper.cs" />
     <Compile Include="Helpers\Url\RoleUrlHelper.cs" />
     <Compile Include="Helpers\Url\SiteConfigUrlHelper.cs" />
     <Compile Include="Helpers\Url\SizeUrlHelper.cs" />

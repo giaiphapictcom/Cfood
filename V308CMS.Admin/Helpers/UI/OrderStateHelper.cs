@@ -8,6 +8,35 @@ namespace V308CMS.Admin.Helpers.UI
 {
     public static class OrderStateHelper
     {
+        public static string ToOrderStateText(this byte state)
+        {            
+            var statusText = "";           
+            switch (state)
+            {
+                case (byte)OrderStatusEnum.Pending:
+                    statusText = OrderStatusEnum.Pending.GetAttributeOfType<DescriptionAttribute>().Description;                
+                    break;
+                case (byte)OrderStatusEnum.Processing:
+                    statusText = OrderStatusEnum.Processing.GetAttributeOfType<DescriptionAttribute>().Description;                    
+                    break;
+                case (byte)OrderStatusEnum.Delivering:
+                    statusText = OrderStatusEnum.Delivering.GetAttributeOfType<DescriptionAttribute>().Description;                    
+                    break;
+                case (byte)OrderStatusEnum.Complete:
+                    statusText = OrderStatusEnum.Complete.GetAttributeOfType<DescriptionAttribute>().Description;                
+                    break;
+                case (byte)OrderStatusEnum.CanceelledPayment:
+                    statusText = OrderStatusEnum.CanceelledPayment.GetAttributeOfType<DescriptionAttribute>().Description;                  
+                    break;
+                case (byte)OrderStatusEnum.CancelledOrder:
+                    statusText = OrderStatusEnum.CancelledOrder.GetAttributeOfType<DescriptionAttribute>().Description;                   
+                    break;
+                case (byte)OrderStatusEnum.Refund:
+                    statusText = OrderStatusEnum.CancelledOrder.GetAttributeOfType<DescriptionAttribute>().Description;                  
+                    break;
+            }
+            return statusText;
+        }
         public static MvcHtmlString ToOrderStateTextHtml(this int? state)
         {
             if (!state.HasValue)

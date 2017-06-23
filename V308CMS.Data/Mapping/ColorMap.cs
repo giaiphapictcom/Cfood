@@ -22,6 +22,8 @@ namespace V308CMS.Data.Mapping
             this.Property(t => t.Description)            
               .HasMaxLength(255);
 
+
+
             this.ToTable("color");
             this.Property(t => t.Id).HasColumnName("id");
             this.Property(t => t.Name).HasColumnName("name");

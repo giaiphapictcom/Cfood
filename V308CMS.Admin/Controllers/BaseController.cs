@@ -14,14 +14,6 @@ namespace V308CMS.Admin.Controllers
         
         protected BaseController()
         {
-            //User.UserName = HttpContext.User
-            if (HttpContext != null)
-            {
-                var user = HttpContext.User;
-            }
-            
-             //=> HttpContext.User as CustomPrincipal;
-        
             NewsService = new NewsRepository();
             NewsGroupService = new NewsGroupRepository();
             AccountService = new AccountRepository();             

@@ -9,7 +9,8 @@ namespace V308CMS.Respository
     {
         string ChangeStatus(int id);
         string CheckUserName(string userName);
-
+        string ChangePassword(int id, string currentPassword, string newPassword);
+        string UpdateProfile(int id, string avatar, string email, string fullName);
     }
     public  class AdminRespository:IBaseRespository<Admin>,IAdminRespository
     {
@@ -164,6 +165,49 @@ namespace V308CMS.Respository
                                    select admin
                  ).FirstOrDefault();
                 return adminAccount != null ? "exists" : "ok";
+            }
+        }
+
+        public string ChangePassword(int id, string currentPassword, string newPassword)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                var adminAccount = (from admin in entities.Admin
+                                    where admin.ID == id
+                                    select admin
+                  ).FirstOrDefault();
+                if (adminAccount != null)
+                {
+                    
+                    if (adminAccount.Password == EncryptionMD5.ToMd5(currentPassword))
+                    {
+                        adminAccount.Password = EncryptionMD5.ToMd5(newPassword);
+                        entities.SaveChanges();
+                        return "ok";
+                    }
+                    return "old_not_correct";
+                }
+                return "not_exists";
+            }
+        }
+
+        public string UpdateProfile(int id, string avatar, string email, string fullName)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                var adminAccount = (from admin in entities.Admin
+                                    where admin.ID == id
+                                    select admin
+                  ).FirstOrDefault();
+                if (adminAccount != null)
+                {
+                    adminAccount.Avatar = avatar;
+                    adminAccount.Email = email;
+                    adminAccount.FullName = fullName;
+                    entities.SaveChanges();
+                    return "ok";
+                }
+                return "not_exists";
             }
         }
     }

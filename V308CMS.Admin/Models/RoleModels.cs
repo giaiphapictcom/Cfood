@@ -49,10 +49,10 @@ namespace V308CMS.Admin.Models
         public int UserPermissionAll { get; set; }
         public int VoucherPermissionAll { get; set; }
         public int BannerPermissionAll { get; set; }
+        public int ProfilePermissionAll { get; set; }
 
-      
 
-
+        public int[] ProfilePermission { get; set; }
         public int[] BannerPermission { get; set; }       
         public int[] AdminAccountPermission { get; set; }       
         public int[] ContactPermission { get; set; }        

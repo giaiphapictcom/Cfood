@@ -40,6 +40,7 @@ namespace V308CMS.Data
             modelBuilder.Configurations.Add(new ProductSizeMap());          
             modelBuilder.Configurations.Add(new PermissionMap());
             modelBuilder.Configurations.Add(new BannerMap());
+            modelBuilder.Configurations.Add(new EmailLogMap());
             modelBuilder.Entity<productorder_detail>()
             .HasRequired(p => p.Order)
             .WithMany(p => p.OrderDetail)
@@ -85,6 +86,11 @@ namespace V308CMS.Data
         }
         #endregion
         #region ObjectSet Properties
+        public DbSet<EmailLog> EmailLog
+        {
+            get;
+            set;
+        }
         public DbSet<Banner> Banner
         {
             get;

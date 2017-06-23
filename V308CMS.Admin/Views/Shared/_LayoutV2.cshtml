@@ -1,9 +1,8 @@
 ﻿<!DOCTYPE html>
-﻿@using System.Web.Mvc.Html
-@using V308CMS.Admin.Helpers
-<!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
+    <meta charset="utf-8" />
+    <meta name="referrer" content="origin-when-crossorigin" id="meta_referrer" />
     @Html.Partial("_Header")
     <script src="/Content/vendor/jquery/jquery.min.js"></script>
     <script src="/Content/vendor/moment/js/moment.min.js"></script>
@@ -17,13 +16,15 @@
     @RenderSection("Header", false)
 </head>
 <body>
+﻿@using System.Web.Mvc.Html
+@using V308CMS.Admin.Helpers
     <div id="wrapper">
         <!-- Navigation -->
         @Html.Partial("_Navigation")
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">@ViewBag.Title</h1>
+                    <h1 class="page-header">@Html.Raw(ViewBag.Title)</h1>
                 </div>
             </div>
 

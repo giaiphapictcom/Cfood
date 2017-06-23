@@ -1,17 +1,13 @@
-<<<<<<< HEAD
 ﻿@using V308CMS.Admin.Helpers
-=======
-@using V308CMS.Admin.Helpers
->>>>>>> toai-0621
 @using V308CMS.Admin.Helpers.UI
 @using V308CMS.Admin.Helpers.Url
 @using V308CMS.Admin.Models.UI
 @using V308CMS.Common
 @model V308CMS.Admin.Models.NewsViewModels
 @{
-    ViewBag.Title = "Danh sách Tin tức";
+    
     Layout = "~/Views/Shared/_LayoutV2.cshtml";
-
+    ViewBag.Title = "Danh sách tin tức";
     var listCategory = (List<MutilCategoryItem>)ViewBag.ListCategory;
     var listSite = (List<SelectListItem>)ViewBag.ListSite;
 }
@@ -23,7 +19,7 @@
             {
                 Name = "CategoryId",
                 Data = listCategory,
-                PlaceHolder = "Tất cả",
+                PlaceHolder = "Tat ca",
                 ParentId = Model.CategoryId
             })
         </div>
@@ -53,7 +49,7 @@
         <!-- /.panel-heading -->
         <div class="panel-body">
 
-            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -123,7 +119,3 @@
         });
     });
 </script>
-<<<<<<< HEAD
-
-=======
->>>>>>> toai-0621

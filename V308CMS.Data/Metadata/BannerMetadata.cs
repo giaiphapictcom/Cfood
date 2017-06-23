@@ -22,8 +22,8 @@ namespace V308CMS.Data.Metadata
         public bool Status { get; set; }
         public DateTime? CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
-
-        public bool Site { get; set; }
+        [MaxLength(50)]
+        public string Site { get; set; }
 
     }
 }
