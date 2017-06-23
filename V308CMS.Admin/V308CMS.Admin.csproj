@@ -262,6 +262,7 @@
     <Compile Include="Models\BannerModels.cs" />
     <Compile Include="Models\CountBoxType.cs" />
     <Compile Include="Models\CountItems.cs" />
+    <Compile Include="Models\OrderModels.cs" />
     <Compile Include="Models\OrderViewModels.cs" />
     <Compile Include="Models\ProfileViewModels.cs" />
     <Compile Include="Models\UserChangePassworModels.cs" />

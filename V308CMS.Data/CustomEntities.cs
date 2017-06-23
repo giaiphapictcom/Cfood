@@ -1536,7 +1536,7 @@ namespace V308CMS.Data
         public string Name { get; set; }
         public string Content { get; set; }
 
-        public byte Site { get; set; }
+        public string Site { get; set; }
 
 
     }
