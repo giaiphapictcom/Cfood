@@ -1924,3 +1924,7 @@ UpgradeLog2.XML
 UpgradeLog.XML
 >>>>>>> 2a80f7d8d838801f0007a10239275145e5bcc2fc
 >>>>>>> toai-neal
+V308CMS.Admin/V308CMS.Admin.csproj
+.vs/config/applicationhost.config
+V308CMS.Admin/Web.config
+V308CMS.Data/V308CMS.Data.csproj
