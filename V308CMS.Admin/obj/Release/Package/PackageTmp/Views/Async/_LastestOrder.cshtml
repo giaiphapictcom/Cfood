@@ -1,0 +1,59 @@
+﻿@using V308CMS.Admin.Helpers.UI
+@using V308CMS.Admin.Helpers.Url
+@using V308CMS.Common
+@model List<V308CMS.Data.ProductOrder>
+<div class="box box-info" id="latest-orders-box">
+    <div class="box-header with-border">
+        <h3 class="box-title">
+            <i class="fa fa-cart-plus"></i>
+            Đơn hàng mới nhất
+            <a href="@Url.ProductOrderIndexUrl()" class="btn btn-xs btn-info btn-flat margin-l-10">Xem thêm</a>
+        </h3>
+    </div>
+    @if (Model.Any())
+    {
+        <div class="box-body" style="display: block;">
+            <div id="orders-grid" class="k-grid k-widget">
+                <table>                  
+                    <thead class="k-grid-header">
+                        <tr>
+                            <th class="w50-column k-header">#</th>
+                            <th class="w250-column k-header">Khách hàng</th>
+                            <th class="w200-column k-header">SĐT</th>                                   
+                            <th class="w250-column k-header">Tổng tiền</th>                           
+                            <th class="w250-column k-header">Trạng thái</th>
+                            <th class="w250-column k-header">Ngày tạo</th>
+                            <th style="text-align: center" class="w100-column k-header">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    
+                        @for (int i = 0, total = Model.Count; i < total; i++)
+                        {
+                            var order = Model[i];
+                            <tr>                              
+                                <td>@(i + 1)</td>
+                                <td>@order.FullName</td>
+                                <td>@order.Phone</td>                                                   
+                                <td>@(order.Price.HasValue ? order.Price.Value.ToString("N0") : "0")</td>
+                                <td>
+                                    @order.Status.ToOrderStateTextHtml()
+                                </td>
+                                <td>@(order.Date.HasValue ? order.Date.Value.ToDdmmyy() : "")</td>
+                                <td style="text-align: center" role="gridcell">
+                                    <a class="btn btn-xs btn-default" href="@Url.ProductOrderEditUrl(new {id = order.ID})">
+                                        <i class="fa fa-eye"></i>Chi tiết
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+
+                           
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+   
+</div>

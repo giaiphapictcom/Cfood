@@ -1,0 +1,48 @@
+﻿@model V308CMS.Admin.Models.AdminModels
+@using V308CMS.Admin.Helpers.Url
+@using V308CMS.Admin.Models.UI
+@{
+    ViewBag.Title = "Cập nhật thông tin cá nhân";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+<div class="panel panel-primary">
+    <div class="panel-body">
+        <form method="post" role="form" action="@Url.ProfileUpdateProfileUrl()" enctype="multipart/form-data">
+            @Html.HiddenFor(profile=>Model.Id)
+            @Html.AntiForgeryToken()
+            <div class="row">
+                @Html.ValidationSummary(true)
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        @Html.LabelFor(profile => Model.FullName)
+                        @Html.TextBoxFor(profile => Model.FullName, new {@class = "form-control"})
+                        @Html.ValidationMessageFor(profile => Model.FullName)
+                    </div>
+                    <div class="form-group">
+                        <label for="@Model.AvatarUrl">@(!string.IsNullOrEmpty(Model.AvatarUrl) ? "Ảnh đại diện hiện tại" : "Ảnh đại diện")</label>
+                    </div>
+                    @Html.Partial("UI/_ImageSelectPreview", new ImageSelectPreviewModels
+                    {
+                        Id = Model.Id,
+                        Name = "AvatarFile",
+                        ImageUrl = Model.AvatarUrl,
+                        ImageUrlHiddenName = "AvatarUrl",
+                        AutoGenerateLabel = false
+                    })
+                    <div class="form-group" style="margin-top: 10px">
+                        <a class="btn btn-danger" href="@Url.ProfileChangePasswordUrl()" title="Đổi mật khẩu tài khoản">
+                            Đổi mật khẩu
+                            <i class="fa fa-key"></i>
+                        </a>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(profile => Model.Email)
+                        @Html.TextBoxFor(profile => Model.Email, new {@class = "form-control"})
+                        @Html.ValidationMessageFor(profile => Model.Email)
+                    </div>
+                    <button type="submit" class="btn btn-success" name="Save" value="true">Lưu lại</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

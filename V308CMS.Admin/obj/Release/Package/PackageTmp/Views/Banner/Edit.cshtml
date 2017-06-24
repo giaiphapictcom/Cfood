@@ -1,0 +1,13 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@model V308CMS.Admin.Models.BannerModels
+@{
+    ViewBag.Title = "Cập nhật Banner";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+<div class="panel panel-primary">
+    <div class="panel-body">
+        <form method="post" role="form" action="@Url.BannerEditUrl()" enctype="multipart/form-data">
+            @Html.Partial("_BannerForm", Model)
+        </form>
+    </div>
+</div>

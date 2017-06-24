@@ -1,0 +1,358 @@
+﻿@using V308CMS.Admin.Helpers.UI
+@using V308CMS.Admin.Helpers.Url
+@model V308CMS.Admin.Models.OrderModels
+@{
+    var listStatus = (List<SelectListItem>)ViewBag.ListStatus;
+}
+<div class="container">
+   @Html.HiddenFor(order => order.Id)
+    <div class="row">
+        @Html.ValidationSummary(true)
+        @foreach (ModelState modelState in ViewData.ModelState.Values)
+        {
+            foreach (ModelError error in modelState.Errors)
+            {
+                <p>@error.ErrorMessage</p>
+            }
+        }
+        <div>
+            <ul class="nav nav-tabs col-lg-12" role="tablist">
+                <li class="active"><a href="#order_main" role="tab" data-toggle="tab">Đơn hàng</a></li>
+                <li class=""><a href="#order_billing" role="tab" data-toggle="tab">Hóa đơn</a></li>
+                <li class=""><a href="#order_ship" role="tab" data-toggle="tab">Thông tin ship</a></li>
+                <li class=""><a href="#order_product" role="tab" data-toggle="tab">Sản phẩm</a></li>
+                <li class=""><a href="#order_note" role="tab" data-toggle="tab">Ghi chú</a></li>
+            </ul>
+        </div>
+        <div class="clearfix"></div>
+        <div class="Product_Content tab-content">
+            <div id="order_main" class="tab-pane panel panel-default active">
+                <fieldset>
+                    <div class="col-lg-12 form-group margin50">
+                        <div class="col-md-1">
+                            <label class="col-lg-2">
+                                Trạng thái
+                            </label>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-group input-group-short">
+                                <div class="input-group-text">
+                                    <strong style="margin-top:5px">
+                                        <div class="form-text-row">
+                                            @Model.Status.ToOrderStateText()
+                                        </div>
+                                    </strong>
+
+                                </div>
+                                <div class="input-group-btn">
+                                    <button type="button" name="cancelorder" id="cancelorder" class="btn btn-danger" style="margin-right: 3px;" data-toggle="modal" data-target="#cancelorder-action-confirmation">
+                                        Hủy đơn hàng
+                                    </button>
+                                    <div id="cancelorder-action-confirmation" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="cancelorder-action-confirmation-title">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">×</span>
+                                                    </button>
+                                                    <h4 class="modal-title" id="cancelorder-action-confirmation-title">Bạn chắc chắn hủy đơn hàng này ?</h4>
+                                                </div>                                                
+                                                <div class="modal-footer">
+                                                    <button type="submit" id="cancelorder-action-confirmation-submit-button" class="btn btn-primary pull-right" name="cancelorder">
+                                                        Đồng ý
+                                                    </button>
+                                                    <span style="margin-right: 5px;" class="btn btn-default pull-right margin-r-5" data-dismiss="modal">Hủy bỏ</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="submit" name="btnChangeOrderStatus" onclick="toggleChangeOrderStatus(true);return false;" id="btnChangeOrderStatus" class="btn btn-primary">
+                                        Thay đổi trạng thái
+                                    </button>
+                                    <div id="pnlChangeOrderStatus" style="margin-top: 3px; display: none;">
+                                        @Html.DropDownListFor(news => Model.Status, listStatus, new
+                                        {
+                                           @class = "form-control"
+                                        })
+                                        <button type="button" name="" id="btnSaveOrderStatus" class="btn btn-primary" style="margin-left: 3px" data-toggle="modal" data-target="#btnSaveOrderStatus-action-confirmation">
+                                            Lưu
+                                        </button>
+                                        <div id="btnSaveOrderStatus-action-confirmation" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="btnSaveOrderStatus-action-confirmation-title">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                        <h4 class="modal-title" id="btnSaveOrderStatus-action-confirmation-title">Bạn chắc chắn muốn thay đổi trạng thái của đơn hàng này ?</h4>
+                                                    </div>                                                   
+                                                    <div class="modal-footer">
+                                                        <button type="submit" id="btnSaveOrderStatus-action-confirmation-submit-button" class="btn btn-primary pull-right" name="btnSaveOrderStatus">
+                                                            Đồng ý
+                                                        </button>
+                                                        <span style="margin-right: 5px;" class="btn btn-default pull-right margin-r-5" data-dismiss="modal">Hủy</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <script>
+                                            $(document).ready(function () {
+                                                $('#btnSaveOrderStatus').attr("data-toggle", "modal").attr("data-target", "#btnSaveOrderStatus-action-confirmation");
+                                                $('#btnSaveOrderStatus-action-confirmation-submit-button').attr("name", $("#btnSaveOrderStatus").attr("name"));
+                                                $("#btnSaveOrderStatus").attr("name", "");
+                                                if ($("#btnSaveOrderStatus").attr("type") == "submit") $("#btnSaveOrderStatus").attr("type", "button");
+                                            });
+                                        </script>
+
+                                        <button type="submit" name="btnCancelOrderStatus" onclick="toggleChangeOrderStatus(false);return false;" id="btnCancelOrderStatus" class="btn bg-teal" style="margin-left: 3px">
+                                            Hủy
+                                        </button>
+                                        <div class="input-group-btn-hint">
+                                            <em>This option is only for advanced users (not recommended to change manually). All appropriate actions (such as inventory adjustment, sending notification emails, reward points, gift card activation/deactivation, etc) should be done manually in this case.</em>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-12 form-group">
+                        <div class="col-md-1">
+                            @Html.LabelFor(order => order.Id, new { @class = "col-lg-2" })
+                        </div>
+                        <div class="col-lg-4">
+                            @Html.DisplayFor(order => order.Id, new { @class = "form-control name" })
+                        </div>
+                    </div>
+                    <div class="col-lg-12 form-group">
+                        <div class="col-md-1">
+                            @Html.LabelFor(order => order.FullName, new { @class = "col-lg-2" })
+                        </div>
+                        <div class="col-lg-4">
+                            @Html.DisplayFor(order => order.FullName, new { @class = "form-control name" })
+                        </div>
+                    </div>
+                    <div class="col-lg-12 form-group">
+                        <div class="col-md-1">
+                            @Html.LabelFor(order => order.Price, new { @class = "col-lg-2" })
+                        </div>
+                        <div class="col-lg-4">
+                            @Html.DisplayFor(order => order.Price, new { @class = "form-control name" })
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div id="order_billing" class="tab-pane ">
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <div class="col-md-9">
+                                    <table class="table table-hover table-bordered" style="max-width: 400px;">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    Khách hàng
+                                                </td>
+                                                <td>
+                                                    @Model.FullName
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Số điện thoại
+                                                </td>
+                                                <td>
+                                                    @Model.Phone
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Địa chỉ
+                                                </td>
+                                                <td>
+                                                    @Model.Address
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>                          
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div id="order_ship" class="tab-pane">
+                <div class="tab-pane active" id="tab-shipping-info">
+                    <div class="panel-group">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <div class="col-md-9">
+                                        <img alt="google maps" src="/Content/images/google-maps.gif">
+                                        <a href="http://maps.google.com/maps?f=q&amp;hl=vi&amp;ie=UTF8&amp;oe=UTF8&amp;geocode=&amp;q=@(Model.Address.Replace(" ","+"))" style="margin-bottom: 10px;" target="_blank">Xem địa chỉ trên Google map</a>
+
+                                        <table class="table table-hover table-bordered" style="max-width: 400px;">
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        Họ tên
+                                                    </td>
+                                                    <td>
+                                                        @Model.FullName
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Số điện thoại
+                                                    </td>
+                                                    <td>
+                                                        @Model.Phone
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Địa chỉ
+                                                    </td>
+                                                    <td>
+                                                        @Model.Address
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="order_product" class="tab-pane">
+                @if (Model.OrderDetail != null && Model.OrderDetail.Any())
+                {
+                    <div class="panel-group">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <div class="col-md-12" style="overflow-x: auto;">
+                                        <table class="table table-hover table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        Id
+                                                    </th>
+                                                    <th>
+                                                        Tên
+                                                    </th>
+                                                    <th>
+                                                        Đơn giá
+                                                    </th>
+                                                    <th>
+                                                        Số lượng
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var product in Model.OrderDetail)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            @product.item_id
+                                                        </td>
+                                                        <td>
+                                                            @product.item_name
+                                                        </td>
+                                                        <td>
+                                                            @product.item_price
+                                                        </td>
+                                                        <td>
+                                                            @product.item_qty
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div id="order_note" class="tab-pane">
+                <div class="tab-pane" id="tab-order-notes">
+                    <div class="panel-group">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                Ghi chú
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <div class="col-md-9">
+                                        @Html.TextAreaFor(order => order.Detail, new { @class = "form-control", cols = "20", rows = "4", placeholder = "Ghi chú về đơn hàng" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-9">
+                                        <button id="btnUpdateDetail" style="margin-top: 10px" class="btn btn-primary">
+                                            Lưu lại
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        toggleChangeOrderStatus(false);
+        $("#btnUpdateDetail").click(function (e) {
+            e.preventDefault();
+            $.post("@Url.ProductOrderUpdateDetailUrl()", { id: $("input[name='Id']").val(), detail : $("textarea[name='Detail']").val() }, function(result) {
+               if (result.code === "not_exists") {
+                   toastr.error('Không tìm thấy đơn hàng cần cập nhật');
+                   return false;
+               }
+                return true;
+            });
+        });
+        $("#cancelorder-action-confirmation-submit-button").click(function (e) {            
+            e.preventDefault();
+            $.post("@Url.ProductOrderCancelUrl()", { id: $("input[name='Id']").val() }, function(result) {
+                if (result.code === "not_exists") {
+                    toastr.error('Không tìm thấy đơn hàng cần hủy');
+                    return false;
+                }
+                location.reload();
+                return true;
+
+            });
+        });
+        $("#btnSaveOrderStatus-action-confirmation-submit-button").click(function(e) {
+            e.preventDefault();
+            $.post("@Url.ProductOrderChangeStatusUrl()", { id: $("input[name='Id']").val(), status: $("select[name='Status']").val() }, function (result) {
+                if (result.code === "not_exists") {
+                    toastr.error('Không tìm thấy đơn hàng cần thay đổi trạng thái');
+                    return false;
+                }
+                location.reload();
+                return true;
+
+            });
+        });
+    });
+    function toggleChangeOrderStatus(editmode) {
+        if (editmode) {
+            $('#pnlChangeOrderStatus').show();
+            $('#btnChangeOrderStatus').hide();
+        } else {
+            $('#pnlChangeOrderStatus').hide();
+            $('#btnChangeOrderStatus').show();
+        }
+    }
+</script>

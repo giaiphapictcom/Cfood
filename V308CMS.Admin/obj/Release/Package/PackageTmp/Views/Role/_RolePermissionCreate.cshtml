@@ -1,0 +1,57 @@
+﻿@using V308CMS.Admin.Helpers
+@model V308CMS.Admin.Models.RoleModels
+@{
+ var listPermission = (List<ControllerActionItem>)ViewBag.ListPermission;
+}
+<div class="panel panel-green">
+    <div class="panel-heading">
+        Phân quyền Nhóm tài khoản       
+        <input type="checkbox" name="AllPermission" id="AllPermission" title="Tất cả các quyền"/>
+    </div>
+    <div class="panel-body">
+        @if (listPermission != null && listPermission.Count > 0)
+        {
+            foreach (var permission in listPermission)
+            {
+                <div class="col-lg-2">
+                    <div class="form-group">
+                        <label>
+                            @permission.ControllerItem.Name
+                            <input title="Tất cả các quyền thuộc mục @permission.ControllerItem.Name" class="check_all" type="checkbox" id="@(permission.ControllerItem.Code.ToLower())_all" name="@(permission.ControllerItem.Code)PermissionAll" value="@permission.ControllerItem.Value"/>
+                        </label>
+                        @if (permission.ListAction != null && permission.ListAction.Count > 0)
+                        {
+                            foreach (var action in permission.ListAction)
+                            {
+                                <div class="checkbox">
+                                    <input id="@(string.Format("{0}_{1}", permission.ControllerItem.Code, action.Code))" name="@(permission.ControllerItem.Code)Permission" type="checkbox" value="@action.Value" class="check_item">
+                                    <label>
+                                        @action.Name
+                                    </label>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            }
+
+        }
+
+
+    </div>
+</div>
+<script type="text/javascript">
+    $(function() {
+        $('.check_all').on('change', function () {
+            var groupName = $(this).prop('name').replace('All', '');
+            $(".check_item[name='" + groupName + "']").prop('checked', $(this).is(":checked"));
+        });
+        $('.check_item').change(function () {
+            $(this).prop('checked', $(this).is(":checked"));
+        });
+        $('#AllPermission').change(function () {
+            $(this).val($(this).val() == 1 ? 0 : 1);
+            $('.check_all').trigger('click');
+        });
+    })
+</script>

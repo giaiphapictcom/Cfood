@@ -1,0 +1,88 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@using V308CMS.Admin.Models.UI
+@model V308CMS.Admin.Models.BannerModels
+ @{
+     var listPosition = (List<SelectListItem>)ViewBag.ListPosition;
+     var listSite = (List<SelectListItem>)ViewData["ListSite"];
+}
+@Html.HiddenFor(menu => Model.Id)
+@Html.AntiForgeryToken()
+<div class="row">
+    @Html.ValidationSummary(true)
+    <div class="col-lg-6">
+        <div class="form-group">
+            @Html.LabelFor(banner => banner.Site)
+            @Html.DropDownListFor(banner => banner.Site, listSite, "Chọn Website", new
+           {
+               @class = "form-control",
+               placeholder = "Chọn Website"
+           })
+            @Html.ValidationMessageFor(banner => banner.Site)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(banner => banner.Name)
+            @Html.TextBoxFor(banner => banner.Name, new {@class = "form-control", placeholder = "Nhập tên"})
+            @Html.ValidationMessageFor(banner => banner.Name)
+        </div>
+        <div class="form-group">
+            <label for="@Model.Name">@(!string.IsNullOrWhiteSpace(Model.ImageUrl) ? "Chọn ảnh khác" : "Chọn ảnh")</label>
+        </div>
+        @Html.Partial("UI/_ImageSelectPreview", new ImageSelectPreviewModels
+        {
+            Id = Model.Id,
+            Name = "Image",
+            ImageUrl = Model.ImageUrl,
+            ImageUrlHiddenName = "ImageUrl",
+            AutoGenerateLabel = false
+        })
+        <div class="form-group">
+            @Html.LabelFor(banner => banner.Description)
+            @Html.TextBoxFor(banner => banner.Description, new {@class = "form-control", placeholder = "Nhập nội dung mô tả"})
+            @Html.ValidationMessageFor(banner => banner.Description)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(brand => brand.Position)
+            @Html.DropDownListFor(banner => banner.Position, listPosition, new
+            {
+                @class = "form-control",
+                placeholder = "Vị trí"
+            })
+            @Html.ValidationMessageFor(banner => banner.Position)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(banner => banner.Width)
+            @Html.TextBoxFor(banner => banner.Width, new {@class = "form-control", placeholder = "Chiều rộng"})
+            @Html.ValidationMessageFor(banner => banner.Width)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(banner => banner.Height)
+            @Html.TextBoxFor(banner => banner.Height, new {@class = "form-control", placeholder = "Chiều cao"})
+            @Html.ValidationMessageFor(banner => banner.Height)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(banner => banner.StartDate)
+            @Html.TextBoxFor(banner => banner.StartDate, new {@class = "date form-control", placeholder = "Ngày bắt đầu hiển thị"})
+            @Html.ValidationMessageFor(banner => banner.StartDate)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(banner => banner.EndDate)
+            @Html.TextBoxFor(banner => banner.EndDate, new {@class = "date form-control", placeholder = "Ngày kết thúc hiển thị"})
+            @Html.ValidationMessageFor(banner => banner.EndDate)
+        </div>
+        <div class="form-group">
+            <div class="checkbox">
+                @Html.CheckBoxFor(category => category.Status, new {@checked = (Model.Status ? "checked" : "")})
+                @Html.LabelFor(category => category.Status)
+            </div>
+        </div>
+        @Html.Partial("UI/_FormAction")
+        <a href="@Url.BannerIndexUrl()" title="Danh sách Banner" class="btn btn-link">Danh sách</a>
+    </div>
+    
+</div>
+<script type="text/javascript">
+    $(function() {
+        $('.date').datetimepicker({ format: 'MM/DD/YYYY' });
+    });
+</script>

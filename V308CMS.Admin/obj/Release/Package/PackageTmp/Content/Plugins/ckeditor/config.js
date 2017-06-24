@@ -17,4 +17,5 @@ CKEDITOR.editorConfig = function( config ) {
     config.filebrowserFlashUploadUrl = '/Content/Plugins/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash';
     config.filebrowserWindowWidth = '1000';
     config.filebrowserWindowHeight = '700';
+    config.extraPlugins = 'youtube';
 };

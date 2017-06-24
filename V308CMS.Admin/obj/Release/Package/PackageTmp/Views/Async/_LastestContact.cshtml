@@ -1,0 +1,51 @@
+﻿@using V308CMS.Admin.Helpers
+@using V308CMS.Admin.Helpers.Url
+@using V308CMS.Common
+@model List<V308CMS.Data.Contact>
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">
+            <i class="fa fa-book"></i>
+            Liên hệ
+            <a href="@Url.ContactIndexUrl()" class="btn btn-xs btn-info btn-flat margin-l-10">Xem thêm</a>
+        </h3>
+    </div>
+    @if (Model.Any())
+    {<div class="box-body" style="display: block;">
+        <div class="k-grid k-widget">
+            <table>              
+                <thead class="k-grid-header">
+                    <tr>
+                        <th class="w50-column k-header">#</th>
+                        <th class="w250-column k-header">Email</th>
+                        <th class="w200-column k-header">SĐT</th>
+                        <th class="w500-column k-header">Tin nhắn</th>
+                        <th class="w250-column k-header">Ngày gửi</th>
+                        <th style="text-align: center" class="w100-column k-header">Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @for (int i = 0, total = Model.Count; i < total; i++)
+                {
+                    var contact = Model[i];
+                    <tr>
+                        <td>@(i+1)</td>
+                        <td>@contact.Email</td>
+                        <td>@contact.Phone</td>
+                        <td>@contact.Message.ToTitle()</td>
+                        <td>@contact.CreatedDate.ToDdmmyyyy()</td>
+                        <td style="text-align: center" role="gridcell">
+                            <a class="btn btn-xs btn-default" href="@Url.ContactEditUrl(new {id = contact.ID})">
+                                <i class="fa fa-eye"></i>Chi tiết
+                            </a>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    }
+    
+</div>

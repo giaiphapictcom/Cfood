@@ -1,4 +1,5 @@
-﻿#UpdateProgress1 {
+﻿
+#UpdateProgress1 {
     width:100%;
     height:100%;
     position:absolute;
@@ -13,8 +14,134 @@
     opacity:0.3;
 }
 .form-loading {
-    background:url(/Images/loading-tlr.gif) center center no-repeat;
+    background:url(/Content/Images/loading-tlr.gif) center center no-repeat;
     width:100%;
     height:100%;
     position:absolute;
+}
+.image-brand {
+    width: 80px;
+    height: 80px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    
+}
+.image-product {
+    width: 100px;
+    height: 100px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    
+}
+
+.Product_Button
+{
+    padding:20px;
+    border:1px solid #fff;
+}
+.margin50{
+    margin-top:50px
+}
+.productbtn:after {
+    font-family: "Glyphicons Halflings";
+    content: "\e114";
+    float: right;
+    margin-left: 15px;
+  }
+  /* Icon when the collapsible content is hidden */
+  .productbtn.collapsed:after {
+    content: "\e080";
+  }
+  .width450
+  {
+      width:450px
+  }
+  .margin50 {
+    margin-top:50px;   
+}
+input[type=radio], input[type=checkbox]
+{
+    margin:4px !important;
+}
+.dimentions-width, .dimentions-height
+{
+    width:90%;
+    display:initial;
+}
+.btn-colorselector {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-color: #DDD;
+  vertical-align: middle;
+  border-radius: 0;
+}
+.gallery
+{
+    display: inline-block;
+    margin-top: 20px;
+}
+.blur {
+    -webkit-filter: blur(4px)
+}
+.btn-active {
+    background-color:#5cb85c;color:#FFFFFF;padding: 5px;border-radius: 5px;width: 50px;
+}
+.btn-lock {
+    background-color:#d9534f;color:#FFFFFF;padding: 5px;border-radius: 5px;width: 50px;
+}
+
+table td .form-group {
+    margin-bottom: 0;
+    margin-top: 2px;
+}
+.table-bordered {
+    border-collapse: separate;
+    border-spacing: 0;
+    border-color: #c5c5c5;
+    border-left: none;
+}
+.table-bordered > thead > tr > th, .table-bordered > tbody > tr > th,
+.table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td,
+.table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > td {
+    border-color: #c5c5c5;
+    border-style: solid;
+    border-width: 0 0 0 1px;
+}
+.table-bordered > thead > tr > th, .table-bordered > tbody > tr > th,
+.table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td {
+    text-align: left;
+    overflow: hidden;
+    border-style: solid;
+    border-width: 0 0 1px 1px;
+    padding: .5em .6em .4em .6em;
+    font-weight: normal;
+    white-space: normal;
+    text-overflow: ellipsis;
+    background-image: none,-webkit-linear-gradient(top,rgba(255,255,255,.6) 0,rgba(255,255,255,.0) 100%);
+    background-image: none,-moz-linear-gradient(top,rgba(255,255,255,.6) 0,rgba(255,255,255,.0) 100%);
+    background-image: none,-o-linear-gradient(top,rgba(255,255,255,.6) 0,rgba(255,255,255,.0) 100%);
+    background-image: none,linear-gradient(to bottom,rgba(255,255,255,.6) 0,rgba(255,255,255,.0) 100%);
+    background-position: 50% 50%;
+    background-color: #e3e3e3;
+}
+.table-bordered tr:nth-child(even) {
+    background-color: #f5f5f5;
+}
+.table-bordered tr:hover td{
+    background-color: #e3e3e3;
+}
+table.text-center, table.text-center td, table.text-center th {
+    text-align: center;
+}
+.table-bordered {
+    border: 1px solid #f4f4f4;
+}
+.table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+}
+.table-bordered>thead>tr>th, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>tbody>tr>td, .table-bordered>tfoot>tr>td {
+    border: 1px solid #f4f4f4;
 }

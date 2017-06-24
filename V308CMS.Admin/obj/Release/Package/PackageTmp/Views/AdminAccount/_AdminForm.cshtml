@@ -1,0 +1,134 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@using V308CMS.Admin.Models.UI
+@using V308CMS.Data.Models
+@model V308CMS.Admin.Models.AdminModels
+@{
+    var listAccountType = (List<SelectListItem>)ViewBag.ListAccountType;
+    var listRole = (List<Role>)ViewBag.ListRole;
+}
+@Html.HiddenFor(user => Model.Id)
+@Html.AntiForgeryToken()
+<div class="row">
+    @Html.ValidationSummary(true)
+    <div class="col-lg-6">
+        <div class="form-group">
+            @Html.LabelFor(user => Model.UserName)
+            @if (Model.Id > 0)
+            {
+                @Html.TextBoxFor(user => Model.UserName, new
+                {
+                    @class = "form-control",
+                    placeholder = "Nhập tên tài khoản",
+                    @readonly = "readonly"
+                })
+            }
+            else
+            {
+                @Html.TextBoxFor(user => Model.UserName, new
+                {
+                     @class = "form-control",
+                     placeholder = "Nhập tên tài khoản"
+                
+               })
+            }
+
+            @Html.ValidationMessageFor(user => user.UserName)
+        </div>
+        <div class="form-group">
+            <label for="@Model.AvatarUrl">@(Model.Id > 0 ? "Ảnh đại diện hiện tại" : "Ảnh đại diện")</label>
+        </div>
+
+        @Html.Partial("UI/_ImageSelectPreview", new ImageSelectPreviewModels
+        {
+            Id = Model.Id,
+            Name = "AvatarFile",
+            ImageUrl = Model.AvatarUrl,
+            ImageUrlHiddenName = "AvatarUrl",
+            AutoGenerateLabel = false
+        })
+        @if (Model.Id == 0)
+        {
+            <div class="form-group">
+                @Html.LabelFor(admin => Model.Password)
+                @Html.PasswordFor(admin => Model.Password, new {@class = "form-control", placeholder = "Nhập mật khẩu"})
+                @Html.ValidationMessageFor(user => Model.Password)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(admin => Model.ConfirmPassword)
+                @Html.PasswordFor(admin => Model.ConfirmPassword, new {@class = "form-control", placeholder = "Nhập mật khẩu xác nhận"})
+                @Html.ValidationMessageFor(admin => Model.ConfirmPassword)
+            </div>
+        }
+        else
+        {
+            <div class="form-group" style="margin-top:10px">
+                <a class="btn btn-danger" href="@Url.AdminAccountChangePasswordUrl(new {id = Model.Id})" title="Đổi mật khẩu tài khoản @Model.UserName">
+                    Đổi mật khẩu
+                    <i class="fa fa-key"></i>
+                </a>
+            </div>
+        }
+        <div class="form-group">
+            @Html.LabelFor(admin => admin.FullName)
+            @Html.TextBoxFor(admin => admin.FullName, new {@class = "form-control", placeholder = "Nhập họ và tên"})
+            @Html.ValidationMessageFor(admin => admin.FullName)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(admin => admin.Email)
+            @Html.TextBoxFor(admin => admin.Email, new {@class = "form-control", placeholder = "Nhập địa chỉ Email"})
+            @Html.ValidationMessageFor(admin => admin.Email)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(admin => admin.Type)
+            @Html.DropDownListFor(admin => admin.Type, listAccountType, "Chọn Loại tài khoản", new
+            {
+                @class = "form-control",
+                placeholder = "Loại tài khoản"
+            })
+            @Html.ValidationMessageFor(admin => admin.Type)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(admin => admin.Role)
+            @Html.DropDownListFor(admin => admin.Role, new SelectList(listRole, "id", "name"), "Chọn Nhóm tài khoản", new
+            {
+                @class = "form-control",
+                placeholder = "Nhóm tài khoản"
+            })
+            @Html.ValidationMessageFor(admin => admin.Role)
+        </div>
+        <div class="form-group">
+            <div class="checkbox">
+                @Html.CheckBoxFor(admin => admin.Status, new {@checked = (Model.Status ? "checked" : "")})
+                @Html.LabelFor(admin => admin.Status)
+            </div>
+        </div>
+        @Html.Partial("UI/_FormAction")
+        <a href="@Url.AdminAccountIndexUrl()" title="Danh sách Màu" class="btn btn-link">Danh sách</a>
+
+    </div>
+
+</div>
+<script type="text/javascript">
+    $("input[name='UserName'").change(function () {
+        var id = $("input[name='id']").val();
+        if (id === '') {
+            var userName = $(this).val();
+            if (userName !== '') {
+                $.post('@Url.UserCheckEmailUrl()', { "userName": userName }, function(response) {
+                    if (response === 'exist') {
+                        if ($('#UserName-Exist-error').length > 0) {
+                            $('#UserName-Exist-error').text('Tài khoản này đã tồn tại trên hệ thống.');
+                            $('#UserName-Exist-error').show();
+                        } else {
+                            $("input[name='UserName'").after("<span class='field-validation-error' data-valmsg-for='UserName' data-valmsg-replace='true'><span id='UserName-Exist-error' class=''>Tài khoản này đã tồn tại trên hệ thống.</span></span>");
+                        }
+                    } else {
+                        $('#UserName-Exist-error').hide();
+                    }
+                });
+
+            }
+        }
+    });
+
+</script>

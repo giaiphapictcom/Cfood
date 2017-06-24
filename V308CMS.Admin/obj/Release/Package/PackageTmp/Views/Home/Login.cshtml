@@ -47,6 +47,12 @@
                                 @Html.PasswordFor(login => login.Password, new {placeholder = "Mật khẩu", @class = "form-control"})
                                 @Html.ValidationMessageFor(login => login.Password)
                             </div>
+                            <div class="checkbox">
+                                <label>                                 
+                                    @Html.CheckBoxFor(login=>login.Remember)
+                                    Ghi nhớ
+                                </label>
+                            </div>
                             <button name="btnLogin" class="btn btn-lg btn-success btn-block">Đăng nhập</button>
                         </fieldset>
                     </form>
@@ -60,6 +66,13 @@
 <script src="/Content/vendor/bootstrap/js/bootstrap.min.js"></script>
 <script src="/Content/vendor/metisMenu/metisMenu.min.js"></script>
 <script src="/Content/assets/js/sb-admin-2.js"></script>
+<script type="text/javascript">
+    $('#remember').change(function () {
+        $('#remember').prop('checked', $('#status').is(":checked"));
+        $("#remember").prop('value', $('#status').is(":checked") ? 1 : 0);
+
+    });
+</script>
 </body>
 
 </html>

@@ -1,41 +1,97 @@
 ﻿@using V308CMS.Admin.Helpers.Url
-@model V308CMS.Data.AccountPage
+@using V308CMS.Admin.Models.UI
+@using V308CMS.Common
+@using V308CMS.Data.Enum
+@model List<V308CMS.Data.Admin>
 @{
-    ViewBag.Title = "Tài khoản quản trị";
-    ViewBag.LinkBack = "<li><a href=" + Url.AdminAccountIndexUrl()+">Tài khoản quản trị</a> </li>";
-    ViewBag.MenuValue = 6;
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Danh sách tài khoản hệ thống";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
 }
-<div>
-    <div>
-        <div id="close" class="mheader">
-            <a href="@Url.AdminAccountCreateUrl()">
-                <img src="@Url.CreateNewImageUrl()" title="Thêm mới"/>
-            </a>
+@Html.Partial("UI/_AddNewButton", Url.AdminAccountCreateUrl())
+@if (Model.Any())
+{
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Tài khoản</th>
+                        <th>Ảnh</th>
+                        <th>Họ tên</th>
+                        <th>Email</th>
+                        <th>Quyền</th>
+                        <th>Loại</th>
+                        <th>Ngày cập nhật</th>
+                        <th style="text-align: center">Trạng thái</th>
+                        <th style="text-align: center">Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Count; i++)
+                {
+                    var user = Model[i];
+                        <tr>
+                            <td style="text-align: center">
+                                @(i + 1)
+                            </td>
+                            <td>
+                                <a title="Cập nhật thông tin tài khoản @user.FullName" class="btn btn-link" href="@Url.AdminAccountCreateUrl(new {user.ID})">
+                                    @user.UserName
+                                </a>
+                            </td>
+                            <td>
+                                <img class="image-brand img-circle" src="@user.Avatar.ToImageUrl()" alt="@user.FullName" />
+                            </td>
+
+                            <td>
+                                @user.FullName
+                            </td>
+                            <td>
+                                @user.Email
+                            </td>
+
+                            <td>
+                                @(user.RoleInfo != null?user.RoleInfo.Name:"")
+                            </td>
+                            <td>
+                                @(user.Type == (byte)AccountType.System ? "Hệ thống" : "Nhà cung cấp")
+                            </td>
+                            <td>
+                                @user.Date.ToDdmmyyyy()
+                            </td>
+                            <td style="text-align: center">
+                                <form id="frm-change-status" action="@Url.AdminAccountChangeStatusUrl()" method="POST">
+                                    <input type="hidden" value="@user.ID" name="id" />
+                                    <button class="@(user.Status == true ? "btn-active" : "btn-lock" )" onclick="return confirm('Bạn chắc chắn muốn thay đổi trạng thái tài khoản này?')">
+                                        <i class="fa  @(user.Status == true ? " fa-unlock" : "fa-lock" )"></i>
+                                    </button>
+                                </form>
+                            </td>
+                            <td style="width: 200px;text-align: center">
+                                @Html.Partial("UI/_EditButton", new ButtonModels
+                           {
+                               Id = string.Format("admin_{0}", user.ID),
+                               Href = Url.AdminAccountEditUrl(new { user.ID }),
+                               Title = "Cập nhật thông tin tài khoản " + user.FullName
+                           })
+                                @Html.Partial("UI/_DeleteForm", new DeleteFormModels
+                           {
+                               NameOfId = "Id",
+                               ValueOfId = user.ID,
+                               IsConfirm = true,
+                               Url = Url.AdminAccountDeleteUrl()
+                           })
+                                <a class="btn btn-circle btn-primary" title="Đổi mật khầu tài khoản" href="@Url.AdminAccountChangePasswordUrl(new { id= user.ID})">
+                                    <i class="fa fa-key"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
         </div>
-        <div style="margin-top:16px;">
-            <select name="pGroup" id="pGroupId" onchange="ThayDoiKieuNhomAdminAccount(@Model.Page);">
-                <option @V308CMS.Common.Ultility.CheckSeclectSelected(0, Model.TypeId) value="0">Tất cả</option>
-                <option @V308CMS.Common.Ultility.CheckSeclectSelected(1, Model.TypeId) value="1">Administrator</option>
-                <option @V308CMS.Common.Ultility.CheckSeclectSelected(2, Model.TypeId) value="2">Member</option>
-                <option @V308CMS.Common.Ultility.CheckSeclectSelected(3, Model.TypeId) value="3">Guest</option>
-            </select>
-        </div>
-        <hr />
-        <div style="width: 100%;">
-            <div class="RadGrid RadGrid_MetroTouch table table-striped table-bordered table-hover dataTable" tabindex="0">
-                @Html.Raw(@Model.Html)
-            </div>
-        </div>
-        <div class="wpmn_page_navi">
-            <a href="/Admin/AdminAccount?pPage=@Model.BackPage&pType=@Model.TypeId">Back</a>
-            <span class="current">@Model.Page</span>
-            <a href="/Admin/AdminAccount?pPage=@Model.NextPage&pType=@Model.TypeId">Next</a>
-        </div>
-        <hr />
+
     </div>
-    <div style="display: none;" role="status" aria-hidden="true">
-        <div class="area"></div>
-        <div class="form-loading"></div>
-    </div>
-</div>
+}
