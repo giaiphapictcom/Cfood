@@ -64,6 +64,7 @@ namespace V308CMS.Respository
                 if (menuConfig != null)
                 {
                     entities.MenuConfig.Remove(menuConfig);
+                    entities.SaveChanges();
                     return "ok";
                 }
                 return "not_exists";
@@ -90,6 +91,7 @@ namespace V308CMS.Respository
                     menuConfig.CreatedAt = config.CreatedAt;
                     menuConfig.UpdatedAt = config.UpdatedAt;
                     menuConfig.Order = config.Order;
+                    menuConfig.Target = config.Target;
                     entities.SaveChanges();
                     return "ok";
 

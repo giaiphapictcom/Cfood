@@ -1932,3 +1932,4 @@ UpgradeLog.XML
 V308CMS.Admin/bin/
 V308CMS.Static/image-cache/*.jpg
 V308CMS.Static/image-cache/affiliate/*
+.vs

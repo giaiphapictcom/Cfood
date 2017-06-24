@@ -783,9 +783,8 @@ namespace V308CMS.Data
         public List<News> GetList(int categoryId = 0, string site ="")
         {
 
-            var listNews = (from news in entities.News               
-                select news
-                );
+            var listNews = from news in entities.News select news;
+
             if (categoryId > 0)
             {
                 listNews = (from news in listNews
@@ -796,7 +795,8 @@ namespace V308CMS.Data
             if (site.Length > 0)
             {
                 listNews = (from news in listNews
-                    where news.Site == site                 
+                            join cate in entities.NewsGroups on news.TypeID equals cate.ID
+                            where cate.Site == site                 
                     select news
                     );
             }

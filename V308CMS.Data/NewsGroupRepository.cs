@@ -48,6 +48,9 @@ namespace V308CMS.Data
         {
             using (var entities = new V308CMSEntities())
             {
+                if (site.Length < 1) {
+                    site = "home";
+                }
                 return state ? 
                     (from category in entities.NewsGroups
                                 orderby category.Date.Value descending

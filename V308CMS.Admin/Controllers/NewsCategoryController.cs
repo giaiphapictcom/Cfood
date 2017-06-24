@@ -108,7 +108,10 @@ namespace V308CMS.Admin.Controllers
                     return View("Edit", category);
                 }
                 SetFlashMessage( string.Format("Sửa chuyên mục '{0}' thành công.",category.Name) );
-                return RedirectToAction("Index");
+
+                string actionReturn = category.Site == "affiliate" ? "affiliatecategory" : "Index";
+                return RedirectToAction(actionReturn);
+
             }
             AddViewData("ListCategory", BuildListCategory());
             return View("Edit", category);
@@ -125,18 +128,23 @@ namespace V308CMS.Admin.Controllers
                 "Chuyên mục không tồn tại trên hệ thống.");
             return RedirectToAction("Index");
 
-        }       
+        }
+
+
         [HttpPost]
         [CheckPermission(4, "Xóa")]
         [ActionName("Delete")]
         public ActionResult OnDelete(int id)
         {
+            var category = NewsGroupService.Find(id);
             var result = NewsGroupService.Delete(id);
             SetFlashMessage(result == "ok" ? 
                 "Xóa chuyên mục thành công." :
                 "Chuyên mục không tồn tại trên hệ thống.");
-            return RedirectToAction("Index");
+            string actionReturn = category.Site == "affiliate" ? "affiliatecategory" : "Index";
+            return RedirectToAction(actionReturn);
         }
+
 
         #region affiliate
         [CheckPermission(1, "Thêm mới")]

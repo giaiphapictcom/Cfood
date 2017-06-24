@@ -14,7 +14,7 @@
 @Html.Partial("UI/_AddNewButton", Url.NewsCreateUrl())
 <div class="row" style="margin-bottom: 2px">
     <form action="@Url.NewsIndexUrl()" method="get">
-        <div class="col-md-3">
+        <div class="col-md-6">
             @Html.Partial("UI/_MutilDropDownlist", new MutilDropDownlistModels
             {
                 Name = "CategoryId",
@@ -23,13 +23,7 @@
                 ParentId = Model.CategoryId
             })
         </div>
-         <div class="col-md-3">
-           @Html.DropDownListFor(news => Model.Site, listSite, "Tất cả", new
-          {
-              @class = "form-control",
-              placeholder = "Tất cả"
-          })
-        </div>
+        
         <div class="col-md-3" style="margin-left: -25px">
             <div class="input-group">
                 <span class="input-group-btn">

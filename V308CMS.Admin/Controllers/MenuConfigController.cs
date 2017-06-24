@@ -101,7 +101,9 @@ namespace V308CMS.Admin.Controllers
                 SetFlashMessage( string.Format("Cập nhật Menu '{0}' thành công.",config.Name) );
                 if (config.SaveList)
                 {
-                    return RedirectToAction("Index");
+                    string actionReturn = config.Site == "affiliate" ? "affiliatemenu" : "Index";
+                    return RedirectToAction(actionReturn);
+                    
                 }
                 AddViewData("ListState", DataHelper.ListEnumType<StateEnum>(), "ListSite", DataHelper.ListEnumType<SiteEnum>());
                 return View("Edit", config);
@@ -115,11 +117,14 @@ namespace V308CMS.Admin.Controllers
         [ActionName("Delete")]
         public ActionResult OnDelete(int id)
         {
-            var result = EmailConfigService.Delete(id);
+            var menu = MenuConfigService.Find(id);
+            string result = MenuConfigService.Delete(id);
             SetFlashMessage(result == Result.Ok ?
                 "Xóa Menu thành công." :
                 "Thông tin Menu không tồn tại trên hệ thống.");
-            return RedirectToAction("Index");
+
+            string actionReturn = menu.Site == "affiliate" ? "affiliatemenu" : "Index";
+            return RedirectToAction(actionReturn);
         }
 
 

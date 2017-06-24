@@ -34,7 +34,13 @@ namespace V308CMS.Admin.Controllers
         [CheckPermission(0, "Danh sách")]
         public ActionResult Index(int categoryId =0, string site ="")
         {
-            ViewBag.ListCategory = BuildListCategory();
+            if (categoryId > 0) {
+                var category = NewsService.LayDanhNhomTin(categoryId);
+                if (category != null) {
+                    site = category.Site;
+                }
+            }
+            ViewBag.ListCategory = BuildListCategory(site);
 
             ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
             if (site.Length < 1) {
@@ -48,6 +54,7 @@ namespace V308CMS.Admin.Controllers
                 Site = site,
                 Data = NewsService.GetList(categoryId, site)
             };
+
             return View("Index", model);
         }        
         [CheckPermission(1, "Thêm mới")]
@@ -63,6 +70,7 @@ namespace V308CMS.Admin.Controllers
             return View("Create", Model);
 
         }
+
         [HttpPost]
         [CheckPermission(1, "Thêm mới")]        
         [ValidateAntiForgeryToken]
@@ -135,7 +143,8 @@ namespace V308CMS.Admin.Controllers
                  ).ToList();
             return RedirectToAction(formView);
             //return View("Create", news);
-        }        
+        }
+
         [CheckPermission(2, "Sửa")]
         public ActionResult Edit(int id)
         {
@@ -168,6 +177,7 @@ namespace V308CMS.Admin.Controllers
             return View("Edit", newsEdit);
 
         }
+
         [HttpPost]
         [CheckPermission(2, "Sửa")]        
         [ActionName("Edit")]
@@ -209,7 +219,10 @@ namespace V308CMS.Admin.Controllers
                 SetFlashMessage( string.Format("Sửa tin tức '{0}' thành công.",news.Title) );
                 if (news.SaveList)
                 {
-                    return RedirectToAction("Index");
+                    var category = NewsService.LayTheLoaiTinTheoId(int.Parse(news.CategoryId.ToString()));
+                    string listViewAction = category.Site == "affiliate" ? "AffiliateIndex" : "Index";
+                    return RedirectToAction(listViewAction);
+                   
                 }
                 ViewBag.ListCategory = BuildListCategory();
                 ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
@@ -220,16 +233,24 @@ namespace V308CMS.Admin.Controllers
             ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
             return View("Edit");
         }        
+        
         [CheckPermission(3, "Xóa")]
         [ActionName("Delete")]
         [HttpPost]
         public ActionResult OnDelete(int id)
         {
+            var news = NewsService.Find(id);
+            var category = NewsService.LayTheLoaiTinTheoId(int.Parse(news.TypeID.ToString()));
+
             var result = NewsService.Delete(id);
             SetFlashMessage(result == Result.Ok ?
                 "Xóa tin tức thành công." : 
                 "Tin tức không tồn tại trên hệ thống.");
-            return RedirectToAction("Index");
+
+            
+            string listViewAction = category.Site == "affiliate" ? "AffiliateIndex" : "Index";
+            return RedirectToAction(listViewAction);
+            
         }
 
 
