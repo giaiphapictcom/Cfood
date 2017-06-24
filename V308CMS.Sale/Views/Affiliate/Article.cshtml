@@ -1,0 +1,37 @@
+﻿@model V308CMS.Data.NewsDetailPageContainer
+@using V308CMS.Data
+@using V308CMS.Common
+
+@{
+
+    Layout = "~/Views/" + @ViewContext.RouteData.Values["controller"] + "/Layout/Default.cshtml";
+    string PageTitle = Model.NewsItem != null ? Model.NewsItem.Title : Model.PageTitle;
+}
+@section header {
+    <title>@PageTitle</title>
+
+}
+
+
+
+<div class="shopify-section loginform">
+    <div class="container-block m-0">
+        <div class="container border-col">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12 article-home-full">
+                    <h3><span>@PageTitle</span></h3>
+                </div>
+                @if (Model.NewsItem != null)
+                {
+                    if (Model.NewsItem.Summary.Length > 0)
+                    {
+                        <div class="col-md-12">@Model.NewsItem.Summary</div>
+                    }
+                    <div class="col-md-12">@Model.NewsItem.Description</div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+@Html.Action("BlockNews12", "Theme")

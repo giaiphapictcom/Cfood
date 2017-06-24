@@ -4851,21 +4851,27 @@ div#rev_slider {
      background: #FFF;
      padding: 0 0.5rem;
 }
-.article-home-full h3::before {
+.article-home-full hr.redline{
     border-top: 4px solid #fd393d;
-    content: "";
-    margin: 0 auto;
-    position: absolute;
-    top: 40%;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    z-index: -1;
+}
+
+@media only screen and (min-width: 992px) {
+    .article-home-full hr.redline {
+        content: "";
+        margin: 0 auto;
+        position: absolute;
+        top: 45%;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        z-index: -1;
+    }
 }
 
 .testimonial {
     text-align: center;
+    display: block;
 }
 
 .testimonial .avatar img {
@@ -4914,14 +4920,19 @@ div#rev_slider {
 img.brandlogo {
     border: 1px solid #ddd;
     padding: 3px;
+    width:100%;
 }
 
 .category-listall {
     border: 1px solid #ddd;
     padding: 15px;
+    display: block;
 }
 .border-left-0 {
     border-left: 0px;
+}
+.border-right-0 {
+    border-right: 0px;
 }
 .category-listall img {
     width: 80px;

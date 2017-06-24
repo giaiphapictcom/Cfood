@@ -18,6 +18,7 @@
 .videos-thumb li:hover {
     color: #fd393d;
 }
+
 .videos-thumb li.selected::before  {
     content: "\f0d9";
     font-family: 'FontAwesome';
@@ -26,6 +27,12 @@
     left: -23px;
     top: -10%;
     color: #f2b21c;
+}
+
+@media only screen and (max-width: 768px) {
+    .videos-thumb li.selected::before {
+        display:none;
+    }
 }
 
 .bannerpreview div.img {
@@ -50,10 +57,7 @@
 .newsfooter {
     padding-bottom: 15px;
 }
-.newsfooter img{
-    border:1px solid #d5d5d5;
 
-}
 .newsfooter .content{
     text-indent: 15px;
 }

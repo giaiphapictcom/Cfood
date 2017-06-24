@@ -27,6 +27,7 @@ namespace V308CMS.Data.Models
         public DateTime? EndDate { get; set; }
        
         public string ImageUrl { get; set; }
+        public string Link { get; set; }
         public bool Status { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }

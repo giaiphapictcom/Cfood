@@ -9,7 +9,7 @@ namespace V308CMS.Respository
     public interface IBannerRespository
     {
         string ChangeStatus(int id);
-        List<Banner> GetList(byte position = 0, string site = "", bool withImg = false);
+        List<Banner> GetList(byte position = 0, string site = "", bool withImg = false, int limit=1);
     }
     public class BannerRespository: IBaseRespository<Banner>, IBannerRespository
     {
@@ -126,23 +126,12 @@ namespace V308CMS.Respository
         
         }
 
-        public List<Banner> GetList(byte position = 0,string site="",bool withImg = false)
+        public List<Banner> GetList(byte position = 0,string site="",bool withImg = false,int limit = 1)
         {
             var banners = new List<Banner>();
             using (var entities = new V308CMSEntities())
             {
-                //var items = position > 0 ?
-                //    (from banner in entities.Banner
-                //     where banner.Position == position && banner.Site == site.Trim()
-                //     orderby banner.UpdatedAt descending
-                //     select banner
-
-                //    ) : (from banner in entities.Banner
-                //         where banner.Site == site.Trim()
-                //         orderby banner.UpdatedAt descending
-                //         select banner
-
-                //    );
+    
                 var items =  from banner in entities.Banner
                      where banner.Position == position && banner.Site == site.Trim()
                      //orderby banner.UpdatedAt descending
@@ -154,8 +143,13 @@ namespace V308CMS.Respository
                             orderby banner.Order ascending
                             select banner;
                 }
-                if (items.Count() > 0) {
+                int count = items.Count();
+                if (count > 0) {
                     banners = items.ToList();
+                    if (limit > 0)
+                    {
+                        banners = items.Take(limit).ToList();
+                    }
                 }
             }
             return banners;

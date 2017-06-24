@@ -64,8 +64,8 @@ namespace V308CMS.Sale
             
 
             routes.MapRoute("NewsAboutUs", "ve-affiliate", new { Controller = "Affiliate", action = "News", NewsAlias = "ve-affiliate", PageTitle="Về Affiliate" });
-            
-            
+            routes.MapRoute("ArticleItemRoute", "{title}-n{id}.html", new { Controller = "Affiliate", action = "Article" }, new { id = @"\d+" });
+
 
             routes.MapRoute("LogoutRoute", "dang-xuat", new { Controller = "Partner", action = "Logout" });
             //routes.MapRoute("ProfileRoute", "profile.html", new { Controller = "Account", action = "ProfileUser" });

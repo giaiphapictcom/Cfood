@@ -1933,3 +1933,5 @@ V308CMS.Admin/bin/
 V308CMS.Static/image-cache/*.jpg
 V308CMS.Static/image-cache/affiliate/*
 .vs
+V308CMS.Static/image-cache/
+V308CMS.Sale/Content/thumb/

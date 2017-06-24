@@ -72,9 +72,16 @@ namespace V308CMS.Data
 
             public News GetById(int id, int type = 58)
             {
-               return (from p in entities.News
-                         where p.ID == id && type == 58
-                       select p).FirstOrDefault();
+            var article = from p in entities.News
+                          where p.ID == id
+                          select p;
+            if (type > 0) {
+                article = from p in entities.News
+                          where p.ID == id && p.TypeID == type
+                          select p;
+            }
+
+               return article.FirstOrDefault();
             }
             public News getFirstNewsWithType(int pId)
             {

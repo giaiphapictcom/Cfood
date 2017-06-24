@@ -1566,6 +1566,7 @@
     <Content Include="Views\Partner\LinkReport.cshtml" />
     <Content Include="Views\Partner\Orders.cshtml" />
     <Content Include="Views\Partner\OrderReport.cshtml" />
+    <Content Include="Views\Affiliate\Article.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
