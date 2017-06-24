@@ -23,10 +23,16 @@ namespace V308CMS.Data
     }
     public class ContactRepository: IContactRepository
     {
-       
-        public ContactRepository( )
+
+        private V308CMSEntities entities;
+ 
+   
+        public ContactRepository(V308CMSEntities _entities = null)
         {
-           
+            if (_entities == null) {
+                _entities = new V308CMSEntities();
+            }
+            this.entities = _entities;
         }
         public List<Contact> GetAll()
         {

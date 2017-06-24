@@ -10,8 +10,8 @@ namespace V308CMS.Admin.Controllers
     public abstract class BaseController : Controller
     {
         //protected virtual new CustomPrincipal User;
-        protected CustomPrincipal User;
-        
+        protected virtual new CustomPrincipal User => HttpContext.User as CustomPrincipal;
+
         protected BaseController()
         {
             NewsService = new NewsRepository();
