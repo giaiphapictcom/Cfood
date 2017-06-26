@@ -889,20 +889,30 @@ namespace V308CMS.Data
             if (newsItem != null)
             {
 
-                newsItem.Title = data.Title;
-                newsItem.TypeID = data.TypeID;
-                newsItem.Image = data.Image;
-                newsItem.Summary = data.Summary;
-                newsItem.Detail = data.Detail;
-                newsItem.Keyword = data.Keyword;
-                newsItem.Description = data.Description;
-                newsItem.Order = data.Order;
-                newsItem.Hot = data.Hot;
-                newsItem.Fast = data.Fast;
-                newsItem.Featured = data.Featured;
-                newsItem.Status = data.Status;
-                newsItem.Site = data.Site;
-                entities.SaveChanges();
+                
+                try
+                {
+                    newsItem.Title = data.Title;
+                    newsItem.TypeID = data.TypeID;
+                    newsItem.Image = data.Image;
+                    newsItem.Summary = data.Summary;
+                    newsItem.Detail = data.Detail;
+                    newsItem.Keyword = data.Keyword;
+                    newsItem.Description = data.Description;
+                    newsItem.Order = data.Order;
+                    newsItem.Hot = data.Hot;
+                    newsItem.Fast = data.Fast;
+                    newsItem.Featured = data.Featured;
+                    newsItem.Status = data.Status;
+                    newsItem.Site = data.Site;
+                    //newsItem.NewsGroup = LayNhomTinAn((int)data.TypeID);
+                    entities.SaveChanges();
+                }
+                catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+                {
+                    Console.Write(dbEx);
+                }
+                
                 return "ok";
             }
             return "not_exists";
