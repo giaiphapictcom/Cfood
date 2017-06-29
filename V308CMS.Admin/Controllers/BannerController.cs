@@ -22,7 +22,7 @@ namespace V308CMS.Admin.Controllers
         [CheckPermission(0, "Danh sách")]
         public ActionResult Index(byte position=0,string site="")
         {
-            return View("Index",BannerService.GetList(position,site));
+            return View("Index",BannerService.GetList(-1,site,false,-1));
         }
 
 
@@ -99,6 +99,7 @@ namespace V308CMS.Admin.Controllers
             Model.Site = "affiliate";
             return View("Create", Model);
         }
+
         [HttpPost]
         [CheckPermission(1, "Thêm mới")]
         [ActionName("affiliateCreate")]
@@ -129,6 +130,7 @@ namespace V308CMS.Admin.Controllers
             bannerEdit.EndDate = banner.EndDate;
             return View("Edit", bannerEdit);
         }
+
         [HttpPost]
         [CheckPermission(2, "Sửa")]
         [ActionName("Edit")]
@@ -157,7 +159,9 @@ namespace V308CMS.Admin.Controllers
                 SetFlashMessage(string.Format("Cập nhật Banner '{0}' thành công.", banner.Name));
                 if (banner.SaveList)
                 {
-                    return RedirectToAction("Index");
+                    string actionReturn = banner.Site == "affiliate" ? "affiliatebanner" : "Index";
+                    return RedirectToAction(actionReturn);
+                    
                 }
                 ViewBag.ListSite = DataHelper.ListEnumTypeSepecial<SiteEnum>();
                 ViewBag.ListPosition = DataHelper.ListEnumType<PositionEnum>();
@@ -167,16 +171,20 @@ namespace V308CMS.Admin.Controllers
             ViewBag.ListPosition = DataHelper.ListEnumType<PositionEnum>();
             return View("Edit", banner);
         }
+
         [HttpPost]
         [CheckPermission(3, "Xóa")]
         [ActionName("Delete")]
         public ActionResult OnDelete(int id)
         {
+            var banner = BannerService.Find(id);
             var result = BannerService.Delete(id);
             SetFlashMessage(result == Result.Ok ?
                 "Xóa banner thành công." :
                 "Banner không tồn tại trên hệ thống.");
-            return RedirectToAction("Index");
+
+            string actionReturn = banner.Site == "affiliate" ? "affiliatebanner" : "Index";
+            return RedirectToAction(actionReturn);
         }
 
         [HttpPost]
@@ -184,11 +192,13 @@ namespace V308CMS.Admin.Controllers
         [ActionName("ChangeStatus")]
         public ActionResult OnChangeStatus(int id)
         {
+            var banner = BannerService.Find(id);
             var result = BannerService.ChangeStatus(id);
             SetFlashMessage(result == Result.Ok ?
                 "Thay đổi trạng thái banner thành công." :
                 "Banner không tồn tại trên hệ thống.");
-            return RedirectToAction("Index");
+            string actionReturn = banner.Site == "affiliate" ? "affiliatebanner" : "Index";
+            return RedirectToAction(actionReturn);
         }
 
 

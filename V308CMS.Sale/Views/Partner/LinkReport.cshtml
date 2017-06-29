@@ -9,16 +9,11 @@
     <title>@PageTitle</title>
 
 }
-<h4>Link đã tạo</h4>
+<h4>Báo cáo Click</h4>
+
 <div class="row">
-    <div class="col-md-5">
-        <a href="/link/tao-moi" class="btn btn-green">Tạo link phân phối</a>
-    </div>
-    <div class="col-md-4">
-        <div class="input-group border-radius-0">
-            <input type="text" class="form-control" placeholder="Tìm kiếm" aria-describedby="tablesearch">
-            <span class="input-group-addon btn-green"><i class="fa fa-search"></i></span>
-        </div>
+    <div class="col-md-7 textright">
+        @Html.Action("BlockPagination", "Theme",new {ProductTotal=Model.LinkTotal})
 
     </div>
     <div class="col-md-3">
@@ -31,14 +26,6 @@
                 <option>Hiển thị : 100</option>
             </select>
         </div>
-    </div>
-
-</div>
-<hr />
-<div class="row">
-    <div class="col-md-10 textright">
-        @Html.Action("BlockPagination", "Theme",new {ProductTotal=Model.LinkTotal})
-
     </div>
     <div class="col-md-2 textright" style="margin-bottom: 15px;">
         <button type="button" class="btn btn-secondary border-radius-0">Xuất excel</button>

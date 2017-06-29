@@ -54,6 +54,7 @@ namespace V308CMS.Data
         private DateTime? _Date;
         private string _Salt;
         private string _Token;
+        private string _Site;
         private DateTime? _TokenExpireDate;
 
         private string _ForgotPasswordToken;
@@ -77,6 +78,7 @@ namespace V308CMS.Data
         public DateTime? Date { get { if (_Date == null) return new DateTime(); else return _Date; } set { if (_Date != value) { _Date = value; } } }     
         public string Salt { get { if (String.IsNullOrEmpty(_Salt)) return ""; else return _Salt; } set { _Salt = value; } }
         public string Token { get { if (String.IsNullOrEmpty(_Token)) return ""; else return _Token; } set { _Token = value; } }
+        public string Site { get { if (String.IsNullOrEmpty(_Site)) return ""; else return _Site; } set { _Site = value; } }
         public DateTime? TokenExpireDate { get { if (_TokenExpireDate == null) return new DateTime(); else return _TokenExpireDate; } set { if (_TokenExpireDate != value) { _TokenExpireDate = value; } } }
         public string ForgotPasswordToken { get { if (String.IsNullOrEmpty(_ForgotPasswordToken)) return ""; else return _ForgotPasswordToken; } set { _ForgotPasswordToken = value; } }
         public DateTime? ForgotPasswordTokenExpireDate { get { if (__ForgotPasswordTokenExpireDate == null) return new DateTime(); else return __ForgotPasswordTokenExpireDate; } set { if (__ForgotPasswordTokenExpireDate != value) { __ForgotPasswordTokenExpireDate = value; } } }
@@ -1547,24 +1549,28 @@ namespace V308CMS.Data
     public class Testimonial
     {
         private int _id;
+        private string _site;
         private string _taget;
         private string _fullname;
         private string _avartar;
         private string _mobile;
         private string _content;
         private int? _order;
-        private int? _status;
+        private bool _status;
 
         [Key]
         public int id { get { return _id; } set { _id = value; } }
+        public string site { get { if (String.IsNullOrEmpty(_site)) return ""; else return _site; } set { _site = value; } }
+
         public string taget { get { if (String.IsNullOrEmpty(_taget)) return ""; else return _taget; } set { _taget = value; } }
         public string fullname { get { if (String.IsNullOrEmpty(_fullname)) return ""; else return _fullname; } set { _fullname = value; } }
         public string avartar { get { if (String.IsNullOrEmpty(_avartar)) return ""; else return _avartar; } set { _avartar = value; } }
         public string mobile { get { if (String.IsNullOrEmpty(_mobile)) return ""; else return _mobile; } set { _mobile = value; } }
         public string content { get { if (String.IsNullOrEmpty(_content)) return ""; else return _content; } set { _content = value; } }
         public int? order { get { if (_order == null || _order < 0) return 0; else return _order; } set { if (_order != value) { if (_order < 0) _order = 0; else _order = value; } } }
-        public int? status { get { if (_status == null || _status < 0) return 0; else return _status; } set { if (_status != value) { if (_status < 0) _status = 0; else _status = value; } } }
+        public bool status { get {  return _status; } set {  _status = value; } }
 
+        
 
     }
     #endregion
@@ -1745,11 +1751,11 @@ namespace V308CMS.Data
         private string _Title;
         private string _Summary;
         private string _Content;
-        private DateTime? _StartDate;
-        private DateTime? _EndDate;
-        private int? _Status;
-        private DateTime? _Created;
-        private int? _CreatedBy;
+        private DateTime _StartDate;
+        private DateTime _EndDate;
+        private int _Status;
+        private DateTime _Created;
+        private int _CreatedBy;
 
         #endregion
         #region[Public Properties]
@@ -1761,11 +1767,11 @@ namespace V308CMS.Data
         public string title { get { if (String.IsNullOrEmpty(_Title)) return ""; else return _Title; } set { _Title = value; } }
         public string summary { get { if (String.IsNullOrEmpty(_Summary)) return ""; else return _Summary; } set { _Summary = value; } }
         public string content { get { if (String.IsNullOrEmpty(_Content)) return ""; else return _Content; } set { _Content = value; } }
-        public DateTime? start_date { get { if (_StartDate == null) return new DateTime(); else return _StartDate; } set { if (_StartDate != value) { _StartDate = value; } } }
-        public DateTime? end_date { get { if (_EndDate == null) return new DateTime(); else return _EndDate; } set { if (_EndDate != value) { _EndDate = value; } } }
-        public int? status { get { if (_Status == null || _Status < 0) return 0; else return _Status; } set { if (_Status != value) { if (_Status < 0) _Status = 0; else _Status = value; } } }
-        public DateTime? created { get { if (_Created == null) return new DateTime(); else return _Created; } set { if (_Created != value) { _Created = value; } } }
-        public int? created_by { get { if (_CreatedBy == null || _CreatedBy < 0) return 0; else return _CreatedBy; } set { if (_CreatedBy != value) { if (_CreatedBy < 0) _CreatedBy = 0; else _CreatedBy = value; } } }
+        public DateTime start_date { get { if (_StartDate == null) return new DateTime(); else return _StartDate; } set { if (_StartDate != value) { _StartDate = value; } } }
+        public DateTime end_date { get { if (_EndDate == null) return new DateTime(); else return _EndDate; } set { if (_EndDate != value) { _EndDate = value; } } }
+        public int status { get { if (_Status == null || _Status < 0) return 0; else return _Status; } set { if (_Status != value) { if (_Status < 0) _Status = 0; else _Status = value; } } }
+        public DateTime created { get { if (_Created == null) return new DateTime(); else return _Created; } set { if (_Created != value) { _Created = value; } } }
+        public int created_by { get { if (_CreatedBy == null || _CreatedBy < 0) return 0; else return _CreatedBy; } set { if (_CreatedBy != value) { if (_CreatedBy < 0) _CreatedBy = 0; else _CreatedBy = value; } } }
         #endregion
 
     }

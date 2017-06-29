@@ -1,4 +1,5 @@
-﻿@{
+﻿@using V308CMS.Sale.Helpers;
+@{
     Layout = "~/Views/Affiliate/Layout/Backend.cshtml";
     string PageTitle = "Trang quản trị";
 }
@@ -6,3 +7,210 @@
     <title>@PageTitle</title>
     
 }
+<div class="row dashboard">
+    <div class="col-md-4">
+        <h4>Công cụ kiếm tiền</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <a href="/link/tao-moi" class="btn btn-yellow">Tạo Link <br />bán hàng</a>
+            </div>
+
+            <div class="col-md-6">
+                <a href="/link" class="btn btn-yellow">Link <br />đã tạo</a>
+            </div>
+            <div class="col-md-6">
+                <a href="/baner/tao-mois" class="btn btn-yellow">Tạo <br />Banner</a>
+            </div>
+            <div class="col-md-6">
+                <a href="/tao-ma-giam-gia" class="btn btn-yellow">Tạo <br />Voucher</a>
+            </div>
+            <div class="col-md-12">
+                <a href="javascript:void(0)" class="btn btn-green pd-14">Tạo Web - Page</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <h4>Voucher</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <a href="/ma-giam-gia" class="btn btn-yellow">Danh sách <br />Voucher</a>
+            </div>
+
+            <div class="col-md-6">
+                <a href="javascript:void(0)" class="btn btn-yellow pd-14">Tạo Event</a>
+            </div>
+            <div class="col-md-6">
+                <a href="javascript:void(0)" class="btn btn-yellow">Voucher hết hạn</a>
+            </div>
+            <div class="col-md-6">
+                <a href="/tao-ma-giam-gia" class="btn btn-yellow">Tạo mã <br />Voucher</a>
+            </div>
+            <div class="col-md-6">
+                <a href="javascript:void(0)" class="btn btn-yellow">Top SP <br />Sale lớn</a>
+            </div>
+            <div class="col-md-6">
+                <a href="javascript:void(0)" class="btn btn-yellow">Đăng ký <br />CT KM</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <h4>Vinh Danh Affiliate</h4>
+        <div class="row">
+            <div class="col-md-12">
+                <a href="javascript:void(0)" class="btn btn-green pd-14">Vinh danh NPP xuất sắc</a>
+            </div>
+            <div class="col-md-12">
+                <a href="javascript:void(0)" class="btn btn-green pd-14">Top xuất sắc tháng</a>
+            </div>
+            <div class="col-md-12">
+                <a href="/chuong-trinh-thuc-day" class="btn btn-green pd-14">Chương trình thúc đẩy</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row dashboard">
+    <div class="col-md-4">
+        <h4>Báo cáo đơn hàng</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <a href="javascript:void(0)" class="btn btn-yellow pd-14">Từ link</a>
+            </div>
+            <div class="col-md-6">
+                <a href="javascript:void(0)" class="btn btn-yellow pd-14">Từ Voucher</a>
+            </div>
+            <div class="col-md-6">
+                <a href="javascript:void(0)" class="btn btn-yellow">Từ mạng <br />xã hội</a>
+            </div>
+            <div class="col-md-6">
+                <a href="javascript:void(0)" class="btn btn-yellow">Không <br />xác định</a>
+            </div>
+            <div class="col-md-12">
+                <a href="javascript:void(0)" class="btn btn-green pd-14">Tổng hợp đơn hàng</a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-4">
+        <h4>Báo cáo Click</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <a href="javascript:void(0)" class="btn btn-yellow pd-11">Tổng số Click</a>
+            </div>
+            <div class="col-md-6">
+                <a href="javascript:void(0)" class="btn btn-yellow">Tổng số <br />mua hàng</a>
+            </div>
+            <div class="col-md-6">
+                <a href="javascript:void(0)" class="btn btn-yellow">Tỉ lệ <br />mua hàng</a>
+            </div>
+            <div class="col-md-6">
+                <a href="javascript:void(0)" class="btn btn-yellow pd-14">Nguồn click</a>
+            </div>
+            <div class="col-md-12">
+                <a href="javascript:void(0)" class="btn btn-green pd-14">Biểu đồ tăng trưởng</a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-4">
+        <h4>Báo cáo Vận đơn</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <a href="javascript:void(0)" class="btn btn-yellow pd-14">Chờ hàng</a>
+            </div>
+            <div class="col-md-6">
+                <a href="javascript:void(0)" class="btn btn-yellow pd-14">Đã gửi</a>
+            </div>
+            <div class="col-md-6">
+                <a href="javascript:void(0)" class="btn btn-yellow pd-14">Hoàn thành</a>
+            </div>
+            <div class="col-md-6">
+                <a href="javascript:void(0)" class="btn btn-yellow pd-14">Chuyển hoàn</a>
+            </div>
+            <div class="col-md-12">
+                <a href="javascript:void(0)" class="btn btn-green pd-14">Tra cứu mã vận đơn</a>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<div class="row dashboard">
+    <div class="col-md-4">
+        <h4>Hỗ trợ 24/7</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <a href="/huong-dan" class="btn btn-yellow pd-14">Hướng dẫn</a>
+            </div>
+            <div class="col-md-6">
+                <a href="/quy-dinh" class="btn btn-yellow pd-14">Quy định</a>
+            </div>
+            <div class="col-md-6">
+                <a href="/chinh-sach" class="btn btn-yellow pd-14">Chính sách</a>
+            </div>
+            <div class="col-md-6">
+                <a href="/huong-dan" class="btn btn-yellow pd-14">Hợp đồng</a>
+            </div>
+            <div class="col-md-12">
+                <a href="/ho-tro" class="btn btn-green pd-14">Yêu cầu hỗ trợ</a>
+            </div>
+
+            <div class="col-md-12">
+                <a href="javascript:void(0)" class="btn btn-green pd-14">Kiến nghị lãnh đạo</a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-4">
+        <h4>Báo cáo thu nhập</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <a href="javascript:void(0)" class="btn btn-yellow">Tổng mức <br />hoa hồng</a>
+            </div>
+            <div class="col-md-6">
+                <a href="javascript:void(0)" class="btn btn-yellow">Hoa hồng <br />chưa TT</a>
+            </div>
+            <div class="col-md-6">
+                <a href="javascript:void(0)" class="btn btn-yellow">Hoa hồng <br />đã TT</a>
+            </div>
+            <div class="col-md-6">
+                <a href="javascript:void(0)" class="btn btn-yellow">Hoa hồng <br />chưa xác định</a>
+            </div>
+            <div class="col-md-12">
+                <a href="javascript:void(0)" class="btn btn-green pd-14">Tổng HH trong tháng</a>
+            </div>
+
+            <div class="col-md-12">
+                <a href="javascript:void(0)" class="btn btn-green pd-14">Sơ đồ hoa hồng theo ngày</a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-4">
+        <h4>Doanh số theo ngày</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <a href="javascript:void(0)" class="btn btn-yellow pd-14">Tổng DS <br />khách cũ</a>
+            </div>
+            <div class="col-md-6">
+                <a href="javascript:void(0)" class="btn btn-yellow pd-14">Tổng DS <br />khách mới</a>
+            </div>
+            <div class="col-md-6">
+                <a href="javascript:void(0)" class="btn btn-yellow pd-14">Top <br />khách VIP</a>
+            </div>
+            <div class="col-md-6">
+                <a href="javascript:void(0)" class="btn btn-yellow pd-14">Sơ đồ tăng <br />giảm DS</a>
+            </div>
+            <div class="col-md-12">
+                <a href="javascript:void(0)" class="btn btn-green pd-14">Doanh số trong ngày<br />Có thể xem đơn hàng theo ngày</a>
+            </div>
+        </div>
+    </div>
+
+
+</div>

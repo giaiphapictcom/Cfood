@@ -36,6 +36,14 @@
                          @Html.Action("AdminMenu", "Theme")
                     </div>
                     <div class="col-md-9 col-sm-9 col-xs-12 mainbody">
+                        @using V308CMS.Sale.Helpers
+                        @if (!string.IsNullOrWhiteSpace(ViewContext.GetFlashMessage()))
+                        {
+                            <div class="alert alert-dismissable alert-success" style="margin-top: 15px;">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                @ViewContext.GetFlashMessage()
+                            </div>
+                        }
                         @RenderBody()
                     </div>
                      

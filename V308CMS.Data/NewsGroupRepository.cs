@@ -51,15 +51,22 @@ namespace V308CMS.Data
                 if (site.Length < 1) {
                     site = "home";
                 }
-                return state ? 
-                    (from category in entities.NewsGroups
-                                orderby category.Date.Value descending
-                                where category.Status == true && category.Site == site
-                                select category).ToList() :
-                   (from category in entities.NewsGroups
-                    where category.Site == site
-                    orderby category.Date.Value descending
-                    select category).ToList();
+
+                var query = entities.NewsGroups.Where(c=>c.Site == site);
+                if (state) {
+                    query = query.Where(c => c.Status == true);
+                }
+
+                return query.OrderBy(c => c.Number).ToList();
+                //return state ? 
+                //    (from category in entities.NewsGroups
+                //                orderby category.Date.Value descending
+                //                where category.Status == true && category.Site == site
+                //                select category).ToList() :
+                //   (from category in entities.NewsGroups
+                //    where category.Site == site
+                //    orderby category.Number.Value ascending
+                //    select category).ToList();
             }
            
         }
@@ -92,7 +99,7 @@ namespace V308CMS.Data
            
         }
 
-        public string Insert(string site, string name, int parentId,int number, bool state, DateTime date)
+        public string Insert(string site, string name, string alias, int parentId,int number, bool state, DateTime date)
         {
             using (var entities = new V308CMSEntities())
             {
@@ -105,6 +112,7 @@ namespace V308CMS.Data
                     var newsCategory = new NewsGroups
                     {
                         Name = name,
+                        Alias = alias,
                         Site = site,
                         Parent = parentId,
                         Number = number,
@@ -142,7 +150,7 @@ namespace V308CMS.Data
             }
           
         }
-        public string Update(int id, string name, int parentId, int number, bool state, DateTime createdDate)
+        public string Update(int id, string name, string alias, int parentId, int number, bool state, DateTime createdDate)
         {
             using (var entities = new V308CMSEntities())
             {
@@ -152,10 +160,12 @@ namespace V308CMS.Data
                 if (newsCategory != null)
                 {
                     newsCategory.Name = name;
+                    newsCategory.Alias = alias;
                     newsCategory.Parent = parentId;
                     newsCategory.Number = number;
                     newsCategory.Status = state;
                     newsCategory.Date = createdDate;
+                    
                     entities.SaveChanges();
                     return "ok";
                 }
@@ -310,10 +320,15 @@ namespace V308CMS.Data
 
                     if (categoryItem.ListNews != null && categoryItem.ListNews.Count > 0)
                     {
-                        foreach (var news in categoryItem.ListNews)
-                        {
-                            entities.News.Remove(news);
-                            entities.SaveChanges();
+                        try {
+                            foreach (var news in categoryItem.ListNews)
+                            {
+                                entities.News.Remove(news);
+                                entities.SaveChanges();
+                            }
+                        }
+                        catch (Exception e) {
+                            Console.Write(e);
                         }
                     }
                     entities.NewsGroups.Remove(categoryItem);

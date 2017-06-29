@@ -15,7 +15,7 @@
     <div class="container-block m-0" data-section-id="1475814045391" data-section-type="slideshow-section">
         <div class="container">
             <div class="row">
-                <div class="col-md-12 col-sm-12 col-xs-12 banner-slide">
+                <div class="col-md-12 col-sm-12 col-xs-12 banner-slide" style="padding: 0;">
                     @Html.Action("HomeSlides", "Theme")
                 </div>
             </div>
@@ -33,7 +33,7 @@
             <div class="container border-col">
                 <div class="row" style="padding-top: 25px;">
                     <div class="col-md-6 col-sm-12 col-xs-12 video-play">
-                        <iframe src="https://www.youtube.com/embed/@videoPlay.Summary?autoplay=0" frameborder="0" allowFullScree style="height:auto; width: 100%; min-height: 300px;" ></iframe>
+                        <iframe src="https://www.youtube.com/embed/@videoPlay.Summary?autoplay=0" frameborder="0" allowFullScree ></iframe>
                     </div>
                     <div class="col-md-6 col-sm-12 col-xs-12 videos-thumb">
                         <p>@Html.Raw(Model.VideoCategory.Description)</p>
@@ -148,7 +148,7 @@ else if (Model.Banners != null && Model.Banners.Count() > 0)
     var commentFirst = Model.Testimonial.First();
     <div class="shopify-section">
         <div class="container-block m-0">
-            <div class="container border-col" style="padding-top: 20px;">
+            <div class="container border-col">
                 <div class="row">
                     <div class="col-md-12 article-home-full" style="margin-bottom: 40px;">
                         <h3 ><span>NHẬN XÉT CỦA CÁC AFFILIATE THÀNH CÔNG VỚI MP START</span></h3>
@@ -157,10 +157,10 @@ else if (Model.Banners != null && Model.Banners.Count() > 0)
                     @foreach (Testimonial Comment in Model.Testimonial)
                     {
                         string actived = Comment == commentFirst ? "actived" : null;
-                        <a href="javascript:void(0)" class="col-md-3 testimonial usercomment @actived" taget="@Comment.id">
-                            <span class="avatar"><img alt="" src="/Content/Images/avatar/@Comment.avartar" class="img-circle"></span>
+                        <a href="javascript:void(0)" class="col-xs-3 testimonial usercomment @actived" taget="@Comment.id">
+                            <span class="avatar"><img alt="" src="@ImageUrlHelper.ToUrl(Comment.avartar)" class="img-circle"></span>
                             <p class="fullname">@Comment.fullname</p>
-                            <p>@Comment.mobile</p>
+                            <p class="hidden-sm hidden-xs">@Comment.mobile</p>
                         </a>
                     }
                 </div>
@@ -190,7 +190,7 @@ else if (Model.Banners != null && Model.Banners.Count() > 0)
                     </div>
                     @foreach (Brand brand in Model.Brands)
                     { 
-                        <div class="col-md-2 col-sm-12">
+                        <div class="col-xs-4 col-md-2">
                             <img src="@ImageHelper.ToUrl(brand.image,160,99)" class="brandlogo img-responsive" />
                         </div>
                     }
@@ -239,12 +239,16 @@ else if (Model.Banners != null && Model.Banners.Count() > 0)
                
                 <div class="row" style="margin-top: 40px;">
                     <a class="col-md-6 stock-button" href="/san-pham">
-                        <span class="img"></span>
+                        <span class="img">
+                            <img src="/Content/themes/affiliate2.0/images/product.jpg" class="img-responsive" />
+                        </span>
                         <h3>Kho Sản Phẩm</h3>
                         
                     </a>
                     <a class="col-md-6 shop-button" href="/san-pham">
-                        <span class="img"></span>
+                        <span class="img">
+                            <img src="/Content/themes/affiliate2.0/images/shop.jpg" class="img-responsive" />
+                        </span>
                         <h3>Hệ Thống AFFILIATE</h3>
                         
                     </a>

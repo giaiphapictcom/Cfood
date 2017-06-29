@@ -893,6 +893,7 @@ namespace V308CMS.Data
                 try
                 {
                     newsItem.Title = data.Title;
+                    newsItem.Alias = data.Alias;
                     newsItem.TypeID = data.TypeID;
                     newsItem.Image = data.Image;
                     newsItem.Summary = data.Summary;

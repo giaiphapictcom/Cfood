@@ -9,7 +9,7 @@ namespace V308CMS.Respository
     public interface IBannerRespository
     {
         string ChangeStatus(int id);
-        List<Banner> GetList(byte position = 0, string site = "", bool withImg = false, int limit=1);
+        List<Banner> GetList(int position = 0, string site = "", bool withImg = false, int limit=1);
     }
     public class BannerRespository: IBaseRespository<Banner>, IBannerRespository
     {
@@ -61,6 +61,8 @@ namespace V308CMS.Respository
                     bannerUpdate.CreatedAt = data.CreatedAt;
                     bannerUpdate.UpdatedAt = data.UpdatedAt;
                     bannerUpdate.Site = data.Site;
+                    bannerUpdate.Link = data.Link;
+                    bannerUpdate.Target = data.Target;
                     entities.SaveChanges();
                     return "ok";
                 }
@@ -126,31 +128,38 @@ namespace V308CMS.Respository
         
         }
 
-        public List<Banner> GetList(byte position = 0,string site="",bool withImg = false,int limit = 1)
+        public List<Banner> GetList(int position = 0,string site="",bool withImg = false,int limit = 1)
         {
             var banners = new List<Banner>();
             using (var entities = new V308CMSEntities())
             {
-    
-                var items =  from banner in entities.Banner
-                     where banner.Position == position && banner.Site == site.Trim()
-                     //orderby banner.UpdatedAt descending
-                             orderby banner.Order ascending
-                     select banner;
-                if (withImg) {
-                    items = from banner in entities.Banner
-                            where banner.Position == position && banner.Site == site.Trim() && banner.ImageUrl.Length > 0
-                            orderby banner.Order ascending
-                            select banner;
-                }
-                int count = items.Count();
-                if (count > 0) {
-                    banners = items.ToList();
-                    if (limit > 0)
+
+                try {
+                    IQueryable<Banner> items = entities.Banner.Where(b => b.Site == site.Trim());
+
+                    if (position >= 0)
                     {
-                        banners = items.Take(limit).ToList();
+                        items = items.Where(b => b.Position.Equals(position));
+                    }
+                    if (withImg)
+                    {
+                        items = items.Where(b => b.ImageUrl.Length > 0);
+                    }
+
+                    if (items.Count() > 0 )
+                    {
+                        banners = items.OrderBy(b => b.Order).ToList();
+                        if (limit > 0)
+                        {
+                            banners = items.Take(limit).ToList();
+                        }
                     }
                 }
+                catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+                {
+                    Console.Write(dbEx);
+                }
+
             }
             return banners;
         }

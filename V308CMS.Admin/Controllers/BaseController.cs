@@ -50,8 +50,11 @@ namespace V308CMS.Admin.Controllers
            
             OrderService = new ProductOrderRespository();
 
+            TestimonialService = new TestimonialRepository();
+
         }
         public ProductOrderRespository OrderService { get; set; }
+
         public BannerRespository BannerService { get; set; }
         public AdminRespository AdminAccountService { get; set; }
         public ProductRespository ProductService { get; set; }
@@ -97,7 +100,7 @@ namespace V308CMS.Admin.Controllers
         public MarketRepository MarketService { get; set; }
         public ImagesRepository ImagesService { get; set; }
         public FileRepository FileService { get; set; }
-
+        public TestimonialRepository TestimonialService { get; set; }
 
 
         public NewsRepository NewsService { get; set; }     

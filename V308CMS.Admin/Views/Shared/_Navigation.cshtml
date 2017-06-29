@@ -3,7 +3,7 @@
 @using V308CMS.Data.Models
 @using V308CMS.Respository
 @{
-    var listRolePermission = new PermissionRespository().GetAllByRoleId(User.RoleId);
+    var listRolePermission = new PermissionRespository().GetAllByRoleId(User!=null ?User.RoleId : 0 );
 
 }
 
@@ -651,6 +651,13 @@
                         }
 
                         <ul class="nav nav-second-level collapse">
+                            @if (IsHasPermission(listRolePermission, "User", 0))
+                            {
+                                <li>
+                                    <a href="@Url.UserIndexUrl(null,"user","affiliate")" title="Danh sách Tài khoản">Tài Khoản</a>
+                                </li>
+                            }
+                            
                             @if (IsHasPermission(listRolePermission, "AffiliateBanner", 0))
                             {
                                 <li>
@@ -679,6 +686,15 @@
                                 <a title="Danh sách Menu trang chủ" href="@Url.MenusAffiliateIndexUrl()">
                                     Menu
                                 </a>
+                                </li>
+                            }
+
+                            @if (IsHasPermission(listRolePermission, "Testimonial", 0))
+                            {
+                                <li>
+                                    <a title="Quản lý bình luận chuyên gia" href="@Url.TestimonialIndexUrl()">
+                                        Bình Luận
+                                    </a>
                                 </li>
                             }
 

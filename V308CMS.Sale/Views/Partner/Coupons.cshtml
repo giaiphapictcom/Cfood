@@ -59,12 +59,12 @@
     foreach (Counpon c in Model.Coupons)
     { 
             <div class="row itemview">
-                <div class="col-md-4"><img src="@ImageHelper.Crop(c.image,300,170)" class="img-responsive" /></div>
+                <div class="col-md-4"><img src="@url.Image(c.image,300,170)" class="img-responsive" /></div>
                 <div class="col-md-8">
                     <h5>@c.title</h5>
                     <p>@c.summary</p>
                     <p class="text-red">Ngày hết hạn: @String.Format("{0:dd/MM/yyyy}", c.end_date)</p>
-                    <p>Coupon Code : <strong>@c.code</strong></p>
+                    <p>Voucher Code : <strong>@c.code</strong></p>
                 </div>
             </div>
             <hr />

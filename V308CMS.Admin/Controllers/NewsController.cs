@@ -90,6 +90,7 @@ namespace V308CMS.Admin.Controllers
                 var newsItem = new News
                 {
                     Title = news.Title,
+                    Alias = news.Alias,
                     TypeID = news.CategoryId,
                     Image = news.ImageUrl,
                     Summary = news.Summary,
@@ -197,6 +198,7 @@ namespace V308CMS.Admin.Controllers
                 {
                     ID = news.Id,
                     Title = news.Title,
+                    Alias = news.Alias,
                     TypeID = news.CategoryId,
                     Image = news.ImageUrl,
                     Summary = news.Summary,
@@ -238,7 +240,7 @@ namespace V308CMS.Admin.Controllers
             }
             ViewBag.ListCategory = BuildListCategory();
             ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
-            return View("Edit");
+            return View("Edit", news);
         }        
         
         [CheckPermission(3, "Xóa")]

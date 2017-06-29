@@ -3,12 +3,32 @@
     <div class="header">
         <div class="header-body">
             <div class="container">
-                <div class="row">
+                <div class="row ">
                     <button class="navbar-toggle btn-menu-canvas" data-toggle="offcanvas" data-target="#off-canvas-nav">
                         <i class="icon_menu"></i>
                     </button>
-                </div>
-                <div class="row hidden-sm hidden-xs">
+                    <div class="col-xs-8 col-xs-offset-1 text-center hidden-md hidden-lg">
+                        <a href="/">
+                            <img src="@ViewBag.ThemesPath/images/logo.png" alt="@ViewBag.SiteName" style="height: 50px;" />
+                        </a>
+                    </div>
+                    <div class="col-xs-1 hidden-md hidden-lg" style="padding-top:15px;">
+                        @if (Model.IsAuthenticated == true && Model.Account != null)
+                        {
+                            <a href="/dashboard" class="btn-login">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                                
+                            </a>
+                        }
+                        else
+                        {
+                            <a href="/dang-nhap" class="btn-login">
+                                <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+                               
+                            </a>
+                        }
+                    </div>
+                <div class="row hidden-sm hidden-xs" style="margin-bottom: 15px;">
                     
                     <div class="col-md-6 col-md-offset-3 col-sm-6 col-xs-12 menu-none">
                         <div id="search-top">
@@ -118,7 +138,7 @@
                                                     if (!menu.Name.ToLower().Equals("footer"))
                                                     {
                                                 <li class="menu-dropdown level-top active">
-                                                    @url.anchor_menu(menu.Name,menu.Link,"dropdown-toggle has-category")
+                                                    @url.anchor_menu(menu.Name,menu.Link,"dropdown-toggle has-category",menu.Target)
                                                 </li>
 
                                                     }
@@ -157,3 +177,4 @@
     </div>
 
 </header>
+

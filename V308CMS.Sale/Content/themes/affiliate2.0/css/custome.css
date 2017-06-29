@@ -29,9 +29,18 @@
     color: #f2b21c;
 }
 
+.video-play iframe {
+    height:auto;
+    width: 100%;
+    min-height: 300px;
+}
+
 @media only screen and (max-width: 768px) {
     .videos-thumb li.selected::before {
         display:none;
+    }
+    .video-play iframe {
+        min-height: unset;
     }
 }
 
@@ -60,4 +69,34 @@
 
 .newsfooter .content{
     text-indent: 15px;
+}
+
+
+.dashboard .btn {
+    display: block;
+    width: 100%;
+    height: auto;
+    white-space:normal;
+    line-height: 17px;
+    padding: 5px;
+    font-size: 11px;
+    
+}
+.dashboard [class^="col-"] {
+    margin-top: 10px;
+}
+
+.main-content .dashboard h4 {
+    font-size: 17px;
+    margin: 15px auto;
+    text-align: center;
+}
+
+
+.pd-14 {
+    padding: 14px 0 !important;
+}
+
+.pd-11 {
+    padding: 11px 0 !important;
 }

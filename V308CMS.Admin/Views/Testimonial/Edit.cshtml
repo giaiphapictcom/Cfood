@@ -1,0 +1,13 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@model V308CMS.Admin.Models.TestimonialModels
+@{
+    ViewBag.Title = "Cập nhật bình luận";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+<div class="panel panel-primary">
+    <div class="panel-body">
+        <form method="post" role="form" action="@Url.TestimonialEditUrl()" enctype="multipart/form-data">
+            @Html.Partial("_Form", Model)
+        </form>
+    </div>
+</div>

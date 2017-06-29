@@ -147,6 +147,28 @@ namespace V308CMS.Sale.Controllers
             
         }
 
+        public ActionResult MenuCanvas()
+        {
+
+            try
+            {
+                CreateRepos();
+                HeaderPage Model = new HeaderPage();
+                Model.menu = MenuRepos.GetList(1, 5, "affiliate");
+
+                string view = "~/Views/" + MainController + "/Elements/MenuCanvas.cshtml";
+                return View(view, Model);
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.InnerException.ToString());
+            }
+            finally
+            {
+                DisposeRepos();
+            }
+
+        }
         public ActionResult Footer()
         {
             CreateRepos();
@@ -172,15 +194,15 @@ namespace V308CMS.Sale.Controllers
                 //}
                 Model.NewsCategorys = NewsCategorys;
 
-                NewsGroups WhoSale = NewsRepos.LayNhomTinAn(29);
-                if (WhoSale.ID > 0)
-                {
-                    NewsGroupPage WhoSalePage = new NewsGroupPage();
-                    WhoSalePage.Name = WhoSale.Name;
-                    WhoSalePage.NewsList = NewsRepos.LayDanhSachTinMoiNhatTheoGroupId(5, WhoSale.ID);
+                //NewsGroups WhoSale = NewsRepos.LayNhomTinAn(29);
+                //if (WhoSale.ID > 0)
+                //{
+                //    NewsGroupPage WhoSalePage = new NewsGroupPage();
+                //    WhoSalePage.Name = WhoSale.Name;
+                //    WhoSalePage.NewsList = NewsRepos.LayDanhSachTinMoiNhatTheoGroupId(5, WhoSale.ID);
 
-                    Model.CategoryWhoSale = WhoSalePage;
-                }
+                //    Model.CategoryWhoSale = WhoSalePage;
+                //}
 
                 string view = "~/Views/" + MainController + "/Elements/Footer.cshtml";
                 return View(view, Model);
@@ -234,7 +256,7 @@ namespace V308CMS.Sale.Controllers
                 CreateRepos();
                 if (banner.Name == null || banner.Name.Length < 1)
                 {
-                    var banners = BannerRepos.GetList(0, "affiliate", true, 3);
+                    var banners = BannerRepos.GetList(-1, "affiliate", true, 3);
                     banner = banners.Last();
                 }
                 string view = "~/Views/" + MainController + "/Blocks/BlockNews12.cshtml";

@@ -29,7 +29,8 @@ namespace V308CMS.Admin.Controllers
         public ActionResult Index(string site="home")
         {
             return View("Index", NewsGroupService.GetAll(false, site));
-        }        
+        }
+
         [CheckPermission(1, "Thêm mới")]
         public ActionResult Create(string site = "home")
         {
@@ -38,6 +39,7 @@ namespace V308CMS.Admin.Controllers
             Model.Site = site;
             return View("Create", Model);
         }
+
         [HttpPost]
         [CheckPermission(1, "Thêm mới")]      
         [ActionName("Create")]
@@ -49,6 +51,7 @@ namespace V308CMS.Admin.Controllers
                     (
                         category.Site,
                        category.Name,
+                       category.Alias,
                        category.ParentId,
                        category.Number,
                        category.State,
@@ -69,7 +72,8 @@ namespace V308CMS.Admin.Controllers
 
             AddViewData("ListCategory", BuildListCategory());
             return View("Create", category);
-        }      
+        }
+
         [CheckPermission(2, "Sửa")]
         public ActionResult Edit(int id)
         {
@@ -83,12 +87,15 @@ namespace V308CMS.Admin.Controllers
             {
                 Id = categoryItem.ID,
                 Name = categoryItem.Name,
+                Alias = categoryItem.Alias,
                 ParentId = categoryItem.Parent ?? 0,
                 Number = categoryItem.Number ?? 0,
-                State = categoryItem.Status.HasValue && categoryItem.Status.Value
+                State = categoryItem.Status.HasValue && categoryItem.Status.Value,
+                Site = categoryItem.Site
             };
             return View("Edit", categoryModel);
         }
+
         [HttpPost]
         [CheckPermission(2, "Sửa")]       
         [ActionName("Edit")]       
@@ -98,7 +105,7 @@ namespace V308CMS.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var result = NewsGroupService.Update(
-                    category.Id,category.Name,
+                    category.Id,category.Name,category.Alias,
                     category.ParentId,category.Number,
                     category.State,category.CreatedDate);
                 if (result == "not_exists")
@@ -116,7 +123,8 @@ namespace V308CMS.Admin.Controllers
             AddViewData("ListCategory", BuildListCategory());
             return View("Edit", category);
 
-        }      
+        }
+
         [HttpPost]
         [CheckPermission(3, "Thay đổi trạng thái")]
         [ActionName("ChangeState")]

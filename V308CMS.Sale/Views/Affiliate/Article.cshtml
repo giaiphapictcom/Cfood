@@ -27,7 +27,7 @@
                     {
                         <div class="col-md-12">@Model.NewsItem.Summary</div>
                     }
-                    <div class="col-md-12">@Model.NewsItem.Description</div>
+                    <div class="col-md-12">@Html.Raw(Model.NewsItem.Detail)</div>
                 }
 
             </div>
