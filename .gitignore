@@ -14,35 +14,20 @@ V308CMS.Data/obj/Release/
 V308CMS/Content/thumb/
 V308CMS/bin/*.xml
 V308CMS.Data/bin/*.xml
-<<<<<<< HEAD
 V308CMS.Common/bin/*
-
 V308CMS/db/account.sql
 V308CMS/db/contact.sql
 V308CMS.Sale/Content/thumb/100x100/
-=======
 V308CMS.Common/bin/System.Web.*
 V308CMS.Common/bin/Newtonsoft.Json.xml
 V308CMS.Common/bin/System.Net.Http.Formatting.xml
-<<<<<<< HEAD
-V308CMS.Sale/Content/thumb/100x100
->>>>>>> toai-neal
-=======
-V308CMS.Sale/Content/thumb/100x100/
->>>>>>> quannh-0529
 V308CMS.Sale/Content/thumb/160x99/
-<<<<<<< HEAD
 V308CMS.Sale/Content/thumb/300x170/
 V308CMS.Sale/Content/thumb/536x271/
-=======
 V308CMS.Sale/Content/thumb/536x271
 V308CMS.Sale/Content/thumb/300x170/
-<<<<<<< HEAD
->>>>>>> toai-neal
 V308CMS.Respository/obj/Debug/
 V308CMS.Static/bin/Newtonsoft.Json.xml
-=======
-<<<<<<< HEAD
 packages/DotNetOpenAuth.OAuth.Core.4.0.3.12153/lib/net35-full/DotNetOpenAuth.OAuth.dll
 packages/DotNetOpenAuth.OAuth.Core.4.0.3.12153/lib/net40-full/DotNetOpenAuth.OAuth.dll
 packages/DotNetOpenAuth.OpenId.Core.4.0.3.12153/lib/net35-full/DotNetOpenAuth.OpenId.dll
@@ -1856,22 +1841,16 @@ packages/DotNetOpenAuth.OpenId.RelyingParty.4.0.3.12153/lib/net35-full/DotNetOpe
 packages/DotNetOpenAuth.OpenId.RelyingParty.4.0.3.12153/lib/net40-full/DotNetOpenAuth.OpenId.RelyingParty.dll
 packages/Microsoft.AspNet.Web.Optimization.1.0.0/lib/net40/System.Web.Optimization.dll
 V308CMS.Admin/obj/Release/Package/PackageTmp/Content/Plugins/ckfinder/help/es/files/toc.html
-=======
-_UpgradeReport_Files/UpgradeReport_Warning.png
-_UpgradeReport_Files/UpgradeReport_Success.png
->>>>>>> toai-neal
 V308CMS.Static/bin/ImageResizer.xml
 V308CMS.Static/bin/ImageResizer.Plugins.PrettyGifs.xml
 V308CMS.Static/bin/ImageResizer.Plugins.FriendlyUrls.xml
 V308CMS.Static/bin/ImageResizer.Plugins.DiskCache.xml
 V308CMS.Static/bin/ImageResizer.Plugins.AnimatedGifs.xml
-<<<<<<< HEAD
 V308CMS.Static/obj/Debug/V308CMS.Static.csproj.FileListAbsolute.txt
 V308CMS/Content/Plugins/OwlCarousel/js/.jshintrc
 V308CMS/Content/Plugins/OwlCarousel/js/.jscsrc
 V308CMS.Respository/obj/Release/
 V308CMS.Static/obj/Release/
-=======
 V308CMS.Revenue/bin/System.Web.WebPages.xml
 V308CMS.Revenue/bin/System.Web.WebPages.Razor.xml
 V308CMS.Revenue/bin/System.Web.WebPages.Deployment.xml
@@ -1885,25 +1864,10 @@ V308CMS.Revenue/bin/Newtonsoft.Json.xml
 V308CMS.Revenue/bin/ClosedXML.xml
 V308CMS.Respository/obj/Release/TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs
 V308CMS.Respository/obj/Release/TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs
->>>>>>> toai-neal
 _UpgradeReport_Files/UpgradeReport_Information.png
 _UpgradeReport_Files/UpgradeReport_Error.png
 _UpgradeReport_Files/UpgradeReport.xslt
 _UpgradeReport_Files/UpgradeReport.css
-<<<<<<< HEAD
-UpgradeLog2.htm
-UpgradeLog2.XML
-UpgradeLog.XML
-_UpgradeReport_Files/UpgradeReport_Success.png
-_UpgradeReport_Files/UpgradeReport_Warning.png
-V308CMS.Admin/bin/V308CMS.Admin.dll.config
-V308CMS.Admin/obj/Debug/V308CMS.Admin.csproj.FileListAbsolute.txt
-V308CMS.Admin/bin/Newtonsoft.Json.xml
-<<<<<<< HEAD
-V308CMS.Admin/obj/Release/
-V308CMS.Admin/obj/Debug/build.force
-=======
-=======
 V308CMS.Static/obj/Release/_WPPLastBuildInfo.txt
 V308CMS.Static/obj/Release/V308CMS.Static.csproj.FileListAbsolute.txt
 V308CMS.Static/obj/Release/TransformWebConfig/transformed/Web.config
@@ -1926,9 +1890,7 @@ V308CMS.Admin/obj/Debug/TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23
 UpgradeLog2.htm
 UpgradeLog2.XML
 UpgradeLog.XML
->>>>>>> 2a80f7d8d838801f0007a10239275145e5bcc2fc
->>>>>>> toai-neal
->>>>>>> ed35e19838df9443048a4c7ac98fb515e75fb477
+
 V308CMS.Admin/bin/
 V308CMS.Static/image-cache/*.jpg
 V308CMS.Static/image-cache/affiliate/*
