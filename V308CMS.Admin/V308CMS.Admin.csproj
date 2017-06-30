@@ -193,6 +193,7 @@
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\SiteConfigController.cs" />
     <Compile Include="Controllers\SizeController.cs" />
+    <Compile Include="Controllers\TestimonialController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
@@ -254,6 +255,7 @@
     <Compile Include="Helpers\Url\SizeUrlHelper.cs" />
     <Compile Include="Helpers\Url\SupportTypeUrlHelper.cs" />
     <Compile Include="Helpers\Url\SupportUrlHelper.cs" />
+    <Compile Include="Helpers\Url\TestimonialHelper.cs" />
     <Compile Include="Helpers\Url\UrlContentHelper.cs" />
     <Compile Include="Helpers\Url\UserUrlHelper.cs" />
     <Compile Include="Attributes\CheckPermissionAttribute.cs" />
@@ -267,6 +269,7 @@
     <Compile Include="Models\OrderModels.cs" />
     <Compile Include="Models\OrderViewModels.cs" />
     <Compile Include="Models\ProfileViewModels.cs" />
+    <Compile Include="Models\TestimonialModels.cs" />
     <Compile Include="Models\UserChangePassworModels.cs" />
     <Compile Include="Models\AdminModels.cs" />
     <Compile Include="Models\BaseModels.cs" />
@@ -1948,6 +1951,10 @@
     <Content Include="Views\Market\Create.cshtml" />
     <Content Include="Views\Market\Edit.cshtml" />
     <Content Include="Views\Market\Index.cshtml" />
+    <Content Include="Views\Testimonial\_Form.cshtml" />
+    <Content Include="Views\Testimonial\Create.cshtml" />
+    <Content Include="Views\Testimonial\Edit.cshtml" />
+    <Content Include="Views\Testimonial\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

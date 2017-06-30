@@ -47,6 +47,11 @@
             @Html.ValidationMessageFor(news => Model.Title)
 
         </div>
+
+        <div class="form-group">
+            @Html.LabelFor(news => Model.Alias)
+            @Html.TextBoxFor(news => Model.Alias, new { @class = "form-control" })
+        </div>
       
          @Html.Partial("UI/_ImageSelectPreview", new ImageSelectPreviewModels
         {
@@ -111,6 +116,12 @@
                 @Html.LabelFor(news => news.Status)
             </div>
         </div>
+
+        <div class="form-group">
+            @Html.LabelFor(news => Model.Order)
+            @Html.TextBoxFor(news => Model.Order, new { @class = "form-control" })
+        </div>
+
         @Html.Partial("UI/_FormAction")
         <a href="@Url.NewsIndexUrl()" title="Danh sách tin tức" class="btn btn-link">Danh sách</a>
 

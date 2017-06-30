@@ -1,16 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 
 namespace V308CMS.Common
 {
-    public class url
+    public static class url
     {
         public static string article(string title="",int id = 0) {
-            string url = "/" + Ultility.URITitle(title) + "-n" + id + ".html";
-            string anchor = "<a href=\"" + url + "\">" + title + "</a>";
+            string anchor = "<a href=\"" + articleURL(title,id) + "\">" + title + "</a>";
             return anchor;
+        }
+
+        public static string articleURL(string title = "", int id = 0)
+        {
+            return "/" + Ultility.URITitle(title) + "-n" + id + ".html";
         }
 
         public static HtmlString productCategory(string title = "", int id = 0)
@@ -55,12 +57,12 @@ namespace V308CMS.Common
             return anchor;
         }
 
-        public static HtmlString anchor_menu(string title = "", string src = "", string classname = "")
+        public static HtmlString anchor_menu(string title = "", string src = "", string classname = "",string target="")
         {
             string domain = HttpContext.Current.Request.Url.Host;
             int port = HttpContext.Current.Request.Url.Port;
 
-            string target = "";
+            string target_url = "";
             string src_return = "";
             if (src != null && src.Length > 0)
             {
@@ -68,10 +70,8 @@ namespace V308CMS.Common
                 {
                     Uri myUri = new Uri(src);
                     string host = myUri.Host;
-                    if (host != domain)
-                    {
-                        target = "target=\"_blank\"";
-                    }
+
+                    
 
                     if (host.Length < 1)
                     {
@@ -95,12 +95,51 @@ namespace V308CMS.Common
             else {
                 src_return = "/";
             }
-            
-            
-            string anchor = "<a class=\""+classname+"\" href=\""+src_return+"\" title=\""+title+"\"  "+target+" > <span>"+title+"</span></a>";
+
+            target_url = "target=\"" + target + "\"";
+
+            string anchor = "<a class=\""+classname+"\" href=\""+src_return+"\" title=\""+title+"\"  "+ target_url + " > <span>"+title+"</span></a>";
             return new HtmlString(anchor);
         }
-        
-        
+
+        public static string Image(this string path, int width = 0, int height = 0)
+        {
+            string ImageUploadSource = System.Configuration.ConfigurationManager.AppSettings["ResourceDomain"] ?? String.Empty;
+            if (ImageUploadSource.Length < 1)
+            {
+                return path;
+            }
+            else if (Uri.IsWellFormedUriString(path, UriKind.Absolute))
+            {
+                return path;
+            }
+
+
+            string resizeDir = "";
+            if (width > 0 && height > 0)
+            {
+                resizeDir = String.Format("w{0}h{1}", width, height);
+            }
+            else if (width > 0)
+            {
+                resizeDir = String.Format("w{0}", width);
+            }
+            else if (height > 0)
+            {
+                resizeDir = String.Format("h{0}", height);
+            }
+            path = path.Replace("\\", "/");
+            var imgUploadPath = path.Replace("/Content/Images/", "").Trim();
+            //imgUploadPath = imgUploadPath.Replace("\\Content\\Images\\", "");
+
+
+            if (imgUploadPath.Length < 1)
+            {
+                imgUploadPath = "noimage.jpg";
+            }
+            return ImageUploadSource + "/" + resizeDir + "/" + imgUploadPath;
+            //return ImageHelper.Crop(path, width,height);
+
+        }
     }
 }

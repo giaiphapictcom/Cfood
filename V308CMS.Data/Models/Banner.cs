@@ -18,6 +18,8 @@ namespace V308CMS.Data.Models
         }
         public int Id { get; set; }
         public string Site { get; set; }
+       
+        
         public string Name { get; set; }
         public string Description { get; set; }
         public byte Position { get; set; }
@@ -27,6 +29,8 @@ namespace V308CMS.Data.Models
         public DateTime? EndDate { get; set; }
        
         public string ImageUrl { get; set; }
+        public string Link { get; set; }
+        public string Target { get; set; }
         public bool Status { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }

@@ -1,0 +1,25 @@
+﻿<section id="offcanvas" class="megamenu-canvas">
+    <nav class="offcanvas-mainnav">
+        <div id="off-canvas-button">
+            <span class="off-canvas-nav"><i class="icon_close"></i></span>
+        </div>
+        <ul class="nav navbar-nav megamenu">
+
+            @if (Model.menu != null && Model.menu.Count > 0)
+            {
+                foreach (V308CMS.Data.Models.MenuConfig menu in Model.menu)
+                {
+                    if (!menu.Name.ToLower().Equals("footer"))
+                    {
+                        <li class="menu-dropdown level-top active">
+                            @V308CMS.Common.url.anchor_menu(menu.Name, menu.Link, "dropdown-toggle has-category")
+                        </li>
+
+                    }
+
+                }
+            }
+
+        </ul>
+    </nav>
+</section>

@@ -90,6 +90,7 @@ namespace V308CMS.Admin.Controllers
                 var newsItem = new News
                 {
                     Title = news.Title,
+                    Alias = news.Alias,
                     TypeID = news.CategoryId,
                     Image = news.ImageUrl,
                     Summary = news.Summary,
@@ -172,7 +173,10 @@ namespace V308CMS.Admin.Controllers
                 Site = newsItem.Site
                
             };
-            ViewBag.ListCategory = BuildListCategory();
+
+            var CategoryOld = NewsService.LayNhomTinAn((int)newsItem.TypeID);
+
+            ViewBag.ListCategory = BuildListCategory(CategoryOld.Site);
             ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
             return View("Edit", newsEdit);
 
@@ -194,6 +198,7 @@ namespace V308CMS.Admin.Controllers
                 {
                     ID = news.Id,
                     Title = news.Title,
+                    Alias = news.Alias,
                     TypeID = news.CategoryId,
                     Image = news.ImageUrl,
                     Summary = news.Summary,
@@ -208,12 +213,16 @@ namespace V308CMS.Admin.Controllers
                     Date = news.CreatedAt,
                     Site = news.Site
                 };
+                var CategoryOld = NewsService.LayNhomTinAn((int)newsItem.TypeID);
                 var result = NewsService.Update(newsItem);
+
+                ViewBag.ListCategory = BuildListCategory(CategoryOld.Site);
+                ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
                 if (result == Result.NotExists)
                 {
                     ModelState.AddModelError("", "Tin tức không tồn tại trên hệ thống.");
-                    ViewBag.ListCategory = BuildListCategory();
-                    ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
+                    
+                    
                     return View("Edit", news);
                 }
                 SetFlashMessage( string.Format("Sửa tin tức '{0}' thành công.",news.Title) );
@@ -224,14 +233,14 @@ namespace V308CMS.Admin.Controllers
                     return RedirectToAction(listViewAction);
                    
                 }
-                ViewBag.ListCategory = BuildListCategory();
-                ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
+                //ViewBag.ListCategory = BuildListCategory(CategoryOld.Site);
+                //ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
                 return View("Edit", news);
 
             }
             ViewBag.ListCategory = BuildListCategory();
             ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
-            return View("Edit");
+            return View("Edit", news);
         }        
         
         [CheckPermission(3, "Xóa")]

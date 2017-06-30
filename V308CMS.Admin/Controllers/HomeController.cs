@@ -17,9 +17,14 @@ namespace V308CMS.Admin.Controllers
         [Authorize]
         public ActionResult Index()
         {
-
-
+            if (!AuthenticationHelper.IsAuthenticate)
+            {
+                return RedirectToAction("Login");
+            }
+            
             return View("IndexV2");
+
+
         }
         // GET: Account
         [AllowAnonymous]

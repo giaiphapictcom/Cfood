@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using V308CMS.Data.Helpers;
 
 namespace V308CMS.Data
 {
@@ -54,6 +52,32 @@ namespace V308CMS.Data
                 entities.SaveChanges();
 
                 return banner.ID.ToString();
+            }
+            catch (Exception ex)
+            {
+                return ex.ToString();
+            }
+
+
+        }
+
+        public string InsertObject(Counpon data)
+        {
+            try
+            {
+                var check = (from c in entities.CounponTbl
+                                    where c.code.ToLower() == data.code.ToLower()
+                                    select c
+                    ).FirstOrDefault();
+                if (check != null)
+                {
+                    return Result.Exists;
+                }
+                entities.CounponTbl.Add(data);
+                entities.SaveChanges();
+
+                return Result.Ok;
+
             }
             catch (Exception ex)
             {

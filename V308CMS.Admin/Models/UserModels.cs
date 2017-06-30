@@ -15,6 +15,7 @@ namespace V308CMS.Admin.Models
 
         }
         public int Id { get; set; }
+        public string Site { get; set; }
 
         [Required(ErrorMessage = "Địa chỉ Email không được để trống.")]
         [Display(Name = "Email*")]

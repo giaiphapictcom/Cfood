@@ -149,6 +149,7 @@
     <Compile Include="Enum\StateFilterEnum.cs" />
     <Compile Include="Enum\TransactionEnum.cs" />
     <Compile Include="FileRepository.cs" />
+    <Compile Include="Helpers\Result.cs" />
     <Compile Include="IBaseRespository.cs" />
     <Compile Include="ImagesRepository.cs" />
     <Compile Include="LinkRepository.cs" />
@@ -266,16 +267,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
-          <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>9961</DevelopmentServerPort>
-          <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:4572/</IISUrl>
-          <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>
-          </CustomServerUrl>
-          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+          <SaveServerSettingsInUserFile>True</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>

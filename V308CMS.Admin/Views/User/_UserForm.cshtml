@@ -2,6 +2,7 @@
 @using V308CMS.Admin.Models.UI
 @model  V308CMS.Admin.Models.UserModels
 @Html.HiddenFor(user => Model.Id)
+@Html.HiddenFor(user => Model.Site)
 @Html.AntiForgeryToken()
 <div class="row">
     @Html.ValidationSummary(true)

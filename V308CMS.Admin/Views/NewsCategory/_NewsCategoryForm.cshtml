@@ -16,6 +16,10 @@
             @Html.ValidationMessageFor(category => category.Name)
         </div>
         <div class="form-group">
+            @Html.LabelFor(category => category.Alias)
+            @Html.TextBoxFor(category => category.Alias, new { @class = "form-control", placeholder = "URL alias" })
+        </div>
+        <div class="form-group">
             @Html.LabelFor(category => category.ParentId)
             @Html.Partial("UI/_MutilDropDownlist", new MutilDropDownlistModels
             {

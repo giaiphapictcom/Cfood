@@ -12,17 +12,6 @@
     @Html.ValidationSummary(true)
     <div class="col-lg-6">
         <div class="form-group">
-            @Html.LabelFor(menu => menu.Site)
-            @Html.DropDownListFor(menu => menu.Site, listSite, "Chọn Website", new
-           {
-               @class = "form-control",
-               placeholder = "Chọn Website"
-           })
-            @Html.ValidationMessageFor(menu => menu.Site)
-        </div>
-
-
-        <div class="form-group">
             @Html.LabelFor(menu => Model.Name)
             @Html.TextBoxFor(menu => Model.Name, new {@class = "form-control", placeholder = "Tên Menu"})
             @Html.ValidationMessageFor(menu => Model.Name)

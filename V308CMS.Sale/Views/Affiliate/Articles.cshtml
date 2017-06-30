@@ -1,0 +1,42 @@
+﻿@model V308CMS.Data.NewsIndexPageContainer
+@using V308CMS.Data
+@using V308CMS.Common
+
+@{
+
+    Layout = "~/Views/" + @ViewContext.RouteData.Values["controller"] + "/Layout/Default.cshtml";
+    string PageTitle = Model.NewsGroups.Name != null ? Model.NewsGroups.Name : "Danh sách bài viết";
+}
+@section header {
+    <title>@PageTitle</title>
+}
+
+<div class="shopify-section loginform">
+    <div class="container-block m-0">
+        <div class="container border-col">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12 article-home-full" style="margin-bottom: 5px;">
+                    <h1 >@PageTitle</h1>
+                </div>
+                <hr class="redline" />
+                <div class="col-md-12 col-sm-12 col-xs-12 article-home-full">
+                    @if (Model.ListNews != null && Model.ListNews.Count() > 0)
+                    {
+
+                        foreach (News news in Model.ListNews)
+                        {
+                            <div class="row">
+                                <div class="col-md-2"><img src="@ImageHelper.Crop(news.Image)" class="img-responsive" /></div>
+                                <div class="col-md-10">
+                                    <h5>@Html.Raw(V308CMS.Common.url.article(news.Title, news.ID))</h5>
+                                    <p><a href="@V308CMS.Common.url.articleURL(news.Title, news.ID)">@news.Summary</a></p>
+                                </div>
+                            </div>
+                            <hr />
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

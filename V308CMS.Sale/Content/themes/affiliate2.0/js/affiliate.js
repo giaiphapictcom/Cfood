@@ -2,6 +2,8 @@ $(document).ready(function () {
     homevideo();
     bannerform.imgMargin();
     commentHome.userclick();
+    link.copy();
+    uploadbutton.select();
 });
 
 
@@ -33,6 +35,26 @@ commentHome = {
             ContentRow.find(".contentcomment").removeClass("show").addClass("hidden");
             jQuery("[comment=" + $(this).attr("taget")+"]", ContentRow).removeClass("hidden").addClass("show");
 
+        });
+    }
+}
+
+link = {
+    copy: function () {
+        jQuery("a.link_href_copy").click(function () {
+            var $temp = $("<input>");
+            $("body").append($temp);
+            $temp.val(jQuery(this).prev("input[type=text]").val()).select();
+            document.execCommand("copy");
+            $temp.remove();
+        });
+    }
+}
+
+uploadbutton = {
+    select: function () {
+        jQuery("a.upload-button").click(function () {
+            jQuery(this).parents(".form-group").find("input[type=file]").trigger('click');
         });
     }
 }

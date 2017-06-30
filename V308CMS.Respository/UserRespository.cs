@@ -9,7 +9,8 @@ namespace V308CMS.Respository
     public interface IUserRespository
     {
          List<Account> GetList(
-            int state = 0
+            int state = 0,
+            string site=""
             );
 
         string ChangeStatus(int id);
@@ -115,31 +116,32 @@ namespace V308CMS.Respository
            
         }
 
-        public List<Account> GetList(int state = 0)
+        public List<Account> GetList(int state = 0,string site="")
         {
             using (var entities = new V308CMSEntities())
             {
-                IEnumerable<Account> data = (from user in entities.Account
-                                             select user
-                                           ).ToList();
+                var items = entities.Account.Select(a=>a);
+                if (site == "affiliate")
+                {
+                    items = items.Where(a => a.Site.Equals(site.Trim()));
+                }
+                else {
+                    items = items.Where(a => a.Site == "home" || a.Site =="" );
+                }
+
 
                 if (state > 0)
                 {
-                    data = state == 1 ?
-                        (from user in data
-                         where user.Status == true
-                         select user
-                     ).ToList() :
-                     (from user in data
-                      where user.Status == false
-                      select user
-                     ).ToList();
-                }
+                    if (state == 1)
+                    {
+                        items = items.Where(a => a.Status == true);
+                    }
+                    else {
+                        items = items.Where(a => a.Status == false);
+                    }
 
-                return (from user in data
-                        orderby user.ID descending
-                        select user
-                    ).ToList();
+                }
+                return items.OrderByDescending(a=>a.ID).ToList();
 
             }
             

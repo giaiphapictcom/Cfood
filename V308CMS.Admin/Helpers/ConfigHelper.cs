@@ -12,6 +12,9 @@ namespace V308CMS.Admin.Helpers
         public static string SkipCheckPermission = "SkipCheckPermission";
         public static string ProductCode = "MP";
 
+        public static string SiteAffiliate = "affiliate";
+
+
 
     }
 }

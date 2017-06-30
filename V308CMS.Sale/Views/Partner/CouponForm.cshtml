@@ -1,0 +1,42 @@
+﻿@using V308CMS.Common;
+@model V308CMS.Sale.Models.CouponModel
+@{
+    Layout = "~/Views/Affiliate/Layout/Backend.cshtml";
+    string PageTitle = "Tạo Banner Quảng Cáo";
+}
+@section header {
+    <title>@PageTitle</title>
+
+}
+<h4>@PageTitle</h4>
+<form style="width: 80%; margin: 0 auto;" action="" method="post" enctype="multipart/form-data">
+        @Html.HiddenFor(menu => Model.Id)
+        <div class="row">
+
+
+            <div class="col-md-12">
+                @BootstrapHelper.InputText("title", "Tiêu đề")
+            </div>
+            <div class="col-md-12">
+                @BootstrapHelper.InputText("code", "Voucher Code")
+            </div>
+            <div class="col-md-12">
+
+                <div class="form-group">
+                    <label>Hình Ảnh(<a href="javascript:void(0)" class="upload-button">Upload</a>)</label>
+                    @Html.TextBoxFor(model => Model.File, new { type = "file" ,@class="hidden"})
+
+                    <input type="text" class="form-control" placeholder="http://website.com/img.jpg" name="ImageUrl">
+                </div>
+            </div>
+            <div class="col-md-12">
+                @BootstrapHelper.InputTextarea("summary", "Mô tả ngắn")
+            </div>
+
+
+
+        </div>
+
+
+        <button type="submit" class="btn btn-success">Tạo Link</button>
+    </form>

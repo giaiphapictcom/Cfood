@@ -58,15 +58,10 @@ namespace V308CMS.Sale.Controllers
                 {
                     Model.Videos = NewsRepos.LayDanhSachTinTheoGroupIdWithPage(5, Model.VideoCategory.ID);
                 }
-                //NewsGroups NewsHomeCategory = NewsRepos.SearchNewsGroupByAlias("affiliate-news");
-                //if (NewsHomeCategory != null)
-                //{
-                //    Model.Articles = NewsRepos.LayDanhSachTinTheoGroupIdWithPage(5, NewsHomeCategory.ID);
-                //}
-                Model.Banners = BannerRepos.GetList(0,"affiliate",true);
+
+                Model.Banners = BannerRepos.GetList(-1,"affiliate",true,3);
                 Model.Testimonial = CommentRepo.GetRandom(4);
 
-                Model.BrandImages = Directory.GetFiles(Server.MapPath("/Content/Images/brand/"), "*.jpg", SearchOption.TopDirectoryOnly);
                 Model.Brands = ProductRepos.getRandomBrands(0, 6);
                 Model.Categorys = CategoryRepo.GetItems(20);
                 return View(Model);
@@ -83,7 +78,6 @@ namespace V308CMS.Sale.Controllers
             
         }
         
-        [AffiliateAuthorize]
         public ActionResult NewsList(string CategoryAlias = "", string PageTitle="")
         {
             try
@@ -111,17 +105,14 @@ namespace V308CMS.Sale.Controllers
             }
         }
 
-        private void InsertNewsGroupDefault(string NewsGroupAlias="",NewsGroups GroupParent= null) {
-            if (GroupParent == null) {
-                NewsGroups AffiliateGroup = NewsRepos.SearchNewsGroupByAlias("affiliate-news");
-                if (AffiliateGroup.ID < 1)
-                {
-                    return;
-                }
-                GroupParent = AffiliateGroup;
-            }
+        public ActionResult Articles(string alias = "") {
+            return NewsList(alias);
+        }
 
-            var GroupItem = new NewsGroups() { Link = "", Date = DateTime.Now, Number = 0, Status = true, Parent = GroupParent.ID, Level = "1", Alias = NewsGroupAlias };
+        private void InsertNewsGroupDefault(string NewsGroupAlias="",NewsGroups GroupParent= null) {
+
+            var GroupItem = new NewsGroups() { Link = "", Date = DateTime.Now, Number = 0, Parent=0,Status = true, Level = "1", Alias = NewsGroupAlias, Site="affiliate" };
+            
 
             switch (GroupItem.Alias)
             {
@@ -142,12 +133,15 @@ namespace V308CMS.Sale.Controllers
                 case "he-thong":
                     GroupItem.Name = "Hệ Thống"; break;
             }
-            mEntities.AddToNewsGroups(GroupItem);
-            mEntities.SaveChanges();
+            if (GroupItem.Name.Length > 0 && GroupItem.Alias.Length > 0) {
+                mEntities.AddToNewsGroups(GroupItem);
+                mEntities.SaveChanges();
 
-            News NewsItem = new News() { Date = DateTime.Now, Order = 1, Status = true, Summary = "", Title = GroupItem.Name + " bài viết mẫu", TypeID = GroupItem.ID, Description = "Nội dung của " + GroupItem.Name };
-            mEntities.AddToNews(NewsItem);
-            mEntities.SaveChanges();
+                News NewsItem = new News() { Date = DateTime.Now, Order = 1, Status = true, Summary = "", Title = GroupItem.Name + " bài viết mẫu", TypeID = GroupItem.ID, Description = "Nội dung của " + GroupItem.Name };
+                mEntities.AddToNews(NewsItem);
+                mEntities.SaveChanges();
+            }
+            
         }
         
         [AffiliateAuthorize]
@@ -221,6 +215,34 @@ namespace V308CMS.Sale.Controllers
             }
         }
 
-        
+        public ActionResult Article(int id)
+        {
+            
+            try {
+                CreateRepos();
+                var newsItem = NewsRepos.GetById(id, 0);
+                if (newsItem == null)
+                {
+                    return HttpNotFound("Tin này không tồn tại trên hệ thống");
+                }
+                var newsDetailViewModel = new NewsDetailPageContainer
+                {
+                    NewsItem = newsItem,
+                    NextNewsItem = NewsRepos.GetNext(id),
+                };
+
+                return View(newsDetailViewModel);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return Content(ex.InnerException.ToString());
+            }
+            finally
+            {
+                DisposeRepos();
+            }
+        }
+
     }
 }

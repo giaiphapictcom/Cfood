@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using V308CMS.Common;
 using V308CMS.Data;
+using V308CMS.Data.Models;
 using V308CMS.Respository;
 
 namespace V308CMS.Sale.Controllers
@@ -22,8 +23,11 @@ namespace V308CMS.Sale.Controllers
         ProductRepository ProductRepos;
         ImagesRepository imagesRepos;
         NewsRepository NewsRepos;
+        NewsGroupRepository NewsGroupRepos;
         AccountRepository accountRepos;
         MenuConfigRespository MenuRepos;
+
+        BannerRespository BannerRepos;
 
         private void CreateRepos()
         {
@@ -31,8 +35,10 @@ namespace V308CMS.Sale.Controllers
             ProductRepos = new ProductRepository(mEntities);
             imagesRepos = new ImagesRepository(mEntities);
             NewsRepos = new NewsRepository(mEntities);
+            NewsGroupRepos = new NewsGroupRepository();
             accountRepos = new AccountRepository(mEntities);
             MenuRepos = new MenuConfigRespository(mEntities);
+            BannerRepos = new BannerRespository();
 
         }
         private void DisposeRepos()
@@ -41,6 +47,7 @@ namespace V308CMS.Sale.Controllers
             ProductRepos.Dispose();
             imagesRepos.Dispose();
             NewsRepos.Dispose();
+            //NewsGroupRepos.Dispose();
             accountRepos.Dispose();
             MenuRepos.Dispose();
             mEntities.Dispose();
@@ -140,6 +147,28 @@ namespace V308CMS.Sale.Controllers
             
         }
 
+        public ActionResult MenuCanvas()
+        {
+
+            try
+            {
+                CreateRepos();
+                HeaderPage Model = new HeaderPage();
+                Model.menu = MenuRepos.GetList(1, 5, "affiliate");
+
+                string view = "~/Views/" + MainController + "/Elements/MenuCanvas.cshtml";
+                return View(view, Model);
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.InnerException.ToString());
+            }
+            finally
+            {
+                DisposeRepos();
+            }
+
+        }
         public ActionResult Footer()
         {
             CreateRepos();
@@ -148,32 +177,32 @@ namespace V308CMS.Sale.Controllers
                 PageFooterControl Model = new PageFooterControl();
                 List<NewsGroupPage> NewsCategorys = new List<NewsGroupPage>(); ;
 
-                NewsGroups footerCate = NewsRepos.SearchNewsGroup("footer-affiliate");
-                if (footerCate != null)
+                //NewsGroups footerCate = NewsRepos.SearchNewsGroup("footer-affiliate");
+                //if (footerCate != null)
+                //{
+                List<NewsGroups> categorys = NewsGroupRepos.GetAll(true, "affiliate");
+                if (categorys.Count() > 0)
                 {
-                    List<NewsGroups> categorys = NewsRepos.GetNewsGroup(footerCate.ID, true, 3);
-                    if (categorys.Count() > 0)
+                    foreach (NewsGroups cate in categorys)
                     {
-                        foreach (NewsGroups cate in categorys)
-                        {
-                            NewsGroupPage NewsCategory = new NewsGroupPage();
-                            NewsCategory.Name = cate.Name;
-                            NewsCategory.NewsList = NewsRepos.LayDanhSachTinMoiNhatTheoGroupId(5, cate.ID);
-                            NewsCategorys.Add(NewsCategory);
-                        }
+                        NewsGroupPage NewsCategory = new NewsGroupPage();
+                        NewsCategory.Name = cate.Name;
+                        NewsCategory.NewsList = NewsRepos.LayDanhSachTinMoiNhatTheoGroupId(5, cate.ID);
+                        NewsCategorys.Add(NewsCategory);
                     }
                 }
+                //}
                 Model.NewsCategorys = NewsCategorys;
 
-                NewsGroups WhoSale = NewsRepos.LayNhomTinAn(29);
-                if (WhoSale.ID > 0)
-                {
-                    NewsGroupPage WhoSalePage = new NewsGroupPage();
-                    WhoSalePage.Name = WhoSale.Name;
-                    WhoSalePage.NewsList = NewsRepos.LayDanhSachTinMoiNhatTheoGroupId(5, WhoSale.ID);
+                //NewsGroups WhoSale = NewsRepos.LayNhomTinAn(29);
+                //if (WhoSale.ID > 0)
+                //{
+                //    NewsGroupPage WhoSalePage = new NewsGroupPage();
+                //    WhoSalePage.Name = WhoSale.Name;
+                //    WhoSalePage.NewsList = NewsRepos.LayDanhSachTinMoiNhatTheoGroupId(5, WhoSale.ID);
 
-                    Model.CategoryWhoSale = WhoSalePage;
-                }
+                //    Model.CategoryWhoSale = WhoSalePage;
+                //}
 
                 string view = "~/Views/" + MainController + "/Elements/Footer.cshtml";
                 return View(view, Model);
@@ -219,18 +248,19 @@ namespace V308CMS.Sale.Controllers
             return View(view, Model);
         }
 
-        public ActionResult BlockNews12(News article=null)
+        public ActionResult BlockNews12(Banner banner=null)
         {
             
             try
             {
                 CreateRepos();
-                if (article == null || article.ID < 1)
+                if (banner.Name == null || banner.Name.Length < 1)
                 {
-                    article = NewsRepos.SearchNews("affiliate-co-gi-khac-biet");
+                    var banners = BannerRepos.GetList(-1, "affiliate", true, 3);
+                    banner = banners.Last();
                 }
                 string view = "~/Views/" + MainController + "/Blocks/BlockNews12.cshtml";
-                return View(view, article);
+                return View(view, banner);
             }
             catch (Exception ex)
             {

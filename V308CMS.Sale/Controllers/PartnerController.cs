@@ -1,61 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using V308CMS.Common;
 using V308CMS.Data;
 using System.Web.Security;
+using V308CMS.Sale.Models;
+using V308CMS.Sale.Helpers;
+using V308CMS.Data.Helpers;
 
 namespace V308CMS.Sale.Controllers
 {
-    public class PartnerController : Controller
+    public class PartnerController : BaseController
     {
-        #region Repository
-        static V308CMSEntities mEntities;
-        ProductRepository ProductRepos;
-       
-        AccountRepository AccountRepos;
-        NewsRepository NewsRepos;
-        TestimonialRepository CommentRepo;
-        CategoryRepository CategoryRepo;
-        LinkRepository LinkRepo;
-        BannerRepository BannerRepo;
-        TicketRepository TicketRepo;
-        CouponRepository CouponRepo;
-        int PageSize = 10;
-        private void CreateRepos()
-        {
-            mEntities = new V308CMSEntities();
-            ProductRepos = new ProductRepository(mEntities);
-            ProductRepos.PageSize = PageSize;
-            ProductHelper.ProductShowLimit = ProductRepos.PageSize;
-            AccountRepos = new AccountRepository(mEntities);
-            NewsRepos = new NewsRepository(mEntities);
-            CommentRepo = new TestimonialRepository(mEntities);
-            CategoryRepo = new CategoryRepository(mEntities);
-            LinkRepo = new LinkRepository(mEntities);
-            BannerRepo = new BannerRepository(mEntities);
-            TicketRepo = new TicketRepository(mEntities);
-            CouponRepo = new CouponRepository(mEntities);
-            CouponRepo.PageSize = PageSize;
-        }
-
-        private void DisposeRepos()
-        {
-            mEntities.Dispose();
-            ProductRepos.Dispose();
-           
-            AccountRepos.Dispose();
-            NewsRepos.Dispose();
-            CommentRepo.Dispose();
-            CategoryRepo.Dispose();
-            LinkRepo.Dispose();
-            BannerRepo.Dispose();
-            TicketRepo.Dispose();
-            CouponRepo.Dispose();
-        }
-        #endregion
+        
 
         [AffiliateAuthorize]
         public ActionResult Index()
@@ -132,18 +88,6 @@ namespace V308CMS.Sale.Controllers
             }
 
         }
-
-        //private string InternalSendEmail(string to, string subject, string body)
-        //{
-        //    var emailSender = new EmailSender(
-        //         ConfigHelper.GMailUserName,
-        //         ConfigHelper.GMailPassword,
-        //         ConfigHelper.GmailSmtpServer,
-        //         ConfigHelper.GMailPort
-        //        );
-        //    return emailSender.SendMail(ConfigHelper.GMailUserName, to,
-        //         subject, body);
-        //}
 
 
         #region Support Send
@@ -375,29 +319,62 @@ namespace V308CMS.Sale.Controllers
         [AffiliateAuthorize]
         public ActionResult CouponForm()
         {
-            return View();
+            return View(new CouponModel());
         }
 
-        [HttpPost, ActionName("CouponForm")]
+        [HttpPost]
+        [ActionName("CouponForm")]
         [AffiliateAuthorize]
-        public ActionResult CouponFormPost()
+        public ActionResult CouponFormPost(CouponModel coupon)
         {
-            try
+            //System.Web.HttpPostedFileBase upload = Request["Image"];
+      
+            coupon.Image = coupon.File != null ?
+                   coupon.File.Upload() :
+                   coupon.Image;
+
+            var newCoupon = coupon.CloneTo<Counpon>(new[] { "File" });
+
+            if (coupon.Image.Length < 1)
             {
-                CreateRepos();
-                BannerRepo.Insert(Request["image"], Request["title"], Request["summary"], Request["url"]);
-                return Redirect("/banner");
+                ModelState.AddModelError("", "Cần phải chọn hình ảnh.");
+                return View("CouponForm", coupon);
             }
-            catch (Exception ex)
-            {
-                Console.Write(ex);
-                return Content("Xảy ra lỗi hệ thống ! Vui lòng thử lại.");
+            CreateRepos();
+            var result = CouponRepo.InsertObject(newCoupon);
+            if (result == Result.Exists) {
+                SetFlashMessage(string.Format("Mã Voucher đã tồn tại, hãy nhập mã mới"));
+                return View("CouponForm", coupon);
+            } else if (result == Result.Ok) {
+                SetFlashMessage(string.Format("Thêm voucher '{0}' thành công.", newCoupon.title));
+                return View("CouponForm", coupon.ResetValue());
             }
-            finally
-            {
-                DisposeRepos();
-            }
+
+            SetFlashMessage(string.Format("Có lỗi xảy ra"));
+            return View("CouponForm", coupon.ResetValue());
+
         }
+
+        //[HttpPost, ActionName("CouponForm")]
+        //[AffiliateAuthorize]
+        //public ActionResult CouponFormPost()
+        //{
+        //    try
+        //    {
+        //        CreateRepos();
+        //        BannerRepo.Insert(Request["image"], Request["title"], Request["summary"], Request["url"]);
+        //        return Redirect("/banner");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.Write(ex);
+        //        return Content("Xảy ra lỗi hệ thống ! Vui lòng thử lại.");
+        //    }
+        //    finally
+        //    {
+        //        DisposeRepos();
+        //    }
+        //}
         #endregion
     
     #region Orders
