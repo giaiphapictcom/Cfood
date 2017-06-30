@@ -1,0 +1,71 @@
+﻿.btn-social-icon {
+    width: 203px;
+    font-size: 12px;
+    color: #fff !important;
+    text-align: center;
+    padding-left: 35px;
+    padding-right: 5px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.btn-facebook {
+    color: #fff !important;
+    background-color: #3b5998 !important;
+    border-color: rgba(0,0,0,.2) !important;
+}
+.btn-facebook.active, .btn-facebook.focus, .btn-facebook:active, .btn-facebook:focus, .btn-facebook:hover, .open>.btn-facebook.dropdown-toggle {
+    color: #fff !important;
+    background-color: #2d4373 !important;
+    border-color: rgba(0,0,0,.2) !important;
+}
+.btn.focus, .btn:focus, .btn:hover {
+    color: #333 ;
+    text-decoration: none;
+}
+.btn-social, .btn-social-icon {
+    position: relative;
+    padding-left: 44px;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.btn-block {
+    display: block;
+    width: 100%;
+}
+.btn {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857;
+    border-radius: 4px;
+    -moz-user-select: none;
+    user-select: none;
+}
+.btn-google {
+    color: #fff !important;
+    background-color: #dd4b39 !important;
+    border-color: rgba(0,0,0,.2);
+}
+.user-name-login-google {
+    display: block;
+    text-align: center;
+    background: #df4a32;
+    overflow: hidden;
+    border: 1px solid #c63923;
+    padding: 5px;
+    -webkit-border-radius: 4px 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}

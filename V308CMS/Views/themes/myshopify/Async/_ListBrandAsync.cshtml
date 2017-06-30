@@ -1,0 +1,18 @@
+﻿@using V308CMS.Helpers
+@using V308CMS.Helpers.Url
+@model List<V308CMS.Data.Brand>
+@if (Model.Any())
+{
+    <div class="brand-image">       
+        @foreach (var brand in Model)
+        {
+            if (!string.IsNullOrEmpty(brand.image))
+            {
+                <a href="javascript:void(0);" title="@brand.name">
+                    <img src="@brand.image.ToUrl(138, 68)" alt="@brand.name" />
+                </a>
+            }
+
+        }
+    </div>
+}
