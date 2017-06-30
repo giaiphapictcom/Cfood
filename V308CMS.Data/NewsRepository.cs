@@ -102,27 +102,12 @@ namespace V308CMS.Data
                     .Take(psize).ToList();
             }
         }
+     
 
-<<<<<<< HEAD
         public List<News> GetListNewsMostView(int pTypeId, string pLevel, int psize = 10)
         {
             using (var entities = new V308CMSEntities())
-=======
-            public News GetById(int id, int type = 58)
-            {
-            var article = from p in entities.News
-                          where p.ID == id
-                          select p;
-            if (type > 0) {
-                article = from p in entities.News
-                          where p.ID == id && p.TypeID == type
-                          select p;
-            }
-
-               return article.FirstOrDefault();
-            }
-            public News getFirstNewsWithType(int pId)
->>>>>>> 14b9b6af344f091eebc0e657cc9c807a103951c6
+           
             {
                 if (pTypeId == 0)
                 {
@@ -142,6 +127,7 @@ namespace V308CMS.Data
                         where mIdGroup.Contains(p.TypeID.Value)
                         orderby p.Views, p.ID descending
                         select p).Take(psize).ToList();
+
             }
 
         }
@@ -631,29 +617,15 @@ namespace V308CMS.Data
 
         public string Update(News data)
         {
-<<<<<<< HEAD
             using (var entities = new V308CMSEntities())
             {
                 var newsItem = (from news in entities.News
-                                where news.ID == data.ID
-                                select news).FirstOrDefault();
+                    where news.ID == data.ID
+                    select news).FirstOrDefault();
                 if (newsItem != null)
-                {
-
-                    newsItem.Title = data.Title;
-=======
-            var newsItem = (from news in entities.News
-                            where news.ID == data.ID
-                            select news).FirstOrDefault();
-            if (newsItem != null)
-            {
-
-                
-                try
                 {
                     newsItem.Title = data.Title;
                     newsItem.Alias = data.Alias;
->>>>>>> 14b9b6af344f091eebc0e657cc9c807a103951c6
                     newsItem.TypeID = data.TypeID;
                     newsItem.Image = data.Image;
                     newsItem.Summary = data.Summary;
@@ -666,24 +638,11 @@ namespace V308CMS.Data
                     newsItem.Featured = data.Featured;
                     newsItem.Status = data.Status;
                     newsItem.Site = data.Site;
-<<<<<<< HEAD
                     entities.SaveChanges();
                     return "ok";
                 }
                 return "not_exists";
-=======
-                    //newsItem.NewsGroup = LayNhomTinAn((int)data.TypeID);
-                    entities.SaveChanges();
-                }
-                catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
-                {
-                    Console.Write(dbEx);
-                }
-                
-                return "ok";
->>>>>>> 14b9b6af344f091eebc0e657cc9c807a103951c6
             }
-
 
         }
 
