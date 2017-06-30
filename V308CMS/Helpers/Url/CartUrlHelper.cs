@@ -1,15 +1,17 @@
 ﻿using System.Web.Mvc;
 
-namespace V308CMS.Helpers
+namespace V308CMS.Helpers.Url
 {
     public static class CartUrlHelper
     {
-        public static string AddToCartUrl(this UrlHelper helper, string controller ="cart", string action= "add")
+        public static string AddToCartUrl(this UrlHelper helper, string controller ="cart", 
+            string action= "add")
         {
             return helper.Action(action, controller);
 
         }
-        public static string GetCartUrl(this UrlHelper helper, string controller = "cart", string action = "index")
+        public static string GetCartUrl(this UrlHelper helper, string controller = "cart",
+            string action = "index")
         {
             return helper.Action(action, controller);
         }
@@ -18,11 +20,11 @@ namespace V308CMS.Helpers
             string action = "viewcart")
         {
             return helper.Action(action, controller);
-        }
-        public static string CheckoutCartUrl(this UrlHelper helper, string controller = "cart",
+        }        
+        public static string CheckoutCartUrl(this UrlHelper helper, object routeValue = null, string controller = "cart",
             string action = "checkout")
         {
-            return helper.Action(action, controller);
+            return helper.Action(action, controller, routeValue);
         }
         public static string UpdateCartUrl(this UrlHelper helper, string controller = "cart",
             string action = "updatecart")

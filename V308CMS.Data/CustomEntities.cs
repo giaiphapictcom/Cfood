@@ -49,7 +49,7 @@ namespace V308CMS.Data
         private bool? _Gender;
         private DateTime? _BirthDay;
         private bool? _Status;
-        private string _Avata;
+        private string _Avatar;
         private int? _Role;
         private DateTime? _Date;
         private string _Salt;
@@ -72,7 +72,7 @@ namespace V308CMS.Data
         public bool? Gender { get { if (_Gender == null) return false; else return _Gender; } set { if (_Gender != value) { _Gender = value; } } }
         public DateTime? BirthDay { get { if (_BirthDay == null) return new DateTime(); else return _BirthDay; } set { if (_BirthDay != value) { _BirthDay = value; } } }
         public bool? Status { get { if (_Status == null) return false; else return _Status; } set { if (_Status != value) { _Status = value; } } }
-        public string Avata { get { if (String.IsNullOrEmpty(_Avata)) return ""; else return _Avata; } set { _Avata = value; } }
+        public string Avatar { get { if (String.IsNullOrEmpty(_Avatar)) return ""; else return _Avatar; } set { _Avatar = value; } }
         public int? Role { get { if (_Role == null || _Role < 0) return 0; else return _Role; } set { if (_Role != value) { if (_Role < 0) _Role = 0; else _Role = value; } } }
         public DateTime? Date { get { if (_Date == null) return new DateTime(); else return _Date; } set { if (_Date != value) { _Date = value; } } }     
         public string Salt { get { if (String.IsNullOrEmpty(_Salt)) return ""; else return _Salt; } set { _Salt = value; } }
@@ -999,28 +999,7 @@ namespace V308CMS.Data
 
     }
     #endregion[ket thuc class tblProductWishlist]
-    #region[Bat dau 1  class tblProductWishlist]
-
-    [Table("productwishlist")]
-    public class ProductWishlist
-    {
-
-        #region[Declare variables]
-        private int _ID;
-        private string _UserID;      
-        private string _ListProduct;      
-        #endregion
-        #region[Public Properties]
-        [Key]
-        public int Id { get { return _ID; } set { _ID = value; } }
-        public string UserId { get { if (String.IsNullOrEmpty(_UserID)) return ""; else return _UserID; } set { _UserID = value; } }
-        public string ListProduct { get { if (String.IsNullOrEmpty(_ListProduct)) return ""; else return _ListProduct; } set { _ListProduct = value; } }
-        #endregion
-
-    }
-    #endregion[ket thuc class tblProductWishlist]
-
-
+    
 
     #region[Bat dau 1  class tblProductManufacturer]
 
@@ -1066,6 +1045,7 @@ namespace V308CMS.Data
         public ProductOrder()
         {
             OrderDetail = new List<productorder_detail>();
+            ListTransaction = new List<OrderTransaction>();
         }
 
         #region[Declare variables]
@@ -1102,9 +1082,10 @@ namespace V308CMS.Data
         public int? ProductID { get { if (_ProductID == null || _ProductID < 0) return 0; else return _ProductID; } set { if (_ProductID != value) { if (_ProductID < 0) _ProductID = 0; else _ProductID = value; } } }
         public int? Count { get { if (_Count == null || _Count < 0) return 0; else return _Count; } set { if (_Count != value) { if (_Count < 0) _Count = 0; else _Count = value; } } }
         public double? Price { get { if (_Price == null || _Price < 0) return 0; else return _Price; } set { if (_Price != value) { if (_Price < 0) _Price = 0; else _Price = value; } } }
-        public string ProductDetail { get { if (String.IsNullOrEmpty(_ProductDetail)) return ""; else return _ProductDetail; } set { _ProductDetail = value; } }
-
+        public string ProductDetail { get { if (String.IsNullOrEmpty(_ProductDetail)) return ""; else return _ProductDetail; } set { _ProductDetail = value; } }         
         public virtual ICollection<productorder_detail> OrderDetail { get; set; }
+        public virtual ICollection<OrderTransaction> ListTransaction { get; set; }
+        public int ShippingId { get; set; }
 
         #endregion
 
@@ -1131,8 +1112,8 @@ namespace V308CMS.Data
         public string item_name { get { if (String.IsNullOrEmpty(ItemName)) return ""; else return ItemName; } set { ItemName = value; } }
         public double? item_price { get { if (ItemPrice == null || ItemPrice < 0) return 0; else return ItemPrice; } set { if (ItemPrice != value) { if (ItemPrice < 0) ItemPrice = 0; else ItemPrice = value; } } }
         public int? item_qty { get { if (ItemQty == null || ItemQty < 0) return 0; else return ItemQty; } set { if (ItemQty != value) { if (ItemQty < 0) ItemQty = 0; else ItemQty = value; } } }
-        [ForeignKey("order_id")]
-        [Required]
+        public string item_picture { get; set; }
+        [ForeignKey("order_id")]       
         public virtual ProductOrder Order { get; set; }
 
         #endregion

@@ -1,7 +1,12 @@
-﻿@using V308CMS.Common
+﻿@using StackExchange.Profiling
+@using V308CMS.Common
+@using V308CMS.Data
+@using V308CMS.Helpers
 @model V308CMS.Data.IndexPageContainer
 @{
     Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
+    var profiler = MiniProfiler.Current;
+    var listBoxContent = (List<BoxContent>)ViewBag.BoxContent;
 }
 @section header {
     <title>@ViewBag.SiteName</title>
@@ -11,32 +16,46 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-9 col-sm-12 col-xs-12 col-md-offset-3 banner-slide">
-                    @Html.Action("HomeSlides", "Block")
+                    @using (profiler.Step("Load Slides"))
+                    {
+                        @Html.Action("HomeSlides", "Block")
+                    }
+
+
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        jQuery(document).ready(function () {
+        jQuery(document).ready(function() {
             jQuery('.tp-caption').hide();
-            jQuery(window).load(function () {
-                setTimeout(function () { jQuery('.tp-caption').show(); }, 1000);
+            jQuery(window).load(function() {
+                setTimeout(function() { jQuery('.tp-caption').show(); }, 1000);
             });
         });
     </script>
 </div>
-@Html.Action("ProductMost", "MyShopify")
-@Html.Action("ProductHot", "MyShopify")
-
-@if (Model.ProductTypeList != null)
+@using (profiler.Step("Load ProductMost"))
 {
-    foreach (V308CMS.Data.ProductType cate in Model.ProductTypeList)
-    {
-    @Html.Action("ProductHomeCategory", "MyShopify", cate)
-    }
+    @Html.Action("ProductMost", "MyShopify")
+}
+@using (profiler.Step("Load ProductHot"))
+{
+    @Html.Action("ProductHot", "MyShopify")
 }
 
+@using (profiler.Step("Load ProductTypeList"))
+{
+    if (listBoxContent != null)
+    {
+        foreach (var boxItem in listBoxContent)
+        {
+            @Html.Partial("_BoxItem", boxItem)
+        }
+    }
+
+}
 
 @Html.Action("HomeYoutube", "MyShopify")
 @Html.Action("HomeFooter", "MyShopify")

@@ -10,7 +10,7 @@ namespace V308CMS.Data
             (
                 string name,
                 string email,
-                string phone, 
+                string phone,
                 string message,
                 DateTime createdDate
             );
@@ -19,20 +19,17 @@ namespace V308CMS.Data
         List<Contact> GetAll();
         Contact Find(int id);
         int Count();
-        List<Contact> Take(int count =10);
+        List<Contact> Take(int count = 10);
     }
-    public class ContactRepository: IContactRepository
+    public class ContactRepository : IContactRepository
     {
 
-        private V308CMSEntities entities;
- 
-   
-        public ContactRepository(V308CMSEntities _entities = null)
+
+
+
+        public ContactRepository()
         {
-            if (_entities == null) {
-                _entities = new V308CMSEntities();
-            }
-            this.entities = _entities;
+
         }
         public List<Contact> GetAll()
         {
@@ -43,7 +40,7 @@ namespace V308CMS.Data
                         select contact
                     ).ToList();
             }
-                
+
         }
         public Contact Find(int id)
         {
@@ -55,7 +52,7 @@ namespace V308CMS.Data
                    ).FirstOrDefault();
 
             }
-            
+
         }
 
         public int Count()
@@ -94,8 +91,8 @@ namespace V308CMS.Data
                 return "ok";
 
             }
-                
-            
+
+
         }
 
         public string Update(int id, string fullName, string email, string phone, string message, DateTime createdDate)
@@ -120,7 +117,7 @@ namespace V308CMS.Data
                 return "not_exists";
             }
 
-           
+
         }
 
         public string Delete(int id)
@@ -139,7 +136,7 @@ namespace V308CMS.Data
                 return "not_exists";
 
             }
-          
+
         }
     }
 }

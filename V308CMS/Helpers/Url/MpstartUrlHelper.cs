@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Web;
-using System.Web.Mvc;
 
-namespace V308CMS.Helpers
+namespace V308CMS.Helpers.Url
 {
     public static class MpstartUrlHelper
     {
-        
-        
-
+       
         public static bool IsLocalUrl(this  string url)
         {
             if (string.IsNullOrWhiteSpace(url))

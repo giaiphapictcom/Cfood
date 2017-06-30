@@ -1,11 +1,12 @@
 ﻿@using V308CMS.Common
 @using V308CMS.Helpers
+@using V308CMS.Helpers.Url
 @model V308CMS.Models.ShoppingCart
 @{
     Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
 }
 @section header {
-    <title>Xem giỏ hàng</title>
+    <title>Giỏ hàng - @ViewBag.SiteName</title>
 }
 @section Breadcrumb{
     <div class="clearfix breadcrumb-wrap">
@@ -26,26 +27,28 @@
         </div>
     </div>
 }
+
 <div id="cart">
     <!-- Begin empty cart -->
 
     <div class="row">
         <div class="col-lg-12">
             <!--h1> 'cart.general.title' | t </h1-->
-          
-                @if (Model.Items.Any()){
-                    <form action="@Url.CheckoutCartUrl()" method="post" id="cartform">
-                        @Html.AntiForgeryToken()
+
+            @if (Model.Items.Any())
+            {
+                <form action="@Url.CheckoutCartUrl()" method="post" id="cartform">
+                    @Html.AntiForgeryToken()
+                    <span>
+                        <h5>
+                            GIỎ HÀNG
+                        </h5>
                         <span>
-                            <h5>
-                                GIỎ HÀNG
-                            </h5>
-                            <span>
-                                (@Model.Items.Count sản phẩm)
-                            </span>
+                            (@Model.Items.Count sản phẩm)
                         </span>
-                        <table>
-                            <thead>
+                    </span>
+                    <table>
+                        <thead>
                             <tr>
                                 <th class="image">&nbsp;</th>
                                 <th class="item">Tên</th>
@@ -53,8 +56,8 @@
                                 <th class="price">Đơn giá</th>
                                 <th class="remove">&nbsp;</th>
                             </tr>
-                            </thead>
-                            <tbody>
+                        </thead>
+                        <tbody>
                             @foreach (var cart in Model.Items)
                             {
                                 <tr>
@@ -73,8 +76,8 @@
 
                                         </a>
                                     </td>
-                                    <td class="qty">                                        
-                                        <input type="text" size="4" name="updates[]" id="updates_@cart.ProductItem.Id" value="1" onfocus="this.select();" class="tc item-quantity">
+                                    <td class="qty">
+                                        <input type="text" size="4" name="updates[]" id="updates_@cart.ProductItem.Id" value="@cart.Quantity" onfocus="this.select();" class="tc item-quantity">
                                     </td>
                                     <td class="price"><span class="money">@cart.UnitPrice.ToString("N0") đ</span></td>
                                     <td class="remove">
@@ -82,35 +85,32 @@
                                     </td>
                                 </tr>
                             }
-                                <tr class="summary">
-                                    <td colspan="3">Tổng tiền</td>
-                                    <td class="price"><span class="total"><strong><span class="money">@Model.SubTotal.ToString("N0") đ</span></strong></span></td>
-                                    <td>&nbsp;</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="row">
-                            <div class="col-md-6 col-sm-6 span6 cart-buttons inner-right inner-left" style="float: right">
-                                <input type="submit" id="checkout" class="btn" name="checkout" value="Thanh Toán" onclick="window.location = '@Url.CheckoutCartUrl()'">                                
-                            </div>
+                            <tr class="summary">
+                                <td colspan="3">Tổng tiền</td>
+                                <td class="price"><span class="total"><strong><span class="money">@Model.SubTotal.ToString("N0") đ</span></strong></span></td>
+                                <td>&nbsp;</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 span6 cart-buttons inner-right inner-left" style="float: right">
+                            <a class="btn" title="Tiếp tục mua hàng" href="/"> Tiếp tục mua hàng</a>
+                            <input type="submit" id="checkout" class="btn" name="checkout" value="Thanh Toán" onclick="window.location = '@Url.CheckoutCartUrl()'">
                         </div>
-                    </form>
-                }
-                else{
-                    <h2 class="tc">Giỏ hàng trống</h2>
-                    <span>Click vào <a href="/" title="Trang chủ">đây</a> để tiếp tục mua hàng. </span>
-                }
-
-
-
+                    </div>
+                </form>
+            }
+            else
+            {
+                <div class="empty-cart">
+                    <img src="/Content/Images/cart-empty.png" alt="Không có sản phẩm nào trong giỏ hàng của bạn.">
+                    <p class="message">Không có sản phẩm nào trong giỏ hàng của bạn.</p>
+                    <a href="/" class="btn btn-yellow">Tiếp tục mua sắm</a>
+                </div>
+            }
         </div>
         <div class="clearfix"></div>
 
     </div>
-
-
-
-
-    <!-- End cart -->
 
 </div>

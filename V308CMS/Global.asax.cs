@@ -1,17 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Web.Security;
+using Newtonsoft.Json;
+using StackExchange.Profiling;
 using V308CMS.Helpers;
 
 namespace V308CMS
-{
-    // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
-    // visit http://go.microsoft.com/?LinkId=9394801
-    public class MvcApplication : System.Web.HttpApplication
+{   
+    public class MvcApplication : HttpApplication
     {
         protected void Application_Start()
         {
@@ -20,8 +19,56 @@ namespace V308CMS
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            SiteConfig.RegisterConfigs();
+            AuthConfig.RegisterAuth();
             ViewEngines.Engines.Clear();
             ViewEngines.Engines.Add(new MpStartViewEngine());
+        }
+        protected void Application_BeginRequest()
+        {
+            if (ConfigHelper.ShowPageProfile)
+            {
+                MiniProfiler.Start();
+            }
+        }
+
+        protected void Application_EndRequest()
+        {
+            if (ConfigHelper.ShowPageProfile)
+            {
+                MiniProfiler.Stop();
+            }
+        }
+        private void SetCustomUser()
+        {
+            var authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+            if (authCookie == null) return;
+            var authTicket = FormsAuthentication.Decrypt(authCookie.Value);
+
+            if (authTicket != null)
+            {
+                var userData = JsonConvert.DeserializeObject<MyUser>(authTicket.UserData);
+                if (userData != null)
+                {
+                    var principal = new CustomPrincipal(authTicket.Name)
+                    {
+                        UserId = userData.UserId,
+                        UserName = userData.UserName,
+                        Avatar = userData.Avatar
+                    };
+                    HttpContext.Current.User = principal;
+                }
+            }
+        }
+        protected void Application_PostAuthenticateRequest(Object sender, EventArgs e)
+        {
+            SetCustomUser();
+        }
+
+        protected void Application_AuthenticateRequest(Object sender, EventArgs e)
+        {
+            SetCustomUser();
+
         }
     }
 }

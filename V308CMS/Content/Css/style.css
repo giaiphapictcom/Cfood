@@ -51,75 +51,75 @@
         position: relative;
     }
 
-        .grounpStoryList .news .create_time {
-            margin: 5px 5px;
-            color: #3b3b3b;
-            font-size: 13px;
-            font-weight: normal;
-        }
+    .grounpStoryList .news .create_time {
+        margin: 5px 5px;
+        color: #3b3b3b;
+        font-size: 13px;
+        font-weight: normal;
+    }
 
-            .grounpStoryList .news .create_time b {
-                font-weight: bold;
-                color: #0A4CBC;
-            }
+    .grounpStoryList .news .create_time b {
+        font-weight: bold;
+        color: #0A4CBC;
+    }
 
-            .grounpStoryList .news .create_time .crateTimeTitle {
-                display: none;
-            }
+    .grounpStoryList .news .create_time .crateTimeTitle {
+        display: none;
+    }
 
-            .grounpStoryList .news .create_time span {
-                font-size: 13px;
-                color: #ff0000;
-                font-weight: normal;
-            }
+    .grounpStoryList .news .create_time span {
+        font-size: 13px;
+        color: #ff0000;
+        font-weight: normal;
+    }
 
-        .grounpStoryList .news .title {
-            font-size: 13px;
-            font-weight: bold;
-            margin: 0;
-            width: 100%;
-            margin-bottom: 8px;
-        }
+    .grounpStoryList .news .title {
+        font-size: 13px;
+        font-weight: bold;
+        margin: 0;
+        width: 100%;
+        margin-bottom: 8px;
+    }
 
-            .grounpStoryList .news .title a {
-                text-decoration: none;
-                font-size: 16px;
-                font-weight: bold;
-                color: #333333;
-                font-family: Arial;
-            }
+    .grounpStoryList .news .title a {
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: bold;
+        color: #333333;
+        font-family: Arial;
+    }
 
-                .grounpStoryList .news .title a:hover {
-                    color: #0d4c8f;
-                }
+    .grounpStoryList .news .title a:hover {
+        color: #0d4c8f;
+    }
 
-        .grounpStoryList .news .hr_h {
-            margin: 5px 0;
-        }
+    .grounpStoryList .news .hr_h {
+        margin: 5px 0;
+    }
 
-        .grounpStoryList .news .description {
-            margin: 8px 0 0 0;
-            color: #3B3B3B;
-            font-size: 12px;
-            line-height: 20px;
-        }
+    .grounpStoryList .news .description {
+        margin: 8px 0 0 0;
+        color: #3B3B3B;
+        font-size: 12px;
+        line-height: 20px;
+    }
 
-        .grounpStoryList .news .image_container {
-            float: left;
-            padding: 0;
-            margin-right: 10px;
-            margin-bottom: 5px;
-            -webkit-border-radius: 0;
-            -moz-border-radius: 0;
-            border-radius: 0;
-        }
+    .grounpStoryList .news .image_container {
+        float: left;
+        padding: 0;
+        margin-right: 10px;
+        margin-bottom: 5px;
+        -webkit-border-radius: 0;
+        -moz-border-radius: 0;
+        border-radius: 0;
+    }
 
-            .grounpStoryList .news .image_container img {
-                float: left;
-                width: 150px;
-                height: 120px;
-                padding: 0;
-            }
+    .grounpStoryList .news .image_container img {
+        float: left;
+        width: 150px;
+        height: 120px;
+        padding: 0;
+    }
 
     .grounpStoryList .story {
         border: 1px solid #d9d9d9;
@@ -131,116 +131,116 @@
         padding: 0;
     }
 
-        .grounpStoryList .story:hover {
-        }
+      
 
-        .grounpStoryList .story .image_container {
-            float: left;
-            width: 100%;
-            background: #ffffff;
-            position: relative;
-        }
+.grounpStoryList .story .image_container {
+    float: left;
+    width: 100%;
+    background: #ffffff;
+    position: relative;
+}
 
-            .grounpStoryList .story .image_container .image_cell {
-                display: table-cell;
-                vertical-align: middle;
-                text-align: center;
-                width: 190px;
-                height: 116px;
-            }
+.grounpStoryList .story .image_container .image_cell {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    width: 190px;
+    height: 116px;
+}
 
-    .grounpStoryList .image_container .image_news {
-        padding: 0;
-        max-width: 190px;
-        max-height: 116px;
-    }
+.grounpStoryList .image_container .image_news {
+    padding: 0;
+    max-width: 190px;
+    max-height: 116px;
+}
 
-    .grounpStoryList .story .title {
-        float: left;
-        width: 100%;
-        margin: 5px 0 0;
-        font-weight: normal;
-        font-size: 13px;
-        padding: 0;
-        text-align: center;
-        height: 35px;
-        overflow: hidden;
-        line-height: 18px;
-    }
+.grounpStoryList .story .title {
+    float: left;
+    width: 100%;
+    margin: 5px 0 0;
+    font-weight: normal;
+    font-size: 13px;
+    padding: 0;
+    text-align: center;
+    height: 35px;
+    overflow: hidden;
+    line-height: 18px;
+}
 
-        .grounpStoryList .story .title a {
-            padding: 0 5px;
-            font-size: 12px;
-            text-decoration: none;
-            color: #444444;
-            text-transform: none;
-            font-weight: bold;
-        }
+.grounpStoryList .story .title a {
+    padding: 0 5px;
+    font-size: 12px;
+    text-decoration: none;
+    color: #444444;
+    text-transform: none;
+    font-weight: bold;
+}
 
-            .grounpStoryList .story .title a:hover {
-                color: #014a8f;
-            }
+.grounpStoryList .story .title a:hover {
+    color: #014a8f;
+}
 
-    .grounpStoryList .story .price {
-        float: left;
-        width: 100%;
-        font-size: 12px;
-        color: #014a8f;
-        margin: 0;
-        padding: 0;
-        text-align: center;
-        font-weight: bold;
-        font-family: Segoe UI, Arial, Helvetica, sans-serif;
-        height: 23px;
-    }
+.grounpStoryList .story .price {
+    float: left;
+    width: 100%;
+    font-size: 12px;
+    color: #014a8f;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    font-weight: bold;
+    font-family: Segoe UI, Arial, Helvetica, sans-serif;
+    height: 23px;
+}
 
-        .grounpStoryList .story .price span {
-            color: #808080;
-            font-size: 14px;
-            font-weight: normal;
-        }
+.grounpStoryList .story .price span {
+    color: #808080;
+    font-size: 14px;
+    font-weight: normal;
+}
 
-    .grounpStoryList .story .price_basic {
-        float: left;
-        width: 100%;
-        font-size: 12px;
-        color: #666666;
-        margin: 0;
-        padding: 0;
-        text-align: center;
-        font-weight: normal;
-        text-decoration: line-through;
-    }
+.grounpStoryList .story .price_basic {
+    float: left;
+    width: 100%;
+    font-size: 12px;
+    color: #666666;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    font-weight: normal;
+    text-decoration: line-through;
+}
 
-        .grounpStoryList .story .price_basic span {
-            color: #666666;
-            font-size: 14px;
-            font-weight: normal;
-        }
+.grounpStoryList .story .price_basic span {
+    color: #666666;
+    font-size: 14px;
+    font-weight: normal;
+}
 
-    .grounpStoryList .laststory {
-        height: 406px;
-    }
+.grounpStoryList .laststory {
+    height: 406px;
+}
 
-        .grounpStoryList .laststory .image_laststory {
-            float: left;
-            width: 100%;
-        }
+.grounpStoryList .laststory .image_laststory {
+    float: left;
+    width: 100%;
+}
 
-            .grounpStoryList .laststory .image_laststory .lastimage-cell {
-                display: table-cell;
-                vertical-align: middle;
-                text-align: center;
-                width: 190px;
-                height: 305px;
-            }
+.grounpStoryList .laststory .image_laststory .lastimage-cell {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    width: 190px;
+    height: 305px;
+}
 
-            .grounpStoryList .laststory .image_laststory .lastimage_news {
-                padding: 0;
-                max-width: 190px;
-                max-height: 305px;
-            }
+.grounpStoryList .laststory .image_laststory .lastimage_news {
+    padding: 0;
+    max-width: 190px;
+    max-height: 305px;
+}
 
-    .grounpStoryList .story_discount {
-        height: 220px;
-    }
+.grounpStoryList .story_discount {
+    height: 220px;
+}
+

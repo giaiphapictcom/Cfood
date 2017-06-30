@@ -10,36 +10,14 @@ namespace V308CMS.Respository
     {
         string ChangeState(int id);
     }
-    public class MenuConfigRespository: Data.IBaseRespository<MenuConfig>, IMenuConfigRespository
+    public class MenuConfigRespository : Data.IBaseRespository<MenuConfig>, IMenuConfigRespository
     {
 
-        private V308CMSEntities entities;
-        public MenuConfigRespository(V308CMSEntities mEntities = null)
-        {
-            if (mEntities == null){
-                mEntities = new V308CMSEntities();
-            }
-            this.entities = mEntities;
-        }
 
-        #region["Vung cac thao tac Dispose"]
-        public void Dispose()
+        public MenuConfigRespository()
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
+
         }
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                if (this.entities != null)
-                {
-                    this.entities.Dispose();
-                    this.entities = null;
-                }
-            }
-        }
-        #endregion
 
         public MenuConfig Find(int id)
         {
@@ -50,7 +28,7 @@ namespace V308CMS.Respository
                         select item
                ).FirstOrDefault();
             }
-            
+
         }
 
         public string Delete(int id)
@@ -69,7 +47,7 @@ namespace V308CMS.Respository
                 }
                 return "not_exists";
             }
-           
+
         }
 
         public string Update(MenuConfig config)
@@ -98,7 +76,7 @@ namespace V308CMS.Respository
                 }
                 return "not_exists";
             }
-            
+
         }
 
         public string Insert(MenuConfig config)
@@ -125,7 +103,7 @@ namespace V308CMS.Respository
                 }
                 return "exists";
             }
-            
+
         }
 
         public string Insert
@@ -159,31 +137,32 @@ namespace V308CMS.Respository
                 }
                 return "exists";
             }
-            
+
         }
 
-        public List<MenuConfig> GetList(int page = 1, int pageSize = 10,string site="",byte status = 0)
+        public List<MenuConfig> GetList(int page = 1, int pageSize = 10, string site = "", byte status = 0)
         {
             using (var entities = new V308CMSEntities())
             {
                 var items = from m in entities.MenuConfig
-                            where m.Site == site 
+                            where m.Site == site
 
-                        orderby m.Order ascending
-                        select m;
-                if (status > 0) { 
-                     items = from m in entities.MenuConfig
-                                 where m.Site == site && m.State == status
+                            orderby m.Order ascending
+                            select m;
+                if (status > 0)
+                {
+                    items = from m in entities.MenuConfig
+                            where m.Site == site && m.State == status
 
-                        orderby m.Order ascending
-                        select m;
+                            orderby m.Order ascending
+                            select m;
                 }
-                
+
                 return items.Skip((page - 1) * pageSize).Take(pageSize).ToList();
             }
-            
+
         }
-        public List<MenuConfig> GetAll(string site="")
+        public List<MenuConfig> GetAll(string site = "")
         {
             using (var entities = new V308CMSEntities())
             {
@@ -192,7 +171,7 @@ namespace V308CMS.Respository
                         select item
                ).ToList();
             }
-           
+
         }
 
 
@@ -213,7 +192,7 @@ namespace V308CMS.Respository
                 }
                 return "not_exists";
             }
-            
+
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using V308CMS.Data.Mapping;
@@ -15,6 +16,7 @@ namespace V308CMS.Data
             : base("V308CMSConnectionString")
         {
 
+            Database.SetInitializer<V308CMSEntities>(null);
         }
         public V308CMSEntities(string connectionString)
             : base(connectionString)
@@ -37,10 +39,20 @@ namespace V308CMS.Data
             modelBuilder.Configurations.Add(new CountryMap());
             modelBuilder.Configurations.Add(new SizeMap());
             modelBuilder.Configurations.Add(new ProductColorMap());
-            modelBuilder.Configurations.Add(new ProductSizeMap());          
+            modelBuilder.Configurations.Add(new ProductSizeMap());
             modelBuilder.Configurations.Add(new PermissionMap());
             modelBuilder.Configurations.Add(new BannerMap());
             modelBuilder.Configurations.Add(new EmailLogMap());
+            modelBuilder.Configurations.Add(new RegionMap());
+            modelBuilder.Configurations.Add(new ShippingAddressMap());            
+            modelBuilder.Configurations.Add(new OrderTransactionMap());
+            modelBuilder.Configurations.Add(new ProductWishlistMap());
+
+            modelBuilder.Entity<OrderTransaction>()
+            .HasRequired(p => p.Order)
+            .WithMany(p => p.ListTransaction)
+            .HasForeignKey(p => p.OrderId);
+
             modelBuilder.Entity<productorder_detail>()
             .HasRequired(p => p.Order)
             .WithMany(p => p.OrderDetail)
@@ -84,8 +96,23 @@ namespace V308CMS.Data
             .HasForeignKey(p => p.RoleId);
 
         }
+        public DbSet<OrderTransaction> OrderTransaction
+        {
+            get;
+            set;
+        }
+        public DbSet<ShippingAddress> ShippingAddress
+        {
+            get;
+            set;
+        }
         #endregion
         #region ObjectSet Properties
+        public DbSet<Region> Region
+        {
+            get;
+            set;
+        }
         public DbSet<EmailLog> EmailLog
         {
             get;
@@ -100,7 +127,7 @@ namespace V308CMS.Data
         {
             get;
             set;
-        }      
+        }
         public DbSet<ProductSize> ProductSize
         {
             get;
@@ -361,7 +388,7 @@ namespace V308CMS.Data
             get;
             set;
         }
-       
+
 
         public DbSet<AffiliateBanner> AffiliateBanner
         {
@@ -390,8 +417,8 @@ namespace V308CMS.Data
             get;
             set;
         }
-      
-        
+
+
 
         #endregion
         #region AddTo Methods
@@ -686,7 +713,7 @@ namespace V308CMS.Data
             this.SupportType.Add(SupportType);
         }
         #endregion
-        
+
     }
     #endregion
 }

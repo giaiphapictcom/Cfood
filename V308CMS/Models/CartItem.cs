@@ -14,23 +14,12 @@ namespace V308CMS.Models
         //So luong
         public int Quantity { get; set; }
         //Don gia
-        public double UnitPrice
-        {
-            get { return ProductItem.Price; }
-        }
+        public double UnitPrice => ProductItem.Price;
         public int Voucher { get; set; }
 
-        public int SaleOff
-        {
-            get { return ProductItem.SaleOff; }
-        }
-        public double TotalPrice
-        {
-            get
-            {
-                return SaleOff > 0 ?Quantity * ((UnitPrice - ((UnitPrice / 100) * SaleOff))) : Quantity * UnitPrice;
-            }
-        }
+        public int SaleOff => ProductItem.SaleOff;
+
+        public double TotalPrice => SaleOff > 0 ?Quantity * ((UnitPrice - ((UnitPrice / 100) * SaleOff))) : Quantity * UnitPrice;
 
         public bool Equals(CartItem other)
         {

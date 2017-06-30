@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using V308CMS.Data;
 
 namespace V308CMS.Models
 {
@@ -125,6 +124,14 @@ namespace V308CMS.Models
         }
         public int Voucher { get; set; }
         public int ShipPrice { get; set; }
+
+        public void Clear()
+        {
+            if (Items.Any())
+            {
+                Items.Clear();
+            }
+        }
     
 
     }

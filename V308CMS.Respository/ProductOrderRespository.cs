@@ -15,7 +15,7 @@ namespace V308CMS.Respository
         List<ProductOrder> Take(int count =10);
         string UpdateDetail(int id, string detail);
         string ChangeStatus(int id, int status);
-        string Delete(int id);
+        string Delete(int id);        
     }
     public  class ProductOrderRespository: IProductOrderRespository
     {

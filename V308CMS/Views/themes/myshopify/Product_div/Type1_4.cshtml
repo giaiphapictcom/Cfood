@@ -1,6 +1,7 @@
 ﻿@model  V308CMS.Data.Product
 @using V308CMS.Data;
 @using V308CMS.Common;
+@using V308CMS.Helpers.Url
 
 <div class="col-md-4 col-sm-4 col-xs-6">
     <div class="grid-item product-item" id="product-@Model.ID">
@@ -12,7 +13,7 @@
 
 
                 <a href="@url.productURL(Model.Name, Model.ID)" class="grid-image">
-                    <img class="feature-Model" src="@V308CMS.Helpers.ImageUrlHelper.ToUrl(@Model.Image, 250)" alt="@Model.Name">
+                    <img class="feature-Model" src="@ImageUrlHelper.ToUrl(@Model.Image, 250)" alt="@Model.Name">
 
 
                 </a>
