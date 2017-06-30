@@ -30,7 +30,7 @@
                                 {
                                         <li>
                                             <a href="@Url.AccountLogoutUrl()" id="customer_logout_link">Thoát tài khoản</a>
-                                            <a href="/account">Tài khoản của tôi</a>
+                                            <a href="#">Tài khoản của tôi</a>
                                         </li>
                                     }
                                     else
@@ -55,7 +55,7 @@
                     @if (AuthenticationHelper.IsAuthenticated)
                             {
                         <div class="wishlist">
-                            <a href="@V308CMS.Common.url.WishlistIndexUrl()" title="Danh sách sản phẩm yêu thích">Danh sách yêu thích</a>
+                            <a href="@Url.MemberWishListIndexUrl()" title="Danh sách sản phẩm yêu thích">Danh sách yêu thích</a>
                         </div>
                     }
 
