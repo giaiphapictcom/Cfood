@@ -149,7 +149,10 @@
     <Compile Include="Enum\StateEnum.cs" />
     <Compile Include="Enum\StateFilterEnum.cs" />
     <Compile Include="FileRepository.cs" />
+    <Compile Include="Helpers\ConfigHelper.cs" />
+    <Compile Include="Helpers\Email.cs" />
     <Compile Include="Helpers\Result.cs" />
+    <Compile Include="Helpers\Site.cs" />
     <Compile Include="IBaseRespository.cs" />
     <Compile Include="ImagesRepository.cs" />
     <Compile Include="LinkRepository.cs" />

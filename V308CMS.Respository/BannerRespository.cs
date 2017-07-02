@@ -128,14 +128,21 @@ namespace V308CMS.Respository
         
         }
 
-        public List<Banner> GetList(int position = 0,string site="",bool withImg = false,int limit = 1)
+        public List<Banner> GetList(int position = 0,string site= Data.Helpers.Site.home, bool withImg = false,int limit = 1)
         {
             var banners = new List<Banner>();
             using (var entities = new V308CMSEntities())
             {
 
                 try {
-                    IQueryable<Banner> items = entities.Banner.Where(b => b.Site == site.Trim());
+                    IQueryable<Banner> items = entities.Banner;
+                    if (site == Data.Helpers.Site.home)
+                    {
+                        items = items.Where(b => b.Site == site || b.Site == "" || b.Site == null || b.Site =="1");
+                    }
+                    else {
+                        items = items.Where(b => b.Site == site.Trim());
+                    }
 
                     if (position >= 0)
                     {

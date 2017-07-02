@@ -752,6 +752,7 @@ div#dropdown-cart .summary p.total span.price{color:#cc0000;font-weight:700;font
 
 
 #cart .cart-buttons{margin: 20px 0; text-align: right;}
+
 .top-bar-dropdown{background: #fff none repeat scroll 0 0;
   border:1px solid #ccc;
   opacity: 0;
@@ -767,8 +768,15 @@ div#dropdown-cart .summary p.total span.price{color:#cc0000;font-weight:700;font
   -o-transition: all 0.3s ease-in-out 0s;
   text-align: left;
   top: 30px;
-  width: 290px;
+    min-width: 200px;
 }
+
+.header-top-right:hover .top-bar-dropdown {
+    visibility:visible;
+    opacity: 1;
+    filter: alpha(opacity = 1);
+}
+
 .top-currency:hover .top-bar-dropdown {
   opacity: 1;
   filter: alpha(opacity = 1);
@@ -863,8 +871,8 @@ div#dropdown-cart .summary p.total span.price{color:#cc0000;font-weight:700;font
 .customer-links > li:hover i,.customer-links > li:hover a{color:#000}
 .customer-links li a{
   color:#a3a3a3;
-  font-size: 13px;
-  font-weight: 400;
+  font-size: 12px;
+  
   margin: 0;text-transform: uppercase;
 }
 .customer-links li a i{font-size:12px;}
@@ -3536,7 +3544,7 @@ body{ position: relative;}
   text-align: center;
 }
 #header-content .header-body {
-  padding: 15px 0;
+  padding: 15px 0 0 0;
 }
 /*--------------------------------------- Home Page Block Top */
 .block-top .static-collection {position: relative;overflow: hidden;}
@@ -4802,6 +4810,14 @@ div#rev_slider {
 
 .article-home-full {
    
+}
+
+.article-home-full h5 {
+    margin-bottom: 10px;
+   
+}
+.article-home-full p {
+    text-align:justify;
 }
 
 .border-col {

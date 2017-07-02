@@ -57,7 +57,7 @@ namespace V308CMS.Admin.Controllers
                     Phone = user.Phone,
                     FullName = user.FullName,
                     Salt = StringHelper.GenerateString(6),
-                    Avata = user.Avatar != null
+                    Avatar = user.Avatar != null
                         ? user.Avatar.Upload()
                         : user.AvatarUrl
                 };
@@ -109,11 +109,11 @@ namespace V308CMS.Admin.Controllers
                 Email = user.Email,
                 Address = user.Address,
                 Phone = user.Phone,
-                Gender = user.Gender.HasValue && user.Gender.Value,
+                Gender = user.Gender,
                 //BirthDay = user.BirthDay?.ToString("dd/MM/yyyy") ?? "",
                 BirthDay = string.Format("dd/MM/yyyy", user.BirthDay),
-                Status = user.Status ?? false,
-                AvatarUrl = user.Avata,
+                Status = user.Status,
+                AvatarUrl = user.Avatar,
                 Site = user.Site
             };
 
@@ -134,7 +134,7 @@ namespace V308CMS.Admin.Controllers
                     UserName = user.Username,
                     Phone = user.Phone,
                     FullName = user.FullName,
-                    Avata = user.Avatar != null
+                    Avatar = user.Avatar != null
                         ? user.Avatar.Upload()
                         : user.AvatarUrl.ToImageOriginalPath(),
                     Address = user.Address,

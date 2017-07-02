@@ -235,53 +235,59 @@ namespace V308CMS.Admin.Controllers
                 return RedirectToAction("Index");
 
             }
-            var modelEdit = new ProductModels
-            {
-                Id = product.ID,
-                Name = product.Name,
-                ImageUrl = product.Image,
-                CategoryId = product.Type ?? 0,
-                Code = product.Code,
-                BrandId = product.BrandId,
-                Store = product.Store,
-                Country = product.Country,
-                ManufacturerId = product.Manufacturer,
-                AccountId = product.AccountId,
-                Number = product.Number ?? 0,
-                Unit = product.Unit1,
-                Quantity = int.Parse(product.Quantity.ToString()),
-                Weight = product.Weight,
-                //Npp = product.Npp?.ToString() ?? "",
-                Npp = product.Npp.ToString(),
-                Width = product.Width,
-                Height = product.Height,
-                Depth = product.Depth,
-                Summary = product.Summary,
-                Detail = product.Detail,
-                WarrantyTime = product.WarrantyTime,
-                ExpireDate = product.ExpireDate,
-                Transport1 = product.Transport1 ?? 0,
-                Transport2 = product.Transport2 ?? 0,
-                MetaTitle = product.Title,
-                MetaDescription = product.Description,
-                MetaKeyword = product.Keyword,
-                Price = (int) (product.Price ?? 0),
-                //ListProductImages = product.ProductImages?.ToList() ?? new List<ProductImage>(),
-                ListProductImages = product.ProductImages.ToList(),
-                //ListProductAttribute = product.ProductAttribute?.ToList() ?? new List<ProductAttribute>(),
-                ListProductAttribute = product.ProductAttribute.ToList() 
-            };
+            var modelEdit = new ProductModels();
+            try {
+                modelEdit.Id = product.ID;
+                modelEdit.Name = product.Name;
+                modelEdit.ImageUrl = product.Image;
+                modelEdit.CategoryId = product.Type ?? 0;
+                modelEdit.Code = product.Code;
+                modelEdit.BrandId = product.BrandId;
+                modelEdit.Store = product.Store;
+                modelEdit.Country = product.Country;
+                modelEdit.ManufacturerId = product.Manufacturer;
+                modelEdit.AccountId = product.AccountId;
+                modelEdit.Number = product.Number ?? 0;
+                modelEdit.Unit = product.Unit1.ToString();
+                modelEdit.Quantity = 0;
+                if (product.Quantity.ToString().Length > 0) {
+                    modelEdit.Quantity = int.Parse(product.Quantity.ToString());
+                }
+                
+                modelEdit.Weight = product.Weight;
+                modelEdit.Width = product.Width;
+                modelEdit.Npp = product.Npp.ToString();
+                modelEdit.Depth = product.Depth;
+                modelEdit.Summary = product.Summary;
+                modelEdit.Detail = product.Detail;
+                modelEdit.WarrantyTime = product.WarrantyTime;
+                modelEdit.ExpireDate = product.ExpireDate;
+                modelEdit.Transport1 = product.Transport1 ?? 0;
+                modelEdit.Transport2 = product.Transport2 ?? 0;
+                modelEdit.MetaTitle = product.Title;
+                modelEdit.MetaDescription = product.Description;
+                modelEdit.MetaKeyword = product.Keyword;
+                modelEdit.Price = (int)(product.Price ?? 0);
+                modelEdit.ListProductImages = product.ProductImages.ToList();
+                modelEdit.ListProductAttribute = product.ProductAttribute.ToList();
 
-            if (product.ProductSaleOff != null && product.ProductSaleOff.Count>0)
-            {
-                var saleOffItem = product.ProductSaleOff.FirstOrDefault();
-                //modelEdit.Percent = saleOffItem.Percent?.ToString() ?? "";
-                //modelEdit.StartDate = saleOffItem.StartTime?.ToString() ?? "";
-                //modelEdit.EndDate = saleOffItem.EndTime?.ToString() ?? "";
-                modelEdit.Percent = saleOffItem.Percent.ToString();
-                modelEdit.StartDate = saleOffItem.StartTime.ToString();
-                modelEdit.EndDate = saleOffItem.EndTime.ToString();
+
+                if (product.ProductSaleOff != null && product.ProductSaleOff.Count > 0)
+                {
+                    var saleOffItem = product.ProductSaleOff.FirstOrDefault();
+                    //modelEdit.Percent = saleOffItem.Percent?.ToString() ?? "";
+                    //modelEdit.StartDate = saleOffItem.StartTime?.ToString() ?? "";
+                    //modelEdit.EndDate = saleOffItem.EndTime?.ToString() ?? "";
+                    modelEdit.Percent = saleOffItem.Percent.ToString();
+                    modelEdit.StartDate = saleOffItem.StartTime.ToString();
+                    modelEdit.EndDate = saleOffItem.EndTime.ToString();
+                }
             }
+            catch (Exception e) {
+                Console.Write(e);
+            }
+
+            
 
             ViewBag.ListCategory = BuildListCategory();
             ViewBag.ListBrand = ProductBrandService.GetAll();
@@ -333,7 +339,11 @@ namespace V308CMS.Admin.Controllers
                 productUpdate.Number = product.Number;
                 productUpdate.Unit1 = product.Unit;
                 productUpdate.Weight = product.Weight;
-                productUpdate.Quantity = product.Quantity;
+                productUpdate.Quantity = 0;
+                if (product.Quantity.ToString().Length > 0)
+                {
+                    productUpdate.Quantity = int.Parse(product.Quantity.ToString());
+                }
                 productUpdate.Npp = Convert.ToDouble(product.Npp);
                 productUpdate.Width = product.Width;
                 productUpdate.Height = product.Height;

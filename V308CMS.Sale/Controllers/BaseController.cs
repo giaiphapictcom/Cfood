@@ -64,5 +64,10 @@ namespace V308CMS.Sale.Controllers
         {
             TempData["Message"] = message;
         }
+
+        protected void SetFlashError(string message)
+        {
+            TempData["Error"] = message;
+        }
     }
 }

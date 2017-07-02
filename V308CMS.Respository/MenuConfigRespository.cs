@@ -166,20 +166,34 @@ namespace V308CMS.Respository
         {
             using (var entities = new V308CMSEntities())
             {
-                var items = from m in entities.MenuConfig
-                            where m.Site == site 
+                var menus = entities.MenuConfig.Select(m=>m);
 
-                        orderby m.Order ascending
-                        select m;
-                if (status > 0) { 
-                     items = from m in entities.MenuConfig
-                                 where m.Site == site && m.State == status
-
-                        orderby m.Order ascending
-                        select m;
+                if (site == Data.Helpers.Site.home)
+                {
+                    menus = menus.Where(m=>m.Site==site || m.Site=="" || m.Site =="1" || m.Site == string.Empty);
                 }
+                else {
+                    menus = menus.Where(m => m.Site == site);
+                }
+
+                if (status > 0)
+                {
+                    menus = menus.Where(m=>m.State==status);
+                }
+                //    var items = from m in entities.MenuConfig
+                //            where m.Site == site 
+
+                //        orderby m.Order ascending
+                //        select m;
+                //if (status > 0) { 
+                //     items = from m in entities.MenuConfig
+                //                 where m.Site == site && m.State == status
+
+                //        orderby m.Order ascending
+                //        select m;
+                //}
                 
-                return items.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+                return menus.OrderBy(m=>m.Order).Skip((page - 1) * pageSize).Take(pageSize).ToList();
             }
             
         }
@@ -187,10 +201,16 @@ namespace V308CMS.Respository
         {
             using (var entities = new V308CMSEntities())
             {
-                return (from item in entities.MenuConfig
-                        orderby item.Order
-                        select item
-               ).ToList();
+                var menu = entities.MenuConfig.Select(m=>m);
+
+                if (site == Data.Helpers.Site.home)
+                {
+                    menu = menu.Where(m => m.Site == site || m.Site == "" || m.Site == "1" || m.Site==null);
+                }
+                else {
+                    menu = menu.Where(m => m.Site == site);
+                }
+                return menu.OrderBy(m => m.Order).ToList();
             }
            
         }

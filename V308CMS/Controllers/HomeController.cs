@@ -13,7 +13,7 @@ using V308CMS.Respository;
 
 namespace V308CMS.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         #region Repository
         static V308CMSEntities mEntities;
@@ -72,12 +72,12 @@ namespace V308CMS.Controllers
 
             try
             {
-                CreateRepos();
+                
                 IndexPageContainer mIndexPageContainer = new IndexPageContainer();
                 List<IndexPage> mIndexPageList = new List<IndexPage>();
                 StringBuilder str = new StringBuilder();
                 List<Market> mMarketList = new List<Market>();
-                List<Product> mBestBuyList;
+               
                 List<ProductType> mTypeList;
                 //List<ProductType> mSoCheList;
                 //List<Product> mBestSoCheList;
@@ -104,36 +104,45 @@ namespace V308CMS.Controllers
                 }
                 mIndexPageContainer.IndexPageList = mIndexPageList;
                 //lay cac san pham ban chay
-                if (!Request.Browser.IsMobileDevice)
-                    mBestBuyList = ProductRepos.LaySanPhamBanChay(1, 10);
-                else
-                    mBestBuyList = ProductRepos.LaySanPhamBanChay(1, 50);
+                //if (!Request.Browser.IsMobileDevice)
+                //    mBestBuyList = ProductRepos.LaySanPhamBanChay(1, 6);
+                //else
+                //    mBestBuyList = ProductRepos.LaySanPhamBanChay(1, 6);
 
-                if (mBestBuyList.Count() < 1)
-                {
-                    mBestBuyList = ProductRepos.getProductsRandom(18);
-                }
-                mIndexPageContainer.BestBuyList = mBestBuyList;
+                //if (mBestBuyList.Count() < 1)
+                //{
+                //    mBestBuyList = ProductRepos.getProductsRandom(6);
+                //}
+                //mIndexPageContainer.BestBuyList = mBestBuyList;
 
 
-                mIndexPageContainer.ProductLastest = ProductRepos.getProductsLastest(18);
+                mIndexPageContainer.ProductLastest = ProductRepos.getProductsLastest(6);
                 if (mIndexPageContainer.ProductLastest.Count() < 1)
                 {
-                    mIndexPageContainer.ProductLastest = ProductRepos.getProductsRandom(18);
+                    mIndexPageContainer.ProductLastest = ProductRepos.getProductsRandom(6);
                 }
 
-                List<ProductType> homeCategorys = new List<ProductType>();
 
-                homeCategorys.Add(ProductRepos.LayLoaiSanPhamTheoId(177));
-                homeCategorys.Add(ProductRepos.LayLoaiSanPhamTheoId(176));
-                homeCategorys.Add(ProductRepos.LayLoaiSanPhamTheoId(179));
-                homeCategorys.Add(ProductRepos.LayLoaiSanPhamTheoId(180));
 
-                homeCategorys.Add(ProductRepos.LayLoaiSanPhamTheoId(183));
-                homeCategorys.Add(ProductRepos.LayLoaiSanPhamTheoId(175));
-                homeCategorys.Add(ProductRepos.LayLoaiSanPhamTheoId(332));
+                if (Theme.domain == "myshopify")
+                {
+                    List<ProductType> homeCategorys = new List<ProductType>();
+                    homeCategorys.Add(ProductRepos.LayLoaiSanPhamTheoId(177));
+                    homeCategorys.Add(ProductRepos.LayLoaiSanPhamTheoId(176));
+                    homeCategorys.Add(ProductRepos.LayLoaiSanPhamTheoId(179));
+                    homeCategorys.Add(ProductRepos.LayLoaiSanPhamTheoId(180));
 
-                mIndexPageContainer.ProductTypeList = homeCategorys;
+                    homeCategorys.Add(ProductRepos.LayLoaiSanPhamTheoId(183));
+                    homeCategorys.Add(ProductRepos.LayLoaiSanPhamTheoId(175));
+                    homeCategorys.Add(ProductRepos.LayLoaiSanPhamTheoId(332));
+
+                    mIndexPageContainer.ProductTypeList = homeCategorys;
+                }
+                else if(Theme.domain == "mamoo") {
+                    //List<ProductType> homeCategorys = ProductRepos.GetCategoryInHome(6);
+                    //mIndexPageContainer.ProductTypeList = homeCategorys;
+                }
+                
 
 
                 string view = Theme.viewPage("home");
@@ -203,12 +212,7 @@ namespace V308CMS.Controllers
                         mProductPageList.Add(ProductHelper.GetCategoryPage(ProductCategory, nPage));
 
                     }
-                    //lay danh sach cac nhom so che
-                    //mSoCheList = productRepos.LayProductTypeTheoParentId(147);
-                    //Model.ProductTypeList = mSoCheList;
-                    //lay cac san pham ban chay
-                    //mBestBuyList = productRepos.getBestBuyWithType(1, 10, 147, "10030");
-                    //Model.ProductList = mBestBuyList;
+
                 }
                 model.List = mProductPageList;
                 model.ProductType = ProductCategory;
@@ -217,10 +221,7 @@ namespace V308CMS.Controllers
                 //    Model.IsEnd = true;
                 model.Page = nPage;
                 return View("Category", model);
-                //if (!Request.Browser.IsMobileDevice)
-                //    return View("Category", model);
-                //else
-                //    return View("MobileCategory", model);
+
             }
             catch (Exception ex)
             {
@@ -295,8 +296,14 @@ namespace V308CMS.Controllers
                 SearchPage mSearchPage = new SearchPage();
 
                 string pKey = Request.QueryString["q"];
-
-                if (pVendor == 1)/*Tìm theo cửa hàng*/
+                if (pKey == null) {
+                    pKey = Request.QueryString["pKey"];
+                }
+                if (pKey == null)
+                {
+                    pKey = "";
+                }
+                    if (pVendor == 1)/*Tìm theo cửa hàng*/
                 {
                     List<Market> mMarketList = MarketRepos.SearchMarketTheoTrangAndType(pPage, 30, pKey);
 
@@ -318,7 +325,7 @@ namespace V308CMS.Controllers
                 }
                 else /*Tìm theo sản phẩm*/
                 {
-                    List<Product> mProductList = ProductRepos.TimSanPhamTheoTen(pPage, 30, pKey.ToLower());
+                    List<Product> mProductList = ProductsService.TimSanPhamTheoTen(pPage, 30, pKey.ToLower());
                     mSearchPage.Code = 2;
                     if (mProductList.Count > 0)
                     {

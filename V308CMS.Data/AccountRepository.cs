@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using System.Web;
 using V308CMS.Common;
+using V308CMS.Data.Helpers;
 
 namespace V308CMS.Data
 {
@@ -59,7 +58,7 @@ namespace V308CMS.Data
                 throw;
             }
         }
-        public ETLogin CheckDangNhap(string  pUsername,string pPassword)
+        public ETLogin CheckDangNhap(string  pUsername,string pPassword,string site= Site.home)
         {
             Account user = null;
             ETLogin mETLogin=new ETLogin();
@@ -67,7 +66,7 @@ namespace V308CMS.Data
             {
                 //lay danh sach tin moi dang nhat
                 user = (from p in entities.Account
-                          where p.UserName.Equals(pUsername) || p.Email.Equals(pUsername)
+                          where (p.UserName.ToLower().Equals(pUsername.ToLower()) || p.Email.ToLower().Equals(pUsername.ToLower()) ) && p.Site == site && p.Status == true
                             select p).FirstOrDefault();
                 if (user != null)
                 {
@@ -149,7 +148,7 @@ namespace V308CMS.Data
                 var mAccount = new Account()
                 {
                     Email = email,
-                    UserName = email,
+                    UserName = "",
                     Password = HashPassword(password,salt) ,
                     Salt = salt,
                     Token = token,
@@ -165,34 +164,55 @@ namespace V308CMS.Data
 
         public string InsertAffiliate(string email, string password, string fullname, string mobile="")
         {
-            var accounts = from p in entities.Account
-                           where p.Email.Equals(email) || p.UserName.Equals(email)
-                           select p;
+           
+            email = email.ToLower();
+            var accounts = (from p in entities.Account
+                           where p.Email.ToLower().Equals(email) || p.UserName.ToLower().Equals(email)
+                           select p);
 
-            if (accounts != null || accounts.Count() < 1)
+            if (accounts != null || accounts.Count() > 0 )
             {
-                return "exist";
+                return Result.Exists;
             }
             else
             {
                 var salt = StringHelper.GenerateString(6);
                 var token = getToken(email);
 
-                var mAccount = new Account()
+                
+                try {
+                    var mAccount = new Account()
+                    {
+                        Email = email,
+                        UserName = email,
+                        FullName = fullname,
+                        Phone = mobile,
+                        Password = HashPassword(password, salt),
+                        Salt = salt,
+                        Token = token,
+                        TokenExpireDate = DateTime.Now.AddDays(1),
+                        Status = false,
+                        Role = 3,
+                        Site = Site.affiliate
+                    };
+                    entities.Account.Add(mAccount);
+                    entities.SaveChanges();
+                }
+                catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
                 {
-                    Email = email,
-                    UserName = email,
-                    FullName = fullname,
-                    Phone = mobile,
-                    Password = HashPassword(password, salt),
-                    Salt = salt,
-                    Token = token,
-                    TokenExpireDate = DateTime.Now.AddDays(1),
-                    Status = false
-                };
-                entities.Account.Add(mAccount);
-                entities.SaveChanges();
-                return "ok";
+                    Console.Write(dbEx);
+                }
+
+                SiteRepository config = new SiteRepository(entities);
+                var activeAccountUrl = string.Format("{0}account/active", Configs.GetItemConfig("WebDomain") );
+
+                var body =
+                        string.Format(
+                            "Cảm ơn bạn đã đăng ký tài khoản trên hệ thống của {0}. Mã kích hoạt tài khoản của bạn là {1}. Click vào <a style='color: #007FF0' href='{2}' title='Kích hoạt tài khoản'> đây</a> để kích hoạt tài khoản của bạn.",
+                            config.SiteConfig("site-name"), token, activeAccountUrl);
+                Email.SendEmail(email, "Đăng ký tài khoản", body);
+
+                return Result.Ok;
             }
 
         }
@@ -337,6 +357,17 @@ namespace V308CMS.Data
           
 
         }
+
+        public Account Find(int id)
+        {
+            return (from p in entities.Account
+                    where p.ID == id
+                    select p).FirstOrDefault();
+
+
+        }
+
+
         public string CheckEmail(string email)
         {
             var accounts = from p in entities.Account
@@ -494,6 +525,54 @@ namespace V308CMS.Data
             return (from p in entities.Admin
                     where p.Type == type
                     select p).ToList();
+        }
+
+        public string UpdateObject(Account data)
+        {
+            try
+            {
+                var check = (from c in entities.Account
+                             where c.ID == data.ID
+                             select c
+                    ).FirstOrDefault();
+                if (check != null)
+                {
+                    check.FullName = data.FullName;
+                    check.Phone = data.Phone;
+                    check.Address = data.Address;
+
+                    check.bank_name = data.bank_name;
+                    check.bank_number = data.bank_number;
+                    check.bank_account = data.bank_account;
+                    check.bank_address = data.bank_address;
+
+                    if (data.cmt_back != null && data.cmt_back.Length > 0)
+                    {
+                        check.cmt_back = data.cmt_back;
+                    }
+                    else {
+                        check.cmt_back = check.cmt_back;
+                    }
+
+                    if (data.cmt_front != null && data.cmt_front.Length > 0)
+                    {
+                        check.cmt_front = data.cmt_front;
+                    }
+                    
+                        
+                    entities.SaveChanges();
+                    return Result.Ok;
+                }
+                return Result.Exists;
+
+
+            }
+            catch (Exception ex)
+            {
+                return ex.ToString();
+            }
+
+
         }
     }
 }

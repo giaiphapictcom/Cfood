@@ -1793,5 +1793,33 @@ namespace V308CMS.Data
             public int page { get; set; }
 
         }
+
+        public List<ProductType> GetCategoryInHome(int product_limit = 9)
+        {
+           
+            try
+            {
+                //lay danh sach tin moi dang nhat
+                var items = (from p in entities.ProductType
+                                where p.IsHome ==true
+                                select p);
+                var categorys = items.ToList();
+                if (categorys.Count() > 0) {
+                    foreach (var cate in categorys) {
+                        var CategoryIDs = entities.ProductType.Where(c => c.Parent == cate.ID).Select(c => c.ID).ToList();
+                                           
+                        CategoryIDs.Add(cate.ID);
+
+                        cate.ListProduct = (from p in entities.Product where CategoryIDs.Any(c => c == p.Type) select p).AsEnumerable().Take(product_limit).ToList();
+                    }
+                }
+                return categorys;
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+                throw;
+            }
+        }
     }
 }

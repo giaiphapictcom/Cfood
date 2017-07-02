@@ -24,6 +24,8 @@ namespace V308CMS.Common
                 return path;
             }
 
+            path = path.Replace("\\Content\\Images\\", "");
+            path = path.Replace("/Content/Images/", "");
 
             string resizeDir = "";
             if (width > 0 && height > 0)

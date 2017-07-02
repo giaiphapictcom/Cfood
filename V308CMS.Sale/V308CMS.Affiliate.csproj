@@ -156,6 +156,7 @@
     <Compile Include="Helpers\ImageUrlHelper.cs" />
     <Compile Include="Models\Authenicate.cs" />
     <Compile Include="Models\CaptchaModel.cs" />
+    <Compile Include="Models\AccountModel.cs" />
     <Compile Include="Models\CouponModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -1455,6 +1456,9 @@
     <Content Include="Views\Affiliate\Elements\MenuCanvas.cshtml" />
     <Content Include="Views\Partner\CouponForm.cshtml" />
     <Content Include="Views\Affiliate\Articles.cshtml" />
+    <Content Include="Views\Partner\AccountInfomation.cshtml" />
+    <Content Include="Views\Affiliate\Videos.cshtml" />
+    <Content Include="Views\Affiliate\Video.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

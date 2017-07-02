@@ -66,7 +66,7 @@ namespace V308CMS.Data
             }
             finally
             {
-                DisposeRepos();
+                //DisposeRepos();
             }
             return ModelPage;
         }
@@ -88,7 +88,7 @@ namespace V308CMS.Data
             }
             finally
             {
-                DisposeRepos();
+                //DisposeRepos();
             }
             return ModelPage;            
         }
@@ -120,7 +120,7 @@ namespace V308CMS.Data
             }
             finally
             {
-                DisposeRepos();
+                //DisposeRepos();
             }
             
         }

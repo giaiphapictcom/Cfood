@@ -14,12 +14,12 @@ namespace V308CMS.Admin.Controllers
     {
               
         [CheckPermission(0, "Danh sách")]
-        public ActionResult Index(string site= "")
+        public ActionResult Index(string site= Data.Helpers.Site.home)
         {
             return View("Index", MenuConfigService.GetList(1,10,site));
         }        
         [CheckPermission(1, "Thêm mới")]
-        public ActionResult Create(string site = "")
+        public ActionResult Create(string site = Data.Helpers.Site.home)
         {
             AddViewData("ListState", DataHelper.ListEnumType<StateEnum>()); 
             var Model = new MenuConfigModels();

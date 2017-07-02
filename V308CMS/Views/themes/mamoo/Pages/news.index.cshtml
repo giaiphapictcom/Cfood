@@ -1,0 +1,56 @@
+﻿@using V308CMS.Common
+@using V308CMS.Data
+@using V308CMS.Helpers
+@model V308CMS.Data.NewsIndexPageContainer
+@{
+    Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
+
+}
+@section header {
+    <title>Tin tức</title>
+    <meta name="twitter:title" content="Mpstart, Tin tức">
+    <meta name="twitter:description" content="Tin tức, thương mại điện tử, điện thoại">
+}
+<div class="box-detail box-shadow">
+    <div class="container">
+    @if (Model.ListNews.IsHasData())
+    {
+                       
+        foreach (var newsItem in Model.ListNews)
+        {
+            <div class="row mt-3">
+                <h4 class="col-12">
+                    <a href="@Url.NewsDetailUrl(newsItem)" title="@newsItem.Title">
+                        @newsItem.Title
+                    </a>
+                </h4>
+                                    
+                <div class="block-images col-4 col-md-2">
+                    <img src="@newsItem.Image.ToUrl()" alt="@newsItem.Title" class="img-fluid">
+                </div>
+                <div class="blog-text col-8 col-md-10">
+                    <div class="rte">
+                        @newsItem.Summary
+                    </div>
+                    <div class="block-comment">
+                        <p class="button">
+                            <a href="@Url.NewsDetailUrl(newsItem)" title="Xem chi tiết tin @newsItem.Title">Chi tiết</a>
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+            if (newsItem != Model.ListNews.Last())
+            {
+                <hr />
+            }
+
+
+        }
+
+
+    }
+
+    </div>
+</div>
+

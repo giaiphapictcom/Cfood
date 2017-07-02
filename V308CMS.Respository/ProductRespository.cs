@@ -46,15 +46,19 @@ namespace V308CMS.Respository
         {
             using (var entities = new V308CMSEntities())
             {
-                return (from item in entities.Product.
+                var item =  (from p in entities.Product.
                     Include("ProductImages").
                     Include("ProductColor").
                     Include("ProductSize").
                     Include("ProductAttribute").
                     Include("ProductSaleOff")
-                        where item.ID == id
-                        select item
+                        where p.ID == id
+                        select p
                 ).FirstOrDefault();
+
+                item.ProductManufacturer = entities.ProductManufacturer.Where(m=>m.ID==item.Manufacturer).FirstOrDefault();
+                item.ProductType = entities.ProductType.Where(c => c.ID == item.Type).FirstOrDefault();
+                return item;
             }
 
         }
@@ -236,8 +240,19 @@ namespace V308CMS.Respository
                ).FirstOrDefault();
                 if (product != null)
                 {
-                    product.Status = !product.Status;
-                    entities.SaveChanges();
+                    if (product.ProductType == null) {
+                        //item.ProductManufacturer = entities.ProductManufacturer.Where(m => m.ID == item.Manufacturer).FirstOrDefault();
+                        product.ProductType = entities.ProductType.Where(c => c.ID == product.Type).FirstOrDefault();
+                    }
+                    try {
+                        product.Status = !product.Status;
+
+                        entities.SaveChanges();
+                    }
+                    catch (System.Data.Entity.Validation.DbEntityValidationException e) {
+                        Console.Write(e);
+                    }
+                    
                     return "ok";
                 }
                 return "not_exists";
@@ -257,6 +272,10 @@ namespace V308CMS.Respository
                ).FirstOrDefault();
                 if (productOrder != null)
                 {
+                    if (productOrder.ProductType == null)
+                    {
+                        productOrder.ProductType = entities.ProductType.Where(c => c.ID == productOrder.Type).FirstOrDefault();
+                    }
                     productOrder.Number = order;
                     entities.SaveChanges();
                     return productOrder.Name;
@@ -276,6 +295,10 @@ namespace V308CMS.Respository
                ).FirstOrDefault();
                 if (productQuantity != null)
                 {
+                    if (productQuantity.ProductType == null)
+                    {
+                        productQuantity.ProductType = entities.ProductType.Where(c => c.ID == productQuantity.Type).FirstOrDefault();
+                    }
                     productQuantity.Quantity = quantity;
                     entities.SaveChanges();
                     return productQuantity.Name;
@@ -296,6 +319,11 @@ namespace V308CMS.Respository
               ).FirstOrDefault();
                 if (productPrice != null)
                 {
+                    if (productPrice.ProductType == null)
+                    {
+                        productPrice.ProductType = entities.ProductType.Where(c => c.ID == productPrice.Type).FirstOrDefault();
+                    }
+
                     productPrice.Price = price;
                     entities.SaveChanges();
                     return productPrice.Name;
@@ -315,6 +343,11 @@ namespace V308CMS.Respository
                ).FirstOrDefault();
                 if (productNpp != null)
                 {
+                    if (productNpp.ProductType == null)
+                    {
+                        productNpp.ProductType = entities.ProductType.Where(c => c.ID == productNpp.Type).FirstOrDefault();
+                    }
+
                     productNpp.Npp = npp;
                     entities.SaveChanges();
                     return productNpp.Name;
@@ -334,9 +367,20 @@ namespace V308CMS.Respository
                ).FirstOrDefault();
                 if (productCode != null)
                 {
-                    productCode.Code = code;
-                    entities.SaveChanges();
-                    return productCode.Name;
+                    try {
+                        if (productCode.ProductType == null)
+                        {
+                            productCode.ProductType = entities.ProductType.Where(c => c.ID == productCode.Type).FirstOrDefault();
+                        }
+                        productCode.Code = code;
+                        entities.SaveChanges();
+                        return productCode.Name;
+                    }
+                    catch (System.Data.Entity.Validation.DbEntityValidationException e)
+                    {
+                        Console.Write(e);
+                    }
+                    
                 }
                 return "not_exists";
             }
@@ -357,6 +401,10 @@ namespace V308CMS.Respository
                     var productHided = "";
                     foreach (var product in listProductHide)
                     {
+                        if (product.ProductType == null)
+                        {
+                            product.ProductType = entities.ProductType.Where(c => c.ID == product.Type).FirstOrDefault();
+                        }
                         product.Status = false;
                         entities.SaveChanges();
                         productHided = productHided + "," + product.ID;

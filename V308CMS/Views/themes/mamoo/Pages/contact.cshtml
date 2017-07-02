@@ -1,0 +1,102 @@
+﻿@using V308CMS.Helpers.Url
+@model V308CMS.Models.ContactModels
+@{
+    Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
+
+}
+@section header {
+    <title>@ViewBag.SiteName - Liên hệ</title>
+
+}
+<div class="box-items box-shadow">
+    <div class="container">
+        <div class="map">
+
+            <iframe height="470" frameborder="0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyC4JVxGy7uILW6C3hQeLlyrcj_AoHV0UEw&q=@ViewBag.CompanyHeaderAddress" marginwidth="0" marginheight="0" scrolling="no" style="pointer-events: none;"></iframe>
+
+        </div>
+
+        <div class="contactus-page">
+            <div class="row">
+
+                <div class="rte"></div>
+
+
+                <div class="col-4">
+
+                    <h3>
+
+                        Thông tin liên hệ @ViewBag.SiteName
+
+                    </h3>
+
+                    <div class="content-left"> @ViewBag.CompanyFullname </div>
+
+
+                    <div class="content-left">
+
+                        <ul>
+                            <li><span>Địa chỉ :</span> @ViewBag.CompanyHeaderAddress</li>
+                            <li><span>Phone:</span> <a href="tel:@ViewBag.Hotline">@ViewBag.Hotline</a></a></li>
+                            <li><span>Email:</span> <a href="mailto:@ViewBag.CompanyEmail">ViewBag.CompanyEmail</a></li>
+
+                        </ul>
+
+                    </div>
+
+                </div>
+                <div class="col-8">
+
+                    <form method="post" action="@Url.ContactIndexUrl()" id="contact_form" class="contact-form" accept-charset="UTF-8">
+                        <input type="hidden" value="contact" name="form_type"><input type="hidden" name="utf8" value="✓">
+                        @Html.AntiForgeryToken()
+                        <div class="note form-error">
+                            <span style="margin-left: 5px;" class="success-message">
+                                @Html.Raw(ViewBag.Message)
+                            </span>
+
+                        </div>
+
+                        <div id="contactFormWrapper" class="col-12">
+
+                            <div class="form-group">
+                                <label for="contactFormName"><span>Họ tên</span><em>*</em></label>
+                                @Html.TextBoxFor(m => m.Name, new { autocapitalize = "words", placeholder = "Nhập họ tên", @class= "form-control" })
+                                
+                                @Html.ValidationMessageFor(m => m.Name)
+                            </div>
+                            <div class="form-group">
+                                <label for="contactFormEmail"><span>Email</span><em>*</em></label>
+                                @Html.TextBoxFor(m => m.Email, new { autocorrect = "off", autocapitalize = "off", placeholder = "Nhập địa chỉ Email" , @class = "form-control" })
+                                
+                                @Html.ValidationMessageFor(m => m.Email)
+                            </div>
+                            <div class="form-group">
+                                <label for="contactFormCompany"><span>Số điện thoại</span><em>*</em></label>
+                                @Html.TextBoxFor(m => m.Phone, new { placeholder = "Số điện thoại" , @class = "form-control" })
+                                
+                                @Html.ValidationMessageFor(m => m.Phone)
+                            </div>
+                            <div class="form-group">
+                                <label for="contactFormMessage"><span>Lời nhắn</span><em>*</em></label>
+                                @Html.TextAreaFor(m => m.Message, new { rows = "10", placeholder = "Lời nhắn", @class = "form-control" })
+                                
+                                @Html.ValidationMessageFor(m => m.Message)
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-primary" value="Gửi">
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script>
+            jQuery('.main-content').removeClass('container');
+            jQuery('body').addClass('contactus');
+            jQuery('#verticalmenu').hide();
+        </script>
+    </div>
+</div>
+        

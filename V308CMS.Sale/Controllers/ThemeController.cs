@@ -180,7 +180,7 @@ namespace V308CMS.Sale.Controllers
                 //NewsGroups footerCate = NewsRepos.SearchNewsGroup("footer-affiliate");
                 //if (footerCate != null)
                 //{
-                List<NewsGroups> categorys = NewsGroupRepos.GetAll(true, "affiliate");
+                List<NewsGroups> categorys = NewsGroupRepos.GetAll(true, "affiliate",true);
                 if (categorys.Count() > 0)
                 {
                     foreach (NewsGroups cate in categorys)

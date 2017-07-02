@@ -1,0 +1,34 @@
+﻿@using V308CMS.Common
+@using V308CMS.Data
+@using V308CMS.Helpers
+@model V308CMS.Data.NewsIndexPageContainer
+@{
+    Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
+
+}
+@section header {
+    <title>Video</title>
+    <meta name="twitter:title" content="Tin tức">
+    <meta name="twitter:description" content="Tin tức, thương mại điện tử, điện thoại">
+}
+<div class="box-items box-shadow ">
+    <div class="container">
+        <div class="row">
+            
+                @if (Model.ListNews.IsHasData())
+                {
+                    <div class="row">
+                        @foreach (var video in Model.ListNews)
+                        {
+                            <div class="col-4">
+                                @Html.Action("VideoItemBlock", "Block", video)
+                            </div>
+
+                        }
+                    </div>
+                }
+
+        </div>
+        </div>
+    </div>
+        

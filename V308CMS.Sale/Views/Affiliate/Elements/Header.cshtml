@@ -85,9 +85,17 @@
                                     <i class="fa fa-shopping-basket" aria-hidden="true"></i>
                                     @Model.Account.FullName
                                 </a>
+                                <div class="top-bar-dropdown">
+                                    <ul class="customer-links">
+                                        <li><a href="/dang-xuat"><span>Đăng Xuất</span></a></li>
+                                        <li>
+                                            <a href="/tai-khoan" >Thông tin tài khoản</a>
+                                        </li>
+                                    </ul>
+                                </div>
                             }
                             else
-                            { 
+                            {
                                 <a href="/dang-nhap" class="btn-login">
                                     <i class="fa fa-shopping-basket" aria-hidden="true"></i>
                                     Đăng Nhập

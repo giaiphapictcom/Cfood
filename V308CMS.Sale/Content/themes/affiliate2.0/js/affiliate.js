@@ -4,6 +4,8 @@ $(document).ready(function () {
     commentHome.userclick();
     link.copy();
     uploadbutton.select();
+
+    menu.hover();
 });
 
 
@@ -56,5 +58,11 @@ uploadbutton = {
         jQuery("a.upload-button").click(function () {
             jQuery(this).parents(".form-group").find("input[type=file]").trigger('click');
         });
+    }
+}
+
+var menu = {
+    hover: function () {
+
     }
 }

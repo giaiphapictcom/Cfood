@@ -65,12 +65,13 @@
                                 @(i + 1)
                             </td>
                             <td>
-                                <a title="Cập nhật tin tức @news.Title" class="btn btn-link" href="@Url.ProductEditUrl(new {news.ID})">
+                                <a title="Cập nhật tin tức @news.Title" class="btn btn-link" href="@Url.NewsEditUrl(new {news.ID})">
                                     @news.Title.ToTitle(25)
                                 </a>
                             </td>
                             <td>
-                                <img class="image-brand img-circle" src="@news.Image.ToImageUrl()" alt="@news.Title" />
+                                
+                                <img class="image-brand img-circle" src="@ImageHelper.ToUrl(news.Image)" alt="@news.Title" />
                             </td>
                             <td>
                                 @news.Summary.ToTitle(50)

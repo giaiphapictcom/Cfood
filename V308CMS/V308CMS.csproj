@@ -22,6 +22,11 @@
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
     <TargetFrameworkProfile />
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -143,6 +148,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\ThemesViewActionFilter.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BlockController.cs" />
     <Compile Include="Controllers\CaptchaController.cs" />
@@ -1925,6 +1931,23 @@
     <Content Include="Views\themes\myshopify\Blocks\VideoItemBlock.cshtml" />
     <Content Include="Views\themes\myshopify\Menu\OffCanvas.cshtml" />
     <Content Include="Views\themes\myshopify\Blocks\Filter\ProductList.cshtml" />
+    <Content Include="Views\themes\mamoo\Blocks\VideoItemBlock.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\Account.Active.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\Account.Addresses.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\Account.ChangePassword.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\Account.ForgotPassword.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\Account.GetToken.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\Account.InvalidToken.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\Account.Login.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\Account.Profile.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\Account.Register.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\Cart.View.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\Cart.Checkout.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\Video.Index.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\contact.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\News.Detail.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\news.index.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\PageItems.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1955,6 +1978,7 @@
   </ItemGroup>
   <ItemGroup>
     <!--<WCFMetadata Include="Service References\" />-->
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

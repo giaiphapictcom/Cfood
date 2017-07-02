@@ -26,7 +26,7 @@
                         foreach (News news in Model.ListNews)
                         {
                             <div class="row">
-                                <div class="col-md-2"><img src="@ImageHelper.Crop(news.Image)" class="img-responsive" /></div>
+                                <div class="col-md-2"><img src="@ImageHelper.ToUrl(news.Image,160,160)" class="img-responsive" /></div>
                                 <div class="col-md-10">
                                     <h5>@Html.Raw(V308CMS.Common.url.article(news.Title, news.ID))</h5>
                                     <p><a href="@V308CMS.Common.url.articleURL(news.Title, news.ID)">@news.Summary</a></p>

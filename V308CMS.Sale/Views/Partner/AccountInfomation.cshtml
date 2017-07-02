@@ -1,0 +1,86 @@
+﻿@using V308CMS.Common;
+@model V308CMS.Sale.Models.AccountModel
+@{
+    Layout = "~/Views/Affiliate/Layout/Backend.cshtml";
+    string PageTitle = "Thông tin tài khoản";
+}
+@section header {
+    <title>@PageTitle</title>
+
+}
+<h4>@PageTitle</h4>
+<form style="width: 80%; margin: 0 auto;" action="" method="post" enctype="multipart/form-data">
+    <div class="row">
+        <input type="hidden" value="@Model.id" name="id" />
+        <div class="col-md-12">
+            @BootstrapHelper.InputText("username", "Biệt Danh", "", Model.username, true)
+        </div>
+        <div class="col-md-12">
+            @BootstrapHelper.InputText("email", "Email", "", Model.email, true)
+        </div>
+
+        <div class="col-md-12">
+            @BootstrapHelper.InputText("fullname", "Họ và Tên", "", Model.fullname)
+        </div>
+        
+
+        <div class="col-md-12">
+            @BootstrapHelper.InputText("phone", "Điện Thoại", "", Model.phone)
+        </div>
+        <div class="col-md-12">
+            @BootstrapHelper.InputTextarea("address", "Chỗ ở hiện tại", "", Model.address)
+        </div>
+
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Thông tin tài khoản ngân hàng</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            @BootstrapHelper.InputText("bank_account", "Chủ Tài Khoản", "", Model.bank_account)
+                        </div>
+                        <div class="col-md-12">
+                            @BootstrapHelper.InputText("bank_number", "Số Tài Khoản", "", Model.bank_number)
+                        </div>
+                        <div class="col-md-12">
+                            @BootstrapHelper.InputText("bank_name", "Tên Ngân Hàng", "", Model.bank_name)
+                        </div>
+                        <div class="col-md-12">
+                            @BootstrapHelper.InputText("bank_address", "Chi Nhánh", "", Model.bank_address)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+
+            <div class="form-group">
+                <label>Ảnh CMTND mặt trước (<a href="#" class="upload-button">Upload</a>)</label>
+                @Html.TextBoxFor(model => Model.FileFront, new { type = "file", @class = "hidden" })
+                <input type="text" class="form-control hidden" placeholder="" value="@Model.cmt_front">
+                @if (Model.cmt_front != null && Model.cmt_front.Length > 0)
+                {
+                    <img src="@ImageHelper.ToUrl(Model.cmt_front,600)" class="img-responsive img-thumbnail" />
+                }
+            </div>
+        </div>
+
+        <div class="col-md-6">
+
+            <div class="form-group">
+                <label>Ảnh CMTND mặt sau (<a href="#" class="upload-button">Upload</a>)</label>
+                @Html.TextBoxFor(model => Model.FileBack, new { type = "file", @class = "hidden" })
+                <input type="text" class="form-control hidden" placeholder="" value="@Model.cmt_back">
+                @if (Model.cmt_back !=null && Model.cmt_back.Length > 0) {
+                    <img src="@ImageHelper.ToUrl(Model.cmt_back,600)" class="img-responsive img-thumbnail"/>
+                }
+            </div>
+        </div>
+
+    </div>
+
+    <button type="submit" class="btn btn-success">Cập nhật dữ liệu cá nhân</button>
+</form>

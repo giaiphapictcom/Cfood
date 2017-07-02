@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 using System.Web.Mvc;
 using V308CMS.Common;
 using V308CMS.Data;
@@ -32,10 +33,11 @@ namespace V308CMS.Sale.Controllers
                 CreateRepos();
                 string email = Request["email"];
                 string password = Request["password"];
-                mETLogin = AccountRepos.CheckDangNhap(email, password);
+                mETLogin = AccountRepos.CheckDangNhap(email, password, Site.affiliate);
                 if (mETLogin.code == 1 && (mETLogin.role == 1 || mETLogin.role == 3))
                 {
-                    mETLogin.message = "Đăng nhập thành công.";
+                    mETLogin.message = "";
+                    SetFlashMessage("Đăng nhập thành công.");
                     Session["UserId"] = mETLogin.Account.ID;
                     Session["UserName"] = mETLogin.Account.UserName;
                     Session["Role"] = mETLogin.Account.Role;
@@ -44,13 +46,13 @@ namespace V308CMS.Sale.Controllers
 
                     return Redirect("/dashboard");
                 }
-                
+                SetFlashError(mETLogin.message);
                 return View(mETLogin);
             }
             catch (Exception ex)
             {
                 Console.Write(ex);
-                return Content("Xảy ra lỗi hệ thống ! Vui lòng thử lại.");
+                return Content("Xảy ra lỗi hệ thống ! Vui lòng thử lại."+ ex.ToString());
             }
             finally
             {
@@ -58,6 +60,25 @@ namespace V308CMS.Sale.Controllers
             }
             
         }
+
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+            System.Web.HttpContext.Current.Session.Abandon();
+            var authenCookie = new HttpCookie(FormsAuthentication.FormsCookieName, string.Empty)
+            {
+                Expires = DateTime.Now.AddYears(-1)
+            };
+            System.Web.HttpContext.Current.Response.Cookies.Add(authenCookie);
+            var sessionCookie = new HttpCookie("ASP.NET_SessionId", "")
+            {
+                Expires = DateTime.Now.AddYears(-1)
+            };
+
+            System.Web.HttpContext.Current.Response.Cookies.Add(sessionCookie);
+            return Redirect("/");
+        }
+
         public ActionResult Register()
         {
             return View();
@@ -71,24 +92,90 @@ namespace V308CMS.Sale.Controllers
                 string fullname = Request["fullname"];
                 string mobile = Request["mobile"];
                 string password = Request["password"];
-                AccountRepos.InsertAffiliate(email, password, fullname, mobile);
+                string repass = Request["repassword"];
+                if (fullname.Length < 1)
+                {
+                    SetFlashError("Bạn phải nhập vào họ  và tên.");
+                    return View("Register");
+                }
+                if (email.Length < 1)
+                {
+                    SetFlashError("Bạn phải nhập vào email.");
+                    return View("Register");
+                }
+                if (password != repass) {
+                    SetFlashError("Mật khẩu không giống nhau.");
+                    return View("Register");
+                }
+                var InsertReturn = AccountRepos.InsertAffiliate(email, password, fullname, mobile);
+                if (InsertReturn == Result.Exists) {
+                    SetFlashError("Người dùng đã tồn tại trên hệ thống, vui lòng nhập lại");
+                    return View("Register");
+                }
 
-                //var body =
-                //        string.Format(
-                //            "Cảm ơn bạn đã đăng ký tài khoản trên hệ thống của {0}. Mã kích hoạt tài khoản của bạn là {1}. Click vào <a style='color: #007FF0' href='{2}' title='Kích hoạt tài khoản'> đây</a> để kích hoạt tài khoản của bạn.",
-                //            ViewBag.SiteName, token, activeAccountUrl);
-                //InternalSendEmail(email, "Đăng ký tài khoản", body);
+                if (InsertReturn == Result.Ok)
+                {
+                    SetFlashMessage(string.Format("Cảm ơn bạn đã đăng ký tài khoản trên hệ thống của {0}. Vui lòng kiểm tra email để kích hoạt tài khoản.", ViewBag.SiteName));
+                    return View("Login");
+                }
 
                 return Redirect("/dang-nhap");
             }
             catch (Exception ex)
             {
                 Console.Write(ex);
-                return Content("Xảy ra lỗi hệ thống ! Vui lòng thử lại.");
+                return Content("Xảy ra lỗi hệ thống ! Vui lòng thử lại."+ex.ToString());
             }
 
         }
 
+        [AffiliateAuthorize]
+        public ActionResult AccountInfomation(AccountModel account)
+        {
+            if (Session["UserId"] != null) {
+                int uid = int.Parse(Session["UserId"].ToString());
+
+                CreateRepos();
+                var userLogined = AccountRepos.Find(uid);
+                account = userLogined.CloneTo<AccountModel>();
+            }
+           
+            return View(account);
+        }
+
+        [HttpPost, ActionName("AccountInfomation")]
+        public ActionResult AccountInfomationPost(AccountModel account)
+        {
+            account.cmt_front = account.FileFront != null ?
+                  account.FileFront.Upload() :
+                  account.cmt_front;
+            if (account.cmt_front != null) {
+                account.cmt_front = account.cmt_front.Replace("\\Content\\Images\\", "");
+            }
+            
+
+
+            account.cmt_back = account.FileBack != null ?
+                  account.FileBack.Upload() :
+                  account.cmt_back;
+            if (account.cmt_back != null ) {
+                account.cmt_back = account.cmt_back.Replace("\\Content\\Images\\", "");
+            }
+            
+
+            var accountNew = account.CloneTo<Account>(new[] { "FileFront","FileBack" });
+
+            CreateRepos();
+            var result = AccountRepos.UpdateObject(accountNew);
+             if (result == Result.Ok)
+            {
+                SetFlashMessage(string.Format("Cập nhật dữ liệu thành công"));
+                return View("AccountInfomation", AccountRepos.Find(account.id).CloneTo<AccountModel>());
+            }
+
+            SetFlashError(string.Format("Có lỗi xảy ra"));
+            return View("AccountInfomation", account);
+        }
 
         #region Support Send
         [HttpGet]

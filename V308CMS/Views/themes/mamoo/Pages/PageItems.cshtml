@@ -1,0 +1,47 @@
+﻿@model  V308CMS.Data.ProductItemsPage
+@using V308CMS.Data;
+@using V308CMS.Common;
+@{
+    Model.Name = "Big sale";
+    Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
+    int pageTotal = 0;
+    if (Model.total > ProductHelper.ProductShowLimit)
+    {
+        pageTotal = (int)Math.Ceiling((float)Model.total / (float)ProductHelper.ProductShowLimit);
+    }
+}
+
+@section header {
+    <title>Big Sale</title>
+    <meta name="keywords" content="@Model.Name">
+    <meta property="og:url" content="@Ultility.ImgUrl("")">
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="@Model.Name">
+    <meta property="og:image" content="">
+    <meta property="og:description" content="">
+}
+<div class="box-items box-shadow">
+    <div class="container">
+        <h4>@Model.Name</h4>
+        <div class="row">
+            <div class="col-12 col-main display-toolbar no-sidebar collection-page no-padding-lr">
+
+                <div class="products-grids product-grid-item">
+                    @if (Model.Products != null && Model.Products.Count > 0)
+            {
+                        <div class="row">
+                            @foreach (V308CMS.Data.Product prod in Model.Products)
+                            {
+                                @Html.Action("ProductBlockType1_4", "Block", prod)
+                            }
+
+                        </div>
+                    }
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>

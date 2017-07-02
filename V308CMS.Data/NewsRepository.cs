@@ -70,7 +70,7 @@ namespace V308CMS.Data
                 }
             }
 
-            public News GetById(int id, int type = 58)
+            public News GetById(int id, int type = 0)
             {
             var article = from p in entities.News
                           where p.ID == id
@@ -348,7 +348,7 @@ namespace V308CMS.Data
                     throw;
                 }
             }
-            public List<News> LayTinTheoGroupId(int pTypeID)
+            public List<News> LayTinTheoGroupId(int pTypeID,int limit=10)
             {
                 List<News> mList = null;
                 try
@@ -357,7 +357,7 @@ namespace V308CMS.Data
                     mList = (from p in entities.News
                              where p.TypeID == pTypeID
                              orderby p.ID descending
-                             select p).ToList();
+                             select p).Take(limit).ToList();
                     return mList;
                 }
                 catch (Exception ex)
@@ -529,7 +529,7 @@ namespace V308CMS.Data
                     //lay danh sach tin moi dang nhat
                     mList = (from p in entities.News
                              where p.Status == true && p.TypeID == pType
-                             orderby p.ID descending
+                             orderby p.Order ascending
                              select p).Take(pSoLuongTin).ToList();
 
 
@@ -711,14 +711,20 @@ namespace V308CMS.Data
                 }
             }
 
-            public NewsGroups SearchNewsGroup(string name)
+            public NewsGroups SearchNewsGroup(string name,string site = Data.Helpers.Site.home)
             {
                 try
                 {
-                    var NewsGroups = from p in entities.NewsGroups
-                                     where p.Name.ToLower().Contains(name.ToLower()) || p.Alias.ToLower().Contains(name.ToLower())
-                                     select p;
-                    return NewsGroups.FirstOrDefault();
+                var categorys = entities.NewsGroups.Where(p=> p.Name.ToLower().Contains(name.ToLower()) || p.Alias.ToLower().Contains(name.ToLower()));
+
+                if (site == Data.Helpers.Site.home)
+                {
+                    categorys = categorys.Where(c => c.Site == site || c.Site == "" || c.Site == null || c.Site == "1");
+                }
+                else {
+                    categorys = categorys.Where(c=>c.Site == site);
+                }
+                    return categorys.FirstOrDefault();
                 }
                 catch (Exception ex)
                 {
@@ -731,12 +737,13 @@ namespace V308CMS.Data
             {
                 try
                 {
-                    string[] words = alias.Split();
-                    var NewsGroups = from p in entities.NewsGroups
-                                     where p.Alias.ToLower().Contains(alias.ToLower())
-                                     //where  ( words.Any(r=> p.Alias.Contains(r)) || words.Any(r => p.Name.Contains(r)) )
-                                     select p;
-                    return NewsGroups.FirstOrDefault();
+                var category = entities.NewsGroups.Where(c => c.Alias.ToLower() == alias.ToLower());
+
+                if (site.Length > 0) {
+                    category = category.Where(c=>c.Site==site);
+                }
+                    
+                    return category.FirstOrDefault();
                 }
                 catch (Exception ex)
                 {
@@ -787,26 +794,38 @@ namespace V308CMS.Data
             return entities.News.FirstOrDefault(news => news.ID == id);
         }
 
-        public List<News> GetList(int categoryId = 0, string site ="")
+        public List<News> GetList(int categoryId = 0, string site = Data.Helpers.Site.home)
         {
 
             var listNews = from news in entities.News select news;
 
+
             if (categoryId > 0)
             {
-                listNews = (from news in listNews
-                    where news.TypeID == categoryId                  
-                    select news
-                    );
+                //listNews = (from news in listNews
+                //    where news.TypeID == categoryId                  
+                //    select news
+                //    );
+                listNews = listNews.Where(n=>n.TypeID == categoryId);
             }
-            if (site.Length > 0)
+
+            var categorys = entities.NewsGroups.Select(c=>c);
+            if (site == Data.Helpers.Site.home)
             {
-                listNews = (from news in listNews
-                            join cate in entities.NewsGroups on news.TypeID equals cate.ID
-                            where cate.Site == site                 
-                    select news
-                    );
+                categorys = categorys.Where(c => c.Site == site || c.Site == "" || c.Site == "1" || c.Site == null);
             }
+            else {
+                categorys = categorys.Where(c => c.Site == site);
+            }
+            listNews = listNews.Where(n => categorys.Any(c => c.ID == n.TypeID));
+            //if (site.Length > 0)
+            //{
+            //    listNews = (from news in listNews
+            //                join cate in entities.NewsGroups on news.TypeID equals cate.ID
+            //                where cate.Site == site                 
+            //        select news
+            //        );
+            //}
             return listNews.OrderByDescending(news=>news.Date.Value).ToList();
 
         }

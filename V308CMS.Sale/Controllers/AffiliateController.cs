@@ -84,7 +84,7 @@ namespace V308CMS.Sale.Controllers
             {
                 CreateRepos();
                 NewsIndexPageContainer Model = new NewsIndexPageContainer();
-                Model.NewsGroups = NewsRepos.SearchNewsGroupByAlias(CategoryAlias);
+                Model.NewsGroups = NewsRepos.SearchNewsGroupByAlias(CategoryAlias, V308CMS.Data.Helpers.Site.affiliate);
                 if (Model.NewsGroups != null) {
                     Model.ListNews = NewsRepos.LayDanhSachTinTheoGroupId(ProductHelper.ProductShowLimit, Model.NewsGroups.ID);
                     Model.PageTitle = Model.NewsGroups.Name;
@@ -109,9 +109,66 @@ namespace V308CMS.Sale.Controllers
             return NewsList(alias);
         }
 
+        public ActionResult Videos()
+        {
+            try
+            {
+                CreateRepos();
+                NewsIndexPageContainer Model = new NewsIndexPageContainer();
+                Model.NewsGroups = NewsRepos.SearchNewsGroup("affiliate-video");
+                if (Model.NewsGroups != null)
+                {
+                    Model.ListNews = NewsRepos.LayDanhSachTinTheoGroupId(ProductHelper.ProductShowLimit, Model.NewsGroups.ID);
+                    Model.PageTitle = Model.NewsGroups.Name;
+                }
+                
+                return View("Videos",Model);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return Content(ex.InnerException.ToString());
+            }
+            finally
+            {
+                DisposeRepos();
+            }
+        }
+
+        public ActionResult Video(int id)
+        {
+
+            try
+            {
+                CreateRepos();
+                var newsItem = NewsRepos.GetById(id, 0);
+                if (newsItem == null)
+                {
+                    return HttpNotFound("Tin này không tồn tại trên hệ thống");
+                }
+                var newsDetailViewModel = new NewsDetailPageContainer
+                {
+                    NewsItem = newsItem,
+                    NextNewsItem = NewsRepos.GetNext(id),
+                };
+
+                return View(newsDetailViewModel);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return Content(ex.InnerException.ToString());
+            }
+            finally
+            {
+                DisposeRepos();
+            }
+        }
+
+
         private void InsertNewsGroupDefault(string NewsGroupAlias="",NewsGroups GroupParent= null) {
 
-            var GroupItem = new NewsGroups() { Link = "", Date = DateTime.Now, Number = 0, Parent=0,Status = true, Level = "1", Alias = NewsGroupAlias, Site="affiliate" };
+            var GroupItem = new NewsGroups() { Link = "", Date = DateTime.Now, Number = 0, Parent=0,Status = true, Level = "1", Alias = NewsGroupAlias, Site= V308CMS.Data.Helpers.Site.affiliate };
             
 
             switch (GroupItem.Alias)
@@ -180,7 +237,31 @@ namespace V308CMS.Sale.Controllers
                 DisposeRepos();
             }
         }
-        
+
+        [AffiliateAuthorize]
+        public ActionResult NewsItem(int id=0)
+        {
+            try
+            {
+                CreateRepos();
+                NewsDetailPageContainer Model = new NewsDetailPageContainer();
+     
+                Model.NewsItem = NewsRepos.GetById(id, 0);
+               
+                Model.PageTitle = Model.NewsItem.Title;
+                return View("News", Model);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return Content(ex.InnerException.ToString());
+            }
+            finally
+            {
+                DisposeRepos();
+            }
+        }
+
         [AffiliateAuthorize]
         public ActionResult NewsTable(string CategoryAlias = "", string PageTitle = "")
         {

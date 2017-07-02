@@ -5,7 +5,7 @@ body .zoomContainer{display:block!important;}
 
 .zoomContainer{display:none!important;}
 html,
-body { font-size: 16px; color: #332f30; }
+body { font-size: 13px; color: #332f30; }
 a { color:#00aeef; }
 a:hover, a:active,#filter-sidebar .sidebar-links li a:hover,.product-tabs .nav.nav-tabs > li.active > a,.product-tabs .nav.nav-tabs > li > a:hover,
 .home-social .footer-icon-share a,.footer-bottom address a { color:#00aeef; }

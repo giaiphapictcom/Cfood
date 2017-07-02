@@ -6,11 +6,30 @@
     {
         foreach (V308CMS.Data.ProductTypePage ca in Model.LinkCategorys)
         {
+
         <li class="nav-item">
-            <a class="nav-link" href="/@V308CMS.Common.Ultility.LocDau(@ca.Name)-t@(@ca.Id).html" title="@ca.Name"><i class="@ca.Icon"></i> @ca.Name</a>
+            <a class="nav-link" href="/@V308CMS.Common.Ultility.LocDau(@ca.Name)-t@(@ca.Id).html" title="@ca.Name"><i class="fa fa-@ca.Icon"></i> @ca.Name</a>
+            <i class="fa fa-plus-square showsubmenu"></i>
+            @{ 
+                using (var entities = new V308CMS.Data.V308CMSEntities()) {
+                    var submenus = (from c in entities.ProductType
+                                   where c.Parent == ca.Id
+                                   orderby c.Number ascending
+                                   select c
+                           ).ToList();
+                    if (submenus.Count() > 0) {
+                        <ul class="hidden">
+                            @foreach (var sub in submenus)
+                            {
+                                <li><a class="nav-link" href="/@V308CMS.Common.Ultility.LocDau(@sub.Name)-t@(@sub.ID).html" title="@ca.Name"><i class="fa fa-@sub.Icon"></i> @sub.Name</a></li>
+                            }
+                        </ul>
+                    }
+                }
+            }
         </li>
-        }
-    }
+                    }
+                }
 
 </ul>
 @if (Model.PromotionHot != null && Model.PromotionHot.Count > 0)
@@ -54,9 +73,19 @@
 }
 
 
-@if (ViewBag.FacebookPage != null & ViewBag.FacebookPage is string) {
+@if (Request.Browser.IsMobileDevice != true && ViewBag.FacebookPage != null & ViewBag.FacebookPage is string) {
     <div class="box-items box-shadow">
 
         @Html.Raw("<iframe src=\"http://www.facebook.com/plugins/likebox.php?profile=1&width=300&height=170&connections=10&stream=true&header=true&id=" + ViewBag.FacebookPage + "\" scrolling='no' frameborder='0' allowtransparency='true' style='border: none; overflow: hidden; width: 100%; height: 150px'></iframe>")
     </div>
+
+    <div id="fb-root"></div>
+    <script>
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.8&appId=1657297111243555";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
 }

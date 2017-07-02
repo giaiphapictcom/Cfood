@@ -7,7 +7,10 @@
             </a>
 	    </div>
         <div class="info">
-            <div class="name"><a href="/@Ultility.LocDau(@Model.Name)-d@(@Model.ID).html">@StringHelper.TruncateAtWord(@Model.Name,20)</a></div>
+            <div class="name"><a href="/@Ultility.LocDau(@Model.Name)-d@(@Model.ID).html">
+                @StringHelper.TruncateAtWord(@Model.Name,20)
+               
+            </a></div>
             <div class="price">
                 @if (Model.Price > 0) { 
                 <a href="/@Ultility.LocDau(@Model.Name)-d@(@Model.ID).html">

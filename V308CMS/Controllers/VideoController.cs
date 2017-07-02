@@ -16,7 +16,7 @@ namespace V308CMS.Controllers
         {
             ViewEngines.Engines.Clear();
             ViewEngines.Engines.Add(new V308CMS.Helpers.MpStartViewEngine(false));
-            NewsGroups videoGroup = NewsService.SearchNewsGroup("video");
+            NewsGroups videoGroup = NewsService.SearchNewsGroup("video",Data.Helpers.Site.home);
             NewsType = videoGroup.ID;
         }
         

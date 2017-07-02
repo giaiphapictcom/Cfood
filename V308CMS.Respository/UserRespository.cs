@@ -76,7 +76,7 @@ namespace V308CMS.Respository
                     userUpdate.Phone = account.Phone;
                     userUpdate.Gender = account.Gender;
                     userUpdate.Status = account.Status;
-                    userUpdate.Avata = account.Avata;
+                    userUpdate.Avatar = account.Avatar;
                     userUpdate.Gender = account.Gender;
                     userUpdate.Date = account.Date;
                     return "ok";

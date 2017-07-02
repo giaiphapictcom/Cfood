@@ -44,20 +44,26 @@ namespace V308CMS.Data
            
         }
 
-        public List<NewsGroups> GetAll(bool state=true,string site = "")
+        public List<NewsGroups> GetAll(bool state=true,string site = "", bool LevelOrder=false)
         {
             using (var entities = new V308CMSEntities())
             {
                 if (site.Length < 1) {
-                    site = "home";
+                    site = Data.Helpers.Site.home;
                 }
 
-                var query = entities.NewsGroups.Where(c=>c.Site == site);
+                var query = entities.NewsGroups.Select(c=>c);
+                if (site == Data.Helpers.Site.home) {
+                    query = query.Where(c => c.Site == site || c.Site == "" || c.Site == "1" || c.Site==null);
+                }
                 if (state) {
                     query = query.Where(c => c.Status == true);
                 }
+                if (LevelOrder) {
+                    query = query.OrderByDescending(c=>c.Level);
+                }
 
-                return query.OrderBy(c => c.Number).ToList();
+                return query.ToList();
                 //return state ? 
                 //    (from category in entities.NewsGroups
                 //                orderby category.Date.Value descending

@@ -39,18 +39,24 @@ namespace V308CMS.Common
             return MvcHtmlString.Create(group.ToString());
         }
 
-        public static MvcHtmlString InputText(string inputName ,string title="", string placeholder="")
+        public static MvcHtmlString InputText(string inputName, string title = "", string placeholder = "", string value = "", bool Readonly = false)
         {
             string inputID = "input-" + EncryptionMD5.ToMd5(inputName);
 
             TagBuilder input = new TagBuilder("input");
             input.MergeAttribute("type", "text");
+            input.MergeAttribute("value", value);
             input.MergeAttribute("name", inputName);
             input.MergeAttribute("id", inputID);
             input.MergeAttribute("class", "form-control");
-            if( placeholder.Length > 0 ){
+            if (placeholder.Length > 0) {
                 input.MergeAttribute("placeholder", placeholder);
             }
+
+            if (Readonly) {
+                input.MergeAttribute("readonly", "true");
+            }
+
             return InputGroup(inputID, title, input);
         }
 
