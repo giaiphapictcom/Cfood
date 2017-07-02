@@ -56,8 +56,11 @@
   <ItemGroup>
     <Compile Include="AdminRespository.cs" />
     <Compile Include="BannerRespository.cs" />
+    <Compile Include="BoxContentRespository.cs" />
     <Compile Include="ColorRespository.cs" />
     <Compile Include="CountryRespository.cs" />
+    <Compile Include="OrderTransactionRespository.cs" />
+    <Compile Include="ShippingAddressRespository.cs" />
     <Compile Include="EmailConfigRepository.cs" />
     <Compile Include="EmailLogRespository.cs" />
     <Compile Include="IBaseRespository.cs" />
@@ -79,6 +82,7 @@
     <Compile Include="ProductTypeRepository.cs" />
     <Compile Include="ProductUnitRespository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegionRespository.cs" />
     <Compile Include="RoleRespository.cs" />
     <Compile Include="SiteConfigRespository.cs" />
     <Compile Include="SizeRespository.cs" />

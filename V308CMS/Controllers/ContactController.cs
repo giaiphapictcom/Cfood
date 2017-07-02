@@ -11,16 +11,10 @@ namespace V308CMS.Controllers
 {
     public class ContactController : BaseController
     {
-        public ContactController()
-        {
-            ViewEngines.Engines.Clear();
-            ViewEngines.Engines.Add(new V308CMS.Helpers.MpStartViewEngine(false));
-        }
-
-
+       
         public ActionResult Index()
         {
-            var userInfo = AccountService.GetByUserId(AuthenticationHelper.CurrentUser);
+            var userInfo = AccountService.GetByUserId(User.UserId);
             var model = new ContactModels();
             if (userInfo != null)
             {

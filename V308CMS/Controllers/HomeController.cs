@@ -15,63 +15,18 @@ namespace V308CMS.Controllers
 {
     public class HomeController : BaseController
     {
-        #region Repository
-        static V308CMSEntities mEntities;
-        ProductRepository ProductRepos;
-        MarketRepository MarketRepos;
-        NewsRepository NewsRepos;
-
-        
-        //ImagesRepository ImageRepos;
-        //ProductTypeRepository ProductTypeRepos;
-        
-        //MenuConfigRespository MenuConfigRepos;
-
-        //AccountRepository AccountRepos;
-        
-        //TestimonialRepository CommentRepo;
-        //CategoryRepository CategoryRepo;
-        private void CreateRepos()
-        {
-            mEntities = new V308CMSEntities();
-            ProductRepos = new ProductRepository(mEntities);
-            NewsRepos = new NewsRepository(mEntities);
-            MarketRepos = new MarketRepository(mEntities);
-  
-        }
-        private void DisposeRepos()
-        {
-            mEntities.Dispose();
-            if (ProductRepos != null) {
-                ProductRepos.Dispose();
-            }
-            if (NewsRepos != null)
-            {
-                NewsRepos.Dispose();
-            }
-            if (MarketRepos != null)
-            {
-                MarketRepos.Dispose();
-            }
-
-        }
-        #endregion
-
         public HomeController()
         {
-            if (mEntities != null) {
-                DisposeRepos();
-            }
-            CreateRepos();
-           
-            ViewEngines.Engines.Clear();
-            ViewEngines.Engines.Add(new V308CMS.Helpers.MpStartViewEngine(false));
         }
         public ActionResult Index()
         {
 
-            try
+            IndexPageContainer mIndexPageContainer = new IndexPageContainer();
+            List<IndexPage> mIndexPageList = new List<IndexPage>();
+            var mListParent = ProductsService.LayProductTypeTheoParentId(0);
+            foreach (ProductType it in mListParent)
             {
+<<<<<<< HEAD
                 
                 IndexPageContainer mIndexPageContainer = new IndexPageContainer();
                 List<IndexPage> mIndexPageList = new List<IndexPage>();
@@ -143,74 +98,97 @@ namespace V308CMS.Controllers
                     //mIndexPageContainer.ProductTypeList = homeCategorys;
                 }
                 
-
-
-                string view = Theme.viewPage("home");
-                if (view.Length > 0)
+=======
+                //lay danh sach san pham
+                var mList = ProductsService.LayTheoTrangAndType(1, !Request.Browser.IsMobileDevice ? 4 : 50, it.ID, it.Level);
+                //lay danh sach nhom san pham con
+                var mTypeList = ProductsService.getProductTypeByParent(it.ID);
+                IndexPage mIndexPage = new IndexPage
                 {
-                    return View("Home", mIndexPageContainer);
-                }
-
-                if (!Request.Browser.IsMobileDevice)
-                    return View(mIndexPageContainer);
-                else
-                    return View("MobileIndex", mIndexPageContainer);
+                    Id = it.ID,
+                    Name = it.Name,
+                    Image = it.Image,
+                    ImageBanner = "/Content/Images/stepbuy.png",
+                    ProductTypeList = mTypeList,
+                    ProductList = mList
+                };
+                //it.ImageBanner;
+                mIndexPageList.Add(mIndexPage);
             }
-            catch (Exception ex)
+
+            mIndexPageContainer.IndexPageList = mIndexPageList;
+>>>>>>> 05ca46d6477b8a114ace89237f7b469368be8bf4
+
+            //lay cac san pham ban chay
+            var mBestBuyList = ProductsService.LaySanPhamBanChay(1, !Request.Browser.IsMobileDevice ? 10 : 50);
+
+            if (!mBestBuyList.Any())
             {
-                return Content(ex.ToString());
+                mBestBuyList = ProductsService.getProductsRandom(18);
             }
-            //finally
-            //{
-            //    DisposeRepos();
-            //}
+            mIndexPageContainer.BestBuyList = mBestBuyList;
 
+            mIndexPageContainer.ProductLastest = ProductsService.getProductsLastest(18);
+            if (!mIndexPageContainer.ProductLastest.Any())
+            {
+                mIndexPageContainer.ProductLastest = ProductsService.getProductsRandom(18);
+            }
+            ViewBag.BoxContent = BoxContentService.GetListBoxContent();
+
+            string view = Theme.viewPage("home");
+            if (view.Length > 0)
+            {
+                return View("Home", mIndexPageContainer);
+            }
+
+            if (!Request.Browser.IsMobileDevice)
+                return View(mIndexPageContainer);
+            else
+                return View("MobileIndex", mIndexPageContainer);
         }
         public ActionResult Category(int pGroupId = 0)
         {
 
-            try {
-                CreateRepos();
-                ProductCategoryPageContainer model = new ProductCategoryPageContainer();
+            ProductCategoryPageContainer model = new ProductCategoryPageContainer();
 
-                int nPage = Convert.ToInt32(Request.QueryString["p"]);
-                if (nPage < 1)
+            int nPage = Convert.ToInt32(Request.QueryString["p"]);
+            if (nPage < 1)
+            {
+                nPage = 1;
+            }
+
+            List<Product> mProductList = new List<Product>();
+            List<ProductCategoryPage> mProductPageList = new List<ProductCategoryPage>();
+
+            ProductType productCategory = ProductsService.LayLoaiSanPhamTheoId(pGroupId);
+            if (productCategory != null)
+            {
+                CategoryPage categoryPage = ProductHelper.getProductsByCategory(productCategory.ID, nPage);
+
+                model.Products = categoryPage.Products;
+                model.ProductTotal = categoryPage.ProductTotal;
+                model.Brands = ProductsService.getRandomBrands(productCategory.ID, 6);
+                List<ProductType> mProductTypeList;
+                if (productCategory.Parent == 0)
+                    mProductTypeList = ProductsService.getProductTypeByProductType(productCategory.ID);//lay danh sach cap 1
+                else
                 {
-                    nPage = 1;
+                    mProductTypeList = new List<ProductType>
+                    {
+                        productCategory
+                    };
+                    //mProductTypeList = productRepository.getProductTypeByProductType((int)mProductType.Parent);//lay danh sach cap 2
                 }
 
-                List<Product> mProductList = new List<Product>();
-                List<ProductCategoryPage> mProductPageList = new List<ProductCategoryPage>();
-                List<ProductType> mProductTypeList;
-
-                ProductType ProductCategory = ProductRepos.LayLoaiSanPhamTheoId(pGroupId);
-                if (ProductCategory != null)
+                if (mProductTypeList.Count > 0)
                 {
-                    CategoryPage CategoryPage = ProductHelper.getProductsByCategory(ProductCategory.ID, nPage);
+                    mProductPageList.AddRange(mProductTypeList.Select(it => ProductHelper.GetCategoryPage(it, nPage)));
+                }
+                else
+                {
+                    mProductPageList.Add(ProductHelper.GetCategoryPage(productCategory, nPage));
 
-                    model.Products = CategoryPage.Products;
-                    model.ProductTotal = CategoryPage.ProductTotal;
-                    model.Brands = ProductRepos.getRandomBrands(ProductCategory.ID, 6);
-                    if (ProductCategory.Parent == 0)
-                        mProductTypeList = ProductRepos.getProductTypeByProductType(ProductCategory.ID);//lay danh sach cap 1
-                    else
-                    {
-                        mProductTypeList = new List<ProductType>();
-                        mProductTypeList.Add(ProductCategory);
-                        //mProductTypeList = productRepository.getProductTypeByProductType((int)mProductType.Parent);//lay danh sach cap 2
-                    }
-
-                    if (mProductTypeList.Count > 0)
-                    {
-                        foreach (ProductType it in mProductTypeList)
-                        {
-                            mProductPageList.Add(ProductHelper.GetCategoryPage(it, nPage));
-                        }
-                    }
-                    else
-                    {
-                        mProductPageList.Add(ProductHelper.GetCategoryPage(ProductCategory, nPage));
-
+<<<<<<< HEAD
                     }
 
                 }
@@ -228,73 +206,87 @@ namespace V308CMS.Controllers
                 return Content(ex.ToString());
             }
            
+=======
+                }
+                //lay danh sach cac nhom so che
+                //mSoCheList = productRepos.LayProductTypeTheoParentId(147);
+                //Model.ProductTypeList = mSoCheList;
+                //lay cac san pham ban chay
+                //mBestBuyList = productRepos.getBestBuyWithType(1, 10, 147, "10030");
+                //Model.ProductList = mBestBuyList;
+            }
+            model.List = mProductPageList;
+            model.ProductType = productCategory;
+            model.BestSeller = ProductsService.getProductsRandom();
+            //if (mProductList.Count < 40)
+            //    Model.IsEnd = true;
+            model.Page = nPage;
+            return View("Category", model);
+            //if (!Request.Browser.IsMobileDevice)
+            //    return View("Category", model);
+            //else
+            //    return View("MobileCategory", model);
+
+>>>>>>> 05ca46d6477b8a114ace89237f7b469368be8bf4
         }
         public ActionResult Detail(int pId = 0)
         {
-
-            try {
-                ProductDetailPage mProductDetailPage = new ProductDetailPage();
-                Product mProduct;
-                ProductType mProductType = new ProductType();
-                Market mMarket = new Market(); ;
-                //List<Product> MarketList;
-                List<Product> RelatedList;
-                //List<Product> DiscountList;
-                List<ProductType> mProductTypeList;
-                mProduct = ProductRepos.LayTheoId(pId);
-                if (mProduct != null)
-                {
-                    mProductDetailPage.Product = mProduct;
-                    mMarket = MarketRepos.LayTheoId((int)mProduct.MarketId);
-                    if (mMarket == null)
-                        mMarket = new Market();
-                    mProductDetailPage.Market = mMarket;
-                    //lay chi tiet ve loai san pham
-                    mProductType = ProductRepos.LayLoaiSanPhamTheoId((int)mProduct.Type);
-                    if (mProductType == null)
-                        mProductType = new ProductType();
-                    mProductDetailPage.ProductType = mProductType;
-                    //lay danh sach san pham cua sieu thi
-                    //MarketList = productRepos.getByPageSizeMarketId(1, 6, mMarket.ID);
-                    //mProductDetailPage.MarketList = MarketList;
-
-                    RelatedList = ProductRepos.LayDanhSachSanPhamLienQuan((int)mProduct.Type, 12, true);
-                    mProductDetailPage.RelatedList = RelatedList;
-
-                    //DiscountList = productRepos.LaySanPhamKhuyenMai(1, 6);
-                    //mProductDetailPage.DiscountList = DiscountList;
-                    //
-                    mProductTypeList = ProductRepos.getProductTypeParent();
-                    mProductDetailPage.ProductTypeList = mProductTypeList;
-
-                    ProductSlideShow ProductImages = new ProductSlideShow();
-
-                    mProductDetailPage.Images = ProductRepos.LayProductImageTheoIDProduct(mProduct.ID);
-
-                }
-                mProductDetailPage.ProductLastest = ProductRepos.getProductsRandom(6);
-
-                //lay chi tiet san pham
-                return View("Detail", mProductDetailPage);
-                //if (!Request.Browser.IsMobileDevice)
-                //    return View("Detail", mProductDetailPage);
-                //else
-                //    return View("MobileDetail", mProductDetailPage);
-            }
-            catch (Exception ex)
+            ProductDetailPage mProductDetailPage = new ProductDetailPage();
+            Product mProduct;
+            ProductType mProductType = new ProductType();
+            Market mMarket = new Market(); ;
+            //List<Product> MarketList;
+            List<Product> RelatedList;
+            //List<Product> DiscountList;
+            List<ProductType> mProductTypeList;
+            mProduct = ProductsService.LayTheoId(pId);
+            if (mProduct != null)
             {
-                return Content(ex.ToString());
+                mProductDetailPage.Product = mProduct;
+                mMarket = MarketService.LayTheoId((int)mProduct.MarketId);
+                if (mMarket == null)
+                    mMarket = new Market();
+                mProductDetailPage.Market = mMarket;
+                //lay chi tiet ve loai san pham
+                mProductType = ProductsService.LayLoaiSanPhamTheoId((int)mProduct.Type);
+                if (mProductType == null)
+                    mProductType = new ProductType();
+                mProductDetailPage.ProductType = mProductType;
+                //lay danh sach san pham cua sieu thi
+                //MarketList = productRepos.getByPageSizeMarketId(1, 6, mMarket.ID);
+                //mProductDetailPage.MarketList = MarketList;
+
+                RelatedList = ProductsService.LayDanhSachSanPhamLienQuan((int)mProduct.Type, 12, true);
+                mProductDetailPage.RelatedList = RelatedList;
+
+                //DiscountList = productRepos.LaySanPhamKhuyenMai(1, 6);
+                //mProductDetailPage.DiscountList = DiscountList;
+                //
+                mProductTypeList = ProductsService.getProductTypeParent();
+                mProductDetailPage.ProductTypeList = mProductTypeList;
+
+                ProductSlideShow ProductImages = new ProductSlideShow();
+
+                mProductDetailPage.Images = ProductsService.LayProductImageTheoIDProduct(mProduct.ID);
+
             }
+            mProductDetailPage.ProductLastest = ProductsService.getProductsRandom(6);
+
+            //lay chi tiet san pham
+            return View("Detail", mProductDetailPage);
+            //if (!Request.Browser.IsMobileDevice)
+            //    return View("Detail", mProductDetailPage);
+            //else
+            //    return View("MobileDetail", mProductDetailPage);
         }
-        
+
         public ActionResult Search()
         {
-            try
-            {
-                int pVendor = 2;
-                int pPage = 1;
-                SearchPage mSearchPage = new SearchPage();
+            int pVendor = 2;
+            int pPage = 1;
+            SearchPage mSearchPage = new SearchPage();
 
+<<<<<<< HEAD
                 string pKey = Request.QueryString["q"];
                 if (pKey == null) {
                     pKey = Request.QueryString["pKey"];
@@ -306,25 +298,26 @@ namespace V308CMS.Controllers
                     if (pVendor == 1)/*Tìm theo cửa hàng*/
                 {
                     List<Market> mMarketList = MarketRepos.SearchMarketTheoTrangAndType(pPage, 30, pKey);
+=======
+            string pKey = Request.QueryString["q"];
 
-                    mSearchPage.Code = 1;
-                    if (mMarketList.Count > 0)
-                    {
-                        mSearchPage.MarketList = mMarketList;
-                        if (mMarketList.Count < 30)
-                            mSearchPage.IsEnd = true;
-                        mSearchPage.Page = pPage;
-                        mSearchPage.Name = pKey;
-                    }
-                    else
-                    {
-                        mSearchPage.MarketList = new List<Data.Market>();
-                        mSearchPage.Name = pKey;
-                        mSearchPage.Html = "Không tìm thấy kết quả nào.";
-                    }
-                }
-                else /*Tìm theo sản phẩm*/
+            if (pVendor == 1)/*Tìm theo cửa hàng*/
+            {
+                List<Market> mMarketList = MarketService.SearchMarketTheoTrangAndType(pPage, 30, pKey);
+>>>>>>> 05ca46d6477b8a114ace89237f7b469368be8bf4
+
+                mSearchPage.Code = 1;
+                if (mMarketList.Count > 0)
                 {
+                    mSearchPage.MarketList = mMarketList;
+                    if (mMarketList.Count < 30)
+                        mSearchPage.IsEnd = true;
+                    mSearchPage.Page = pPage;
+                    mSearchPage.Name = pKey;
+                }
+                else
+                {
+<<<<<<< HEAD
                     List<Product> mProductList = ProductsService.TimSanPhamTheoTen(pPage, 30, pKey.ToLower());
                     mSearchPage.Code = 2;
                     if (mProductList.Count > 0)
@@ -341,27 +334,45 @@ namespace V308CMS.Controllers
                         mSearchPage.Name = pKey;
                         mSearchPage.Html = "Không tìm thấy kết quả nào.";
                     }
+=======
+                    mSearchPage.MarketList = new List<Data.Market>();
+                    mSearchPage.Name = pKey;
+                    mSearchPage.Html = "Không tìm thấy kết quả nào.";
+>>>>>>> 05ca46d6477b8a114ace89237f7b469368be8bf4
                 }
-                return View("Search", mSearchPage);
             }
-            catch (Exception ex)
+            else /*Tìm theo sản phẩm*/
             {
-                return Content(ex.ToString());
+                List<Product> mProductList = ProductsService.TimSanPhamTheoTen(pPage, 30, pKey.ToLower());
+                mSearchPage.Code = 2;
+                if (mProductList.Count > 0)
+                {
+                    mSearchPage.ProductList = mProductList;
+                    if (mProductList.Count < 30)
+                        mSearchPage.IsEnd = true;
+                    mSearchPage.Page = pPage;
+                    mSearchPage.Name = pKey;
+                }
+                else
+                {
+                    mSearchPage.ProductList = new List<Product>();
+                    mSearchPage.Name = pKey;
+                    mSearchPage.Html = "Không tìm thấy kết quả nào.";
+                }
             }
+            return View("Search", mSearchPage);
         }
         public ActionResult YoutubeDetail(int pId = 0)
         {
-         
-          
             NewsPage mCommonModel = new NewsPage();
             StringBuilder mStr = new StringBuilder();
             //lay chi tiet san pham
-            var mNews = NewsRepos.LayTinTheoId(pId);
+            var mNews = NewsService.LayTinTheoId(pId);
             if (mNews != null)
             {
 
                 mCommonModel.pNews = mNews;
-                var mListLienQuan = NewsRepos.LayTinTucLienQuan(mNews.ID, 26, 5);
+                var mListLienQuan = NewsService.LayTinTucLienQuan(mNews.ID, 26, 5);
                 //tao Html tin tuc lien quan
                 mCommonModel.List = mListLienQuan;
             }
@@ -369,26 +380,26 @@ namespace V308CMS.Controllers
             {
                 mCommonModel.Html = "Không tìm thấy sản phẩm";
             }
-          
-            return View("Video",mCommonModel);
-         
+
+            return View("Video", mCommonModel);
+
         }
 
         public ActionResult Market(string pMarketName = "")
         {
-         
+
             Market mMarket;
             ProductCategoryPageBox mProductCategoryPageBox = new ProductCategoryPageBox();
             ProductType mProductType = new ProductType();
             //lay chi tiet ProductType
             //lay danh sach các nhóm sản phẩm con
             //lay cac san pham cua nhom
-            mMarket = MarketRepos.getByName(pMarketName.Replace('-', ' '));
+            mMarket = MarketService.getByName(pMarketName.Replace('-', ' '));
             if (mMarket != null)
             {
                 mProductCategoryPageBox.List = new List<ProductCategoryPage>();
                 mProductCategoryPageBox.Market = mMarket;
-                var mProductTypeList = ProductRepos.getProductTypeParent();
+                var mProductTypeList = ProductsService.getProductTypeParent();
                 foreach (ProductType it in mProductTypeList)
                 {
                     ProductCategoryPage mProductPage = new ProductCategoryPage();
@@ -396,173 +407,113 @@ namespace V308CMS.Controllers
                     mProductPage.Value = mMarket.UserName;
                     mProductPage.Id = (int)it.ID;
                     mProductPage.Image = it.Image;
-                    List<Product> mProductList = ProductRepos.getByPageSizeMarketId(1, 4, (int)it.ID, mMarket.ID, it.Level);
+                    List<Product> mProductList = ProductsService.getByPageSizeMarketId(1, 4, (int)it.ID, mMarket.ID, it.Level);
                     mProductPage.List = mProductList;
                     mProductCategoryPageBox.List.Add(mProductPage);
                 }
 
             }
-            return View("Market",mProductCategoryPageBox);
+            return View("Market", mProductCategoryPageBox);
         }
         public ActionResult MarketCategory(string pMarketName = "", int pGroupId = 0, int pPage = 1)
         {
-            V308CMSEntities mEntities = new V308CMSEntities();
-            ProductRepository productRepository = new ProductRepository(mEntities);
-            MarketRepository marketRepository = new MarketRepository(mEntities);
             Market mMarket;
             ProductCategoryPage mProductPage = new ProductCategoryPage();
             ProductType mProductType = new ProductType();
-            try
+            //lay chi tiet ProductType
+            //lay danh sach các nhóm sản phẩm con
+            //lay cac san pham cua nhom
+            mMarket = MarketService.getByName(pMarketName.Replace('-', ' '));
+            mProductType = ProductsService.LayLoaiSanPhamTheoId(pGroupId);
+            if (mMarket != null)
             {
-                //lay chi tiet ProductType
-                //lay danh sach các nhóm sản phẩm con
-                //lay cac san pham cua nhom
-                mMarket = marketRepository.getByName(pMarketName.Replace('-', ' '));
-                mProductType = productRepository.LayLoaiSanPhamTheoId(pGroupId);
-                if (mMarket != null)
-                {
-                    mProductPage.Market = mMarket;
-                    mProductPage.Name = mProductType.Name;
-                    mProductPage.Id = mProductType.ID;
-                    mProductPage.Image = mProductType.Image;
-                    List<Product> mProductList = productRepository.getByPageSizeMarketId(1, 25, mProductType.ID, mMarket.ID, mProductType.Level);
-                    mProductPage.List = mProductList;
-                    if (mProductList.Count < 25)
-                        mProductPage.IsEnd = true;
-                    mProductPage.Page = pPage;
-                }
-                return View(mProductPage);
+                mProductPage.Market = mMarket;
+                mProductPage.Name = mProductType.Name;
+                mProductPage.Id = mProductType.ID;
+                mProductPage.Image = mProductType.Image;
+                List<Product> mProductList = ProductsService.getByPageSizeMarketId(1, 25, mProductType.ID, mMarket.ID, mProductType.Level);
+                mProductPage.List = mProductList;
+                if (mProductList.Count < 25)
+                    mProductPage.IsEnd = true;
+                mProductPage.Page = pPage;
             }
-            catch (Exception ex)
-            {
-                return Content(ex.InnerException.ToString());
-            }
-            finally
-            {
-                mEntities.Dispose();
-                productRepository.Dispose();
-            }
+            return View(mProductPage);
+
         }
 
         public JsonResult GuiThongTinLienHe(string pfirstname = "", string plastname = "", string pemail = "", string pphone = "", string pcontent = "")
         {
-            try
-            {
-                //lay danh sach diem di :sales@dongxuanmedia.vn
-                string EmailContent = "Thông tin liên hệ từ " + pfirstname + " " + plastname + " của Đồng Xuân Media: <br/> " + pcontent + " <br/> Email: " + pemail + "<br/> Mobile: " + pphone + " <br/> Ngày : " + DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss") + "";
-                V308Mail.SendMail("sales@dongxuanmedia.vn", "Thông tin liên hệ từ " + pfirstname + " " + plastname + " của Đồng Xuân Media: " + " - " + DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss") + "", EmailContent);
-                return Json(new { code = 1, message = "Yêu cầu được gửi thành công ! Chúng tôi sẽ sớm liên lạc lại với bạn." });
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("error :", ex);
-                return Json(new { code = 0, message = "Có lỗi xảy ra, Vui lòng gửi lại hoặc liên lạc trực tiếp với chúng tôi qua điện thoại." });
-            }
+            string emailContent = "Thông tin liên hệ từ " + pfirstname + " " + plastname + " của Đồng Xuân Media: <br/> " + pcontent + " <br/> Email: " + pemail + "<br/> Mobile: " + pphone + " <br/> Ngày : " + DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss") + "";
+            V308Mail.SendMail("sales@dongxuanmedia.vn", "Thông tin liên hệ từ " + pfirstname + " " + plastname + " của Đồng Xuân Media: " + " - " + DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss") + "", emailContent);
+            return Json(new { code = 1, message = "Yêu cầu được gửi thành công ! Chúng tôi sẽ sớm liên lạc lại với bạn." });
         }
         public ActionResult Add()
         {
             V308CMSEntities mEntities = new V308CMSEntities();
-            ProductRepository productRepository = new ProductRepository(mEntities);
-            MarketRepository marketRepository = new MarketRepository(mEntities);
+            ProductRepository productRepository = new ProductRepository();
+            MarketRepository marketRepository = new MarketRepository();
             StringBuilder str = new StringBuilder();
-            List<Market> mMarketList = new List<Market>();
-            List<ProductType> mProductTypeList = new List<ProductType>();
-            List<MarketProductType> mMarketProductTypeList;
-            try
+            var mMarketList = marketRepository.getAll(18);
+            foreach (Market it in mMarketList)
             {
-                //lay danh sach cac cua hang
-                //lay danh sach cac nhom hang cua cua hang ban
-                //them cac san pham vao theo cac nhom cac cua hang
-                mMarketList = marketRepository.getAll(18);
-                foreach (Market it in mMarketList)
+                //lay danh sach cac nhom san pham
+                var mMarketProductTypeList = marketRepository.getAllMarketProductType(it.ID);
+                //lap khap cac kieu nay
+                foreach (MarketProductType ut in mMarketProductTypeList)
                 {
-                    //lay danh sach cac nhom san pham
-                    mMarketProductTypeList = marketRepository.getAllMarketProductType(it.ID);
-                    //lap khap cac kieu nay
-                    foreach (MarketProductType ut in mMarketProductTypeList)
+                    //lay danh sach cac nhom con
+                    var mProductTypeList = productRepository.getProductTypeByParent((int)ut.Parent);
+                    //them cac san pham
+                    foreach (ProductType ht in mProductTypeList)
                     {
-                        //lay danh sach cac nhom con
-                        mProductTypeList = productRepository.getProductTypeByParent((int)ut.Parent);
-                        //them cac san pham
-                        foreach (ProductType ht in mProductTypeList)
+                        for (int i = 0; i < 6; i++)
                         {
-                            for (int i = 0; i < 6; i++)
+                            Product mProduct = new Product()
                             {
-                                Product mProduct = new Product() { Name = "Sản phẩm " + it.ID + "_" + ht.ID, Type = ht.ID, MarketId = it.ID, Image = "/Content/Images/pimg.png", Price = 1000, Summary = "Rau muống " + it.ID, Status = true, Date = DateTime.Now };
-                                mEntities.AddToProduct(mProduct);
-                            }
+                                Name = "Sản phẩm " + it.ID + "_" + ht.ID,
+                                Type = ht.ID,
+                                MarketId = it.ID,
+                                Image = "/Content/Images/pimg.png",
+                                Price = 1000,
+                                Summary = "Rau muống " + it.ID,
+                                Status = true,
+                                Date = DateTime.Now
+                            };
+                            mEntities.AddToProduct(mProduct);
                         }
                     }
-                    mEntities.SaveChanges();
                 }
-                //
-                return Content("OK"); ;
+                mEntities.SaveChanges();
             }
-            catch (Exception ex)
-            {
-                return Content(ex.InnerException.ToString());
-            }
-            finally
-            {
-                mEntities.Dispose();
-                productRepository.Dispose();
-            }
+            //
+            return Content("OK"); ;
         }
-        
-        
+
+
         public ActionResult MarketList(int ptype = 0)
         {
-            V308CMSEntities mEntities = new V308CMSEntities();
-            MarketRepository marketRepository = new MarketRepository(mEntities);
             List<Market> mList = new List<Market>();
-            try
-            {
-                //lay danh sach nhom tin
-                mList = marketRepository.getMarketByType(100, ptype);
-                ViewBag.MkType = ptype;
-                //lay danh sach cac tin theo nhom
-                return View(mList);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("error :", ex);
-                return Content("<dx></dx>");
-            }
-            finally
-            {
-                mEntities.Dispose();
-                marketRepository.Dispose();
-            }
+            //lay danh sach nhom tin
+            mList = MarketService.getMarketByType(100, ptype);
+            ViewBag.MkType = ptype;
+            //lay danh sach cac tin theo nhom
+            return View(mList);
         }
         [HttpPost]
         public JsonResult addEmail(string pEmail)
         {
             V308CMSEntities mEntities = new V308CMSEntities();
             EmailRepository emailRepository = new EmailRepository(mEntities);
-            try
+            if (ValidateInput.IsValidEmailAddress(pEmail))
             {
-
-                if (ValidateInput.IsValidEmailAddress(pEmail))
-                {
-                    VEmail mVEmail = new VEmail() { CreatedDate = DateTime.Now, State = true, Type = 1, Value = pEmail };
-                    mEntities.AddToVEmail(mVEmail);
-                    mEntities.SaveChanges();
-                    return Json(new { code = 1, message = "Email đã được thêm vào hệ thống." });
-                }
-                else
-                {
-                    return Json(new { code = 0, message = "Email bạn nhập không chính xác." });
-                }
+                VEmail mVEmail = new VEmail() { CreatedDate = DateTime.Now, State = true, Type = 1, Value = pEmail };
+                mEntities.AddToVEmail(mVEmail);
+                mEntities.SaveChanges();
+                return Json(new { code = 1, message = "Email đã được thêm vào hệ thống." });
             }
-            catch (Exception ex)
+            else
             {
-                Console.WriteLine("error :", ex);
-                return Json(new { code = 0, message = "Có lỗi xảy ra. Vui lòng thử lại." });
-            }
-            finally
-            {
-                mEntities.Dispose();
-                emailRepository.Dispose();
+                return Json(new { code = 0, message = "Email bạn nhập không chính xác." });
             }
 
         }
@@ -573,43 +524,25 @@ namespace V308CMS.Controllers
         [HttpPost]
         public JsonResult CheckMarketRegister(string pUserName, string pPassWord, string pPassWord2, string pEmail, string pMobile, string InvisibleCaptchaValue, string Captcha = "", bool rbtAgree = false, string pFullName = "")
         {
-            V308CMSEntities mEntities = new V308CMSEntities();
-            AccountRepository accountRepository = new AccountRepository(mEntities);
-            ETLogin mETLogin = null;
-            try
+            var mEtLogin = AccountService.CheckDangKyHome(pUserName, pPassWord, pPassWord2, pEmail, pFullName, pMobile);
+            if (mEtLogin.code == 1)
             {
-                mETLogin = accountRepository.CheckDangKyHome(pUserName, pPassWord, pPassWord2, pEmail, pFullName, pMobile);
-                if (mETLogin.code == 1)
-                {
-                    //SET session cho UserId
-                    Session["UserId"] = mETLogin.Account.ID;
-                    Session["UserName"] = mETLogin.Account.UserName;
-                    if (Session["ShopCart"] == null)
-                        Session["ShopCart"] = new ShopCart();
-                    //Thuc hien Authen cho User.
-                    FormsAuthentication.SetAuthCookie(pUserName, true);
-                    return Json(new { code = 1, message = "Đăng ký thành công. Tài khoản là : " + pUserName + "." });
-                }
-                else
-                {
-                    return Json(new { code = 0, message = mETLogin.message });
-                }
+                //SET session cho UserId
+                Session["UserId"] = mEtLogin.Account.ID;
+                Session["UserName"] = mEtLogin.Account.UserName;
+                if (Session["ShopCart"] == null)
+                    Session["ShopCart"] = new ShopCart();
+                //Thuc hien Authen cho User.
+                FormsAuthentication.SetAuthCookie(pUserName, true);
+                return Json(new { code = 1, message = "Đăng ký thành công. Tài khoản là : " + pUserName + "." });
             }
-            catch (Exception ex)
+            else
             {
-                Console.WriteLine("error :", ex);
-                return Json(new { code = 0, message = "Có lỗi xảy ra. Vui lòng thử lại." });
+                return Json(new { code = 0, message = mEtLogin.message });
             }
-            finally
-            {
-                mEntities.Dispose();
-                accountRepository.Dispose();
-            }
-
         }
 
-     
-       
+
     }
 
 }

@@ -5,349 +5,244 @@ using System.Web;
 
 namespace V308CMS.Data
 {
-        public interface INewsRepository
+    public interface INewsRepository
+    {
+        News LayTinTheoId(int pId);
+        News getFirstNewsWithType(int pId);
+        List<News> LayTinTheoTrang(int pcurrent, int psize);
+        List<News> LayTinTheoTrangAndGroupId(int pcurrent, int psize, int pTypeID);
+        List<News> LayTinTheoTrangAndGroupIdAdmin(int pcurrent, int psize, int pTypeID, string pLevel);
+        List<News> GetListNewsMostView(int pTypeId, string pLevel, int psize = 10);
+        List<News> GetListNewsLastest(int pTypeId, string pLevel, int psize = 10);
+        List<News> LayTinTheoTrangAndGroupIdAndLevel(int pcurrent, int psize, int pTypeID, string pLevel);
+
+    }
+    public class NewsRepository
+    {
+
+        public NewsRepository()
         {
-            News LayTinTheoId(int pId);
-            News getFirstNewsWithType(int pId);
-            List<News> LayTinTheoTrang(int pcurrent, int psize);
-            List<News> LayTinTheoTrangAndGroupId(int pcurrent, int psize, int pTypeID);
-            List<News> LayTinTheoTrangAndGroupIdAdmin(int pcurrent, int psize, int pTypeID, string pLevel);
-             List<News> GetListNewsMostView(int pTypeId, string pLevel, int psize = 10);
-            List<News> GetListNewsLastest(int pTypeId, string pLevel, int psize = 10);
-            List<News> LayTinTheoTrangAndGroupIdAndLevel(int pcurrent, int psize, int pTypeID, string pLevel);
 
         }
-        public class NewsRepository
+        public News LayTinTheoId(int pId)
         {
-            private V308CMSEntities entities;
-            #region["Contructor"]
+            using (var entities = new V308CMSEntities())
+            {
+                return (from p in entities.News
+                        where p.ID == pId
+                        select p).FirstOrDefault();
+            }
+        }
 
-            public NewsRepository()
+        public News GetById(int id, int type = 58)
+        {
+            using (var entities = new V308CMSEntities())
             {
-                this.entities = new V308CMSEntities();
+                return (from p in entities.News
+                        where p.ID == id && type == 58
+                        select p).FirstOrDefault();
+
             }
 
-            public NewsRepository(V308CMSEntities mEntities)
+        }
+        public News getFirstNewsWithType(int pId)
+        {
+            using (var entities = new V308CMSEntities())
             {
-                this.entities = mEntities;
+                return (from p in entities.News
+                        where p.TypeID == pId
+                        select p).FirstOrDefault();
             }
-
-            #endregion
-            #region["Vung cac thao tac Dispose"]
-            public void Dispose()
-            {
-                Dispose(true);
-                GC.SuppressFinalize(this);
-            }
-            protected virtual void Dispose(bool disposing)
-            {
-                if (disposing)
-                {
-                    if (this.entities != null)
-                    {
-                        this.entities.Dispose();
-                        this.entities = null;
-                    }
-                }
-            }
-            #endregion
-
-            public News LayTinTheoId(int pId)
-            {
-                News mNews = null;
-                try
-                {
-                    //lay danh sach tin moi dang nhat
-                    mNews = (from p in entities.News
-                             where p.ID == pId
-                             select p).FirstOrDefault();
-                    return mNews;
-                }
-                catch (Exception ex)
-                {
-                    Console.Write(ex);
-                    throw;
-                }
-            }
+<<<<<<< HEAD
 
             public News GetById(int id, int type = 0)
-            {
-            var article = from p in entities.News
-                          where p.ID == id
-                          select p;
-            if (type > 0) {
-                article = from p in entities.News
-                          where p.ID == id && p.TypeID == type
-                          select p;
-            }
-
-               return article.FirstOrDefault();
-            }
-            public News getFirstNewsWithType(int pId)
-            {
-                News mNews = null;
-                try
-                {
-                    //lay danh sach tin moi dang nhat
-                    mNews = (from p in entities.News
-                             where p.TypeID == pId
-                             select p).FirstOrDefault();
-                    return mNews;
-                }
-                catch (Exception ex)
-                {
-                    Console.Write(ex);
-                    throw;
-                }
-            }
-            public List<News> LayTinTheoTrang(int pcurrent, int psize)
-            {
-                List<News> mList = null;
-                try
-                {
-                    //lay danh sach tin moi dang nhat
-                    mList = (from p in entities.News
-                             orderby p.ID descending
-                             select p).Skip((pcurrent - 1) * psize)
-                             .Take(psize).ToList();
-                    return mList;
-                }
-                catch (Exception ex)
-                {
-                    Console.Write(ex);
-                    throw;
-                }
-            }
-            public List<News> LayTinTheoTrangAndGroupId(int pcurrent, int psize, int pTypeID)
-            {
-                List<News> mList = null;
-                try
-                {
-                    //lay danh sach tin moi dang nhat
-                    mList = (from p in entities.News
-                             where p.TypeID==pTypeID
-                             orderby p.ID descending
-                             select p).Skip((pcurrent - 1) * psize)
-                             .Take(psize).ToList();
-                    return mList;
-                }
-                catch (Exception ex)
-                {
-                    Console.Write(ex);
-                    throw;
-                }
-            }
-            public List<News> LayTinTheoTrangAndGroupIdAdmin(int pcurrent, int psize, int pTypeID, string pLevel)
-            {
-                List<News> mList = null;
-                int[] mIdGroup;
-                try
-                {
-                    if (pTypeID > 0)
-                    {
-                        //lay tat ca cac ID cua group theo Level
-                        mIdGroup = (from p in entities.NewsGroups
-                                    where p.Level.Substring(0, pLevel.Length).Equals(pLevel)
-                                    select p.ID).ToArray();
-                        //lay danh sach tin moi dang nhat
-                        mList = (from p in entities.News
-                                 where mIdGroup.Contains(p.TypeID.Value)
-                                 orderby p.ID descending
-                                 select p).Skip((pcurrent - 1) * psize)
-                                 .Take(psize).ToList();
-                    }
-                    else if (pTypeID == 0)
-                    {
-                        //lay danh sach tin moi dang nhat
-                        mList = (from p in entities.News
-                                 orderby p.ID descending
-                                 select p).Skip((pcurrent - 1) * psize)
-                                 .Take(psize).ToList();
-                    }
-                    return mList;
-                }
-                catch (Exception ex)
-                {
-                    Console.Write(ex);
-                    throw;
-                }
-            }
-            public List<News> GetListNewsMostView(int pTypeId, string pLevel, int psize = 10)
+=======
+        }
+        public List<News> LayTinTheoTrang(int pcurrent, int psize)
         {
-            List<News> mList = null;
-            int[] mIdGroup;
-            try
+            using (var entities = new V308CMSEntities())
+>>>>>>> 05ca46d6477b8a114ace89237f7b469368be8bf4
             {
-                if (pTypeId > 0)
+                return (from p in entities.News
+                        orderby p.ID descending
+                        select p).Skip((pcurrent - 1) * psize)
+                        .Take(psize).ToList();
+
+            }
+        }
+        public List<News> LayTinTheoTrangAndGroupId(int pcurrent, int psize, int pTypeID)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return (from p in entities.News
+                        where p.TypeID == pTypeID
+                        orderby p.ID descending
+                        select p).Skip((pcurrent - 1) * psize)
+                        .Take(psize).ToList();
+            }
+        }
+
+        public List<News> LayTinTheoTrangAndGroupIdAdmin(int pcurrent, int psize, int pTypeID, string pLevel)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                if (pTypeID == 0)
                 {
-                    //lay tat ca cac ID cua group theo Level
-                    mIdGroup = (from p in entities.NewsGroups
+
+                    return (from p in entities.News
+                            orderby p.ID descending
+                            select p).Skip((pcurrent - 1) * psize)
+                        .Take(psize).ToList();
+
+                }
+                //lay tat ca cac ID cua group theo Level
+                var mIdGroup = (from p in entities.NewsGroups
                                 where p.Level.Substring(0, pLevel.Length).Equals(pLevel)
                                 select p.ID).ToArray();
-                    //lay danh sach tin moi dang nhat
-                    mList = (from p in entities.News
-                             where mIdGroup.Contains(p.TypeID.Value)
-                             orderby p.Views, p.ID descending
-                             select p).Take(psize).ToList();
-                }
-                else if (pTypeId == 0)
+                //lay danh sach tin moi dang nhat
+                return (from p in entities.News
+                        where mIdGroup.Contains(p.TypeID.Value)
+                        orderby p.ID descending
+                        select p).Skip((pcurrent - 1) * psize)
+                    .Take(psize).ToList();
+            }
+        }
+     
+
+        public List<News> GetListNewsMostView(int pTypeId, string pLevel, int psize = 10)
+        {
+            using (var entities = new V308CMSEntities())
+           
+            {
+                if (pTypeId == 0)
                 {
                     //lay danh sach tin moi dang nhat
-                    mList = (from p in entities.News
-                             orderby p.Views, p.ID descending
-                             select p).Take(psize).ToList();
+                    return (from p in entities.News
+                            orderby p.Views, p.ID descending
+                            select p).Take(psize).ToList();
+
+
                 }
-                return mList;
-            }
-            catch (Exception ex)
-            {
-                Console.Write(ex);
-                throw;
+                //lay tat ca cac ID cua group theo Level
+                var mIdGroup = (from p in entities.NewsGroups
+                                where p.Level.Substring(0, pLevel.Length).Equals(pLevel)
+                                select p.ID).ToArray();
+                //lay danh sach tin moi dang nhat
+                return (from p in entities.News
+                        where mIdGroup.Contains(p.TypeID.Value)
+                        orderby p.Views, p.ID descending
+                        select p).Take(psize).ToList();
+
             }
 
         }
 
-            public List<News> GetListNewsLastest(int pTypeId, string pLevel, int psize =10)
+        public List<News> GetListNewsLastest(int pTypeId, string pLevel, int psize = 10)
         {
-            List<News> mList = null;
-            int[] mIdGroup;
-            try
+            using (var entities = new V308CMSEntities())
             {
-                if (pTypeId > 0)
+                if (pTypeId == 0)
                 {
-                    //lay tat ca cac ID cua group theo Level
-                    mIdGroup = (from p in entities.NewsGroups
+                    //lay danh sach tin moi dang nhat
+                    return (from p in entities.News
+                            orderby p.ID descending
+                            select p).Take(psize).ToList();
+                }
+                //lay tat ca cac ID cua group theo Level
+                var mIdGroup = (from p in entities.NewsGroups
                                 where p.Level.Substring(0, pLevel.Length).Equals(pLevel)
                                 select p.ID).ToArray();
-                    //lay danh sach tin moi dang nhat
-                    mList = (from p in entities.News
-                             where mIdGroup.Contains(p.TypeID.Value)
-                             orderby p.ID descending
-                             select p).Take(psize).ToList();
-                }
-                else if (pTypeId == 0)
-                {
-                    //lay danh sach tin moi dang nhat
-                    mList = (from p in entities.News
-                             orderby p.ID descending
-                             select p).Take(psize).ToList();
-                }
-                return mList;
+                //lay danh sach tin moi dang nhat
+                return (from p in entities.News
+                        where mIdGroup.Contains(p.TypeID.Value)
+                        orderby p.ID descending
+                        select p).Take(psize).ToList();
             }
-            catch (Exception ex)
-            {
-                Console.Write(ex);
-                throw;
-            }
-
         }
-            public List<News> LayTinTheoTrangAndGroupIdAndLevel(int pcurrent, int psize, int pTypeID, string pLevel)
+        public List<News> LayTinTheoTrangAndGroupIdAndLevel(int pcurrent, int psize, int pTypeID, string pLevel)
+        {
+            using (var entities = new V308CMSEntities())
             {
-                List<News> mList = null;
-                int[] mIdGroup;
-                try
+                if (pTypeID == 0)
                 {
-                    if (pTypeID > 0)
-                    {
-                        //lay tat ca cac ID cua group theo Level
-                        mIdGroup = (from p in entities.NewsGroups
-                                    where p.Level.Substring(0, pLevel.Length).Equals(pLevel)
-                                    select p.ID).ToArray();
-                        //lay danh sach tin moi dang nhat
-                        mList = (from p in entities.News
-                                 where mIdGroup.Contains(p.TypeID.Value)
-                                 orderby p.ID descending
-                                 select p).Skip((pcurrent - 1) * psize)
-                                 .Take(psize).ToList();
-                    }
-                    else if (pTypeID == 0)
-                    {
-                        //lay danh sach tin moi dang nhat
-                        mList = (from p in entities.News
-                                 orderby p.ID descending
-                                 select p).Skip((pcurrent - 1) * psize)
-                                 .Take(psize).ToList();
-                    }
-                    return mList;
+                    //lay danh sach tin moi dang nhat
+                    return (from p in entities.News
+                            orderby p.ID descending
+                            select p).Skip((pcurrent - 1) * psize)
+                             .Take(psize).ToList();
                 }
-                catch (Exception ex)
-                {
-                    Console.Write(ex);
-                    throw;
-                }
+                //lay tat ca cac ID cua group theo Level
+                var mIdGroup = (from p in entities.NewsGroups
+                                where p.Level.Substring(0, pLevel.Length).Equals(pLevel)
+                                select p.ID).ToArray();
+                //lay danh sach tin moi dang nhat
+                return (from p in entities.News
+                        where mIdGroup.Contains(p.TypeID.Value)
+                        orderby p.ID descending
+                        select p).Skip((pcurrent - 1) * psize)
+                         .Take(psize).ToList();
+
             }
-            public List<NewsGroups> LayNewsGroupsTrangAndGroupIdAdmin(int pcurrent, int psize, int pTypeId, string pLevel, string keyword ="")
+        }
+        public List<NewsGroups> LayNewsGroupsTrangAndGroupIdAdmin(int pcurrent, int psize, int pTypeId, string pLevel, string keyword = "")
+        {
+            using (var entities = new V308CMSEntities())
             {
                 List<NewsGroups> mList = null;
-                try
+                if (pTypeId > 0)
                 {
-                    if (pTypeId > 0)
+                    //lay tat ca cac ID cua group theo Level
+                    var mIdGroup = (from p in entities.NewsGroups
+                                    where p.Level.Substring(0, pLevel.Length).Equals(pLevel)
+                                    select p.ID).ToArray();
+                    //lay danh sach tin moi dang nhat
+                    mList = (from p in entities.NewsGroups
+                             where mIdGroup.Contains(p.ID)
+                             orderby p.ID descending
+                             select p).Skip((pcurrent - 1) * psize)
+                             .Take(psize).ToList();
+                    if (!string.IsNullOrWhiteSpace(keyword))
                     {
-                        //lay tat ca cac ID cua group theo Level
-                        var mIdGroup = (from p in entities.NewsGroups
-                            where p.Level.Substring(0, pLevel.Length).Equals(pLevel)
-                            select p.ID).ToArray();
-                        //lay danh sach tin moi dang nhat
-                        mList =  (from p in entities.NewsGroups
-                                 where mIdGroup.Contains(p.ID)
+                        mList = (from p in mList
+                                 where mIdGroup.Contains(p.ID) &&
+                                 p.Name.ToLower().Contains(keyword.ToLower())
                                  orderby p.ID descending
                                  select p).Skip((pcurrent - 1) * psize)
-                                 .Take(psize).ToList();
-                        if (!string.IsNullOrWhiteSpace(keyword))
-                        {
-                            mList = (from p in mList
-                                     where mIdGroup.Contains(p.ID) &&
-                                     p.Name.ToLower().Contains(keyword.ToLower())
-                                     orderby p.ID descending
-                                     select p).Skip((pcurrent - 1) * psize)
-                                .Take(psize).ToList();
-                        }
+                            .Take(psize).ToList();
                     }
-                    else if (pTypeId == 0)
-                    {
-                        //lay danh sach tin moi dang nhat
-                        mList =  (from p in entities.NewsGroups
-                                 orderby p.ID descending
-                                 select p).Skip((pcurrent - 1) * psize)
-                                 .Take(psize).ToList();
-                        if (!string.IsNullOrWhiteSpace(keyword))
-                        {
-                            mList = (from p in mList
-                                     where p.Name.ToLower().Contains(keyword.ToLower())
-                                     orderby p.ID descending
-                                     select p).Skip((pcurrent - 1) * psize)
-                                 .Take(psize).ToList();
-                        }
-                    }
-                    return mList;
                 }
-                catch (Exception ex)
-                {
-                    Console.Write(ex);
-                    throw;
-                }
-            }
-
-            
-            public List<News> LayTinTucLienQuan(int pId,int pTypeID,int pSize)
-            {
-                List<News> mList = null;
-                try
+                else if (pTypeId == 0)
                 {
                     //lay danh sach tin moi dang nhat
-                    mList = (from p in entities.News
-                             where p.ID!=pId && p.TypeID == pTypeID
+                    mList = (from p in entities.NewsGroups
                              orderby p.ID descending
-                             select p)
-                             .Take(pSize).ToList();
-                    return mList;
+                             select p).Skip((pcurrent - 1) * psize)
+                             .Take(psize).ToList();
+                    if (!string.IsNullOrWhiteSpace(keyword))
+                    {
+                        mList = (from p in mList
+                                 where p.Name.ToLower().Contains(keyword.ToLower())
+                                 orderby p.ID descending
+                                 select p).Skip((pcurrent - 1) * psize)
+                             .Take(psize).ToList();
+                    }
                 }
-                catch (Exception ex)
-                {
-                    Console.Write(ex);
-                    throw;
-                }
+                return mList;
             }
+        }
+
+
+        public List<News> LayTinTucLienQuan(int pId, int pTypeID, int pSize)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return (from p in entities.News
+                        where p.ID != pId && p.TypeID == pTypeID
+                        orderby p.ID descending
+                        select p)
+                         .Take(pSize).ToList();
+            }
+<<<<<<< HEAD
             public List<News> LayTinTheoGroupId(int pTypeID,int limit=10)
             {
                 List<News> mList = null;
@@ -365,164 +260,119 @@ namespace V308CMS.Data
                     Console.Write(ex);
                     throw;
                 }
-            }
-            public List<News> LayTinSlider(int pTake)
+=======
+        }
+        public List<News> LayTinTheoGroupId(int typeId)
+        {
+            using (var entities = new V308CMSEntities())
             {
-                List<News> mList = null;
-                try
-                {
-                    //lay danh sach tin moi dang nhat
-                    mList = (from p in entities.News
-                             where p.Slider==true && p.Status==true
-                             orderby p.ID descending
-                             select p).Take(pTake).ToList();
-                    return mList;
-                }
-                catch (Exception ex)
-                {
-                    Console.Write(ex);
-                    throw;
-                }
-            }
-            public List<NewsGroups> LayNhomTinAll()
-            {
-                List<NewsGroups> mList = null;
-                try
-                {
-                    //lay danh sach tin moi dang nhat
-                    mList = (from p in entities.NewsGroups
-                             where p.Status==true
-                             select p).ToList();
-                    return mList;
-                }
-                catch (Exception ex)
-                {
-                    Console.Write(ex);
-                    throw;
-                }
-            }
-            public List<NewsGroups> getNewsGroupAffterParent(int pId)
-            {
-                List<NewsGroups> mList = null;
-                try
-                {
-                    //lay danh sach tin moi dang nhat
-                    mList = (from p in entities.NewsGroups
-                             where p.Parent == pId
-                             select p).ToList();
-                    return mList;
-                }
-                catch (Exception ex)
-                {
-                    Console.Write(ex);
-                    throw;
-                }
-            }
-            public List<NewsGroups> LayNhomTinTheoTrang(int pcurrent, int psize)
-            {
-                List<NewsGroups> mList = null;
-                try
-                {
-                    //lay danh sach tin moi dang nhat
-                    mList = (from p in entities.NewsGroups
-                             orderby p.ID descending
-                             select p).Skip((pcurrent - 1) * psize)
-                             .Take(psize).ToList();
-                    return mList;
-                }
-                catch (Exception ex)
-                {
-                    Console.Write(ex);
-                    throw;
-                }
-            }
-            public NewsGroups LayTheLoaiTinTheoId(int pId)
-            {
-                NewsGroups mNewsGroups = null;
-                try
-                {
-                    //lay danh sach tin moi dang nhat
-                    mNewsGroups = (from p in entities.NewsGroups
-                             where p.ID == pId
-                             select p).FirstOrDefault();
-                    return mNewsGroups;
-                }
-                catch (Exception ex)
-                {
-                    Console.Write(ex);
-                    throw;
-                }
+                //lay danh sach tin moi dang nhat
+                return entities.News
+                .Where(news => news.TypeID == typeId)
+                .OrderByDescending(p => p.ID).ToList();
+>>>>>>> 05ca46d6477b8a114ace89237f7b469368be8bf4
             }
 
-            public List<NewsGroups> GetListNewsGroupRoot()
+        }
+        public List<News> LayTinSlider(int pTake)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+
+                return (from p in entities.News
+                        where p.Slider == true && p.Status == true
+                        orderby p.ID descending
+                        select p).Take(pTake).ToList();
+            }
+        }
+        public List<NewsGroups> LayNhomTinAll()
+        {
+            using (var entities = new V308CMSEntities())
             {
                 return (from p in entities.NewsGroups
-                    where p.Parent == 0
-                    orderby p.ID descending
-                    select p).ToList();
+                        where p.Status == true
+                        select p).ToList();
             }
-            public List<News> LayDanhSachTinHot(int pSoLuongTin)
+        }
+        public List<NewsGroups> getNewsGroupAffterParent(int pId)
+        {
+            using (var entities = new V308CMSEntities())
             {
-                List<News> mList = null;
-                try
-                {
-                    //lay danh sach tin moi dang nhat
-                    mList = (from p in entities.News
-                             where p.Status == true && p.Hot==true
-                             orderby p.Date descending
-                             select p).Take(pSoLuongTin).ToList();
+                return (from p in entities.NewsGroups
+                        where p.Parent == pId
+                        select p).ToList();
 
-
-                    return mList;
-                }
-                catch (Exception ex)
-                {
-                    Console.Write(ex);
-                    throw;
-                }
             }
-            public List<News> LayDanhSachTinNhanh(int pSoLuongTin)
+        }
+        public List<NewsGroups> LayNhomTinTheoTrang(int pcurrent, int psize)
+        {
+            using (var entities = new V308CMSEntities())
             {
-                List<News> mList = null;
-                try
-                {
-                    //lay danh sach tin moi dang nhat
-                    mList = (from p in entities.News
-                             where p.Status == true && p.Fast == true
-                             orderby p.Date descending
-                             select p).Take(pSoLuongTin).ToList();
-
-
-                    return mList;
-                }
-                catch (Exception ex)
-                {
-                    Console.Write(ex);
-                    throw;
-                }
+                return (from p in entities.NewsGroups
+                        orderby p.ID descending
+                        select p).Skip((pcurrent - 1) * psize)
+                        .Take(psize).ToList();
             }
-            public List<News> LayDanhSachTinTheoGroupId(int pSoLuongTin, int pType)
+        }
+        public NewsGroups LayTheLoaiTinTheoId(int pId)
+        {
+            using (var entities = new V308CMSEntities())
             {
-                List<News> mList = null;
-                try
-                {
-                    //lay danh sach tin moi dang nhat
-                    mList = (from p in entities.News
-                             where p.Status == true && p.TypeID == pType
-                             orderby p.Date descending
-                             select p).Take(pSoLuongTin).ToList();
-
-
-                    return mList;
-                }
-                catch (Exception ex)
-                {
-                    Console.Write(ex);
-                    throw;
-                }
+                return (from p in entities.NewsGroups
+                        where p.ID == pId
+                        select p).FirstOrDefault();
             }
-            public List<News> LayDanhSachTinMoiNhatTheoGroupId(int pSoLuongTin, int pType)
+
+        }
+
+        public List<NewsGroups> GetListNewsGroupRoot()
+        {
+            using (var entities = new V308CMSEntities())
             {
+                return (from p in entities.NewsGroups
+                        where p.Parent == 0
+                        orderby p.ID descending
+                        select p).ToList();
+
+            }
+
+        }
+        public List<News> LayDanhSachTinHot(int pSoLuongTin)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return (from p in entities.News
+                        where p.Status == true && p.Hot == true
+                        orderby p.Date descending
+                        select p).Take(pSoLuongTin).ToList();
+            }
+
+        }
+        public List<News> LayDanhSachTinNhanh(int pSoLuongTin)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return (from p in entities.News
+                        where p.Status == true && p.Fast == true
+                        orderby p.Date descending
+                        select p).Take(pSoLuongTin).ToList();
+            }
+        }
+        public List<News> LayDanhSachTinTheoGroupId(int pSoLuongTin, int pType)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return (from p in entities.News
+                        where p.Status == true && p.TypeID == pType
+                        orderby p.Date descending
+                        select p).Take(pSoLuongTin).ToList();
+            }
+        }
+        public List<News> LayDanhSachTinMoiNhatTheoGroupId(int pSoLuongTin, int pType)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+<<<<<<< HEAD
                 List<News> mList = null;
                 try
                 {
@@ -531,186 +381,108 @@ namespace V308CMS.Data
                              where p.Status == true && p.TypeID == pType
                              orderby p.Order ascending
                              select p).Take(pSoLuongTin).ToList();
+=======
+                //lay danh sach tin moi dang nhat
+                return (from p in entities.News
+                        where p.Status == true && p.TypeID == pType
+                        orderby p.ID descending
+                        select p).Take(pSoLuongTin).ToList();
+>>>>>>> 05ca46d6477b8a114ace89237f7b469368be8bf4
 
 
-                    return mList;
-                }
-                catch (Exception ex)
-                {
-                    Console.Write(ex);
-                    throw;
-                }
             }
-            public List<News> LayDanhSachTinDangDocTheoGroupId(int pSoLuongTin, int pType)
+        }
+        public List<News> LayDanhSachTinDangDocTheoGroupId(int pSoLuongTin, int pType)
+        {
+            using (var entities = new V308CMSEntities())
             {
-                List<News> mList = null;
-                try
-                {
-                    //lay danh sach tin moi dang nhat
-                    mList = (from p in entities.News
-                             where p.Status == true && p.Featured==true && p.TypeID == pType
-                             orderby p.ID descending
-                             select p).Take(pSoLuongTin).ToList();
-
-
-                    return mList;
-                }
-                catch (Exception ex)
-                {
-                    Console.Write(ex);
-                    throw;
-                }
+                return (from p in entities.News
+                        where p.Status == true && p.Featured == true && p.TypeID == pType
+                        orderby p.ID descending
+                        select p).Take(pSoLuongTin).ToList();
             }
-            public List<News> LayDanhSachTinTheoGroupIdWithPage(int pSoLuongTin, int pType, int pcurrent=1)
+        }
+        public List<News> LayDanhSachTinTheoGroupIdWithPage(int pSoLuongTin, int pType, int pcurrent = 1)
+        {
+            using (var entities = new V308CMSEntities())
             {
-                List<News> mList = null;
-                try
-                {
-                    //lay danh sach tin moi dang nhat
-                    mList = (from p in entities.News
-                             where p.Status == true && p.TypeID == pType
-                             orderby p.Date descending
-                             select p).Skip((pcurrent - 1) * pSoLuongTin)
+                return (from p in entities.News
+                        where p.Status == true && p.TypeID == pType
+                        orderby p.Date descending
+                        select p).Skip((pcurrent - 1) * pSoLuongTin)
+                            .Take(pSoLuongTin).ToList();
+            }
+        }
+        public List<News> LayDanhSachTinTheoKey(int pSoLuongTin, string pkey, int pcurrent)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return (from p in entities.News
+                        where p.Status == true && p.Keyword.Contains(pkey)
+                        orderby p.Date descending
+                        select p).Skip((pcurrent - 1) * pSoLuongTin)
                                  .Take(pSoLuongTin).ToList();
-
-
-                    return mList;
-                }
-                catch (Exception ex)
-                {
-                    Console.Write(ex);
-                    throw;
-                }
             }
-            public List<News> LayDanhSachTinTheoKey(int pSoLuongTin, string pkey, int pcurrent)
+        }
+        public List<NewsGroups> LayDanhSachNhomTin()
+        {
+            using (var entities = new V308CMSEntities())
             {
-                List<News> mList = null;
-                try
-                {
-                    //lay danh sach tin moi dang nhat
-                    mList = (from p in entities.News
-                             where p.Status == true && p.Keyword.Contains(pkey)
-                             orderby p.Date descending
-                             select p).Skip((pcurrent - 1) * pSoLuongTin)
-                                 .Take(pSoLuongTin).ToList();
-
-
-                    return mList;
-                }
-                catch (Exception ex)
-                {
-                    Console.Write(ex);
-                    throw;
-                }
+                return (from p in entities.NewsGroups
+                        where p.Status == true && p.Parent == 1
+                        orderby p.Number ascending
+                        select p).ToList();
             }
-            public List<NewsGroups> LayDanhSachNhomTin()
+        }
+        public List<NewsGroups> LayDanhSachTatCaNhomTin()
+        {
+            using (var entities = new V308CMSEntities())
             {
-                List<NewsGroups> mList = null;
-                try
-                {
-                    //lay danh sach tin moi dang nhat
-                    mList = (from p in entities.NewsGroups
-                             where p.Status == true && p.Parent == 1
-                             orderby p.Number ascending
-                             select p).ToList();
-
-
-                    return mList;
-                }
-                catch (Exception ex)
-                {
-                    Console.Write(ex);
-                    throw;
-                }
+                return (from p in entities.NewsGroups
+                        orderby p.Number ascending
+                        select p).ToList();
             }
-            public List<NewsGroups> LayDanhSachTatCaNhomTin()
+        }
+        public NewsGroups LayDanhNhomTin(int pId)
+        {
+            using (var entities = new V308CMSEntities())
             {
-                List<NewsGroups> mList = null;
-                try
-                {
-                    //lay danh sach tin moi dang nhat
-                    mList = (from p in entities.NewsGroups
-                             orderby p.Number ascending
-                             select p).ToList();
-
-
-                    return mList;
-                }
-                catch (Exception ex)
-                {
-                    Console.Write(ex);
-                    throw;
-                }
+                return (from p in entities.NewsGroups
+                        where p.ID == pId && p.Status == true
+                        select p).FirstOrDefault();
             }
-            public NewsGroups LayDanhNhomTin(int pId)
+        }
+        public List<News> LayTatCaTinTheoNhom(int pNewsGroup)
+        {
+            using (var entities = new V308CMSEntities())
             {
-                NewsGroups mGroup = null;
-                try
-                {
-                    //lay danh sach tin moi dang nhat
-                    mGroup = (from p in entities.NewsGroups
-                              where p.ID == pId && p.Status == true
-                              select p).FirstOrDefault();
-                    return mGroup;
-                }
-                catch (Exception ex)
-                {
-                    Console.Write(ex);
-                    throw;
-                }
+                return (from p in entities.News
+                        where p.TypeID == pNewsGroup
+                        select p).ToList();
             }
-            public List<News> LayTatCaTinTheoNhom(int pNewsGroup)
+        }
+        public NewsGroups LayNhomTinAn(int pId)
+        {
+            using (var entities = new V308CMSEntities())
             {
-                List<News> mList = null;
-                try
-                {
-                    //lay danh sach tin moi dang nhat
-                    mList = (from p in entities.News
-                             where p.TypeID == pNewsGroup
-                             select p).ToList();
-                    return mList;
-                }
-                catch (Exception ex)
-                {
-                    Console.Write(ex);
-                    throw;
-                }
+                return (from p in entities.NewsGroups
+                        where p.ID == pId
+                        select p).FirstOrDefault();
             }
-            public NewsGroups LayNhomTinAn(int pId)
-            {
-                NewsGroups mGroup = null;
-                try
-                {
-                    //lay danh sach tin moi dang nhat
-                    mGroup = (from p in entities.NewsGroups
-                              where p.ID == pId
-                              select p).FirstOrDefault();
-                    return mGroup;
-                }
-                catch (Exception ex)
-                {
-                    Console.Write(ex);
-                    throw;
-                }
-            }
+        }
 
-            public List<NewsGroups> GetNewsGroup(int Parent = 0, Boolean Status = true, int Limit = 5)
+        public List<NewsGroups> GetNewsGroup(int Parent = 0, Boolean Status = true, int Limit = 5)
+        {
+            using (var entities = new V308CMSEntities())
             {
-                try
-                {
-                    var newGroups = from g in entities.NewsGroups
-                                    where g.Status == Status & g.Parent == Parent
-                             orderby g.Number ascending
-                             select g;
-                    return newGroups.Take(Limit).ToList();
-                }
-                catch (Exception ex)
-                {
-                    Console.Write(ex);
-                    throw;
-                }
+                return (from g in entities.NewsGroups
+                        where g.Status == Status & g.Parent == Parent
+                        orderby g.Number ascending
+                        select g).Take(Limit).ToList();
             }
+        }
 
+<<<<<<< HEAD
             public NewsGroups SearchNewsGroup(string name,string site = Data.Helpers.Site.home)
             {
                 try
@@ -731,10 +503,24 @@ namespace V308CMS.Data
                     Console.Write(ex);
                     throw;
                 }
+=======
+        public NewsGroups SearchNewsGroup(string name)
+        {
+            using (var cmsEntities = new V308CMSEntities())
+            {
+
+                return
+                    cmsEntities.NewsGroups.FirstOrDefault(group => (group.Name.ToLower().Contains(name.ToLower()) ||
+                                                                 group.Alias.ToLower().Contains(name.ToLower())));
+>>>>>>> 05ca46d6477b8a114ace89237f7b469368be8bf4
             }
 
-            public NewsGroups SearchNewsGroupByAlias(string alias, string site="")
+        }
+        public NewsGroups SearchNewsGroupWithNews(string name)
+        {
+            using (var cmsEntities = new V308CMSEntities())
             {
+<<<<<<< HEAD
                 try
                 {
                 var category = entities.NewsGroups.Where(c => c.Alias.ToLower() == alias.ToLower());
@@ -750,50 +536,71 @@ namespace V308CMS.Data
                     Console.Write(ex);
                     throw;
                 }
-            }
-            public News GetNext(int id, int type =58)
-            {
-                try
-                {
-                   return entities.News.SkipWhile(news => news.ID != id && news.TypeID == type).Skip(1).First();
+=======
 
-                }
-                catch (Exception)
-                {
-                    return null;
-                }                
-
-            }
-            public News GetPrevious(int id,int type =58)
-            {
-                try
-                {
-                    return entities.News.TakeWhile(news => news.ID != id && news.TypeID == type).Last();
-                }
-                catch (Exception)
-                {
-
-                 return null;
-                }
-                
+                return cmsEntities.NewsGroups
+                    .Include("ListNews")
+                    .FirstOrDefault(group => (group.Name.ToLower().Contains(name.ToLower()) ||
+                                              group.Alias.ToLower().Contains(name.ToLower())));
+>>>>>>> 05ca46d6477b8a114ace89237f7b469368be8bf4
             }
 
-            public List<News> GetListNewsByTag(string tag, out int totalRecord, int page = 1, int pageSize = 10)
+        }
+
+        public NewsGroups SearchNewsGroupByAlias(string alias, string site = "")
+        {
+            using (var entities = new V308CMSEntities())
             {
-                var listNews = entities.News                  
-                    .Where(news => news.Keyword.Contains(tag))
-                    .OrderByDescending(news => news.ID)
-                    .Select(news => news)
-                    .ToList();
+                string[] words = alias.Split();
+                var NewsGroups = from p in entities.NewsGroups
+                                 where p.Alias.ToLower().Contains(alias.ToLower())
+                                 //where  ( words.Any(r=> p.Alias.Contains(r)) || words.Any(r => p.Name.Contains(r)) )
+                                 select p;
+                return NewsGroups.FirstOrDefault();
+            }
+        }
+        public News GetNext(int id, int type = 58)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return entities.News.SkipWhile(news => news.ID != id && news.TypeID == type).Skip(1).First();
+            }
+
+        }
+        public News GetPrevious(int id, int type = 58)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return entities.News.TakeWhile(news => news.ID != id && news.TypeID == type).Last();
+            }
+        }
+
+        public List<News> GetListNewsByTag(string tag, out int totalRecord, int page = 1, int pageSize = 10)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                var listNews = entities.News
+                .Where(news => news.Keyword.Contains(tag))
+                .OrderByDescending(news => news.ID)
+                .Select(news => news)
+                .ToList();
                 totalRecord = listNews.Count;
-                return listNews.Skip((page - 1)*pageSize).Take(pageSize).ToList();
+                return listNews.Skip((page - 1) * pageSize).Take(pageSize).ToList();
             }
+
+        }
 
         public News Find(int id)
         {
-            return entities.News.FirstOrDefault(news => news.ID == id);
+            using (var entities = new V308CMSEntities())
+            {
+                return entities.News.FirstOrDefault(news => news.ID == id);
+
+            }
+
         }
 
+<<<<<<< HEAD
         public List<News> GetList(int categoryId = 0, string site = Data.Helpers.Site.home)
         {
 
@@ -827,89 +634,108 @@ namespace V308CMS.Data
             //        );
             //}
             return listNews.OrderByDescending(news=>news.Date.Value).ToList();
+=======
+        public List<News> GetList(int categoryId = 0, string site = "")
+        {
+
+            using (var entities = new V308CMSEntities())
+            {
+                var listNews = from news in entities.News select news;
+
+                if (categoryId > 0)
+                {
+                    listNews = (from news in listNews
+                                where news.TypeID == categoryId
+                                select news
+                        );
+                }
+                if (site.Length > 0)
+                {
+                    listNews = (from news in listNews
+                                join cate in entities.NewsGroups on news.TypeID equals cate.ID
+                                where cate.Site == site
+                                select news
+                        );
+                }
+                return listNews.OrderByDescending(news => news.Date.Value).ToList();
+            }
+
+>>>>>>> 05ca46d6477b8a114ace89237f7b469368be8bf4
 
         }
 
         public List<News> GetVideos(int pcurrent, int psize, int pTypeID)
         {
-            List<News> mList = null;
-            //int[] mIdGroup;
-            try
+            using (var entities = new V308CMSEntities())
             {
+                List<News> mList = null;
                 if (pTypeID > 0)
                 {
                     //lay tat ca cac ID cua group theo Level
                     //mIdGroup = (from p in entities.NewsGroups
-                                
+
                     //            select p.ID).ToArray();
 
                     //lay danh sach tin moi dang nhat
-                    mList = (from p in entities.News
-                             where p.TypeID.Value.Equals(pTypeID) && p.Summary.Length > 0
-                             orderby p.ID descending
-                             select p).Skip((pcurrent - 1) * psize)
-                             .Take(psize).ToList();
+                    return (from p in entities.News
+                            where p.TypeID.Value.Equals(pTypeID) && p.Summary.Length > 0
+                            orderby p.ID descending
+                            select p).Skip((pcurrent - 1) * psize)
+                              .Take(psize).ToList();
                 }
                 return mList;
-            }
-            catch (Exception ex)
-            {
-                Console.Write(ex);
-                throw;
             }
         }
 
         public string Insert(News data)
         {
-            var newsItem = (from news in entities.News
-                            where news.Title == data.Title && news.TypeID == data.TypeID
-                            select news).FirstOrDefault();
-            if (newsItem == null)
+            using (var entities = new V308CMSEntities())
             {
-                
-                try
+                var newsItem = (from news in entities.News
+                                where news.Title == data.Title && news.TypeID == data.TypeID
+                                select news).FirstOrDefault();
+                if (newsItem == null)
                 {
-                    data.NewsGroup = new NewsGroups();
-                    if( data.TypeID > 1 ){
-                        data.NewsGroup = LayTheLoaiTinTheoId(int.Parse(data.TypeID.ToString()));
+
+                    try
+                    {
+                        data.NewsGroup = new NewsGroups();
+                        if (data.TypeID > 1)
+                        {
+                            data.NewsGroup = LayTheLoaiTinTheoId(int.Parse(data.TypeID.ToString()));
+                        }
+                        entities.News.Add(data);
+                        entities.SaveChanges();
                     }
-                    entities.News.Add(data);
-                    entities.SaveChanges();
+                    catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+                    {
+                        Console.Write(dbEx);
+                    }
+                    return "ok";
                 }
-                catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
-                {
-                    Console.Write(dbEx);
-                }
-                return "ok";
+                return "exists";
             }
-            return "exists";
+
         }
         public News SearchNews(string name)
         {
-            try
+            using (var entities = new V308CMSEntities())
             {
-                var Items = from n in entities.News
-                            where n.Title.ToLower().Contains(name.ToLower()) || n.Alias.ToLower().Contains(name.ToLower())
-                                    select n;
-                return Items.FirstOrDefault();
-            }
-            catch (Exception ex)
-            {
-                Console.Write(ex);
-                throw;
+                return (from n in entities.News
+                        where n.Title.ToLower().Contains(name.ToLower()) || n.Alias.ToLower().Contains(name.ToLower())
+                        select n).FirstOrDefault();
+
             }
         }
-        
+
         public string Update(News data)
         {
-            var newsItem = (from news in entities.News
-                            where news.ID == data.ID
-                            select news).FirstOrDefault();
-            if (newsItem != null)
+            using (var entities = new V308CMSEntities())
             {
-
-                
-                try
+                var newsItem = (from news in entities.News
+                    where news.ID == data.ID
+                    select news).FirstOrDefault();
+                if (newsItem != null)
                 {
                     newsItem.Title = data.Title;
                     newsItem.Alias = data.Alias;
@@ -925,32 +751,31 @@ namespace V308CMS.Data
                     newsItem.Featured = data.Featured;
                     newsItem.Status = data.Status;
                     newsItem.Site = data.Site;
-                    //newsItem.NewsGroup = LayNhomTinAn((int)data.TypeID);
                     entities.SaveChanges();
+                    return "ok";
                 }
-                catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
-                {
-                    Console.Write(dbEx);
-                }
-                
-                return "ok";
+                return "not_exists";
             }
-            return "not_exists";
 
         }
 
         public string Delete(int id)
         {
-            var newsItem = (from color in entities.News
-                            where color.ID == id
-                            select color).FirstOrDefault();
-            if (newsItem != null)
+            using (var entities = new V308CMSEntities())
             {
-                entities.News.Remove(newsItem);
-                entities.SaveChanges();
-                return "ok";
+                var newsItem = (from color in entities.News
+                                where color.ID == id
+                                select color).FirstOrDefault();
+                if (newsItem != null)
+                {
+                    entities.News.Remove(newsItem);
+                    entities.SaveChanges();
+                    return "ok";
+                }
+                return "not_exists";
+
             }
-            return "not_exists";
+
         }
 
     }

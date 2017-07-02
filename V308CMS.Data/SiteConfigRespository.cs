@@ -11,75 +11,112 @@ namespace V308CMS.Data
         SiteConfig GetById(int id);
         string Delete(int id);
         string Update(int id, string name, string content);
-        string Insert(string name, string content );
+        string Insert(string name, string content);
     }
-    public class SiteConfigRespository: ISiteConfigRespository
+    public class SiteConfigRespository : ISiteConfigRespository
     {
-        private readonly V308CMSEntities _entities;
-        public SiteConfigRespository(V308CMSEntities entities)
+
+        public SiteConfigRespository()
         {
-            _entities = entities;
+
         }
         public List<SiteConfig> GetList()
         {
-            return (from item in _entities.SiteConfig
-                orderby item.Id descending
-                select item
-                ).ToList();
+            using (var entities = new V308CMSEntities())
+            {
+                return (from item in entities.SiteConfig
+                        orderby item.Id descending
+                        select item
+               ).ToList();
+            }
+
         }
 
         public SiteConfig GetById(int id)
         {
-            return (from config in _entities.SiteConfig
-                where config.Id == id
-                select config).FirstOrDefault();
+            using (var entities = new V308CMSEntities())
+            {
+                return (from config in entities.SiteConfig
+                        where config.Id == id
+                        select config).FirstOrDefault();
+            }
+
         }
 
         public string Delete(int id)
         {
-            var configItem = (from config in _entities.SiteConfig
-                    where config.Id == id
-                    select config).FirstOrDefault();
-            if (configItem != null)
+            using (var entities = new V308CMSEntities())
             {
-                _entities.SiteConfig.Remove(configItem);
-                _entities.SaveChanges();
-                return "ok";
+                var configItem = (from config in entities.SiteConfig
+                                  where config.Id == id
+                                  select config).FirstOrDefault();
+                if (configItem != null)
+                {
+                    entities.SiteConfig.Remove(configItem);
+                    entities.SaveChanges();
+                    return "ok";
+                }
+                return "not_exists";
+
             }
-            return "not_exists";
+
         }
 
         public string Update(int id, string name, string content)
         {
-            var configItem = (from config in _entities.SiteConfig
-                              where config.Id == id
-                              select config).FirstOrDefault();
-            if (configItem != null)
+            using (var entities = new V308CMSEntities())
             {
-                configItem.Name = name;
-                configItem.Content = content;
-                _entities.SaveChanges();
-                return "ok";
+                var configItem = (from config in entities.SiteConfig
+                                  where config.Id == id
+                                  select config).FirstOrDefault();
+                if (configItem != null)
+                {
+                    configItem.Name = name;
+                    configItem.Content = content;
+                    entities.SaveChanges();
+                    return "ok";
+                }
+                return "not_exists";
             }
-            return "not_exists";
+
         }
 
         public string Insert(string name, string content)
         {
-            var configItem = (from config in _entities.SiteConfig
-                              where config.Name == name
-                              select config).FirstOrDefault();
-            if (configItem == null)
+            using (var entities = new V308CMSEntities())
             {
-                _entities.SiteConfig.Add(new SiteConfig
+                var configItem = (from config in entities.SiteConfig
+                                  where config.Name == name
+                                  select config).FirstOrDefault();
+                if (configItem == null)
                 {
-                    Name = name,
-                    Content = content
-                });
-                _entities.SaveChanges();
-                return "ok";
+                    entities.SiteConfig.Add(new SiteConfig
+                    {
+                        Name = name,
+                        Content = content
+                    });
+                    entities.SaveChanges();
+                    return "ok";
+                }
+                return "exists";
             }
-            return "exists";
+
+        }
+        public List<SiteConfig> LoadSiteConfig()
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return entities.SiteConfig.ToList();
+
+            }
+
+        }
+
+        public string ReadSiteConfig(List<SiteConfig> siteConfigs, string config, string defaultValue = "")
+        {
+            var siteConfig = siteConfigs.FirstOrDefault(item => item.Name == config);
+            return siteConfig != null ? siteConfig.Content : defaultValue;
+
         }
     }
 }

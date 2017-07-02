@@ -1,44 +1,48 @@
 ﻿using System;
+using System.Data.Entity.Validation;
+using System.Linq;
 
 namespace V308CMS.Data
 {
-    public interface ShoppingCartItemRepository
+    public interface IShoppingCartItemRepository
     {
-        string Insert(int order_id, int item_id, string item_name, double price, int quantity);
+        string Insert(int orderId, int itemId, string itemName, string itemPicture, double price, int quantity);
     }
 
-    public class CartItemRepository : ShoppingCartItemRepository
+    public class CartItemRepository : IShoppingCartItemRepository
     {
-        private V308CMSEntities entities;
-        public CartItemRepository(V308CMSEntities mEntities)
+        public CartItemRepository()
         {
-            this.entities = mEntities;
+
         }
 
 
-        public string Insert(int OrderID, int ItemID, string ItemName, double price, int quantity)
+        public string Insert(int orderId, int itemId, string itemName, string itemPicture, double price, int quantity)
         {
-            try
+            
+            using (var entities = new V308CMSEntities())
             {
+                var checkOrderDetail = entities.ProductOrderItem.FirstOrDefault(order => order.order_id == orderId
+                                    && order.item_id == itemId
+                                    && order.item_name == itemName
+                                    && order.item_picture == itemPicture
+                                    && order.item_price == price
+                                    && order.item_qty == quantity);
+
                 var item = new productorder_detail
                 {
-                    order_id = OrderID,
-                    item_id = ItemID,
-                    item_name = ItemName,
+                    order_id = orderId,
+                    item_id = itemId,
+                    item_name = itemName,
                     item_price = price,
-                    item_qty = quantity
+                    item_qty = quantity,
+                    item_picture = itemPicture
                 };
                 entities.ProductOrderItem.Add(item);
                 entities.SaveChanges();
-
                 return item.ID.ToString();
-            }
-            catch (Exception ex)
-            {
-                return ex.ToString();
-            }
 
-
+            }
         }
 
     }

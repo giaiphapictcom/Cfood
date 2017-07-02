@@ -1,0 +1,37 @@
+﻿@{
+    Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
+}
+@section header {
+    <title>Giỏ hàng trống - @ViewBag.SiteName</title>
+}
+@section Breadcrumb{
+    <div class="clearfix breadcrumb-wrap">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="breadcrumb">
+                        <h2></h2>
+                        <a href="/" title="Trang chủ">Trang chủ</a>
+                        <span class="icon"><i class="fa fa-circle"></i></span>
+                        <strong>
+                            Giỏ hàng
+                        </strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div id="cart">    
+    <div class="row">
+        <div class="col-lg-12">         
+            <div class="empty-cart">
+                <img src="/Content/Images/cart-empty.png" alt="Không có sản phẩm nào trong giỏ hàng của bạn.">
+                <p class="message">Không có sản phẩm nào trong giỏ hàng của bạn.</p>
+                <a href="/" class="btn btn-yellow">Tiếp tục mua sắm</a>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

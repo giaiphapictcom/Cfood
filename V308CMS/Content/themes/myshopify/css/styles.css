@@ -4770,3 +4770,17 @@ div#rev_slider {
 .footer-container {
     background: #111111
 }
+.empty-cart {
+    text-align: center;
+    background-color: #fff;
+    padding: 0 30px 30px;
+    border-radius: 4px;
+}
+.btn-yellow {
+    background-color: #fdd835 !important;
+    color: #4a4a4a;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 0.5px 55.5px;
+    margin-top: 15px;
+}

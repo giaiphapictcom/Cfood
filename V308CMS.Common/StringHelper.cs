@@ -8,9 +8,18 @@ namespace V308CMS.Common
 {
     public static class StringHelper
     {
+        public static string ToRemoveWhitespace(this string str)
+        {
+            str = str.Replace(" ", "");
+            while (str.Contains("  "))
+            {
+                str = str.Replace(" ", "");
+            }
+            return str;
+        }
         public static string ToUnsign(this string str)
         {
-            return Ultility.LocDau(str);
+            return Ultility.LocDau2(str);
         }
         public static string ToSlug(this string title)
         {

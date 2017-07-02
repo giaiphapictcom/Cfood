@@ -13,27 +13,31 @@
                 </div>
                 <div class="col-md-6 col-sm-12 col-xs-12 text-right">
                     <div class="top-currency">
-                        <span class="text-log"><span>@(AuthenticationHelper.IsAuthenticate ? AuthenticationHelper.CurrentUser : "Tài khoản")</span> <i class="fa fa-caret-down" aria-hidden="true"></i></span>
+                        <span class="text-log">
+                            @if (AuthenticationHelper.IsAuthenticated) {<span>Chào&nbsp;</span>}
+                            <span>@AuthenticationHelper.AuthenticateName</span> 
+                                <i class="fa fa-caret-down" aria-hidden="true"></i>
+                        </span>
                         <div class="top-bar-dropdown">
                             <div class="cusstom-link">
                                 
                                 <ul class="customer-links">
                                     <li>
                                         <i class="icon_check_alt" aria-hidden="true"></i>
-                                        <a href="/checkout"><span>Thanh toán</span></a>
+                                        <a href="@Url.CheckoutCartUrl()" title="Thanh toán"><span>Thanh toán</span></a>
                                     </li>
-                                    @if (AuthenticationHelper.IsAuthenticate)
-                                    {
+                                    @if (AuthenticationHelper.IsAuthenticated)
+                                {
                                         <li>
                                             <a href="@Url.AccountLogoutUrl()" id="customer_logout_link">Thoát tài khoản</a>
-                                            <a href="/account">Tài khoản của tôi</a>
+                                            <a href="#">Tài khoản của tôi</a>
                                         </li>
                                     }
                                     else
                                     {
                                         <li>
                                             <i class="icon_lock-open" aria-hidden="true"></i>
-                                            <a href="@Url.AccountLoginUrl()" id="customer_login_link">Đăng nhập</a>
+                                            <a href="@Url.AccountLoginUrl()" id="customer_login_link" title="Đăng nhập">Đăng nhập</a>
                                         </li>
                                         <li>
                                             <i class="icon_profile" aria-hidden="true"></i>
@@ -48,10 +52,10 @@
                         </div>
 
                     </div>
-                    @if (AuthenticationHelper.IsAuthenticate)
-                    {
+                    @if (AuthenticationHelper.IsAuthenticated)
+                            {
                         <div class="wishlist">
-                            <a href="@V308CMS.Common.url.WishlistIndexUrl()" title="Danh sách sản phẩm yêu thích">Danh sách yêu thích</a>
+                            <a href="@Url.MemberWishListIndexUrl()" title="Danh sách sản phẩm yêu thích">Danh sách yêu thích</a>
                         </div>
                     }
 
@@ -162,7 +166,7 @@
                                             <a href="/cart" id="cartToggle">
                                                 <div class="text-cart-left">
                                                     <span id="text-cart">Giỏ hàng</span>
-                                                    <span id="cart-count">@Model.item_count sản phẩm</span>
+                                                    <span id="cart-count">@(Model.item_count>0? Model.item_count + " sản phẩm" :"") </span>                                                  
                                                 </div>
                                                 <span class="icon top-icon-cart"><i class="fa fa-shopping-basket" aria-hidden="true"></i></span>
                                             </a>

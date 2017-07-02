@@ -15,7 +15,7 @@ namespace V308CMS.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            var wishlist = ProductWishlistService.GetListWishlist(AuthenticationHelper.CurrentUser);
+            var wishlist = ProductWishlistService.GetListWishlist(User.UserId);
             var listProductWishlist = ProductsService.GetListProductWishlist(wishlist);
             return View("Wishlist.Index", listProductWishlist);
         }
@@ -23,11 +23,11 @@ namespace V308CMS.Controllers
         [HttpPost]
         public JsonResult AddToWishList(int id)
         {
-            if (!AuthenticationHelper.IsAuthenticate)
+            if (!AuthenticationHelper.IsAuthenticated)
             {
                 return Json(new {code = 0, message = "Bạn cần đăng nhập để thực hiện chức năng này."});
             }
-            var result = ProductWishlistService.AddItemToWishlist(id, AuthenticationHelper.CurrentUser);
+            var result = ProductWishlistService.AddItemToWishlist(id, User.UserId);
             if (result == "exist")
             {
                 return Json(new { code = 0, message = "Sản phẩm đã có trong danh sách yêu thích." });
@@ -37,11 +37,11 @@ namespace V308CMS.Controllers
 
         public JsonResult RemoveItemFromWishList(int id)
         {
-            if (!AuthenticationHelper.IsAuthenticate)
+            if (!AuthenticationHelper.IsAuthenticated)
             {
                 return Json(new {code = "require_login", message = "Bạn cần đăng nhập để thực hiện chức năng này."});
             }
-            var result = ProductWishlistService.RemoveItemFromWishlist(id, AuthenticationHelper.CurrentUser);
+            var result = ProductWishlistService.RemoveItemFromWishlist(id, User.UserId);
             if (result == "userid_invalid")
             {
                 return Json(new { code = 0, message = "Tên tài khoản không chính xác." });
