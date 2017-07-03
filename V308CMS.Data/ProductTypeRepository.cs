@@ -167,14 +167,15 @@ namespace V308CMS.Data
         }
 
 
-        public List<ProductType> GetAllWeb()
+        public async Task<List<ProductType>> GetAllWeb()
         {
             using (var entities = new V308CMSEntities())
             {
-                return (from category in entities.ProductType
+                return await (from category in entities.ProductType
+                              where  category.Status == true
                         orderby category.Number ascending
                         select category
-                ).ToList();
+                ).ToListAsync();
             }
 
         }
