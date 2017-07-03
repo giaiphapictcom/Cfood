@@ -40,7 +40,7 @@
                 var isHasSubInParent = (listParent.Count > 0 &&
                                     listParent.FirstOrDefault().CountSub > 0);
                 <li class="parent dropdown">
-                    <a class="dropdown-toggle has-category" data-toggle="dropdown" href="@url.productCategoryURL(root.Name, root.ID)" title="@root.Name" target="_self">
+                    <a class="dropdown-toggle has-category"  href="@url.productCategoryURL(root.Name, root.ID)" title="@root.Name" target="_self">
 
                         <span class="menu-icon">
                             <i class="fa fa-@root.Icon"></i>
@@ -80,7 +80,9 @@
                                                 <div class="col-sm-@totalColumn">
                                                     <div class="mega-col-inner ">
                                                         <div class="menu-title">
-                                                            @parent.Category.Name
+                                                            <a href="@url.productCategoryURL(parent.Category.Name, parent.Category.ID)" title="@parent.Category.Name">
+                                                                    @parent.Category.Name
+                                                            </a>
                                                         </div>
                                                         @if (parent.ListSub.Count > 0)
                                                         {
