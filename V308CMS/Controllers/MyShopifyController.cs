@@ -10,10 +10,10 @@ namespace V308CMS.Controllers
 {
     public class MyShopifyController : BaseController
     {
-        public ActionResult CategoryMenu()
+        public async  Task<ActionResult> CategoryMenu()
         {
 
-            return View("CategoryMenu", ProductTypeService.GetAllWeb());
+            return View("CategoryMenu", await ProductTypeService.GetAllWeb());
         }
         
         public async Task<ActionResult> Mainmenu()

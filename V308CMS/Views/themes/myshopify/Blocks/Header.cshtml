@@ -27,7 +27,7 @@
                                         <a href="@Url.CheckoutCartUrl()" title="Thanh toán"><span>Thanh toán</span></a>
                                     </li>
                                     @if (AuthenticationHelper.IsAuthenticated)
-                                {
+                                    {
                                         <li>
                                             <a href="@Url.AccountLogoutUrl()" id="customer_logout_link">Thoát tài khoản</a>
                                             <a href="#">Tài khoản của tôi</a>
@@ -163,7 +163,7 @@
                                 <div id="header-top-cart">
                                     <div class="header-cart">
                                         <p class="top-cart">
-                                            <a href="/cart" id="cartToggle">
+                                            <a href="@Url.ViewCartUrl()" id="cartToggle">
                                                 <div class="text-cart-left">
                                                     <span id="text-cart">Giỏ hàng</span>
                                                     <span id="cart-count">@(Model.item_count>0? Model.item_count + " sản phẩm" :"") </span>                                                  
@@ -235,7 +235,7 @@
                                 <div class="parent-title"><i aria-hidden="true" class="icon_menu"></i><span>Danh mục Sản Phẩm</span></div>
                                 <div id="verticalmenu" class="verticalmenu">
                                     <div class="navbar">
-                                        @Html.Action("CategoryMenu", "MyShopify")
+                                        @{Html.RenderAction("CategoryMenu", "MyShopify")}
                                     </div>
                                 </div>
                             </div>
@@ -256,7 +256,7 @@
                                     <!--Top Menu -->
 
                                     <div class="megamenu">
-                                        @Html.Action("Mainmenu", "MyShopify")
+                                        @{Html.RenderAction("Mainmenu", "MyShopify")}                                       
                                     </div>
 
                                     <script>

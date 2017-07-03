@@ -93,13 +93,14 @@ namespace V308CMS.Controllers
                 }
             }
             model.NewsCategorys = newsCategorys;
-
             var whoSale = NewsService.LayNhomTinAn(29);
             if (whoSale.ID > 0)
             {
-                var whoSalePage = new NewsGroupPage();
-                whoSalePage.Name = whoSale.Name;
-                whoSalePage.NewsList = NewsService.LayDanhSachTinMoiNhatTheoGroupId(5, whoSale.ID);
+                var whoSalePage = new NewsGroupPage
+                {
+                    Name = whoSale.Name,
+                    NewsList = NewsService.LayDanhSachTinMoiNhatTheoGroupId(5, whoSale.ID)
+                };
 
                 model.CategoryWhoSale = whoSalePage;
             }
