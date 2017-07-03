@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -18,7 +19,7 @@ namespace V308CMS.Controllers
         public HomeController()
         {
         }
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
 
             IndexPageContainer mIndexPageContainer = new IndexPageContainer();
@@ -59,7 +60,7 @@ namespace V308CMS.Controllers
             {
                 mIndexPageContainer.ProductLastest = ProductsService.getProductsRandom(18);
             }
-            ViewBag.BoxContent = BoxContentService.GetListBoxContent();
+            ViewBag.ListCategoryRootHome = await ProductTypeService.GetListHomeAsync();
 
             string view = Theme.viewPage("home");
             if (view.Length > 0)

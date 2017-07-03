@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.SqlServer;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using V308CMS.Common;
 using V308CMS.Data.Enum;
@@ -13,6 +16,19 @@ namespace V308CMS.Data
         {
 
         }
+        public async Task<List<Product>> GetListByCategoryWithImagesAsync(int categoryId, int limit)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return await (from product in entities.Product.Include("ProductImages")
+                              where product.Status == true && product.Type == categoryId
+                              orderby product.Number
+                              select product
+                    ).Take(limit).ToListAsync();
+            }
+
+        }
+
 
         #region get Product by
         public List<Product> LaySanPhamKhuyenMai(int pcurrent = 1, int psize = 5)
@@ -37,6 +53,24 @@ namespace V308CMS.Data
                          .Take(psize).ToList();
             }
         }
+        public async Task<List<Product>>  GetProductsRandomAsync(int limit = 5, int categoryId = 0)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                entities.Configuration.LazyLoadingEnabled = false;
+                var products = from p in entities.Product
+                               where p.Status == true
+
+                               select p;
+                if (categoryId > 0)
+                {
+                    products = from p in products where p.Type == categoryId select p;
+                }
+                return await products.OrderBy(x => Guid.NewGuid()).Take(limit).ToListAsync();
+
+            }
+        }
+
         public List<Product> getProductsRandom(int psize = 5, int category_id = 0)
         {
             using (var entities = new V308CMSEntities())
@@ -132,6 +166,16 @@ namespace V308CMS.Data
 
         #endregion
 
+        public async Task<Product> FindAsync(int id)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+
+                return await (from p in entities.Product
+                        where p.ID == id
+                              select p).FirstOrDefaultAsync();
+            }
+        }
 
         public Product LayTheoId(int pId)
         {
@@ -463,6 +507,18 @@ namespace V308CMS.Data
                         .Take(psize).ToList();
             }
         }
+        public async Task<List<Product>>  GetListProductMostAsync(int pcurrent, int psize)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return await (from p in entities.Product
+                        where p.Buy > 0
+                        orderby p.Buy descending
+                        select p).Skip((pcurrent - 1) * psize)
+                       .Take(psize).ToListAsync();
+            }
+        }
+
         public List<Product> LaySanPhamBanChay(int pcurrent, int psize)
         {
             using (var entities = new V308CMSEntities())
@@ -513,6 +569,16 @@ namespace V308CMS.Data
                         orderby p.ID descending
                         select p).Skip((pcurrent - 1) * psize)
                        .Take(psize).ToList();
+            }
+        }
+        public async Task<List<Product>>  GetProductsLastestAsync(int limit)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return await (from p in entities.Product
+                        where p.Hot == true
+                        orderby p.ID descending
+                        select p).Take(limit).ToListAsync();
             }
         }
 

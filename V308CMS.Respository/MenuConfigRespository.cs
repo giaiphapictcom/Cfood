@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using V308CMS.Data;
 using V308CMS.Data.Models;
 
@@ -170,6 +172,17 @@ namespace V308CMS.Respository
                         orderby item.Order
                         select item
                ).ToList();
+            }
+
+        }
+        public async Task<List<MenuConfig>>  GetAllAsync(string site = "")
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return await (from item in entities.MenuConfig
+                        orderby item.Order
+                        select item
+               ).ToListAsync();
             }
 
         }

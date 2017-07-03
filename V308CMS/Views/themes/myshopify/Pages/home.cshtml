@@ -3,8 +3,7 @@
 @model V308CMS.Data.IndexPageContainer
 @{
     Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
-    var profiler = MiniProfiler.Current;
-    var listBoxContent = (List<BoxContent>)ViewBag.BoxContent;
+    var profiler = MiniProfiler.Current;  
 }
 @section header {
     <title>@ViewBag.SiteName</title>
@@ -14,12 +13,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-9 col-sm-12 col-xs-12 col-md-offset-3 banner-slide">
-                    @using (profiler.Step("Load Slides"))
-                    {
-                        @Html.Action("HomeSlides", "Block")
-                    }
-
-
+                    @{ Html.RenderAction("HomeSlides", "Block");}
                 </div>
             </div>
         </div>
@@ -36,27 +30,26 @@
 </div>
 @using (profiler.Step("Load ProductMost"))
 {
-    @Html.Action("ProductMost", "MyShopify")
+    Html.RenderAction("ProductMost", "MyShopify");
 }
 @using (profiler.Step("Load ProductHot"))
 {
-    @Html.Action("ProductHot", "MyShopify")
+    Html.RenderAction("ProductHot", "MyShopify");
 }
 
 @using (profiler.Step("Load ProductTypeList"))
 {
-    if (listBoxContent != null)
+    var listCategoryRootHome = (List<ProductType>)ViewBag.ListCategoryRootHome;
+    if (listCategoryRootHome != null)
     {
-        foreach (var boxItem in listBoxContent)
+        foreach (var category in listCategoryRootHome)
         {
-            @Html.Partial("_BoxItem", boxItem)
+            Html.RenderAction("LoadBoxItemAsync", "Async", new {category});
         }
     }
-
 }
-
-@Html.Action("HomeYoutube", "MyShopify")
-@Html.Action("HomeFooter", "MyShopify")
+@{Html.RenderAction("HomeYoutube", "MyShopify");}
+@{Html.RenderAction("HomeFooter", "MyShopify");}
 <script>
     jQuery('.item-poduct').addClass('product-loading');
     jQuery(window).load(function () {

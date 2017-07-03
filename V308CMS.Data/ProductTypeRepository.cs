@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-
+using System.Threading.Tasks;
 using System.Web;
 
 using V308CMS.Data.Enum;
@@ -418,11 +419,24 @@ namespace V308CMS.Data
 
         }
 
-        public List<ProductType> GetListHome()
+        public async Task<List<ProductType>>  GetListHomeAsync()
         {
             using (var entities = new V308CMSEntities())
             {
-                return entities.ProductType.Where(productType => productType.IsHome).ToList();
+                return await entities.ProductType
+                    .Where(productType => productType.IsHome && productType.Status == true).ToListAsync();
+            }
+        }
+
+        public async  Task<List<ProductType>> GetListSubByParentIdAsync(int parentId, int limit)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+               return  await(from subCategory in entities.ProductType
+                                            where subCategory.Parent == parentId && subCategory.Status == true
+                                            orderby subCategory.Number
+                                            select subCategory
+                       ).Take(limit).ToListAsync();
             }
         }
 
