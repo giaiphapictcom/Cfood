@@ -73,7 +73,7 @@ namespace V308CMS.Controllers
             model.Brands = ProductsService.getRandomBrands(categoryId, 12);
             return View("HomeCategory", model);
         }
-
+        [ChildActionOnly]
         public ActionResult HomeYoutube()
         {
             List<News> videos = new List<News>();
@@ -86,7 +86,7 @@ namespace V308CMS.Controllers
 
 
         }
-
+        [ChildActionOnly]
         public ActionResult HomeFooter()
         {
             return View("HomeFooter");
