@@ -1069,27 +1069,12 @@ namespace V308CMS.Data
 
         }
 
-        public List<Brand> getRandomBrands(int categoryId = 0, int limit = 1)
-        {
-            using (var entities = new V308CMSEntities())
-            {
-                List<Brand> brands = new List<Brand>();
-                var items = from b in entities.Brand
-                            where b.status.Equals(1)
-                            select b;
-                if (categoryId > 0)
-                {
-                    items = items.Where(b => b.category_default == categoryId);
-                }
-                return items.ToList().OrderBy(x => Guid.NewGuid()).Take(limit).ToList();
-            }
-        }
+
 
         public List<Brand> getRandomBrands(int categoryId = 0, int limit = 1)
         {
             using (var entities = new V308CMSEntities())
-            {
-                List<Brand> brands = new List<Brand>();
+            {              
                 var items = from b in entities.Brand
                             where b.status.Equals(1)
                             select b;

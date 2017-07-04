@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using V308CMS.Common;
 using V308CMS.Data.Models;
 using V308CMS.Respository;
 
@@ -19,7 +20,7 @@ namespace UpdateAddress
     class Program
     {
         static void Main(string[] args)
-        {
+        {            
 
             var regionService = new RegionRespository();
             var listRegion = regionService.GetListRegionByParentId();         
