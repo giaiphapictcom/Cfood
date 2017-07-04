@@ -20,5 +20,8 @@ namespace V308CMS.Helpers
 
         public static string GoogleAppId => Configs.GetItemConfig("GoogleAppId");
         public static string GoogleAppSecret => Configs.GetItemConfig("GoogleAppSecret");
+        public static string SiteConfigName => Configs.GetItemConfig("SiteConfigName");
+
+        
     }
 }

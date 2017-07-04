@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using V308CMS.Data;
+using V308CMS.Helpers;
 using V308CMS.Respository;
 
 namespace V308CMS.Controllers
@@ -18,7 +19,7 @@ namespace V308CMS.Controllers
         
         public async Task<ActionResult> Mainmenu()
         {
-            return View("Mainmenu", await MenuConfigService.GetAllAsync());
+            return View("Mainmenu", await MenuConfigService.GetAllAsync(ConfigHelper.SiteConfigName));
 
         }
 
