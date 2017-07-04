@@ -166,14 +166,17 @@ namespace V308CMS.Data
 
         #endregion
 
-        public async Task<Product> FindAsync(int id)
+        public async Task<Product> FindAsync(int id, bool includeProductImages = false)
         {
             using (var entities = new V308CMSEntities())
             {
-
-                return await (from p in entities.Product
+                
+                return await ( includeProductImages ?(from p in entities.Product.Include("ProductImages")
                         where p.ID == id
-                              select p).FirstOrDefaultAsync();
+                              select p).FirstOrDefaultAsync() :
+                              (from p in entities.Product
+                               where p.ID == id
+                               select p).FirstOrDefaultAsync());
             }
         }
 
@@ -417,6 +420,30 @@ namespace V308CMS.Data
             }
         }
 
+        public async Task<List<Product>> GetListRelativedAsync(
+            int id, int categoryId, int limit = 12,
+            bool includeProductImages = false)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+
+                string mGuid = Guid.NewGuid().ToString();
+                //lay danh sach tin moi dang nhat
+                return includeProductImages ? await 
+                         (from p in entities.Product.Include("ProductImages")
+                          where p.Type == categoryId && p.ID != id
+                          orderby mGuid
+                          select p)
+                              .Take(limit).ToListAsync() :
+                              await
+                          (from p in entities.Product
+                           where p.Type == categoryId && p.ID != id
+                           orderby mGuid
+                           select p)
+                          .Take(limit).ToListAsync();
+
+            }
+        }
         public List<Product> LayDanhSachSanPhamLienQuan(int pType, int pSize, bool includeProductImages = false)
         {
             using (var entities = new V308CMSEntities())

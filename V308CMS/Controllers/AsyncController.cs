@@ -47,5 +47,10 @@ namespace V308CMS.Controllers
 
         }
 
+        public async Task<ActionResult> LoadProductRelatived(int productId, int categoryId, int limit =12)
+        {
+            return View("_ListRelatived", await ProductsService.GetListRelativedAsync(productId, categoryId,limit,true));
+        }
+
     }
 }

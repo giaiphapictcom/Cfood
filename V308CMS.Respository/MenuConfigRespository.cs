@@ -180,6 +180,7 @@ namespace V308CMS.Respository
             using (var entities = new V308CMSEntities())
             {
                 return await (from item in entities.MenuConfig
+                              where  item.Site == site && item.State ==1
                         orderby item.Order
                         select item
                ).ToListAsync();
