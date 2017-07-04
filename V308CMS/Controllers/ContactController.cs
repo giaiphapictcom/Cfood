@@ -14,21 +14,23 @@ namespace V308CMS.Controllers
        
         public ActionResult Index()
         {
-            var userInfo = AccountService.GetByUserId(User.UserId);
             var model = new ContactModels();
-            if (userInfo != null)
+            if (AuthenticationHelper.IsAuthenticated)
             {
-                model.Email = userInfo.Email;
-                model.Phone = userInfo.Phone;
-                model.Name = userInfo.FullName;
+                var userInfo = AccountService.GetByUserId(User.UserId);
+                if (userInfo != null)
+                {
+                    model.Email = userInfo.Email;
+                    model.Phone = userInfo.Phone;
+                    model.Name = userInfo.FullName;
+                }
             }
-            
             return View("Contact", model);
         }
         [HttpPost]
         [ActionName("Index")]
         [ValidateAntiForgeryToken]
-        public ActionResult HandleIndex(ContactModels contact)
+        public ActionResult OnIndex(ContactModels contact)
         {
             if(ModelState.IsValid)
             {

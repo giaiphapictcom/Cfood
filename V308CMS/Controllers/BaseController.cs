@@ -125,7 +125,7 @@ namespace V308CMS.Controllers
             RegionService = new RegionRespository();
             ShippingService = new ShippingAddressRespository();
             OrderTransactionService = new OrderTransactionRespository();
-            ProductBrandService = new Respository.ProductBrandRespository();
+            ProductBrandService = new ProductBrandRespository();
             LoadSiteConfig();
 
         }
