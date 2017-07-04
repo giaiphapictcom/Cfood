@@ -106,9 +106,8 @@ namespace V308CMS.Controllers
             var avatar = me.Image.Url;
             var displayName = me.DisplayName;           
             var userIdResult  = AddUser(userId, email, fullName, avatar);
-            AuthenticationHelper.SignIn(userIdResult, userId, displayName, avatar);
-            ReturnUrl = returnUrl;
-            return RedirectToAction(ReturnUrl);
+            AuthenticationHelper.SignIn(userIdResult, userId, displayName, avatar);           
+            return RedirectToUrl(returnUrl);
         }
         [NonAction]
         private int AddUser(string userId, string email, string fullName, string avatar)
