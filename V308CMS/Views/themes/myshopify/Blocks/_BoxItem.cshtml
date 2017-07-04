@@ -54,7 +54,7 @@
                                 <div class="hidden-xs hidden-sm col-md-4 col-lg-5">
                                     <div class="banner-featured">
                                         <a href="#@Model.Category.ID">
-                                            <img src="@Model.Category.Image.ToUrl(445, 500)" alt="@Model.Category.Name"/>
+                                            <img src="@Model.Category.Image.ToOriginalUrl()" alt="@Model.Category.Name"/>
                                         </a>
                                     </div>
                                     <div class="async brand-image" data-url="@Url.LoadListBrandAsyncUrl(Model.Category.ID)">
@@ -83,7 +83,7 @@
                                                                 }
                                                                             <div class="item">
                                                                                 <div class="grid-3  grid-item product-item product-hover product-review" id="product-@product.ID">
-                                                                                    <div class="product-image ">
+                                                                                    <div class="product-image">
                                                                                         @if (product.SaleOff > 0)
                                                                                         {
                                                                                             <div class="product-label">

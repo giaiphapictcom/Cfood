@@ -4785,3 +4785,8 @@ div#rev_slider {
     padding: 0.5px 55.5px;
     margin-top: 15px;
 }
+.banner-featured a img {
+    width: 445px;
+    height: 500px;
+    
+}

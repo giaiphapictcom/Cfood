@@ -7,17 +7,13 @@
 
 }
 @section header {
-    <title>@Model.NewsItem.Title</title>
-    <meta name="description" content="@Model.NewsItem.Summary" />
-    <meta name="keywords" content="@Model.NewsItem.Keyword"/>
-    <meta content="@Model.NewsItem.Title - @ViewBag.SiteName" itemprop="headline" property="og:title"/>
-    <meta content="@Request.Url" itemprop="url" property="og:url" />
-    <meta content="@Model.NewsItem.Image.ToUrl()" itemprop="thumbnailUrl" property="og:image" />
-    <meta content="@Model.NewsItem.Summary" itemprop="description" property="og:description" />
-    <meta name="tt_site_id" content="1003834" />
-    <meta name="tt_category_id" content="@Model.NewsItem." />
-    <meta name="tt_article_id" content="@Model.NewsItem.ID" />
-    <meta name="tt_page_type" content="article" />
+    <title>Tin tức - @Model.NewsItem.Title</title>
+    <meta name="keywords" content="@Model.NewsItem.Keyword">
+    <meta property="og:url" content="@Request.Url">
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="@Model.NewsItem.Title">
+    <meta property="og:image" content="@Model.NewsItem.Image.ToUrl(600,600)">
+    <meta property="og:description" content="@Model.NewsItem.Summary">
 }
 @section Breadcrumb{
     <div class="clearfix breadcrumb-wrap">
@@ -57,7 +53,7 @@
                                     <a href="@Url.NewsDetailUrl(newsItem)" title="@newsItem.Title">
                                         @newsItem.Title
                                     </a>
-                                    <em>@newsItem.Date.ToDdmmyyyyHhm()</em>
+                                    <em>@newsItem.Date.ToDdMmHhmm()</em>
                                 </p>
                             </li>
                         }
@@ -110,7 +106,7 @@
 
                 <div class="blog-time">
                     <span class="date-time">
-                        <span class="date-sub">Ngày đăng : </span>@Model.NewsItem.Date.ToDdmmyyyyHhm()
+                        <span class="date-sub">Ngày đăng : </span>@Model.NewsItem.Date.ToDdMmHhmm()
                     </span>
                 </div>
                 
@@ -121,6 +117,9 @@
 
             <div class="rte">
                 @Html.Raw(Model.NewsItem.Detail)
+                <div class="fb-share-button" data-href="@Request.Url" data-layout="button_count" data-size="large" data-mobile-iframe="true" style="display: block">
+                    <a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=@(Request.Url)&amp;src=sdkpreparse">Chia sẻ</a>
+                </div>
             </div>
             @if (Model.NextNewsItem != null || Model.PreviousNewsItem != null)
             {
