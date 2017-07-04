@@ -27,13 +27,13 @@ namespace V308CMS.Respository
             using (var entities = new V308CMSEntities())
             {
                 var items = from b in entities.Brand
-                            where b.status == 1
+                            where b.status.Equals(1)
                             select b;
                 if (categoryId > 0)
                 {
                     items = items.Where(b => b.category_default == categoryId);
                 }
-                return  items.OrderBy(x => Guid.NewGuid()).Take(limit).ToList();
+                return items.ToList().OrderBy(x => Guid.NewGuid()).Take(limit).ToList();
             }
         }
       
