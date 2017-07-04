@@ -1,6 +1,21 @@
-﻿@using V308CMS.Common
+﻿@using Newtonsoft.Json
+@using V308CMS.Common
+@using V308CMS.Data
+@using V308CMS.Data.Models
 @using V308CMS.Helpers
-@model V308CMS.Models.ShoppingCart
+@using V308CMS.Helpers.Url
+@using V308CMS.Models
+@model ShippingModels
+@{
+    Layout = null;
+
+    var listRegion = (List<Region>)ViewBag.ListRegion;
+    var currentCart = (ShoppingCart)ViewBag.Cart;
+    var listShippingAddress = (List<ShippingAddress>)ViewBag.ListShippingAddress;
+    var currentOrder = (ProductOrder)ViewBag.Order;
+    var mode = (string)ViewBag.Mode;
+
+}
 <!DOCTYPE html>
 <html lang="en" dir="ltr" class="no-js multi-step windows chrome desktop page--no-banner page--logo-main page--show  card-fields">
 <head>
@@ -8,35 +23,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height, minimum-scale=1.0, user-scalable=0">
     <meta name="referrer" content="origin">
-
-    <title>@ViewBag.SiteName - Checkout</title>
-
+    <title>@ViewBag.SiteName - Thông tin giao hàng</title>
     <!--[if lt IE 9]>
     <link rel="stylesheet" media="all" href="//cdn.shopify.com/app/services/14982346/assets/158713545/checkout_stylesheet/v2-ltr-edge-2fb6ca2c2ac44cb97965799c4a298fed-7400122826340964516/oldie" />
     <![endif]-->
     <!--[if gte IE 9]><!-->
-    <link rel="stylesheet" media="all" href="//cdn.shopify.com/app/services/14982346/assets/158713545/checkout_stylesheet/v2-ltr-edge-2fb6ca2c2ac44cb97965799c4a298fed-7400122826340964516" />
+    <link rel="stylesheet" media="all" href="/Content/themes/myshopify/css/checkout.css?v=1.1" />
+    <link href="@ViewBag.ThemesPath/css/social.css" rel="stylesheet" type="text/css" />
     <!--<![endif]-->
-
     <meta data-browser="chrome" data-browser-major="58">
     <meta data-body-font-family="Helvetica Neue" data-body-font-type="system">
-    <meta id="shopify-digital-wallet" name="shopify-digital-wallet" content="/14982346/digital_wallets/dialog" />
-
-
-    <script src="//cdn.shopify.com/s/assets/checkout-b677f13d7a17215b7c3210e32bbd8e477d8ca5080890b810faa01425cbe1abdd.js"></script>
-
-    <meta name="shopify-checkout-authorization-token" content="860a971c6ed2a87989c89c736c123729" />
-
-    <script src="//cdn.shopify.com/app/services/14982346/javascripts/countries/158713545/en/countries-163f7410df696f7feeccdfa6e52b242bb7da9acc-1485145186.js"></script>
-
-
-
-    <script src="https://cdn.shopify.com/s/javascripts/shopify_stats.js?v=6" type="text/javascript" async="async"></script>
-
-
-
-
-
+    <script src="/Content/js/jquery.min.js" type="text/javascript"></script>
 </head>
 <body>
     <div class="banner" data-header>
@@ -89,33 +86,33 @@
                 </div>
                 <div class="sidebar__content">
                     <div class="order-summary order-summary--is-collapsed" data-order-summary>
-                        <h2 class="visually-hidden">Order summary</h2>
+                        <h2 class="visually-hidden">Thông tin đơn hàng</h2>
 
                         <div class="order-summary__sections">
                             <div class="order-summary__section order-summary__section--product-list">
                                 <div class="order-summary__section__content">
                                     <table class="product-table">
-                                        <caption class="visually-hidden">Shopping cart</caption>
+                                        <caption class="visually-hidden">Giỏ hàng</caption>
                                         <thead>
                                             <tr>
-                                                <th scope="col"><span class="visually-hidden">Product image</span></th>
-                                                <th scope="col"><span class="visually-hidden">Description</span></th>
-                                                <th scope="col"><span class="visually-hidden">Quantity</span></th>
-                                                <th scope="col"><span class="visually-hidden">Price</span></th>
+                                                <th scope="col"><span class="visually-hidden">Ảnh</span></th>
+                                                <th scope="col"><span class="visually-hidden">Tên</span></th>
+                                                <th scope="col"><span class="visually-hidden">Số lượng</span></th>
+                                                <th scope="col"><span class="visually-hidden">Đơn giá</span></th>
                                             </tr>
                                         </thead>
                                         <tbody data-order-summary-section="line-items">
-                                            @foreach (var cart in Model.Items)
-                                            { 
-                                                <tr class="product" data-product-id="7824318409" data-variant-id="25221476489" data-product-type="">
+                                            @foreach (var cart in currentCart.Items)
+                                            {
+                                                <tr class="product" data-product-id="@cart.ProductItem.Id" data-variant-id="@cart.ProductItem.Id" data-product-type="">
                                                     <td class="product__image">
                                                         <div class="product-thumbnail">
                                                             <div class="product-thumbnail__wrapper">
                                                                 <a href="@url.productURL(cart.ProductItem.Name, cart.ProductItem.Id)" title="Xem chi tiết sản phẩm @cart.ProductItem.Name">
-                                                                    <img src="@cart.ProductItem.Avatar.ToUrl(152, 160)" alt="@cart.ProductItem.Name">
+                                                                    <img src="@ImageHelper.ToUrl(cart.ProductItem.Avatar,152, 160)" alt="@cart.ProductItem.Name">
                                                                 </a>
                                                             </div>
-                                                            <span class="product-thumbnail__quantity" aria-hidden="true">1</span>
+                                                            <span class="product-thumbnail__quantity" aria-hidden="true">@cart.Quantity</span>
                                                         </div>
 
                                                     </td>
@@ -125,13 +122,13 @@
                                                                 <strong>
                                                                     @cart.ProductItem.Name
                                                                 </strong>
-
                                                             </a>
                                                         </span>
                                                         <span class="product__description__variant order-summary__small-text"></span>
 
                                                     </td>
-                                                    <td class="product__quantity visually-hidden">1
+                                                    <td class="product__quantity visually-hidden">
+                                                        @cart.Quantity
                                                     </td>
                                                     <td class="product__price">
                                                         <span class="order-summary__emphasis">@cart.UnitPrice.ToString("N0") đ</span>
@@ -150,9 +147,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
-
                             <div class="order-summary__section order-summary__section--total-lines" data-order-summary-section="payment-lines">
                                 <table class="total-line-table">
                                     <caption class="visually-hidden">Cost summary</caption>
@@ -166,17 +160,16 @@
                                         <tr class="total-line total-line--subtotal">
                                             <td class="total-line__name">Tổng tiền</td>
                                             <td class="total-line__price">
-                                                <span class="order-summary__emphasis" data-checkout-subtotal-price-target="@Model.SubTotal">
-                                                    @Model.SubTotal.ToString("N0") đ
+                                                <span class="order-summary__emphasis" data-checkout-subtotal-price-target="@currentCart.SubTotal">
+                                                    @currentCart.SubTotal.ToString("N0") đ
                                                 </span>
                                             </td>
                                         </tr>
-
-
                                         <tr class="total-line total-line--shipping">
                                             <td class="total-line__name">Phí vận chuyển</td>
                                             <td class="total-line__price">
-                                                <span class="order-summary__emphasis" data-checkout-total-shipping-target="@Model.ShipPrice">—
+                                                <span class="order-summary__emphasis" data-checkout-total-shipping-target="@currentCart.ShipPrice">
+                                                    —
                                                 </span>
                                             </td>
                                         </tr>
@@ -196,8 +189,8 @@
                                             </td>
                                             <td class="total-line__price payment-due">
                                                 <span class="payment-due__currency">VNĐ</span>
-                                                <span class="payment-due__price" data-checkout-payment-due-target="@Model.SubTotal">
-                                                    @Model.SubTotal.ToString("N0") đ
+                                                <span class="payment-due__price" data-checkout-payment-due-target="@currentCart.SubTotal">
+                                                    @currentCart.SubTotal.ToString("N0") đ
                                                 </span>
                                             </td>
                                         </tr>
@@ -237,234 +230,362 @@
                 </div>
                 <div class="main__content">
                     <div class="step" data-step="contact_information">
-                        <form novalidate="novalidate" class="edit_checkout" data-customer-information-form="true" accept-charset="UTF-8" action="@Url.SendOrderCartUrl()" method="post" >
-                            <input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="_method" value="patch" /><input type="hidden" name="authenticity_token" value="" />
-
-                            <input type="hidden" name="previous_step" id="previous_step" value="contact_information" />
-                            <input type="hidden" name="step" value="shipping_method" />
-
-                            <div class="step__sections">
-                                @if (AuthenticationHelper.IsAuthenticate != false & AuthenticationHelper.CurrentUser != null)
-                                { 
+                        <input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="_method" value="patch" /><input type="hidden" name="authenticity_token" value="" />
+                        <input type="hidden" name="previous_step" id="previous_step" value="contact_information" />
+                        <input type="hidden" name="step" value="shipping_method" />
+                        <div class="step__sections">
+                            @if (AuthenticationHelper.IsAuthenticated)
+                            {
                                 <div class="section section--contact-information">
                                     <div class="section__header">
                                         <div class="layout-flex layout-flex--tight-vertical layout-flex--loose-horizontal layout-flex--wrap">
                                             <h2 class="section__title layout-flex__item layout-flex__item--stretch">Thông tin khách hàng</h2>
-
                                         </div>
                                     </div>
                                     <div class="section__content" data-section="customer-information">
-                                        
-                                            <input value="toaihv@gmail.com" size="30" type="hidden" name="checkout[email]" id="checkout_email" />
-                                            <div class="logged-in-customer-information">
-                                                <div class="logged-in-customer-information__avatar-wrapper">
-                                                    <div class="logged-in-customer-information__avatar gravatar" style="background-image: url(//proxy.shopifycdn.com/90d0613dff5e4065b926fe15fd35d6c253578ff44ee5d5341fa975fa69bd5ac1/www.gravatar.com/avatar/668d4f705efdd081975d651796dbd82a.jpg?s=100&amp;d=blank); filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=&#39; //proxy.shopifycdn.com/90d0613dff5e4065b926fe15fd35d6c253578ff44ee5d5341fa975fa69bd5ac1/www.gravatar.com/avatar/668d4f705efdd081975d651796dbd82a.jpg?s=100&amp; d=blank&#39; , sizingMethod=&#39; scale&#39; )" role="img" aria-label="Avatar"></div>
-                                                </div>
-
-                                                <p class="logged-in-customer-information__paragraph">
-                                                    <span class="page-main__emphasis">toai hoang van</span>
-                                                    <span data-rtl-ensure>(toaihv@gmail.com)</span>
-                                                    <br>
-                                                    <a href="https://bigsale-01.myshopify.com/account/logout?return_url=https%3A%2F%2Fcheckout.shopify.com%2F14982346%2Fcheckouts%2F819f674a463255a4798dbe5a6c0984c4%3Fstep%3Dcontact_information">Log out</a>
-                                                </p>
-                                            </div>
-                                        
-
-                                    </div>
-                                </div>
-                                }
-
-                                <div class="section section--shipping-address" data-shipping-address
-                                    data-update-order-summary>
-
-                                    <div class="section__header">
-                                        <h2 class="section__title">Thông tin đặt hàng</h2>
-                                    </div>
-
-                                    <div class="section__content">
-                                        <div class="fieldset" data-address-fields>
-
-                                            <input class="visually-hidden" autocomplete="shipping given-name" tabindex="-1" data-autocomplete-field="first_name" size="30" type="text" name="checkout[shipping_address][first_name]" />
-                                            <input class="visually-hidden" autocomplete="shipping family-name" tabindex="-1" data-autocomplete-field="last_name" size="30" type="text" name="checkout[shipping_address][last_name]" />
-
-                                            <input class="visually-hidden" autocomplete="shipping address-line1" tabindex="-1" data-autocomplete-field="address1" size="30" type="text" name="checkout[shipping_address][address1]" />
-                                            <input class="visually-hidden" autocomplete="shipping address-line2" tabindex="-1" data-autocomplete-field="address2" size="30" type="text" name="checkout[shipping_address][address2]" />
-                                            <input class="visually-hidden" autocomplete="shipping address-level2" tabindex="-1" data-autocomplete-field="city" size="30" type="text" name="checkout[shipping_address][city]" />
-                                            <input class="visually-hidden" autocomplete="shipping country" tabindex="-1" data-autocomplete-field="country" size="30" type="text" name="checkout[shipping_address][country]" />
-                                            <input class="visually-hidden" autocomplete="shipping address-level1" tabindex="-1" data-autocomplete-field="province" size="30" type="text" name="checkout[shipping_address][province]" />
-                                            <input class="visually-hidden" autocomplete="shipping postal-code" tabindex="-1" data-autocomplete-field="zip" size="30" type="text" name="checkout[shipping_address][zip]" />
-
-
-
-                                            <div class="field--half field field--optional" data-address-field="first_name">
-                                                <label class="field__label" for="checkout_shipping_address_first_name">Họ</label>
-                                                <div class="field__input-wrapper">
-                                                    <input placeholder="Họ" autocomplete="shipping given-name" data-backup="first_name" class="field__input" size="30" type="text" value="" name="first_name" id="checkout_shipping_address_first_name" />
-                                                </div>
-                                            </div>
-                                            <div class="field--half field field--required" data-address-field="last_name">
-                                                <label class="field__label" for="checkout_shipping_address_last_name">Tên</label>
-                                                <div class="field__input-wrapper">
-                                                    <input placeholder="Tên" autocomplete="shipping family-name" data-backup="last_name" class="field__input" size="30" type="text" value="" name="last_name" id="checkout_shipping_address_last_name" />
-                                                </div>
+                                        <input value="@AuthenticationHelper.AuthenticateName" size="30" type="hidden" name="checkout[email]" id="checkout_email" />
+                                        <div class="logged-in-customer-information">
+                                            <div class="logged-in-customer-information__avatar-wrapper">
+                                                @{
+                                                    string avartar = "";
+                                                    try {
+                                                        //avartar = User.Avatar;
+                                                    }
+                                                    catch (Exception ex)
+                                                    {
+                                                        Console.Write(ex.InnerException.ToString());
+                                                    }
+                                                }
+                                                <div class="logged-in-customer-information__avatar gravatar" style="background-image: url(@avartar); filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=@avartar)" role="img" aria-label="Avatar"></div>
+                                                
+                                                
                                             </div>
 
-                                            <div class="field--two-thirds field field--required" data-address-field="address1" data-google-places="true">
-                                                <label class="field__label" for="checkout_shipping_address_address1">Địa chỉ nhận hàng</label>
-                                                <div class="field__input-wrapper">
-                                                    <input placeholder="Địa chỉ" autocomplete="shipping address-line1" data-backup="address1" class="field__input" size="30" type="text" name="address" id="checkout_shipping_address_address1" />
-                                                </div>
-                                            </div>
-
-                                            <div data-address-field="city" data-google-places="true" class="field field--required">
-                                                <label class="field__label" for="checkout_shipping_address_city">Thành Phố</label>
-                                                <div class="field__input-wrapper">
-                                                    <input placeholder="Thành phố" autocomplete="shipping address-level2" data-backup="city" class="field__input" size="30" type="text" name="checkout[shipping_address][city]" id="checkout_shipping_address_city" />
-                                                </div>
-                                            </div>
-
-
+                                            <p class="logged-in-customer-information__paragraph">
+                                                <span class="page-main__emphasis">@AuthenticationHelper.AuthenticateName</span>
+                                                <br>
+                                                <a href="@Url.AccountLogoutUrl()" title="Thoát tài khoản">Thoát tài khoản</a>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="step__footer" data-step-footer>
-                                @if (AuthenticationHelper.IsAuthenticate != false & AuthenticationHelper.CurrentUser != null)
+                            }
+                            else
+                            {
+                                <form method="POST" action="@Url.AccountLoginUrl()" name="form_login">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="returnUrl" value="@Request.Url" />
+                                    <div class="section section--contact-information">
+                                        <div class="section__header">
+                                            <div class="layout-flex layout-flex--tight-vertical layout-flex--loose-horizontal layout-flex--wrap">
+                                                <h2 class="section__title layout-flex__item layout-flex__item--stretch">Đăng nhập</h2>
+                                            </div>
+                                        </div>
+                                        <div class="section__content" data-section="customer-information">
+                                            <div class="field field--optional field--half" data-address-field="first_name">
+                                                <div class="field__input-wrapper">
+                                                    <label class="field__label field__label--visible" for="email">Email</label>
+                                                    <input placeholder="email" class="field__input" size="30" type="text" name="email" id="email">
+                                                </div>
+                                            </div>
+                                            <div class="field field--optional field--half" data-address-field="first_name">
+                                                <div class="field__input-wrapper">
+                                                    <label class="field__label field__label--visible" for="password">Mật khẩu</label>
+                                                    <input placeholder="password" class="field__input" size="30" type="password" name="password" id="password">
+                                                </div>
+                                            </div>
+                                            <div class="action-btn">
+                                                <p>
+                                                    <input type="submit" class="btn" value="Đăng nhập" style="padding: 10px; margin-left: 5px; margin-top: 5px; width: 135px">
+                                                    <a class="btn" style="width: 135px; margin-top: 5px; padding:10px" title="Đăng ký tài khoản" href="@Url.AccounRegisterUrl()">Đăng ký</a>
+                                                </p>
+                                                <p style="margin-top: 5px; padding-left: 5px">Hoặc</p>
+                                                <p style="margin-top: 5px">
+                                                    <a href="@Url.SocialLoginFacebookUrl(Request.Url.ToString())" class="btn btn-block btn-social btn-facebook user-name-loginfb" title="Đăng nhập bằng Facebook" style="width: 270px; margin-bottom: 5px; margin-left: 6px;padding: 10px">
+                                                        <i class="fa fa-facebook"></i>
+                                                        <span>Đăng nhập bằng Facebook</span>
+                                                    </a>
+                                                    <a href="@Url.SocialLoginGoogleUrl(Request.Url.ToString())" class="btn btn-block btn-social btn-google user-name-login-google" style="width: 270px; margin-left: 6px;padding: 10px" title="Đăng nhập bằng Google">
+                                                        <i class="fa fa-google-plus"></i>
+                                                        <span>Đăng nhập bằng Google</span>
+                                                    </a>
+                                                </p>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </form>
+
+                            }
+                            @if (AuthenticationHelper.IsAuthenticated)
+                            {
+                                if (currentOrder != null)
                                 {
-                                <button name="button" type="submit" class="step__footer__continue-btn btn ">
-                                    <span class="btn__content">Đặt hàng</span>
-                                    <i class="btn__spinner icon icon--button-spinner"></i>
-                                </button>
-                                } else {
-                                    <a href="" class="step__footer__continue-btn btn ">
-                                    <span class="btn__content">Đăng ký thành viên</span>
-                                    
-                                </a>
+                                    <div class="section">
+                                        <div class="content-box">
+                                            <div class="content-box__row content-box__row--tight-spacing-vertical content-box__row--secondary">
+                                                <div class="review-block">
+                                                    <div class="review-block__inner">
+                                                        <div class="review-block__label">
+                                                            Địa chỉ nhận hàng
+                                                        </div>
+                                                        <div class="review-block__content">
+                                                            @currentOrder.Address
+                                                        </div>
+                                                    </div>
+                                                    <div class="review-block__link">
+                                                        <a class="link--small" href="#form_order" title="Sửa địa chỉ nhận hàng" id="btn-edit-shipping">
+                                                            <i class="fa fa-pencil">Sửa</i>
+                                                            <span class="visually-hidden">Sửa</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="step__footer" id="edit_shipping_footer">
+                                            <a href="@Url.PaymentIndexUrl()" class="step__footer__continue-btn btn ">
+                                                <span class="btn__content">Đặt hàng</span>
+                                                <i class="btn__spinner icon icon--button-spinner"></i>
+                                            </a>
+                                            <a class="step__footer__previous-link" href="@Url.ViewCartUrl()">
+                                                <svg class="icon-svg icon-svg--color-accent icon-svg--size-10 previous-link__icon rtl-flip" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
+                                                    <path d="M8 1L7 0 3 4 2 5l1 1 4 4 1-1-4-4" />
+                                                </svg>
+                                                <span class="step__footer__previous-link-content">Quay lại giỏ hàng</span>
+                                            </a>
+                                        </div>
+
+                                    </div>
+
+
                                 }
-                                <a class="step__footer__previous-link" href="/cart/viewcart">
-                                    <svg class="icon-svg icon-svg--color-accent icon-svg--size-10 previous-link__icon rtl-flip" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
-                                        <path d="M8 1L7 0 3 4 2 5l1 1 4 4 1-1-4-4" />
-                                    </svg>
-                                    <span class="step__footer__previous-link-content">Quay lại giỏ hàng</span>
-                                </a>
-                            </div>
+                                <form action="@Url.SendOrderCartUrl()" method="post" id="form_order" name="form_order" class="@(currentOrder != null?"show-edit-shipping":"")" style="padding-top: 3em;">
+                                    <div class="section section--shipping-address">
+                                        <div class="section__header">
+                                            <h2 class="section__title">Địa chỉ giao hàng</h2>
+                                        </div>
+
+                                        <div class="section__content">
+                                            <div class="fieldset" data-address-fields>
+                                                @if (listShippingAddress != null && listShippingAddress.Count > 0)
+                                                {
+                                                    int i = 0;
+                                                    <div class="field field--required">
+                                                        <div class="field__input-wrapper field__input-wrapper--select">
+                                                            <label class="field__label field__label--visible" for="shipping">Địa chỉ giao hàng</label>
+                                                            <select class="field__input field__input--select" name="shipping" id="shipping">
+                                                                <option value="0">Địa chỉ mới…</option>
+                                                                @foreach (var shipping in listShippingAddress)
+                                                                {
+                                                                    <option value="@JsonConvert.SerializeObject(shipping)">@shipping.Address, @shipping.Ward, @shipping.City, @shipping.Region</option>
+                                                                    i = i + 1;
+
+                                                                }
+
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                }
+                                                <div class="field field--required">
+                                                    @Html.LabelFor(model => model.FullName, new { @class = "field__label" })
+                                                    <div class="field__input-wrapper">
+                                                        @Html.TextBoxFor(model => model.FullName, new
+                                                       {
+                                                           size = "30",
+                                                           @class = "field__input",
+                                                           placeholder = "Nhập họ tên"
+
+                                                       })
+                                                    </div>
+                                                    @Html.ValidationMessageFor(ship => ship.FullName)
+                                                </div>
+                                                <div class="field field--required" data-address-field="Phone">
+                                                    @Html.LabelFor(model => model.Phone, new { @class = "field__label" })
+                                                    <div class="field__input-wrapper">
+                                                        @Html.TextBoxFor(model => model.Phone, new
+                                                       {
+                                                           size = "30",
+                                                           @class = "field__input",
+                                                           placeholder = "Nhập số điện thoại"
+
+                                                       })
+                                                    </div>
+                                                    @Html.ValidationMessageFor(ship => ship.Phone)
+                                                </div>
+                                                <div class="field field--required">
+                                                    <div class="field__input-wrapper field__input-wrapper--select">
+                                                        @Html.LabelFor(model => model.Region, new { @class = "field__label" })
+                                                        @Html.DropDownListFor(ship => ship.Region, new SelectList(listRegion, "Id", "Name"), "Chọn Tỉnh/Thành phố", new
+                                                       {
+                                                           @class = "field__input field__input--select"
+                                                       })
+                                                        @Html.ValidationMessageFor(ship => ship.Region)
+                                                    </div>
+                                                </div>
+                                                <div class="field field--required">
+
+                                                    <div class="field__input-wrapper field__input-wrapper--select">
+                                                        @Html.LabelFor(model => model.City, new { @class = "field__label" })
+                                                        <select placeholder="Chọn Quận/Huyện" class="field__input field__input--select" name="City" data-val-length="Quận/Huyện không được vượt quá 250 ký tự." data-val-length-max="250" data-val-required="Vui lòng chọn Quận/Huyện."></select>
+                                                        @Html.ValidationMessageFor(ship => ship.City)
+                                                    </div>
+                                                </div>
+                                                <div class="field field--required">
+                                                    @Html.LabelFor(model => model.Ward, new { @class = "field__label" })
+                                                    <div class="field__input-wrapper field__input-wrapper--select">
+                                                        <select placeholder="Chọn  Phường/Xã" class="field__input field__input--select" name="Ward" data-val-length="Phường/Xã không được vượt quá 250 ký tự." data-val-length-max="250" data-val-required="Vui lòng chọn Phường/Xã."></select>
+                                                    </div>
+                                                    @Html.ValidationMessageFor(ship => ship.Ward)
+                                                </div>
+                                                <div class="field field--required">
+                                                    @Html.LabelFor(model => model.Address, new { @class = "field__label" })
+                                                    <div class="field__input-wrapper">
+                                                        @Html.TextBoxFor(model => model.Address, new
+                                                       {
+                                                           size = "30",
+                                                           placeholder = "Nhập địa chỉ",
+                                                           @class = "field__input"
+                                                       })
+                                                    </div>
+                                                    @Html.ValidationMessageFor(ship => ship.Address)
+                                                </div>
 
 
-                        </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="step__footer" data-step-footer>
+                                        @if (currentOrder != null)
+                                        {
+                                            <button name="button" type="submit" class="step__footer__continue-btn btn ">
+                                                <span class="btn__content">Lưu lại</span>
+                                                <i class="btn__spinner icon icon--button-spinner"></i>
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <button name="button" type="submit" class="step__footer__continue-btn btn ">
+                                                <span class="btn__content">Đặt hàng</span>
+                                                <i class="btn__spinner icon icon--button-spinner"></i>
+                                            </button>
+                                                <a class="step__footer__previous-link" href="@Url.ViewCartUrl()">
+                                                    <svg class="icon-svg icon-svg--color-accent icon-svg--size-10 previous-link__icon rtl-flip" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
+                                                        <path d="M8 1L7 0 3 4 2 5l1 1 4 4 1-1-4-4" />
+                                                    </svg>
+                                                    <span class="step__footer__previous-link-content">Quay lại giỏ hàng</span>
+                                                </a>
+                                        }
 
+                                    </div>
+                                </form>
+
+                            }
+
+                        </div>
                     </div>
 
                 </div>
                 <div class="main__footer">
                     <div class="modals">
                     </div>
-
-
                     <div role="contentinfo" aria-label="Footer">
-                       
-                        <address class="copyright-text" >©@DateTime.Now.Year.ToString() Copyright. Đã đăng ký bản quyền</address>
+                        <address class="copyright-text">©@DateTime.Now.Year.ToString() Copyright. Đã đăng ký bản quyền</address>
                     </div>
 
-                    <div id="dialog-close-title" class="hidden">Close</div>
+                    <div id="dialog-close-title" class="hidden">Đóng</div>
 
                 </div>
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        $(function () {
+            $("#btn-edit-shipping").click(function(e) {
+                e.preventDefault();
+                $("form[name='form_order']").toggleClass("show-edit-shipping");
+                $(this).text($("form[name='form_order']").attr('class') === "" ? 'Hủy' : 'Sửa');
+            });
+            $("select[name='Region']").change(function () {
+                $.post("@Url.MemberAddressAjaxAddressUrl()", { value: $(this).val() }, function (response) {
+                    if (response.length > 0) {
+                        $("select[name='City']").empty();
+                        $("select[name='City']").append('<option value="">Chọn Quận/Huyện</option>');
+                        $.each(response, function (index, element) {
+                            $("select[name='City']").append("<option value='" + element.Id + "'>" + element.Name + "</option>");
+                        });
+                    }
+                });
+            });
 
+            $("select[name='City']").change(function () {
+                $.post("@Url.MemberAddressAjaxAddressUrl()", { value: $(this).val() }, function (response) {
+                    if (response.length > 0) {
+                        $("select[name='Ward']").empty();
+                        $("select[name='Ward']").append('<option value="">Chọn Phường/Xã </option>');
+                        $.each(response, function (index, element) {
+                            $("select[name='Ward']").append("<option value='" + element.Id + "'>" + element.Name + "</option>");
+                        });
+                    }
+                });
+            });
 
-
-
-
-
-    <script type="text/javascript" class="analytics">
-
-
-
-        (function () {
-            var customDocumentWrite = function (content) {
-                var jquery = null;
-
-                if (window.jQuery) {
-                    jquery = window.jQuery;
-                } else if (window.Checkout && window.Checkout.$) {
-                    jquery = window.Checkout.$;
+            $("select[name='shipping']").change(function () {
+                var shippingSelected = $(this).val();
+                if (shippingSelected === "0") {
+                    $("#FullName").val("");
+                    $("#Phone").val("");
+                    $("#Address").val("");
+                    $("select[name='Region']").val("");
+                    $("select[name='City']").empty();
+                    $("select[name='Ward']").empty();
                 }
+                var shipping = JSON.parse($(this).val());
+                if (shipping !== null) {
+                    $("#FullName").val(shipping.FullName);
+                    $("#Phone").val(shipping.Phone);
+                    $("#Address").val(shipping.Address);
+                    $("select[name='Region'] option:contains(" + shipping.Region + ")").attr("selected", true);
 
-                if (jquery) {
-                    jquery('body').append(content);
+                    $.post("@Url.MemberAddressAjaxAddressUrl()", { value: $("select[name='Region']").val() }, function (response) {
+                        var citySelected = 0;
+                        if (response.length > 0) {
+                            $("select[name='City']").empty();
+                            $("select[name='City']").append('<option value="">Chọn Quận/Huyện</option>');
+                            $.each(response, function (index, element) {
+                                if (element.Name === shipping.City) {
+                                    citySelected = element.Id;
+                                    $("select[name='City']").append("<option selected value='" + element.Id + "'>" + element.Name + "</option>");
+                                } else {
+                                    $("select[name='City']").append("<option value='" + element.Id + "'>" + element.Name + "</option>");
+                                }
+
+                            });
+                            $.post("@Url.MemberAddressAjaxAddressUrl()", { value: citySelected }, function (response) {
+                                if (response.length > 0) {
+                                    $("select[name='Ward']").empty();
+                                    $("select[name='Ward']").append('<option value="">Chọn Phường/Xã </option>');
+                                    $.each(response, function (index, element) {
+                                        if (element.Name === shipping.Ward) {
+                                            $("select[name='Ward']").append("<option selected value='" + element.Id + "'>" + element.Name + "</option>");
+                                        } else {
+                                            $("select[name='Ward']").append("<option value='" + element.Id + "'>" + element.Name + "</option>");
+                                        }
+
+                                    });
+                                }
+                            });
+
+                        }
+                    });
+
                 }
-            };
-
-            var trekkie = window.ShopifyAnalytics.lib = window.trekkie = window.trekkie || [];
-            if (trekkie.integrations) {
-                return;
-            }
-            trekkie.methods = [
-              'identify',
-              'page',
-              'ready',
-              'track',
-              'trackForm',
-              'trackLink'
-            ];
-            trekkie.factory = function (method) {
-                return function () {
-                    var args = Array.prototype.slice.call(arguments);
-                    args.unshift(method);
-                    trekkie.push(args);
-                    return trekkie;
-                };
-            };
-            for (var i = 0; i < trekkie.methods.length; i++) {
-                var key = trekkie.methods[i];
-                trekkie[key] = trekkie.factory(key);
-            }
-            trekkie.load = function (config) {
-                trekkie.config = config;
-                var script = document.createElement('script');
-                script.type = 'text/javascript';
-                script.onerror = function (e) {
-                    (new Image()).src = '//v.shopify.com/internal_errors/track?error=trekkie_load';
-                };
-                script.async = true;
-                script.src = 'https://cdn.shopify.com/s/javascripts/tricorder/trekkie.storefront.min.js?v=2017.03.29.1';
-                var first = document.getElementsByTagName('script')[0];
-                first.parentNode.insertBefore(script, first);
-            };
-            trekkie.load(
-              { "Trekkie": { "appName": "checkout", "development": false, "defaultAttributes": { "shopId": 14982346, "isMerchantRequest": null, "themeId": 158713545, "themeCityHash": 12278893959013367840, "checkoutToken": "819f674a463255a4798dbe5a6c0984c4" } }, "Performance": { "navigationTimingApiMeasurementsEnabled": true, "navigationTimingApiMeasurementsSampleRate": 0.1 }, "Clickstream": {}, "Session Attribution": {} }
-            );
-
-            var loaded = false;
-            trekkie.ready(function () {
-                if (loaded) return;
-                loaded = true;
-
-                window.ShopifyAnalytics.lib = window.trekkie;
-
-
-                var originalDocumentWrite = document.write;
-                document.write = customDocumentWrite;
-                try { window.ShopifyAnalytics.merchantGoogleAnalytics.call(this); } catch (error) { };
-                document.write = originalDocumentWrite;
-
-
-                window.ShopifyAnalytics.lib.page(
-                  "Checkout - Contact information",
-                  { "path": "\/checkout\/contact_information", "search": "", "url": "https:\/\/checkout.shopify.com\/14982346\/checkouts\/819f674a463255a4798dbe5a6c0984c4?sid=4f1548ac70b937f9f1ad97ba20a8c0c4" }
-                );
 
 
             });
+        });
 
-
-            var eventsListenerScript = document.createElement('script');
-            eventsListenerScript.async = true;
-            eventsListenerScript.src = "//cdn.shopify.com/s/assets/shop_events_listener-9410288c486c406bc38edb97003bb123d375112c2b7e037d65afabae7c905e02.js";
-            document.getElementsByTagName('head')[0].appendChild(eventsListenerScript);
-
-        })();
     </script>
 
 </body>

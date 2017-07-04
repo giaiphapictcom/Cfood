@@ -104,7 +104,8 @@ namespace V308CMS.Controllers
 
         public ActionResult Checkout()
         {
-            if (IsEmptyCart())
+            
+                if (IsEmptyCart())
             {
                 return RedirectToAction("EmptyCart");
             }                    

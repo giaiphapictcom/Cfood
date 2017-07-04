@@ -44,7 +44,7 @@ namespace V308CMS.Data
            
         }
 
-        public List<NewsGroups> GetAll(bool state=true,string site = "", bool LevelOrder=false)
+        public List<NewsGroups> GetAll(bool state=true,string site = Data.Helpers.Site.home, bool LevelOrder=false)
         {
             using (var entities = new V308CMSEntities())
             {

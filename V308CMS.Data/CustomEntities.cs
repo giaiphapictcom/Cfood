@@ -48,15 +48,11 @@ namespace V308CMS.Data
         private string _Phone;
         private bool _Gender;
         private DateTime? _BirthDay;
-<<<<<<< HEAD
+
         private bool _Status;
         private string _Avatar;
         private int _Role;
-=======
-        private bool? _Status;
-        private string _Avatar;
-        private int? _Role;
->>>>>>> 05ca46d6477b8a114ace89237f7b469368be8bf4
+
         private DateTime? _Date;
         private string _Salt;
         private string _Token;
@@ -85,15 +81,9 @@ namespace V308CMS.Data
         public string Phone { get { if (String.IsNullOrEmpty(_Phone)) return ""; else return _Phone; } set { _Phone = value; } }
         public bool Gender { get { if (_Gender == null) return false; else return _Gender; } set { if (_Gender != value) { _Gender = value; } } }
         public DateTime? BirthDay { get { if (_BirthDay == null) return new DateTime(); else return _BirthDay; } set { if (_BirthDay != value) { _BirthDay = value; } } }
-<<<<<<< HEAD
         public bool Status { get { if (_Status == null) return false; else return _Status; } set { if (_Status != value) { _Status = value; } } }
         public string Avatar { get { if (String.IsNullOrEmpty(_Avatar)) return ""; else return _Avatar; } set { _Avatar = value; } }
         public int Role { get { if (_Role == null || _Role < 0) return 0; else return _Role; } set { if (_Role != value) { if (_Role < 0) _Role = 0; else _Role = value; } } }
-=======
-        public bool? Status { get { if (_Status == null) return false; else return _Status; } set { if (_Status != value) { _Status = value; } } }
-        public string Avatar { get { if (String.IsNullOrEmpty(_Avatar)) return ""; else return _Avatar; } set { _Avatar = value; } }
-        public int? Role { get { if (_Role == null || _Role < 0) return 0; else return _Role; } set { if (_Role != value) { if (_Role < 0) _Role = 0; else _Role = value; } } }
->>>>>>> 05ca46d6477b8a114ace89237f7b469368be8bf4
         public DateTime? Date { get { if (_Date == null) return new DateTime(); else return _Date; } set { if (_Date != value) { _Date = value; } } }     
         public string Salt { get { if (String.IsNullOrEmpty(_Salt)) return ""; else return _Salt; } set { _Salt = value; } }
         public string Token { get { if (String.IsNullOrEmpty(_Token)) return ""; else return _Token; } set { _Token = value; } }

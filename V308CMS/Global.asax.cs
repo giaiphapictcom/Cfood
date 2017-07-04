@@ -1,10 +1,7 @@
-<<<<<<< HEAD
-﻿using System.Web.Http;
-=======
-﻿using System;
+using System.Web.Http;
+using System;
 using System.Web;
 using System.Web.Http;
->>>>>>> 05ca46d6477b8a114ace89237f7b469368be8bf4
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using V308CMS.Common;
+using V308CMS.Data;
 using V308CMS.Data.Enum;
 
 namespace V308CMS.Data
@@ -19,7 +20,14 @@ namespace V308CMS.Data
         {
             using (var entities = new V308CMSEntities())
             {
-                return (from p in entities.Product
+                return (from p in entities.Product.
+                        Include("ProductImages").
+                        Include("ProductType").
+                        Include("ProductManufacturer").
+                        Include("ProductColor").
+                        Include("ProductSize").
+                        Include("ProductAttribute").
+                        Include("ProductSaleOff")
                         where p.SaleOff > 0 & p.Status == true
                         orderby p.SaleOff descending
                         select p).Skip((pcurrent - 1) * psize)
@@ -30,7 +38,14 @@ namespace V308CMS.Data
         {
             using (var entities = new V308CMSEntities())
             {
-                return (from p in entities.Product
+                return (from p in entities.Product.
+                        Include("ProductImages").
+                        Include("ProductType").
+                        Include("ProductManufacturer").
+                        Include("ProductColor").
+                        Include("ProductSize").
+                        Include("ProductAttribute").
+                        Include("ProductSaleOff")
                         where p.SaleOff > 0 & p.Status == true
                         orderby p.SaleOff descending
                         select p)
@@ -39,20 +54,39 @@ namespace V308CMS.Data
         }
         public List<Product> getProductsRandom(int psize = 5, int category_id = 0)
         {
+            var items = new List<Product>();
             using (var entities = new V308CMSEntities())
             {
                 entities.Configuration.LazyLoadingEnabled = false;
-                var products = from p in entities.Product
-                               where p.Status == true
-
-                               select p;
-                if (category_id > 0)
+                try
                 {
-                    products = from p in products where p.Type == category_id select p;
+                    var products = from p in entities.Product
+                             //   Include("ProductImages").
+                             //Include("ProductType").
+                             //Include("ProductManufacturer").
+                             //Include("ProductColor").
+                             //Include("ProductSize").
+                             //Include("ProductAttribute").
+                             //Include("ProductSaleOff")
+                                   where p.Status == true
+
+                                   select p;
+                    if (category_id > 0)
+                    {
+                        //products = from p in products where p.Type == category_id select p;
+                        products = products.Where(p => p.Type == category_id);
+                    }
+                    items = products.ToList().OrderBy(x => Guid.NewGuid()).Take(psize).ToList();
+
                 }
-                return products.ToList().OrderBy(x => Guid.NewGuid()).Take(psize).ToList();
+                catch (System.Data.Entity.Validation.DbEntityValidationException e)
+                {
+                    Console.Write(e);
+                }
+                
 
             }
+            return items;
         }
 
         public int getProductTotal(int pType, string pLevel)
@@ -138,7 +172,14 @@ namespace V308CMS.Data
             using (var entities = new V308CMSEntities())
             {
 
-                return (from p in entities.Product
+                return (from p in entities.Product.
+                        Include("ProductImages").
+                             Include("ProductType").
+                             Include("ProductManufacturer").
+                             Include("ProductColor").
+                             Include("ProductSize").
+                             Include("ProductAttribute").
+                             Include("ProductSaleOff")
                         where p.ID == pId
                         select p).FirstOrDefault();
             }
@@ -149,7 +190,9 @@ namespace V308CMS.Data
             using (var entities = new V308CMSEntities())
             {
                 return includeDetail
-                 ? (from p in entities.Product.Include("ProductManufacturer").Include("ProductImages")
+                 ? (from p in entities.Product
+                    .Include("ProductManufacturer")
+                    .Include("ProductImages")
                     where p.ID == id
                     select p).FirstOrDefault()
                  : (from p in entities.Product
@@ -381,7 +424,16 @@ namespace V308CMS.Data
                 string mGuid = Guid.NewGuid().ToString();
                 //lay danh sach tin moi dang nhat
                 return includeProductImages ?
-                         (from p in entities.Product.Include("ProductImages")
+                         (from p in entities.Product
+                          .Include("ProductImages")
+                          .Include("ProductType")
+                            .Include("ProductManufacturer")
+                             .Include("ProductColor")
+                             .Include("ProductSize")
+                             .Include("ProductAttribute")
+                             .Include("ProductSaleOff")
+
+
                           where p.Type == pType
                           orderby mGuid
                           select p)
@@ -535,7 +587,14 @@ namespace V308CMS.Data
                                    select c.ID).ToList();
                 categoryIDs.Add(CategoryID);
 
-                return (from p in entities.Product
+                return (from p in entities.Product.
+                        Include("ProductImages").
+                        Include("ProductType").
+                        Include("ProductManufacturer").
+                        Include("ProductColor").
+                        Include("ProductSize").
+                        Include("ProductAttribute").
+                        Include("ProductSaleOff")
                         where categoryIDs.Any(c => c == p.Type)
                         orderby p.ID descending
                         select p).Skip((Page - 1) * Limit).Take(Limit).ToList();
@@ -1399,21 +1458,35 @@ namespace V308CMS.Data
            
             try
             {
-                //lay danh sach tin moi dang nhat
-                var items = (from p in entities.ProductType
-                                where p.IsHome ==true
-                                select p);
-                var categorys = items.ToList();
-                if (categorys.Count() > 0) {
-                    foreach (var cate in categorys) {
-                        var CategoryIDs = entities.ProductType.Where(c => c.Parent == cate.ID).Select(c => c.ID).ToList();
-                                           
-                        CategoryIDs.Add(cate.ID);
+                using (var entities = new V308CMSEntities()) {
+                    //lay danh sach tin moi dang nhat
+                    var items = (from p in entities.ProductType
+                                 where p.IsHome == true
+                                 select p);
+                    var categorys = items.ToList();
+                    if (categorys.Count() > 0)
+                    {
+                        foreach (var cate in categorys)
+                        {
+                            var CategoryIDs = entities.ProductType.Where(c => c.Parent == cate.ID).Select(c => c.ID).ToList();
 
-                        cate.ListProduct = (from p in entities.Product where CategoryIDs.Any(c => c == p.Type) select p).AsEnumerable().Take(product_limit).ToList();
+                            CategoryIDs.Add(cate.ID);
+
+                            cate.ListProduct = (from p in entities.Product
+                                                .Include("ProductImages")
+                                              .Include("ProductType")
+                                                .Include("ProductManufacturer")
+                                                 .Include("ProductColor")
+                                                 .Include("ProductSize")
+                                                 .Include("ProductAttribute")
+                                                 .Include("ProductSaleOff")
+                                                where CategoryIDs.Any(c => c == p.Type) select p)
+                                                .AsEnumerable().Take(product_limit).ToList();
+                        }
                     }
+                    return categorys;
                 }
-                return categorys;
+                    
             }
             catch (Exception ex)
             {

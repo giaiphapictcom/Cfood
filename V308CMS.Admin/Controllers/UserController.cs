@@ -126,8 +126,8 @@ namespace V308CMS.Admin.Controllers
         [ValidateAntiForgeryToken]       
         public ActionResult OnEdit(UserModels user)
         {
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
                 var userUpdate = new Account
                 {
                     Email = user.Email,
@@ -161,16 +161,31 @@ namespace V308CMS.Admin.Controllers
                     return RedirectToAction("Index");
                 }               
                 return View("Edit", user);
-            }
+            //}
 
 
-            return View("Edit", user);
+            //return View("Edit", user);
+        }
+
+       
+        [CheckPermission(3, "Xóa")]
+        
+        public ActionResult Delete(int id)
+        {
+            var user = UserService.Find(id);
+            var result = UserService.Delete(id);
+            SetFlashMessage(result == Result.Ok ?
+                "Xóa khách hàng thành công." :
+                "Khách hàng không tồn tại trên hệ thống.");
+
+            string listViewAction = user.Site == ConfigHelper.SiteAffiliate ? "affiliate" : "Index";
+            return RedirectToAction(listViewAction);
         }
 
         [HttpPost]
         [CheckPermission(3, "Xóa")]        
-        [ActionName("Delete")]        
-        [ValidateAntiForgeryToken]
+        [ActionName("Delete")]
+
         public ActionResult OnDelete(int id)
         {
             var user = UserService.Find(id);

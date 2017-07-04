@@ -24,24 +24,24 @@ namespace V308CMS.Sale.Controllers
         private void CreateRepos()
         {
             mEntities = new V308CMSEntities();
-            ImageRepos = new ImagesRepository(mEntities);
+            ImageRepos = new ImagesRepository();
             BannerRepos = new V308CMS.Respository.BannerRespository();
 
-            ProductRepos = new ProductRepository(mEntities);
-            AccountRepos = new AccountRepository(mEntities);
-            NewsRepos = new NewsRepository(mEntities);
+            ProductRepos = new ProductRepository();
+            AccountRepos = new AccountRepository();
+            NewsRepos = new NewsRepository();
             CommentRepo = new TestimonialRepository(mEntities);
             CategoryRepo = new CategoryRepository(mEntities);
         }
         private void DisposeRepos()
         {
             mEntities.Dispose();
-            ImageRepos.Dispose();
+            //ImageRepos.Dispose();
             
 
-            ProductRepos.Dispose();
-            AccountRepos.Dispose();
-            NewsRepos.Dispose();
+            //ProductRepos.Dispose();
+            //AccountRepos.Dispose();
+            //NewsRepos.Dispose();
             CommentRepo.Dispose();
             CategoryRepo.Dispose();
         }

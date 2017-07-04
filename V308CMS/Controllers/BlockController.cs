@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using V308CMS.Common;
 using V308CMS.Data;
 using V308CMS.Models;
+using V308CMS.Data.Models;
 
 namespace V308CMS.Controllers
 {
@@ -22,6 +23,12 @@ namespace V308CMS.Controllers
         {
           
             return View("MainMenu", MenuConfigRepos.GetAll(Data.Helpers.Site.home));
+        }
+
+        public ActionResult MenuCanvas()
+        {
+
+            return View("MenuCanvas", MenuConfigRepos.GetAll(Data.Helpers.Site.home));
         }
 
         public ActionResult LeftColumn()
@@ -118,7 +125,18 @@ namespace V308CMS.Controllers
         public ActionResult HomeSlides()
         {
 
-            var model = BannerService.GetList(-1, Data.Helpers.Site.home, true, 1).FirstOrDefault();
+            Banner model = new Banner();
+            try {
+                var banners = BannerService.GetList(-1, Data.Helpers.Site.home, true, 1);
+                if (banners.Count() > 0) {
+                    model = banners.FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+            }
+
             return View("HomeSlides", model);
         }
         public ActionResult HomeAdsProduct()

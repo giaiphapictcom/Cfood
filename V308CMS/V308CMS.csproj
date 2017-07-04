@@ -116,8 +116,8 @@
       <HintPath>..\..\..\..\GAMES\GP1\DECHEMOBILEMVC4\DECHEMOBILEMVC4\bin\MySql.Web.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="ServiceStack.Text, Version=3.9.59.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -192,12 +192,8 @@
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\SiteConfig.cs" />
     <Compile Include="App_Start\ThemesViewActionFilter.cs" />
-<<<<<<< HEAD
-    <Compile Include="Controllers\AccountController.cs" />
-=======
     <Compile Include="Controllers\AsyncController.cs" />
     <Compile Include="Controllers\AuthCallbackController.cs" />
->>>>>>> 05ca46d6477b8a114ace89237f7b469368be8bf4
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BlockController.cs" />
     <Compile Include="Controllers\CaptchaController.cs" />
@@ -1988,7 +1984,6 @@
     <Content Include="Views\themes\myshopify\Blocks\VideoItemBlock.cshtml" />
     <Content Include="Views\themes\myshopify\Menu\OffCanvas.cshtml" />
     <Content Include="Views\themes\myshopify\Blocks\Filter\ProductList.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\themes\mamoo\Blocks\VideoItemBlock.cshtml" />
     <Content Include="Views\themes\mamoo\Pages\Account.Active.cshtml" />
     <Content Include="Views\themes\mamoo\Pages\Account.Addresses.cshtml" />
@@ -2006,7 +2001,6 @@
     <Content Include="Views\themes\mamoo\Pages\News.Detail.cshtml" />
     <Content Include="Views\themes\mamoo\Pages\news.index.cshtml" />
     <Content Include="Views\themes\mamoo\Pages\PageItems.cshtml" />
-=======
     <Content Include="Views\themes\myshopify\Async\_ListBrandAsync.cshtml" />
     <Content Include="Views\themes\myshopify\Async\_ListProductByCategoryAsync.cshtml" />
     <Content Include="Views\themes\myshopify\Blocks\_BoxItem.cshtml" />
@@ -2014,7 +2008,18 @@
     <Content Include="Views\themes\myshopify\Pages\Cart.Empty.cshtml" />
     <Content Include="Views\themes\myshopify\Pages\Payment.Success.cshtml" />
     <None Include="Properties\PublishProfiles\Mpstart30062017.pubxml" />
->>>>>>> 05ca46d6477b8a114ace89237f7b469368be8bf4
+    <Content Include="Views\themes\mamoo\Pages\Member.Active.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\Member.Addresses.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\Member.ChangePassword.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\Member.GetToken.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\Member.InvalidToken.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\Member.Login.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\Member.Profile.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\Cart.Empty.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\Payment.Success.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\Payment.Index.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\Member.Register.cshtml" />
+    <Content Include="Views\themes\mamoo\Blocks\MenuCanvas.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

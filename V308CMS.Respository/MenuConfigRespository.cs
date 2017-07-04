@@ -140,11 +140,11 @@ namespace V308CMS.Respository
 
         }
 
-        public List<MenuConfig> GetList(int page = 1, int pageSize = 10, string site = "", byte status = 0)
+        public List<MenuConfig> GetList(int page = 1, int pageSize = 10, string site = Data.Helpers.Site.home, byte status = 0)
         {
             using (var entities = new V308CMSEntities())
             {
-<<<<<<< HEAD
+
                 var menus = entities.MenuConfig.Select(m=>m);
 
                 if (site == Data.Helpers.Site.home)
@@ -159,37 +159,11 @@ namespace V308CMS.Respository
                 {
                     menus = menus.Where(m=>m.State==status);
                 }
-                //    var items = from m in entities.MenuConfig
-                //            where m.Site == site 
-
-                //        orderby m.Order ascending
-                //        select m;
-                //if (status > 0) { 
-                //     items = from m in entities.MenuConfig
-                //                 where m.Site == site && m.State == status
-
-                //        orderby m.Order ascending
-                //        select m;
-                //}
+            
                 
                 return menus.OrderBy(m=>m.Order).Skip((page - 1) * pageSize).Take(pageSize).ToList();
-=======
-                var items = from m in entities.MenuConfig
-                            where m.Site == site
 
-                            orderby m.Order ascending
-                            select m;
-                if (status > 0)
-                {
-                    items = from m in entities.MenuConfig
-                            where m.Site == site && m.State == status
 
-                            orderby m.Order ascending
-                            select m;
-                }
-
-                return items.Skip((page - 1) * pageSize).Take(pageSize).ToList();
->>>>>>> 05ca46d6477b8a114ace89237f7b469368be8bf4
             }
 
         }

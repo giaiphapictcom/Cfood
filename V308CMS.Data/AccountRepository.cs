@@ -26,23 +26,16 @@ namespace V308CMS.Data
                         select p).FirstOrDefault();
             }
         }
-<<<<<<< HEAD
         public ETLogin CheckDangNhap(string  pUsername,string pPassword,string site= Site.home)
-=======
-        public ETLogin CheckDangNhap(string pUsername, string pPassword)
->>>>>>> 05ca46d6477b8a114ace89237f7b469368be8bf4
+
         {
             using (var entities = new V308CMSEntities())
             {
                 ETLogin mEtLogin = new ETLogin();
                 //lay danh sach tin moi dang nhat
-<<<<<<< HEAD
-                user = (from p in entities.Account
-                          where (p.UserName.ToLower().Equals(pUsername.ToLower()) || p.Email.ToLower().Equals(pUsername.ToLower()) ) && p.Site == site && p.Status == true
-=======
                 var user = (from p in entities.Account
-                            where p.UserName.Equals(pUsername) || p.Email.Equals(pUsername)
->>>>>>> 05ca46d6477b8a114ace89237f7b469368be8bf4
+                          where (p.UserName.ToLower().Equals(pUsername.ToLower()) || p.Email.ToLower().Equals(pUsername.ToLower()) ) && p.Site == site && p.Status == true
+
                             select p).FirstOrDefault();
                 if (user != null)
                 {
@@ -150,13 +143,8 @@ namespace V308CMS.Data
                 var mAccount = new Account()
                 {
                     Email = email,
-<<<<<<< HEAD
-                    UserName = "",
-                    Password = HashPassword(password,salt) ,
-=======
                     UserName = email,
                     Password = HashPassword(password, salt),
->>>>>>> 05ca46d6477b8a114ace89237f7b469368be8bf4
                     Salt = salt,
                     Token = token,
                     TokenExpireDate = tokenExpireDate,
@@ -172,21 +160,8 @@ namespace V308CMS.Data
 
         public string InsertAffiliate(string email, string password, string fullname, string mobile = "")
         {
-<<<<<<< HEAD
-           
-            email = email.ToLower();
-            var accounts = (from p in entities.Account
-                           where p.Email.ToLower().Equals(email) || p.UserName.ToLower().Equals(email)
-                           select p);
 
-            if (accounts != null || accounts.Count() > 0 )
-            {
-                return Result.Exists;
-            }
-            else
-=======
             using (var entities = new V308CMSEntities())
->>>>>>> 05ca46d6477b8a114ace89237f7b469368be8bf4
             {
                 var accounts = (from p in entities.Account
                                 where p.Email.Equals(email) || p.UserName.Equals(email)
@@ -223,7 +198,7 @@ namespace V308CMS.Data
                     Console.Write(dbEx);
                 }
 
-                SiteRepository config = new SiteRepository(entities);
+                SiteRepository config = new SiteRepository();
                 var activeAccountUrl = string.Format("{0}account/active", Configs.GetItemConfig("WebDomain") );
 
                 var body =
@@ -371,26 +346,38 @@ namespace V308CMS.Data
         {
             using (var entities = new V308CMSEntities())
             {
-                var checkAccount = (from p in entities.Account
-                                    where p.Email.Equals(email) || p.UserName.Equals(email)
-                                    select p).FirstOrDefault();
+               
 
-                if (checkAccount == null)
+                try {
+                    var checkAccount = (from p in entities.Account
+                                        where p.Email.Equals(email) || p.UserName.Equals(email)
+                                        select p).FirstOrDefault();
+                    if (checkAccount == null)
+                    {
+                        return "invalid";
+                    }
+
+                    if (checkAccount.Status == false)
+                    {
+                        return "not_active";
+                    }
+                    if (checkAccount.Salt.Length > 0 && checkAccount.Password != HashPassword(password, checkAccount.Salt))
+                    {
+                        return "invalid";
+                    }
+                    else if (checkAccount.Password != EncryptionMD5.ToMd5(password.Trim()))
+                    {
+                        return "invalid";
+                    }
+
+                    return $"{checkAccount.ID}|{checkAccount.Avatar}";
+                }
+                catch (Exception ex)
                 {
-                    return "invalid";
+                    Console.WriteLine(ex);
+                    return (ex.InnerException.ToString());
                 }
 
-                if (checkAccount.Status == false)
-                {
-                    return "not_active";
-                }
-                var hashPassword = HashPassword(password, checkAccount.Salt);
-                if (checkAccount.Password != hashPassword)
-                {
-                    return "invalid";
-
-                }
-                return $"{checkAccount.ID}|{checkAccount.Avatar}";
             }
 
 
@@ -411,9 +398,12 @@ namespace V308CMS.Data
 
         public Account Find(int id)
         {
-            return (from p in entities.Account
-                    where p.ID == id
-                    select p).FirstOrDefault();
+            using (var entities = new V308CMSEntities()) {
+                return (from p in entities.Account
+                        where p.ID == id
+                        select p).FirstOrDefault();
+            }
+                
 
 
         }
@@ -547,39 +537,44 @@ namespace V308CMS.Data
         {
             try
             {
-                var check = (from c in entities.Account
-                             where c.ID == data.ID
-                             select c
-                    ).FirstOrDefault();
-                if (check != null)
+                using (var entities = new V308CMSEntities())
                 {
-                    check.FullName = data.FullName;
-                    check.Phone = data.Phone;
-                    check.Address = data.Address;
-
-                    check.bank_name = data.bank_name;
-                    check.bank_number = data.bank_number;
-                    check.bank_account = data.bank_account;
-                    check.bank_address = data.bank_address;
-
-                    if (data.cmt_back != null && data.cmt_back.Length > 0)
+                    var check = (from c in entities.Account
+                                 where c.ID == data.ID
+                                 select c
+                    ).FirstOrDefault();
+                    if (check != null)
                     {
-                        check.cmt_back = data.cmt_back;
-                    }
-                    else {
-                        check.cmt_back = check.cmt_back;
-                    }
+                        check.FullName = data.FullName;
+                        check.Phone = data.Phone;
+                        check.Address = data.Address;
 
-                    if (data.cmt_front != null && data.cmt_front.Length > 0)
-                    {
-                        check.cmt_front = data.cmt_front;
+                        check.bank_name = data.bank_name;
+                        check.bank_number = data.bank_number;
+                        check.bank_account = data.bank_account;
+                        check.bank_address = data.bank_address;
+
+                        if (data.cmt_back != null && data.cmt_back.Length > 0)
+                        {
+                            check.cmt_back = data.cmt_back;
+                        }
+                        else
+                        {
+                            check.cmt_back = check.cmt_back;
+                        }
+
+                        if (data.cmt_front != null && data.cmt_front.Length > 0)
+                        {
+                            check.cmt_front = data.cmt_front;
+                        }
+
+
+                        entities.SaveChanges();
+                        return Result.Ok;
                     }
-                    
-                        
-                    entities.SaveChanges();
-                    return Result.Ok;
+                    return Result.Exists;
                 }
-                return Result.Exists;
+                    
 
 
             }

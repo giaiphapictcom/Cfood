@@ -35,6 +35,19 @@ $(document).ready(function () {
 
         });
     }
+
+    jQuery('.btn-menu-canvas').click(function () {
+        
+        if (jQuery('#offcanvas').hasClass('active')) {
+            jQuery('body').removeClass('off-canvas-active');
+            jQuery('#offcanvas').removeClass('active');
+            jQuery('.wrapper').removeClass('offcanvas-push');
+        } else {
+            jQuery('body').addClass('off-canvas-active');
+            jQuery('#offcanvas').addClass('active');
+            jQuery('.wrapper').addClass('offcanvas-push');
+        }
+    });
     
 })
 

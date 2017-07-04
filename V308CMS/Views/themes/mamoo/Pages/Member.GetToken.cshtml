@@ -1,0 +1,42 @@
+﻿@model V308CMS.Models.GetTokenModels
+@using V308CMS.Helpers.Url
+@{
+    Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
+}
+@section header {
+    <title>@ViewBag.SiteName - Lấy mã kích hoạt</title>
+}
+<div class="box-detail box-shadow">
+    <fieldset class="container">
+        <div class="create-an-account">
+            <header class="page-header">
+                <h1>Lấy mã kích hoạt</h1>
+                <div class="action-btn">
+
+                    <p>
+                        Đã có mã kích hoạt? <a href="@Url.AccountGetTokenUrl()" style="color: #007FF0" title="Kích hoạt tài khoản">Kíck hoạt</a>
+                    </p>
+                </div>
+            </header>
+            <span class="field-validation-error">@Html.Raw(ViewBag.Error)</span>
+            <form method="post" action="@Url.AccountGetTokenUrl()" id="create_customer" accept-charset="UTF-8">
+                <input type="hidden" value="create_customer" name="form_type">
+                <input type="hidden" name="utf8" value="✓">
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                <div id="token"  class="form-group">
+                    <label for="token"><span>Email : </span><em>*</em></label>
+                    @Html.TextBoxFor(m => m.Email, new { placeholder = "Nhập Email đăng ký tài khoản", autocomplete = "on", @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Email)
+                </div>
+
+                <div class="action-btn">
+                    <p>
+                        <input type="submit" value="Kích hoạt" class="btn">
+                    </p>
+                </div>
+            </form>
+        </div>
+        </fieldset>
+    </div>
+        

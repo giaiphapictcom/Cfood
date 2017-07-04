@@ -65,7 +65,7 @@
                                 @(i + 1)
                             </td>
                             <td>
-                                <a title="Cập nhật tin tức @news.Title" class="btn btn-link" href="@Url.NewsEditUrl(new {news.ID})">
+                                <a title="Cập nhật tin tức @news.Title" class="btn btn-link" href="@Url.NewsEditUrl(new { news.ID })">
                                     @news.Title.ToTitle(25)
                                 </a>
                             </td>
@@ -78,7 +78,22 @@
                             </td>
                            
                             <td>
-                                @(news.NewsGroup != null ? news.NewsGroup.Name : "")
+                                @{
+                                    string categoryname = "";
+                                    try
+                                    {
+                                        if (news.NewsGroup != null) {
+                                            categoryname = news.NewsGroup.Name;
+                                        }
+
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        Console.Write(ex);
+                                    }
+
+                                } 
+                                @categoryname
                             </td>                                                    
                             <td>
                                @news.Date.ToDdmmyyyy()

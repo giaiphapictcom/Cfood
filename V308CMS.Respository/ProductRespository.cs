@@ -124,8 +124,14 @@ namespace V308CMS.Respository
                             productImageRespository.Delete(productImage.ID);
                         }                       
                     }
-                    entities.Product.Remove(productDelete);
-                    entities.SaveChanges();
+                    try {
+                        entities.Product.Remove(productDelete);
+                        entities.SaveChanges();
+                    }
+                    catch (System.Data.Entity.Validation.DbEntityValidationException e)
+                    {
+                        Console.Write(e);
+                    }
                     return "ok";
                 }
                 return "not_exists";
@@ -145,35 +151,48 @@ namespace V308CMS.Respository
                ).FirstOrDefault();
                 if (productUpdate != null)
                 {
-                    productUpdate.Name = data.Name;
-                    productUpdate.Type = data.Type;
-                    productUpdate.Summary = data.Summary;
-                    productUpdate.Code = data.Code;
-                    productUpdate.Image = data.Image;
-                    productUpdate.BrandId = data.BrandId;
-                    productUpdate.Country = data.Country;
-                    productUpdate.Store = data.Store;
-                    productUpdate.Manufacturer = data.Manufacturer;
-                    productUpdate.AccountId = data.AccountId;
-                    productUpdate.Number = data.Number;
-                    productUpdate.Unit1 = data.Unit1;
-                    productUpdate.Weight = data.Weight;
-                    productUpdate.Quantity = data.Quantity;
-                    productUpdate.Npp = Convert.ToDouble(data.Npp);
-                    productUpdate.Width = data.Width;
-                    productUpdate.Height = data.Height;
-                    productUpdate.Depth = data.Depth;
-                    productUpdate.Detail = data.Detail;
-                    productUpdate.WarrantyTime = data.WarrantyTime;
-                    productUpdate.ExpireDate = data.ExpireDate;
-                    productUpdate.Title = data.Title;
-                    productUpdate.Keyword = data.Keyword;
-                    productUpdate.Description = data.Description;
-                    productUpdate.Price = data.Price;
-                    productUpdate.Transport1 = data.Transport1;
-                    productUpdate.Transport2 = data.Transport2;
+                    
+                    try {
+                        productUpdate.Name = data.Name;
+                        productUpdate.Type = data.Type;
+                        productUpdate.Summary = data.Summary;
+                        productUpdate.Code = data.Code;
+                        productUpdate.Image = data.Image;
+                        productUpdate.BrandId = data.BrandId;
+                        productUpdate.Country = data.Country;
+                        productUpdate.Store = data.Store;
+                        productUpdate.Manufacturer = data.Manufacturer;
+                        productUpdate.AccountId = data.AccountId;
+                        productUpdate.Number = data.Number;
+                        productUpdate.Unit1 = data.Unit1;
+                        productUpdate.Weight = data.Weight;
+                        productUpdate.Quantity = data.Quantity;
+                        productUpdate.Npp = Convert.ToDouble(data.Npp);
+                        productUpdate.Width = data.Width;
+                        productUpdate.Height = data.Height;
+                        productUpdate.Depth = data.Depth;
+                        productUpdate.Detail = data.Detail;
+                        productUpdate.WarrantyTime = data.WarrantyTime;
+                        productUpdate.ExpireDate = data.ExpireDate;
+                        productUpdate.Title = data.Title;
+                        productUpdate.Keyword = data.Keyword;
+                        productUpdate.Description = data.Description;
+                        productUpdate.Price = data.Price;
+                        productUpdate.Transport1 = data.Transport1;
+                        productUpdate.Transport2 = data.Transport2;
 
-                    entities.SaveChanges();
+                        if (productUpdate.ProductType == null)
+                        {
+                            //item.ProductManufacturer = entities.ProductManufacturer.Where(m => m.ID == item.Manufacturer).FirstOrDefault();
+                            productUpdate.ProductType = entities.ProductType.Where(c => c.ID == productUpdate.Type).FirstOrDefault();
+                        }
+
+                        entities.SaveChanges();
+                    }
+                    catch (System.Data.Entity.Validation.DbEntityValidationException e)
+                    {
+                        Console.Write(e);
+                    }
                     return "ok";
                 }
                 return "not_exists";

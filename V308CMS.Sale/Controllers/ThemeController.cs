@@ -32,25 +32,25 @@ namespace V308CMS.Sale.Controllers
         private void CreateRepos()
         {
             mEntities = new V308CMSEntities();
-            ProductRepos = new ProductRepository(mEntities);
-            imagesRepos = new ImagesRepository(mEntities);
-            NewsRepos = new NewsRepository(mEntities);
+            ProductRepos = new ProductRepository();
+            imagesRepos = new ImagesRepository();
+            NewsRepos = new NewsRepository();
             NewsGroupRepos = new NewsGroupRepository();
-            accountRepos = new AccountRepository(mEntities);
-            MenuRepos = new MenuConfigRespository(mEntities);
+            accountRepos = new AccountRepository();
+            MenuRepos = new MenuConfigRespository();
             BannerRepos = new BannerRespository();
 
         }
         private void DisposeRepos()
         {
            
-            ProductRepos.Dispose();
-            imagesRepos.Dispose();
-            NewsRepos.Dispose();
-            //NewsGroupRepos.Dispose();
-            accountRepos.Dispose();
-            MenuRepos.Dispose();
-            mEntities.Dispose();
+            //ProductRepos.Dispose();
+            //imagesRepos.Dispose();
+            //NewsRepos.Dispose();
+            ////NewsGroupRepos.Dispose();
+            //accountRepos.Dispose();
+            //MenuRepos.Dispose();
+            //mEntities.Dispose();
 
         }
         #endregion
@@ -213,7 +213,7 @@ namespace V308CMS.Sale.Controllers
             }
             finally
             {
-                DisposeRepos();
+                //DisposeRepos();
             }
 
             

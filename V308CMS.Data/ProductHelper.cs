@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System;
 
 //using System.Collections.Specialized;
 
@@ -23,7 +24,14 @@ namespace V308CMS.Data
                     Image = productCategory.Image
                 };
 
-                var products = from p in mEntities.Product
+                var products = from p in mEntities.Product.
+                               Include("ProductImages").
+                        Include("ProductType").
+                        Include("ProductManufacturer").
+                        Include("ProductColor").
+                        Include("ProductSize").
+                        Include("ProductAttribute").
+                        Include("ProductSaleOff")
                                where p.Type == productCategory.ID && p.Status == true
                                orderby p.ID descending
                                select p
@@ -35,21 +43,18 @@ namespace V308CMS.Data
                 }
                 modelPage.Paging = modelPage.ProductTotal > ProductShowLimit;
 
-<<<<<<< HEAD
-                
-            }
-            catch (Exception ex)
-            {
-                Console.Write(ex);
-            }
-            finally
-            {
-                //DisposeRepos();
-=======
-                modelPage.List = products.Skip((nPage - 1) * ProductShowLimit).Take(ProductShowLimit).ToList(); ;
+                modelPage.List = products.Skip((nPage - 1) * ProductShowLimit).Take(ProductShowLimit).ToList();
                 return modelPage;
->>>>>>> 05ca46d6477b8a114ace89237f7b469368be8bf4
+
             }
+            //catch (Exception ex)
+            //{
+            //    Console.Write(ex);
+            //}
+            //finally
+            //{
+            //    //DisposeRepos();
+            //}
 
         }
 
@@ -58,17 +63,11 @@ namespace V308CMS.Data
             var productRespository = new ProductRepository();
             CategoryPage modelPage = new CategoryPage
             {
-<<<<<<< HEAD
-                //DisposeRepos();
-            }
-            return ModelPage;            
-=======
                 Products = productRespository.getProductsByCategory(categoryId, ProductShowLimit, nPage),
                 ProductTotal = productRespository.getProductTotalByCategory(categoryId)
             };
             return modelPage;
 
->>>>>>> 05ca46d6477b8a114ace89237f7b469368be8bf4
         }
 
         public static List<ProductImage> getProductImages(int? ProductID, int limit = 0)
@@ -83,20 +82,18 @@ namespace V308CMS.Data
                 var images = limit > 0 ? imgEntities.Take(limit).ToList() : imgEntities.ToList();
                 return images;
             }
-<<<<<<< HEAD
-            catch (Exception ex)
-            {
-                Console.Write(ex);
-                throw;
-            }
-            finally
-            {
-                //DisposeRepos();
-            }
-            
-=======
 
->>>>>>> 05ca46d6477b8a114ace89237f7b469368be8bf4
+            //catch (Exception ex)
+            //{
+            //    Console.Write(ex);
+            //    throw;
+            //}
+            //finally
+            //{
+            //    //DisposeRepos();
+            //}
+            
+
         }
 
 

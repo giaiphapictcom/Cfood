@@ -186,8 +186,15 @@ namespace V308CMS.Respository
                 {
                     return "invalid";
                 }
+                if (checkAccount.Salt.Length > 0)
+                {
+                    checkAccount.Password = HashPassword(newPassword, checkAccount.Salt);
+                }
+                else {
+                    checkAccount.Password = EncryptionMD5.ToMd5(newPassword.Trim());
+                }
 
-                checkAccount.Password = HashPassword(newPassword, checkAccount.Salt);
+                
                 entities.SaveChanges();
                 return "ok";
             }

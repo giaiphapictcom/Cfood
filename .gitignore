@@ -1903,3 +1903,10 @@ UpgradeLog4.htm
 UpgradeLog3.htm
 Backup/
 Backup1/
+V308CMS.Respository/bin/System.Web.WebPages.xml
+V308CMS.Respository/bin/System.Web.WebPages.Razor.xml
+V308CMS.Respository/bin/System.Web.WebPages.Deployment.xml
+V308CMS.Respository/bin/System.Web.Razor.xml
+V308CMS.Respository/bin/System.Web.Mvc.xml
+V308CMS.Data/bin/V308CMS.Data.dll.config
+V308CMS.Static/obj/Debug

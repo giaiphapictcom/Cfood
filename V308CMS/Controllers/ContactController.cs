@@ -14,15 +14,24 @@ namespace V308CMS.Controllers
        
         public ActionResult Index()
         {
-            var userInfo = AccountService.GetByUserId(User.UserId);
-            var model = new ContactModels();
-            if (userInfo != null)
-            {
-                model.Email = userInfo.Email;
-                model.Phone = userInfo.Phone;
-                model.Name = userInfo.FullName;
-            }
             
+            var model = new ContactModels();
+            try {
+                var userInfo = AccountService.GetByUserId(User.UserId);
+                if (userInfo != null)
+                {
+                    model.Email = userInfo.Email;
+                    model.Phone = userInfo.Phone;
+                    model.Name = userInfo.FullName;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return Content(ex.InnerException.ToString());
+            }
+
+
             return View("Contact", model);
         }
         [HttpPost]

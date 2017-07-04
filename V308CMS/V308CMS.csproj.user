@@ -2,17 +2,13 @@
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <UseIISExpress>true</UseIISExpress>
-    <ProjectView>ProjectFiles</ProjectView>
+    <ProjectView>ShowAllFiles</ProjectView>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
-<<<<<<< HEAD
     <NameOfLastUsedPublishProfile>MPStart</NameOfLastUsedPublishProfile>
-=======
-    <NameOfLastUsedPublishProfile>Mpstart30062017</NameOfLastUsedPublishProfile>
->>>>>>> 05ca46d6477b8a114ace89237f7b469368be8bf4
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
