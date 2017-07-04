@@ -185,12 +185,13 @@
             <div class="footer-top">
                 <div class="row row-eq-height">
 
-                    <div class="col-md-3 col-sm-6 col-xs-12 footer-contact">
+                    <div class="col-md-4 col-sm-6 col-xs-12 footer-contact">
                         <h3 class="module-title">Liên hệ với @ViewBag.SiteName</h3>
                         <ul class="content">
-                            <li></li>
-                            <li>@ViewBag.CompanyHeaderAddress</li>
-                            <li>@Html.Raw(ViewBag.FooterCompanyContact)</li>
+                           <li>
+                                @ViewBag.CompanyHeaderAddress
+                            </li>
+                            @Html.Raw(ViewBag.FooterCompanyContact)
                         </ul>
                     </div>
                     @if (Model.NewsCategorys != null && Model.NewsCategorys.Count() > 0)
