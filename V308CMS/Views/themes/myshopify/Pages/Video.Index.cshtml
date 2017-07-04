@@ -37,7 +37,7 @@
                     @foreach (var video in Model.ListNews)
                     {
                         <li class="col-xs-4">
-                             @Html.Action("VideoItemBlock", "Block", video)
+                             @Html.Action("VideoItemBlock", "Block", new News {ID = video.ID,Title = video.Title,Summary = video.Summary})
                         </li>
 
                     }
