@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 
@@ -34,12 +35,37 @@ namespace V308CMS.Data
             }
         }
 
-        public News GetById(int id, int type = 58)
+        public void IncrementView(int id)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                var newsItem = (from p in entities.News
+                                where p.ID == id
+                                select p).FirstOrDefault();
+                if (newsItem != null)
+                {
+                    if (newsItem.Views.HasValue)
+                    {
+                        newsItem.Views += 1;
+                    }
+                    else
+                    {
+                        newsItem.Views = 1;
+                    }
+
+                    entities.SaveChanges();
+                }
+
+            }
+
+        }
+
+        public News GetById(int id)
         {
             using (var entities = new V308CMSEntities())
             {
                 return (from p in entities.News
-                        where p.ID == id && type == 58
+                        where p.ID == id
                         select p).FirstOrDefault();
 
             }
@@ -117,14 +143,9 @@ namespace V308CMS.Data
                             select p).Take(psize).ToList();
 
 
-                }
-                //lay tat ca cac ID cua group theo Level
-                var mIdGroup = (from p in entities.NewsGroups
-                                where p.Level.Substring(0, pLevel.Length).Equals(pLevel)
-                                select p.ID).ToArray();
-                //lay danh sach tin moi dang nhat
+                }               
                 return (from p in entities.News
-                        where mIdGroup.Contains(p.TypeID.Value)
+                        where p.TypeID == pTypeId
                         orderby p.Views, p.ID descending
                         select p).Take(psize).ToList();
 
@@ -482,11 +503,13 @@ namespace V308CMS.Data
                 return NewsGroups.FirstOrDefault();
             }
         }
+     
         public News GetNext(int id, int type = 58)
         {
             using (var entities = new V308CMSEntities())
             {
-                return entities.News.SkipWhile(news => news.ID != id && news.TypeID == type).Skip(1).First();
+                var listNews = entities.News.Where(news => news.ID > id && news.TypeID == type).OrderByDescending(news=>news.ID).Take(1).ToList();
+                return listNews.Count > 0 ? listNews[0] : null;
             }
 
         }
@@ -494,7 +517,8 @@ namespace V308CMS.Data
         {
             using (var entities = new V308CMSEntities())
             {
-                return entities.News.TakeWhile(news => news.ID != id && news.TypeID == type).Last();
+                var listNews = entities.News.Where(news => news.ID < id && news.TypeID == type).OrderByDescending(news => news.ID).Take(1).ToList();
+                return listNews.Count > 0 ? listNews[0] : null;
             }
         }
 
