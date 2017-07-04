@@ -12,9 +12,9 @@ namespace V308CMS.Controllers
     {
         //
         // GET: /Async/      
-        public async Task<PartialViewResult> LoadListBrandAsync(int categoryId, int limit = 6)
+        public PartialViewResult LoadListBrandAsync(int categoryId, int limit = 6)
         {
-            return PartialView("_ListBrandAsync", await ProductBrandService.GetRandomAsync(categoryId, limit));
+            return PartialView("_ListBrandAsync",  ProductBrandService.GetRandom(categoryId, limit));
         }
 
         public async Task<PartialViewResult>  LoadListProductByCategoryAsync(int categoryId, int limit = 6)
