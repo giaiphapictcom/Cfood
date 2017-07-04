@@ -179,6 +179,16 @@ namespace V308CMS.Data
                                select p).FirstOrDefaultAsync());
             }
         }
+        public Product Find(int pId)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+
+                return (from p in entities.Product
+                        where p.ID == pId
+                        select p).FirstOrDefault();
+            }
+        }
 
         public Product LayTheoId(int pId)
         {

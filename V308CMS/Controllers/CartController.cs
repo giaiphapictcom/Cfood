@@ -19,9 +19,9 @@ namespace V308CMS.Controllers
         // GET: /ShoppingCart/
 
         [HttpPost]
-        public async Task<JsonResult> Add(int id = 0,int quantity = 1)
+        public JsonResult Add(int id = 0,int quantity = 1)
         {
-            var product = await ProductsService.FindAsync(id);
+            var product =  ProductsService.Find(id);
             if (product != null)
             {               
                 MyCart.AddItem(new ProductModels
@@ -43,9 +43,9 @@ namespace V308CMS.Controllers
             return Json(new { code = 0, message = "Không tìm thấy sản phẩm." });
         }
         [HttpGet,ActionName("remove")]
-        public async Task<ActionResult>  OnRemoveItem(int id)
+        public ActionResult OnRemoveItem(int id)
         {
-            var product = await ProductsService.FindAsync(id);
+            var product =  ProductsService.Find(id);
             if (product != null)
             {
                 RemoveItemInCart(id);               
@@ -54,9 +54,9 @@ namespace V308CMS.Controllers
 
         }
         [HttpPost]
-        public async Task<JsonResult>  RemoveItem(int id, int quantity =0)
+        public JsonResult RemoveItem(int id, int quantity =0)
         {
-            var product = await ProductsService.FindAsync(id);
+            var product =  ProductsService.Find(id);
             if (product != null)
             {
                 RemoveItemInCart(id);              
@@ -124,10 +124,10 @@ namespace V308CMS.Controllers
         }
 
         [HttpPost]
-        public async  Task<ActionResult> UpdateCart(int id=0, int quantity=0)
+        public  ActionResult UpdateCart(int id=0, int quantity=0)
         {
 
-            var product = await ProductsService.FindAsync(id);
+            var product =  ProductsService.Find(id);
             if (product != null)
             {
                 if (product.Quantity == 0)
