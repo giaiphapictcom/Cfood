@@ -12,14 +12,14 @@ namespace V308CMS.Controllers
     {
         //
         // GET: /Async/      
-        public PartialViewResult LoadListBrandAsync(int categoryId, int limit = 6)
+        public async Task<PartialViewResult> LoadListBrandAsync(int categoryId, int limit = 6)
         {
-            return PartialView("_ListBrandAsync", ProductsService.getRandomBrands(categoryId, limit));
+            return PartialView("_ListBrandAsync", await ProductBrandService.GetRandomAsync(categoryId, limit));
         }
 
-        public PartialViewResult LoadListProductByCategoryAsync(int categoryId, int limit = 6)
+        public async Task<PartialViewResult>  LoadListProductByCategoryAsync(int categoryId, int limit = 6)
         {
-            return PartialView("_ListProductByCategoryAsync", BoxContentService.GetListProductByCategory(categoryId, limit));
+            return PartialView("_ListProductByCategoryAsync", await BoxContentService.GetListProductByCategory(categoryId, limit));
 
         }
         [ChildActionOnly]

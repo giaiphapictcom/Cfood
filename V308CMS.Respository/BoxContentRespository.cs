@@ -9,14 +9,14 @@ namespace V308CMS.Respository
     
     public class BoxContentRespository
     {
-        public List<Product> GetListProductByCategory(int subCateId, int productLimit =6)
+        public async Task<List<Product>> GetListProductByCategory(int subCateId, int productLimit =6)
         {
             using (var entities = new V308CMSEntities())
             {
-                return (from product in entities.Product.Include("ProductImages")
+                return await (from product in entities.Product.Include("ProductImages")
                  where product.Status == true
                  orderby product.Number
-                 select product).Take(productLimit).ToList();
+                 select product).Take(productLimit).ToListAsync();
             }
             
         }

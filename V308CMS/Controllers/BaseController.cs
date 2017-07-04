@@ -125,10 +125,11 @@ namespace V308CMS.Controllers
             RegionService = new RegionRespository();
             ShippingService = new ShippingAddressRespository();
             OrderTransactionService = new OrderTransactionRespository();
+            ProductBrandService = new Respository.ProductBrandRespository();
             LoadSiteConfig();
 
         }
-
+        public ProductBrandRespository ProductBrandService;
         public OrderTransactionRespository OrderTransactionService;
         public ShippingAddressRespository ShippingService { get; }
         public RegionRespository RegionService { get; }
