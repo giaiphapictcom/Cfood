@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using V308CMS.Data;
 using V308CMS.Data.Models;
 
@@ -181,6 +183,18 @@ namespace V308CMS.Respository
                     menu = menu.Where(m => m.Site == site);
                 }
                 return menu.OrderBy(m => m.Order).ToList();
+            }
+
+        }
+        public async Task<List<MenuConfig>>  GetAllAsync(string site = "")
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return await (from item in entities.MenuConfig
+                              where  item.Site == site && item.State ==1
+                        orderby item.Order
+                        select item
+               ).ToListAsync();
             }
 
         }

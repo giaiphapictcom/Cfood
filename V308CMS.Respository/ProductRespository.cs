@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using V308CMS.Common;
 using V308CMS.Data;
 using V308CMS.Data.Enum;
@@ -462,6 +463,7 @@ namespace V308CMS.Respository
             }
         }
 
+       
         public int Count()
         {
             using (var entities = new V308CMSEntities())

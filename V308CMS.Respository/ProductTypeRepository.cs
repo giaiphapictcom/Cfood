@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using V308CMS.Data;
 using V308CMS.Data.Enum;
 
@@ -31,6 +33,18 @@ namespace V308CMS.Respository
            
         }
 
+        public async Task<List<ProductType>> GetListHome()
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return await entities.ProductType
+                     .Where(productType => productType.IsHome && productType.Status == true)
+                     .OrderBy(productType => productType.Number)
+                     .Select(productType => productType)
+                     .ToListAsync();
+            }
+          
+        }
         public List<ProductType> GetAllWeb()
         {
             using (var entities = new V308CMSEntities())

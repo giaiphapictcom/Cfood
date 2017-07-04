@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -15,10 +16,15 @@ namespace V308CMS.Controllers
 {
     public class HomeController : BaseController
     {
-        //public HomeController()
-        //{
+
+        //public ActionResult Index() {
         //}
-        public ActionResult Index()
+
+        public HomeController()
+        {
+        }
+        public async Task<ActionResult> Index()
+
         {
 
             //IndexPageContainer mIndexPageContainer = new IndexPageContainer();
@@ -112,7 +118,7 @@ namespace V308CMS.Controllers
             {
                 mIndexPageContainer.ProductLastest = ProductsService.getProductsRandom(12);
             }
-            ViewBag.BoxContent = BoxContentService.GetListBoxContent();
+            ViewBag.ListCategoryRootHome = await ProductTypeService.GetListHomeAsync();
 
             string view = Theme.viewPage("home");
             if (view.Length > 0)
@@ -211,55 +217,9 @@ namespace V308CMS.Controllers
 
 //>>>>>>> 05ca46d6477b8a114ace89237f7b469368be8bf4
         }
-        public ActionResult Detail(int pId = 0)
+        public async Task<ActionResult> Detail(int pId = 0)
         {
-            ProductDetailPage mProductDetailPage = new ProductDetailPage();
-            Product mProduct;
-            ProductType mProductType = new ProductType();
-            Market mMarket = new Market(); ;
-            //List<Product> MarketList;
-            List<Product> RelatedList;
-            //List<Product> DiscountList;
-            List<ProductType> mProductTypeList;
-            mProduct = ProductsService.LayTheoId(pId);
-            if (mProduct != null)
-            {
-                mProductDetailPage.Product = mProduct;
-                mMarket = MarketService.LayTheoId((int)mProduct.MarketId);
-                if (mMarket == null)
-                    mMarket = new Market();
-                mProductDetailPage.Market = mMarket;
-                //lay chi tiet ve loai san pham
-                mProductType = ProductsService.LayLoaiSanPhamTheoId((int)mProduct.Type);
-                if (mProductType == null)
-                    mProductType = new ProductType();
-                mProductDetailPage.ProductType = mProductType;
-                //lay danh sach san pham cua sieu thi
-                //MarketList = productRepos.getByPageSizeMarketId(1, 6, mMarket.ID);
-                //mProductDetailPage.MarketList = MarketList;
-
-                RelatedList = ProductsService.LayDanhSachSanPhamLienQuan((int)mProduct.Type, 12, true);
-                mProductDetailPage.RelatedList = RelatedList;
-
-                //DiscountList = productRepos.LaySanPhamKhuyenMai(1, 6);
-                //mProductDetailPage.DiscountList = DiscountList;
-                //
-                mProductTypeList = ProductsService.getProductTypeParent();
-                mProductDetailPage.ProductTypeList = mProductTypeList;
-
-                ProductSlideShow ProductImages = new ProductSlideShow();
-
-                mProductDetailPage.Images = ProductsService.LayProductImageTheoIDProduct(mProduct.ID);
-
-            }
-            mProductDetailPage.ProductLastest = ProductsService.getProductsRandom(6);
-
-            //lay chi tiet san pham
-            return View("Detail", mProductDetailPage);
-            //if (!Request.Browser.IsMobileDevice)
-            //    return View("Detail", mProductDetailPage);
-            //else
-            //    return View("MobileDetail", mProductDetailPage);
+            return View("Detail", await  ProductsService.FindAsync(pId,true));           
         }
 
         public ActionResult Search()

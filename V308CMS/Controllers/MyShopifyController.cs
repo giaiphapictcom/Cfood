@@ -1,49 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using V308CMS.Data;
+using V308CMS.Helpers;
 using V308CMS.Respository;
 
 namespace V308CMS.Controllers
 {
     public class MyShopifyController : BaseController
     {
-        public ActionResult CategoryMenu()
+        public async  Task<ActionResult> CategoryMenu()
         {
 
-            return View("CategoryMenu", ProductTypeService.GetAllWeb());
+            return View("CategoryMenu", await ProductTypeService.GetAllWeb());
+        }
+        
+        public async Task<ActionResult> Mainmenu()
+        {
+            return View("Mainmenu", await MenuConfigService.GetAllAsync(ConfigHelper.SiteConfigName));
+
         }
 
-        public ActionResult Mainmenu()
+        public async Task<ActionResult> OffCanvas()
         {
-            return View("Mainmenu", MenuConfigService.GetAll());
-
+            return View("OffCanvas", await MenuConfigService.GetAllAsync());
         }
 
-        public ActionResult OffCanvas()
+        public async Task<ActionResult>  ProductMost()
         {
-            return View("OffCanvas", MenuConfigService.GetAll());
-        }
-
-        public ActionResult ProductMost()
-        {
-            List<Product> products = ProductsService.LaySanPhamBanChay(1, 3);
+            List<Product> products = await ProductsService.GetListProductMostAsync(1, 3);
             if (!products.Any())
             {
-                products = ProductsService.getProductsRandom(3);
+                products =  ProductsService.getProductsRandom(3);
             }
 
             return View("ProductMost", products);
         }
 
-        public ActionResult ProductHot()
+        public async Task<ActionResult> ProductHot()
         {
 
-            List<Product> products = ProductsService.getProductsLastest(10);
+            List<Product> products = await ProductsService.GetProductsLastestAsync(10);
             if (!products.Any())
             {
-                products = ProductsService.getProductsRandom(10);
+                products =  ProductsService.getProductsRandom(10);
             }
             List<ProductDetail> productDetails = products.Select(pro => new ProductDetail
             {
@@ -73,7 +75,7 @@ namespace V308CMS.Controllers
             model.Brands = ProductsService.getRandomBrands(categoryId, 12);
             return View("HomeCategory", model);
         }
-
+        [ChildActionOnly]
         public ActionResult HomeYoutube()
         {
             List<News> videos = new List<News>();
@@ -86,7 +88,7 @@ namespace V308CMS.Controllers
 
 
         }
-
+        [ChildActionOnly]
         public ActionResult HomeFooter()
         {
             return View("HomeFooter");
