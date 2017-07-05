@@ -95,7 +95,7 @@ namespace V308CMS.Controllers
             var plusService = new PlusService(new BaseClientService.Initializer
             {
                 HttpClientInitializer = result.Credential,
-                ApplicationName = "MyApp"
+                ApplicationName = "MpStart"
             });
 
             //get the user basic information
