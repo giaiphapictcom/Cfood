@@ -25,11 +25,11 @@ namespace V308CMS.Sale.Controllers
         public void CreateRepos()
         {
             mEntities = new V308CMSEntities();
-            ProductRepos = new ProductRepository(mEntities);
+            ProductRepos = new ProductRepository();
             ProductRepos.PageSize = PageSize;
             ProductHelper.ProductShowLimit = ProductRepos.PageSize;
-            AccountRepos = new AccountRepository(mEntities);
-            NewsRepos = new NewsRepository(mEntities);
+            AccountRepos = new AccountRepository();
+            NewsRepos = new NewsRepository();
             CommentRepo = new TestimonialRepository(mEntities);
             CategoryRepo = new CategoryRepository(mEntities);
             LinkRepo = new LinkRepository(mEntities);
@@ -42,10 +42,10 @@ namespace V308CMS.Sale.Controllers
         public void DisposeRepos()
         {
             mEntities.Dispose();
-            ProductRepos.Dispose();
+            //ProductRepos.Dispose();
 
-            AccountRepos.Dispose();
-            NewsRepos.Dispose();
+            //AccountRepos.Dispose();
+            //NewsRepos.Dispose();
             CommentRepo.Dispose();
             CategoryRepo.Dispose();
             LinkRepo.Dispose();
@@ -53,11 +53,14 @@ namespace V308CMS.Sale.Controllers
             TicketRepo.Dispose();
             CouponRepo.Dispose();
         }
+
+        private readonly AccountRepository _AccountService;
+        protected AccountRepository AccountService { get { return _AccountService; } }
         #endregion
 
         protected BaseController()
         {
-
+            _AccountService = new AccountRepository();
         }
 
         protected void SetFlashMessage(string message)

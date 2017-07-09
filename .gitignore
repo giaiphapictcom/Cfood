@@ -1995,3 +1995,17 @@ V308CMS.Static/bin/System.Web.Razor.xml
 V308CMS.Static/bin/System.Web.Mvc.xml
 V308CMS.Static/bin/System.Web.Http.xml
 V308CMS.Static/bin/V308CMS.Static.dll.config
+V308CMS.Admin/obj/Debug/build.force
+V308CMS.Sale/bin/System.Web.Helpers.xml
+V308CMS.Sale/bin/System.Net.Http.Formatting.xml
+V308CMS.Sale/bin/Newtonsoft.Json.xml
+V308CMS.Sale/bin/EntityFramework.xml
+V308CMS.Sale/bin/EntityFramework.SqlServer.xml
+V308CMS.Sale/bin/ClosedXML.xml
+V308CMS.Sale/bin/System.Web.WebPages.xml
+V308CMS.Sale/bin/System.Web.WebPages.Razor.xml
+V308CMS.Sale/bin/System.Web.WebPages.Deployment.xml
+V308CMS.Sale/bin/System.Web.Razor.xml
+V308CMS.Sale/bin/System.Web.Mvc.xml
+V308CMS.Sale/bin/System.Web.Http.xml
+V308CMS.Sale/bin/System.Web.Http.WebHost.xml

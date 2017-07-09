@@ -109,8 +109,8 @@ namespace V308CMS.Data
             try
             {
                 var items = from p in entities.CounponTbl
-                               orderby p.ID descending
-                               select p;
+                            orderby p.ID descending
+                            select p;
 
                 ModelPage.Total = items.Count();
                 ModelPage.Page = PageCurrent;
@@ -145,7 +145,7 @@ namespace V308CMS.Data
                     items = items.Where(c => c.status == 0);
                 }
 
-                vouchers = items.OrderBy(c=>c.ID).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+                vouchers = items.OrderBy(c => c.ID).Skip((page - 1) * pageSize).Take(pageSize).ToList();
             }
             return vouchers;
 
@@ -231,8 +231,8 @@ namespace V308CMS.Data
             using (var entities = new V308CMSEntities())
             {
                 var voucher = (from c in entities.CounponTbl
-                                where c.ID == id
-                                select c).FirstOrDefault();
+                               where c.ID == id
+                               select c).FirstOrDefault();
                 if (voucher != null)
                 {
                     entities.CounponTbl.Remove(voucher);
@@ -243,6 +243,16 @@ namespace V308CMS.Data
 
             }
 
+        }
+
+        public static int VoucherCount(int uid=0) {
+            var count = 0;
+            using (var entities = new V308CMSEntities())
+            {
+                var vouchers = entities.CounponTbl.Where(l => l.created_by == uid);
+                count = vouchers.Count();
+            }
+            return count;
         }
     }
 }

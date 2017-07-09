@@ -39,7 +39,8 @@ namespace V308CMS.Data
                             select p).FirstOrDefault();
                 if (user != null)
                 {
-                    if (user.Password.Trim().Equals(EncryptionMD5.ToMd5(pPassword.Trim())))
+                    //if (user.Password.Trim().Equals(EncryptionMD5.ToMd5(pPassword.Trim())))
+                    if (user.Salt.Length > 0 && user.Password != HashPassword(pPassword.Trim(), user.Salt))
                     {
                         mEtLogin.code = 1;
                         mEtLogin.message = "OK.";

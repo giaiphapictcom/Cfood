@@ -185,6 +185,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Attributes\SkipCheckPermissionAttribute.cs" />
     <Compile Include="Controllers\AdminAccountController.cs" />
+    <Compile Include="Controllers\AffiliateAccountController.cs" />
     <Compile Include="Controllers\AffiliateCategoryController.cs" />
     <Compile Include="Controllers\AsyncController.cs" />
     <Compile Include="Controllers\BannerController.cs" />
@@ -226,6 +227,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\AffiliateHelper.cs" />
     <Compile Include="Helpers\AuthenticationHelper.cs" />
     <Compile Include="Helpers\ConfigHelper.cs" />
     <Compile Include="Helpers\ContentHelper.cs" />
@@ -1985,6 +1987,7 @@
     <Content Include="Views\AffiliateCategory\Edit.cshtml" />
     <Content Include="Views\AffiliateCategory\Index.cshtml" />
     <Content Include="Views\Voucher\_VoucherForm.cshtml" />
+    <Content Include="Views\AffiliateAccount\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

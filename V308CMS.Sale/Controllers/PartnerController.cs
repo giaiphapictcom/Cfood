@@ -34,6 +34,7 @@ namespace V308CMS.Sale.Controllers
                 string email = Request["email"];
                 string password = Request["password"];
                 mETLogin = AccountRepos.CheckDangNhap(email, password, Site.affiliate);
+                //var result = AccountService.CheckAccount(email, password);
                 if (mETLogin.code == 1 && (mETLogin.role == 1 || mETLogin.role == 3))
                 {
                     mETLogin.message = "";

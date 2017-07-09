@@ -130,7 +130,7 @@ namespace V308CMS.Respository
                 }
 
 
-                if (state > 0)
+                if (state >= 0)
                 {
                     if (state == 1)
                     {
