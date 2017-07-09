@@ -1,0 +1,1385 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Touch</name>
+    </assembly>
+    <members>
+        <member name="M:Touch.Domain.DocumentUtil.ToDocumentString(System.DateTime)">
+            <summary>
+            Get string representation for <c>IDocument</c> usage.
+            </summary>
+        </member>
+        <member name="M:Touch.Domain.DocumentUtil.FromDocumentString(System.String)">
+            <summary>
+            Get value from <c>IDocument</c> string representation.
+            </summary>
+        </member>
+        <member name="M:Touch.Domain.EntityUtil.ToTokenString(System.Guid)">
+            <summary>
+            Get string representation for <c>IDocument</c> usage.
+            </summary>
+        </member>
+        <member name="M:Touch.Domain.Enums.ToEnum``1(System.Enum)">
+            <summary>
+            Convert enum into another enum.
+            </summary>
+        </member>
+        <member name="M:Touch.Domain.Enums.ToEnumString(System.Enum)">
+            <summary>
+            Convert enum into a string.
+            </summary>
+        </member>
+        <member name="M:Touch.Domain.Enums.FromEnumString``1(System.String)">
+            <summary>
+            Convert enum into a string.
+            </summary>
+        </member>
+        <member name="M:Touch.Domain.Enums.AllValues``1(System.Enum)">
+            <summary>
+            Get all enum values.
+            </summary>
+        </member>
+        <member name="M:Touch.Domain.StoreExtensions.Get``1(Touch.Persistence.IStore{``0},System.Guid)">
+            <see cref="M:Touch.Persistence.IStore`1.Get(System.String)"/>
+        </member>
+        <member name="M:Touch.Domain.StoreExtensions.Delete``1(Touch.Persistence.IStore{``0},System.Guid)">
+            <see cref="M:Touch.Persistence.IStore`1.Delete(`0)"/>
+        </member>
+        <member name="T:Touch.Helpers.DataContractHelper">
+            <summary>
+            Data contract helper.
+            </summary>
+        </member>
+        <member name="M:Touch.Helpers.DataContractHelper.GetProperties(System.Object)">
+            <summary>
+            Get object's properties.
+            </summary>
+        </member>
+        <member name="M:Touch.Helpers.DataContractHelper.IsDataContract(System.Type)">
+            <summary>
+            Check if type is a valid data contract.
+            </summary>
+        </member>
+        <member name="M:Touch.Helpers.DataContractHelper.GetContractAlias(System.Type)">
+            <summary>
+            Get data contract type's alias.
+            </summary>
+            <param name="type">Data contract type.</param>
+            <returns>Alias name.</returns>
+            <exception cref="T:System.ArgumentException">Type is not a valid data contract.</exception>
+        </member>
+        <member name="M:Touch.Helpers.DataContractHelper.InstantiateContract(System.Type,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Instantiate a data contract object and populate it with provided properties.
+            </summary>
+            <param name="type">Data contract type.</param>
+            <param name="values">Values to use.</param>
+            <returns>Data contract instance.</returns>
+        </member>
+        <member name="M:Touch.Helpers.DataContractHelper.InstantiateContract(System.Type,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Object}},System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Reflection.PropertyInfo}},System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Reflection.FieldInfo}})">
+            <summary>
+            Instantiate a data contract object and populate it with provided properties.
+            </summary>
+            <param name="type">Data contract type.</param>
+            <param name="values">Values to use.</param>
+            <param name="properties">Type's properties.</param>
+            <param name="fields">Type's fields.</param>
+            <returns>Type instance.</returns>
+        </member>
+        <member name="M:Touch.Helpers.DataContractHelper.GetContractProperties(System.Object)">
+            <summary>
+            Get data contract object's properties.
+            </summary>
+            <param name="instance">Object instance.</param>
+            <returns>A set of property name-value pairs.</returns>
+        </member>
+        <member name="M:Touch.Helpers.DataContractHelper.GetContractProperties(System.Object,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Reflection.PropertyInfo}},System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Reflection.FieldInfo}})">
+            <summary>
+            Get data contract object's properties.
+            </summary>
+            <param name="instance">Object instance.</param>
+            <param name="properties">Type's properties.</param>
+            <param name="fields">Type's fields.</param>
+            <returns>A set of property name-value pairs.</returns>
+        </member>
+        <member name="M:Touch.Helpers.DataContractHelper.GetContractMembers(System.Type)">
+            <summary>
+            Get contract members from a contract type.
+            </summary>
+        </member>
+        <member name="M:Touch.Helpers.DataContractHelper.GetContractProperties(System.Type)">
+            <summary>
+            Get properties of data contract type.
+            </summary>
+            <param name="type">Data contract type.</param>
+            <returns>A set of name-property pairs.</returns>
+        </member>
+        <member name="M:Touch.Helpers.DataContractHelper.GetContractFields(System.Type)">
+            <summary>
+            Get fields of data contract type.
+            </summary>
+            <param name="type">Data contract type.</param>
+            <returns>A set of name-field pairs.</returns>
+        </member>
+        <member name="M:Touch.Helpers.DataContractHelper.IsNumericType(System.Type,System.TypeCode)">
+            <summary>
+            Check if type is a numeric type.
+            </summary>
+        </member>
+        <member name="M:Touch.Helpers.DataContractHelper.IsNumericType(System.Type,System.TypeCode,System.Boolean@)">
+            <summary>
+            Check if type is a numeric type.
+            </summary>
+        </member>
+        <member name="M:Touch.Helpers.DataContractHelper.ConvertToTimestamp(System.DateTime)">
+            <summary>
+            Convert a <c>DateTime</c> to a UNIX timestamp in milliseconds.
+            </summary>
+        </member>
+        <member name="M:Touch.Helpers.DataContractHelper.GetEnumValues(System.Type)">
+            <summary>
+            Get enumeration type's values.
+            </summary>
+        </member>
+        <member name="M:Touch.Helpers.TypeExtension.ImplementsInterface(System.Type,System.Type)">
+            <summary>
+            Check if type implements an interface.
+            </summary>
+            <param name="type">Type to check.</param>
+            <param name="interfaceType">Interface type to look for.</param>
+        </member>
+        <member name="M:Touch.Helpers.TypeExtension.IsNullable(System.Type)">
+            <summary>
+            Check if type is nullable.
+            </summary>
+        </member>
+        <member name="T:Touch.Logic.BusinessLogic">
+            <summary>
+            Business logic.
+            </summary>
+        </member>
+        <member name="T:Touch.Messaging.Acknowledge">
+            <summary>
+            Service acknowledge.
+            </summary>
+        </member>
+        <member name="T:Touch.Messaging.AddAcknowledge">
+            <summary>
+            Service acknowledge.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.AddAcknowledge.Token">
+            <summary>
+            Result token.
+            </summary>
+        </member>
+        <member name="T:Touch.Messaging.IDataEntity">
+            <summary>
+            Data entity.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.IDataEntity.Token">
+            <summary>
+            Token.
+            </summary>
+        </member>
+        <member name="T:Touch.Messaging.FaultMessage">
+            <summary>
+            Service fault message.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.FaultMessage.Message">
+            <summary>
+            Message.
+            </summary>
+        </member>
+        <member name="T:Touch.Logic.Model">
+            <summary>
+            Model.
+            </summary>
+        </member>
+        <member name="T:Touch.Notification.IBroadcasterProvider">
+            <summary>
+            Notification broadcaster provider.
+            </summary>
+        </member>
+        <member name="M:Touch.Notification.IBroadcasterProvider.GetBroadcaster``1(System.String)">
+            <summary>
+            Get notification broadcaster for topic.
+            </summary>
+            <typeparam name="T">Notification type.</typeparam>
+            <param name="topicName">Notification topic name.</param>
+            <exception cref="T:System.ArgumentException">Invalid queue name.</exception>
+        </member>
+        <member name="T:Touch.Notification.INotificationDispatcher">
+            <summary>
+            Push notification dispatcher.
+            </summary>
+        </member>
+        <member name="M:Touch.Notification.INotificationDispatcher.Dispatch(System.String,System.String,System.Int32,System.String)">
+            <summary>
+            Dispatch a notification.
+            </summary>
+            <param name="deviceToken">Device token.</param>
+            <param name="message">Notification alert message.</param>
+            <param name="count">Badge count.</param>
+        </member>
+        <member name="T:Touch.Persistence.AbstractCache`1">
+            <summary>
+            Abstract cache.
+            </summary>
+            <typeparam name="T">Cached element type.</typeparam>
+        </member>
+        <member name="T:Touch.Persistence.IStore`1">
+            <summary>
+            A store of documents of type T.
+            </summary>
+            <typeparam name="T">Type of documents.</typeparam>
+        </member>
+        <member name="M:Touch.Persistence.IStore`1.Get(System.String)">
+            <summary>
+            Get document by hash key.
+            </summary>
+            <param name="hashKey">Document hash key.</param>
+            <returns>Matching document.</returns>
+        </member>
+        <member name="M:Touch.Persistence.IStore`1.Delete(`0)">
+            <summary>
+            Remove document from store.
+            </summary>
+            <param name="target">Target document.</param>
+        </member>
+        <member name="M:Touch.Persistence.IStore`1.Delete(System.String)">
+            <summary>
+            Delete document from store by hash key.
+            </summary>
+            <param name="hashKey">Target document hash key.</param>
+        </member>
+        <member name="M:Touch.Persistence.IStore`1.Store(`0)">
+            <summary>
+            Store a document.
+            </summary>
+            <param name="target">Document to store.</param>
+        </member>
+        <member name="T:Touch.Persistence.AbstractCacheProvider">
+            <summary>
+            Abstract cache provider.
+            </summary>
+        </member>
+        <member name="T:Touch.Persistence.IStoreProvider">
+            <summary>
+            Document store provider.
+            </summary>
+        </member>
+        <member name="M:Touch.Persistence.IStoreProvider.GetStore``1">
+            <summary>
+            Get document store instance.
+            </summary>
+            <typeparam name="T">Store documents type.</typeparam>
+            <returns></returns>
+            <exception cref="T:System.Collections.Generic.KeyNotFoundException">Store for a given document type not found.</exception>
+        </member>
+        <member name="T:Touch.Persistence.BusinessEntity">
+            <summary>
+            Business entity.
+            </summary>
+        </member>
+        <member name="T:Touch.Persistence.IBusinessEntity">
+            <summary>
+            Business entity.
+            </summary>
+        </member>
+        <member name="T:Touch.Persistence.IEntity">
+            <summary>
+            Entity.
+            </summary>
+        </member>
+        <member name="P:Touch.Persistence.IEntity.Identity">
+            <summary>
+            Object's identity. Is <c>null</c> if an entity is not persisted.
+            </summary>
+        </member>
+        <member name="P:Touch.Persistence.IBusinessEntity.Id">
+            <summary>
+            Globally unique business entity ID.
+            </summary>
+        </member>
+        <member name="P:Touch.Persistence.IBusinessEntity.IsRemoved">
+            <summary>
+            Business entity has been removed. An entity with this property set to <c>true</c> will not appear when fetching it with 
+            <c>IBusinessRepository.Get</c> method.  Be cautious though that when quierying a repository an <c>IsRemoved</c> property is not
+            respected automatically. This property should not be set to <c>true</c> explicitly. Instead, consider using <c>Delete</c>
+            method of <c>IBusinessRepository</c>.
+            </summary>
+        </member>
+        <member name="P:Touch.Persistence.BusinessEntity.IsRemoved">
+            <summary>
+            Entity has been removed.
+            </summary>
+        </member>
+        <member name="P:Touch.Persistence.BusinessEntity.Id">
+            <summary>
+            Globally unique business entity ID.
+            </summary>
+        </member>
+        <member name="P:Touch.Persistence.BusinessEntity.Identity">
+            <summary>
+            Object's identity.
+            </summary>
+        </member>
+        <member name="T:Touch.Persistence.AbstractStore`1">
+            <summary>
+            Abstract document store.
+            </summary>
+            <typeparam name="T">Store document type.</typeparam>
+        </member>
+        <member name="F:Touch.Persistence.AbstractStore`1.Provider">
+            <summary>
+            Context provider.
+            </summary>
+        </member>
+        <member name="M:Touch.Persistence.AbstractStore`1.TryCatch(System.Func{`0})">
+            <summary>
+            Handle process operation execution and handle IStore exceptions.
+            </summary>
+            <param name="func">Function to execute.</param>
+            <returns>Function result.</returns>
+            <exception cref="T:Touch.Persistence.Exceptions.ObjectNotFoundException"/>
+            <exception cref="T:Touch.Persistence.Exceptions.ObjectNotUniqueException"/>
+        </member>
+        <member name="T:Touch.Persistence.IBlob">
+            <summary>
+            Persistent data storage.
+            </summary>
+        </member>
+        <member name="M:Touch.Persistence.IBlob.Read">
+            <summary>
+            Read data.
+            </summary>
+        </member>
+        <member name="M:Touch.Persistence.IBlob.ReadBinary">
+            <summary>
+            Read binary data.
+            </summary>
+        </member>
+        <member name="M:Touch.Persistence.IBlob.Write(System.Byte[])">
+            <summary>
+            Write data.
+            </summary>
+        </member>
+        <member name="M:Touch.Persistence.IBlob.WriteBinary">
+            <summary>
+            Write binary data.
+            </summary>
+        </member>
+        <member name="P:Touch.Persistence.IBlob.Name">
+            <summary>
+            Blob name.
+            </summary>
+        </member>
+        <member name="P:Touch.Persistence.IBlob.LastModified">
+            <summary>
+            Last modification date.
+            </summary>
+        </member>
+        <member name="T:Touch.Persistence.IContextProvider">
+            <summary>
+            <c>IContext</c> provider.
+            </summary>
+        </member>
+        <member name="M:Touch.Persistence.IContextProvider.GetContext">
+            <summary>
+            Get document store context.
+            </summary>
+        </member>
+        <member name="T:Touch.Persistence.IContext">
+            <summary>
+            Document store context.
+            </summary>
+        </member>
+        <member name="M:Touch.Persistence.IContext.Get``1(System.String)">
+            <summary>
+            Get document by hash key.
+            </summary>
+            <param name="hashKey">Document hash key.</param>
+            <returns>Matching document or <c>null</c>.</returns>
+        </member>
+        <member name="M:Touch.Persistence.IContext.Delete``1(``0)">
+            <summary>
+            Remove document from store.
+            </summary>
+            <param name="target">Target document.</param>
+        </member>
+        <member name="M:Touch.Persistence.IContext.Delete``1(System.String)">
+            <summary>
+            Delete document from store by hash key.
+            </summary>
+            <param name="hashKey">Target document hash key.</param>
+        </member>
+        <member name="M:Touch.Persistence.IContext.Store(Touch.Persistence.IDocument)">
+            <summary>
+            Store a document.
+            </summary>
+            <param name="target">Document to store.</param>
+        </member>
+        <member name="T:Touch.Persistence.Document">
+            <summary>
+            Document.
+            </summary>
+        </member>
+        <member name="T:Touch.Persistence.IDocument">
+            <summary>
+            Document.
+            </summary>
+        </member>
+        <member name="P:Touch.Persistence.IDocument.HashKey">
+            <summary>
+            Document's hash key.
+            </summary>
+        </member>
+        <member name="P:Touch.Persistence.Document.HashKey">
+            <summary>
+            Documents's hash key.
+            </summary>
+        </member>
+        <member name="T:Touch.Persistence.ITransaction">
+            <summary>
+            Persistence transaction.
+            </summary>
+        </member>
+        <member name="M:Touch.Persistence.ITransaction.Commit">
+            <summary>
+            Commit the transaction.
+            </summary>
+        </member>
+        <member name="M:Touch.Persistence.ITransaction.Rollback">
+            <summary>
+            Rollback the transaction.
+            </summary>
+        </member>
+        <member name="T:Touch.Queue.IQueueProvider">
+            <summary>
+            Queue provider.
+            </summary>
+        </member>
+        <member name="M:Touch.Queue.IQueueProvider.GetQueue``1(System.String)">
+            <summary>
+            Get message queue.
+            </summary>
+            <typeparam name="T">Message body type.</typeparam>
+            <param name="queueName">Queue name.</param>
+            <returns>Message queue.</returns>
+            <exception cref="T:System.ArgumentException">Invalid queue name.</exception>
+        </member>
+        <member name="T:Touch.Logging.LoggerLevel">
+            <summary>
+            Supporting Logger levels.
+            </summary>
+        </member>
+        <member name="F:Touch.Logging.LoggerLevel.Off">
+            <summary>
+            Logging will be off
+            </summary>
+        </member>
+        <member name="F:Touch.Logging.LoggerLevel.Fatal">
+            <summary>
+            Fatal logging level
+            </summary>
+        </member>
+        <member name="F:Touch.Logging.LoggerLevel.Error">
+            <summary>
+            Error logging level
+            </summary>
+        </member>
+        <member name="F:Touch.Logging.LoggerLevel.Warn">
+            <summary>
+            Warn logging level
+            </summary>
+        </member>
+        <member name="F:Touch.Logging.LoggerLevel.Info">
+            <summary>
+            Info logging level
+            </summary>
+        </member>
+        <member name="F:Touch.Logging.LoggerLevel.Debug">
+            <summary>
+            Debug logging level
+            </summary>
+        </member>
+        <member name="T:Touch.Logging.ILogger">
+            <summary>
+            Manages logging.
+            </summary>
+            <remarks>
+            This is a facade for the different logging subsystems.
+            It offers a simplified interface that follows IOC patterns
+            and a simplified priority/level/severity abstraction. 
+            </remarks>
+        </member>
+        <member name="M:Touch.Logging.ILogger.Debug(System.String)">
+            <summary>
+            Logs a debug message.
+            </summary>
+            <param name="message">The message to log</param>
+        </member>
+        <member name="M:Touch.Logging.ILogger.Debug(System.String,System.Exception)">
+            <summary>
+            Logs a debug message. 
+            </summary>
+            <param name="exception">The exception to log</param>
+            <param name="message">The message to log</param>
+        </member>
+        <member name="M:Touch.Logging.ILogger.DebugFormat(System.String,System.Object[])">
+            <summary>
+            Logs a debug message.
+            </summary>
+            <param name="format">Format string for the message to log</param>
+            <param name="args">Format arguments for the message to log</param>
+        </member>
+        <member name="M:Touch.Logging.ILogger.DebugFormat(System.Exception,System.String,System.Object[])">
+            <summary>
+            Logs a debug message.
+            </summary>
+            <param name="exception">The exception to log</param>
+            <param name="format">Format string for the message to log</param>
+            <param name="args">Format arguments for the message to log</param>
+        </member>
+        <member name="M:Touch.Logging.ILogger.DebugFormat(System.IFormatProvider,System.String,System.Object[])">
+            <summary>
+            Logs a debug message.
+            </summary>
+            <param name="formatProvider">The format provider to use</param>
+            <param name="format">Format string for the message to log</param>
+            <param name="args">Format arguments for the message to log</param>
+        </member>
+        <member name="M:Touch.Logging.ILogger.DebugFormat(System.Exception,System.IFormatProvider,System.String,System.Object[])">
+            <summary>
+            Logs a debug message.
+            </summary>
+            <param name="exception">The exception to log</param>
+            <param name="formatProvider">The format provider to use</param>
+            <param name="format">Format string for the message to log</param>
+            <param name="args">Format arguments for the message to log</param>
+        </member>
+        <member name="M:Touch.Logging.ILogger.Info(System.String)">
+            <summary>
+            Logs an info message.
+            </summary>
+            <param name="message">The message to log</param>
+        </member>
+        <member name="M:Touch.Logging.ILogger.Info(System.String,System.Exception)">
+            <summary>
+            Logs an info message. 
+            </summary>
+            <param name="exception">The exception to log</param>
+            <param name="message">The message to log</param>
+        </member>
+        <member name="M:Touch.Logging.ILogger.InfoFormat(System.String,System.Object[])">
+            <summary>
+            Logs an info message.
+            </summary>
+            <param name="format">Format string for the message to log</param>
+            <param name="args">Format arguments for the message to log</param>
+        </member>
+        <member name="M:Touch.Logging.ILogger.InfoFormat(System.Exception,System.String,System.Object[])">
+            <summary>
+            Logs an info message.
+            </summary>
+            <param name="exception">The exception to log</param>
+            <param name="format">Format string for the message to log</param>
+            <param name="args">Format arguments for the message to log</param>
+        </member>
+        <member name="M:Touch.Logging.ILogger.InfoFormat(System.IFormatProvider,System.String,System.Object[])">
+            <summary>
+            Logs an info message.
+            </summary>
+            <param name="formatProvider">The format provider to use</param>
+            <param name="format">Format string for the message to log</param>
+            <param name="args">Format arguments for the message to log</param>
+        </member>
+        <member name="M:Touch.Logging.ILogger.InfoFormat(System.Exception,System.IFormatProvider,System.String,System.Object[])">
+            <summary>
+            Logs an info message.
+            </summary>
+            <param name="exception">The exception to log</param>
+            <param name="formatProvider">The format provider to use</param>
+            <param name="format">Format string for the message to log</param>
+            <param name="args">Format arguments for the message to log</param>
+        </member>
+        <member name="M:Touch.Logging.ILogger.Warn(System.String)">
+            <summary>
+            Logs a warn message.
+            </summary>
+            <param name="message">The message to log</param>
+        </member>
+        <member name="M:Touch.Logging.ILogger.Warn(System.String,System.Exception)">
+            <summary>
+            Logs a warn message. 
+            </summary>
+            <param name="exception">The exception to log</param>
+            <param name="message">The message to log</param>
+        </member>
+        <member name="M:Touch.Logging.ILogger.WarnFormat(System.String,System.Object[])">
+            <summary>
+            Logs a warn message.
+            </summary>
+            <param name="format">Format string for the message to log</param>
+            <param name="args">Format arguments for the message to log</param>
+        </member>
+        <member name="M:Touch.Logging.ILogger.WarnFormat(System.Exception,System.String,System.Object[])">
+            <summary>
+            Logs a warn message.
+            </summary>
+            <param name="exception">The exception to log</param>
+            <param name="format">Format string for the message to log</param>
+            <param name="args">Format arguments for the message to log</param>
+        </member>
+        <member name="M:Touch.Logging.ILogger.WarnFormat(System.IFormatProvider,System.String,System.Object[])">
+            <summary>
+            Logs a warn message.
+            </summary>
+            <param name="formatProvider">The format provider to use</param>
+            <param name="format">Format string for the message to log</param>
+            <param name="args">Format arguments for the message to log</param>
+        </member>
+        <member name="M:Touch.Logging.ILogger.Error(System.String)">
+            <summary>
+            Logs an error message.
+            </summary>
+            <param name="message">The message to log</param>
+        </member>
+        <member name="M:Touch.Logging.ILogger.Error(System.String,System.Exception)">
+            <summary>
+            Logs an error message. 
+            </summary>
+            <param name="exception">The exception to log</param>
+            <param name="message">The message to log</param>
+        </member>
+        <member name="M:Touch.Logging.ILogger.ErrorFormat(System.String,System.Object[])">
+            <summary>
+            Logs an error message.
+            </summary>
+            <param name="format">Format string for the message to log</param>
+            <param name="args">Format arguments for the message to log</param>
+        </member>
+        <member name="M:Touch.Logging.ILogger.ErrorFormat(System.Exception,System.String,System.Object[])">
+            <summary>
+            Logs an error message.
+            </summary>
+            <param name="exception">The exception to log</param>
+            <param name="format">Format string for the message to log</param>
+            <param name="args">Format arguments for the message to log</param>
+        </member>
+        <member name="M:Touch.Logging.ILogger.ErrorFormat(System.IFormatProvider,System.String,System.Object[])">
+            <summary>
+            Logs an error message.
+            </summary>
+            <param name="formatProvider">The format provider to use</param>
+            <param name="format">Format string for the message to log</param>
+            <param name="args">Format arguments for the message to log</param>
+        </member>
+        <member name="M:Touch.Logging.ILogger.ErrorFormat(System.Exception,System.IFormatProvider,System.String,System.Object[])">
+            <summary>
+            Logs an error message.
+            </summary>
+            <param name="exception">The exception to log</param>
+            <param name="formatProvider">The format provider to use</param>
+            <param name="format">Format string for the message to log</param>
+            <param name="args">Format arguments for the message to log</param>
+        </member>
+        <member name="M:Touch.Logging.ILogger.Fatal(System.String)">
+            <summary>
+            Logs a fatal message.
+            </summary>
+            <param name="message">The message to log</param>
+        </member>
+        <member name="M:Touch.Logging.ILogger.Fatal(System.String,System.Exception)">
+            <summary>
+            Logs a fatal message. 
+            </summary>
+            <param name="exception">The exception to log</param>
+            <param name="message">The message to log</param>
+        </member>
+        <member name="M:Touch.Logging.ILogger.FatalFormat(System.String,System.Object[])">
+            <summary>
+            Logs a fatal message.
+            </summary>
+            <param name="format">Format string for the message to log</param>
+            <param name="args">Format arguments for the message to log</param>
+        </member>
+        <member name="M:Touch.Logging.ILogger.FatalFormat(System.Exception,System.String,System.Object[])">
+            <summary>
+            Logs a fatal message.
+            </summary>
+            <param name="exception">The exception to log</param>
+            <param name="format">Format string for the message to log</param>
+            <param name="args">Format arguments for the message to log</param>
+        </member>
+        <member name="M:Touch.Logging.ILogger.FatalFormat(System.IFormatProvider,System.String,System.Object[])">
+            <summary>
+            Logs a fatal message.
+            </summary>
+            <param name="formatProvider">The format provider to use</param>
+            <param name="format">Format string for the message to log</param>
+            <param name="args">Format arguments for the message to log</param>
+        </member>
+        <member name="M:Touch.Logging.ILogger.FatalFormat(System.Exception,System.IFormatProvider,System.String,System.Object[])">
+            <summary>
+            Logs a fatal message.
+            </summary>
+            <param name="exception">The exception to log</param>
+            <param name="formatProvider">The format provider to use</param>
+            <param name="format">Format string for the message to log</param>
+            <param name="args">Format arguments for the message to log</param>
+        </member>
+        <member name="P:Touch.Logging.ILogger.IsDebugEnabled">
+            <summary>
+            Determines if messages of priority "debug" will be logged.
+            </summary>
+            <value>True if "debug" messages will be logged.</value> 
+        </member>
+        <member name="P:Touch.Logging.ILogger.IsInfoEnabled">
+            <summary>
+            Determines if messages of priority "info" will be logged.
+            </summary>
+            <value>True if "info" messages will be logged.</value> 
+        </member>
+        <member name="P:Touch.Logging.ILogger.IsWarnEnabled">
+            <summary>
+            Determines if messages of priority "warn" will be logged.
+            </summary>
+            <value>True if "warn" messages will be logged.</value> 
+        </member>
+        <member name="P:Touch.Logging.ILogger.IsErrorEnabled">
+            <summary>
+            Determines if messages of priority "error" will be logged.
+            </summary>
+            <value>True if "error" messages will be logged.</value> 
+        </member>
+        <member name="P:Touch.Logging.ILogger.IsFatalEnabled">
+            <summary>
+            Determines if messages of priority "fatal" will be logged.
+            </summary>
+            <value>True if "fatal" messages will be logged.</value> 
+        </member>
+        <member name="T:Touch.Logging.ILoggerProvider">
+            <summary>
+            ILogger provider.
+            </summary>
+        </member>
+        <member name="M:Touch.Logging.ILoggerProvider.Get``1">
+            <summary>
+            Get an <c>ILogger</c> instance for a given type.
+            </summary>
+            <typeparam name="T">Caller's type.</typeparam>
+            <returns><c>ILogger</c> instance.</returns>
+        </member>
+        <member name="T:Touch.Logging.MockLogger">
+            <summary>
+            Mock <c>ILogger</c>.
+            </summary>
+        </member>
+        <member name="T:Touch.Logging.MockLoggerProvider">
+            <summary>
+            Mock <c>ILoggerProvider</c>.
+            </summary>
+        </member>
+        <member name="T:Touch.Notification.AbstractNotification">
+            <summary>
+            Abstract notification message.
+            </summary>
+        </member>
+        <member name="T:Touch.Queue.AbstractMessage">
+            <summary>
+            Abstract queue message.
+            </summary>
+        </member>
+        <member name="T:Touch.Queue.IMessage">
+            <summary>
+            Queue message.
+            </summary>
+        </member>
+        <member name="T:Touch.Notification.INotification">
+            <summary>
+            A notification that can be broadcasted by a INotificationBroadcaster.
+            </summary>
+        </member>
+        <member name="T:Touch.Notification.INotificationBroadcaster`1">
+            <summary>
+            Notification broadcaster.
+            </summary>
+            <typeparam name="T">Notification type.</typeparam>
+        </member>
+        <member name="M:Touch.Notification.INotificationBroadcaster`1.Broadcast(`0)">
+            <summary>
+            Broadcast a notification.
+            </summary>
+            <param name="notification">Notification to broadcast.</param>
+        </member>
+        <member name="T:Touch.Persistence.AbstractRepository`1">
+            <summary>
+            Abstract repository.
+            </summary>
+            <typeparam name="T">Repository entity type.</typeparam>
+        </member>
+        <member name="T:Touch.Persistence.IRepository`1">
+            <summary>
+            Repository that contains entities of type T.
+            </summary>
+            <typeparam name="T">Type of entities.</typeparam>
+        </member>
+        <member name="M:Touch.Persistence.IRepository`1.Get(System.Object)">
+            <summary>
+            Get entity by ID.
+            </summary>
+            <param name="id">ID.</param>
+            <returns>Matching entity.</returns>
+        </member>
+        <member name="M:Touch.Persistence.IRepository`1.Delete(`0)">
+            <summary>
+            Remove entity from repository.
+            </summary>
+            <param name="target">Target entity.</param>
+        </member>
+        <member name="M:Touch.Persistence.IRepository`1.Query">
+            <summary>
+            Get queryable repository object.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Touch.Persistence.IRepository`1.Save(`0)">
+            <summary>
+            Add new entity to repository.
+            </summary>
+            <param name="target">Entity to add.</param>
+            <returns>Saved entity.</returns>
+        </member>
+        <member name="M:Touch.Persistence.IRepository`1.Update(`0)">
+            <summary>
+            Update an existing entity.
+            </summary>
+            <param name="target">Entity to update.</param>
+            <returns>Updated entity.</returns>
+        </member>
+        <member name="M:Touch.Persistence.IRepository`1.Proxy(System.Object)">
+            <summary>
+            Create a proxy object with the provided ID.
+            </summary>
+            <param name="id">Object ID.</param>
+        </member>
+        <member name="F:Touch.Persistence.AbstractRepository`1._provider">
+            <summary>
+            Session provider.
+            </summary>
+        </member>
+        <member name="M:Touch.Persistence.AbstractRepository`1.TryCatch(System.Func{`0})">
+            <summary>
+            Handle process operation execution and handle IRepository exceptions.
+            </summary>
+            <param name="func">Function to execute.</param>
+            <returns>Function result.</returns>
+            <exception cref="T:Touch.Persistence.Exceptions.ObjectNotFoundException"/>
+            <exception cref="T:Touch.Persistence.Exceptions.ObjectNotUniqueException"/>
+        </member>
+        <member name="T:Touch.Persistence.AbstractBusinessRepository`1">
+            <summary>
+            Abstract business repository.
+            </summary>
+            <typeparam name="T">Repository business entity type.</typeparam>
+        </member>
+        <member name="T:Touch.Persistence.IBusinessRepository`1">
+            <summary>
+            Repository that contains business entities of type T.
+            </summary>
+            <typeparam name="T">Type of business entities.</typeparam>
+        </member>
+        <member name="M:Touch.Persistence.IBusinessRepository`1.Get(System.Guid)">
+            <summary>
+            Get business entity by token.
+            </summary>
+            <param name="token">Token.</param>
+            <returns>Matching business entity.</returns>
+        </member>
+        <member name="M:Touch.Persistence.IBusinessRepository`1.Destroy(`0)">
+            <summary>
+            Permanently remove entity from repository.
+            </summary>
+            <param name="target">Target entity.</param>
+        </member>
+        <member name="M:Touch.Persistence.IBusinessRepository`1.Destroy(System.Guid)">
+            <summary>
+            Permanently remove business entity by token.
+            </summary>
+            <param name="token">Token.</param>
+        </member>
+        <member name="M:Touch.Persistence.IBusinessRepository`1.Proxy(System.Guid)">
+            <summary>
+            Create a proxy object with the provided ID.
+            </summary>
+            <param name="id">Object ID.</param>
+        </member>
+        <member name="T:Touch.Persistence.Entity">
+            <summary>
+            Entity.
+            </summary>
+        </member>
+        <member name="P:Touch.Persistence.Entity.Id">
+            <summary>
+            Internal object's ID.
+            </summary>
+        </member>
+        <member name="P:Touch.Persistence.Entity.Identity">
+            <summary>
+            Object's identity.
+            </summary>
+        </member>
+        <member name="T:Touch.Persistence.IPersistence">
+            <summary>
+            Persistence access interface.
+            </summary>
+        </member>
+        <member name="M:Touch.Persistence.IPersistence.Get``1(System.Object)">
+            <summary>
+            Return the persistent instance of the given entity class with the given identifier,
+            or null if there is no such persistent instance.
+            </summary>
+            <typeparam name="T">Entity type.</typeparam>
+            <param name="id">ID.</param>
+            <returns>Persistent instance of null.</returns>
+        </member>
+        <member name="M:Touch.Persistence.IPersistence.Delete``1(``0)">
+            <summary>
+            Remove a persistent instance from the datastore.
+            </summary>
+            <param name="obj">Object to delete.</param>
+        </member>
+        <member name="M:Touch.Persistence.IPersistence.Save``1(``0)">
+            <summary>
+            Persist the given transient instance, first assigning an unique identifier.
+            </summary>
+            <param name="obj">Objet instance.</param>
+            <returns>Persisted instance.</returns>
+        </member>
+        <member name="M:Touch.Persistence.IPersistence.Update``1(``0)">
+            <summary>
+            Update the persistent instance with the identifier of the given transient instance.
+            </summary>
+            <param name="obj">Transient instance.</param>
+        </member>
+        <member name="M:Touch.Persistence.IPersistence.Proxy``1(System.Object)">
+            <summary>
+            Create a proxy object with the provided ID.
+            </summary>
+            <param name="id">Object ID.</param>
+        </member>
+        <member name="M:Touch.Persistence.IPersistence.Query``1">
+            <summary>
+            Get queryable repository interface.
+            </summary>
+            <typeparam name="T">Entity type.</typeparam>
+            <returns>Queryable interface.</returns>
+        </member>
+        <member name="M:Touch.Persistence.IPersistence.BeginTransaction">
+            <summary>
+            Begin a transaction.
+            </summary>
+        </member>
+        <member name="T:Touch.Persistence.IPersistenceProvider">
+            <summary>
+            <c>IPersistence</c> provider.
+            </summary>
+        </member>
+        <member name="M:Touch.Persistence.IPersistenceProvider.GetSession">
+            <summary>
+            Get persistence session.
+            </summary>
+            <returns>Persistence session.</returns>
+        </member>
+        <member name="T:Touch.Persistence.IRepositoryProvider">
+            <summary>
+            Repository provider.
+            </summary>
+        </member>
+        <member name="M:Touch.Persistence.IRepositoryProvider.GetRepository``1">
+            <summary>
+            Get repository instance.
+            </summary>
+            <typeparam name="T">Repository entities type.</typeparam>
+            <returns></returns>
+            <exception cref="T:System.Collections.Generic.KeyNotFoundException">Repository for a given entity type not found.</exception>
+        </member>
+        <member name="M:Touch.Persistence.IRepositoryProvider.GetBusinessRepository``1">
+            <summary>
+            Get business repository instance.
+            </summary>
+            <typeparam name="T">Repository business entities type.</typeparam>
+            <returns></returns>
+            <exception cref="T:System.Collections.Generic.KeyNotFoundException">Repository for a given business entity type not found.</exception>
+        </member>
+        <member name="M:Touch.Persistence.IRepositoryProvider.BeginTransaction">
+            <summary>
+            Begin a transaction.
+            </summary>
+        </member>
+        <member name="T:Touch.Queue.IMessageQueue`1">
+            <summary>
+            A queue of messages.
+            </summary>
+            <typeparam name="T">Message body type.</typeparam>
+        </member>
+        <member name="M:Touch.Queue.IMessageQueue`1.Enqueue(`0)">
+            <summary>
+            Add message to the queue.
+            </summary>
+            <param name="message">Message to add.</param>
+        </member>
+        <member name="M:Touch.Queue.IMessageQueue`1.Dequeue(System.UInt32,System.TimeSpan)">
+            <summary>
+            Get messages from the queue.
+            </summary>
+            <param name="take">Maximum number of messages to take.</param>
+            <param name="visibilityTimeout">Message visibility timeout.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Touch.Queue.IMessageQueue`1.DeleteMessage(Touch.Queue.IQueueItem{`0})">
+            <summary>
+            Remove message from the queue.
+            </summary>
+            <param name="message">Message to remove from the queue.</param>
+        </member>
+        <member name="T:Touch.Queue.IQueueItem`1">
+            <summary>
+            An IMessageQueue message.
+            </summary>
+        </member>
+        <member name="P:Touch.Queue.IQueueItem`1.Id">
+            <summary>
+            Message ID.
+            </summary>
+        </member>
+        <member name="P:Touch.Queue.IQueueItem`1.Receipt">
+            <summary>
+            Receipt.
+            </summary>
+        </member>
+        <member name="P:Touch.Queue.IQueueItem`1.Body">
+            <summary>
+            Message body.
+            </summary>
+        </member>
+        <member name="P:Touch.Queue.IQueueItem`1.ExpirationTime">
+            <summary>
+            Expiration date.
+            </summary>
+        </member>
+        <member name="T:Touch.Queue.IQueueWatcher`1">
+            <summary>
+            Represents a class that can watch and retrieve new elements from an INotificationQueue.
+            </summary>
+            <typeparam name="T">Notification type.</typeparam>
+        </member>
+        <member name="M:Touch.Queue.IQueueWatcher`1.StartWatching(Touch.Queue.IMessageQueue{`0},Touch.Queue.HandleNewQueueItem{`0})">
+            <summary>
+            Start watching the queue for new notifications.
+            </summary>
+            <param name="queue">Queue to watch.</param>
+            <param name="handler">New notification handler.</param>
+        </member>
+        <member name="M:Touch.Queue.IQueueWatcher`1.StopWatching">
+            <summary>
+            Stop watching the queue for new notifications.
+            </summary>
+        </member>
+        <member name="P:Touch.Queue.IQueueWatcher`1.IsWatching">
+            <summary>
+            The watcher is active and is trying to get new notifications from the queue.
+            </summary>
+        </member>
+        <member name="T:Touch.Queue.HandleNewQueueItem`1">
+            <summary>
+            Delegate for recieving new notifications from the queue.
+            </summary>
+            <typeparam name="T">Notification type.</typeparam>
+            <param name="message">Notification instance.</param>
+        </member>
+        <member name="T:Touch.Queue.QueueSettings">
+            <summary>
+            IMessageQueue settings.
+            </summary>
+        </member>
+        <member name="F:Touch.Queue.QueueSettings.QueueName">
+            <summary>
+            Queue name.
+            </summary>
+        </member>
+        <member name="M:Touch.Queue.QueueUtil.GetRequestsQueueName(System.Guid)">
+            <summary>
+            Get requests queue name.
+            </summary>
+            <param name="location">Location token.</param>
+        </member>
+        <member name="T:Touch.Serialization.IEncoder">
+            <summary>
+            Symmetrical encoder.
+            </summary>
+        </member>
+        <member name="M:Touch.Serialization.IEncoder.Encode(System.Byte[])">
+            <summary>
+            Encode data.
+            </summary>
+        </member>
+        <member name="M:Touch.Serialization.IEncoder.Decode(System.Byte[])">
+            <summary>
+            Dencode data.
+            </summary>
+        </member>
+        <member name="T:Touch.Serialization.IEncrypter">
+            <summary>
+            Data encrypter.
+            </summary>
+        </member>
+        <member name="M:Touch.Serialization.IEncrypter.Crypt(System.Byte[])">
+            <summary>
+            Encrypt data.
+            </summary>
+        </member>
+        <member name="M:Touch.Serialization.IEncrypter.Crypt(System.Byte[],System.Byte[])">
+            <summary>
+            Encrypt data with salt.
+            </summary>
+        </member>
+        <member name="T:Touch.Serialization.IHashGenerator">
+            <summary>
+            Data hash generator.
+            </summary>
+        </member>
+        <member name="M:Touch.Serialization.IHashGenerator.Generate(System.Byte[])">
+            <summary>
+            Generate hash for data.
+            </summary>
+        </member>
+        <member name="T:Touch.Serialization.ISerializer">
+            <summary>
+            Object serializer.
+            </summary>
+        </member>
+        <member name="M:Touch.Serialization.ISerializer.Serialize``1(``0)">
+            <summary>
+            Serialize object.
+            </summary>
+        </member>
+        <member name="M:Touch.Serialization.ISerializer.Serialize``1(``0,System.IO.Stream)">
+            <summary>
+            Serialize object.
+            </summary>
+        </member>
+        <member name="M:Touch.Serialization.ISerializer.Deserialize``1(System.String)">
+            <summary>
+            Deserialize data.
+            </summary>
+        </member>
+        <member name="M:Touch.Serialization.ISerializer.Deserialize``1(System.IO.Stream)">
+            <summary>
+            Deserialize data.
+            </summary>
+        </member>
+        <member name="T:Touch.Serialization.MockEncoder">
+            <summary>
+            Mock encoder.
+            </summary>
+        </member>
+        <member name="T:Touch.ServiceModel.IUnitOfWork">
+            <summary>
+            Unit of work.
+            </summary>
+        </member>
+        <member name="M:Touch.ServiceModel.IUnitOfWork.Commit">
+            <summary>
+            Commit operation.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">Unit of work is finished.</exception>
+        </member>
+        <member name="T:Touch.Storage.IArchiver">
+            <summary>
+            File archiver.
+            </summary>
+        </member>
+        <member name="M:Touch.Storage.IArchiver.Extract(System.IO.Stream,System.String)">
+            <summary>
+            Extract an archive.
+            </summary>
+            <param name="archive">Archive stream.</param>
+            <param name="outputPath">Output path.</param>
+        </member>
+        <member name="M:Touch.Storage.IArchiver.Compress(System.String,System.IO.Stream)">
+            <summary>
+            Create an archive.
+            </summary>
+            <param name="directoryPath">Directory to archive.</param>
+            <param name="output">Output stream.</param>
+        </member>
+        <member name="T:Touch.Storage.IMediaEncoder">
+            <summary>
+            Media encoder.
+            </summary>
+        </member>
+        <member name="M:Touch.Storage.IMediaEncoder.Encode(System.String,System.String)">
+            <summary>
+            Encoded the provided storage file.
+            </summary>
+        </member>
+        <member name="T:Touch.Storage.IStorage">
+            <summary>
+            File storage.
+            </summary>
+        </member>
+        <member name="M:Touch.Storage.IStorage.HasFile(System.String)">
+            <summary>
+            Check if bucket contains the requested file.
+            </summary>
+            <param name="token">File token.</param>
+        </member>
+        <member name="M:Touch.Storage.IStorage.HasFile(System.String,Touch.Storage.Metadata@)">
+            <summary>
+            Check if bucket contains the requested file.
+            </summary>
+            <param name="token">File token.</param>
+            <param name="metadata">File metadata, if any.</param>
+        </member>
+        <member name="M:Touch.Storage.IStorage.PutFile(System.IO.Stream,System.String)">
+            <summary>
+            Put file into the storage.
+            </summary>
+            <param name="file">File stream.</param>
+            <param name="token">Unique file identifier.</param>
+        </member>
+        <member name="M:Touch.Storage.IStorage.PutFile(System.IO.Stream,System.String,Touch.Storage.Metadata)">
+            <summary>
+            Put file into the storage.
+            </summary>
+            <param name="file">File stream.</param>
+            <param name="token">Unique file identifier.</param>
+            <param name="metadata">File metadata.</param>
+        </member>
+        <member name="M:Touch.Storage.IStorage.GetFile(System.String)">
+            <summary>
+            Get file from the storage.
+            </summary>
+            <param name="token">Unique file identifier.</param>
+            <returns>File stream.</returns>
+        </member>
+        <member name="M:Touch.Storage.IStorage.GetFile(System.String,Touch.Storage.Metadata@)">
+            <summary>
+            Get file from the storage.
+            </summary>
+            <param name="token">Unique file identifier.</param>
+            <param name="metadata">File metadata.</param>
+            <returns>File stream.</returns>
+        </member>
+        <member name="M:Touch.Storage.IStorage.RemoveFile(System.String)">
+            <summary>
+            Remove file from the storage.
+            </summary>
+            <param name="token">Unique file identifier.</param>
+        </member>
+        <member name="M:Touch.Storage.IStorage.GetPublicUrl(System.String)">
+            <summary>
+            Get public file URL.
+            </summary>
+            <param name="token">File token.</param>
+            <returns>URL of the file.</returns>
+        </member>
+        <member name="P:Touch.Storage.IStorage.IsPublic">
+            <summary>
+            Storage is public and its contents can be accessed by an authorized users by a URL.
+            </summary>
+        </member>
+        <member name="T:Touch.Storage.ITemporaryDirectory">
+            <summary>
+            Temporary directory.
+            </summary>
+        </member>
+        <member name="P:Touch.Storage.ITemporaryDirectory.Path">
+            <summary>
+            Directory path.
+            </summary>
+        </member>
+        <member name="T:Touch.Storage.ITemporaryFile">
+            <summary>
+            Temporary file.
+            </summary>
+        </member>
+        <member name="P:Touch.Storage.ITemporaryFile.Stream">
+            <summary>
+            File stream.
+            </summary>
+        </member>
+        <member name="T:Touch.Storage.ITemporaryStorage">
+            <summary>
+            Temporary file storage.
+            </summary>
+        </member>
+        <member name="M:Touch.Storage.ITemporaryStorage.CreateFile">
+            <summary>
+            Create new temporary file.
+            </summary>
+            <returns>New temporary file.</returns>
+        </member>
+        <member name="M:Touch.Storage.ITemporaryStorage.CreateDirectory">
+            <summary>
+            Create new temporary directory.
+            </summary>
+            <returns>New temporary directory.</returns>
+        </member>
+        <member name="T:Touch.Storage.MediaEncoderJob">
+            <summary>
+            Media encoder job.
+            </summary>
+        </member>
+        <member name="T:Touch.Storage.Metadata">
+            <summary>
+            File metadata.
+            </summary>
+        </member>
+        <member name="F:Touch.Storage.Metadata.DefaultContentType">
+            <summary>
+            Default content type.
+            </summary>
+        </member>
+        <member name="P:Touch.Storage.Metadata.ContentType">
+            <summary>
+            Content type of the file.
+            </summary>
+        </member>
+        <member name="T:Touch.Storage.StorageSettings">
+            <summary>
+            IStorage container settings.
+            </summary>
+        </member>
+        <member name="F:Touch.Storage.StorageSettings.ContainerName">
+            <summary>
+            Container name.
+            </summary>
+        </member>
+        <member name="F:Touch.Storage.StorageSettings.FolderName">
+            <summary>
+            Blob folder name (optional).
+            </summary>
+        </member>
+        <member name="F:Touch.Storage.StorageSettings.IsPublic">
+            <summary>
+            Container has read access for anonymous users.
+            </summary>
+        </member>
+        <member name="F:Touch.Storage.StorageSettings.DomainName">
+            <summary>
+            Domain name, associated with the container.
+            </summary>
+        </member>
+        <member name="F:Touch.Storage.StorageSettings.UseReducedRedundancy">
+            <summary>
+            Blobs should be stored in reduced redundancy storage.
+            </summary>
+        </member>
+    </members>
+</doc>

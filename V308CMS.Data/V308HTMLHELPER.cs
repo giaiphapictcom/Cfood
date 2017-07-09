@@ -131,6 +131,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -215,6 +216,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -299,6 +301,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -384,6 +387,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -468,6 +472,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -552,6 +557,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -636,6 +642,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -688,6 +695,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -772,6 +780,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -856,6 +865,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -941,6 +951,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -993,6 +1004,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -1045,6 +1057,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -1129,6 +1142,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -1213,6 +1227,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -1298,6 +1313,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -1350,6 +1366,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -1434,6 +1451,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -1518,6 +1536,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -1572,6 +1591,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -1624,6 +1644,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -1763,6 +1784,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -1847,6 +1869,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -1940,6 +1963,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -2024,6 +2048,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -2045,6 +2070,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -2066,6 +2092,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -2087,6 +2114,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -2172,6 +2200,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -2256,6 +2285,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -2306,6 +2336,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -2362,6 +2393,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -2396,6 +2428,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -2430,6 +2463,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -2514,6 +2548,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -2598,6 +2633,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -2620,6 +2656,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -2664,6 +2701,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -2684,6 +2722,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -2762,6 +2801,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -2793,6 +2833,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -2838,6 +2879,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -2855,6 +2897,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return 0;
             }
         }
@@ -2890,6 +2933,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -2957,6 +3001,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -3008,6 +3053,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -3048,6 +3094,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -3101,6 +3148,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -3163,6 +3211,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -3225,6 +3274,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -3242,6 +3292,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -3259,6 +3310,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -3294,6 +3346,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "<dx></dx>";
             }
 
@@ -3346,6 +3399,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "<dx></dx>";
             }
 
@@ -3353,7 +3407,7 @@ namespace V308CMS.Data
         static public string TaoDanhTinPhoBien(News pNews)
         {
             StringBuilder Str2 = new StringBuilder();
-            int i = 1;
+            //int i = 1;
             try
             {
                 Str2.Append("<div class=\"item-wrap style2\">");
@@ -3375,6 +3429,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "<dx></dx>";
             }
 
@@ -3382,7 +3437,7 @@ namespace V308CMS.Data
         static public string TaoDanhSachTinCauDo(List<News> pList, string pName, int pType)
         {
             StringBuilder Str = new StringBuilder();
-            int i = 1;
+            //int i = 1;
             try
             {
                 Str.Append("<div class=\"module  bg_title4 teen-news3\">");
@@ -3418,6 +3473,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "<dx></dx>";
             }
 
@@ -3426,7 +3482,7 @@ namespace V308CMS.Data
         static public string TaoDanhSachTinBanner(List<Image> pList)
         {
             StringBuilder Str = new StringBuilder();
-            int i = 1;
+            //int i = 1;
             try
             {
                 foreach (Image it in pList)
@@ -3437,6 +3493,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "<dx></dx>";
             }
 
@@ -3459,13 +3516,14 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "<dx></dx>";
             }
         }
         static public string TaoDanhSachTinTrangChu2(NhomTin pNhomTin)
         {
             StringBuilder Str = new StringBuilder();
-            int i = 0;
+            //int i = 0;
             try
             {
                 if (pNhomTin != null)
@@ -3517,13 +3575,14 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "<dx></dx>";
             }
         }
         static public string TaoDanhSachTinTrangChu3(NhomTin pNhomTin)
         {
             StringBuilder Str = new StringBuilder();
-            int i = 0;
+            //int i = 0;
             try
             {
                 if (pNhomTin != null)
@@ -3575,13 +3634,14 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "<dx></dx>";
             }
         }
         static public string TaoDanhSachTinTheoNhom(List<News> pList)
         {
             StringBuilder Str = new StringBuilder();
-            int i = 1;
+            //int i = 1;
             try
             {
                 foreach (News it in pList)
@@ -3661,6 +3721,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "<dx></dx>";
             }
 
@@ -3668,7 +3729,7 @@ namespace V308CMS.Data
         static public string TaoDanhSachTinTheoNhomListDEMO(List<Product> pList)
         {
             StringBuilder Str = new StringBuilder();
-            int i = 1;
+            //int i = 1;
             try
             {
                 foreach (Product it in pList)
@@ -3691,6 +3752,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "<dx></dx>";
             }
 
@@ -3698,7 +3760,7 @@ namespace V308CMS.Data
         static public string TaoDanhSachNhomTinLienQuan(List<News> pList, int pId)
         {
             StringBuilder Str = new StringBuilder();
-            int i = 1;
+            //int i = 1;
             try
             {
                 foreach (News it in pList)
@@ -3715,6 +3777,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "<dx></dx>";
             }
 
@@ -3722,7 +3785,7 @@ namespace V308CMS.Data
         static public string TaoDanhSachNhomTinGocTrai(List<News> pList, int pId)
         {
             StringBuilder Str = new StringBuilder();
-            int i = 0;
+            //int i = 0;
             try
             {
                 if (pList[0] != null)
@@ -3772,6 +3835,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "<dx></dx>";
             }
 
@@ -3801,6 +3865,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "<dx></dx>";
             }
 
@@ -3852,6 +3917,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -3895,6 +3961,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -3938,6 +4005,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }
@@ -3981,6 +4049,7 @@ namespace V308CMS.Data
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "";
             }
         }

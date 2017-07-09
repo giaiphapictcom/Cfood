@@ -414,8 +414,6 @@ namespace V308CMS.Sale.Controllers
         [AffiliateAuthorize]
         public ActionResult CouponFormPost(CouponModel coupon)
         {
-            //System.Web.HttpPostedFileBase upload = Request["Image"];
-      
             coupon.Image = coupon.File != null ?
                    coupon.File.Upload() :
                    coupon.Image;

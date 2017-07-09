@@ -44,9 +44,9 @@ namespace V308CMS.Data
             List<Categorys> mList = null;
             try
             {
-                var items = from comment in entities.Categorys
-                            where comment.status == 1
-                            select comment;
+                var items = from c in entities.Categorys
+                            where c.status == true
+                            select c;
                 mList = items.Take(limit).ToList();
                 return mList;
             }

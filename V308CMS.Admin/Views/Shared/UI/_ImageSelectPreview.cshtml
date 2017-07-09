@@ -4,7 +4,7 @@
 {
     <input type="hidden" name="@Model.ImageUrlHiddenName" value="@Model.ImageUrl" />    
     <div class="form-group">
-        <img class="image-brand img-circle img-responsive" src="@Model.ImageUrl.ToImageUrl()" alt="Ảnh đại diện" />
+        <img class="image-brand img-circle img-responsive" src="@V308CMS.Common.ImageHelper.ToUrl(Model.ImageUrl)" alt="Ảnh đại diện" />
     </div>    
 }
 @if (Model.AutoGenerateLabel)

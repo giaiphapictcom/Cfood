@@ -54,10 +54,29 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\DocumentFormat.OpenXml.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework">
-      <HintPath>..\V308CMS\Bin\EntityFramework.dll</HintPath>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0-beta1\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0-beta1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MySql.Data, Version=6.9.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
+    <Reference Include="MySql.Data.Entity, Version=6.9.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
+    <Reference Include="MySql.Data.Entity.EF6, Version=6.8.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.ConnectorNET.Entity.6.8.3.2\lib\net45\MySql.Data.Entity.EF6.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="ServiceStack.Text, Version=3.9.59.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\ServiceStack.Text.dll</HintPath>
@@ -65,7 +84,6 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -167,6 +185,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Attributes\SkipCheckPermissionAttribute.cs" />
     <Compile Include="Controllers\AdminAccountController.cs" />
+    <Compile Include="Controllers\AffiliateCategoryController.cs" />
     <Compile Include="Controllers\AsyncController.cs" />
     <Compile Include="Controllers\BannerController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -235,6 +254,7 @@
     <Compile Include="Helpers\Url\ImageUrlHelper.cs" />
     <Compile Include="Helpers\Url\MarketUrlHelper.cs" />
     <Compile Include="Helpers\Url\MenuConfigUrlHelper.cs" />
+    <Compile Include="Helpers\Url\AffiliateCategoryUrlHelper.cs" />
     <Compile Include="Helpers\Url\NewsCategoryUrlHelper.cs" />
     <Compile Include="Helpers\Url\NewsUrlHelper.cs" />
     <Compile Include="Helpers\Url\PermissionUrlHelper.cs" />
@@ -259,10 +279,12 @@
     <Compile Include="Helpers\Url\UrlContentHelper.cs" />
     <Compile Include="Helpers\Url\UserUrlHelper.cs" />
     <Compile Include="Attributes\CheckPermissionAttribute.cs" />
+    <Compile Include="Helpers\Url\VoucherUrlHelper.cs" />
     <Compile Include="Helpers\View\BaseViewPage.cs" />
     <Compile Include="Middlewares\CheckPermissionMiddleware.cs" />
     <Compile Include="Attributes\CheckGroupPermissionAttribute.cs" />
     <Compile Include="Models\AdminChangePassworModels.cs" />
+    <Compile Include="Models\AffiliateCategoryModels.cs" />
     <Compile Include="Models\BannerModels.cs" />
     <Compile Include="Models\CountBoxType.cs" />
     <Compile Include="Models\CountItems.cs" />
@@ -1623,7 +1645,9 @@
     <Content Include="Content\vendor\toastr\toastr.min.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -1823,6 +1847,7 @@
     <Content Include="Content\vendor\bootstrap-editable\LICENSE-GPL" />
     <Content Include="Content\vendor\bootstrap-editable\LICENSE-MIT" />
     <Content Include="Content\vendor\bootstrap-editable\README.md" />
+    <Content Include="packages.config" />
     <None Include="Properties\PublishProfiles\ToaiHVV308Cms.pubxml" />
     <None Include="Properties\PublishProfiles\V308Cms.pubxml" />
     <Content Include="Views\Shared\_LayoutV2.cshtml" />
@@ -1955,6 +1980,11 @@
     <Content Include="Views\Testimonial\Create.cshtml" />
     <Content Include="Views\Testimonial\Edit.cshtml" />
     <Content Include="Views\Testimonial\Index.cshtml" />
+    <Content Include="Views\AffiliateCategory\_CategoryForm.cshtml" />
+    <Content Include="Views\AffiliateCategory\Create.cshtml" />
+    <Content Include="Views\AffiliateCategory\Edit.cshtml" />
+    <Content Include="Views\AffiliateCategory\Index.cshtml" />
+    <Content Include="Views\Voucher\_VoucherForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

@@ -9,6 +9,7 @@ namespace V308CMS.Admin.Controllers
     [CheckGroupPermission(false)]
     public abstract class BaseController : Controller
     {
+        public int ListViewLimit = 10;
         //protected virtual new CustomPrincipal User;
         protected virtual new CustomPrincipal User => HttpContext.User as CustomPrincipal;
 
@@ -51,6 +52,8 @@ namespace V308CMS.Admin.Controllers
             OrderService = new ProductOrderRespository();
 
             TestimonialService = new TestimonialRepository();
+            AffiliateCategoryRepo = new AffiliateCategoryRespository();
+            VoucherRepo = new CouponRepository();
 
         }
         public ProductOrderRespository OrderService { get; set; }
@@ -103,7 +106,10 @@ namespace V308CMS.Admin.Controllers
         public TestimonialRepository TestimonialService { get; set; }
 
 
-        public NewsRepository NewsService { get; set; }     
+        public NewsRepository NewsService { get; set; }
+
+        public AffiliateCategoryRespository AffiliateCategoryRepo { get; set; }
+        public CouponRepository VoucherRepo { get; set; }
 
         protected AccountRepository AccountService { get; set; }
 

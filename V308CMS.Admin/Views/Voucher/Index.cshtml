@@ -1,6 +1,77 @@
-﻿@{
-    ViewBag.Title = "Index";
+﻿@using V308CMS.Admin.Helpers.Url
+@using V308CMS.Admin.Models.UI
+@using V308CMS.Data
+@model List<Counpon>
+@{
+    ViewBag.Title = "Quản lý Mã Voucher";
     Layout = "~/Views/Shared/_LayoutV2.cshtml";
 }
 
-<h2>Index</h2>
+@Html.Partial("UI/_AddNewButton", Url.VoucherCreateUrl())
+@if (Model.Any())
+{
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                <thead>
+                    <tr>
+                        <th>Ảnh</th>
+                        <th>Tiêu đề</th>
+                        <th style="text-align: center">Kiểu</th>
+                        <th style="text-align: center">Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var voucher in Model)
+                    {
+                        string VoucherType = "";
+                        if (voucher.type == "order")
+                        {
+                            VoucherType = "Đơn Hàng";
+                        }
+                        else if (voucher.type == "product") {
+                            VoucherType = "Sản phẩm";
+                        }
+
+                        <tr>
+                            <td><img class="image-brand" src="@V308CMS.Common.ImageHelper.ToUrl(voucher.image)" alt="@voucher.title" /></td>
+                            <td>
+                                <a class="btn btn-link" href="@Url.VoucherEditUrl(new { voucher.ID })">
+                                    @voucher.title
+                                </a>
+                            </td>
+
+                            <td style="text-align: center">@VoucherType</td>
+                            <td style='width: 200px;text-align: center'>
+                                @Html.Partial("UI/_EditButton", new ButtonModels
+                           {
+                               Id = string.Format("category_{0}", voucher.ID),
+                               Href = Url.VoucherEditUrl(new { voucher.ID }),
+                               Title = "Cập nhật thông tin Voucher " + voucher.title
+                           })
+                                @Html.Partial("UI/_DeleteForm", new DeleteFormModels
+                           {
+                               NameOfId = "Id",
+                               ValueOfId = voucher.ID,
+                               IsConfirm = true,
+                               Url = Url.VoucherDeleteUrl()
+                           })
+                            </td>
+                        </tr>
+
+
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#dataTables-example').DataTable({
+            responsive: true
+        });
+    });
+</script>

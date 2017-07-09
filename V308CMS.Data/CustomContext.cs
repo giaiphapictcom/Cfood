@@ -418,6 +418,11 @@ namespace V308CMS.Data
             set;
         }
 
+        //public DbSet<Categorys> AffiliateCategory
+        //{
+        //    get;
+        //    set;
+        //}
 
 
         #endregion

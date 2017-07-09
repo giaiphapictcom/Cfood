@@ -1,14 +1,14 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
 using System.Data.Entity.SqlServer;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using V308CMS.Common;
 using V308CMS.Data;
 using V308CMS.Data.Enum;
+
 
 namespace V308CMS.Data
 {
@@ -416,7 +416,7 @@ namespace V308CMS.Data
         {
             using (var entities = new V308CMSEntities())
             {
-                List<Product> mList = null;
+                //List<Product> mList = null;
                 int[] mIdGroup;
                 if (pType == 0)
                 {

@@ -656,7 +656,8 @@ namespace V308CMS.Data
                 }
                 listNews = listNews.Where(n => categorys.Any(c => c.ID == n.TypeID));
 
-                return listNews.OrderByDescending(news => news.Date.Value).ToList();
+                //return listNews.OrderByDescending(news => news.Date.Value).ToList();
+                return listNews.ToList();
             }
         }
 

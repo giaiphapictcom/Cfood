@@ -1,0 +1,868 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Dts.Contracts</name>
+    </assembly>
+    <members>
+        <member name="T:Touch.Messaging.MenuCategory">
+            <summary>
+            Menu.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuCategory.Token">
+            <summary>
+            Token.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuCategory.Title">
+            <summary>
+            Title.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuCategory.Image">
+            <summary>
+            Image token.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuCategory.ParentCategory">
+            <summary>
+            Parent menu category token (optional).
+            </summary>
+        </member>
+        <member name="T:Touch.Messaging.MenuCategoryForm">
+            <summary>
+            Menu category form.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuCategoryForm.Token">
+            <summary>
+            Token.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuCategoryForm.MenuSet">
+            <summary>
+            Parent menu set token (optional).
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuCategoryForm.ParentCategory">
+            <summary>
+            Parent menu category token (optional).
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuCategoryForm.Title">
+            <summary>
+            Title.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuCategoryForm.Image">
+            <summary>
+            Current image token.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuCategoryForm.ImageNew">
+            <summary>
+            New image token.
+            </summary>
+        </member>
+        <member name="T:Touch.Messaging.MenuItem">
+            <summary>
+            Menu.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuItem.Token">
+            <summary>
+            Token.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuItem.Type">
+            <summary>
+            Type.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuItem.Title">
+            <summary>
+            Title.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuItem.Image">
+            <summary>
+            Image token.
+            </summary>
+        </member>
+        <member name="T:Touch.Messaging.MenuItemForm">
+            <summary>
+            Menu item form.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuItemForm.Token">
+            <summary>
+            Token.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuItemForm.MenuSet">
+            <summary>
+            Parent menu set token (optional).
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuItemForm.Type">
+            <summary>
+            Type.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuItemForm.Title">
+            <summary>
+            Title.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuItemForm.Description">
+            <summary>
+            Description.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuItemForm.Price">
+            <summary>
+            Price.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuItemForm.Url">
+            <summary>
+            URL.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuItemForm.Image">
+            <summary>
+            Current image token.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuItemForm.ImageNew">
+            <summary>
+            New image token.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuItemForm.Media">
+            <summary>
+            Current content token.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuItemForm.MediaNew">
+            <summary>
+            New content token.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuItemForm.MediaWidth">
+            <summary>
+            Content width.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuItemForm.MediaHeight">
+            <summary>
+            Content height.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuItemForm.Photo">
+            <summary>
+            Current photo token.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuItemForm.ModifierCategories">
+            <summary>
+            Assigned modifier categories.
+            </summary>
+        </member>
+        <member name="T:Touch.Messaging.MenuModifier">
+            <summary>
+            Modifier category.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuModifier.Token">
+            <summary>
+            Token.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuModifier.Name">
+            <summary>
+            Name.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuModifier.Price">
+            <summary>
+            Price.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuModifier.Image">
+            <summary>
+            Image token.
+            </summary>
+        </member>
+        <member name="T:Touch.Messaging.MenuModifierCategory">
+            <summary>
+            Modifier category.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuModifierCategory.Token">
+            <summary>
+            Token.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuModifierCategory.Location">
+            <summary>
+            Location.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuModifierCategory.Name">
+            <summary>
+            Name.
+            </summary>
+        </member>
+        <member name="T:Touch.Messaging.MenuModifierCategoryForm">
+            <summary>
+            Menu modifier category form.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuModifierCategoryForm.Name">
+            <summary>
+            Name.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuModifierCategoryForm.Title">
+            <summary>
+            Title.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuModifierCategoryForm.SelectionMode">
+            <summary>
+            Selection mode.
+            </summary>
+        </member>
+        <member name="T:Touch.Messaging.MenuModifierForm">
+            <summary>
+            Menu modifier form.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuModifierForm.Category">
+            <summary>
+            Parent category token (optional).
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuModifierForm.Title">
+            <summary>
+            Title.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuModifierForm.Price">
+            <summary>
+            Title.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuModifierForm.Image">
+            <summary>
+            Current image token.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuModifierForm.ImageNew">
+            <summary>
+            New image token.
+            </summary>
+        </member>
+        <member name="T:Touch.Messaging.MenuPromo">
+            <summary>
+            Promo.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuPromo.Token">
+            <summary>
+            Token.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuPromo.Type">
+            <summary>
+            Type.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuPromo.Media">
+            <summary>
+            Media.
+            </summary>
+        </member>
+        <member name="T:Touch.Messaging.MenuPromoForm">
+            <summary>
+            Menu promo form.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuPromoForm.Title">
+            <summary>
+            Title.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuPromoForm.Image">
+            <summary>
+            Current image token.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuPromoForm.ImageNew">
+            <summary>
+            New image token.
+            </summary>
+        </member>
+        <member name="T:Touch.Messaging.MenuSet">
+            <summary>
+            Menu set.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuSet.Token">
+            <summary>
+            Token.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuSet.Subscription">
+            <summary>
+            Origin menu subscription token.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuSet.Title">
+            <summary>
+            Title.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuSet.Image">
+            <summary>
+            Image token.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuSet.Promos">
+            <summary>
+            Promos.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuSet.IsDeactivated">
+            <summary>
+            Menu is deactivated.
+            </summary>
+        </member>
+        <member name="T:Touch.Messaging.MenuSetForm">
+            <summary>
+            Menu set form.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuSetForm.Token">
+            <summary>
+            Token.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuSetForm.Location">
+            <summary>
+            Location token.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuSetForm.Subscription">
+            <summary>
+            Origin menu subscription token.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuSetForm.Title">
+            <summary>
+            Title.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuSetForm.IsDeactivated">
+            <summary>
+            Menu is deactivated.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuSetForm.Image">
+            <summary>
+            Current image token.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuSetForm.ImageNew">
+            <summary>
+            New image token.
+            </summary>
+        </member>
+        <member name="T:Touch.Messaging.MenuSubscription">
+            <summary>
+            Menu subscription.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuSubscription.Token">
+            <summary>
+            Token.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuSubscription.Title">
+            <summary>
+            Title.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.MenuSubscription.Image">
+            <summary>
+            Image.
+            </summary>
+        </member>
+        <member name="T:Touch.Service.IClient">
+            <summary>
+            Service client.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapAdvertisementData.Top">
+            <summary>
+            Top ads.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapAdvertisementData.Bottom">
+            <summary>
+            Bottom ads.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapAdvertisement.Src">
+            <summary>
+            Image source.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapAdvertisement.Href">
+            <summary>
+            Target.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapBackgroundData.Main">
+            <summary>
+            Main backgrounds.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapBackgroundData.Screensaver">
+            <summary>
+            Main backgrounds.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapBackgroundData.Pages">
+            <summary>
+            Page backgrounds.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapBackground.Src">
+            <summary>
+            Image source.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapPageBackground.Background">
+            <summary>
+            Background.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapPageBackground.Destination">
+            <summary>
+            Destination.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapSurveyData.Surveys">
+            <summary>
+            Surveys.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapCategory.MenuId">
+            <summary>
+            Menu ID.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapCategory.Title">
+            <summary>
+            Menu title.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapCategory.Categories">
+            <summary>
+            Category items.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapCategory.Items">
+            <summary>
+            Category items.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapDigestData.LastModified">
+            <summary>
+            Last modification date of the digest.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapDigestData.Location">
+            <summary>
+            Location.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapDigestData.Home">
+            <summary>
+            Home.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapDigestData.Advertisements">
+            <summary>
+            Advertisements.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapDigestData.Backgrounds">
+            <summary>
+            Backgrounds.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapDigestData.Elements">
+            <summary>
+            Elements.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapDigestData.MenuSets">
+            <summary>
+            Menu sets.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapDigestData.MenuCategories">
+            <summary>
+            Menu categories.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapDigestData.MenuItems">
+            <summary>
+            Menu items.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapDigestData.Surveys">
+            <summary>
+            Survey.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapDigestData.Media">
+            <summary>
+            Media.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapDigestItem.Token">
+            <summary>
+            Token.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapDigestItem.LastModified">
+            <summary>
+            Last modified.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapDigestMediaItem.Token">
+            <summary>
+            Token.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapDigestMediaItem.Kind">
+            <summary>
+            Kind.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapDigestMediaItem.MimeType">
+            <summary>
+            MIME type.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapDestination.Token">
+            <summary>
+            Token.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapDestination.Url">
+            <summary>
+            URL.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapDestination.Type">
+            <summary>
+            Type.
+            </summary>
+        </member>
+        <member name="T:Touch.Messaging.SnapDestinationType">
+            <summary>
+            Destination type.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapElementData.Elements">
+            <summary>
+            Elements.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapElement.Type">
+            <summary>
+            Type.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapElement.Src">
+            <summary>
+            Image source.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapMenuData.Menus">
+            <summary>
+            Menus.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapMenuInfo.Title">
+            <summary>
+            Menu title.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapMenuInfo.Image">
+            <summary>
+            Main image URL.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapMenuInfo.Promos">
+            <summary>
+            Promos.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapItem.CategoryId">
+            <summary>
+            Category ID.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapItem.Type">
+            <summary>
+            Item type.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapItem.Title">
+            <summary>
+            Title text.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapItem.Description">
+            <summary>
+            Description text.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapItem.Image">
+            <summary>
+            Main image URL.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapItem.Order">
+            <summary>
+            Order (optional).
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapItem.Website">
+            <summary>
+            Website (optional).
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapItem.Media">
+            <summary>
+            Media (optional).
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapItem.Modifiers">
+            <summary>
+            Modifiers.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapItemMedia.Media">
+            <summary>
+            Media.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapItemMedia.Type">
+            <summary>
+            Media type.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapItemMedia.Width">
+            <summary>
+            Media width.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapItemMedia.Height">
+            <summary>
+            Media height.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapItemWebsite.Url">
+            <summary>
+            URL.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapMedia.MimeType">
+            <summary>
+            MIME type.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapMenu.Title">
+            <summary>
+            Menu title.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapMenu.Categories">
+            <summary>
+            Categories.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapModifier.Title">
+            <summary>
+            Title.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapModifier.Image">
+            <summary>
+            Image URL.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapModifier.Price">
+            <summary>
+            Price.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapModifierCategory.Title">
+            <summary>
+            Title.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapModifierCategory.Selection">
+            <summary>
+            Selection mode.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapModifierCategory.Items">
+            <summary>
+            Items.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapOrder.Price">
+            <summary>
+            Price.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapTile.Destination">
+            <summary>
+            Destination.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapTile.Title">
+            <summary>
+            Title text.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.SnapTile.Image">
+            <summary>
+            Image URL.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.WaiterRequest.Seat">
+            <summary>
+            Table name.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.WaiterRequest.Kind">
+            <summary>
+            Kind.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.WaiterRequest.Status">
+            <summary>
+            Status.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.WaiterRequest.DateCreated">
+            <summary>
+            Date created.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.WaiterRequest.DateExpires">
+            <summary>
+            Date expires.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.WaiterRequest.Description">
+            <summary>
+            Description.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.WaiterRequest.PrinterToken">
+            <summary>
+            Printer token.
+            </summary>
+        </member>
+        <member name="T:Touch.Messaging.WaiterRequestDetails">
+            <summary>
+            Request details.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.WaiterRequestDetails.Entities">
+            <summary>
+            Entites.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.WaiterRequestDetails.Options">
+            <summary>
+            Options.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.WaiterRequestDetails.Seat">
+            <summary>
+            Table name.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.WaiterRequestDetails.Kind">
+            <summary>
+            Kind.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.WaiterRequestDetails.Status">
+            <summary>
+            Status.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.WaiterRequestDetails.DateCreated">
+            <summary>
+            Date created.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.WaiterRequestDetails.DateArchived">
+            <summary>
+            Date archived.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.WaiterRequestDetails.AcceptedBy">
+            <summary>
+            Request accepted by user.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.WaiterRequestDetails.Estimate">
+            <summary>
+            Estimate.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.WaiterRequestDetails.Description">
+            <summary>
+            Description.
+            </summary>
+        </member>
+        <member name="T:Touch.Messaging.WaiterRequestEntry">
+            <summary>
+            Request details entity.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.WaiterRequestEntry.Name">
+            <summary>
+            Name.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.WaiterRequestEntry.Quantity">
+            <summary>
+            Quantity.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.WaiterRequestEntry.Modifiers">
+            <summary>
+            Modifiers.
+            </summary>
+        </member>
+        <member name="P:Touch.Messaging.WaiterRequestEntry.Note">
+            <summary>
+            User's message.
+            </summary>
+        </member>
+    </members>
+</doc>

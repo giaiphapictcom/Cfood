@@ -378,6 +378,15 @@
                         }
 
                         <ul class="nav nav-second-level collapse">
+                            @if (IsHasPermission(listRolePermission, "Voucher", 0))
+                            {
+                                <li>
+                                    <a title="Mã giảm giá" href="@Url.VoucherIndexUrl()">
+                                        Mã giảm giá
+                                    </a>
+                                </li>
+                            }
+
                             @if (IsHasPermission(listRolePermission, "Product", 0))
                             {
                                 <li>
@@ -694,6 +703,15 @@
                                 <li>
                                     <a title="Quản lý bình luận chuyên gia" href="@Url.TestimonialIndexUrl()">
                                         Bình Luận
+                                    </a>
+                                </li>
+                            }
+
+                            @if (IsHasPermission(listRolePermission, "AffiliateCategory", 0))
+                            {
+                                <li>
+                                    <a title="Danh mục sản phẩm" href="@Url.CategoryIndexUrl()">
+                                        Danh Mục Sản Phẩm
                                     </a>
                                 </li>
                             }

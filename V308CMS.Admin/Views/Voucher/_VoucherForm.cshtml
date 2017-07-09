@@ -1,0 +1,70 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@using V308CMS.Admin.Models.UI
+@model V308CMS.Admin.Models.VoucherModels
+
+@Html.AntiForgeryToken()
+@Html.HiddenFor(v => v.Id)
+
+<div class="row">
+    @Html.ValidationSummary(true)
+    <div class="col-lg-6">
+        @Html.Partial("UI/_ImageSelectPreview", new ImageSelectPreviewModels
+           {
+               Id = Model.Id,
+               Name = "ImgNew",
+               ImageUrl = Model.Image,
+               ImageUrlHiddenName = "Image"
+           })
+        <div class="form-group">
+            @Html.LabelFor(c => c.ProductCode)
+            @Html.TextBoxFor(c => c.ProductCode, new { @class = "form-control", placeholder = "Nhập mã sản phẩm" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(c => c.Title)
+            @Html.TextBoxFor(c => c.Title, new { @class = "form-control", placeholder = "Nhập tên Voucher" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(c => c.Code)
+            @Html.TextBoxFor(c => c.Code, new { @class = "form-control", placeholder = "Nhập Nội dung mô tả" })
+            @Html.ValidationMessageFor(c => c.Summary)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(v => v.Summary)
+            @Html.TextAreaFor(c => c.Summary, new { rows = "3", @class = "form-control", placeholder = "Nhập mô tả ngắn" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(v => v.Content)
+            @Html.TextAreaFor(c => c.Content, new { rows = "3", @class = "form-control", placeholder = "Nhập Nội dung mô tả" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(v => v.StartDate)
+            @Html.TextBoxFor(v => v.StartDate, new { @class = "date form-control", placeholder = "Ngày bắt đầu" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(v => v.EndDate)
+            @Html.TextBoxFor(v => v.EndDate, new { @class = "date form-control", placeholder = "Ngày kết thúc" })
+        </div>
+        <div class="form-group">
+            <div class="checkbox">
+                @Html.CheckBoxFor(v=>v.Status, new { @checked = (Model.Status ? "checked" : "")})
+                @Html.LabelFor(v => v.Status)
+            </div>
+        </div>
+
+        @Html.Partial("UI/_FormAction")
+        <a href="@Url.VoucherIndexUrl()" title="Danh sách Danh mục" class="btn btn-link">Danh sách</a>
+
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('.date').each(function (index) {
+            var dateval = new Date($(this).val());
+            if (dateval == "Invalid Date" || dateval < new Date(2001, 1, 1)) {
+                $(this).val("");
+            }
+            $(this).datetimepicker({ format: 'MM/DD/YYYY' });
+        });
+    });
+</script>
