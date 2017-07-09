@@ -172,12 +172,16 @@ namespace V308CMS.Controllers
             RegionService = new RegionRespository();
             ShippingService = new ShippingAddressRespository();
             OrderTransactionService = new OrderTransactionRespository();
+<<<<<<< HEAD
             _MenuConfigRepos = new MenuConfigRespository();
             _bannerService = new BannerRespository();
+=======
+            ProductBrandService = new ProductBrandRespository();
+>>>>>>> 527fed4d0fbb418d29ef5fd10747593d42f8edf7
             LoadSiteConfig();
 
         }
-
+        public ProductBrandRespository ProductBrandService;
         public OrderTransactionRespository OrderTransactionService;
         public ShippingAddressRespository ShippingService { get; }
         public RegionRespository RegionService { get; }

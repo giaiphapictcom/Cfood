@@ -620,8 +620,7 @@ namespace V308CMS.Data
         public bool? Hot { get { if (_Hot == null) return false; else return _Hot; } set { if (_Hot != value) { _Hot = value; } } }
         public bool? Fast { get { if (_Fast == null) return false; else return _Fast; } set { if (_Fast != value) { _Fast = value; } } }
         public  string Site { get; set; }
-        [ForeignKey("TypeID")]
-        [Required]
+        [ForeignKey("TypeID")]        
         public virtual NewsGroups NewsGroup { get; set; }
         #endregion
 

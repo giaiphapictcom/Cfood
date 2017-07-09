@@ -141,7 +141,7 @@ namespace V308CMS.Sale.Controllers
             try
             {
                 CreateRepos();
-                var newsItem = NewsRepos.GetById(id, 0);
+                var newsItem = NewsRepos.GetById(id);
                 if (newsItem == null)
                 {
                     return HttpNotFound("Tin này không tồn tại trên hệ thống");
@@ -246,7 +246,7 @@ namespace V308CMS.Sale.Controllers
                 CreateRepos();
                 NewsDetailPageContainer Model = new NewsDetailPageContainer();
      
-                Model.NewsItem = NewsRepos.GetById(id, 0);
+                Model.NewsItem = NewsRepos.GetById(id);
                
                 Model.PageTitle = Model.NewsItem.Title;
                 return View("News", Model);
@@ -301,7 +301,7 @@ namespace V308CMS.Sale.Controllers
             
             try {
                 CreateRepos();
-                var newsItem = NewsRepos.GetById(id, 0);
+                var newsItem = NewsRepos.GetById(id);
                 if (newsItem == null)
                 {
                     return HttpNotFound("Tin này không tồn tại trên hệ thống");

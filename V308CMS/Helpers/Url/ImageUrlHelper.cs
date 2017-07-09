@@ -4,6 +4,11 @@ namespace V308CMS.Helpers.Url
 {
     public static class ImageUrlHelper
     {
+
+        public static string ToOriginalUrl(this string path)
+        {
+            return $"{ConfigHelper.ResourceDomain}{path}";
+        }
         public static string ToUrl(this string path, int width =0, int height =0)
         {
             string imageUploadSource = System.Configuration.ConfigurationManager.AppSettings["ResourceDomain"] ?? String.Empty;

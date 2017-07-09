@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using V308CMS.Data;
 
 namespace V308CMS.Respository
@@ -19,8 +22,21 @@ namespace V308CMS.Respository
         {
            
         }
-
-
+        public List<Brand> GetRandom(int categoryId = 0, int limit = 1)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                var items = from b in entities.Brand
+                            where b.status.Equals(1)
+                            select b;
+                if (categoryId > 0)
+                {
+                    items = items.Where(b => b.category_default == categoryId);
+                }
+                return items.ToList().OrderBy(x => Guid.NewGuid()).Take(limit).ToList();
+            }
+        }
+      
         public Brand Find(int id)
         {
             using (var entities = new V308CMSEntities())

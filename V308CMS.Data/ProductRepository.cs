@@ -214,6 +214,16 @@ namespace V308CMS.Data
                                select p).FirstOrDefaultAsync());
             }
         }
+        public Product Find(int pId)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+
+                return (from p in entities.Product
+                        where p.ID == pId
+                        select p).FirstOrDefault();
+            }
+        }
 
         public Product LayTheoId(int pId)
         {
@@ -1129,19 +1139,20 @@ namespace V308CMS.Data
 
         }
 
-        public List<Brand> getRandomBrands(int CategoryID = 0, int Limit = 1)
+
+
+        public List<Brand> getRandomBrands(int categoryId = 0, int limit = 1)
         {
             using (var entities = new V308CMSEntities())
-            {
-                List<Brand> brands = new List<Brand>();
+            {              
                 var items = from b in entities.Brand
                             where b.status.Equals(1)
                             select b;
-                if (CategoryID > 0)
+                if (categoryId > 0)
                 {
-                    items = items.Where(b => b.category_default == CategoryID);
+                    items = items.Where(b => b.category_default == categoryId);
                 }
-                return items.ToList().OrderBy(x => Guid.NewGuid()).Take(Limit).ToList();
+                return items.ToList().OrderBy(x => Guid.NewGuid()).Take(limit).ToList();
             }
         }
 

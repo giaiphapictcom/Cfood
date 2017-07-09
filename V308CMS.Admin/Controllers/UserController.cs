@@ -112,7 +112,10 @@ namespace V308CMS.Admin.Controllers
                 Gender = user.Gender,
                 //BirthDay = user.BirthDay?.ToString("dd/MM/yyyy") ?? "",
                 BirthDay = string.Format("dd/MM/yyyy", user.BirthDay),
+
                 Status = user.Status,
+                //Status = user.Status ?? false,
+
                 AvatarUrl = user.Avatar,
                 Site = user.Site
             };

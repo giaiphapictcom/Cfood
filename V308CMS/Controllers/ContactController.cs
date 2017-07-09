@@ -14,6 +14,7 @@ namespace V308CMS.Controllers
        
         public ActionResult Index()
         {
+<<<<<<< HEAD
             
             var model = new ContactModels();
             try {
@@ -32,12 +33,25 @@ namespace V308CMS.Controllers
             }
 
 
+=======
+            var model = new ContactModels();
+            if (AuthenticationHelper.IsAuthenticated)
+            {
+                var userInfo = AccountService.GetByUserId(User.UserId);
+                if (userInfo != null)
+                {
+                    model.Email = userInfo.Email;
+                    model.Phone = userInfo.Phone;
+                    model.Name = userInfo.FullName;
+                }
+            }
+>>>>>>> 527fed4d0fbb418d29ef5fd10747593d42f8edf7
             return View("Contact", model);
         }
         [HttpPost]
         [ActionName("Index")]
         [ValidateAntiForgeryToken]
-        public ActionResult HandleIndex(ContactModels contact)
+        public ActionResult OnIndex(ContactModels contact)
         {
             if(ModelState.IsValid)
             {

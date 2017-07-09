@@ -4,9 +4,15 @@ namespace V308CMS.Common
 {
     public static class DateTimeHelper
     {
+        public static string ToDdMmHhmm(this DateTime? dateTime)
+        {
+            return dateTime?.ToString("dd/MM hh:mm") ?? "";
+
+
+        }
         public static string ToDdmmyyyyHhm(this DateTime? dateTime)
         {
-            return dateTime.HasValue ? dateTime.Value.ToString("dd/MM/yyyy hh:mm") : "";
+            return dateTime?.ToString("dd/MM/yyyy hh:mm") ?? "";
 
 
         }
