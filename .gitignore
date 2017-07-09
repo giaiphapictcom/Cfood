@@ -1899,3 +1899,13 @@ V308CMS.Static/image-cache/
 V308CMS.Sale/Content/thumb/
 V308CMS/Content/Images/avatar/
 V308CMS/Content/Images/Upload/
+V308CMS.Data/bin/x86/Microsoft.VC90.CRT/README_ENU.txt
+V308CMS.Data/bin/x86/Microsoft.VC90.CRT/Microsoft.VC90.CRT.manifest
+V308CMS.Data/bin/amd64/Microsoft.VC90.CRT/README_ENU.txt
+V308CMS.Data/bin/amd64/Microsoft.VC90.CRT/Microsoft.VC90.CRT.manifest
+V308CMS.Data/bin/V308CMS.Data.dll.config
+V308CMS.Data/_bin_deployableAssemblies/x86/Microsoft.VC90.CRT/README_ENU.txt
+V308CMS.Data/_bin_deployableAssemblies/x86/Microsoft.VC90.CRT/Microsoft.VC90.CRT.manifest
+V308CMS.Data/_bin_deployableAssemblies/amd64/Microsoft.VC90.CRT/README_ENU.txt
+V308CMS.Data/_bin_deployableAssemblies/amd64/Microsoft.VC90.CRT/Microsoft.VC90.CRT.manifest
+V308CMS.Respository/bin/V308CMS.Respository.dll.config
