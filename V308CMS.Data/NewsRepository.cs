@@ -35,7 +35,7 @@ namespace V308CMS.Data
             }
         }
 
-        public void IncrementView(int id)
+        public  void IncrementView(int id)
         {
             using (var entities = new V308CMSEntities())
             {
@@ -53,7 +53,7 @@ namespace V308CMS.Data
                         newsItem.Views = 1;
                     }
 
-                    entities.SaveChanges();
+                   entities.SaveChanges();
                 }
 
             }

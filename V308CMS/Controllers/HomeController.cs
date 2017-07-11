@@ -136,6 +136,7 @@ namespace V308CMS.Controllers
             //    return View("MobileCategory", model);
 
         }
+        [ProductUpdateView]
         public async Task<ActionResult> Detail(int pId = 0)
         {
             return View("Detail", await  ProductsService.FindAsync(pId,true));           

@@ -45,7 +45,7 @@ namespace V308CMS.Controllers
             newsIndexViewModel.ListNewsMostView = NewsService.GetListNewsMostView(type, level);
             return View("News.Index", newsIndexViewModel);            
         }
-        [UpdateView]
+        [NewsUpdateView]
         public ActionResult Detail(int id)
         {
             var newsItem = NewsService.GetById(id);

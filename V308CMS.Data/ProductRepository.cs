@@ -1489,6 +1489,7 @@ namespace V308CMS.Data
 
         }
 
+
         public class ProductItems
         {
 
@@ -1496,6 +1497,33 @@ namespace V308CMS.Data
             public int total { get; set; }
             public int page { get; set; }
 
+        }
+
+        public void IncrementView(int id)
+        {
+
+            using (var entities = new V308CMSEntities())
+            {
+                var productView = (from product in entities.Product
+                                    where product.ID == id
+                                   select product
+                ).FirstOrDefault();
+                if (productView != null)
+                {
+
+                    if (productView.View.HasValue)
+                    {
+                        productView.View = 1;
+                    }
+                    else
+                    {
+                        productView.View += 1;
+                    }
+                    entities.SaveChanges();
+                 
+                }
+            
+            }
         }
     }
 }
