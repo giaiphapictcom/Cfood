@@ -1,12 +1,12 @@
 ﻿@using V308CMS.Helpers
 @using V308CMS.Helpers.Url
-@using ModelState = System.Web.ModelBinding.ModelState
 @model V308CMS.Models.LoginModels
 @{
     Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
 }
 @section header {
     <title>@ViewBag.SiteName - Đăng nhập</title>
+ 
 }
 @section Breadcrumb{
     <div class="clearfix breadcrumb-wrap">
@@ -38,15 +38,13 @@
         <header class="page-header">
             <h1>Đăng nhập</h1>
         </header>
-
         <span class="field-validation-error">@Html.Raw(ViewBag.Error)</span>
-        <label for="email"><span>Email</span><em>*</em></label>
+        <label for="@Model.Email"><span>Email</span><em>*</em></label>
         @Html.TextBoxFor(m => m.Email)
         @Html.ValidationMessageFor(m => m.Email)
-
-        <label for="password"><span>Mật khẩu</span><em>*</em></label>
+        <label for="@Model.Password"><span>Mật khẩu</span><em>*</em></label>
         @Html.PasswordFor(m => m.Password)
-        @Html.ValidationMessageFor(m => m.Password)
+        @Html.ValidationMessageFor(m => m.Password)       
         <div class="action-btn">
             <p>
                 <input type="submit" class="btn" value="Đăng nhập">
@@ -54,7 +52,7 @@
             <p>
                 <label style="font-weight: bold;">Hoặc</label>
                 <div class="form-group last">
-                    <a href="@Url.SocialLoginFacebookUrl()" class="btn btn-block btn-social btn-facebook user-name-loginfb" title="Đăng nhập bằng Facebook" style="width: 380px">
+                    <a href="@Url.SocialLoginFacebookUrl()" class="btn btn-block btn-social btn-facebook user-name-loginfb" title="Đăng nhập bằng Facebook" style="width: 380px" target="_blank">
                         <i class="fa fa-facebook"></i>
                         <span>Đăng nhập bằng Facebook</span>
                     </a>
@@ -63,9 +61,7 @@
                         <span>Đăng nhập bằng Google</span>                        
                     </a>
                 </div>
-
             </p>
-
             <p>
                 Chưa có tài khoản? Nhấn vào <a href="@Url.AccounRegisterUrl()" title="Đăng ký tài khoản">đây</a> để đăng ký tài khoản
             </p>

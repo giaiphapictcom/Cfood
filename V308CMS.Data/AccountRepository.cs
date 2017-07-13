@@ -147,7 +147,8 @@ namespace V308CMS.Data
                     Salt = salt,
                     Token = token,
                     TokenExpireDate = tokenExpireDate,
-                    Status = false
+                    Status = true,
+                    Date = DateTime.Now
                 };
                 entities.Account.Add(mAccount);
                 entities.SaveChanges();

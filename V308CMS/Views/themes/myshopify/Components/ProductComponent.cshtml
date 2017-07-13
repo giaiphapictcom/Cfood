@@ -1,0 +1,92 @@
+﻿@using V308CMS.Helpers
+@using V308CMS.Helpers.Url
+@model V308CMS.Data.Product
+
+<div class="col-md-4 col-sm-4 col-xs-6">
+
+    <div class="grid-item product-item" id="product-@Model.ID">
+        <div class="item-poduct">
+            <div class="product-image ">
+                @if (Model.SaleOff > 0)
+                {
+                    <div class="product-label">
+                        <label class="label">Giám giá</label>
+                    </div>
+                }               
+                <a href="@Url.ProductDetailUrl(Model)" class="grid-image">
+                    <img class="feature-images" src="@Model.Image.ToUrl(250, 263)" alt="@Model.Name">
+
+                    <span class="product-hover" data-idproduct="@Model.ID">
+                        <img class="img-responsive" alt="@Model.Name" src="@Model.Image.ToUrl(250, 263)">
+
+                    </span>
+                </a>
+
+                <div class="quickview-button">
+                    <a href="javascript:void(0)" data-id="@Model.ID" data-toggle="tooltip" data-placement="top" title="@ViewBag.ProductViewText" class="sca-qv-button btn" data-original-title="@ViewBag.ProductViewText">@ViewBag.ProductViewText</a>
+                </div>
+
+            </div>
+            <div class="product-content">
+                <h3>
+                    <a class="product-title" href="@Url.ProductDetailUrl(Model)" title="@Model.Name">
+                        @Model.Name
+                    </a>
+                </h3>
+                <div class="price-box">
+                    @if (Model.SaleOff == 0)
+                    {
+                        <p class="regular-product">
+                            <span><span class="money">@Model.ToProductPrice()</span></span>
+                        </p>
+                    }
+                    else
+                    {
+                        <p class="sale">
+                            <span class="special-price"><span class="money">@Model.ToProductPrice()</span></span>
+                            <span class="old-price"><span class="money">@Model.ToProductSaleOffPrice()</span></span>
+                        </p>
+                    }
+                </div>
+
+                <div class="reviews-container">
+                    <span class="spr-badge" id="spr_badge_@(Model.ID)" data-rating="0.0">
+                        <span class="spr-starrating spr-badge-starrating">
+                            <i class="spr-icon spr-icon-star-empty" style=""></i>
+                            <i class="spr-icon spr-icon-star-empty" style=""></i>
+                            <i class="spr-icon spr-icon-star-empty" style=""></i>
+                            <i class="spr-icon spr-icon-star-empty" style=""></i>
+                            <i class="spr-icon spr-icon-star-empty" style=""></i>
+                        </span>
+                        <span class="spr-badge-caption">No reviews</span>
+                    </span>
+
+                </div>
+
+                <p class="short-description">
+                    @Model.Summary
+                </p>
+                <div class="add-to-link">
+                    <div class="add-to-cart">
+                       @if (Model.Quantity > 0)
+                       {
+                            <a href="javascript:void(0);" class="btn add-to-cart-btn" add-cart="@Model.ID" title="Thêm vào giỏ hàng">
+                                Thêm vào giỏ hàng
+                            </a>
+
+                       }
+                       else
+                       {
+                            <span style="color: #f00; font-weight: bold">Sản phẩm tạm hết hàng</span>
+                       }
+
+                    </div>
+                    <a data-id="@Model.ID" class="wishlist btn" href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="Yêu thích">
+                        <span><i class="fa fa-heart" aria-hidden="true"></i></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

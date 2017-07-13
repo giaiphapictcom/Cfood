@@ -20,11 +20,7 @@ namespace V308CMS.Common
                     value = value.Trim();
                 return value;
             }
-            catch (Exception)
-            {
-
-                return string.Empty;
-            }
+            catch (Exception){return string.Empty;}
 
         }
     }

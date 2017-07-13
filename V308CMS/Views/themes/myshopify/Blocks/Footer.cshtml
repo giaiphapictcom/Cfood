@@ -121,7 +121,7 @@
             <div class="ajax-error-title">Lỗi</div>
             <div class="ajax-error-message"></div>
         </div>
-    </div>
+   </div>
 
     <div class="ajax-success-cbox cbox">
         <div class="content">
@@ -139,9 +139,9 @@
             <a href="javascript:void(0)" class="close-cbox"><span class="icon_close"></span></a>
         </div>
     </div>
+    
     <div class="product-quickview"></div>
-    <!-- Begin quick-view-template -->
-    <div class="clearfix" id="quickview-popup" style="display:none">
+    <div class="clearfix" id="quickview-popup" style="display: none">
         <div class="overlay"></div>
         <div class="product-content clearfix">
             <div class="product-img col-xs-6">
@@ -150,10 +150,10 @@
                     <ul class="product-photo-thumbs  quickview-more-views-owlslider " data-cycle-carousel-vertical=true></ul>
                 </div>
             </div>
-
             <div class="product-shop col-xs-6">
                 <div class="product-item">
-                    <h2 class="product-title"><a>&nbsp;</a></h2>
+                    <h2 class="product-title"><a>&nbsp;</a>
+                    </h2>
                     <span class="shopify-product-reviews-badge" data-id=""></span>
 
                     <div class="prices">
@@ -174,7 +174,7 @@
 
                     <div class="product-details clearfix">
                         <form action="@Url.AddToCartUrl()" method="post" class="variants" name="quickview-form">
-                            <input name="id" value="0" type="hidden"/>                           
+                            <input name="id" value="0" type="hidden"/>
                             <label>Số lượng :</label>
                             <input type="text" name="quantity" value="1" class="quantity">
                             <div class="actions">
@@ -189,5 +189,7 @@
             <a href="javascript:void(0)" class="close-popup"><i class="fa fa-times"></i></a>
         </div>
     </div>
-    <!-- End of quick-view-template -->
+
+
+
 </div>

@@ -10,7 +10,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   </PropertyGroup>
   <ItemGroup>
     <File Include="App_Start/AuthConfig.cs">
-      <publishTime>06/26/2017 22:26:39</publishTime>
+      <publishTime>07/01/2017 00:15:05</publishTime>
     </File>
     <File Include="App_Start/FilterConfig.cs">
       <publishTime>06/07/2017 14:08:52</publishTime>
@@ -19,7 +19,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/26/2017 22:16:43</publishTime>
     </File>
     <File Include="App_Start/SiteConfig.cs">
-      <publishTime>06/26/2017 10:43:00</publishTime>
+      <publishTime>07/01/2017 00:15:33</publishTime>
     </File>
     <File Include="App_Start/ThemesViewActionFilter.cs">
       <publishTime>06/26/2017 22:16:10</publishTime>
@@ -31,7 +31,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/21/2017 00:46:45</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
-      <publishTime>06/07/2017 14:06:11</publishTime>
+      <publishTime>06/21/2017 00:46:47</publishTime>
+    </File>
+    <File Include="bin/EntityFramework.SqlServer.dll">
+      <publishTime>06/21/2017 00:46:46</publishTime>
+    </File>
+    <File Include="bin/EntityFramework.SqlServer.xml">
+      <publishTime>06/21/2017 00:46:46</publishTime>
+    </File>
+    <File Include="bin/EntityFramework.xml">
+      <publishTime>06/21/2017 00:46:47</publishTime>
     </File>
     <File Include="bin/Facebook.dll">
       <publishTime>04/13/2015 15:48:00</publishTime>
@@ -104,6 +113,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="bin/MySql.Data.Entity.dll">
       <publishTime>11/07/2014 21:35:20</publishTime>
+    </File>
+    <File Include="bin/MySql.Data.Entity.EF6.dll">
+      <publishTime>06/17/2016 18:29:12</publishTime>
     </File>
     <File Include="bin/MySql.Web.dll">
       <publishTime>11/07/2014 21:35:50</publishTime>
@@ -178,31 +190,37 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/07/2013 13:09:18</publishTime>
     </File>
     <File Include="bin/V308CMS.Common.dll">
-      <publishTime>06/30/2017 21:28:51</publishTime>
+      <publishTime>07/05/2017 00:46:16</publishTime>
     </File>
     <File Include="bin/V308CMS.Common.pdb">
-      <publishTime>06/30/2017 21:28:51</publishTime>
+      <publishTime>07/05/2017 00:46:16</publishTime>
     </File>
     <File Include="bin/V308CMS.Data.dll">
-      <publishTime>06/30/2017 23:17:33</publishTime>
+      <publishTime>07/05/2017 00:46:18</publishTime>
     </File>
     <File Include="bin/V308CMS.Data.pdb">
-      <publishTime>06/30/2017 23:17:33</publishTime>
+      <publishTime>07/05/2017 00:46:18</publishTime>
+    </File>
+    <File Include="bin/V308CMS.Dependencies.dll">
+      <publishTime>07/03/2017 10:48:20</publishTime>
+    </File>
+    <File Include="bin/V308CMS.Dependencies.pdb">
+      <publishTime>07/03/2017 10:48:20</publishTime>
     </File>
     <File Include="bin/V308CMS.dll">
-      <publishTime>06/30/2017 23:34:02</publishTime>
+      <publishTime>07/05/2017 01:58:51</publishTime>
     </File>
     <File Include="bin/V308CMS.dll.config">
       <publishTime>06/21/2017 00:46:45</publishTime>
     </File>
     <File Include="bin/V308CMS.pdb">
-      <publishTime>06/30/2017 23:34:02</publishTime>
+      <publishTime>07/05/2017 01:58:51</publishTime>
     </File>
     <File Include="bin/V308CMS.Respository.dll">
-      <publishTime>06/30/2017 23:20:51</publishTime>
+      <publishTime>07/05/2017 00:46:18</publishTime>
     </File>
     <File Include="bin/V308CMS.Respository.pdb">
-      <publishTime>06/30/2017 23:20:51</publishTime>
+      <publishTime>07/05/2017 00:46:18</publishTime>
     </File>
     <File Include="bin/WebMatrix.Data.dll">
       <publishTime>07/10/2012 12:03:34</publishTime>
@@ -3570,6 +3588,60 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Content/Images/cart-empty.png">
       <publishTime>06/27/2017 11:52:51</publishTime>
     </File>
+    <File Include="Content/Images/category/camera.jpg">
+      <publishTime>06/30/2017 23:52:14</publishTime>
+    </File>
+    <File Include="Content/Images/category/dienmayvacongnghe.jpg">
+      <publishTime>06/30/2017 23:52:14</publishTime>
+    </File>
+    <File Include="Content/Images/category/dienthoai.jpg">
+      <publishTime>06/30/2017 23:52:14</publishTime>
+    </File>
+    <File Include="Content/Images/category/do-lam-bep.jpg">
+      <publishTime>06/30/2017 23:52:14</publishTime>
+    </File>
+    <File Include="Content/Images/category/donghovaphukien.jpg">
+      <publishTime>06/30/2017 23:52:14</publishTime>
+    </File>
+    <File Include="Content/Images/category/giaydepvatuixach.jpg">
+      <publishTime>06/30/2017 23:52:14</publishTime>
+    </File>
+    <File Include="Content/Images/category/laptop.jpg">
+      <publishTime>06/30/2017 23:52:14</publishTime>
+    </File>
+    <File Include="Content/Images/category/may-say-toc.jpg">
+      <publishTime>06/30/2017 23:52:14</publishTime>
+    </File>
+    <File Include="Content/Images/category/mebevadochoi.jpg">
+      <publishTime>06/30/2017 23:52:14</publishTime>
+    </File>
+    <File Include="Content/Images/category/mobile.jpg">
+      <publishTime>06/30/2017 23:52:14</publishTime>
+    </File>
+    <File Include="Content/Images/category/nhacuavadoisong.jpg">
+      <publishTime>06/30/2017 23:52:14</publishTime>
+    </File>
+    <File Include="Content/Images/category/otoxemay.jpg">
+      <publishTime>06/30/2017 23:52:14</publishTime>
+    </File>
+    <File Include="Content/Images/category/suckhoevasacdep.jpg">
+      <publishTime>06/30/2017 23:52:14</publishTime>
+    </File>
+    <File Include="Content/Images/category/tablet.jpg">
+      <publishTime>06/30/2017 23:52:14</publishTime>
+    </File>
+    <File Include="Content/Images/category/thoitrangnam.jpg">
+      <publishTime>06/30/2017 23:52:14</publishTime>
+    </File>
+    <File Include="Content/Images/category/thoitrangnu.jpg">
+      <publishTime>06/30/2017 23:52:14</publishTime>
+    </File>
+    <File Include="Content/Images/category/toy.jpg">
+      <publishTime>06/30/2017 23:52:14</publishTime>
+    </File>
+    <File Include="Content/Images/category/watch.png">
+      <publishTime>06/30/2017 23:52:14</publishTime>
+    </File>
     <File Include="Content/Images/cateicon.png">
       <publishTime>06/07/2017 14:06:18</publishTime>
     </File>
@@ -4401,8 +4473,83 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Content/Plugins/font-awesome-4.7/scss/_variables.scss">
       <publishTime>06/07/2017 14:08:53</publishTime>
     </File>
+    <File Include="Content/Plugins/jquery.fancybox/fancybox-x.png">
+      <publishTime>07/04/2017 17:27:32</publishTime>
+    </File>
+    <File Include="Content/Plugins/jquery.fancybox/fancybox-y.png">
+      <publishTime>07/04/2017 17:37:02</publishTime>
+    </File>
+    <File Include="Content/Plugins/jquery.fancybox/fancybox.png">
+      <publishTime>07/04/2017 17:27:32</publishTime>
+    </File>
+    <File Include="Content/Plugins/jquery.fancybox/fancybox_loading%402x.gif">
+      <publishTime>07/04/2017 17:37:02</publishTime>
+    </File>
+    <File Include="Content/Plugins/jquery.fancybox/fancybox_loading.gif">
+      <publishTime>07/04/2017 17:37:02</publishTime>
+    </File>
+    <File Include="Content/Plugins/jquery.fancybox/fancybox_overlay.png">
+      <publishTime>07/04/2017 17:37:02</publishTime>
+    </File>
+    <File Include="Content/Plugins/jquery.fancybox/fancybox_sprite%402x.png">
+      <publishTime>07/04/2017 17:37:02</publishTime>
+    </File>
+    <File Include="Content/Plugins/jquery.fancybox/fancybox_sprite.png">
+      <publishTime>07/04/2017 17:37:02</publishTime>
+    </File>
+    <File Include="Content/Plugins/jquery.fancybox/fancy_close.png">
+      <publishTime>07/04/2017 17:27:32</publishTime>
+    </File>
+    <File Include="Content/Plugins/jquery.fancybox/fancy_loading.png">
+      <publishTime>07/04/2017 17:27:32</publishTime>
+    </File>
+    <File Include="Content/Plugins/jquery.fancybox/fancy_nav_left.png">
+      <publishTime>07/04/2017 17:27:32</publishTime>
+    </File>
+    <File Include="Content/Plugins/jquery.fancybox/fancy_nav_right.png">
+      <publishTime>07/04/2017 17:27:32</publishTime>
+    </File>
+    <File Include="Content/Plugins/jquery.fancybox/fancy_shadow_e.png">
+      <publishTime>07/04/2017 17:27:32</publishTime>
+    </File>
+    <File Include="Content/Plugins/jquery.fancybox/fancy_shadow_n.png">
+      <publishTime>07/04/2017 17:27:32</publishTime>
+    </File>
+    <File Include="Content/Plugins/jquery.fancybox/fancy_shadow_ne.png">
+      <publishTime>07/04/2017 17:27:32</publishTime>
+    </File>
+    <File Include="Content/Plugins/jquery.fancybox/fancy_shadow_nw.png">
+      <publishTime>07/04/2017 17:27:31</publishTime>
+    </File>
+    <File Include="Content/Plugins/jquery.fancybox/fancy_shadow_s.png">
+      <publishTime>07/04/2017 17:27:31</publishTime>
+    </File>
+    <File Include="Content/Plugins/jquery.fancybox/fancy_shadow_se.png">
+      <publishTime>07/04/2017 17:27:32</publishTime>
+    </File>
+    <File Include="Content/Plugins/jquery.fancybox/fancy_shadow_sw.png">
+      <publishTime>07/04/2017 17:27:32</publishTime>
+    </File>
+    <File Include="Content/Plugins/jquery.fancybox/fancy_shadow_w.png">
+      <publishTime>07/04/2017 17:27:31</publishTime>
+    </File>
+    <File Include="Content/Plugins/jquery.fancybox/fancy_title_left.png">
+      <publishTime>07/04/2017 17:27:32</publishTime>
+    </File>
+    <File Include="Content/Plugins/jquery.fancybox/fancy_title_main.png">
+      <publishTime>07/04/2017 17:27:32</publishTime>
+    </File>
+    <File Include="Content/Plugins/jquery.fancybox/fancy_title_over.png">
+      <publishTime>07/04/2017 17:27:32</publishTime>
+    </File>
+    <File Include="Content/Plugins/jquery.fancybox/fancy_title_right.png">
+      <publishTime>07/04/2017 17:27:32</publishTime>
+    </File>
     <File Include="Content/Plugins/jquery.fancybox/jquery.fancybox.css">
       <publishTime>06/07/2017 14:08:53</publishTime>
+    </File>
+    <File Include="Content/Plugins/jquery.fancybox/jquery.fancybox.pack.js">
+      <publishTime>07/04/2017 17:23:10</publishTime>
     </File>
     <File Include="Content/Plugins/jquery/js/jquery-1.1.1.min.js">
       <publishTime>06/07/2017 14:08:53</publishTime>
@@ -5125,7 +5272,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/07/2017 14:08:53</publishTime>
     </File>
     <File Include="Content/themes/myshopify/css/styles.css">
-      <publishTime>06/29/2017 10:38:08</publishTime>
+      <publishTime>07/05/2017 01:07:25</publishTime>
     </File>
     <File Include="Content/themes/myshopify/fonts/ElegantIcons.eot">
       <publishTime>06/07/2017 14:08:53</publishTime>
@@ -5323,31 +5470,31 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/07/2017 14:08:53</publishTime>
     </File>
     <File Include="Controllers/AsyncController.cs">
-      <publishTime>06/26/2017 22:19:28</publishTime>
+      <publishTime>07/04/2017 21:08:54</publishTime>
     </File>
     <File Include="Controllers/AuthCallbackController.cs">
       <publishTime>06/27/2017 10:20:36</publishTime>
     </File>
     <File Include="Controllers/BaseController.cs">
-      <publishTime>06/30/2017 17:14:50</publishTime>
+      <publishTime>07/04/2017 20:50:12</publishTime>
     </File>
     <File Include="Controllers/BlockController.cs">
-      <publishTime>06/21/2017 00:46:45</publishTime>
+      <publishTime>07/04/2017 16:17:17</publishTime>
     </File>
     <File Include="Controllers/CaptchaController.cs">
       <publishTime>06/07/2017 14:08:53</publishTime>
     </File>
     <File Include="Controllers/CartController.cs">
-      <publishTime>06/30/2017 21:49:46</publishTime>
+      <publishTime>07/04/2017 22:12:51</publishTime>
     </File>
     <File Include="Controllers/ContactController.cs">
-      <publishTime>06/28/2017 22:15:32</publishTime>
+      <publishTime>07/04/2017 20:50:05</publishTime>
     </File>
     <File Include="Controllers/ErrorController.cs">
       <publishTime>06/07/2017 14:08:53</publishTime>
     </File>
     <File Include="Controllers/HomeController.cs">
-      <publishTime>06/27/2017 06:45:46</publishTime>
+      <publishTime>07/04/2017 16:52:30</publishTime>
     </File>
     <File Include="Controllers/MemberAddressController.cs">
       <publishTime>06/27/2017 21:31:42</publishTime>
@@ -5359,10 +5506,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/28/2017 23:30:09</publishTime>
     </File>
     <File Include="Controllers/MyShopifyController.cs">
-      <publishTime>06/26/2017 22:22:01</publishTime>
+      <publishTime>07/04/2017 15:28:06</publishTime>
     </File>
     <File Include="Controllers/NewsController.cs">
-      <publishTime>06/07/2017 14:08:53</publishTime>
+      <publishTime>07/05/2017 00:27:44</publishTime>
     </File>
     <File Include="Controllers/PaymentController.cs">
       <publishTime>06/30/2017 16:46:20</publishTime>
@@ -5371,10 +5518,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/30/2017 21:49:46</publishTime>
     </File>
     <File Include="Controllers/SocialLoginController.cs">
-      <publishTime>06/30/2017 23:31:30</publishTime>
+      <publishTime>07/05/2017 01:58:23</publishTime>
     </File>
     <File Include="Controllers/VideoController.cs">
-      <publishTime>06/21/2017 00:46:45</publishTime>
+      <publishTime>07/05/2017 00:27:15</publishTime>
     </File>
     <File Include="Controllers/WidgetController.cs">
       <publishTime>06/26/2017 22:22:40</publishTime>
@@ -5412,6 +5559,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="db/siteconfig.sql">
       <publishTime>06/07/2017 14:08:53</publishTime>
     </File>
+    <File Include="Filters/UpdateViewFilter.cs">
+      <publishTime>07/05/2017 00:26:48</publishTime>
+    </File>
     <File Include="Global.asax">
       <publishTime>06/07/2017 14:06:18</publishTime>
     </File>
@@ -5422,10 +5572,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/28/2017 23:29:34</publishTime>
     </File>
     <File Include="Helpers/ConfigHelper.cs">
-      <publishTime>06/26/2017 22:24:08</publishTime>
+      <publishTime>07/04/2017 23:38:13</publishTime>
     </File>
     <File Include="Helpers/CustomPrincipal.cs">
       <publishTime>06/28/2017 22:12:51</publishTime>
+    </File>
+    <File Include="Helpers/MemberWishListUrlHelper.cs">
+      <publishTime>07/01/2017 00:47:13</publishTime>
     </File>
     <File Include="Helpers/MpStartViewEngine.cs">
       <publishTime>06/21/2017 00:46:45</publishTime>
@@ -5446,7 +5599,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/28/2017 16:30:58</publishTime>
     </File>
     <File Include="Helpers/Url/ImageUrlHelper.cs">
-      <publishTime>06/30/2017 21:49:23</publishTime>
+      <publishTime>07/04/2017 23:36:15</publishTime>
     </File>
     <File Include="Helpers/Url/MemberAddressUrlHelper.cs">
       <publishTime>06/30/2017 17:17:58</publishTime>
@@ -5527,7 +5680,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/07/2017 14:08:53</publishTime>
     </File>
     <File Include="packages.config">
-      <publishTime>06/30/2017 23:25:25</publishTime>
+      <publishTime>07/03/2017 09:21:24</publishTime>
     </File>
     <File Include="Properties/AssemblyInfo.cs">
       <publishTime>06/07/2017 14:06:18</publishTime>
@@ -5542,13 +5695,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/30/2017 21:28:44</publishTime>
     </File>
     <File Include="Properties/PublishProfiles/Mpstart30062017.pubxml.user">
-      <publishTime>06/30/2017 23:21:13</publishTime>
+      <publishTime>07/05/2017 00:52:15</publishTime>
     </File>
     <File Include="V308CMS.csproj">
-      <publishTime>06/30/2017 23:33:37</publishTime>
+      <publishTime>07/05/2017 00:27:53</publishTime>
     </File>
     <File Include="V308CMS.csproj.user">
-      <publishTime>06/30/2017 23:33:37</publishTime>
+      <publishTime>07/05/2017 00:27:53</publishTime>
     </File>
     <File Include="Views/Account/Login.cshtml">
       <publishTime>06/07/2017 14:06:18</publishTime>
@@ -5806,7 +5959,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/07/2017 14:08:53</publishTime>
     </File>
     <File Include="Views/themes/mamoo/Blocks/Footer.cshtml">
-      <publishTime>06/07/2017 14:08:53</publishTime>
+      <publishTime>07/03/2017 17:10:35</publishTime>
     </File>
     <File Include="Views/themes/mamoo/Blocks/Header.cshtml">
       <publishTime>06/07/2017 14:08:53</publishTime>
@@ -5941,10 +6094,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/07/2017 14:06:18</publishTime>
     </File>
     <File Include="Views/themes/myshopify/Async/_ListBrandAsync.cshtml">
-      <publishTime>06/30/2017 21:49:46</publishTime>
+      <publishTime>07/04/2017 23:38:09</publishTime>
     </File>
     <File Include="Views/themes/myshopify/Async/_ListProductByCategoryAsync.cshtml">
       <publishTime>06/30/2017 21:49:46</publishTime>
+    </File>
+    <File Include="Views/themes/myshopify/Async/_ListRelatived.cshtml">
+      <publishTime>07/04/2017 15:45:57</publishTime>
     </File>
     <File Include="Views/themes/myshopify/Banner/CategoryAdv.cshtml">
       <publishTime>06/07/2017 14:08:53</publishTime>
@@ -5968,10 +6124,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/07/2017 14:08:53</publishTime>
     </File>
     <File Include="Views/themes/myshopify/Blocks/Footer.cshtml">
-      <publishTime>06/27/2017 22:42:25</publishTime>
+      <publishTime>07/04/2017 22:07:46</publishTime>
     </File>
     <File Include="Views/themes/myshopify/Blocks/Header.cshtml">
-      <publishTime>06/30/2017 15:49:10</publishTime>
+      <publishTime>07/03/2017 16:46:49</publishTime>
     </File>
     <File Include="Views/themes/myshopify/Blocks/HomeFooter.cshtml">
       <publishTime>06/07/2017 14:08:53</publishTime>
@@ -5989,22 +6145,22 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/27/2017 06:18:51</publishTime>
     </File>
     <File Include="Views/themes/myshopify/Blocks/VideoItemBlock.cshtml">
-      <publishTime>06/21/2017 00:46:45</publishTime>
+      <publishTime>07/04/2017 21:48:21</publishTime>
     </File>
     <File Include="Views/themes/myshopify/Blocks/WapperPopup.cshtml">
       <publishTime>06/07/2017 14:08:53</publishTime>
     </File>
     <File Include="Views/themes/myshopify/Blocks/_BoxItem.cshtml">
-      <publishTime>06/27/2017 06:18:13</publishTime>
+      <publishTime>07/05/2017 01:07:39</publishTime>
     </File>
     <File Include="Views/themes/myshopify/Layout/Layout.cshtml">
-      <publishTime>06/27/2017 06:19:14</publishTime>
+      <publishTime>07/04/2017 23:10:46</publishTime>
     </File>
     <File Include="Views/themes/myshopify/Layout/Resources.cshtml">
-      <publishTime>06/29/2017 10:35:08</publishTime>
+      <publishTime>07/05/2017 01:09:55</publishTime>
     </File>
     <File Include="Views/themes/myshopify/Menu/CategoryMenu.cshtml">
-      <publishTime>06/07/2017 15:33:02</publishTime>
+      <publishTime>07/04/2017 09:12:03</publishTime>
     </File>
     <File Include="Views/themes/myshopify/Menu/CategoryMenuSource.cshtml">
       <publishTime>06/07/2017 14:08:53</publishTime>
@@ -6034,16 +6190,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/07/2017 14:08:53</publishTime>
     </File>
     <File Include="Views/themes/myshopify/Pages/contact.cshtml">
-      <publishTime>06/21/2017 00:46:45</publishTime>
+      <publishTime>07/04/2017 20:52:48</publishTime>
     </File>
     <File Include="Views/themes/myshopify/Pages/detail.cshtml">
-      <publishTime>06/27/2017 22:42:25</publishTime>
+      <publishTime>07/04/2017 17:24:00</publishTime>
     </File>
     <File Include="Views/themes/myshopify/Pages/Error.cshtml">
       <publishTime>06/07/2017 14:08:53</publishTime>
     </File>
     <File Include="Views/themes/myshopify/Pages/home.cshtml">
-      <publishTime>06/27/2017 06:19:35</publishTime>
+      <publishTime>07/03/2017 15:27:33</publishTime>
     </File>
     <File Include="Views/themes/myshopify/Pages/Member.Active.cshtml">
       <publishTime>06/27/2017 21:45:32</publishTime>
@@ -6073,7 +6229,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/27/2017 21:45:32</publishTime>
     </File>
     <File Include="Views/themes/myshopify/Pages/News.Detail.cshtml">
-      <publishTime>06/30/2017 20:16:04</publishTime>
+      <publishTime>07/05/2017 01:34:06</publishTime>
     </File>
     <File Include="Views/themes/myshopify/Pages/News.Index.cshtml">
       <publishTime>06/30/2017 20:16:04</publishTime>
@@ -6091,10 +6247,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/07/2017 14:08:53</publishTime>
     </File>
     <File Include="Views/themes/myshopify/Pages/Video.cshtml">
-      <publishTime>06/07/2017 14:08:53</publishTime>
+      <publishTime>07/04/2017 23:01:10</publishTime>
     </File>
     <File Include="Views/themes/myshopify/Pages/Video.Index.cshtml">
-      <publishTime>06/21/2017 00:46:45</publishTime>
+      <publishTime>07/04/2017 21:55:10</publishTime>
     </File>
     <File Include="Views/themes/myshopify/Pages/Wishlist.Index.cshtml">
       <publishTime>06/27/2017 22:42:25</publishTime>
@@ -6103,7 +6259,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/30/2017 21:49:46</publishTime>
     </File>
     <File Include="Views/themes/myshopify/Product/PageItems.cshtml">
-      <publishTime>06/27/2017 07:04:00</publishTime>
+      <publishTime>07/04/2017 15:14:58</publishTime>
     </File>
     <File Include="Views/themes/myshopify/Product/ProductBlockLeft.cshtml">
       <publishTime>06/30/2017 21:49:46</publishTime>
@@ -6118,13 +6274,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/07/2017 14:08:53</publishTime>
     </File>
     <File Include="Views/themes/myshopify/Product_div/Type1_4.cshtml">
-      <publishTime>06/30/2017 21:49:46</publishTime>
+      <publishTime>07/03/2017 15:22:46</publishTime>
     </File>
     <File Include="Views/themes/myshopify/Widget/AdvLeft.cshtml">
       <publishTime>06/07/2017 14:08:53</publishTime>
     </File>
     <File Include="Views/themes/myshopify/Widget/HotProductLeft.cshtml">
-      <publishTime>06/07/2017 14:08:53</publishTime>
+      <publishTime>07/03/2017 15:21:36</publishTime>
     </File>
     <File Include="Views/themes/myshopify/Widget/RecentArticles.cshtml">
       <publishTime>06/07/2017 14:08:53</publishTime>
@@ -6202,7 +6358,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/07/2017 14:06:18</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>06/30/2017 23:25:54</publishTime>
+      <publishTime>07/04/2017 21:32:39</publishTime>
     </File>
     <File Include="Web.Debug.config">
       <publishTime>06/07/2017 14:06:18</publishTime>

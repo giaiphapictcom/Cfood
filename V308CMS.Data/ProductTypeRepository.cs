@@ -180,6 +180,66 @@ namespace V308CMS.Data
 
         }
 
+        private static void GetCategoryParent(ref List<ProductType> result, List<ProductType> allCategory, int parentId)
+        {
+            var categoryParent = allCategory.FirstOrDefault(category => category.ID == parentId);
+            if (categoryParent!= null &&  categoryParent.Parent> 0)
+            {
+                result.Add(categoryParent);
+                GetCategoryParent(ref result, allCategory, categoryParent.Parent ?? 0);
+            }
+        }
+
+        public List<ProductType> GetListCategoryPath(int categoryId)
+        {
+            using (var entities = new V308CMSEntities())
+
+            {                                    
+                var result = new List<ProductType>();
+                GetCategoryParent(ref result, entities.ProductType
+                       .Where(category => category.Status == true)
+                       .OrderBy(category => category.Number)
+                       .ToList(), categoryId);
+                return result;
+            }
+
+        }
+
+       
+        public List<ProductType> GetAllByCategoryId(int categoryId)
+        {
+            using (var entities = new V308CMSEntities())
+
+            {               
+                var listProductType = entities.ProductType
+                        .Where(category => category.Status == true)
+                        .OrderBy(category => category.Number)
+                        .ToList();
+                var result = new List<ProductType>();
+                GetListByParent(ref result, listProductType, categoryId);
+                return result;
+            }
+        }
+
+        public void GetListByParent(ref  List<ProductType> result, List<ProductType> allCategory,
+            int categoryId = 0)
+        {
+            var listSub = allCategory
+                     .Select(category => category)
+                     .Where(cate => cate.Parent.HasValue && cate.Parent.Value == categoryId)
+                     .ToList();
+
+            foreach (var sub in listSub)
+            {
+                result.Add(sub);
+                if (sub.Parent == categoryId)
+                {
+                    GetListByParent(ref result, allCategory, sub.ID);
+                }
+            }
+
+        }
+
         public void GetListByParent(int level, ref List<ProductType> result, List<ProductType> allCategory, int categoryId = 0)
         {
             if (result == null)
@@ -202,6 +262,7 @@ namespace V308CMS.Data
                     result.Add(category);
                     if (category.Parent == categoryId)
                     {
+                        level += 1;
                         GetListByParent(level, ref result, allCategory
                             .Where(cate => cate.Parent.HasValue && cate.Parent.Value == categoryId)
                             .Select(cate => category)

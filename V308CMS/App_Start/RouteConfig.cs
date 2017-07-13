@@ -37,7 +37,7 @@ namespace V308CMS
 
 
 
-            routes.MapRoute("CategoryRoute", "{title}-t{pGroupId}.html", new { Controller = "Home", action = "Category" }, new { pGroupId = @"\d+" });
+            routes.MapRoute("CategoryRoute", "{title}-t{categoryId}.html", new { Controller = "Home", action = "ListByCategory" }, new { categoryId = @"\d+" });
             routes.MapRoute("DetailRoute", "{title}-d{pId}.html", new { Controller = "Home", action = "Detail" }, new { pId = @"\d+" });
 
             routes.MapRoute("SearchRoute", "tim-kiem.html", new { Controller = "Home", action = "Search" });

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Security.Policy;
 using System.Web.Mvc;
 
 namespace V308CMS.Common
@@ -100,7 +99,7 @@ namespace V308CMS.Common
                                 item.ToString()).ToDictionary(description => description.ToUnsign().ToLower());
             return new SelectList(dictionary, "Key", "Value", 1).ToList();
         }
-        public static List<SelectListItem> ListEnumType<T>()
+        public static List<SelectListItem> ListEnumType<T>(object selectedValue = null)
         {
             var dictionary = new Dictionary<int, string>();
             foreach (var item in Enum.GetValues(typeof(T)))
@@ -110,7 +109,7 @@ namespace V308CMS.Common
                 var description = (attributes.Length > 0) ? attributes[0].Description : item.ToString();
                 dictionary.Add((int)item, description);
             }
-            return new SelectList(dictionary, "Key", "Value", 1).ToList();
+            return new SelectList(dictionary, "Key", "Value",selectedValue).ToList();
         }
         public static string GetStringEnum<T>(int obj) where T : struct
         {

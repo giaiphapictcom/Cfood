@@ -28,14 +28,8 @@
         });
     </script>
 </div>
-@using (profiler.Step("Load ProductMost"))
-{
-    Html.RenderAction("ProductMost", "MyShopify");
-}
-@using (profiler.Step("Load ProductHot"))
-{
-    Html.RenderAction("ProductHot", "MyShopify");
-}
+@{ Html.RenderAction("ProductMost", "MyShopify");}
+@{ Html.RenderAction("ProductHot", "MyShopify");}
 
 @using (profiler.Step("Load ProductTypeList"))
 {

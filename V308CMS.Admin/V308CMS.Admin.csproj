@@ -54,8 +54,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\DocumentFormat.OpenXml.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework">
-      <HintPath>..\V308CMS\Bin\EntityFramework.dll</HintPath>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="ServiceStack.Text, Version=3.9.59.0, Culture=neutral, processorArchitecture=MSIL">
@@ -65,7 +70,6 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -1678,6 +1682,10 @@
       <Project>{4F5528A8-75F6-4B33-B254-2EAA5F916F12}</Project>
       <Name>V308CMS.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\V308CMS.Dependencies\V308CMS.Dependencies.csproj">
+      <Project>{6330e246-9e72-4bf7-835e-971936615b7f}</Project>
+      <Name>V308CMS.Dependencies</Name>
+    </ProjectReference>
     <ProjectReference Include="..\V308CMS.Respository\V308CMS.Respository.csproj">
       <Project>{8FC8706C-8F72-4B7E-8779-5AA694CAD443}</Project>
       <Name>V308CMS.Respository</Name>
@@ -1823,6 +1831,7 @@
     <Content Include="Content\vendor\bootstrap-editable\LICENSE-GPL" />
     <Content Include="Content\vendor\bootstrap-editable\LICENSE-MIT" />
     <Content Include="Content\vendor\bootstrap-editable\README.md" />
+    <Content Include="packages.config" />
     <None Include="Properties\PublishProfiles\ToaiHVV308Cms.pubxml" />
     <None Include="Properties\PublishProfiles\V308Cms.pubxml" />
     <Content Include="Views\Shared\_LayoutV2.cshtml" />

@@ -9,7 +9,9 @@ using System.Web.Security;
 using ServiceStack.Text;
 using V308CMS.Common;
 using V308CMS.Data;
+using V308CMS.Data.Enum;
 using V308CMS.Helpers;
+using V308CMS.Models;
 using V308CMS.Respository;
 
 namespace V308CMS.Controllers
@@ -72,6 +74,34 @@ namespace V308CMS.Controllers
                 return View(mIndexPageContainer);
             else
                 return View("MobileIndex", mIndexPageContainer);
+        }
+
+        public  ActionResult ListByCategory(int categoryId = 0,string filter = "", int sort = (int) SortEnum.Default, int page = 1,
+            int pageSize = 18)
+        {
+            var category = ProductTypeService.Find(categoryId);
+            if (category == null)
+            {
+                return RedirectToAction("Index");
+            }
+            var listFilter = FilterParser.ParseTokenizer(filter);
+            int totalRecords;
+            var result = new ProductCategoryViewModels
+            {
+                Category = category,
+                ListSubCategory = ProductTypeService.GetAllByCategoryId(categoryId),              
+                ListProduct = ProductsService.GetListByCategoryId(categoryId, listFilter, sort, out totalRecords, page, pageSize),
+                Page = page,
+                PageSize = pageSize,
+                Sort = sort,
+                ListSort = DataHelper.ListEnumType<SortEnum>(sort),
+                TotalRecord = totalRecords,
+                Filter = filter
+                
+            };
+
+            return View("ListByCategory", result);
+
         }
         public ActionResult Category(int pGroupId = 0)
         {
@@ -136,60 +166,35 @@ namespace V308CMS.Controllers
             //    return View("MobileCategory", model);
 
         }
-        [ProductUpdateView]
+     
         public async Task<ActionResult> Detail(int pId = 0)
         {
-            return View("Detail", await  ProductsService.FindAsync(pId,true));           
+            var product = await ProductsService.FindAsync(pId, true);
+            ViewBag.CategoryPath =  ProductTypeService.GetListCategoryPath(product.Type.Value);
+            return View("Detail", product);           
         }
 
-        public ActionResult Search()
+        public ActionResult Search(string q, int page=1, int pageSize=30)
         {
-            int pVendor = 2;
-            int pPage = 1;
-            SearchPage mSearchPage = new SearchPage();
-
-            string pKey = Request.QueryString["q"];
-
-            if (pVendor == 1)/*Tìm theo cửa hàng*/
+            int totalRecord;
+            int totalPage = 0;
+            var listProduct = ProductsService.Search(q, out totalRecord, page, pageSize);
+            if (totalRecord > 0)
             {
-                List<Market> mMarketList = MarketService.SearchMarketTheoTrangAndType(pPage, 30, pKey);
 
-                mSearchPage.Code = 1;
-                if (mMarketList.Count > 0)
-                {
-                    mSearchPage.MarketList = mMarketList;
-                    if (mMarketList.Count < 30)
-                        mSearchPage.IsEnd = true;
-                    mSearchPage.Page = pPage;
-                    mSearchPage.Name = pKey;
-                }
-                else
-                {
-                    mSearchPage.MarketList = new List<Data.Market>();
-                    mSearchPage.Name = pKey;
-                    mSearchPage.Html = "Không tìm thấy kết quả nào.";
-                }
+                totalPage = totalRecord / pageSize;
+                if (totalRecord % pageSize > 0)
+                    totalPage += 1;
             }
-            else /*Tìm theo sản phẩm*/
+            var searchModel = new SearchViewModels
             {
-                List<Product> mProductList = ProductsService.TimSanPhamTheoTen(pPage, 30, pKey.ToLower());
-                mSearchPage.Code = 2;
-                if (mProductList.Count > 0)
-                {
-                    mSearchPage.ProductList = mProductList;
-                    if (mProductList.Count < 30)
-                        mSearchPage.IsEnd = true;
-                    mSearchPage.Page = pPage;
-                    mSearchPage.Name = pKey;
-                }
-                else
-                {
-                    mSearchPage.ProductList = new List<Product>();
-                    mSearchPage.Name = pKey;
-                    mSearchPage.Html = "Không tìm thấy kết quả nào.";
-                }
-            }
-            return View("Search", mSearchPage);
+                Page = page,
+                PageSize = pageSize,
+                ListProduct = listProduct,
+                Keyword = q,
+                TotalPage = totalPage
+            };
+            return View("Search", searchModel);
         }
         public ActionResult YoutubeDetail(int pId = 0)
         {

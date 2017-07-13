@@ -17,13 +17,14 @@ namespace V308CMS.Helpers
         public static bool ShowPageProfile => Configs.GetItemConfig("ShowpageProfile") == "1";
         public static string FacebookAppId => Configs.GetItemConfig("FacebookAppId");
         public static string FacebookAppSecret => Configs.GetItemConfig("FacebookAppSecret");
-
+        public static string FacebookLoginCallback => Configs.GetItemConfig("FacebookLoginCallback");
         public static string GoogleAppId => Configs.GetItemConfig("GoogleAppId");
         public static string GoogleAppSecret => Configs.GetItemConfig("GoogleAppSecret");
+        public static string GoogleLoginCallback => Configs.GetItemConfig("GoogleLoginCallback");
+
         public static string SiteConfigName => Configs.GetItemConfig("SiteConfigName");
         public static string ResourceDomain => Configs.GetItemConfig("ResourceDomain");
-        
-
-
+        public static string MoneyShort => Configs.GetItemConfig("MoneyShort");
+       
     }
 }

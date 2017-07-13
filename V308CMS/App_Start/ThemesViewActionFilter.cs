@@ -18,7 +18,7 @@ namespace V308CMS
 
             viewBag.domain = Theme.domain;
             viewBag.ThemesPath = "/Content/themes/" + Theme.domain;
-            viewBag.MoneyShort = "vnđ";
+            viewBag.MoneyShort = "đ";
         }
     }
 }

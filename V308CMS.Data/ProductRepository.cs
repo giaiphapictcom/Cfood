@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.Entity.SqlServer;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using V308CMS.Common;
 using V308CMS.Data.Enum;
 
@@ -14,8 +12,126 @@ namespace V308CMS.Data
     {
         public ProductRepository()
         {
-
         }
+
+        public List<Product> GetListByCategoryId(int categoryId, string[] listFilter, int sort, out int totalRecord, int page = 1,
+            int pageSize = 25)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                var listProduct = (from product in entities.Product
+                    where product.Status == true && product.Type == categoryId
+                    orderby  product.Number, product.Date descending 
+                    select product
+                    );
+                if (listFilter != null && listFilter.Length>0)
+                {
+                    for (var i = 0; i < listFilter.Length; i += 2)
+                    {
+                        var typeFilter = int.Parse(listFilter[i]);
+                        var valueFilter = listFilter[i + 1];                     
+                        switch (typeFilter)
+                        {
+                            case (int)FilterEnum.ByBrand:
+                                int brandIdFilter;
+                                int.TryParse(valueFilter, out brandIdFilter);                             
+                                listProduct = (from product in listProduct
+                                               where product.BrandId == brandIdFilter
+                                               orderby product.Number, product.Date descending
+                                               select product
+                               );
+                                break;
+                            case (int)FilterEnum.ByManufacturer:                                
+                                int manufacturerIdFilter;
+                                int.TryParse(valueFilter, out manufacturerIdFilter);
+                                listProduct = (from product in listProduct
+                                               where product.Manufacturer == manufacturerIdFilter
+                                               orderby product.Number, product.Date descending
+                                               select product
+                                );
+                                break;
+                            case (int)FilterEnum.ByFromPrice:
+                                double fromPriceValue;
+                                double.TryParse(valueFilter, out fromPriceValue);
+                                if (fromPriceValue > 0)
+                                {
+                                    listProduct = (from product in listProduct
+                                                   where product.Price >= fromPriceValue
+                                                   orderby product.Number, product.Date descending
+                                                   select product
+                                                   );
+                                }
+                                break;
+                            case (int)FilterEnum.ByToPrice:
+                                double toPriceValue;
+                                double.TryParse(valueFilter, out toPriceValue);
+                                if (toPriceValue > 0)
+                                {
+                                    listProduct = (from product in listProduct
+                                                   where product.Price <= toPriceValue
+                                                   orderby product.Number, product.Date descending
+                                                   select product
+                                                   );
+                                }
+                                break;
+
+                        }
+                    }
+                }
+
+                switch (sort)
+                {
+                    case (int)SortEnum.PriceAsc:
+                        listProduct = (from product in listProduct                                    
+                                       orderby product.Price
+                                       select product
+                        );
+                        break;
+                    case (int)SortEnum.PriceDesc:
+                        listProduct = (from product in listProduct
+                                       orderby product.Number,  product.Price descending 
+                                       select product
+                        );
+                        break;
+                    case (int)SortEnum.NameAsc:
+                        listProduct = (from product in listProduct
+                                       orderby product.Number, product.Name
+                                       select product
+                        );
+                        break;
+                    case (int)SortEnum.NameDesc:
+                        listProduct = (from product in listProduct
+                                       orderby product.Number, product.Name descending 
+                                       select product
+                        );
+                        break;
+                    case (int)SortEnum.DateAsc:
+                        listProduct = (from product in listProduct
+                                       orderby product.Number, product.Date
+                                       select product
+                        );
+                        break;
+                    case (int)SortEnum.DateDesc:
+                        listProduct = (from product in listProduct
+                                       orderby product.Number, product.Date descending 
+                                       select product
+                        );
+                        break;
+                    case (int)SortEnum.BestSelling:
+                        listProduct = (from product in listProduct
+                                       orderby product.Number, product.Buy descending
+                                       select product
+                        );
+                        break;                        
+                }
+                totalRecord = listProduct.Count();
+                return (from product in listProduct.Include("ProductImages")                                                       
+                             select product
+                   ).Skip((page-1)*pageSize).Take(pageSize).ToList();
+
+            }
+        }
+
         public async Task<List<Product>> GetListByCategoryWithImagesAsync(int categoryId, int limit)
         {
             using (var entities = new V308CMSEntities())
@@ -68,6 +184,44 @@ namespace V308CMS.Data
                 }
                 return await products.OrderBy(x => Guid.NewGuid()).Take(limit).ToListAsync();
 
+            }
+        }
+
+        public List<Product> GetProductsBestSeller(int categoryId = 0,int limit = 5)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                if (categoryId == 0)
+                {
+                    return  (from product in entities.Product
+                            where product.Status == true
+                            orderby product.Buy
+                            select product).Take(limit).ToList();
+                }
+
+                return  (from product in entities.Product
+                        where product.Status == true && product.Type == categoryId
+                        orderby product.Buy
+                        select product).Take(limit).ToList();
+            }
+        }
+
+        public async Task<List<Product>> GetProductsBestSellerAsync(int categoryId = 0, int limit = 5)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                if (categoryId == 0)
+                {
+                    return await (from product in entities.Product
+                            where product.Status == true
+                            orderby product.Buy
+                            select product).Take(limit).ToListAsync();
+                }
+
+                return await (from product in entities.Product
+                        where product.Status == true && product.Type == categoryId
+                        orderby product.Buy
+                        select product).Take(limit).ToListAsync();
             }
         }
 
@@ -485,6 +639,22 @@ namespace V308CMS.Data
                         orderby p.ID descending
                         select p).Skip((pcurrent - 1) * psize)
                           .Take(psize).ToList();
+            }
+        }
+
+        public List<Product> Search(string keyword,out int totalRecord, int page = 1, int pageSize = 30)
+        {
+           
+            using (var entities = new V308CMSEntities())
+            {
+                var keywordSearch = keyword.Trim().ToLower();
+                var listProduct = (from product in entities.Product
+                    where product.Name.ToLower().Trim().Contains(keywordSearch)
+                    orderby product.ID descending
+                    select product);
+                totalRecord = listProduct.Count();
+                return listProduct.Include("ProductImages")
+                    .OrderByDescending(product=>product.ID).Skip((page - 1) * pageSize).Take(pageSize).ToList();
             }
         }
         public List<Product> TimSanPhamTheoGia(int pcurrent, int psize, int pValue1, int pValue2, int pGroupId)

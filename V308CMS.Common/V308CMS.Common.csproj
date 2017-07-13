@@ -111,7 +111,6 @@
     <Compile Include="AuthorizeAttribute.cs" />
     <Compile Include="Base64Helper.cs" />
     <Compile Include="BootstrapHelper.cs" />
-
     <Compile Include="CloneObjectHelper.cs" />
     <Compile Include="Configs.cs" />
     <Compile Include="ConverterUlti.cs" />
@@ -128,11 +127,13 @@
     <Compile Include="ObjectHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RamdomUltis.cs" />
+    <Compile Include="RequestHelper.cs" />
     <Compile Include="StringClearFormat.cs" />
     <Compile Include="StringHelper.cs" />
     <Compile Include="Ultility.cs" />
     <Compile Include="Url.cs" />
     <Compile Include="ValidateInput.cs" />
+    <Compile Include="ValidationHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="web.config" />

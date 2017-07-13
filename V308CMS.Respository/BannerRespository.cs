@@ -13,6 +13,8 @@ namespace V308CMS.Respository
     }
     public class BannerRespository: IBaseRespository<Banner>, IBannerRespository
     {
+        
+
         public Banner Find(int id)
         {
             using (var entities = new V308CMSEntities())

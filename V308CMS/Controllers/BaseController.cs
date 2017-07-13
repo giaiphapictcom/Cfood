@@ -5,6 +5,7 @@ using V308CMS.Helpers;
 using V308CMS.Helpers.Url;
 using V308CMS.Models;
 using V308CMS.Respository;
+using V308CMS.Socail;
 
 namespace V308CMS.Controllers
 {
@@ -86,6 +87,9 @@ namespace V308CMS.Controllers
             var siteConfigs = SiteConfig.ConfigTable;
             if (siteConfigs.Any())
             {
+                ViewBag.domain = Theme.domain;
+                ViewBag.ThemesPath = "/Content/themes/" + Theme.domain;
+                ViewBag.MoneyShort = "đ";
                 ViewBag.SiteName = SiteConfigService.ReadSiteConfig(siteConfigs, "site-name");
                 ViewBag.Hotline = SiteConfigService.ReadSiteConfig(siteConfigs, "hotline");
                 ViewBag.CompanyFullname = SiteConfigService.ReadSiteConfig(siteConfigs, "company-fullname");
@@ -100,6 +104,7 @@ namespace V308CMS.Controllers
                 ViewBag.ProductViewText = SiteConfigService.ReadSiteConfig(siteConfigs, "product-text-view");
                 ViewBag.HomeAliasText = SiteConfigService.ReadSiteConfig(siteConfigs, "home-text-alias");
                 ViewBag.SubscribeNews = SiteConfigService.ReadSiteConfig(siteConfigs, "subscribe-news");
+              
             }
 
         }
@@ -126,9 +131,15 @@ namespace V308CMS.Controllers
             ShippingService = new ShippingAddressRespository();
             OrderTransactionService = new OrderTransactionRespository();
             ProductBrandService = new ProductBrandRespository();
+            ProductManufacturerService = new ProductManufacturerRespository();
+            GoogleplusService = new GoogleplusService(ConfigHelper.GoogleAppId, ConfigHelper.GoogleAppSecret);
+            FacebookService = new FacebookService(ConfigHelper.FacebookAppId,ConfigHelper.FacebookAppSecret);
             LoadSiteConfig();
 
         }
+        public FacebookService FacebookService { get; }
+        public GoogleplusService GoogleplusService { get; }
+        public ProductManufacturerRespository ProductManufacturerService;
         public ProductBrandRespository ProductBrandService;
         public OrderTransactionRespository OrderTransactionService;
         public ShippingAddressRespository ShippingService { get; }

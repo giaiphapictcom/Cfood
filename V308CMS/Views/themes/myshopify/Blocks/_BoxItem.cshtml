@@ -1,4 +1,4 @@
-﻿@using V308CMS.Common
+﻿@using V308CMS.Helpers
 @using V308CMS.Helpers.Url
 @model V308CMS.Data.BoxContent
 
@@ -13,7 +13,7 @@
                                 <div class="title-container">
                                     <div class="row">
                                         <div class="block-title col-xs-10 col-sm-10 col-md-5">
-                                            <a href="@url.productCategoryURL(@Model.Category.Name, @Model.Category.ID)">
+                                            <a href="@Url.ProductCategoryUrl(Model.Category)" title="@Model.Category.Name">
                                                 <h2 style="">
                                                     <span>@Model.Category.Name</span>
                                                     <i class="fa fa-@Model.Category.Icon"></i>
@@ -48,7 +48,6 @@
                                 });
                             </script>
                         </div>
-
                         <div class="row">
                             <div class="product-featured tabs-product">
                                 <div class="hidden-xs hidden-sm col-md-4 col-lg-5">
@@ -87,10 +86,10 @@
                                                                                         @if (product.SaleOff > 0)
                                                                                         {
                                                                                             <div class="product-label">
-                                                                                                <label class="label">Sale</label>
+                                                                                                <label class="label">Giám giá</label>
                                                                                             </div>
                                                                                         }
-                                                                                        <a href="@url.productURL(product.Name, product.ID)" class="grid-image">
+                                                                                        <a href="@Url.ProductDetailUrl(product)" class="grid-image" title="@product.Name">
                                                                                             <img class="feature-images" src="@product.Image.ToUrl(250, 250)" alt="@product.Name">
                                                                                             @if (product.ProductImages != null && product.ProductImages.Any())
                                                                                             {
@@ -100,26 +99,29 @@
                                                                                             }
                                                                                         </a>
                                                                                         <div class="quickview-button">
-                                                                                            <a href="javascript:void(0)" id="@product.ID" data-toggle="tooltip" data-placement="top" title="@product.Name" class="sca-qv-button btn">
+                                                                                            <a href="javascript:void(0)" data-id="@product.ID" data-toggle="tooltip" data-placement="top" title="@product.Name" class="sca-qv-button btn">
                                                                                                 @ViewBag.ProductViewText
                                                                                             </a>
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="product-content">
                                                                                         <h3>
-                                                                                            <a class="product-title" href="@url.productURL(product.Name, product.ID)">@product.Name</a>
+                                                                                            <a class="product-title" href="@Url.ProductDetailUrl(product)">@product.Name</a>
                                                                                         </h3>
                                                                                         <div class="price-box">
-                                                                                            <p class="sale">
-                                                                                                @if (product.Price > 0)
-                                                                                                {
-                                                                                                    <span class="special-price"><span class="money">@String.Format("{0: 0,0}", (product.Price)) @ViewBag.MoneyShort</span></span>
-                                                                                                }
-                                                                                                @if (product.SaleOff > 0)
-                                                                                                {
-                                                                                                    <span class="old-price"><span class="money">@String.Format("{0: 0,0}", product.Price - (product.Price/100)*product.SaleOff) ) @ViewBag.MoneyShort</span></span>
-                                                                                                }
-                                                                                            </p>
+                                                                                            @if (product.SaleOff == 0)
+                                                                                            {
+                                                                                                <p class="regular-product">
+                                                                                                    <span><span class="money">@product.ToProductPrice()</span></span>
+                                                                                                </p>
+                                                                                            }
+                                                                                            else
+                                                                                            {
+                                                                                                <p class="sale">
+                                                                                                    <span class="special-price"><span class="money">@product.ToProductPrice()</span></span>
+                                                                                                    <span class="old-price"><span class="money">@product.ToProductSaleOffPrice()</span></span>
+                                                                                                </p>
+                                                                                            }
                                                                                         </div>
                                                                                         <span class="shopify-product-reviews-badge" data-id="@product.ID"></span>
                                                                                         <div class="add-to-link">
@@ -162,7 +164,7 @@
                                 </div>
                             </div>
                             <div class="col-md-12 visible-xs  text-right" style="margin: 5px 15px;">
-                                <a href="@url.productCategoryURL(Model.Category.Name, Model.Category.ID)"> Xem Thêm</a>
+                                <a href="@Url.ProductCategoryUrl(Model.Category)"> Xem Thêm</a>
                             </div>
                         </div>
 
@@ -172,7 +174,7 @@
         </div>
     </div>
 </div>
-<script>
+<script type="text/javascript">
     $(".async").each(function (index, item) {
         var url = $(item).data("url");
         if (url && url.length > 0) {

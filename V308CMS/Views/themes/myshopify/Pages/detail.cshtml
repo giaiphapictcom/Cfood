@@ -5,6 +5,7 @@
 @model V308CMS.Data.Product
 @{
     Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
+    var categoryPath =(List<ProductType>) ViewBag.CategoryPath;
 }
 
 @section header {
@@ -16,12 +17,61 @@
     <meta property="og:image" content="@Ultility.ImgUrl(@Model.Image)">
     <meta property="og:description" content="@Model.Summary">
 }
+@section Breadcrumb{
+
+<div class="clearfix breadcrumb-wrap">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="breadcrumb">
+                    @if (categoryPath != null && categoryPath.Count > 0)
+                    {
+                        var firstCategory = categoryPath.FirstOrDefault();
+                        if (firstCategory != null)
+                        {
+                            <h2>
+                                @firstCategory.Name
+                            </h2>
+                        }
+
+                        for (int total = categoryPath.Count, i = total - 1; i >= 0; i--)
+                        {
+                            var category = categoryPath[i];
+                            if (i == total - 1)
+                            {
+                                <a href="/" title="Trang chủ">Home</a>
+                                <span class="icon"><i class="fa fa-circle"></i></span>
+
+                            }
+                            if (i < total - 1 && i > 0)
+                            {
+                                <a href="@Url.ProductCategoryUrl(category)" title="@category.Name">@category.Name</a>
+                                <span class="icon"><i class="fa fa-circle"></i></span>
+                            }
+                            if (i == 0)
+                            {
+                                <strong>
+                                    @category.Name
+                                </strong>
+                            }
+
+                        }
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+   
+}
 
 <div class="row" id="product">
 
     <div class="col-xs-12 col-main col-md-12 col-sm-12">
         <div itemscope itemtype="http://schema.org/Product" class="product">
-            <meta itemprop="url" content="@url.productURL(Model.Name,Model.ID)">
+            <meta itemprop="url" content="@Url.ProductDetailUrl(Model)">
             <meta itemprop="image" content="@ImageHelper.Crop(@Model.Image, 500)">
             <meta itemprop="shop-currency" content="VND">
 
@@ -123,7 +173,7 @@
                 </li>
                 <li><a data-toggle="tab" href="#collapse-tab2">Đánh giá</a></li>
                 <li>                 
-                    <a href="https://www.facebook.com/sharer/sharer.php?u=@WebUtility.UrlEncode(Request.Url.ToString())&display=popup&ref=plugin&src=like&kid_directed_site=0&app_id=@ConfigHelper.FacebookAppId" target="_blank" class="fb-share" >                       
+                    <a href="@Url.FacebookShareUrl(WebUtility.UrlEncode(Request.Url.ToString()))" target="_blank" class="fb-share" title="Chia sẻ trên facebook">                       
                         <span class="hidden-xs"> Chia sẻ Facebook</span>
                         <span class="visible-xs">Share</span>
                     </a>
@@ -149,9 +199,6 @@
                 
             })
         </script>
-
-        @*        <script src="//cdn.shopify.com/s/assets/themes_support/option_selection-f3dd7ba25bddfb6b0fe9addc0cae11dc709eeb6a469ec7f66f49e3abc4ce8c81.js" type="text/javascript"></script>*@
-
     </div>
 
 </div>
@@ -177,9 +224,7 @@
         jQuery('#product-featured-image').elevateZoom();
 
     });
-    //Shopify.Image.preload(["\/\/cdn.shopify.com\/s\/files\/1\/1498\/2346\/products\/21_d775a09c-a223-4d2f-bc4a-7d8e2c3474e8.jpg?v=1484812816","\/\/cdn.shopify.com\/s\/files\/1\/1498\/2346\/products\/23_f5425920-e855-4fdd-accb-0b480443dd09.jpg?v=1484812817","\/\/cdn.shopify.com\/s\/files\/1\/1498\/2346\/products\/24_d5cd5894-cd4d-412a-933e-f11c715907e8.jpg?v=1484812818","\/\/cdn.shopify.com\/s\/files\/1\/1498\/2346\/products\/25_d3353baa-4cc4-4cba-a95c-1523cc987ab1.jpg?v=1484812819"], 'grande');
-
-
+  
     var selectCallback = function(variant, selector) {
         if (variant) {
             jQuery('.variant-sku').text(variant.sku);

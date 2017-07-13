@@ -4,6 +4,13 @@ namespace V308CMS.Helpers.Url
 {
     public static class AccountUrlHelper
     {
+
+        public static string AccountAjaxLoginUrl(this UrlHelper helper, string controller = "member", string action = "ajaxlogin")
+        {
+            return helper.Action(action, controller);
+
+        }
+        
         public static string AccountLoginUrl(this UrlHelper helper, string controller = "member", string action = "login")
         {
             return helper.Action(action, controller);
@@ -14,8 +21,17 @@ namespace V308CMS.Helpers.Url
             return helper.Action(action, controller);
 
         }
+        public static string AccounRegisterAjaxUrl(this UrlHelper helper, string controller = "member", string action = "registerajax")
+        {
+            return helper.Action(action, controller);
 
+        }
+       
         public static string AccountForgotPasswordUrl(this UrlHelper helper, string controller = "member", string action = "forgotgassword")
+        {
+            return helper.Action(action, controller);
+        }
+        public static string AccountForgotPasswordAjaxUrl(this UrlHelper helper, string controller = "member", string action = "forgotpasswordajax")
         {
             return helper.Action(action, controller);
         }
