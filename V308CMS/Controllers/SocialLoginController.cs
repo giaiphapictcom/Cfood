@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using V308CMS.Common;
 using V308CMS.Helpers;
-using V308CMS.Socail;
+using V308CMS.Social;
 
 namespace V308CMS.Controllers
 {

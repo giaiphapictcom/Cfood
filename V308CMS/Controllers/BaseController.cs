@@ -5,7 +5,7 @@ using V308CMS.Helpers;
 using V308CMS.Helpers.Url;
 using V308CMS.Models;
 using V308CMS.Respository;
-using V308CMS.Socail;
+using V308CMS.Social;
 
 namespace V308CMS.Controllers
 {
