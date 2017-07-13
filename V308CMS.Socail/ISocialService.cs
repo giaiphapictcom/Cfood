@@ -1,4 +1,4 @@
-﻿namespace V308CMS.Socail
+﻿namespace V308CMS.Social
 {
     internal interface ISocialService
     {

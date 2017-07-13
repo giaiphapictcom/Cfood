@@ -4,7 +4,7 @@ using System.Web.Script.Serialization;
 using Newtonsoft.Json.Linq;
 using V308CMS.Common;
 
-namespace V308CMS.Socail
+namespace V308CMS.Social
 {
     /// <summary>
     /// Dang nhap su dung tai khoan googgle

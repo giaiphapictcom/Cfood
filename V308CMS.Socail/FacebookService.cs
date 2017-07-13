@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using Facebook;
 
-namespace V308CMS.Socail
+namespace V308CMS.Social
 {
     public sealed class FacebookService : ISocialService
     {
