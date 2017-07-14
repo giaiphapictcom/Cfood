@@ -18,7 +18,6 @@ namespace UpdateAddress
     {
         static void Main(string[] args)
         {            
-
             var regionService = new RegionRespository();
             var listRegion = regionService.GetListRegionByParentId();         
             if (listRegion.Any())
