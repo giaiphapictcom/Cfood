@@ -26,4 +26,3 @@ E:\Work\Tam\Tam21062017\TamGit\V308CMS.Dependencies\bin\Debug\System.Web.Razor.x
 E:\Work\Tam\Tam21062017\TamGit\V308CMS.Dependencies\bin\Debug\System.Web.WebPages.Deployment.xml
 E:\Work\Tam\Tam21062017\TamGit\V308CMS.Dependencies\obj\Debug\V308CMS.Dependencies.dll
 E:\Work\Tam\Tam21062017\TamGit\V308CMS.Dependencies\obj\Debug\V308CMS.Dependencies.pdb
-E:\Work\Tam\Tam21062017\TamGit\V308CMS.Dependencies\obj\Debug\V308CMS.Dependencies.csprojResolveAssemblyReference.cache
