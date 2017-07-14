@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace V308CMS.Data.Models
 {
@@ -17,5 +15,13 @@ namespace V308CMS.Data.Models
         public int VoucherId { get; set; }
         public string VoucherCode { get; set; }
         public DateTime CreatedAt { get; set; }
+
+        [ForeignKey("VoucherId")]
+        public virtual Voucher Voucher { get; set; }
+
+        [ForeignKey("UserId")]
+        public virtual Account User { get; set; }
+
+
     }
 }

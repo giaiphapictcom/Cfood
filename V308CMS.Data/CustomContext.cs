@@ -40,6 +40,8 @@ namespace V308CMS.Data
             modelBuilder.Configurations.Add(new ShippingAddressMap());            
             modelBuilder.Configurations.Add(new OrderTransactionMap());
             modelBuilder.Configurations.Add(new ProductWishlistMap());
+            modelBuilder.Configurations.Add(new VoucherMap());
+            modelBuilder.Configurations.Add(new VoucherCodeMap());
 
             modelBuilder.Entity<OrderTransaction>()
             .HasRequired(p => p.Order)
