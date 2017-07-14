@@ -1,4 +1,5 @@
-﻿@{
+﻿@using V308CMS.Helpers.Url
+@{
     Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
 }
 @section header {
@@ -29,7 +30,7 @@
             <div class="empty-cart">
                 <img src="/Content/Images/cart-empty.png" alt="Không có sản phẩm nào trong giỏ hàng của bạn.">
                 <p class="message">Không có sản phẩm nào trong giỏ hàng của bạn.</p>
-                <a href="/" class="btn btn-yellow">Tiếp tục mua sắm</a>
+                <a href="@Url.HomeIndexUrl()" class="btn btn-yellow">Tiếp tục mua sắm</a>
             </div>
         </div>
         <div class="clearfix"></div>
