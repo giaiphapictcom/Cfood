@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace V308CMS.Data.Enum
 {
-    [Flags]
+  
     public enum PositionEnum
     {
         [Description("Trang chủ")]

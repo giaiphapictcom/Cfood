@@ -1349,35 +1349,38 @@ namespace V308CMS.Data
             }
         }
 
-        public List<Product> GetListProductWishlist(string listWishlist)
+        public List<Product> GetListProductWishlist(string listWishlist, out int totalRecord, int page =1, int pageSize=10)
         {
             using (var entities = new V308CMSEntities())
             {
-                if (!string.IsNullOrWhiteSpace(listWishlist))
+                if (string.IsNullOrWhiteSpace(listWishlist))
                 {
-                    if (listWishlist.Contains(";"))
-                    {
-                        return (from item in entities.Product.AsEnumerable()
-                                where listWishlist.Contains(item.ID + ";") || listWishlist.Contains(";" + item.ID)
-                                orderby item.ID descending
-                                select item
-                            ).ToList();
-                    }
-                    else
-                    {
-                        var productId = Convert.ToInt32(listWishlist.Trim());
-                        return (from item in entities.Product
-                                where item.ID == productId
-                                orderby item.ID descending
-                                select item
-                          ).ToList();
-                    }
+                    totalRecord = 0;
+                    return null;
+                }
+                IEnumerable<Product> listProduct;
+                if ((listWishlist.IndexOf(";", StringComparison.Ordinal) <0))
+                {
+                    var productId = Convert.ToInt32(listWishlist.Trim());
+
+                     listProduct = (from item in entities.Product
+                        where item.ID == productId
+                        orderby item.ID descending
+                        select item
+                        );
+                    totalRecord = listProduct.Count();
+                    return listProduct.Skip((page - 1)*pageSize).Take(pageSize).ToList();
                 }
 
-                return default(List<Product>);
+
+                 listProduct = (from item in entities.Product.AsEnumerable()
+                    where listWishlist.Contains(item.ID + ";") || listWishlist.Contains(";" + item.ID)
+                    orderby item.ID descending
+                    select item
+                    );
+                totalRecord = listProduct.Count();
+                return listProduct.Skip((page - 1) * pageSize).Take(pageSize).ToList();
             }
-
-
 
         }
 
