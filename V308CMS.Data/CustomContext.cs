@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Configuration;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using V308CMS.Data.Mapping;
 using V308CMS.Data.Models;
 
@@ -20,15 +18,10 @@ namespace V308CMS.Data
         }
         public V308CMSEntities(string connectionString)
             : base(connectionString)
-        {
-            //cai nay giup chi ra rang ta dung provider MySql.Data.MySqlClient
-            Database.DefaultConnectionFactory = new SqlCeConnectionFactory("MySql.Data.MySqlClient");
+        {            
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-
-            modelBuilder.Ignore<IncludeMetadataConvention>();
-
             modelBuilder.Configurations.Add(new SiteConfigMap());
             modelBuilder.Configurations.Add(new EmailConfigMap());
             modelBuilder.Configurations.Add(new MenuConfigMap());
