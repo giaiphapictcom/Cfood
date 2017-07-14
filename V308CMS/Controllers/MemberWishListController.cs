@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using V308CMS.Helpers;
+using V308CMS.Models;
 
 namespace V308CMS.Controllers
 {
@@ -13,11 +14,28 @@ namespace V308CMS.Controllers
         //
         // GET: /WishList/
         [Authorize]
-        public ActionResult Index()
+        public ActionResult Index(int page =1, int pageSize = 10)
         {
             var wishlist = ProductWishlistService.GetListWishlist(User.UserId);
-            var listProductWishlist = ProductsService.GetListProductWishlist(wishlist);
-            return View("Wishlist.Index", listProductWishlist);
+            int totalRecord = 0;
+            int totalPage = 0;
+            var listProductWishlist = ProductsService.GetListProductWishlist(wishlist,out totalRecord,page, pageSize);
+            if (totalRecord > 0)
+            {
+
+                totalPage = totalRecord / pageSize;
+                if (totalRecord % pageSize > 0)
+                    totalPage += 1;
+            }
+            var model = new MemberWishListViewModels
+            {
+                Page = page,
+                PageSize = pageSize,
+                TotalRecord = totalRecord,
+                TotalPage = totalPage,
+                ListProduct = listProductWishlist
+            };
+            return View("Wishlist.Index", model);
         }
 
         [HttpPost]

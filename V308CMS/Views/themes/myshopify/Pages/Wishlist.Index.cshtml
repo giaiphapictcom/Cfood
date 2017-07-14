@@ -1,7 +1,8 @@
 ﻿@using V308CMS.Common
 @using V308CMS.Helpers
 @using V308CMS.Helpers.Url
-@model List<V308CMS.Data.Product>
+@using V308CMS.Models
+@model V308CMS.Models.MemberWishListViewModels
 @{
     Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
 }
@@ -26,84 +27,100 @@
         </div>
     </div>
 }
-<main class="container main-content">
-    <div class="wishlist-page">
-        
-        @if (Model.IsHasData())
-        {
-            <div class="page-header">
-                <h2>
-                    Sản phẩm yêu thích (@Model.Count)
-                </h2>
-            </div>
-            <table class="wishlist-product">
-                <colgroup>
-                    <col width="1">
-                    <col>
-                    <col>
-                    <col width="1">
-                    <col width="1">
-                </colgroup>
-                <thead>
-                <tr>
-                    <th>Ảnh</th>
-                    <th>Tên</th>
-                    <th class="a-center">Đơn giá</th>
-                    <th class="a-center">Xóa</th>
-                    <th class="a-center">Thêm vào giỏ hàng</th>
+<div class="wishlist-page">
+
+    @if (Model.ListProduct.IsHasData())
+    {
+        <div class="page-header">
+            <h2>
+                Sản phẩm yêu thích (@Model.ListProduct.Count)
+            </h2>
+        </div>
+        <table class="wishlist-product">
+            <colgroup>
+                <col width="1">
+                <col>
+                <col>
+                <col width="1">
+                <col width="1">
+            </colgroup>
+            <thead>
+            <tr>
+                <th>Ảnh</th>
+                <th>Tên</th>
+                <th class="a-center">Đơn giá</th>
+                <th class="a-center">Xóa</th>
+                <th class="a-center">Thêm vào giỏ hàng</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model.ListProduct)
+            {
+                <tr class="row-@item.ID product-item" id="product-@item.ID">
+                    <td>
+                        <a href="@url.productURL(item.Name, item.ID)" class="product-grid-image"><img src="@item.Image.ToUrl(96, 101)" alt="@item.Name"></a>
+                    </td>
+                    <td>
+                        <a href="@url.productURL(item.Name, item.ID)" class="product-title">
+                            @item.Name
+                        </a>
+                    </td>
+                    <td class="a-center">
+
+                        <p class="regular-product">
+                            <span><span class="money" data-currency-usd="@item.Price.Value.ToString("N0")">@item.Price.Value.ToString("N0") đ</span></span>
+                        </p>
+
+                    </td>
+                    <td class="a-center">
+                        <input class="tag-id" type="hidden" value="@item.ID">
+                        <a href="javascript:void(0)" class="btn-remove-wishlist">Xóa</a>
+                    </td>
+                    <td class="a-center">
+                        <div class="action">
+
+                            <form action="@Url.AddToCartUrl()" method="post" class="variants" id="product-actions-@item.ID" enctype="multipart/form-data" style="padding: 0px;">
+                                <input type="hidden" name="id" value="@item.ID">
+                                <input class="btn add-to-cart-btn" type="submit" value="Thêm vào giỏ hàng">
+
+                            </form>
+                        </div>
+                    </td>
                 </tr>
-                </thead>
-                <tbody>
-                @foreach (var item in Model)
+            }
+            </tbody>
+        </table>
+
+
+        <div class="text-center">
+
+            <div class="toolbar toolbar-bottom" style="border-style: none !important; padding: 0px">
+
+                @Html.Partial("PaginationComponent", new PaginationModels
                 {
-                    <tr class="row-@item.ID product-item" id="product-@item.ID">
-                        <td>
-                            <a href="@url.productURL(item.Name,item.ID)" class="product-grid-image"><img src="@item.Image.ToUrl(96,101)" alt="@item.Name"></a>
-                        </td>
-                        <td>
-                            <a href="@url.productURL(item.Name,item.ID)" class="product-title">
-                               @item.Name
-                            </a>
-                        </td>
-                        <td class="a-center">
-
-                            <p class="regular-product">
-                                <span><span class="money" data-currency-usd="@item.Price.Value.ToString("N0")">@item.Price.Value.ToString("N0") đ</span></span>
-                            </p>
-
-                        </td>
-                        <td class="a-center">
-                            <input class="tag-id" type="hidden" value="@item.ID">
-                            <a href="javascript:void(0)" class="btn-remove-wishlist">Xóa</a>
-                        </td>
-                        <td class="a-center">
-                            <div class="action">
-
-                                <form action="@Url.AddToCartUrl()" method="post" class="variants" id="product-actions-@item.ID" enctype="multipart/form-data" style="padding: 0px;">
-                                    <input type="hidden" name="id" value="@item.ID">
-                                    <input class="btn add-to-cart-btn" type="submit" value="Thêm vào giỏ hàng">
-
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                }                
-                </tbody>
-            </table>
-        }
-        else
-        {
-            <div class="page-header">
-                <h2>
-                    Sản phẩm yêu thích
-                </h2>
+                  TotalPages = Model.TotalPage,
+                  BaseUrl = Url.MemberWishListIndexUrl(),
+                  CurrentPage = Model.Page,
+                  PageParamFormat = @"page=\d+",
+                  RecordPerPages = 5
+              })
             </div>
+
+        </div>
+
+    }
+    else
+    {
+        <div class="page-header">
+            <h2>
+                Sản phẩm yêu thích
+            </h2>
+        </div>
             <div class="empty-content">
                 <img src="/Content/Images/mpstart-not-found-pgae.png">
                 <p>Hãy <i class="fa fa-heart"></i> sản phẩm bạn yêu thích khi mua sắm để xem lại thuận tiện nhất</p>
                 <a type="submit" class="btn-yellow" href="/">Tiếp tục mua sắm</a>
             </div>
-        }
+    }
 
-    </div>
-</main>
+</div>
