@@ -1,11 +1,7 @@
 ﻿using System.Web.Mvc;
 using V308CMS.Data;
-<<<<<<< HEAD
 using V308CMS.Filters;
 using V308CMS.Helpers;
-=======
-//using V308CMS.Filters;
->>>>>>> 80cc5f7e5b4271fc74adbe046b3ae514ea8a1a30
 
 namespace V308CMS.Controllers
 {
@@ -17,14 +13,9 @@ namespace V308CMS.Controllers
         public VideoController()
         {
             ViewEngines.Engines.Clear();
-<<<<<<< HEAD
             ViewEngines.Engines.Add(new MpStartViewEngine(false));
             NewsGroups videoGroup = NewsService.SearchNewsGroup("video");
-=======
-            ViewEngines.Engines.Add(new V308CMS.Helpers.MpStartViewEngine(false));
-            NewsGroups videoGroup = NewsService.SearchNewsGroup("video",Data.Helpers.Site.home);
->>>>>>> 80cc5f7e5b4271fc74adbe046b3ae514ea8a1a30
-            NewsType = videoGroup.ID;
+           
         }
         
 
@@ -45,15 +36,6 @@ namespace V308CMS.Controllers
             return View("Video.Index", newsIndexViewModel);
         }
 
-        //public ActionResult Detail(int id )
-        //{
-        //    return Content("ok");
-        //}
-<<<<<<< HEAD
-        [NewsUpdateView]
-=======
-       // [UpdateView]
->>>>>>> 80cc5f7e5b4271fc74adbe046b3ae514ea8a1a30
         public ActionResult Detail(int id = 0)
         {
 

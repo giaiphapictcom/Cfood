@@ -22,15 +22,14 @@ namespace V308CMS.Controllers
         [ChildActionOnly]
         public ActionResult MainMenu()
 
-        {
-          
-            return View("MainMenu", MenuConfigRepos.GetAll(Data.Helpers.Site.home));
+        {          
+            return View("MainMenu", MenuConfigService.GetAll(Data.Helpers.Site.home));
         }
 
         public ActionResult MenuCanvas()
         {
 
-            return View("MenuCanvas", MenuConfigRepos.GetAll(Data.Helpers.Site.home));
+            return View("MenuCanvas", MenuConfigService.GetAll(Data.Helpers.Site.home));
         //{          
         //    return View("MainMenu", NewsService.GetNewsGroup());
         }
@@ -134,7 +133,7 @@ namespace V308CMS.Controllers
             Banner model = new Banner();
             try {
                 var banners = BannerService.GetList(-1, Data.Helpers.Site.home, true, 1);
-                if (banners.Count() > 0) {
+                if (banners.Any()) {
                     model = banners.FirstOrDefault();
                 }
             }

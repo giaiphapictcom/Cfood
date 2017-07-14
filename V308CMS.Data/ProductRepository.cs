@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.Data.Entity;
-<<<<<<< HEAD
+using System.Data.Entity.Validation;
 using System.Linq;
-=======
-using System.Data.Entity.SqlServer;
->>>>>>> 80cc5f7e5b4271fc74adbe046b3ae514ea8a1a30
 using System.Threading.Tasks;
 using V308CMS.Common;
-using V308CMS.Data;
 using V308CMS.Data.Enum;
-
 
 namespace V308CMS.Data
 {
@@ -66,7 +60,7 @@ namespace V308CMS.Data
                                 break;
                             case (int)FilterEnum.ByFromPrice:
                                 int fromPriceValue;
-                                int.TryParse(valueFilter +"000", out fromPriceValue);
+                                int.TryParse(valueFilter, out fromPriceValue);
                                 if (fromPriceValue > 0)
                                 {
                                     listProduct = (from product in listProduct
@@ -78,7 +72,7 @@ namespace V308CMS.Data
                                 break;
                             case (int)FilterEnum.ByToPrice:
                                 int toPriceValue;
-                                int.TryParse(valueFilter +"000", out toPriceValue);
+                                int.TryParse(valueFilter, out toPriceValue);
                                 if (toPriceValue > 0)
                                 {
                                     listProduct = (from product in listProduct
@@ -95,9 +89,9 @@ namespace V308CMS.Data
                                     valueFilter.Split(new[] {"-"}, StringSplitOptions.RemoveEmptyEntries)
                                         .ToArray();
                                 if (listPrice.Length > 0)
-                                    int.TryParse(listPrice[0] +"000", out fromPrice);
+                                    int.TryParse(listPrice[0], out fromPrice);
                                 if (listPrice.Length > 1)
-                                    int.TryParse(listPrice[1] +"000", out toPrice);
+                                    int.TryParse(listPrice[1], out toPrice);
                                 if (fromPrice < toPrice)
                                 {
                                     listProduct = (from product in listProduct
@@ -299,7 +293,7 @@ namespace V308CMS.Data
                     items = products.ToList().OrderBy(x => Guid.NewGuid()).Take(psize).ToList();
 
                 }
-                catch (System.Data.Entity.Validation.DbEntityValidationException e)
+                catch (DbEntityValidationException e)
                 {
                     Console.Write(e);
                 }
@@ -1276,9 +1270,8 @@ namespace V308CMS.Data
                              select new { AccountID = g.FirstOrDefault().AccountID });
                 foreach (var obj in table)
                 {
-                    int AccountIDDistin = obj.AccountID.GetValueOrDefault();
-                    ProductOrder mProductOrder = new ProductOrder();
-                    mProductOrder = listProductOrder.Where(x => x.AccountID == AccountIDDistin).FirstOrDefault();
+                    int accountIdDistin = obj.AccountID.GetValueOrDefault();
+                    var mProductOrder = listProductOrder.FirstOrDefault(x => x.AccountID == accountIdDistin);
                     mList.Add(mProductOrder);
                 }
 
@@ -1299,13 +1292,12 @@ namespace V308CMS.Data
                              where p.AdminId == pUserId && (p.Date >= pDate1 && p.Date <= pDate2)
                              orderby p.ID descending
                              group p by p.AccountID into g//Nhóng theo Mã hàng
-                             where g.Count() >= 1
+                             where g.Any()
                              select new { AccountID = g.FirstOrDefault().AccountID });
                 foreach (var obj in table)
                 {
-                    int AccountIDDistin = obj.AccountID.GetValueOrDefault();
-                    ProductOrder mProductOrder = new ProductOrder();
-                    mProductOrder = listProductOrder.Where(x => x.AccountID == AccountIDDistin).FirstOrDefault();
+                    int accountIdDistin = obj.AccountID.GetValueOrDefault();
+                    var mProductOrder = listProductOrder.FirstOrDefault(x => x.AccountID == accountIdDistin);
                     mList.Add(mProductOrder);
                 }
 
@@ -1760,16 +1752,15 @@ namespace V308CMS.Data
 
         }
 
-<<<<<<< HEAD
         public void IncrementView(int id)
         {
 
             using (var entities = new V308CMSEntities())
             {
                 var productView = (from product in entities.Product
-                                    where product.ID == id
-                                   select product
-                ).FirstOrDefault();
+                    where product.ID == id
+                    select product
+                    ).FirstOrDefault();
                 if (productView != null)
                 {
 
@@ -1782,10 +1773,12 @@ namespace V308CMS.Data
                         productView.View += 1;
                     }
                     entities.SaveChanges();
-                 
+
                 }
-            
-=======
+
+            }
+        }
+
         public List<ProductType> GetCategoryInHome(int product_limit = 9)
         {
            
@@ -1825,7 +1818,6 @@ namespace V308CMS.Data
             {
                 Console.Write(ex);
                 throw;
->>>>>>> 80cc5f7e5b4271fc74adbe046b3ae514ea8a1a30
             }
         }
     }

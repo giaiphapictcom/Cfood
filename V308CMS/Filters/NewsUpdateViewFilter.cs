@@ -24,8 +24,6 @@ namespace V308CMS.Filters
                 {                 
                     new NewsRepository().IncrementView(newsId);
                 }
-
-              
             }
             base.OnActionExecuting(filterContext);
         }

@@ -22,53 +22,7 @@ namespace V308CMS.Controllers
         protected void ClearCart()
         {
             MyCart.Clear();
-        }
-
-
-        private readonly ProductRepository _productService;
-        private readonly NewsRepository _newsService;
-        private readonly AccountRepository _AccountService;
-        private readonly FileRepository _fileService;
-        private readonly IProductWishlistRepositry _productWishlistService;
-        private readonly ImagesRepository _imagesRepository;
-        private readonly MarketRepository _marketRepository;
-        private readonly IContactRepository _contactRepository;
-        private readonly MenuConfigRespository _meuMenuConfigRespository;
-        private readonly Data.ProductTypeRepository _productTypeRepository;
-        private readonly CartRepository _CartRepository;
-        private readonly CartItemRepository _CartItemRepository;
-
-        private readonly BannerRespository _bannerService;
-        public MenuConfigRespository _MenuConfigRepos;
-
-        //protected BaseController()
-        //{
-        //    _mEntities = EnsureV308CmsEntitiesNotNull();
-        //    //V308CMSEntities mEntities = new V308CMSEntities();
-
-        //    _productService = new ProductRepository(_mEntities);
-        //    //_productService = new Data.ProductRepository();
-
-        //    _newsService = new NewsRepository(_mEntities);
-
-            //_accountService = new AccountRepository(_mEntities);
-        //    _fileService = new FileRepository(_mEntities);
-        //    //_productWishlistService = new ProductWishlistRepositry(_mEntities);
-        //    _imagesRepository = new ImagesRepository(_mEntities);
-        //    _marketRepository = new MarketRepository(_mEntities);
-
-        //    _contactRepository = new ContactRepository(_mEntities);
-
-        //    _CartRepository = new CartRepository(_mEntities);
-        //    _CartItemRepository = new CartItemRepository(_mEntities);
-
-        //    _meuMenuConfigRespository = new MenuConfigRespository(_mEntities);
-        //    _productTypeRepository = new Data.ProductTypeRepository(_mEntities);
-
-        //    _bannerService = new BannerRespository();
-
-        //    _MenuConfigRepos = new MenuConfigRespository(_mEntities);
-        //}
+        }     
         /// <summary>
         /// Kiem tra gio hang trong
         /// </summary>
@@ -162,7 +116,7 @@ namespace V308CMS.Controllers
         {
             ProductsService = new ProductRepository();
             NewsService = new NewsRepository();
-            _AccountService = new AccountRepository();
+            AccountService = new AccountRepository();
             FileService = new FileRepository();
             ProductWishlistService = new ProductWishlistRepositry();
             ImagesService = new ImagesRepository();
@@ -176,19 +130,12 @@ namespace V308CMS.Controllers
             BoxContentService = new BoxContentRespository();
             RegionService = new RegionRespository();
             ShippingService = new ShippingAddressRespository();
-            OrderTransactionService = new OrderTransactionRespository();
-<<<<<<< HEAD
-            _MenuConfigRepos = new MenuConfigRespository();
-            _bannerService = new BannerRespository();
-=======
+            OrderTransactionService = new OrderTransactionRespository();           
+            BannerService = new BannerRespository();
             ProductBrandService = new ProductBrandRespository();
-<<<<<<< HEAD
             ProductManufacturerService = new ProductManufacturerRespository();
             GoogleplusService = new GoogleplusService(ConfigHelper.GoogleAppId, ConfigHelper.GoogleAppSecret);
             FacebookService = new FacebookService(ConfigHelper.FacebookAppId,ConfigHelper.FacebookAppSecret);
-=======
->>>>>>> 527fed4d0fbb418d29ef5fd10747593d42f8edf7
->>>>>>> 80cc5f7e5b4271fc74adbe046b3ae514ea8a1a30
             LoadSiteConfig();
 
         }
@@ -202,6 +149,7 @@ namespace V308CMS.Controllers
         public BoxContentRespository BoxContentService { get; }
         public Data.SiteConfigRespository SiteConfigService { get; }
         public Data.ProductTypeRepository ProductTypeService { get; }
+        public BannerRespository BannerService { get; }
 
         public MenuConfigRespository MenuConfigService { get; }
 
@@ -217,7 +165,7 @@ namespace V308CMS.Controllers
 
         protected Data.ProductRepository ProductsService { get; }
 
-        protected AccountRepository AccountService { get { return _AccountService; }  }
+        protected AccountRepository AccountService { get; }
 
         protected FileRepository FileService { get; }
 
@@ -242,24 +190,7 @@ namespace V308CMS.Controllers
         }
 
 
-        public BannerRespository BannerService
-        {
-            get
-            {
-                //EnsureV308CmsEntitiesNotNull();
-                return _bannerService;
-            }
-        }
-
-        public MenuConfigRespository MenuConfigRepos
-        {
-            get
-            {
-                //EnsureV308CmsEntitiesNotNull();
-                return _MenuConfigRepos;
-            }
-
-        }
+        
 
     }
 }

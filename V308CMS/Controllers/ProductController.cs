@@ -11,9 +11,6 @@ namespace V308CMS.Controllers
     public class ProductController : BaseController 
     {
         
-
- 
-
         public ActionResult Index(int id)
         {
             var product = ProductsService.GetById(id);
