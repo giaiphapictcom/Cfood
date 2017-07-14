@@ -518,9 +518,10 @@
                         {
                             <a href="@Url.AdminAccountIndexUrl()" title="Tài khoản">
                                 <i class="fa fa-user fa-fw"></i>Tài khoản
-                    <span class="fa arrow"></span>
+                                <span class="fa arrow"></span>
                             </a>
                         }
+
 
                         <ul class="nav nav-second-level collapse">
                             @if (IsHasPermission(listRolePermission, "AdminAccount", 0))
@@ -666,6 +667,12 @@
                                     <a href="@Url.UserIndexUrl(null,"user","affiliate")" title="Danh sách Tài khoản">Tài Khoản</a>
                                 </li>
                             }
+
+                            
+                                <li>
+                                    <a href="@Url.UserIndexUrl(null,"affiliateaccount","index")" title="Danh sách Tài khoản">Thống kê</a>
+                                </li>
+                            
                             
                             @if (IsHasPermission(listRolePermission, "AffiliateBanner", 0))
                             {

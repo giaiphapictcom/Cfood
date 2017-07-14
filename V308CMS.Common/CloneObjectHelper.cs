@@ -20,7 +20,13 @@ namespace V308CMS.Common
                 var isSkipProperty = ((skipProperties != null) && skipProperties.Contains(property.Name)) == false;
                 if (convertProperty != null && isSkipProperty)
                 {
-                    convertProperty.SetValue(convert, Convert.ChangeType(entityProperty.GetValue(entity), convertProperty.PropertyType));
+                    var value = entityProperty.GetValue(entity);
+                    var ConvertType = convertProperty.PropertyType;
+                    var TypeCurrent = entityProperty.PropertyType;
+                    if (ConvertType == TypeCurrent) {
+                        convertProperty.SetValue(convert, Convert.ChangeType(value, ConvertType));
+                    }
+                    
                 }
             }
 

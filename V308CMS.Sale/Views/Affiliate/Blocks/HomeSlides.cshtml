@@ -68,10 +68,10 @@
             jQuery("#rev_slider").removeClass("loadding-image");
         }, 3000);
 
-        if (jQuery('#rev_slider').length > 0)
+        if (jQuery('#rev_slider').length > 0) {
             jQuery('#rev_slider').show().revolution({
                 dottedOverlay: 'none',
-                delay: 8000*10000,
+                delay: 8000 * 10000,
                 startwidth: 1140,
                 startheight: 400,
                 navigationType: "both",
@@ -85,5 +85,7 @@
                 hideAllCaptionAtLilmit: 0,
                 startWithSlide: 0
             });
+        }
+            
     });
 </script>

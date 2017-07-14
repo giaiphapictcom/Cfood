@@ -9,43 +9,43 @@ using System.IO;
 
 namespace V308CMS.Sale.Controllers
 {
-    public class AffiliateController : Controller
+    public class AffiliateController : BaseController
     {
-        #region Repository
-        static V308CMSEntities mEntities;
-        ProductRepository ProductRepos;
-        ImagesRepository ImageRepos;
-        V308CMS.Respository.BannerRespository BannerRepos;
+        //#region Repository
+        //static V308CMSEntities mEntities;
+        //ProductRepository ProductRepos;
+        //ImagesRepository ImageRepos;
+        //V308CMS.Respository.BannerRespository BannerRepos;
        
-        AccountRepository AccountRepos;
-        NewsRepository NewsRepos;
-        TestimonialRepository CommentRepo;
-        CategoryRepository CategoryRepo;
-        private void CreateRepos()
-        {
-            mEntities = new V308CMSEntities();
-            ImageRepos = new ImagesRepository();
-            BannerRepos = new V308CMS.Respository.BannerRespository();
+        //AccountRepository AccountRepos;
+        //NewsRepository NewsRepos;
+        //TestimonialRepository CommentRepo;
+        //CategoryRepository CategoryRepo;
+        //private void CreateRepos()
+        //{
+        //    mEntities = new V308CMSEntities();
+        //    ImageRepos = new ImagesRepository();
+        //    BannerRepos = new V308CMS.Respository.BannerRespository();
 
-            ProductRepos = new ProductRepository();
-            AccountRepos = new AccountRepository();
-            NewsRepos = new NewsRepository();
-            CommentRepo = new TestimonialRepository(mEntities);
-            CategoryRepo = new CategoryRepository(mEntities);
-        }
-        private void DisposeRepos()
-        {
-            mEntities.Dispose();
-            //ImageRepos.Dispose();
+        //    ProductRepos = new ProductRepository();
+        //    AccountRepos = new AccountRepository();
+        //    NewsRepos = new NewsRepository();
+        //    CommentRepo = new TestimonialRepository(mEntities);
+        //    CategoryRepo = new CategoryRepository(mEntities);
+        //}
+        //private void DisposeRepos()
+        //{
+        //    mEntities.Dispose();
+        //    //ImageRepos.Dispose();
             
 
-            //ProductRepos.Dispose();
-            //AccountRepos.Dispose();
-            //NewsRepos.Dispose();
-            CommentRepo.Dispose();
-            CategoryRepo.Dispose();
-        }
-        #endregion
+        //    //ProductRepos.Dispose();
+        //    //AccountRepos.Dispose();
+        //    //NewsRepos.Dispose();
+        //    CommentRepo.Dispose();
+        //    CategoryRepo.Dispose();
+        //}
+        //#endregion
 
 
         public ActionResult Home()
@@ -59,7 +59,7 @@ namespace V308CMS.Sale.Controllers
                     Model.Videos = NewsRepos.LayDanhSachTinTheoGroupIdWithPage(5, Model.VideoCategory.ID);
                 }
 
-                Model.Banners = BannerRepos.GetList(-1,"affiliate",true,3);
+                Model.Banners = BannerRepo.GetList(-1,"affiliate",true,3);
                 Model.Testimonial = CommentRepo.GetRandom(4);
 
                 Model.Brands = ProductRepos.getRandomBrands(0, 6);
@@ -191,12 +191,15 @@ namespace V308CMS.Sale.Controllers
                     GroupItem.Name = "Hệ Thống"; break;
             }
             if (GroupItem.Name.Length > 0 && GroupItem.Alias.Length > 0) {
-                mEntities.AddToNewsGroups(GroupItem);
-                mEntities.SaveChanges();
+                using (var mEntities = new V308CMSEntities()) {
+                    mEntities.AddToNewsGroups(GroupItem);
+                    mEntities.SaveChanges();
 
-                News NewsItem = new News() { Date = DateTime.Now, Order = 1, Status = true, Summary = "", Title = GroupItem.Name + " bài viết mẫu", TypeID = GroupItem.ID, Description = "Nội dung của " + GroupItem.Name };
-                mEntities.AddToNews(NewsItem);
-                mEntities.SaveChanges();
+                    News NewsItem = new News() { Date = DateTime.Now, Order = 1, Status = true, Summary = "", Title = GroupItem.Name + " bài viết mẫu", TypeID = GroupItem.ID, Description = "Nội dung của " + GroupItem.Name };
+                    mEntities.AddToNews(NewsItem);
+                    mEntities.SaveChanges();
+                }
+                
             }
             
         }
@@ -221,8 +224,11 @@ namespace V308CMS.Sale.Controllers
                             NewsTitle = "News default title "; break;
                     }
                     News NewsItem = new News() { Date = DateTime.Now, Alias = NewsAlias, Order = 1, Status = true, Summary = NewsTitle+" mô tả ngắn", Title = NewsTitle + " bài viết mẫu", TypeID = AffiliateGroup.ID, Description = "Nội dung của " + NewsTitle };
-                    mEntities.AddToNews(NewsItem);
-                    mEntities.SaveChanges();
+                    using (var mEntities = new V308CMSEntities()) {
+                        mEntities.AddToNews(NewsItem);
+                        mEntities.SaveChanges();
+                    }
+                    
                 }
                 Model.PageTitle = PageTitle;
                 return View(Model);
@@ -278,8 +284,12 @@ namespace V308CMS.Sale.Controllers
                 else
                 {
                     var GroupItem = new NewsGroups() { Link = "", Date = DateTime.Now, Number = 0, Status = true, Parent = 0, Level = "99", Alias = CategoryAlias };
-                    mEntities.AddToNewsGroups(GroupItem);
-                    mEntities.SaveChanges();
+                    using (var mEntities = new V308CMSEntities())
+                    {
+                        mEntities.AddToNewsGroups(GroupItem);
+                        mEntities.SaveChanges();
+                    }
+                    
 
                     Model.PageTitle = PageTitle;
                 }

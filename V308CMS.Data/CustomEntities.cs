@@ -1658,7 +1658,7 @@ namespace V308CMS.Data
         private string _Title;
         private string _Summary;
         private string _URl;
-        private int? _Status;
+        private int _Status;
         private DateTime? _Created;
 
         #endregion
@@ -1669,7 +1669,7 @@ namespace V308CMS.Data
         public string title { get { if (String.IsNullOrEmpty(_Title)) return ""; else return _Title; } set { _Title = value; } }
         public string summary { get { if (String.IsNullOrEmpty(_Summary)) return ""; else return _Summary; } set { _Summary = value; } }
         public string url { get { if (String.IsNullOrEmpty(_URl)) return ""; else return _URl; } set { _URl = value; } }
-        public int? status { get { if (_Status == null || _Status < 0) return 0; else return _Status; } set { if (_Status != value) { if (_Status < 0) _Status = 0; else _Status = value; } } }
+        public int status { get { if ( _Status < 0) return 0; else return _Status; } set { if (_Status != value) { if (_Status < 0) _Status = 0; else _Status = value; } } }
         public DateTime? created { get { if (_Created == null) return new DateTime(); else return _Created; } set { if (_Created != value) { _Created = value; } } }
         #endregion
 
@@ -1743,6 +1743,7 @@ namespace V308CMS.Data
         #region[Declare variables]
         private int _ID;
         private string _Type;
+        private float _Discount;
         private string _ProductCode;
         private string _site;
         private string _Code;
@@ -1762,6 +1763,7 @@ namespace V308CMS.Data
         [Key]
         public int ID { get { return _ID; } set { _ID = value; } }
         public string type { get { if (String.IsNullOrEmpty(_Type)) return "order"; else return _Type; } set { _Type = value; } }
+        public float discount { get { return _Discount; } set { _Discount = value; } }
         public string productcode { get { if (String.IsNullOrEmpty(_ProductCode)) return ""; else return _ProductCode; } set { _ProductCode = value; } }
         public string site { get { if (String.IsNullOrEmpty(_site)) return Data.Helpers.Site.home; else return _site; } set { _site = value; } }
         public string code { get { if (String.IsNullOrEmpty(_Code)) return "xxxxx"; else return _Code; } set { _Code = value; } }

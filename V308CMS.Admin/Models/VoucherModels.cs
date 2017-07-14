@@ -21,6 +21,9 @@ namespace V308CMS.Admin.Models
         [Display(Name = "Mã Sản Phẩm")]
         public string ProductCode { get; set; }
 
+        [Display(Name = "Lượng giảm giá")]
+        public float discount { get; set; }
+
         [Display(Name = "Mã giảm giá")]
         [Required(ErrorMessage = "Mã Voucher không được để trống.")]
         public string Code { get; set; }

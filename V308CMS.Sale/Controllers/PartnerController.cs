@@ -12,7 +12,23 @@ namespace V308CMS.Sale.Controllers
 {
     public class PartnerController : BaseController
     {
-        
+        int nPage = 1;
+        public PartnerController() {
+            if (Request != null) {
+                var UriPage = Request.QueryString["p"];
+                if (UriPage == null || UriPage == "")
+                {
+                    UriPage = "1";
+                }
+                int SetPage = Convert.ToInt32(UriPage);
+                if (SetPage > 0)
+                {
+                    nPage = SetPage;
+                }
+            }
+            
+            //CreateRepos();
+        }
 
         [AffiliateAuthorize]
         public ActionResult Index()
@@ -343,24 +359,41 @@ namespace V308CMS.Sale.Controllers
         [AffiliateAuthorize]
         public ActionResult Banners()
         {
-            return View();
+            try
+            {
+
+                AffiliateBannerPage Model = BannerDaraRepo.GetItemsPage(nPage);
+                return View(Model);
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+                return Content("Xảy ra lỗi hệ thống ! Vui lòng thử lại.");
+            }
+            finally
+            {
+                DisposeRepos();
+            }
         }
 
         [HttpGet]
         [AffiliateAuthorize]
-        public ActionResult BannerForm()
+        public ActionResult BannerForm(BannerModel Model)
         {
-            return View();
+            return View(Model);
         }
 
         [HttpPost, ActionName("BannerForm")]
         [AffiliateAuthorize]
-        public ActionResult BannerFormPost()
+        public ActionResult BannerFormPost(BannerModel Data)
         {
             try
             {
                 CreateRepos();
-                BannerRepo.Insert(Request["image"], Request["title"], Request["summary"], Request["url"]);
+                var newItem = Data.CloneTo<AffiliateBanner>(new[] { "File" });
+
+                newItem.image = Data.File != null ? Data.File.Upload() : Data.Image;
+                BannerDaraRepo.InsertObject(newItem);
                 return Redirect("/banner");
             }
             catch (Exception ex)
@@ -421,7 +454,7 @@ namespace V308CMS.Sale.Controllers
 
             var newCoupon = coupon.CloneTo<Counpon>(new[] { "File" });
 
-            if (coupon.Image.Length < 1)
+            if (coupon.Image == null || coupon.Image.Length < 1)
             {
                 ModelState.AddModelError("", "Cần phải chọn hình ảnh.");
                 return View("CouponForm", coupon);

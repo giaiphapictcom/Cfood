@@ -5,7 +5,7 @@
 @{
 
     Layout = "~/Views/" + @ViewContext.RouteData.Values["controller"] + "/Layout/Default.cshtml";
-    string PageTitle = Model.NewsGroups.Name != null ? Model.NewsGroups.Name : "Danh sách bài viết";
+    string PageTitle = (Model.NewsGroups != null && Model.NewsGroups.Name != null) ? Model.NewsGroups.Name : "Danh sách video";
 }
 @section header {
     <title>@PageTitle</title>

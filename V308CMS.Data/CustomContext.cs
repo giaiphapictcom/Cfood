@@ -418,6 +418,12 @@ namespace V308CMS.Data
             set;
         }
 
+        public DbSet<SupportMan> SupportManTbl
+        {
+            get;
+            set;
+        }
+
         //public DbSet<Categorys> AffiliateCategory
         //{
         //    get;

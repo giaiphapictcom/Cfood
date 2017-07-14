@@ -206,7 +206,7 @@ namespace V308CMS.Respository
         {
             using (var entities = new V308CMSEntities())
             {
-                var product = (from item in entities.Product
+                var product = (from item in entities.Account
                                where item.ID == id
                                select item
                ).FirstOrDefault();

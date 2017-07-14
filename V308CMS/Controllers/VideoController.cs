@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using V308CMS.Data;
-using V308CMS.Filters;
+//using V308CMS.Filters;
 
 namespace V308CMS.Controllers
 {
@@ -43,7 +43,7 @@ namespace V308CMS.Controllers
         //{
         //    return Content("ok");
         //}
-        [UpdateView]
+       // [UpdateView]
         public ActionResult Detail(int id = 0)
         {
 

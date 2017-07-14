@@ -2,7 +2,7 @@
 @model V308CMS.Sale.Models.CouponModel
 @{
     Layout = "~/Views/Affiliate/Layout/Backend.cshtml";
-    string PageTitle = "Tạo Banner Quảng Cáo";
+    string PageTitle = "Tạo Voucher giảm giá";
 }
 @section header {
     <title>@PageTitle</title>
@@ -15,10 +15,21 @@
 
 
             <div class="col-md-12">
-                @BootstrapHelper.InputText("title", "Tiêu đề")
+                @BootstrapHelper.InputText("title", "Tiêu đề",null, Model.Title)
             </div>
             <div class="col-md-12">
-                @BootstrapHelper.InputText("code", "Voucher Code")
+                <div class="form-group">
+                    <label>Lượng giảm giá</label>
+                    @Html.TextBoxFor(model => Model.discount, new { type = "number", @class = "form-control" })
+
+                </div>
+                @*@BootstrapHelper.InputText("discount", "Lượng giảm giá", null, Model.discount.ToString() )*@
+            </div>
+            <div class="col-md-12">
+                @BootstrapHelper.InputText("ProductCode", "Mã sản phẩm",null,Model.ProductCode)
+            </div>
+            <div class="col-md-12">
+                @BootstrapHelper.InputText("code", "Voucher Code", null, Model.Code)
             </div>
             <div class="col-md-12">
 
@@ -26,11 +37,20 @@
                     <label>Hình Ảnh(<a href="javascript:void(0)" class="upload-button">Upload</a>)</label>
                     @Html.TextBoxFor(model => Model.File, new { type = "file" ,@class="hidden"})
 
-                    <input type="text" class="form-control" placeholder="http://website.com/img.jpg" name="ImageUrl">
+                    <input type="text" class="form-control" placeholder="http://website.com/img.jpg" name="ImageUrl" value="@Model.Image">
                 </div>
             </div>
             <div class="col-md-12">
-                @BootstrapHelper.InputTextarea("summary", "Mô tả ngắn")
+                @BootstrapHelper.InputTextarea("summary", "Mô tả ngắn", null, Model.Summary)
+            </div>
+            <div class="col-md-12">
+                @BootstrapHelper.InputTextarea("content", "Nội dung chi tiết",null, Model.Content)
+            </div>
+            <div class="col-md-6">
+                @BootstrapHelper.InputDate("start_date", "Ngày bắt đầu", null, Model.start_date.ToString())
+            </div>
+            <div class="col-md-6">
+                @BootstrapHelper.InputDate("end_date", "Ngày kết thúc",null,Model.end_date.ToString() )
             </div>
 
 
@@ -38,5 +58,5 @@
         </div>
 
 
-        <button type="submit" class="btn btn-success">Tạo Link</button>
+        <button type="submit" class="btn btn-success">Tạo Voucher</button>
     </form>

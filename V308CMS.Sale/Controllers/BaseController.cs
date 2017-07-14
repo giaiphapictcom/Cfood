@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using V308CMS.Data;
+using V308CMS.Respository;
 using V308CMS.Sale.Helpers;
 using V308CMS.Data.Helpers;
 
@@ -18,24 +19,39 @@ namespace V308CMS.Sale.Controllers
         public TestimonialRepository CommentRepo;
         public CategoryRepository CategoryRepo;
         public LinkRepository LinkRepo;
-        public BannerRepository BannerRepo;
+        public BannerRepository BannerDaraRepo;
+        public BannerRespository BannerRepo;
         public TicketRepository TicketRepo;
         public CouponRepository CouponRepo;
+        public MenuConfigRespository MenuRepos;
+        public NewsGroupRepository NewsGroupRepos;
+        public SupportManRepository SupportManRepos;
+
+
         public int PageSize = 10;
         public void CreateRepos()
         {
+           
+
             mEntities = new V308CMSEntities();
+
             ProductRepos = new ProductRepository();
             ProductRepos.PageSize = PageSize;
             ProductHelper.ProductShowLimit = ProductRepos.PageSize;
+
             AccountRepos = new AccountRepository();
             NewsRepos = new NewsRepository();
+            NewsGroupRepos = new NewsGroupRepository();
             CommentRepo = new TestimonialRepository(mEntities);
             CategoryRepo = new CategoryRepository(mEntities);
             LinkRepo = new LinkRepository(mEntities);
-            BannerRepo = new BannerRepository(mEntities);
+            BannerDaraRepo = new BannerRepository(mEntities);
+            BannerRepo = new BannerRespository();
             TicketRepo = new TicketRepository(mEntities);
             CouponRepo = new CouponRepository(mEntities);
+            MenuRepos = new MenuConfigRespository();
+            SupportManRepos = new SupportManRepository();
+
             CouponRepo.PageSize = PageSize;
         }
 
@@ -46,12 +62,29 @@ namespace V308CMS.Sale.Controllers
 
             //AccountRepos.Dispose();
             //NewsRepos.Dispose();
-            CommentRepo.Dispose();
-            CategoryRepo.Dispose();
-            LinkRepo.Dispose();
-            BannerRepo.Dispose();
-            TicketRepo.Dispose();
-            CouponRepo.Dispose();
+
+            if (CommentRepo != null) {
+                CommentRepo.Dispose();
+            }
+            if (CategoryRepo != null) {
+                CategoryRepo.Dispose();
+            }
+            if (LinkRepo != null) {
+                LinkRepo.Dispose();
+            }
+            if (BannerDaraRepo != null) {
+                BannerDaraRepo.Dispose();
+            }
+            if (TicketRepo != null) {
+                TicketRepo.Dispose();
+            }
+            if (CouponRepo != null) {
+                CouponRepo.Dispose();
+            }
+            if (MenuRepos != null) {
+                //MenuRepos.Dispose();
+            }
+            
         }
 
         private readonly AccountRepository _AccountService;
@@ -61,6 +94,7 @@ namespace V308CMS.Sale.Controllers
         protected BaseController()
         {
             _AccountService = new AccountRepository();
+            CreateRepos();
         }
 
         protected void SetFlashMessage(string message)

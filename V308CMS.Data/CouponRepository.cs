@@ -14,6 +14,13 @@ namespace V308CMS.Data
     public class CouponRepository : CouponInterfaceRepository
     {
         private V308CMSEntities entities;
+        public int PageSize = 20;
+        protected CouponRepository()
+        {
+
+        }
+
+
         public void Dispose()
         {
             Dispose(true);
@@ -102,7 +109,7 @@ namespace V308CMS.Data
 
         }
 
-        public int PageSize = 20;
+        
         public CouponsPage GetItemsPage(int PageCurrent = 0)
         {
             CouponsPage ModelPage = new CouponsPage();

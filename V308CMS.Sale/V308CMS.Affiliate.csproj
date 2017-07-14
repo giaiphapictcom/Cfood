@@ -163,6 +163,7 @@
     <Compile Include="Helpers\HtmlAffiliate.cs" />
     <Compile Include="Helpers\ImageUrlHelper.cs" />
     <Compile Include="Models\Authenicate.cs" />
+    <Compile Include="Models\BannerModel.cs" />
     <Compile Include="Models\CaptchaModel.cs" />
     <Compile Include="Models\AccountModel.cs" />
     <Compile Include="Models\CouponModel.cs" />
@@ -1349,6 +1350,7 @@
     <Content Include="Content\themes\affiliate2.0\css\retina-responsive.css" />
     <Content Include="Content\themes\affiliate2.0\css\styles-setting.css" />
     <Content Include="Content\themes\affiliate2.0\css\styles.css" />
+    <Content Include="Content\themes\affiliate2.0\css\support.css" />
     <Content Include="Content\themes\affiliate2.0\fonts\ElegantIcons.svg" />
     <Content Include="Content\themes\affiliate2.0\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\themes\affiliate2.0\fonts\ionicons.svg" />
@@ -1466,6 +1468,8 @@
     <Content Include="Views\Partner\AccountInfomation.cshtml" />
     <Content Include="Views\Affiliate\Videos.cshtml" />
     <Content Include="Views\Affiliate\Video.cshtml" />
+    <Content Include="Views\Partner\Banners.cshtml" />
+    <Content Include="Views\Affiliate\Elements\SupportRight.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

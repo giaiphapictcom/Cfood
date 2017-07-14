@@ -13,6 +13,7 @@ namespace V308CMS.Sale.Helpers
         public static string ProductCode = "MP";
 
         public static string SiteAffiliate = "affiliate";
+        public static string FacebookAppId = Configs.GetAppConfig("FacebookAppId");
 
 
 

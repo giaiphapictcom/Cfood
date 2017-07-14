@@ -6,6 +6,7 @@ $(document).ready(function () {
     uploadbutton.select();
 
     menu.hover();
+    supporthuman.action();
 });
 
 
@@ -64,5 +65,19 @@ uploadbutton = {
 var menu = {
     hover: function () {
 
+    }
+}
+
+var supporthuman = {
+    action: function () {
+        jQuery("#side-overlay button.pull-right").click(function () {
+
+            $("#side-overlay").css("right", 0);
+        });
+        jQuery("a.viewsupport").click(function () {
+
+            $("#side-overlay").css("right", 310);
+        });
+        
     }
 }

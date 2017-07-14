@@ -18,7 +18,7 @@ namespace V308CMS.Admin.Controllers
         //
         // GET: /User/        
         [CheckPermission(0, "Danh sách")]
-        public ActionResult Index(int status =0,string site="")
+        public ActionResult Index(int status =0,string site= Data.Helpers.Site.home)
         {
             ViewBag.ListStateFilter = DataHelper.ListEnumType<StateFilterEnum>();
             return View("Index", UserService.GetList(status, site));
@@ -197,21 +197,24 @@ namespace V308CMS.Admin.Controllers
                 "Xóa khách hàng thành công." :
                 "Khách hàng không tồn tại trên hệ thống.");
 
-            string listViewAction = user.Site == ConfigHelper.SiteAffiliate ? "affiliate" : "Index";
-            return RedirectToAction(listViewAction);
+            string ActionIndex = user.Site == Data.Helpers.Site.affiliate ? "affiliate" : "Index";
+            return RedirectToAction(ActionIndex);
         }
 
         [HttpPost]
         [CheckPermission(4, "Thay đổi trạng thái")]
         [ActionName("ChangeStatus")]
-        [ValidateAntiForgeryToken]       
+        //[ValidateAntiForgeryToken]       
         public ActionResult OnChangeStatus(int id)
         {
+            var user = UserService.Find(id);
             var result = UserService.ChangeStatus(id);
             SetFlashMessage(result == Result.Ok
                 ? string.Format("Thay đổi trạng thái khách hàng thành công.")
                 : "Không tìm thấy khách hàng cần thay đổi trạng thái.");
-            return RedirectToAction("Index");
+
+            string ActionIndex = user.Site == Data.Helpers.Site.affiliate ? "affiliate" : "Index";
+            return RedirectToAction(ActionIndex);
 
         }
         [CheckPermission(5, "Đổi mật khẩu")]
@@ -221,7 +224,9 @@ namespace V308CMS.Admin.Controllers
             var userChangePassword = UserService.Find(id);
             if (userChangePassword == null)
             {
-                return RedirectToAction("Index");
+                //return RedirectToAction("Index");
+                string ActionIndex = userChangePassword.Site == Data.Helpers.Site.affiliate ? "affiliate" : "Index";
+                return RedirectToAction(ActionIndex);
 
             }
             var userChangePasswordModels = new UserChangePassworModels
@@ -262,9 +267,9 @@ namespace V308CMS.Admin.Controllers
 
         #region Affiliate action
         [CheckPermission(0, "Danh sách")]
-        public ActionResult affiliate(int status = 0)
+        public ActionResult affiliate(int status = -1)
         {
-            return Index(status, ConfigHelper.SiteAffiliate);
+            return Index(status, Data.Helpers.Site.affiliate);
         }
         [CheckPermission(1, "Thêm mới")]
         public ActionResult affiliateCreate()

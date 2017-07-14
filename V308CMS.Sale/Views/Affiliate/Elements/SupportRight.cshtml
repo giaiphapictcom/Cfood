@@ -1,0 +1,52 @@
+﻿@model V308CMS.Data.SupportMansPage
+
+@if (Model.Items != null)
+{
+<aside id="side-overlay">
+    <!-- Side Overlay Scroll Container -->
+    <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 100%;">
+        <div id="side-overlay-scroll" style="overflow: hidden; width: auto; height: 100%">
+
+            <div class="side-content remove-padding-t">
+                <div class="block pull-r-l" style="">
+                    <div class="block-header bg-gray-lighter">
+                        <h3 class="block-title">Hỗ trợ trực tuyến</h3>
+                        <button class="btn btn-default pull-right" type="button" data-toggle="layout" data-action="side_overlay_close">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="block-content">
+                        @foreach (V308CMS.Data.Models.SupportMan s in Model.Items)
+                        {
+                            <h5>@s.Name</h5>
+                            <p>
+                                @if (s.Skype != null && s.Skype.Length > 0) {
+                                    <span>Skype :</span><a href="skype:@s.Skype?chat" > @s.Skype </a><br/>
+                                }
+
+                                @if (s.Email != null && s.Email.Length > 0)
+                                {
+                                   <span>Email :</span><a href="mailto:@s.Email">@s.Email</a><br/>
+                                }
+
+                                @if (s.Mobile != null && s.Mobile.Length > 0)
+                                {
+                                    <span>Mobile :</span><a href="tel:@s.Mobile">@s.Mobile</a><br>
+                                }
+                                @if (s.Phone != null && s.Phone.Length > 0)
+                                {
+                                    <span>Phone :</span><a href="tel:@s.Phone">@s.Phone</a><br>
+                                }
+                            </p>
+                        }
+                        
+                        @*Group: <a href="https://www.facebook.com/groups/masoffer/" target="_blank">fb.com/groups/masoffer</a><br>
+                        FanPage: <a href="https://www.facebook.com/masoffer/" target="_blank">fb.com/masoffer</a>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slimScrollBar" style="background: rgb(0, 0, 0); width: 5px; position: absolute; top: 0px; opacity: 0.35; display: none; border-radius: 7px; z-index: 99; right: 2px; height: 638px;"></div><div class="slimScrollRail" style="width: 5px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51); opacity: 1; z-index: 90; right: 2px;"></div>
+    </div>
+</aside>
+}

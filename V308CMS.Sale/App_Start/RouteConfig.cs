@@ -33,9 +33,9 @@ namespace V308CMS.Sale
             
             routes.MapRoute("ShortLink-Edit", "link/chinh-sua/{id}", new { Controller = "Partner", action = "LinkForm" }, new { id = @"\d+" });
 
-            routes.MapRoute("ShortBanners", "baner", new { Controller = "Partner", action = "Banners" });
-            routes.MapRoute("ShortBanners-Create", "baner/tao-moi", new { Controller = "Partner", action = "BannerForm" });
-            routes.MapRoute("ShortBanners-Edit", "baner/chinh-sua/{id}", new { Controller = "Partner", action = "BannerForm" }, new { id = @"\d+" });
+            routes.MapRoute("ShortBanners", "banner", new { Controller = "Partner", action = "Banners" });
+            routes.MapRoute("ShortBanners-Create", "banner/tao-moi", new { Controller = "Partner", action = "BannerForm" });
+            routes.MapRoute("ShortBanners-Edit", "banner/chinh-sua/{id}", new { Controller = "Partner", action = "BannerForm" }, new { id = @"\d+" });
 
             routes.MapRoute("Product", "san-pham", new { Controller = "Partner", action = "Products" });
             routes.MapRoute("Coupon", "ma-giam-gia", new { Controller = "Partner", action = "Coupons" });
