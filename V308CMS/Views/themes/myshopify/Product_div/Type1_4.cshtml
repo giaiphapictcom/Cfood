@@ -45,13 +45,17 @@
                 <p class="short-description">@Model.Summary</p>
                 <div class="add-to-link">
                     <div class="add-to-cart">
+                        @if (Model.Quantity > 0)
+                        {
+                            <a href="javascript:void(0);" class="btn add-to-cart-btn" add-cart="@Model.ID" title="Thêm vào giỏ hàng">
+                                Thêm vào giỏ hàng
+                            </a>
 
-                        <form action="/cart/add" method="post" class="variants" id="product-actions-@Model.ID" enctype="multipart/form-data" style="padding: 0px;">
-                            <input type="hidden" name="id" value="29530312713" />
-                            <span>
-                                <input class="btn add-to-cart-btn" data-toggle="tooltip" data-placement="top" title="Thêm vào giỏ hàng" type="submit" value="Thêm vào giỏ hàng" />
-                            </span>
-                        </form>
+                        }
+                        else
+                        {
+                            <span style="color: #f00; font-weight: bold">Sản phẩm tạm hết hàng</span>
+                        }
                     </div>
                     <a class="wishlist btn" href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="Yêu thích"><span><i class="fa fa-heart" aria-hidden="true"></i></span></a>
                 </div>

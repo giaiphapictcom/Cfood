@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace V308CMS.Controllers
 {
-    public class PopupController : Controller
+    public class PopupController : BaseController
     {
         //
         // GET: /Popup/

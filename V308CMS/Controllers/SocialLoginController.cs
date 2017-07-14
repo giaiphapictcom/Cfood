@@ -61,7 +61,7 @@ namespace V308CMS.Controllers
 
         public ActionResult LoginFail(string provider)
         {
-            return View("Social.LoginFail", provider);
+            return View("LoginFail",(object)provider);
         }
         public ActionResult GoogleCallback(string returnUrl = "")
         {

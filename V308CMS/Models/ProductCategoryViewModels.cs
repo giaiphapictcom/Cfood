@@ -13,6 +13,7 @@ namespace V308CMS.Models
         public int Sort { get; set;}
         public int Page { get; set; }
         public int PageSize { get; set; }
+        public int TotalPage { get; set; }
         public int TotalRecord { get; set; }
         public ProductType Category { get; set; }
         public List<ProductType> ListSubCategory { get; set; } 

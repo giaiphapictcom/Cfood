@@ -27,9 +27,7 @@ namespace V308CMS.Helpers
                     result.AddRange(filterIem);
                 }
             }
-
-
-            return result.ToArray();
+            return result.Distinct().ToArray();
         }
     }
 }

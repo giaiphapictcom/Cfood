@@ -20,12 +20,19 @@
                 </div>
                 <div class="col-lg-6 col-xs-12 home-social">
                     <div class="title-social">FOLLOW US:</div>
-                    <div class="footer-icon-share">
-                        <!--Edited by toaihv-->
-                        <a href="@(ViewBag.GPlus  != null?ViewBag.GPlus: "javascript:void(0)")" target="_blank"><img src="~/Content/images/social/google.png" /></a>
-                        <a href="@(ViewBag.FacebookPage != null ?ViewBag.FacebookPage: "javascript:void(0)")" target="_blank"><img src="~/Content/images/social/facebook.png" /></a>
-                        <a href="@(ViewBag.Zalo != null ?ViewBag.Zalo: "javascript:void(0)")" target="_blank"><img src="~/Content/images/social/zalo.png" /></a>
-                        <a href="@(ViewBag.Youtube != null?ViewBag.Youtube: "javascript:void(0)")" target="_blank"><img src="~/Content/images/social/youtube.png" /></a>
+                    <div class="footer-icon-share">                       
+                        <a href="@(ViewBag.GPlus ?? "javascript:void(0)")" target="_blank">
+                            <i class="fa fa-google-plus"></i>
+                        </a>
+                        <a href="@(ViewBag.FacebookPage ?? "javascript:void(0)")" target="_blank">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                        <a href="@(ViewBag.Zalo ?? "javascript:void(0)")" target="_blank">
+                            Zalo
+                        </a>
+                        <a href="@(ViewBag.Youtube ?? "javascript:void(0)")" target="_blank">
+                            <i class="fa fa-youtube"></i>
+                        </a>
                     </div>
 
                 </div>

@@ -26,6 +26,8 @@ namespace V308CMS.Data.Models
         public byte DiscountType { get; set; }  
         public double Value { get; set; }      
         public byte State { get; set; }
+        public  DateTime StartDate { get; set; }
+
         
     }
 }

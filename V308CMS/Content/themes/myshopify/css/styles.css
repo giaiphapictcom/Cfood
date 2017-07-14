@@ -4977,3 +4977,11 @@ label.active {
     height: 24px;
     border: solid 1px #666;
 }
+.filter_item,.filter_item_active label {
+    cursor: pointer;
+}
+.filter_item_active {
+    color: #00aeef !important;
+    font-weight: bold !important;
+    
+}

@@ -125,13 +125,17 @@
                                                                                         </div>
                                                                                         <span class="shopify-product-reviews-badge" data-id="@product.ID"></span>
                                                                                         <div class="add-to-link">
-                                                                                            <div class="add-to-cart">
-                                                                                                <a href="javascript:void(0);"
-                                                                                                   class="btn add-to-cart-btn" add-cart="@product.ID" title="Thêm vào giỏ hàng">
+                                                                                            @if (product.Quantity > 0)
+                                                                                            {
+                                                                                                <a href="javascript:void(0);" class="btn add-to-cart-btn" add-cart="@product.ID" title="Thêm vào giỏ hàng">
                                                                                                     Thêm vào giỏ hàng
                                                                                                 </a>
 
-                                                                                            </div>
+                                                                                            }
+                                                                                            else
+                                                                                            {
+                                                                                                <span style="color: #f00; font-weight: bold">Sản phẩm tạm hết hàng</span>
+                                                                                            }                                                                                            
                                                                                             <a data-id="@product.ID" class="wishlist btn" href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="Yêu thích">
                                                                                                 <span><i class="fa fa-heart" aria-hidden="true"></i></span>
                                                                                             </a>

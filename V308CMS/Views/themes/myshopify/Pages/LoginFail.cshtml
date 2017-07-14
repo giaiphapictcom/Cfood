@@ -30,7 +30,7 @@
         <h1>Đăng nhập sử dụng @Model </h1>
     </header>
     <span class="field-validation-error">
-        Đăng nhập không thành công, vui lòng kiểm tra lại thiết lập tài khoản của bạn. Nhấn vào  <a href="@Url.AccountLoginUrl()" title="Đăng nhập">đây</a> để đăng nhập lại.
+        Đăng nhập không thành công, vui lòng kiểm tra lại thiết lập tài khoản của bạn. Nhấn vào  <a style="cursor: pointer" href="@(Model=="facebook"?Url.SocialLoginFacebookUrl():(Model=="google"?Url.SocialLoginGoogleUrl():"/"))" title="Đăng nhập">đây</a> để đăng nhập lại.
     </span>
 
 </div>

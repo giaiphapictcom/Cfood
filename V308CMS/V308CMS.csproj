@@ -188,6 +188,7 @@
     <Compile Include="Helpers\Url\CaptchaUrlHelper.cs" />
     <Compile Include="Helpers\Url\ComponentUrlHelper.cs" />
     <Compile Include="Helpers\Url\FacebookPluginUrlHelper.cs" />
+    <Compile Include="Helpers\Url\HomeUrlHelper.cs" />
     <Compile Include="Helpers\Url\PopupUrlHelper.cs" />
     <Compile Include="Helpers\Url\ProductUrlHelper.cs" />
     <Compile Include="Helpers\Url\AccountUrlHelper.cs" />
@@ -1306,6 +1307,10 @@
     <Content Include="Content\Css\extention.css" />
     <Content Include="Content\Css\home.css" />
     <Content Include="Content\Css\landing.css" />
+    <Content Include="Content\Css\login.css" />
+    <Content Include="Content\Css\new_login.css" />
+    <Content Include="Content\Css\profile.css" />
+    <Content Include="Content\Css\register.css" />
     <Content Include="Content\Css\select2.min.css" />
     <Content Include="Content\Css\style.css" />
     <Content Include="Content\Css\vthree.css" />
@@ -1905,7 +1910,6 @@
     <Content Include="Views\themes\myshopify\Layout\Resources.cshtml">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="Views\themes\myshopify\Pages\category.cshtml" />
     <Content Include="Views\themes\myshopify\Pages\Detail.cshtml" />
     <Content Include="Views\themes\myshopify\Pages\Error.cshtml" />
     <Content Include="Views\themes\myshopify\Pages\Home.cshtml">
@@ -1994,7 +1998,7 @@
     <Content Include="Views\themes\myshopify\Pages\Payment.Success.cshtml" />
     <None Include="Properties\PublishProfiles\Mpstart30062017.pubxml" />
     <Content Include="Views\themes\myshopify\Async\_ListProductRelativedAsync.cshtml" />
-    <Content Include="Views\themes\myshopify\Pages\ListByCategory.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Category.cshtml" />
     <Content Include="Views\themes\myshopify\Async\_ListProductBestSellerAsync.cshtml" />
     <Content Include="Views\themes\myshopify\Async\_ListProductBrandFilterAsync.cshtml" />
     <Content Include="Views\themes\myshopify\Async\_ListProductManufacturerFilterAsync.cshtml" />
@@ -2002,7 +2006,7 @@
     <Content Include="Views\themes\myshopify\Components\ProductPriceComponent.cshtml" />
     <Content Include="Views\themes\myshopify\Components\CategoryHomeComponent.cshtml" />
     <Content Include="Views\themes\myshopify\Components\ProductComponent.cshtml" />
-    <Content Include="Views\themes\myshopify\Pages\Social.LoginFail.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\LoginFail.cshtml" />
     <Content Include="Views\themes\myshopify\Popup\Login.cshtml" />
     <Content Include="Views\themes\myshopify\Popup\Register.cshtml" />
     <Content Include="Views\themes\myshopify\Popup\ForgotPassword.cshtml" />

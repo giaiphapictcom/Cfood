@@ -14,16 +14,23 @@ namespace V308CMS.Data
         {
         }
 
-        public List<Product> GetListByCategoryId(int categoryId, string[] listFilter, int sort, out int totalRecord, int page = 1,
+        public List<Product> GetListByCategoryId(string categoryFilter, string[] listFilter, int sort, out int totalRecord, int page = 1,
             int pageSize = 25)
         {
             using (var entities = new V308CMSEntities())
             {
-                var listProduct = (from product in entities.Product
-                    where product.Status == true && product.Type == categoryId
-                    orderby  product.Number, product.Date descending 
-                    select product
-                    );
+                var listProduct = string.IsNullOrWhiteSpace(categoryFilter)
+                    ? (from product in entities.Product
+                        where product.Status == true
+                        orderby product.Number, product.Date descending
+                        select product
+                        )
+                    : (
+                        from product in entities.Product
+                        where product.Status == true && categoryFilter.Contains("," + product.Type +",")
+                        orderby product.Number, product.Date descending
+                        select product
+                        );
                 if (listFilter != null && listFilter.Length>0)
                 {
                     for (var i = 0; i < listFilter.Length; i += 2)
@@ -51,27 +58,46 @@ namespace V308CMS.Data
                                 );
                                 break;
                             case (int)FilterEnum.ByFromPrice:
-                                double fromPriceValue;
-                                double.TryParse(valueFilter, out fromPriceValue);
+                                int fromPriceValue;
+                                int.TryParse(valueFilter +"000", out fromPriceValue);
                                 if (fromPriceValue > 0)
                                 {
                                     listProduct = (from product in listProduct
-                                                   where product.Price >= fromPriceValue
+                                                   where product.Price < fromPriceValue
                                                    orderby product.Number, product.Date descending
                                                    select product
                                                    );
                                 }
                                 break;
                             case (int)FilterEnum.ByToPrice:
-                                double toPriceValue;
-                                double.TryParse(valueFilter, out toPriceValue);
+                                int toPriceValue;
+                                int.TryParse(valueFilter +"000", out toPriceValue);
                                 if (toPriceValue > 0)
                                 {
                                     listProduct = (from product in listProduct
-                                                   where product.Price <= toPriceValue
+                                                   where product.Price > toPriceValue
                                                    orderby product.Number, product.Date descending
                                                    select product
                                                    );
+                                }
+                                break;
+                            case (int)FilterEnum.ByBetweenPrice:
+                                int fromPrice = 0;
+                                int toPrice = 0;
+                                var listPrice =
+                                    valueFilter.Split(new[] {"-"}, StringSplitOptions.RemoveEmptyEntries)
+                                        .ToArray();
+                                if (listPrice.Length > 0)
+                                    int.TryParse(listPrice[0] +"000", out fromPrice);
+                                if (listPrice.Length > 1)
+                                    int.TryParse(listPrice[1] +"000", out toPrice);
+                                if (fromPrice < toPrice)
+                                {
+                                    listProduct = (from product in listProduct
+                                                   where product.Price >= fromPrice && product.Price<=toPrice
+                                                   orderby product.Number, product.Date descending
+                                                   select product
+                                                  );
                                 }
                                 break;
 

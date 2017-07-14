@@ -166,6 +166,8 @@
     <Compile Include="Mapping\SizeMap.cs" />
     <Compile Include="Mapping\StoreMap.cs" />
     <Compile Include="Mapping\UnitMap.cs" />
+    <Compile Include="Mapping\VoucherCodeMap.cs" />
+    <Compile Include="Mapping\VoucherLogMap.cs" />
     <Compile Include="Mapping\VoucherMap.cs" />
     <Compile Include="MarketRepository.cs" />
     <Compile Include="Metadata\BannerMetadata.cs" />
@@ -187,6 +189,8 @@
     <Compile Include="Metadata\SizeMetadata.cs" />
     <Compile Include="Metadata\StoreMetadata.cs" />
     <Compile Include="Metadata\UnitMetadata.cs" />
+    <Compile Include="Metadata\VoucherCodeMetadata.cs" />
+    <Compile Include="Metadata\VoucherLogMetadata.cs" />
     <Compile Include="Metadata\VoucherMetadata.cs" />
     <Compile Include="Models\Banner.cs" />
     <Compile Include="Models\CategoryItem.cs" />

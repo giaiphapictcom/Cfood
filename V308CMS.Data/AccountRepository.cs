@@ -253,7 +253,7 @@ namespace V308CMS.Data
             using (var entities = new V308CMSEntities())
             {
                 var checkAccount = (from account in entities.Account
-                                    where account.Email == email
+                                    where account.Email == email || account.UserName == email
                                     select account
                ).FirstOrDefault();
                 if (checkAccount == null)
@@ -320,7 +320,7 @@ namespace V308CMS.Data
 
         private string HashPassword(string password, string salt)
         {
-            return EncryptionMD5.ToMd5(string.Format("{0}|{1}", password, salt));
+            return EncryptionMD5.ToMd5($"{password}|{salt}");
         }
         public string CheckAccount(string email, string password)
         {

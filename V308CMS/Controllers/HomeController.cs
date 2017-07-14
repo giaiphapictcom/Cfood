@@ -76,7 +76,7 @@ namespace V308CMS.Controllers
                 return View("MobileIndex", mIndexPageContainer);
         }
 
-        public  ActionResult ListByCategory(int categoryId = 0,string filter = "", int sort = (int) SortEnum.Default, int page = 1,
+        public  ActionResult Category(int categoryId = 0,string filter = "", int sort = (int) SortEnum.Default, int page = 1,
             int pageSize = 18)
         {
             var category = ProductTypeService.Find(categoryId);
@@ -85,88 +85,52 @@ namespace V308CMS.Controllers
                 return RedirectToAction("Index");
             }
             var listFilter = FilterParser.ParseTokenizer(filter);
-            int totalRecords;
+            int totalRecord;
+            int totalPage = 0;
+            var listSubCategory = ProductTypeService.GetAllByCategoryId(categoryId);
+            var listCategoryFilter = "";
+            if (categoryId > 0)
+            {
+                listCategoryFilter = "," + categoryId;
+            }
+            if (listSubCategory == null || listSubCategory.Count==0)
+            {
+                listCategoryFilter += ",";
+            }
+            else
+            {
+                listCategoryFilter = listSubCategory.Aggregate(listCategoryFilter, (current, subCategory) => current + "," + subCategory.ID) + ",";
+            }            
+            var listProduct = ProductsService.GetListByCategoryId(listCategoryFilter, listFilter, sort, out totalRecord, page,
+                pageSize);
+            
+            if (totalRecord > 0)
+            {
+
+                totalPage = totalRecord / pageSize;
+                if (totalRecord % pageSize > 0)
+                    totalPage += 1;
+            }
+
             var result = new ProductCategoryViewModels
             {
                 Category = category,
-                ListSubCategory = ProductTypeService.GetAllByCategoryId(categoryId),              
-                ListProduct = ProductsService.GetListByCategoryId(categoryId, listFilter, sort, out totalRecords, page, pageSize),
+                CategoryId = categoryId,
+                ListSubCategory = listSubCategory,              
+                ListProduct = listProduct,
                 Page = page,
                 PageSize = pageSize,
                 Sort = sort,
                 ListSort = DataHelper.ListEnumType<SortEnum>(sort),
-                TotalRecord = totalRecords,
-                Filter = filter
-                
+                TotalPage = totalPage,
+                TotalRecord = totalRecord,
+                Filter = filter                
             };
 
-            return View("ListByCategory", result);
+            return View("Category", result);
 
         }
-        public ActionResult Category(int pGroupId = 0)
-        {
-
-            ProductCategoryPageContainer model = new ProductCategoryPageContainer();
-
-            int nPage = Convert.ToInt32(Request.QueryString["p"]);
-            if (nPage < 1)
-            {
-                nPage = 1;
-            }
-
-            List<Product> mProductList = new List<Product>();
-            List<ProductCategoryPage> mProductPageList = new List<ProductCategoryPage>();
-
-            ProductType productCategory = ProductsService.LayLoaiSanPhamTheoId(pGroupId);
-            if (productCategory != null)
-            {
-                CategoryPage categoryPage = ProductHelper.getProductsByCategory(productCategory.ID, nPage);
-
-                model.Products = categoryPage.Products;
-                model.ProductTotal = categoryPage.ProductTotal;
-                model.Brands = ProductsService.getRandomBrands(productCategory.ID, 6);
-                List<ProductType> mProductTypeList;
-                if (productCategory.Parent == 0)
-                    mProductTypeList = ProductsService.getProductTypeByProductType(productCategory.ID);//lay danh sach cap 1
-                else
-                {
-                    mProductTypeList = new List<ProductType>
-                    {
-                        productCategory
-                    };
-                    //mProductTypeList = productRepository.getProductTypeByProductType((int)mProductType.Parent);//lay danh sach cap 2
-                }
-
-                if (mProductTypeList.Count > 0)
-                {
-                    mProductPageList.AddRange(mProductTypeList.Select(it => ProductHelper.GetCategoryPage(it, nPage)));
-                }
-                else
-                {
-                    mProductPageList.Add(ProductHelper.GetCategoryPage(productCategory, nPage));
-
-                }
-                //lay danh sach cac nhom so che
-                //mSoCheList = productRepos.LayProductTypeTheoParentId(147);
-                //Model.ProductTypeList = mSoCheList;
-                //lay cac san pham ban chay
-                //mBestBuyList = productRepos.getBestBuyWithType(1, 10, 147, "10030");
-                //Model.ProductList = mBestBuyList;
-            }
-            model.List = mProductPageList;
-            model.ProductType = productCategory;
-            model.BestSeller = ProductsService.getProductsRandom();
-            //if (mProductList.Count < 40)
-            //    Model.IsEnd = true;
-            model.Page = nPage;
-            return View("Category", model);
-            //if (!Request.Browser.IsMobileDevice)
-            //    return View("Category", model);
-            //else
-            //    return View("MobileCategory", model);
-
-        }
-     
+       
         public async Task<ActionResult> Detail(int pId = 0)
         {
             var product = await ProductsService.FindAsync(pId, true);
@@ -174,7 +138,7 @@ namespace V308CMS.Controllers
             return View("Detail", product);           
         }
 
-        public ActionResult Search(string q, int page=1, int pageSize=30)
+        public ActionResult Search(string q, int page=1, int pageSize=25)
         {
             int totalRecord;
             int totalPage = 0;

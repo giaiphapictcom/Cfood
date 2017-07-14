@@ -96,6 +96,22 @@ namespace V308CMS.Data
             .HasForeignKey(p => p.RoleId);
 
         }
+        public DbSet<Voucher> Voucher
+        {
+            get;
+            set;
+        }
+        public DbSet<VoucherCode> VoucherCode
+        {
+            get;
+            set;
+        }
+
+        public DbSet<VoucherLog> VoucherLog
+        {
+            get;
+            set;
+        }
         public DbSet<OrderTransaction> OrderTransaction
         {
             get;

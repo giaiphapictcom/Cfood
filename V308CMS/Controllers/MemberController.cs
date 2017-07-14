@@ -35,12 +35,12 @@ namespace V308CMS.Controllers
         [ActionName("AjaxLogin")]
         public JsonResult OnAjaxLogin(string email="", string password="")
         {          
-            var result = AccountService.CheckAccount(email, password);
-            if (result == "invalid")
+            var checkLoginResult = AccountService.CheckAccount(email, password);
+            if (checkLoginResult == "invalid")
             {              
                 return Json(new { code = 0, message = "Tên tài khoản hoặc Mật khẩu không chính xác."});
             }
-            InternalLoginSuccess(result, email);         
+            InternalLoginSuccess(checkLoginResult, email);         
             return Json(new { code = 1, message = "Đăng nhập thành công. Đang chuyển về trang chủ..." });
         }
 
@@ -49,7 +49,7 @@ namespace V308CMS.Controllers
             var userDetail = checkLoginResult.Split(new[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
             var userId = int.Parse(userDetail[0]);
             var userAvatar = userDetail.Length > 1 ? userDetail[1] : "";
-            AuthenticationHelper.SignIn(userId, email, email, userAvatar);
+            AuthenticationHelper.SignIn(userId, email, email, userAvatar,remember);
         }
 
         [ValidateAntiForgeryToken]

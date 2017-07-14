@@ -67,8 +67,6 @@ namespace V308CMS.Controllers
         {
             ViewBag.CurrentRouteData = currentRouteData;
             return PartialView("_ListProductManufacturerFilterAsync", await ProductManufacturerService.GetAllAsync());
-
         }
-     
     }
 }
