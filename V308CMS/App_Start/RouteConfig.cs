@@ -10,7 +10,9 @@ namespace V308CMS
     public class RouteConfig
     {
         public static void RegisterRoutes(RouteCollection routes)
-        {
+        {          
+            routes.MapRoute("MemberWishlistIndexRoute", "san-pham-yeu-thich", new { Controller = "MemberWishList", action = "Index" });
+            
             routes.MapRoute("CartCheckoutRoute", "thanh-toan", new { Controller = "Cart", action = "Checkout" });
             routes.MapRoute("CartViewCartRoute", "gio-hang", new { Controller = "Cart", action = "ViewCart" });
             routes.MapRoute("CartEmptyRoute", "gio-hang-trong", new { Controller = "Cart", action = "EmptyCart" });

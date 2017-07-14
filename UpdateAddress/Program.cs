@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using V308CMS.Common;
-using V308CMS.Data.Enum;
 using V308CMS.Respository;
 
 namespace UpdateAddress
