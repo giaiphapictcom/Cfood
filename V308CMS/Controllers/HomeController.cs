@@ -3,25 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using ServiceStack.Text;
 using V308CMS.Common;
 using V308CMS.Data;
 using V308CMS.Data.Enum;
 using V308CMS.Helpers;
 using V308CMS.Models;
-using V308CMS.Respository;
 
 namespace V308CMS.Controllers
 {
     public class HomeController : BaseController
-    {
-
-        //public ActionResult Index() {
-        //}
-
+    {      
         public HomeController()
         {
         }
@@ -81,13 +74,10 @@ namespace V308CMS.Controllers
 
 
             mIndexPageContainer.ProductLastest = ProductsService.getProductsLastest(6);
-            if (mIndexPageContainer.ProductLastest.Count() < 1)
+            if (!mIndexPageContainer.ProductLastest.Any())
             {
                 mIndexPageContainer.ProductLastest = ProductsService.getProductsRandom(6);
             }
-
-
-
             if (Theme.domain == "myshopify")
             {
                 List<ProductType> homeCategorys = new List<ProductType>();
