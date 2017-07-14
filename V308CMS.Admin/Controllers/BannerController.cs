@@ -20,7 +20,7 @@ namespace V308CMS.Admin.Controllers
         }
         // GET: /Banner/
         [CheckPermission(0, "Danh sách")]
-        public ActionResult Index(byte position=0,string site="")
+        public ActionResult Index(byte position=0,string site=Data.Helpers.Site.home)
         {
             return View("Index",BannerService.GetList(-1,site,false,-1));
         }

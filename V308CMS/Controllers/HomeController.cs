@@ -18,49 +18,107 @@ namespace V308CMS.Controllers
 {
     public class HomeController : BaseController
     {
+
+        //public ActionResult Index() {
+        //}
+
         public HomeController()
         {
         }
         public async Task<ActionResult> Index()
+
         {
 
-            IndexPageContainer mIndexPageContainer = new IndexPageContainer();
-            List<IndexPage> mIndexPageList = new List<IndexPage>();
-            var mListParent = ProductsService.LayProductTypeTheoParentId(0);
-            foreach (ProductType it in mListParent)
-            {
-                //lay danh sach san pham
-                var mList = ProductsService.LayTheoTrangAndType(1, !Request.Browser.IsMobileDevice ? 4 : 50, it.ID, it.Level);
-                //lay danh sach nhom san pham con
-                var mTypeList = ProductsService.getProductTypeByParent(it.ID);
-                IndexPage mIndexPage = new IndexPage
+            //IndexPageContainer mIndexPageContainer = new IndexPageContainer();
+            //List<IndexPage> mIndexPageList = new List<IndexPage>();
+            //var mListParent = ProductsService.LayProductTypeTheoParentId(0);
+            //foreach (ProductType it in mListParent)
+            //{
+
+                
+                IndexPageContainer mIndexPageContainer = new IndexPageContainer();
+                List<IndexPage> mIndexPageList = new List<IndexPage>();
+                StringBuilder str = new StringBuilder();
+                List<Market> mMarketList = new List<Market>();
+               
+                List<ProductType> mTypeList;
+                //List<ProductType> mSoCheList;
+                //List<Product> mBestSoCheList;
+                List<Product> mList;
+                List<ProductType> mListParent;
+                mListParent = ProductsService.LayProductTypeTheoParentId(0);
+                foreach (ProductType it in mListParent)
                 {
-                    Id = it.ID,
-                    Name = it.Name,
-                    Image = it.Image,
-                    ImageBanner = "/Content/Images/stepbuy.png",
-                    ProductTypeList = mTypeList,
-                    ProductList = mList
-                };
-                //it.ImageBanner;
-                mIndexPageList.Add(mIndexPage);
+                    //lay danh sach san pham
+                    if (!Request.Browser.IsMobileDevice)
+                        mList = ProductsService.LayTheoTrangAndType(1, 4, it.ID, it.Level);
+                    else
+                        mList = ProductsService.LayTheoTrangAndType(1, 50, it.ID, it.Level);
+                    //lay danh sach nhom san pham con
+                    mTypeList = ProductsService.getProductTypeByParent(it.ID);
+                    IndexPage mIndexPage = new IndexPage();
+                    mIndexPage.Id = it.ID;
+                    mIndexPage.Name = it.Name;
+                    mIndexPage.Image = it.Image;
+                    mIndexPage.ImageBanner = "/Content/Images/stepbuy.png"; //it.ImageBanner;
+                    mIndexPage.ProductTypeList = mTypeList;
+                    mIndexPage.ProductList = mList;
+                    mIndexPageList.Add(mIndexPage);
+                }
+                mIndexPageContainer.IndexPageList = mIndexPageList;
+                //lay cac san pham ban chay
+                //if (!Request.Browser.IsMobileDevice)
+                //    mBestBuyList = ProductRepos.LaySanPhamBanChay(1, 6);
+                //else
+                //    mBestBuyList = ProductRepos.LaySanPhamBanChay(1, 6);
+
+                //if (mBestBuyList.Count() < 1)
+                //{
+                //    mBestBuyList = ProductRepos.getProductsRandom(6);
+                //}
+                //mIndexPageContainer.BestBuyList = mBestBuyList;
+
+
+                mIndexPageContainer.ProductLastest = ProductsService.getProductsLastest(6);
+                if (mIndexPageContainer.ProductLastest.Count() < 1)
+                {
+                    mIndexPageContainer.ProductLastest = ProductsService.getProductsRandom(6);
+                }
+
+
+
+            if (Theme.domain == "myshopify")
+            {
+                List<ProductType> homeCategorys = new List<ProductType>();
+                homeCategorys.Add(ProductsService.LayLoaiSanPhamTheoId(177));
+                homeCategorys.Add(ProductsService.LayLoaiSanPhamTheoId(176));
+                homeCategorys.Add(ProductsService.LayLoaiSanPhamTheoId(179));
+                homeCategorys.Add(ProductsService.LayLoaiSanPhamTheoId(180));
+
+                homeCategorys.Add(ProductsService.LayLoaiSanPhamTheoId(183));
+                homeCategorys.Add(ProductsService.LayLoaiSanPhamTheoId(175));
+                homeCategorys.Add(ProductsService.LayLoaiSanPhamTheoId(332));
+
+                mIndexPageContainer.ProductTypeList = homeCategorys;
             }
+            else if (Theme.domain == "mamoo") { 
+                //List<ProductType> homeCategorys = ProductsService.GetCategoryInHome(6);
+                //mIndexPageContainer.ProductTypeList = homeCategorys;
+            }
+                
 
-            mIndexPageContainer.IndexPageList = mIndexPageList;
-
-            //lay cac san pham ban chay
-            var mBestBuyList = ProductsService.LaySanPhamBanChay(1, !Request.Browser.IsMobileDevice ? 10 : 50);
+            var mBestBuyList = ProductsService.LaySanPhamBanChay(1, 12);
 
             if (!mBestBuyList.Any())
             {
-                mBestBuyList = ProductsService.getProductsRandom(18);
+                mBestBuyList = ProductsService.getProductsRandom(12);
             }
             mIndexPageContainer.BestBuyList = mBestBuyList;
 
-            mIndexPageContainer.ProductLastest = ProductsService.getProductsLastest(18);
+            mIndexPageContainer.ProductLastest = ProductsService.getProductsLastest(12);
             if (!mIndexPageContainer.ProductLastest.Any())
             {
-                mIndexPageContainer.ProductLastest = ProductsService.getProductsRandom(18);
+                mIndexPageContainer.ProductLastest = ProductsService.getProductsRandom(12);
             }
             ViewBag.ListCategoryRootHome = await ProductTypeService.GetListHomeAsync();
 
@@ -75,6 +133,7 @@ namespace V308CMS.Controllers
             else
                 return View("MobileIndex", mIndexPageContainer);
         }
+<<<<<<< HEAD
 
         public  ActionResult Category(int categoryId = 0,string filter = "", int sort = (int) SortEnum.Default, int page = 1,
             int pageSize = 18)
@@ -128,7 +187,93 @@ namespace V308CMS.Controllers
             };
 
             return View("Category", result);
+=======
 
+        public ActionResult Category(int pGroupId = 0)
+        {
+
+            try {
+                ProductCategoryPageContainer model = new ProductCategoryPageContainer();
+
+                int nPage = Convert.ToInt32(Request.QueryString["p"]);
+                if (nPage < 1)
+                {
+                    nPage = 1;
+                }
+
+                List<Product> mProductList = new List<Product>();
+                List<ProductCategoryPage> mProductPageList = new List<ProductCategoryPage>();
+
+                ProductType productCategory = ProductsService.LayLoaiSanPhamTheoId(pGroupId);
+                if (productCategory != null)
+                {
+                    model.ProductType = productCategory;
+                    CategoryPage categoryPage = ProductHelper.getProductsByCategory(productCategory.ID, nPage);
+
+                    model.Products = categoryPage.Products;
+                    model.ProductTotal = categoryPage.ProductTotal;
+                    model.Brands = ProductsService.getRandomBrands(productCategory.ID, 6);
+                    List<ProductType> mProductTypeList;
+                    if (productCategory.Parent == 0)
+                        mProductTypeList = ProductsService.getProductTypeByProductType(productCategory.ID);//lay danh sach cap 1
+                    else
+                    {
+                        mProductTypeList = new List<ProductType>
+                    {
+                        productCategory
+                    };
+                        //mProductTypeList = productRepository.getProductTypeByProductType((int)mProductType.Parent);//lay danh sach cap 2
+                    }
+
+                    if (mProductTypeList.Count > 0)
+                    {
+                        mProductPageList.AddRange(mProductTypeList.Select(it => ProductHelper.GetCategoryPage(it, nPage)));
+                    }
+                    else
+                    {
+                        mProductPageList.Add(ProductHelper.GetCategoryPage(productCategory, nPage));
+
+        
+                    }
+
+                }
+                model.List = mProductPageList;
+               
+                //model.BestSeller = ProductRepos.getProductsRandom();
+                //if (mProductList.Count < 40)
+                //    Model.IsEnd = true;
+                model.Page = nPage;
+                return View("Category", model);
+>>>>>>> 80cc5f7e5b4271fc74adbe046b3ae514ea8a1a30
+
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.ToString());
+            }
+           
+//=======
+//                }
+//                //lay danh sach cac nhom so che
+//                //mSoCheList = productRepos.LayProductTypeTheoParentId(147);
+//                //Model.ProductTypeList = mSoCheList;
+//                //lay cac san pham ban chay
+//                //mBestBuyList = productRepos.getBestBuyWithType(1, 10, 147, "10030");
+//                //Model.ProductList = mBestBuyList;
+//            }
+//            model.List = mProductPageList;
+//            model.ProductType = productCategory;
+//            model.BestSeller = ProductsService.getProductsRandom();
+//            //if (mProductList.Count < 40)
+//            //    Model.IsEnd = true;
+//            model.Page = nPage;
+//            return View("Category", model);
+//            //if (!Request.Browser.IsMobileDevice)
+//            //    return View("Category", model);
+//            //else
+//            //    return View("MobileCategory", model);
+
+//>>>>>>> 05ca46d6477b8a114ace89237f7b469368be8bf4
         }
        
         public async Task<ActionResult> Detail(int pId = 0)
@@ -140,6 +285,7 @@ namespace V308CMS.Controllers
 
         public ActionResult Search(string q, int page=1, int pageSize=25)
         {
+<<<<<<< HEAD
             int totalRecord;
             int totalPage = 0;
             var listProduct = ProductsService.Search(q, out totalRecord, page, pageSize);
@@ -149,6 +295,66 @@ namespace V308CMS.Controllers
                 totalPage = totalRecord / pageSize;
                 if (totalRecord % pageSize > 0)
                     totalPage += 1;
+=======
+            int pVendor = 2;
+            int pPage = 1;
+            SearchPage mSearchPage = new SearchPage();
+
+//<<<<<<< HEAD
+                string pKey = Request.QueryString["q"];
+                if (pKey == null) {
+                    pKey = Request.QueryString["pKey"];
+                }
+                if (pKey == null)
+                {
+                    pKey = "";
+                }
+                    if (pVendor == 1)/*Tìm theo cửa hàng*/
+                {
+                    List<Market> mMarketList = MarketService.SearchMarketTheoTrangAndType(pPage, 30, pKey);
+//=======
+//            string pKey = Request.QueryString["q"];
+
+//            if (pVendor == 1)/*Tìm theo cửa hàng*/
+//            {
+//                List<Market> mMarketList = MarketService.SearchMarketTheoTrangAndType(pPage, 30, pKey);
+//>>>>>>> 05ca46d6477b8a114ace89237f7b469368be8bf4
+
+                mSearchPage.Code = 1;
+                if (mMarketList.Count > 0)
+                {
+                    mSearchPage.MarketList = mMarketList;
+                    if (mMarketList.Count < 30)
+                        mSearchPage.IsEnd = true;
+                    mSearchPage.Page = pPage;
+                    mSearchPage.Name = pKey;
+                }
+                else
+                {
+//<<<<<<< HEAD
+                    List<Product> mProductList = ProductsService.TimSanPhamTheoTen(pPage, 30, pKey.ToLower());
+                    mSearchPage.Code = 2;
+                    if (mProductList.Count > 0)
+                    {
+                        mSearchPage.ProductList = mProductList;
+                        if (mProductList.Count < 30)
+                            mSearchPage.IsEnd = true;
+                        mSearchPage.Page = pPage;
+                        mSearchPage.Name = pKey;
+                    }
+                    else
+                    {
+                        mSearchPage.ProductList = new List<Product>();
+                        mSearchPage.Name = pKey;
+                        mSearchPage.Html = "Không tìm thấy kết quả nào.";
+                    }
+//=======
+//                    mSearchPage.MarketList = new List<Data.Market>();
+//                    mSearchPage.Name = pKey;
+//                    mSearchPage.Html = "Không tìm thấy kết quả nào.";
+//>>>>>>> 05ca46d6477b8a114ace89237f7b469368be8bf4
+                }
+>>>>>>> 80cc5f7e5b4271fc74adbe046b3ae514ea8a1a30
             }
             var searchModel = new SearchViewModels
             {

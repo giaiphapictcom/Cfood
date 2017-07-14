@@ -46,11 +46,13 @@ namespace V308CMS.Data
         private string _Email;
         private string _Address;
         private string _Phone;
-        private bool? _Gender;
+        private bool _Gender;
         private DateTime? _BirthDay;
-        private bool? _Status;
+
+        private bool _Status;
         private string _Avatar;
-        private int? _Role;
+        private int _Role;
+
         private DateTime? _Date;
         private string _Salt;
         private string _Token;
@@ -59,6 +61,13 @@ namespace V308CMS.Data
 
         private string _ForgotPasswordToken;
         private DateTime? __ForgotPasswordTokenExpireDate;
+
+        private string _bank_account;
+        private string _bank_number;
+        private string _bank_name;
+        private string _bank_address;
+        private string _cmt_front;
+        private string _cmt_back;
 
         #endregion
         #region[Public Properties]
@@ -70,11 +79,11 @@ namespace V308CMS.Data
         public string Email { get { if (String.IsNullOrEmpty(_Email)) return ""; else return _Email; } set { _Email = value; } }
         public string Address { get { if (String.IsNullOrEmpty(_Address)) return ""; else return _Address; } set { _Address = value; } }
         public string Phone { get { if (String.IsNullOrEmpty(_Phone)) return ""; else return _Phone; } set { _Phone = value; } }
-        public bool? Gender { get { if (_Gender == null) return false; else return _Gender; } set { if (_Gender != value) { _Gender = value; } } }
+        public bool Gender { get { return _Gender; } set { if (_Gender != value) { _Gender = value; } } }
         public DateTime? BirthDay { get { if (_BirthDay == null) return new DateTime(); else return _BirthDay; } set { if (_BirthDay != value) { _BirthDay = value; } } }
-        public bool? Status { get { if (_Status == null) return false; else return _Status; } set { if (_Status != value) { _Status = value; } } }
+        public bool Status { get { return _Status; } set { if (_Status != value) { _Status = value; } } }
         public string Avatar { get { if (String.IsNullOrEmpty(_Avatar)) return ""; else return _Avatar; } set { _Avatar = value; } }
-        public int? Role { get { if (_Role == null || _Role < 0) return 0; else return _Role; } set { if (_Role != value) { if (_Role < 0) _Role = 0; else _Role = value; } } }
+        public int Role { get {  return _Role; } set { if (_Role != value) { if (_Role < 0) _Role = 0; else _Role = value; } } }
         public DateTime? Date { get { if (_Date == null) return new DateTime(); else return _Date; } set { if (_Date != value) { _Date = value; } } }     
         public string Salt { get { if (String.IsNullOrEmpty(_Salt)) return ""; else return _Salt; } set { _Salt = value; } }
         public string Token { get { if (String.IsNullOrEmpty(_Token)) return ""; else return _Token; } set { _Token = value; } }
@@ -83,6 +92,12 @@ namespace V308CMS.Data
         public string ForgotPasswordToken { get { if (String.IsNullOrEmpty(_ForgotPasswordToken)) return ""; else return _ForgotPasswordToken; } set { _ForgotPasswordToken = value; } }
         public DateTime? ForgotPasswordTokenExpireDate { get { if (__ForgotPasswordTokenExpireDate == null) return new DateTime(); else return __ForgotPasswordTokenExpireDate; } set { if (__ForgotPasswordTokenExpireDate != value) { __ForgotPasswordTokenExpireDate = value; } } }
 
+        public string bank_account { get { if (String.IsNullOrEmpty(_bank_account)) return ""; else return _bank_account; } set { _bank_account = value; } }
+        public string bank_number { get { if (String.IsNullOrEmpty(_bank_number)) return ""; else return _bank_number; } set { _bank_number = value; } }
+        public string bank_name { get { if (String.IsNullOrEmpty(_bank_name)) return ""; else return _bank_name; } set { _bank_name = value; } }
+        public string bank_address { get { if (String.IsNullOrEmpty(_bank_address)) return ""; else return _bank_address; } set { _bank_address = value; } }
+        public string cmt_front { get { if (String.IsNullOrEmpty(_cmt_front)) return ""; else return _cmt_front; } set { _cmt_front = value; } }
+        public string cmt_back { get { if (String.IsNullOrEmpty(_cmt_back)) return ""; else return _cmt_back; } set { _cmt_back = value; } }
 
         #endregion
 
@@ -874,12 +889,9 @@ namespace V308CMS.Data
         #endregion
         public int getReview()
         {
-
             return V308CMS.Common.RamdomUltis.getRamdom(2, 5);
         }
-        [ForeignKey("Type")]
-        [Required]
-        public virtual ProductType ProductType { get; set; }
+        
         //add by toaihv
         public virtual ICollection<ProductImage> ProductImages { get; set; }
 
@@ -887,6 +899,11 @@ namespace V308CMS.Data
         public virtual ICollection<ProductSize> ProductSize { get; set; }
 
         public virtual ICollection<ProductAttribute> ProductAttribute { get; set; }
+
+        [ForeignKey("Type")]
+        [Required]
+        public virtual ProductType ProductType { get; set; }
+
         [ForeignKey("Manufacturer")]
         public virtual ProductManufacturer ProductManufacturer { get; set; }
 
@@ -1564,8 +1581,8 @@ namespace V308CMS.Data
         private string _summary;
         private string _image;
         private string _link;
-        private int? _order;
-        private int? _status;
+        private int _order;
+        private bool _status;
 
         [Key]
         public int id { get { return _id; } set { _id = value; } }
@@ -1573,8 +1590,8 @@ namespace V308CMS.Data
         public string image { get { if (String.IsNullOrEmpty(_image)) return ""; else return _image; } set { _image = value; } }
         public string summary { get { if (String.IsNullOrEmpty(_summary)) return ""; else return _summary; } set { _summary = value; } }
         public string link { get { if (String.IsNullOrEmpty(_link)) return "javascript:void(0)"; else return _link; } set { _link = value; } }
-        public int? order { get { if (_order == null || _order < 0) return 0; else return _order; } set { if (_order != value) { if (_order < 0) _order = 0; else _order = value; } } }
-        public int? status { get { if (_status == null || _status < 0) return 0; else return _status; } set { if (_status != value) { if (_status < 0) _status = 0; else _status = value; } } }
+        public int order { get { if ( _order < 0) return 0; else return _order; } set { if (_order != value) { if (_order < 0) _order = 0; else _order = value; } } }
+        public bool status { get { return _status; } set { _status = value; } }
 
 
     }
@@ -1641,7 +1658,7 @@ namespace V308CMS.Data
         private string _Title;
         private string _Summary;
         private string _URl;
-        private int? _Status;
+        private int _Status;
         private DateTime? _Created;
 
         #endregion
@@ -1652,7 +1669,7 @@ namespace V308CMS.Data
         public string title { get { if (String.IsNullOrEmpty(_Title)) return ""; else return _Title; } set { _Title = value; } }
         public string summary { get { if (String.IsNullOrEmpty(_Summary)) return ""; else return _Summary; } set { _Summary = value; } }
         public string url { get { if (String.IsNullOrEmpty(_URl)) return ""; else return _URl; } set { _URl = value; } }
-        public int? status { get { if (_Status == null || _Status < 0) return 0; else return _Status; } set { if (_Status != value) { if (_Status < 0) _Status = 0; else _Status = value; } } }
+        public int status { get { if ( _Status < 0) return 0; else return _Status; } set { if (_Status != value) { if (_Status < 0) _Status = 0; else _Status = value; } } }
         public DateTime? created { get { if (_Created == null) return new DateTime(); else return _Created; } set { if (_Created != value) { _Created = value; } } }
         #endregion
 
@@ -1726,6 +1743,9 @@ namespace V308CMS.Data
         #region[Declare variables]
         private int _ID;
         private string _Type;
+        private float _Discount;
+        private string _ProductCode;
+        private string _site;
         private string _Code;
         private string _Image;
         private string _Title;
@@ -1735,6 +1755,7 @@ namespace V308CMS.Data
         private DateTime _EndDate;
         private int _Status;
         private DateTime _Created;
+        private DateTime _UpdateDate;
         private int _CreatedBy;
 
         #endregion
@@ -1742,6 +1763,9 @@ namespace V308CMS.Data
         [Key]
         public int ID { get { return _ID; } set { _ID = value; } }
         public string type { get { if (String.IsNullOrEmpty(_Type)) return "order"; else return _Type; } set { _Type = value; } }
+        public float discount { get { return _Discount; } set { _Discount = value; } }
+        public string productcode { get { if (String.IsNullOrEmpty(_ProductCode)) return ""; else return _ProductCode; } set { _ProductCode = value; } }
+        public string site { get { if (String.IsNullOrEmpty(_site)) return Data.Helpers.Site.home; else return _site; } set { _site = value; } }
         public string code { get { if (String.IsNullOrEmpty(_Code)) return "xxxxx"; else return _Code; } set { _Code = value; } }
         public string image { get { if (String.IsNullOrEmpty(_Image)) return ""; else return _Image; } set { _Image = value; } }
         public string title { get { if (String.IsNullOrEmpty(_Title)) return ""; else return _Title; } set { _Title = value; } }
@@ -1749,9 +1773,10 @@ namespace V308CMS.Data
         public string content { get { if (String.IsNullOrEmpty(_Content)) return ""; else return _Content; } set { _Content = value; } }
         public DateTime start_date { get { if (_StartDate == null) return new DateTime(); else return _StartDate; } set { if (_StartDate != value) { _StartDate = value; } } }
         public DateTime end_date { get { if (_EndDate == null) return new DateTime(); else return _EndDate; } set { if (_EndDate != value) { _EndDate = value; } } }
-        public int status { get { if (_Status == null || _Status < 0) return 0; else return _Status; } set { if (_Status != value) { if (_Status < 0) _Status = 0; else _Status = value; } } }
+        public DateTime update_date { get { if (_UpdateDate == null) return new DateTime(); else return _UpdateDate; } set { if (_UpdateDate != value) { _UpdateDate = value; } } }
+        public int status { get {  return _Status; } set { if (_Status != value) { if (_Status < 0) _Status = 0; else _Status = value; } } }
         public DateTime created { get { if (_Created == null) return new DateTime(); else return _Created; } set { if (_Created != value) { _Created = value; } } }
-        public int created_by { get { if (_CreatedBy == null || _CreatedBy < 0) return 0; else return _CreatedBy; } set { if (_CreatedBy != value) { if (_CreatedBy < 0) _CreatedBy = 0; else _CreatedBy = value; } } }
+        public int created_by { get { return _CreatedBy; } set { if (_CreatedBy != value) { if (_CreatedBy < 0) _CreatedBy = 0; else _CreatedBy = value; } } }
         #endregion
 
     }
@@ -1790,8 +1815,40 @@ namespace V308CMS.Data
         public int? uid { get { if (_uid == null || _uid < 0) return 0; else return _uid; } set { if (_uid != value) { if (_uid < 0) _uid = 0; else _uid = value; } } }
         public string user_type { get { if (String.IsNullOrEmpty(_user_type)) return ""; else return _user_type; } set { _user_type = value; } }
 
-        #endregion
+    #endregion
 
-    }
+}
+
+
+    //[Table("categorys")]
+    //public class AffiliateCategory
+    //{
+
+    //    #region[Declare variables]
+    //    private int _ID;
+
+    //    private string _name;
+    //    private string _link;
+    //    private string _summary;
+    //    private string _image;
+    //    private int _order;
+    //    private Boolean _status;
+
+    //    #endregion
+
+    //    #region[Public Properties]
+    //    [Key]
+    //    public int id { get { return _ID; } set { _ID = value; } }
+
+    //    public string name { get { if (String.IsNullOrEmpty(_name)) return ""; else return _name; } set { _name = value; } }
+    //    public string link { get { if (String.IsNullOrEmpty(_link)) return ""; else return _link; } set { _link = value; } }
+    //    public string summary { get { if (String.IsNullOrEmpty(_summary)) return ""; else return _summary; } set { _summary = value; } }
+    //    public string image { get { if (String.IsNullOrEmpty(_image)) return ""; else return _image; } set { _image = value; } }
+    //    public Boolean status { get { return _status; } set { _status = value; } }
+    //    public int order { get { if (_order == null || _order < 0) return 0; else return _order; } set { if (_order != value) { if (_order < 0) _order = 0; else _order = value; } } }
+
+    //    #endregion
+
+    //}
 
 }

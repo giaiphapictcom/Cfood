@@ -130,7 +130,7 @@ namespace V308CMS.Respository
                 }
 
 
-                if (state > 0)
+                if (state >= 0)
                 {
                     if (state == 1)
                     {
@@ -186,8 +186,15 @@ namespace V308CMS.Respository
                 {
                     return "invalid";
                 }
+                if (checkAccount.Salt.Length > 0)
+                {
+                    checkAccount.Password = HashPassword(newPassword, checkAccount.Salt);
+                }
+                else {
+                    checkAccount.Password = EncryptionMD5.ToMd5(newPassword.Trim());
+                }
 
-                checkAccount.Password = HashPassword(newPassword, checkAccount.Salt);
+                
                 entities.SaveChanges();
                 return "ok";
             }
@@ -199,7 +206,7 @@ namespace V308CMS.Respository
         {
             using (var entities = new V308CMSEntities())
             {
-                var product = (from item in entities.Product
+                var product = (from item in entities.Account
                                where item.ID == id
                                select item
                ).FirstOrDefault();

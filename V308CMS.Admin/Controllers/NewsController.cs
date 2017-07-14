@@ -17,7 +17,7 @@ namespace V308CMS.Admin.Controllers
     public class NewsController : BaseController
     {
         [NonAction]
-        private List<MutilCategoryItem> BuildListCategory(string site="")
+        private List<MutilCategoryItem> BuildListCategory(string site=Data.Helpers.Site.home)
         {
             return NewsGroupService.GetAll(true,site).Select
                 (
@@ -32,7 +32,7 @@ namespace V308CMS.Admin.Controllers
         //
         // GET: /News2/       
         [CheckPermission(0, "Danh sách")]
-        public ActionResult Index(int categoryId =0, string site ="")
+        public ActionResult Index(int categoryId =0, string site = Data.Helpers.Site.home)
         {
             if (categoryId > 0) {
                 var category = NewsService.LayDanhNhomTin(categoryId);

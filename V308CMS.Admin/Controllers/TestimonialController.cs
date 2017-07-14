@@ -26,6 +26,48 @@ namespace V308CMS.Admin.Controllers
            return View("Create", new TestimonialModels());
         }
 
+        [HttpPost]
+        [CheckPermission(1, "Thêm mới")]
+        [ActionName("Create")]
+        [ValidateAntiForgeryToken]
+        public ActionResult OnCreate(TestimonialModels comment)
+        {
+            if (ModelState.IsValid)
+            {
+                comment.Avartar = comment.Upload != null ?
+                    comment.Upload.Upload() :
+                    comment.Avartar;
+                if (comment.Avartar != null)
+                {
+                    comment.Avartar = comment.Avartar.Replace("\\Content\\Images\\", "");
+                }
+
+                var newComment = comment.CloneTo<Testimonial>(new[] {
+                   "Upload",
+
+                });
+
+                var result = TestimonialService.Insert(newComment);
+                if (result == Result.Exists)
+                {
+                    ModelState.AddModelError("", string.Format("Banner '{0}' đã tồn tại trên hệ thống.", comment.Fullname));
+                    ViewBag.ListSite = DataHelper.ListEnumTypeSepecial<SiteEnum>();
+                    ViewBag.ListPosition = DataHelper.ListEnumType<PositionEnum>();
+                    return View("Create", comment);
+                }
+                SetFlashMessage(string.Format("Thêm banner '{0}' thành công.", comment.Fullname));
+                if (comment.SaveList)
+                {
+                    string actionReturn = comment.Site == "affiliate" ? "affiliatebanner" : "Index";
+                    return RedirectToAction(actionReturn);
+                }
+                ModelState.Clear();
+                return View("Create", comment.ResetValue());
+            }
+
+            return View("Create", comment);
+        }
+
         [CheckPermission(2, "Sửa")]
         public ActionResult Edit(int id)
         {
@@ -58,7 +100,12 @@ namespace V308CMS.Admin.Controllers
                    comment.Avartar.ToImageOriginalPath();
                 var commentUpdate = comment.CloneTo<Testimonial>(new[] {"Upload" });
 
-                commentUpdate.avartar = commentUpdate.avartar.Replace("\\Content\\Images\\", "");
+                if (commentUpdate.avartar != null)
+                {
+                    commentUpdate.avartar = commentUpdate.avartar.Replace("\\Content\\Images\\", "");
+                }
+
+                
                 var result = TestimonialService.Update(commentUpdate);
                 if (result == Result.NotExists)
                 {

@@ -100,3 +100,10 @@
 .pd-11 {
     padding: 11px 0 !important;
 }
+
+
+.mainbody h5 {
+    margin-bottom: 5px;
+    font-size: 15px;
+    font-weight:bold;
+}

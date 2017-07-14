@@ -84,6 +84,30 @@ namespace V308CMS.Data
             }
         }
 
+        public string Insert(Testimonial data)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                
+                    try
+                    {
+                        entities.Testimonial.Add(data);
+
+                        entities.SaveChanges();
+                        return Result.Ok;
+                    }
+                    catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+                    {
+                        Console.Write(dbEx);
+                    }
+
+                   
+                
+                return Result.NotExists;
+            }
+
+        }
+
         public string Update(Testimonial data)
         {
             using (var entities = new V308CMSEntities())

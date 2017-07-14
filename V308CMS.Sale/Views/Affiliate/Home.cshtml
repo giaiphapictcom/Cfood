@@ -225,7 +225,7 @@ else if (Model.Banners != null && Model.Banners.Count() > 0)
                         }
                         <a class="col-md-3 category-listall border-left-0 @BorderRemove index-@index" check="@Html.Raw(itemIndex)" href="@cateHref" target="_blank">
                             @*<img src="/Content/Images/category/@cate.image" />*@
-                            <img src="@ImageHelper.ToUrl("/Content/Images/category/"+cate.image, 80,80)" />
+                            <img src="@ImageHelper.ToUrl(cate.image, 80,80)" />
                             <h3>@cate.name</h3>
                             <p>@cate.summary.Split(' ').Take(10).Aggregate((a, b) => a + " " + b)</p>
                         </a>

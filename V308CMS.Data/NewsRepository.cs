@@ -79,10 +79,14 @@ namespace V308CMS.Data
                         where p.TypeID == pId
                         select p).FirstOrDefault();
             }
+
+
+
         }
         public List<News> LayTinTheoTrang(int pcurrent, int psize)
         {
             using (var entities = new V308CMSEntities())
+
             {
                 return (from p in entities.News
                         orderby p.ID descending
@@ -247,7 +251,28 @@ namespace V308CMS.Data
             }
         }
 
+        public List<News> LayTinTheoGroupId(int pTypeID, int limit = 10)
+        {
+            List<News> mList = null;
+            try
+            {
+                //lay danh sach tin moi dang nhat
+                using (var entities = new V308CMSEntities()) {
+                    mList = (from p in entities.News.
+                              Include("NewsGroup")
+                             where p.TypeID == pTypeID
+                             orderby p.ID descending
+                             select p).Take(limit).ToList();
+                }
+                return mList;
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+                throw;
+            }
 
+        }
         public List<News> LayTinTucLienQuan(int pId, int pTypeID, int pSize)
         {
             using (var entities = new V308CMSEntities())
@@ -259,6 +284,8 @@ namespace V308CMS.Data
                          .Take(pSize).ToList();
             }
         }
+
+            
         public List<News> LayTinTheoGroupId(int typeId)
         {
             using (var entities = new V308CMSEntities())
@@ -267,6 +294,7 @@ namespace V308CMS.Data
                 return entities.News
                 .Where(news => news.TypeID == typeId)
                 .OrderByDescending(p => p.ID).ToList();
+
             }
 
         }
@@ -368,13 +396,28 @@ namespace V308CMS.Data
         {
             using (var entities = new V308CMSEntities())
             {
-                //lay danh sach tin moi dang nhat
-                return (from p in entities.News
-                        where p.Status == true && p.TypeID == pType
-                        orderby p.ID descending
-                        select p).Take(pSoLuongTin).ToList();
 
+                List<News> mList = null;
+                try
+                {
+                    //lay danh sach tin moi dang nhat
+                    mList = (from p in entities.News
+                             where p.Status == true && p.TypeID == pType
+                             orderby p.Order ascending
+                             select p).Take(pSoLuongTin).ToList();
 
+                    //lay danh sach tin moi dang nhat
+                    return (from p in entities.News
+                            where p.Status == true && p.TypeID == pType
+                            orderby p.ID descending
+                            select p).Take(pSoLuongTin).ToList();
+
+                }
+                catch (Exception ex)
+                {
+                    Console.Write(ex);
+                    throw;
+                }
             }
         }
         public List<News> LayDanhSachTinDangDocTheoGroupId(int pSoLuongTin, int pType)
@@ -467,26 +510,89 @@ namespace V308CMS.Data
             }
         }
 
-        public NewsGroups SearchNewsGroup(string name)
-        {
-            using (var cmsEntities = new V308CMSEntities())
-            {
 
-                return
-                    cmsEntities.NewsGroups.FirstOrDefault(group => (group.Name.ToLower().Contains(name.ToLower()) ||
-                                                                 group.Alias.ToLower().Contains(name.ToLower())));
+            //public NewsGroups SearchNewsGroup(string name,string site = Data.Helpers.Site.home)
+            //{
+            //    try
+            //    {
+            //    var categorys = entities.NewsGroups.Where(p=> p.Name.ToLower().Contains(name.ToLower()) || p.Alias.ToLower().Contains(name.ToLower()));
+
+            //    if (site == Data.Helpers.Site.home)
+            //    {
+            //        categorys = categorys.Where(c => c.Site == site || c.Site == "" || c.Site == null || c.Site == "1");
+            //    }
+            //    else {
+            //        categorys = categorys.Where(c=>c.Site == site);
+            //    }
+            //        return categorys.FirstOrDefault();
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        Console.Write(ex);
+            //        throw;
+            //    }
+
+        public NewsGroups SearchNewsGroup(string name, string site = Data.Helpers.Site.home)
+        {
+            //using (var cmsEntities = new V308CMSEntities())
+            //{
+
+            //    return
+            //        cmsEntities.NewsGroups.FirstOrDefault(group => (group.Name.ToLower().Contains(name.ToLower()) ||
+            //                                                     group.Alias.ToLower().Contains(name.ToLower())));
+
+            //}
+            try
+            {
+                using (var entities = new V308CMSEntities()) {
+                    var categorys = entities.NewsGroups.Where(p => p.Name.ToLower().Contains(name.ToLower()) || p.Alias.ToLower().Contains(name.ToLower()));
+
+                    if (site == Data.Helpers.Site.home)
+                    {
+                        categorys = categorys.Where(c => c.Site == site || c.Site == "" || c.Site == null || c.Site == "1");
+                    }
+                    else
+                    {
+                        categorys = categorys.Where(c => c.Site == site);
+                    }
+                    return categorys.FirstOrDefault();
+                }
+                    
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+                throw;
             }
 
         }
-        public NewsGroups SearchNewsGroupWithNews(string name)
+        public NewsGroups SearchNewsGroupWithNews(string name, string site="")
         {
-            using (var cmsEntities = new V308CMSEntities())
+            using (var entities = new V308CMSEntities())
             {
 
-                return cmsEntities.NewsGroups
-                    .Include("ListNews")
-                    .FirstOrDefault(group => (group.Name.ToLower().Contains(name.ToLower()) ||
-                                              group.Alias.ToLower().Contains(name.ToLower())));
+                try
+                {
+                var category = entities.NewsGroups.Where(c => c.Alias.ToLower() == name.ToLower());
+
+                if (site.Length > 0) {
+                    category = category.Where(c=>c.Site==site);
+                }
+                    
+                    return category.FirstOrDefault();
+                }
+                catch (Exception ex)
+                {
+                    Console.Write(ex);
+                    throw;
+                }
+
+
+                //return entities.NewsGroups
+                //    .Include("ListNews")
+                //    .FirstOrDefault(group => (group.Name.ToLower().Contains(name.ToLower()) ||
+                //                              group.Alias.ToLower().Contains(name.ToLower())));
+
             }
 
         }
@@ -547,33 +653,66 @@ namespace V308CMS.Data
 
         }
 
-        public List<News> GetList(int categoryId = 0, string site = "")
-        {
 
-            using (var entities = new V308CMSEntities())
-            {
+        public List<News> GetList(int categoryId = 0, string site = Data.Helpers.Site.home)
+        {
+            using (var entities = new V308CMSEntities()) {
                 var listNews = from news in entities.News select news;
+
 
                 if (categoryId > 0)
                 {
-                    listNews = (from news in listNews
-                                where news.TypeID == categoryId
-                                select news
-                        );
+                    //listNews = (from news in listNews
+                    //    where news.TypeID == categoryId                  
+                    //    select news
+                    //    );
+                    listNews = listNews.Where(n => n.TypeID == categoryId);
                 }
-                if (site.Length > 0)
+
+                var categorys = entities.NewsGroups.Select(c => c);
+                if (site == Data.Helpers.Site.home)
                 {
-                    listNews = (from news in listNews
-                                join cate in entities.NewsGroups on news.TypeID equals cate.ID
-                                where cate.Site == site
-                                select news
-                        );
+                    categorys = categorys.Where(c => c.Site == site || c.Site == "" || c.Site == "1" || c.Site == null);
                 }
-                return listNews.OrderByDescending(news => news.Date.Value).ToList();
+                else
+                {
+                    categorys = categorys.Where(c => c.Site == site);
+                }
+                listNews = listNews.Where(n => categorys.Any(c => c.ID == n.TypeID));
+
+                //return listNews.OrderByDescending(news => news.Date.Value).ToList();
+                return listNews.ToList();
             }
-
-
         }
+
+        //public List<News> GetList(int categoryId = 0, string site = "")
+        //{
+
+        //    using (var entities = new V308CMSEntities())
+        //    {
+        //        var listNews = from news in entities.News select news;
+
+        //        if (categoryId > 0)
+        //        {
+        //            listNews = (from news in listNews
+        //                        where news.TypeID == categoryId
+        //                        select news
+        //                );
+        //        }
+        //        if (site.Length > 0)
+        //        {
+        //            listNews = (from news in listNews
+        //                        join cate in entities.NewsGroups on news.TypeID equals cate.ID
+        //                        where cate.Site == site
+        //                        select news
+        //                );
+        //        }
+        //        return listNews.OrderByDescending(news => news.Date.Value).ToList();
+        //    }
+
+
+
+        //}
 
         public List<News> GetVideos(int pcurrent, int psize, int pTypeID)
         {

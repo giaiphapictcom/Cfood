@@ -17,4 +17,17 @@ $(document).ready(function () {
     jQuery("#offcanvas .off-canvas-nav").click(function () {
         jQuery("#offcanvas").removeClass("active");
     });
+
+    //jQuery.fn.datepicker.defaults.format = "mm/dd/yyyy";
+
+    $('.datepicker').each(function (index) {
+        var dateval = new Date($(this).val());
+        if (dateval == "Invalid Date" || dateval < new Date(2001, 1, 1)) {
+            $(this).val("");
+        } else {
+            $(this).val($.datepicker.formatDate('dd/mm/yy', new Date()));
+        }
+        $(this).datepicker({ dateFormat: 'dd/mm/yy' });
+    });
+
 });

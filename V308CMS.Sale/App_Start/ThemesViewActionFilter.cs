@@ -13,7 +13,7 @@ namespace V308CMS.App_Start
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             V308CMSEntities mEntities = new V308CMSEntities();
-            SiteRepository config = new SiteRepository(mEntities);
+            SiteRepository config = new SiteRepository();
             dynamic ViewBag = filterContext.Controller.ViewBag;
 
             ViewBag.linkDomain = System.Configuration.ConfigurationManager.AppSettings["link_domain"];
@@ -29,6 +29,7 @@ namespace V308CMS.App_Start
                 ViewBag.FooterCompanyContact = config.SiteConfig("company-footer-contact");
                 ViewBag.CompanyHeaderAddress = config.SiteConfig("company-header-address");
                 ViewBag.FacebookPage = config.SiteConfig("affiliate-facebook-page");
+                ViewBag.MainSite = config.SiteConfig("main-site");
             }
             catch (Exception ex)
             {
@@ -37,7 +38,7 @@ namespace V308CMS.App_Start
             finally
             {
                 mEntities.Dispose();
-                config.Dispose();
+                //config.Dispose();
             }
             
 

@@ -1,16 +1,15 @@
-﻿@if (Model != null) { 
+﻿@using V308CMS.Data
+
+@if (Model != null) { 
+    List<Image> images = Model;
     <div class="row product-ads">
-        @{int limit = 2;}
-        @foreach (V308CMS.Data.Image adv in Model) {
-            if (limit < 0) {
-                break;
-            }
-            <div class="col-md-@adv.Col col-12">
-                <a class="ads ml-0" href="@adv.Link">
-                    <img src="@adv.LinkImage" class=""/>
+        @foreach (V308CMS.Data.Image adv in images.Take(2)) {
+            string hidden = (adv == images.Last()) ? "hidden-sm-down" : "";
+            <div class="col-md-@adv.Col col-12 @hidden">
+                <a class="ads ml-0 clearfix " href="@adv.Link">
+                    <img src="@adv.LinkImage" class="img-responsive"/>
                 </a>
             </div>
-            {limit--;}
         }
 
     </div>

@@ -1,11 +1,17 @@
-﻿<div class="slides">
-    <div class="item">
-        <img src="@ViewBag.ThemesPath/images/slide-1.jpg" style="width: 100%;">
-        <div class="detail">
-            <h4>Đăng ký làm cộng tác viên kinh doanh</h4>
-            <p>Bạn đam mê kinh doanh?  Gặp trở ngại về nguồn vốn? Giải pháp dành cho bạn là trở thành cộng tác viên của chúng tôi.</p>
-            <button class="btn btn-secondary btn-yellow float-right">Đăng ký</button>
-        </div>
-    </div>
+﻿@model V308CMS.Data.Models.Banner
+@using V308CMS.Common
+@if (Model != null)
+{
+    <div class="slides">
+        <a class="item" href="@Model.Link">
+            <img src="@ImageHelper.ToUrl(Model.ImageUrl)" style="width: 100%;">
+            <div class="detail">
+                <h4>@Model.Name</h4>
+                
+                <button class="btn btn-secondary btn-yellow float-right">Đăng ký</button>
+            </div>
+        </a>
 
-</div>
+    </div>
+}
+

@@ -4,6 +4,9 @@ $(document).ready(function () {
     commentHome.userclick();
     link.copy();
     uploadbutton.select();
+
+    menu.hover();
+    supporthuman.action();
 });
 
 
@@ -56,5 +59,25 @@ uploadbutton = {
         jQuery("a.upload-button").click(function () {
             jQuery(this).parents(".form-group").find("input[type=file]").trigger('click');
         });
+    }
+}
+
+var menu = {
+    hover: function () {
+
+    }
+}
+
+var supporthuman = {
+    action: function () {
+        jQuery("#side-overlay button.pull-right").click(function () {
+
+            $("#side-overlay").css("right", 0);
+        });
+        jQuery("a.viewsupport").click(function () {
+
+            $("#side-overlay").css("right", 310);
+        });
+        
     }
 }

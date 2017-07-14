@@ -27,6 +27,7 @@ namespace V308CMS.Common
         }
         public static string TruncateAtWord(string word, int limit = 10)
         {
+            word = word.Substring(0, Math.Min(limit, word.Length));
             return word;
         }
         private const string NumberChars = "0123456789";

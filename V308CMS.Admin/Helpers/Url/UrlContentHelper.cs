@@ -12,6 +12,12 @@ namespace V308CMS.Admin.Helpers.Url
 
         public static string ToImageUrl(this string path)
         {
+            if (path !=null && path.Length > 0) {
+                path = path.Replace("\\Content\\Images\\", "");
+                path = path.Replace("/Content/Images/", "");
+            }
+                    
+            
             return !string.IsNullOrWhiteSpace(path)?
                 string.Format("{0}/{1}",ConfigHelper.ImageDomain,path):
                 string.Format("{0}/no-image.jpg",ConfigHelper.ImageDomain);

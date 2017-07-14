@@ -1,0 +1,78 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@using V308CMS.Admin.Models.UI
+@using V308CMS.Data
+@model List<Categorys>
+@{
+    ViewBag.Title = "Quản lý danh mục Affiliate";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+
+@Html.Partial("UI/_AddNewButton", Url.CategoryCreateUrl())
+@if (Model.Any())
+{
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                <thead>
+                    <tr>
+                        <th>Ảnh</th>
+                        <th>Tên</th>
+                        <th style="text-align: center">Trạng thái</th>
+                        <th style="text-align: center">Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var category in Model)
+                    {
+
+                        <tr>
+                            <td><img class="image-brand" src="@V308CMS.Common.ImageHelper.ToUrl(category.image)" alt="@category.name" /></td>
+                            <td>
+                                <a class="btn btn-link" href="@Url.CategoryEditUrl(new {category.id})" >
+                                    @category.name
+                                </a>
+                            </td>
+                            
+                            <td style="text-align: center">
+                                @Html.Partial("UI/_ChangeStateForm", new ChangeStateFormModels
+                                               {
+                                                   NameOfId = "Id",
+                                                   ValueOfId = category.id,
+                                                   IsConfirm = true,
+                                                   State = category.status,
+                                                   Url = Url.CategoryChangeStateUrl()
+                                               })
+                            </td>
+                            <td style='width: 200px;text-align: center'>
+                                @Html.Partial("UI/_EditButton", new ButtonModels
+                           {
+                               Id = string.Format("category_{0}", category.id),
+                               Href = Url.CategoryEditUrl(new { category.id }),
+                               Title = "Cập nhật thông tin chuyên mục " + category.name
+                           })
+                                @Html.Partial("UI/_DeleteForm", new DeleteFormModels
+                                               {
+                                                   NameOfId = "Id",
+                                                   ValueOfId = category.id,
+                                                   IsConfirm = true,
+                                                   Url = Url.CategoryDeleteUrl()
+                                               })
+                            </td>
+                        </tr>
+
+
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#dataTables-example').DataTable({
+            responsive: true
+        });
+    });
+</script>

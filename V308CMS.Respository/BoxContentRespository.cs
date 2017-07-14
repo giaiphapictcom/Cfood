@@ -32,7 +32,7 @@ namespace V308CMS.Respository
                         .ToListAsync();
                 if (listHomeCategory.Any())
                 {
-                    for (int i = 0, total = listHomeCategory.Count; i < total; i++)
+                    for (int i = 0, total = listHomeCategory.Count(); i < total; i++)
                     {
 
                         var category = listHomeCategory[i];
@@ -48,7 +48,7 @@ namespace V308CMS.Respository
                             ListSubCategory = listSubcategory
                         };
 
-                        for (int k = 0, subTotal = listSubcategory.Count; k < subTotal; k++)
+                        for (int k = 0, subTotal = listSubcategory.Count(); k < subTotal; k++)
                         {
                             var subCategory = listSubcategory[k];
                             var boxContentItem = new BoxContentItem

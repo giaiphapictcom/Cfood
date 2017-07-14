@@ -1,4 +1,6 @@
 ﻿@using V308CMS.Common;
+@using V308CMS.Helpers
+@using V308CMS.Helpers.Url
 @if (Model != null) { 
     <div class="item-type-1 col-12 col-md-6 col-lg-4">
         <div class="special">
@@ -11,7 +13,7 @@
         
 	    <div class="thumb">
             <a href="/@Ultility.LocDau(@Model.Name)-d@(@Model.ID).html">
-            <img src="@ImageHelper.Crop(@Model.Image,235)" class="img-fluid mx-auto d-block" alt="@Model.Name" />
+            <img src="@ImageHelper.ToUrl(@Model.Image,235,235)" class="img-fluid mx-auto d-block" alt="@Model.Name" />
             </a>
 	    </div>
 	    <div class="name"><a href="/@Ultility.LocDau(@Model.Name)-d@(@Model.ID).html">@Model.Name</a></div>
@@ -34,7 +36,7 @@
 			    <a href="#" class="like"><i class="icon-heart"></i></a>
 			    <a href="javascript:void(0);" class="buy ml-3" add-cart="@Model.ID"><i class="icon-basket"></i></a>
             </p>
-			<p class="pt-3"><a href="/@V308CMS.Common.Ultility.LocDau(@Model.Name)-d@(@Model.ID).html" class="btn ">Xem chi tiết</a></p>
+			<p class="pt-3"><a href="/@V308CMS.Common.Ultility.LocDau(@Model.Name)-d@(@Model.ID).html" class="btn" >Xem chi tiết</a></p>
         </div>
 	</div>
 }

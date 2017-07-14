@@ -63,7 +63,11 @@
                 <div class="col-md-8">
                     <h5>@c.title</h5>
                     <p>@c.summary</p>
-                    <p class="text-red">Ngày hết hạn: @String.Format("{0:dd/MM/yyyy}", c.end_date)</p>
+                    @if (c.end_date > new DateTime(2000, 1, 1))
+                    {
+                        <p class="text-red">Ngày hết hạn: @String.Format("{0:dd/MM/yyyy}", c.end_date)</p>
+                    }
+                    
                     <p>Voucher Code : <strong>@c.code</strong></p>
                 </div>
             </div>

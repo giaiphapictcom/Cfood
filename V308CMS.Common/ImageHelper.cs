@@ -24,6 +24,10 @@ namespace V308CMS.Common
                 return path;
             }
 
+            if (path != null && path.Length > 0) {
+                path = path.Replace("\\Content\\Images\\", "");
+                path = path.Replace("/Content/Images/", "");
+            }
 
             string resizeDir = "";
             if (width > 0 && height > 0)
@@ -38,8 +42,11 @@ namespace V308CMS.Common
             {
                 resizeDir = String.Format("h{0}", height);
             }
-            path = path.Replace("\\", "/");
-            var imgUploadPath = path.Replace("/Content/Images/", "").Trim();
+            var imgUploadPath = "";
+            if (path != null && path.Length > 0) {
+                imgUploadPath = path.Replace("\\", "/");
+            }
+            
 
             if (imgUploadPath.Length < 1)
             {

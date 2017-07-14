@@ -4,10 +4,10 @@
     </li>
     @if (Model != null && Model.Count > 0)
     {
-        foreach (V308CMS.Data.NewsGroups menu in Model)
+        foreach (V308CMS.Data.Models.MenuConfig menu in Model)
         {
             if (!menu.Name.ToLower().Equals("footer")) { 
-                <li class="nav-item"><a class="nav-link" href="@menu.Link">@menu.Name</a></li>
+                <li class="nav-item"><a class="nav-link" href="@menu.Link" target="@menu.Target">@menu.Name</a></li>
             }
         
         }

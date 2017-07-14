@@ -38,11 +38,11 @@
     
         foreach (News news in Model.ListNews) { 
             <div class="row">
-                <div class="col-md-4"><img src="@ImageHelper.Crop(news.Image)" class="img-responsive" /></div>
-                <div class="col-md-8">
+                <div class="col-md-2"><img src="@ImageHelper.ToUrl(news.Image,160,160)" class="img-responsive img-thumbnail" /></div>
+                <a class="col-md-10" href="/@Model.NewsGroups.Alias/@url.articleURL(news.Title, news.ID)">
                     <h5>@news.Title</h5>
                     <p>@news.Summary</p>
-                </div>
+                </a>
             </div>
             <hr />
         }

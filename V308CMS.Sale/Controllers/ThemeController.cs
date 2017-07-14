@@ -10,7 +10,7 @@ using V308CMS.Respository;
 
 namespace V308CMS.Sale.Controllers
 {
-    public class ThemeController : Controller
+    public class ThemeController : BaseController
     {
 
         static string MainController = "";
@@ -18,42 +18,42 @@ namespace V308CMS.Sale.Controllers
             MainController = "Affiliate";
         }
 
-        #region Repository
-        static V308CMSEntities mEntities;
-        ProductRepository ProductRepos;
-        ImagesRepository imagesRepos;
-        NewsRepository NewsRepos;
-        NewsGroupRepository NewsGroupRepos;
-        AccountRepository accountRepos;
-        MenuConfigRespository MenuRepos;
+        //#region Repository
+        //static V308CMSEntities mEntities;
+        //ProductRepository ProductRepos;
+        //ImagesRepository imagesRepos;
+        //NewsRepository NewsRepos;
+        //NewsGroupRepository NewsGroupRepos;
+        //AccountRepository accountRepos;
+        //MenuConfigRespository MenuRepos;
 
-        BannerRespository BannerRepos;
+        //BannerRespository BannerRepos;
 
-        private void CreateRepos()
-        {
-            mEntities = new V308CMSEntities();
-            ProductRepos = new ProductRepository(mEntities);
-            imagesRepos = new ImagesRepository(mEntities);
-            NewsRepos = new NewsRepository(mEntities);
-            NewsGroupRepos = new NewsGroupRepository();
-            accountRepos = new AccountRepository(mEntities);
-            MenuRepos = new MenuConfigRespository(mEntities);
-            BannerRepos = new BannerRespository();
+        //private void CreateRepos()
+        //{
+        //    mEntities = new V308CMSEntities();
+        //    ProductRepos = new ProductRepository();
+        //    imagesRepos = new ImagesRepository();
+        //    NewsRepos = new NewsRepository();
+        //    NewsGroupRepos = new NewsGroupRepository();
+        //    accountRepos = new AccountRepository();
+        //    MenuRepos = new MenuConfigRespository();
+        //    BannerRepos = new BannerRespository();
 
-        }
-        private void DisposeRepos()
-        {
-           
-            ProductRepos.Dispose();
-            imagesRepos.Dispose();
-            NewsRepos.Dispose();
-            //NewsGroupRepos.Dispose();
-            accountRepos.Dispose();
-            MenuRepos.Dispose();
-            mEntities.Dispose();
+        //}
+        //private void DisposeRepos()
+        //{
 
-        }
-        #endregion
+        //    //ProductRepos.Dispose();
+        //    //imagesRepos.Dispose();
+        //    //NewsRepos.Dispose();
+        //    ////NewsGroupRepos.Dispose();
+        //    //accountRepos.Dispose();
+        //    //MenuRepos.Dispose();
+        //    //mEntities.Dispose();
+
+        //}
+        //#endregion
 
         public ActionResult CategoryMenu()
         {
@@ -129,7 +129,7 @@ namespace V308CMS.Sale.Controllers
                 if (HttpContext.User.Identity.IsAuthenticated == true && Session["UserId"] != null)
                 {
                     //lay thong tin chi tiet user
-                    Model.Account = accountRepos.LayTinTheoId(Int32.Parse(Session["UserId"].ToString()));
+                    Model.Account = AccountRepos.LayTinTheoId(Int32.Parse(Session["UserId"].ToString()));
                     Model.IsAuthenticated = true;
                 }
 
@@ -180,7 +180,7 @@ namespace V308CMS.Sale.Controllers
                 //NewsGroups footerCate = NewsRepos.SearchNewsGroup("footer-affiliate");
                 //if (footerCate != null)
                 //{
-                List<NewsGroups> categorys = NewsGroupRepos.GetAll(true, "affiliate");
+                List<NewsGroups> categorys = NewsGroupRepos.GetAll(true, "affiliate",true);
                 if (categorys.Count() > 0)
                 {
                     foreach (NewsGroups cate in categorys)
@@ -213,7 +213,7 @@ namespace V308CMS.Sale.Controllers
             }
             finally
             {
-                DisposeRepos();
+                //DisposeRepos();
             }
 
             
@@ -256,7 +256,7 @@ namespace V308CMS.Sale.Controllers
                 CreateRepos();
                 if (banner.Name == null || banner.Name.Length < 1)
                 {
-                    var banners = BannerRepos.GetList(-1, "affiliate", true, 3);
+                    var banners = BannerRepo.GetList(-1, "affiliate", true, 3);
                     banner = banners.Last();
                 }
                 string view = "~/Views/" + MainController + "/Blocks/BlockNews12.cshtml";
@@ -271,6 +271,13 @@ namespace V308CMS.Sale.Controllers
                 DisposeRepos();
             }
             
+        }
+
+        public ActionResult SupportRight() {
+            string view = "~/Views/" + MainController + "/Elements/SupportRight.cshtml";
+            var Model = new SupportMansPage();
+            Model.Items = SupportManRepos.GetList(true,Data.Helpers.Site.affiliate);
+            return View(view, Model);
         }
     }
 }

@@ -19,12 +19,14 @@ namespace V308CMS
 
             routes.MapRoute("NewsIndexRoute", "tin-tuc", new { Controller = "News", action = "Index", page = 1, type = 58 });
             routes.MapRoute("NewsIndexHtmlRoute", "tin-tuc.html", new { Controller = "News", action = "Index", page = 1, type = 58 });
-            routes.MapRoute("NewsIndexPagingRoute", "tin-tuc/trang-{page}.html", new { Controller = "News", action = "Index", type = 58 });
-            routes.MapRoute("NewsDetailRoute", "tin-tuc/{slug}.{id}.html", new { Controller = "News", action = "Detail" }, new { id = @"\d+" });
 
-            //routes.MapRoute("VideoIndexRoute", "video.html", new { Controller = "MyShopify", action = "HomeYoutube" });
+            routes.MapRoute("NewsIndexPagingRoute", "tin-tuc/trang-{page}.html", new { Controller = "News", action = "Index",type = 58 });
+            routes.MapRoute("NewsDetailRoute", "tin-tuc/{slug}.{id}.html", new { Controller = "News", action = "Detail" }, new { id = @"\d+", type = 58 });
+            routes.MapRoute("ArticleItemRoute", "{title}-n{id}.html", new { Controller = "News", action = "Detail" }, new { id = @"\d+" });
+            routes.MapRoute("ArticlesRoute", "{title}-c{type}", new { Controller = "News", action = "Index" }, new { type = @"\d+" });
+
+
             routes.MapRoute("VideoIndexRoute", "video", new { Controller = "Video", action = "Index" });
-            //routes.MapRoute("VideoDetailRoute", "{title}-youtube{pId}.html", new { Controller = "Home", action = "YoutubeDetail" }, new { pId = @"\d+" });
             routes.MapRoute("VideoDetailRoute", "{title}-youtube{id}.html", new { Controller = "Video", action = "Detail" }, new { id = @"\d+" });
 
             routes.MapRoute("LoginRoute", "dang-nhap.html", new { Controller = "Member", action = "Login" });
@@ -36,6 +38,11 @@ namespace V308CMS
             routes.MapRoute("MarketListRoute", "danh-sach-sieu-thi.html", new { Controller = "Home", action = "MarketList" });
 
             routes.MapRoute("AddCartRoute", "them-san-pham", new { Controller = "Home", action = "addToShopCart" });
+
+            routes.MapRoute("CheckoutCartRoute", "chi-tiet-don-hang.html", new { Controller = "Cart", action = "Checkout" });
+            
+            
+
             routes.MapRoute("MarketCategoryRoute", "{pMarketName}-m{pGroupId}.html", new { Controller = "Home", action = "MarketCategory" }, new { pGroupId = @"\d+" });
 
 

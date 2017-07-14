@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using V308CMS.Common;
 using V308CMS.Data;
 using V308CMS.Models;
+using V308CMS.Data.Models;
 
 namespace V308CMS.Controllers
 {
@@ -20,8 +21,18 @@ namespace V308CMS.Controllers
         }
         [ChildActionOnly]
         public ActionResult MainMenu()
-        {          
-            return View("MainMenu", NewsService.GetNewsGroup());
+
+        {
+          
+            return View("MainMenu", MenuConfigRepos.GetAll(Data.Helpers.Site.home));
+        }
+
+        public ActionResult MenuCanvas()
+        {
+
+            return View("MenuCanvas", MenuConfigRepos.GetAll(Data.Helpers.Site.home));
+        //{          
+        //    return View("MainMenu", NewsService.GetNewsGroup());
         }
 
         public ActionResult LeftColumn()
@@ -49,7 +60,7 @@ namespace V308CMS.Controllers
             NewsGroups videoGroup = NewsService.SearchNewsGroup("video");
             if (videoGroup != null)
             {
-                model.News = NewsService.LayTinTheoGroupId(videoGroup.ID);
+                model.News = NewsService.LayTinTheoGroupId(videoGroup.ID,2);
             }                     
             return View("LeftColumn", model);
           
@@ -81,7 +92,7 @@ namespace V308CMS.Controllers
             var newsCategorys = new List<NewsGroupPage>(); ;
 
             var footerCate = NewsService.SearchNewsGroup("footer");
-            if (footerCate.ID > 0)
+            if (footerCate !=null && footerCate.ID > 0)
             {
                 var categorys = NewsService.GetNewsGroup(footerCate.ID, true, 3);
                 if (categorys.Any())
@@ -118,8 +129,21 @@ namespace V308CMS.Controllers
         #region Action for Home Page
         [ChildActionOnly]
         public ActionResult HomeSlides()
-        {                
-            return View("HomeSlides");
+        {
+
+            Banner model = new Banner();
+            try {
+                var banners = BannerService.GetList(-1, Data.Helpers.Site.home, true, 1);
+                if (banners.Count() > 0) {
+                    model = banners.FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+            }
+
+            return View("HomeSlides", model);
         }
         public ActionResult HomeAdsProduct()
         {
@@ -131,7 +155,12 @@ namespace V308CMS.Controllers
         {
             return View("VideoItemBlock", video);
         }
+        public ActionResult YoutubeBlock(V308CMS.Data.News video)
+        {
+            return View("VideoItemBlock", video);
+        }
         
+
         #endregion
 
 

@@ -183,6 +183,7 @@ namespace V308CMS.Common
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "Không Rõ";
             }
             return str;
@@ -198,6 +199,7 @@ namespace V308CMS.Common
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "Không Rõ";
             }
             return str;
@@ -213,6 +215,7 @@ namespace V308CMS.Common
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "Không Rõ";
             }
             return str;
@@ -254,6 +257,7 @@ namespace V308CMS.Common
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "Không Rõ";
             }
             return str;
@@ -269,6 +273,7 @@ namespace V308CMS.Common
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return new DateTime();
             }
 
@@ -285,6 +290,7 @@ namespace V308CMS.Common
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return "Không Rõ";
             }
             return str;
@@ -340,6 +346,7 @@ namespace V308CMS.Common
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 return 0;
             }
         }

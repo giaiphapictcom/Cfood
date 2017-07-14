@@ -5,35 +5,57 @@
 <!--[if IE 9 ]><html class="ie9 no-js"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!-->
 <html class="no-js">
-<!--<![endif]-->
+<!--<![endif]-->
 <head>
-     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    @RenderSection("header",false)
-    @Html.Action("Resources", "Block")
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="shortcut icon" href="@ViewBag.ThemesPath/images/favicon.png" type="image/png">
+    <link rel="icon" href="@ViewBag.ThemesPath/images/favicon.png" type="image/png" />
+    <meta content="website" property="og:type" />
 
-</head>
-<body>
-    <header>
+        @RenderSection("header", false)
+        @Html.Action("Resources", "Block")
+
+    </head>
+    <body>
+        <header>
             @Html.Action("Header", "Block")
-    </header>
-    <nav class="navbar-toggleable-md  bg-mpstart">
-	    <div class="container">
-	        <div class="collapse navbar-collapse">@Html.Action("MainMenu", "Block")</div>
-	    </div>
-    </nav>
-    <div class="main-content">
-	    <div class="container">
-		    <div class="row">
-                <div class="col-lg-3 col-md-12 col-12 mb-4">
-                    <div id="leftcol"> @Html.Action("LeftColumn", "Block")</div>
-                </div>
-                <div class="col-lg-9 col-md-12 col-12 ">
-                    @RenderBody()
+        </header>
+        @Html.Action("MenuCanvas", "Block")
+        <nav class="navbar-toggleable-md  bg-mpstart">
+            <div class="container">
+                <div class="collapse navbar-collapse">@Html.Action("MainMenu", "Block")</div>
+            </div>
+        </nav>
+        <div class="main-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-12 col-12 mb-4">
+                        <div id="leftcol"> @Html.Action("LeftColumn", "Block")</div>
+                    </div>
+                    <div class="col-lg-9 col-md-12 col-12 ">
+                        @RenderBody()
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    @Html.Action("Footer", "Block")
-</body>
+        @Html.Action("Footer", "Block")
+
+        <div class="modal fade" id="addcart-success" role="dialog">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Modal Header</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>This is a small modal.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng lại</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>

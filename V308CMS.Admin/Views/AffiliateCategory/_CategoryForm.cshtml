@@ -1,0 +1,48 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@using V308CMS.Admin.Models.UI
+@model V308CMS.Admin.Models.AffiliateCategoryModels
+
+@Html.AntiForgeryToken()
+@Html.HiddenFor(category => category.id)
+
+<div class="row">
+    @Html.ValidationSummary(true)
+    <div class="col-lg-6">
+        @Html.Partial("UI/_ImageSelectPreview", new ImageSelectPreviewModels
+       {
+           Id = Model.id,
+           Name = "ImgNew",
+           ImageUrl = Model.Image,
+           ImageUrlHiddenName = "Image"
+       })
+        <div class="form-group">
+            @Html.LabelFor(category => category.Name)
+            @Html.TextBoxFor(category => category.Name, new {@class = "form-control", placeholder = "Nhập tên danh mục"})
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(c => c.Summary)
+            @Html.TextAreaFor(c => c.Summary, new { rows = "3", @class = "form-control", placeholder = "Nhập Nội dung mô tả" })
+            @Html.ValidationMessageFor(c => c.Summary)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(c => c.Link)
+            @Html.TextBoxFor(c => c.Link, new { @class = "form-control", placeholder = "URL" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(category => category.Order)
+            @Html.TextBoxFor(category => category.Order, new {@class = "form-control", placeholder = "Nhập thứ tự hiển thị nếu bạn muốn sắp xếp"})
+            @Html.ValidationMessageFor(category => category.Order)
+        </div>
+        <div class="form-group">
+            <div class="checkbox">
+                @Html.CheckBoxFor(category => category.Status, new {@checked = (Model.Status ? "checked" : "")})
+                @Html.LabelFor(category=>category.Status)                
+            </div>
+        </div>
+
+        @Html.Partial("UI/_FormAction")
+        <a href="@Url.CategoryIndexUrl()" title="Danh sách Danh mục" class="btn btn-link">Danh sách</a>
+
+    </div>
+</div>

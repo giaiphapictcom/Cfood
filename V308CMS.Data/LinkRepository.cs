@@ -42,8 +42,6 @@ namespace V308CMS.Data
         {
             try
             {
-                
-
                 var link = new AffiliateLink
                 {
                     url = url,
@@ -114,6 +112,14 @@ namespace V308CMS.Data
             }
         }
 
-
+        public static int LinkCount(int uid=0) {
+            int count = 0;
+            using (var entities = new V308CMSEntities())
+            {
+                var links = entities.AffiliateLink.Where(l => l.created_by == uid);
+                count = links.Count();
+            }
+            return count;
+        }
     }
 }

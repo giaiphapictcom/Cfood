@@ -16,12 +16,7 @@ namespace V308CMS.Admin.Helpers.Url
            string action = "create")
         {
 
-            switch (HttpContext.Current.Request.RequestContext.RouteData.Values["action"].ToString())
-            {
-                case "affiliatebanner":
-                    action = "affiliateCreate";
-                    break;
-            }
+            
             return helper.Action(action, controller, routeValue);
         }
 

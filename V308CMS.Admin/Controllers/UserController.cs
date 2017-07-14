@@ -18,7 +18,7 @@ namespace V308CMS.Admin.Controllers
         //
         // GET: /User/        
         [CheckPermission(0, "Danh sách")]
-        public ActionResult Index(int status =0,string site="")
+        public ActionResult Index(int status =0,string site= Data.Helpers.Site.home)
         {
             ViewBag.ListStateFilter = DataHelper.ListEnumType<StateFilterEnum>();
             return View("Index", UserService.GetList(status, site));
@@ -109,10 +109,13 @@ namespace V308CMS.Admin.Controllers
                 Email = user.Email,
                 Address = user.Address,
                 Phone = user.Phone,
-                Gender = user.Gender.HasValue && user.Gender.Value,
+                Gender = user.Gender,
                 //BirthDay = user.BirthDay?.ToString("dd/MM/yyyy") ?? "",
                 BirthDay = string.Format("dd/MM/yyyy", user.BirthDay),
-                Status = user.Status ?? false,
+
+                Status = user.Status,
+                //Status = user.Status ?? false,
+
                 AvatarUrl = user.Avatar,
                 Site = user.Site
             };
@@ -126,8 +129,8 @@ namespace V308CMS.Admin.Controllers
         [ValidateAntiForgeryToken]       
         public ActionResult OnEdit(UserModels user)
         {
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
                 var userUpdate = new Account
                 {
                     Email = user.Email,
@@ -161,17 +164,16 @@ namespace V308CMS.Admin.Controllers
                     return RedirectToAction("Index");
                 }               
                 return View("Edit", user);
-            }
+            //}
 
 
-            return View("Edit", user);
+            //return View("Edit", user);
         }
 
-        [HttpPost]
-        [CheckPermission(3, "Xóa")]        
-        [ActionName("Delete")]        
-        [ValidateAntiForgeryToken]
-        public ActionResult OnDelete(int id)
+       
+        [CheckPermission(3, "Xóa")]
+        
+        public ActionResult Delete(int id)
         {
             var user = UserService.Find(id);
             var result = UserService.Delete(id);
@@ -184,16 +186,35 @@ namespace V308CMS.Admin.Controllers
         }
 
         [HttpPost]
+        [CheckPermission(3, "Xóa")]        
+        [ActionName("Delete")]
+
+        public ActionResult OnDelete(int id)
+        {
+            var user = UserService.Find(id);
+            var result = UserService.Delete(id);
+            SetFlashMessage(result == Result.Ok ?
+                "Xóa khách hàng thành công." :
+                "Khách hàng không tồn tại trên hệ thống.");
+
+            string ActionIndex = user.Site == Data.Helpers.Site.affiliate ? "affiliate" : "Index";
+            return RedirectToAction(ActionIndex);
+        }
+
+        [HttpPost]
         [CheckPermission(4, "Thay đổi trạng thái")]
         [ActionName("ChangeStatus")]
-        [ValidateAntiForgeryToken]       
+        //[ValidateAntiForgeryToken]       
         public ActionResult OnChangeStatus(int id)
         {
+            var user = UserService.Find(id);
             var result = UserService.ChangeStatus(id);
             SetFlashMessage(result == Result.Ok
                 ? string.Format("Thay đổi trạng thái khách hàng thành công.")
                 : "Không tìm thấy khách hàng cần thay đổi trạng thái.");
-            return RedirectToAction("Index");
+
+            string ActionIndex = user.Site == Data.Helpers.Site.affiliate ? "affiliate" : "Index";
+            return RedirectToAction(ActionIndex);
 
         }
         [CheckPermission(5, "Đổi mật khẩu")]
@@ -203,7 +224,9 @@ namespace V308CMS.Admin.Controllers
             var userChangePassword = UserService.Find(id);
             if (userChangePassword == null)
             {
-                return RedirectToAction("Index");
+                //return RedirectToAction("Index");
+                string ActionIndex = userChangePassword.Site == Data.Helpers.Site.affiliate ? "affiliate" : "Index";
+                return RedirectToAction(ActionIndex);
 
             }
             var userChangePasswordModels = new UserChangePassworModels
@@ -244,9 +267,9 @@ namespace V308CMS.Admin.Controllers
 
         #region Affiliate action
         [CheckPermission(0, "Danh sách")]
-        public ActionResult affiliate(int status = 0)
+        public ActionResult affiliate(int status = -1)
         {
-            return Index(status, ConfigHelper.SiteAffiliate);
+            return Index(status, Data.Helpers.Site.affiliate);
         }
         [CheckPermission(1, "Thêm mới")]
         public ActionResult affiliateCreate()

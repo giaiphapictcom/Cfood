@@ -4,6 +4,7 @@ using V308CMS.Admin.Attributes;
 using V308CMS.Admin.Models;
 using V308CMS.Common;
 using V308CMS.Data.Enum;
+using V308CMS.Admin.Helpers;
 
 namespace V308CMS.Admin.Controllers
 {
@@ -65,20 +66,27 @@ namespace V308CMS.Admin.Controllers
             ViewBag.ListStatus = DataHelper.ListEnumType<OrderStatusEnum>();
             return View("Edit", order.CloneTo<OrderModels>());
         }
+
         [CheckPermission(2, "Xóa")]
         [HttpPost]
         [ActionName("Delete")]
         public ActionResult OnDelete(int id)
         {
             var result = OrderService.Delete(id);
-            return Json(new { code = result });
+            return RedirectToAction("Index");
+            //return Json(new { code = result });
         }
+
         [CheckPermission(3, "Thay đổi trạng thái")]
         [HttpPost]
         [ActionName("ChangeStatus")]
         public ActionResult OnChangeStatus(int id, int status)
         {
             var result = OrderService.ChangeStatus(id, status);
+            SetFlashMessage(result == Result.Ok ?
+                "Thay đổi trạng thái thành công." :
+                "đơn hàng không tồn tại trên hệ thống.");
+            //return RedirectToAction("Index");
             return Json(new { code = result });
         }
         [CheckPermission(4, "Hủy đơn hàng")]
@@ -87,14 +95,18 @@ namespace V308CMS.Admin.Controllers
         public ActionResult OnCancelOrder(int id)
         {
             var result = OrderService.ChangeStatus(id,(int) OrderStatusEnum.CancelledOrder);
-            return Json(new { code = result });
+           
+            return RedirectToAction("Index");
+            
         }
+
         [CheckPermission(5, "Cập nhật ghi chú")]
         [HttpPost]
         [ActionName("UpdateDetail")]
         public JsonResult OnUpdateDetail(int id,string detail)
         {
             var result = OrderService.UpdateDetail(id, detail);
+
             return Json(new {code = result});
         }
   

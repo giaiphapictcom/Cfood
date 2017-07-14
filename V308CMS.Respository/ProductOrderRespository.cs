@@ -25,32 +25,33 @@ namespace V308CMS.Respository
         {
             using (var entities = new V308CMSEntities())
             {
-                IEnumerable<ProductOrder> listOrder = (from order in entities.ProductOrder
-                    select order
-                    );
+                IEnumerable<ProductOrder> listOrder = (from order in entities.ProductOrder select order );
                 if (status > 0)
                 {
-                    listOrder = (from order in listOrder
-                                 where order.Status == status
-                        select order
-                        );
+                    listOrder = listOrder.Where(o=>o.Status == status);
+                    //listOrder = (from order in listOrder
+                    //             where order.Status == status
+                    //    select order
+                    //    );
                 }
                 if ((startDate != DateTime.MinValue) && startDate<=endDate)
                 {
                     if (startDate == endDate)
                     {
-                        listOrder = (from order in listOrder
-                                     where order.Date == startDate
-                            select order
-                            );
+                        //listOrder = (from order in listOrder
+                        //             where order.Date == startDate
+                        //    select order
+                        //    );
+                        listOrder = listOrder.Where(o=>o.Date == startDate);
                     }
                     else
                     {
-                        var endDateCheck = endDate.AddDays(1);
-                        listOrder = (from order in listOrder
-                                     where order.Date>= startDate && order.Date< endDateCheck
-                                     select order
-                            );
+                        //var endDateCheck = endDate.AddDays(1);
+                        //listOrder = (from order in listOrder
+                        //             where order.Date>= startDate && order.Date< endDateCheck
+                        //             select order
+                        //    );
+                        listOrder = listOrder.Where(o => o.Date >= startDate && o.Date < endDate.AddDays(1));
                     }
                 }
                 if (!string.IsNullOrEmpty(keyword))
@@ -59,45 +60,55 @@ namespace V308CMS.Respository
                     if (searchType == (byte)OrderSearchTypeEnum.All)
                     {
 
-                        listOrder = (from order in listOrder.AsEnumerable()
-                                     where order.FullName.ToLower().Contains(keywordLower) ||
-                                     order.Phone.ToLower().Contains(keywordLower) ||
-                                     order.Address.ToLower().Contains(keywordLower)
-                                     select order
-                               );
+                        //listOrder = (from order in listOrder.AsEnumerable()
+                        //             where order.FullName.ToLower().Contains(keywordLower) ||
+                        //             order.Phone.ToLower().Contains(keywordLower) ||
+                        //             order.Address.ToLower().Contains(keywordLower)
+                        //             select order
+                        //       );
+                        listOrder = listOrder.Where(o=> o.FullName.ToLower().Contains(keywordLower) ||o.Phone.ToLower().Contains(keywordLower) || o.Address.ToLower().Contains(keywordLower));
                     }
                     if (searchType == (byte)OrderSearchTypeEnum.ByName)
                     {
 
-                        listOrder = (from order in listOrder.AsEnumerable()
-                                     where order.FullName.ToLower().Contains(keywordLower)                                  
-                                     select order
-                               );
+                        //listOrder = (from order in listOrder.AsEnumerable()
+                        //             where order.FullName.ToLower().Contains(keywordLower)                                  
+                        //             select order
+                        //       );
+                        listOrder = listOrder.Where(o=>o.FullName.ToLower().Contains(keywordLower));
                     }
                     if (searchType == (byte)OrderSearchTypeEnum.ByPhone)
                     {
 
-                        listOrder = (from order in listOrder.AsEnumerable()
-                                     where order.Phone.ToLower().Contains(keywordLower)
-                                     select order
-                               );
+                        //listOrder = (from order in listOrder.AsEnumerable()
+                        //             where order.Phone.ToLower().Contains(keywordLower)
+                        //             select order
+                        //       );
+                        listOrder = listOrder.Where(o => o.Phone.ToLower().Contains(keywordLower));
+
                     }
                     if (searchType == (byte)OrderSearchTypeEnum.ByAddress)
                     {
 
-                        listOrder = (from order in listOrder.AsEnumerable()
-                                     where order.Address.ToLower().Contains(keywordLower)
-                                     select order
-                               );
+                        //listOrder = (from order in listOrder.AsEnumerable()
+                        //             where order.Address.ToLower().Contains(keywordLower)
+                        //             select order
+                        //       );
+                        listOrder = listOrder.Where(o => o.Address.ToLower().Contains(keywordLower));
                     }
                 }
                 totalRecord = listOrder.Count();
-                return (from order in listOrder
-                    orderby order.Date descending
-                    select order
-                    ).Skip((page-1)*pageSize)
+
+                return listOrder.OrderByDescending(o=>o.Date).Skip((page - 1) * pageSize)
                     .Take(pageSize)
                     .ToList();
+
+                //return (from order in listOrder
+                //    orderby order.Date descending
+                //    select order
+                //    ).Skip((page-1)*pageSize)
+                //    .Take(pageSize)
+                //    .ToList();
             }
             
         }
@@ -115,14 +126,23 @@ namespace V308CMS.Respository
 
         public List<ProductOrder> Take(int count = 10)
         {
+            var items = new List<ProductOrder>();
             using (var entities = new V308CMSEntities())
             {
-                return (from order in entities.ProductOrder
-                 orderby order.Date descending
-                 select order
+                try
+                {
+                    items = (from order in entities.ProductOrder
+                             orderby order.Date descending
+                             select order
                     ).Take(count)
                     .ToList();
+                }
+                catch (Exception ex)
+                {
+                    Console.Write(ex);
+                }
             }
+            return items;
            
         }
 
@@ -175,13 +195,19 @@ namespace V308CMS.Respository
                 {
                     if (orderDelete.OrderDetail != null)
                     {
-                        foreach (var orderItem in orderDelete.OrderDetail)
-                        {
-                            orderDelete.OrderDetail.Remove(orderItem);
-                            entities.SaveChanges();
+                        try {
+                            foreach (var orderItem in orderDelete.OrderDetail)
+                            {
+                                orderDelete.OrderDetail.Remove(orderItem);
+                                entities.SaveChanges();
+                            }
                         }
-                        
-                        
+                        catch (Exception ex)
+                        {
+                            Console.Write(ex);
+                        }
+
+
                     }
                     entities.ProductOrder.Remove(orderDelete);
                     entities.SaveChanges();

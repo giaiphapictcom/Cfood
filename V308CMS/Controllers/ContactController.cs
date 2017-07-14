@@ -14,6 +14,26 @@ namespace V308CMS.Controllers
        
         public ActionResult Index()
         {
+<<<<<<< HEAD
+            
+            var model = new ContactModels();
+            try {
+                var userInfo = AccountService.GetByUserId(User.UserId);
+                if (userInfo != null)
+                {
+                    model.Email = userInfo.Email;
+                    model.Phone = userInfo.Phone;
+                    model.Name = userInfo.FullName;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return Content(ex.InnerException.ToString());
+            }
+
+
+=======
             var model = new ContactModels();
             if (AuthenticationHelper.IsAuthenticated)
             {
@@ -25,6 +45,7 @@ namespace V308CMS.Controllers
                     model.Name = userInfo.FullName;
                 }
             }
+>>>>>>> 527fed4d0fbb418d29ef5fd10747593d42f8edf7
             return View("Contact", model);
         }
         [HttpPost]

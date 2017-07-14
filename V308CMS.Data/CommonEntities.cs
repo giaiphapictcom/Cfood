@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using V308CMS.Data.Models;
 
 
 namespace V308CMS.Data
@@ -2102,6 +2101,14 @@ namespace V308CMS.Data
 
     }
 
+    public class AffiliateBannerPage
+    {
+        public List<AffiliateBanner> Banners { get; set; }
+        public int Total { get; set; }
+        public int Page { get; set; }
+
+    }
+
     public class CouponsPage
     {
         public List<Counpon> Coupons { get; set; }
@@ -2129,5 +2136,13 @@ namespace V308CMS.Data
         public DateTime date { get; set; }
         public int Total { get; set; }
         public float Price { get; set; }
+    }
+
+    public class SupportMansPage
+    {
+        public List<SupportMan> Items { get; set; }
+        public int Total { get; set; }
+        public int Page { get; set; }
+
     }
 }

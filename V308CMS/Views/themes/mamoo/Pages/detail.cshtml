@@ -1,14 +1,22 @@
 ﻿@model V308CMS.Data.ProductDetailPage
 @using V308CMS.Common;
+@using V308CMS.Helpers
+@using V308CMS.Helpers.Url
 @{
     Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
+   
+    string url_current = Request.Url.ToString();
+    url_current = System.Net.WebUtility.UrlEncode(url_current);
+    
 }
 
 @section header {
     <title>Sản Phẩm - @Model.Product.Name</title>
+    <meta property="og:site_name" content="" />
     <meta name="keywords" content="@Model.Product.Name">
-    <meta property="og:url" content="@Ultility.ImgUrl("")">
-    <meta property="og:type" content="website" />
+    <meta property="og:url" content="@Request.Url.ToString()">
+    <meta property="og:type" content="article" />
+    
     <meta property="og:title" content="@Model.Product.Name">
     <meta property="og:image" content="@Ultility.ImgUrl(@Model.Product.Image)">
     <meta property="og:description" content="@Model.Product.Summary">
@@ -24,7 +32,7 @@
         
         <div class="col-4">
             <div class="thumb">
-                <img src="@ImageHelper.Crop(@Model.Product.Image,240)" id="product-thumb" class="img-fluid mx-auto d-block" alt="@Model.Product.Name" />
+                <img src="@ImageHelper.ToUrl(@Model.Product.Image,240)" id="product-thumb" class="img-fluid mx-auto d-block" alt="@Model.Product.Name" />
             </div>
             <div class="thumb2 mt-2">
                 @Html.Action("ProductDetailSlide", "Block", Model.Product)
@@ -35,62 +43,74 @@
         <div class="col-8">
             <h1>@Model.Product.Name</h1>
             <div class="status">Tình Trạng : <span class="text-blue">còn hàng</span></div>
+            @if (Model.Product.Code.Length > 0)
+            {
+                <div>Mã sản phẩm : <span class="text-blue" style="font-size:20px;">@Model.Product.Code</span></div>
+            }
+            
             <hr>
             @if (Model.Product.Price > 0)
             {
                 <div class="price mb-3">
-
-                    <span class="discount">@String.Format("{0: 0,0}", Model.Product.Price - (Model.Product.Price / 100) * Model.Product.SaleOff) <i class="unit">@ViewBag.MoneyShort</i></span>
+                    @if (Model.Product.SaleOff > 0)
+                    {
+                        <span class="discount">@String.Format("{0: 0,0}", Model.Product.Price - (Model.Product.Price / 100) * Model.Product.SaleOff) <i class="unit">@ViewBag.MoneyShort</i></span>
+                    }
+                    
                     <span class="sale">@String.Format("{0: 0,0}", (Model.Product.Price)) <i class="unit">@ViewBag.MoneyShort</i></span>
                 </div>
             }
             
+                <form action="@Url.AddToCartUrl()" method="post" name="addcart" >
+                <input name="id" type="hidden" value="@Model.Product.ID" />
 
-            <div class="action mb-3 row">
-                <div class="col">
-                    <a href="javascript:void(0);" class="buy" add-cart="@Model.Product.ID" ><i class="icon-basket text-grey"></i>Thêm vào giỏ hàng</a>
-                </div>
-                <div class="col">
-                    <a href="#" class="like"><i class="icon-heart text-grey"></i>Thêm vào danh sách ưa thích</a>
-                </div>
-
-
-            </div>
-            <div class="quantity row mb-3">
-                <div class="col">
-                    <div class="input-group cart">
-                        <span class="input-group-addon bg-grey border-0">Số lượng</span>
-                        <input type="number" class="form-control bg-grey-act border-0" />
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="input-group cart">
-                        <span class="input-group-addon bg-grey border-0">Kích thước</span>
-                        <input type="number" class="form-control bg-grey-act border-0" />
-                    </div>
-                </div>
-            </div>
-
-            <div class="addcart row">
-                <div class="col">
-                    <a class="input-group cart" style="height: 40px;">
-                        <span class="input-group-addon bg-yellow2 border-0"><i class="icon-basket text-white"></i></span>
-                        <div class="form-control bg-yellow border-0 text-bold text-upper">
-                            Mua hàng
+                    <div class="action mb-3 row">
+                        <div class="col">
+                            <a href="javascript:void(0);" class="buy" add-cart="@Model.Product.ID"><i class="icon-basket text-grey"></i>Thêm vào giỏ hàng</a>
                         </div>
-                    </a>
-                </div>
-
-                <div class="col">
-                    <a class="input-group cart" style="height: 40px;">
-                        <span class="input-group-addon bg-blue-act border-0"><i class="icon-basket text-white"></i></span>
-                        <div class="form-control bg-blue border-0 text-bold text-upper">
-                            Link Bán hàng
+                        <div class="col">
+                            <a href="#" class="like"><i class="icon-heart text-grey"></i>Thêm vào danh sách ưa thích</a>
                         </div>
-                    </a>
-                </div>
-            </div>
+
+
+                    </div>
+                    <div class="quantity row mb-3">
+                        <div class="col-6">
+                            <div class="input-group cart">
+                                <span class="input-group-addon bg-grey border-0">Số lượng</span>
+                                <input type="number" class="form-control bg-grey-act border-0" name="quantity" value="1" />
+                            </div>
+                        </div>
+
+                        
+                    </div>
+
+                    <div class="addcart row">
+                        <div class="col-6">
+                            <div class="input-group cart btn-submit" style="height: 40px;">
+                                <span class="input-group-addon bg-yellow2 border-0"><i class="icon-basket text-white"></i></span>
+                                <div class="form-control bg-yellow border-0 text-bold text-upper">
+                                    Mua hàng
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                    </div>
+               
+               
+            </form>
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    jQuery(".btn-submit").click(function () {
+                        frm = jQuery(this).parents("form");
+                        shopping.addCartAjax(frm,true);
+                        //ajaxPost(frm.get(0), shopping.success);
+                    });
+                });
+                
+            </script>
+            
         </div>
     
         </div>
@@ -105,6 +125,10 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#comment" role="tab">Đánh Giá</a>
+        </li>
+        <li class="nav-item">
+            
+            <a class="nav-link" href="https://www.facebook.com/sharer/sharer.php?u=@url_current&display=popup&ref=plugin&src=like&kid_directed_site=0&app_id=113869198637480" target="_blank" >Chia Sẻ</a>
         </li>
 
     </ul>
