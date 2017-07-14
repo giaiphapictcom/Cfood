@@ -105,7 +105,6 @@ namespace V308CMS.Controllers
                 ViewBag.ProductViewText = SiteConfigService.ReadSiteConfig(siteConfigs, "product-text-view");
                 ViewBag.HomeAliasText = SiteConfigService.ReadSiteConfig(siteConfigs, "home-text-alias");
                 ViewBag.SubscribeNews = SiteConfigService.ReadSiteConfig(siteConfigs, "subscribe-news");
-              
             }
 
         }
@@ -163,7 +162,7 @@ namespace V308CMS.Controllers
 
         protected IProductWishlistRepositry ProductWishlistService { get; }
 
-        protected Data.ProductRepository ProductsService { get; }
+        protected ProductRepository ProductsService { get; }
 
         protected AccountRepository AccountService { get; }
 
@@ -188,9 +187,5 @@ namespace V308CMS.Controllers
         {
             Session[name] = defaultValue;
         }
-
-
-        
-
     }
 }

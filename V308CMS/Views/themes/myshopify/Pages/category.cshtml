@@ -127,15 +127,7 @@
                     @Html.DropDownListFor(filter => Model.Sort, Model.ListSort, new {@class = "sort-by"})
                 </div>
             </div>
-            @if (Model.TotalPage > 1)
-            {
-                <div class="col-md-4 total-page ">
-                    <div class="page-total">
-                        <span>Hiển thị</span> : <span> @(Model.ListProduct.Count + "/"  +  Model.TotalRecord)</span>
-                    </div>
-                </div>
-            }
-          
+        
         </div>
     </div>
     <script>

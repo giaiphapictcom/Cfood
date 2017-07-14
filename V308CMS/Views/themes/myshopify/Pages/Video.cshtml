@@ -1,12 +1,8 @@
 ﻿@model V308CMS.Data.NewsPage
-@{
-    Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
-}
-
 @section header {
     <title>Tin video - @Model.pNews.Title</title>
     <meta name="keywords" content="@Model.pNews.Keyword">
-    <meta property="og:url" content="@V308CMS.Common.Ultility.ImgUrl("")">
+    <meta property="og:url" content="@Request.Url">
     <meta property="og:type" content="website" />
     <meta property="og:title" content="@Model.pNews.Title">
     <meta property="og:image" content="https://i.ytimg.com/vi/@Model.pNews.Summary/hqdefault.jpg">
@@ -40,7 +36,7 @@
             @foreach (V308CMS.Data.News video in Model.List)
             {
                 <div class="col-md-4">
-                    @Html.Action("YoutubeBlock", "Block",video)
+                    @{ Html.RenderPartial("YoutubeVideoComponent", video);}                    
                 </div>
                 
             }
