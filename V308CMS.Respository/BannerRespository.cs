@@ -130,6 +130,8 @@ namespace V308CMS.Respository
         
         }
 
+       
+
         public List<Banner> GetList(int position = 0,string site= Data.Helpers.Site.home, bool withImg = false,int limit = 1)
         {
             var banners = new List<Banner>();
@@ -155,7 +157,7 @@ namespace V308CMS.Respository
                         items = items.Where(b => b.ImageUrl.Length > 0);
                     }
 
-                    if (items.Count() > 0 )
+                    if (items.Any() )
                     {
                         banners = items.OrderBy(b => b.Order).ToList();
                         if (limit > 0)

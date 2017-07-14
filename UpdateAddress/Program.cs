@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using V308CMS.Common;
+using V308CMS.Data.Enum;
 using V308CMS.Respository;
 
 namespace UpdateAddress
@@ -17,7 +18,7 @@ namespace UpdateAddress
     class Program
     {
         static void Main(string[] args)
-        {            
+        {                
             var regionService = new RegionRespository();
             var listRegion = regionService.GetListRegionByParentId();         
             if (listRegion.Any())
