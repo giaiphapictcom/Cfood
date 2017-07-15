@@ -1800,13 +1800,13 @@ namespace V308CMS.Data
                                  where p.IsHome == true
                                  select p);
                     var categorys = items.ToList();
-                    if (categorys.Count() > 0)
+                    if (categorys.Any())
                     {
                         foreach (var cate in categorys)
                         {
-                            var CategoryIDs = entities.ProductType.Where(c => c.Parent == cate.ID).Select(c => c.ID).ToList();
+                            var categoryIDs = entities.ProductType.Where(c => c.Parent == cate.ID).Select(c => c.ID).ToList();
 
-                            CategoryIDs.Add(cate.ID);
+                            categoryIDs.Add(cate.ID);
 
                             cate.ListProduct = (from p in entities.Product
                                                 .Include("ProductImages")
@@ -1816,7 +1816,7 @@ namespace V308CMS.Data
                                                  .Include("ProductSize")
                                                  .Include("ProductAttribute")
                                                  .Include("ProductSaleOff")
-                                                where CategoryIDs.Any(c => c == p.Type) select p)
+                                                where categoryIDs.Any(c => c == p.Type) select p)
                                                 .AsEnumerable().Take(product_limit).ToList();
                         }
                     }

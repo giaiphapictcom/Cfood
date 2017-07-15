@@ -33,15 +33,14 @@
         <ul>
             @foreach (var brand in Model)
             {
-                var currBrandSelected = !string.IsNullOrWhiteSpace(brandFilterValue) && ((brandFilterValue == brand.id.ToString()) || (brandFilterValue.Contains("," + brand.id + ",")));
-                var urlRemoveFilter = @currentUrl.Replace("," + brand.id, "").Replace(brand.id + ",", "");
+                var currBrandSelected = !string.IsNullOrWhiteSpace(brandFilterValue) && ((brandFilterValue == brand.id.ToString()) || (brandFilterValue.Contains("," + brand.id + ",")));              
 
                 <li>
                     <a title="@brand.name" href="@(currBrandSelected ? "javascript:void(0)" : Url.CategoryFilterUrl(currentRouteData, (int) FilterEnum.ByBrand, string.Format("|{0}_{1}|", (int) FilterEnum.ByBrand, brand.id)).ToString())">
                         <label class="@(currBrandSelected ? "filter_item_active" : "filter_item")">
                             @if (currBrandSelected)
                             {
-                                <i style="float: right;margin-left: 10px;color: red;cursor: pointer;" class="remove-brand" title="Bỏ chọn thương hiệu @brand.name" data-url="@currentUrl.Replace("," +brand.id,"").Replace( brand.id + ",", "")">x</i>
+                                <i style="float: right;margin-left: 10px;color: red;cursor: pointer;" class="remove-brand" title="Bỏ chọn thương hiệu @brand.name">x</i>
                             }
                             @brand.name
                         </label>
