@@ -41,10 +41,17 @@ namespace V308CMS.Data
                         switch (typeFilter)
                         {
                             case (int)FilterEnum.ByBrand:
-                                int brandIdFilter;
-                                int.TryParse(valueFilter, out brandIdFilter);                             
+                                if (!valueFilter.StartsWith(","))
+                                {
+                                    valueFilter = "," + valueFilter;
+                                }
+                                if (!valueFilter.EndsWith(","))
+                                {
+                                    valueFilter =  valueFilter + ",";
+                                }
+
                                 listProduct = (from product in listProduct
-                                               where product.BrandId == brandIdFilter
+                                               where valueFilter.Contains("," + product.BrandId +",")
                                                orderby product.Number, product.Date descending
                                                select product
                                );

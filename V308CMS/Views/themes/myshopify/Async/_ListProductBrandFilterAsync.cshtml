@@ -5,6 +5,22 @@
 @model List<V308CMS.Data.Brand>
 @if (Model != null && Model.Count > 0)
 {
+    var currentUrl = HttpUtility.UrlDecode(Request.Url.ToString()) ;
+    var brandLabel = string.Format("|{0}_", (int)FilterEnum.ByBrand);
+    var brandFilterValue = "";
+    if (currentUrl.IndexOf(brandLabel, StringComparison.Ordinal) > 0)
+    {
+        brandFilterValue = currentUrl.Substring(currentUrl.IndexOf("|", 0, StringComparison.Ordinal), currentUrl.LastIndexOf("|", StringComparison.Ordinal)- currentUrl.IndexOf("|", 0, StringComparison.Ordinal)).Replace(brandLabel, "");
+        if (!brandFilterValue.StartsWith(","))
+        {
+            brandFilterValue = "," + brandFilterValue;
+        }
+        if (!brandFilterValue.EndsWith(","))
+        {
+            brandFilterValue = brandFilterValue + ",";
+        }
+    }
+
     var currentRouteData = (RouteValueDictionary)ViewBag.CurrentRouteData;
     <div class="title">
         <h3>
@@ -17,18 +33,28 @@
         <ul>
             @foreach (var brand in Model)
             {
-                <li>             
-                   
-                        <a title="@brand.name" href="@Url.CategoryFilterUrl(currentRouteData, string.Format("|{0}_{1}|", (int) FilterEnum.ByBrand, brand.id))">
-                            <label>
-                                @brand.name
-                            </label>
-                        </a>
-                   
-                                    
+                var currBrandSelected = !string.IsNullOrWhiteSpace(brandFilterValue) && ((brandFilterValue == brand.id.ToString()) || (brandFilterValue.Contains("," + brand.id + ",")));
+                var urlRemoveFilter = @currentUrl.Replace("," + brand.id, "").Replace(brand.id + ",", "");
+
+                <li>
+                    <a title="@brand.name" href="@(currBrandSelected ? "javascript:void(0)" : Url.CategoryFilterUrl(currentRouteData, (int) FilterEnum.ByBrand, string.Format("|{0}_{1}|", (int) FilterEnum.ByBrand, brand.id)).ToString())">
+                        <label class="@(currBrandSelected ? "filter_item_active" : "filter_item")">
+                            @if (currBrandSelected)
+                            {
+                                <i style="float: right;margin-left: 10px;color: red;cursor: pointer;" class="remove-brand" title="Bỏ chọn thương hiệu @brand.name" data-url="@currentUrl.Replace("," +brand.id,"").Replace( brand.id + ",", "")">x</i>
+                            }
+                            @brand.name
+                        </label>
+                    </a>
                 </li>
             }           
         </ul>
     </div>
-
 }
+<script>
+    $("i.remove-brand").click(function(e) {
+        e.preventDefault();
+        location.href = $(this).attr('data-url');
+    });
+</script>
+

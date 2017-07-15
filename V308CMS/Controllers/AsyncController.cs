@@ -2,6 +2,8 @@
 using System.Web.Mvc;
 using System.Web.Routing;
 using V308CMS.Data;
+using V308CMS.Data.Enum;
+using V308CMS.Data.Models;
 
 namespace V308CMS.Controllers
 {
@@ -68,5 +70,16 @@ namespace V308CMS.Controllers
             ViewBag.CurrentRouteData = currentRouteData;
             return PartialView("_ListProductManufacturerFilterAsync", await ProductManufacturerService.GetAllAsync());
         }
+
+        public async Task<PartialViewResult> LoadHomeSliderAsync(int limit =5, byte position =(byte)PositionEnum.HomeSlider)
+        {
+            return PartialView("HomeSlides", await BannerService.GetListByPositionAsync(position));
+        }
+
+        public async Task<PartialViewResult> LoadLeftBanner(byte position)
+        {
+            return PartialView("_LeftBannerAsyn", await BannerService.GetFistByPosition(position));
+        }
+        
     }
 }

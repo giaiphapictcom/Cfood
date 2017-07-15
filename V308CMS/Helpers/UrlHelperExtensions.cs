@@ -10,14 +10,14 @@ namespace V308CMS.Helpers
 {
     public static class UrlHelperExtensions
     {
-        //Builds URL by finding the best matching route that corresponds to the current URL,
-        //with given parameters added or replaced.
-        public static MvcHtmlString CategoryFilterUrl(this UrlHelper helper,RouteValueDictionary currentRouteData,string filterBrandValue, string filterParamName="filter")
+        public enum  BrandFilterAction
         {
-            
-            //get the route data for the current URL e.g. /Research/InvestmentModelling/RiskComparison
-            //this is needed because unlike UrlHelper.Action, UrlHelper.RouteUrl sets includeImplicitMvcValues to false
-            //which causes it to ignore current ViewContext.RouteData.Values
+            AppendFilter = 1,
+            RemoveFilter = 2
+        }
+      
+        public static MvcHtmlString CategoryFilterUrl(this UrlHelper helper,RouteValueDictionary currentRouteData, byte filterBrandType, string filterBrandValue, string filterParamName="filter")
+        {
             var rd = new RouteValueDictionary(currentRouteData);
 
             //get the current query string e.g. ?BucketID=17371&amp;compareTo=123
@@ -33,11 +33,20 @@ namespace V308CMS.Helpers
             }
             if (rd.ContainsKey(filterParamName))
             {
-
-                var newFilterBrandValue = rd[filterParamName] + filterBrandValue;
+                var listFilterToken =
+                       (rd[filterParamName] + filterBrandValue).Split(new[] { "|" },
+                           StringSplitOptions.RemoveEmptyEntries).ToList();
+                var newFilterBrandValue = "|" + listFilterToken[0];
+                for (int i = 1; i < listFilterToken.Count; i++)
+                {
+                    newFilterBrandValue = newFilterBrandValue + listFilterToken[i].Replace(filterBrandType + "_", ",");
+                }
+                newFilterBrandValue = newFilterBrandValue + "|";
                 rd.Remove(filterParamName);
                 rd[filterParamName] = newFilterBrandValue;
-              
+
+
+
             }
             else
             {

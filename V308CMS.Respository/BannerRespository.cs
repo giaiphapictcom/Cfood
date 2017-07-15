@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using V308CMS.Data;
 using V308CMS.Data.Models;
 
@@ -13,7 +15,29 @@ namespace V308CMS.Respository
     }
     public class BannerRespository: IBaseRespository<Banner>, IBannerRespository
     {
-        
+
+        public async Task<Banner> GetFistByPosition(byte position)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return await (from banner in entities.Banner
+                    where banner.Position == position
+                    orderby banner.Order, banner.Id descending
+                    select banner).FirstOrDefaultAsync();
+            }
+        }
+
+        public async Task<List<Banner>> GetListByPositionAsync(byte position, int limit =5)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return await (from banner in entities.Banner
+                        where banner.Position == position
+                        orderby  banner.Order, banner.Id  descending 
+                        select banner).ToListAsync();
+            }
+
+        }
 
         public Banner Find(int id)
         {
