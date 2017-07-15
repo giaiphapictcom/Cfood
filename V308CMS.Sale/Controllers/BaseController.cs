@@ -26,6 +26,7 @@ namespace V308CMS.Sale.Controllers
         public MenuConfigRespository MenuRepos;
         public NewsGroupRepository NewsGroupRepos;
         public SupportManRepository SupportManRepos;
+        public WebsiteRequestRepository WebsiteRequestRepo;
 
 
         public int PageSize = 10;
@@ -51,6 +52,7 @@ namespace V308CMS.Sale.Controllers
             CouponRepo = new CouponRepository(mEntities);
             MenuRepos = new MenuConfigRespository();
             SupportManRepos = new SupportManRepository();
+            WebsiteRequestRepo = new WebsiteRequestRepository();
 
             CouponRepo.PageSize = PageSize;
         }

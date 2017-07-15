@@ -519,3 +519,11 @@ label,.pagination-page li a, .pagination-page li span,.toolbar .page-total,.prod
     content: "*";
     color: red;
 }
+
+.maxw150 {
+    max-width: 150px;
+}
+
+.fillter-form .submit {
+    cursor:pointer;
+}

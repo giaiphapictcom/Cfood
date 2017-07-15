@@ -1194,10 +1194,10 @@ namespace V308CMS.Data
         {
             using (var entities = new V308CMSEntities())
             {
-                return entities.Product
-                          .OrderByDescending(p => p.ID)
-                          .Skip((pcurrent - 1) * PageSize)
-                          .Take(PageSize).ToList();
+                var products = entities.Product.Select(p=>p);
+                products = products.OrderByDescending(p => p.ID);
+
+                return products.Skip((pcurrent - 1) * PageSize).Take(PageSize).ToList();
             }
 
         }

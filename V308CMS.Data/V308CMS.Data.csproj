@@ -230,6 +230,7 @@
     <Compile Include="Metadata\SupportManMetadata.cs" />
     <Compile Include="Metadata\UnitMetadata.cs" />
     <Compile Include="Metadata\VoucherMetadata.cs" />
+    <Compile Include="Metadata\WebsiteRequestMetadata.cs" />
     <Compile Include="Models\Banner.cs" />
     <Compile Include="Models\CategoryItem.cs" />
     <Compile Include="Models\Color.cs" />
@@ -252,6 +253,7 @@
     <Compile Include="Models\Voucher.cs" />
     <Compile Include="Models\VoucherCode.cs" />
     <Compile Include="Models\VoucherLog.cs" />
+    <Compile Include="Models\WebsiteRequest.cs" />
     <Compile Include="MySQLProvider.cs" />
     <Compile Include="ProductBrandRepository.cs" />
     <Compile Include="NewsGroupRepository.cs" />

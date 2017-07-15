@@ -79,6 +79,7 @@ namespace V308CMS.Sale
             routes.MapRoute("ArticleItemRoute", "{title}-n{id}.html", new { Controller = "Affiliate", action = "Article" }, new { id = @"\d+" });
             routes.MapRoute("ArticleCategoryRoute", "{category-alias}/{title}-n{id}.html", new { Controller = "Affiliate", action = "NewsItem" }, new { id = @"\d+" });
 
+            routes.MapRoute("WebsiteRequestRoute", "website", new { Controller = "Partner", action = "WebsiteRequest" });
 
             routes.MapRoute("Default", "{controller}/{action}/{id}", new { controller = "Affiliate", action = "Home", id = UrlParameter.Optional });
             

@@ -6,18 +6,18 @@ using V308CMS.Data.Models;
 
 namespace V308CMS.Respository
 {
-    public interface ISupportManRespository
+    public interface IWebsiteRequestRespository
     {
-        string ChangeStatus(int id);
-        List<SupportMan> GetList(bool status, string site = "", int limit = 1);
+        string ChangeStatus(int id, int status=0);
+        List<WebsiteRequest> GetList(bool status, int limit = 1);
     }
-    public class SupportManRepository : IBaseRespository<SupportMan>, ISupportManRespository
+    public class WebsiteRequestRepository : IBaseRespository<WebsiteRequest>, IWebsiteRequestRespository
     {
-        public SupportMan Find(int id)
+        public WebsiteRequest Find(int id)
         {
             using (var entities = new V308CMSEntities())
             {
-                return (from s in entities.SupportManTbl
+                return (from s in entities.WebsiteRequestTbl
                         where s.id == id
                         select s).FirstOrDefault();
             }
@@ -27,12 +27,12 @@ namespace V308CMS.Respository
         {
             using (var entities = new V308CMSEntities())
             {
-                var item = (from s in entities.SupportManTbl
-                                    where s.id == id
-                                    select s).FirstOrDefault();
+                var item = (from s in entities.WebsiteRequestTbl
+                            where s.id == id
+                            select s).FirstOrDefault();
                 if (item != null)
                 {
-                    entities.SupportManTbl.Remove(item);
+                    entities.WebsiteRequestTbl.Remove(item);
                     entities.SaveChanges();
                     return "ok";
                 }
@@ -40,22 +40,23 @@ namespace V308CMS.Respository
             }
         }
 
-        public string Update(SupportMan data)
+        public string Update(WebsiteRequest data)
         {
             using (var entities = new V308CMSEntities())
             {
-                var bannerUpdate = (from banner in entities.SupportManTbl
+                var item = (from banner in entities.WebsiteRequestTbl
                                     where banner.id == data.id
                                     select banner).FirstOrDefault();
-                if (bannerUpdate != null)
+                if (item != null)
                 {
-                    bannerUpdate.Name = data.Name;
-                    
-                    bannerUpdate.Status = data.Status;
-                    bannerUpdate.Created = data.Created;
-                    bannerUpdate.Updated = data.Updated;
-                    bannerUpdate.Site = data.Site;
-   
+                    item.domain = data.domain;
+
+                    item.email = data.email;
+                    item.mobile = data.mobile;
+                    item.address = data.address;
+                    item.content = data.content;
+                    item.status = data.status;
+
                     entities.SaveChanges();
                     return "ok";
                 }
@@ -63,19 +64,19 @@ namespace V308CMS.Respository
             }
         }
 
-        public string Insert(SupportMan data)
+        public string Insert(WebsiteRequest data)
         {
             using (var entities = new V308CMSEntities())
             {
-                var bannerInsert = (from c in entities.SupportManTbl
-                                    where c.Name == data.Name
+                var item = (from c in entities.WebsiteRequestTbl
+                                    where c.domain == data.domain
                                     select c
                     ).FirstOrDefault();
-                if (bannerInsert == null)
+                if (item == null)
                 {
                     try
                     {
-                        entities.SupportManTbl.Add(data);
+                        entities.WebsiteRequestTbl.Add(data);
                         entities.SaveChanges();
                     }
                     catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
@@ -83,35 +84,34 @@ namespace V308CMS.Respository
                         Console.Write(dbEx);
                     }
 
-                    return "ok";
+                    return Data.Helpers.Result.Ok;
                 }
-                return "not_exists";
+                return Data.Helpers.Result.Exists;
             }
 
         }
-        public List<SupportMan> GetAll()
+        public List<WebsiteRequest> GetAll()
         {
             using (var entities = new V308CMSEntities())
             {
-                return (from banner in entities.SupportManTbl
-                        orderby banner.Updated descending
+                return (from banner in entities.WebsiteRequestTbl
                         select banner
                     ).ToList();
             }
 
         }
 
-        public string ChangeStatus(int id)
+        public string ChangeStatus(int id, int status=0)
         {
             using (var entities = new V308CMSEntities())
             {
-                var bannerStatus = (from banner in entities.Banner
-                                    where banner.Id == id
+                var bannerStatus = (from banner in entities.WebsiteRequestTbl
+                                    where banner.id== id
                                     select banner
                ).FirstOrDefault();
                 if (bannerStatus != null)
                 {
-                    bannerStatus.Status = !bannerStatus.Status;
+                    bannerStatus.status = status;
                     entities.SaveChanges();
                     return "ok";
                 }
@@ -119,27 +119,18 @@ namespace V308CMS.Respository
             }
 
         }
-        public List<SupportMan> GetList(bool status=true, string site = "", int limit = 1)
+        public List<WebsiteRequest> GetList(bool status = true, int limit = 1)
         {
-            var banners = new List<SupportMan>();
+            var banners = new List<WebsiteRequest>();
             using (var entities = new V308CMSEntities())
             {
                 try
                 {
-                    IQueryable<SupportMan> items = entities.SupportManTbl;
-                    if (site == Data.Helpers.Site.home)
-                    {
-                        items = items.Where(b => b.Site == site || b.Site == "" || b.Site == null || b.Site == "1");
-                    }
-                    else
-                    {
-                        items = items.Where(b => b.Site == site.Trim());
-                    }
-
+                    IQueryable<WebsiteRequest> items = entities.WebsiteRequestTbl;
 
                     if (items.Count() > 0)
                     {
-                        banners = items.OrderBy(b => b.Order).ToList();
+                        banners = items.ToList();
                         if (limit > 0)
                         {
                             banners = items.Take(limit).ToList();

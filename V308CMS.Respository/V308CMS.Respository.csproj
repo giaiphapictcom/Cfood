@@ -99,6 +99,7 @@
     <Compile Include="SizeRespository.cs" />
     <Compile Include="SupportManRepository.cs" />
     <Compile Include="UserRespository.cs" />
+    <Compile Include="WebsiteRequestRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\V308CMS.Common\V308CMS.Common.csproj">

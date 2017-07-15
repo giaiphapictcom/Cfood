@@ -424,6 +424,11 @@ namespace V308CMS.Data
             set;
         }
 
+        public DbSet<WebsiteRequest> WebsiteRequestTbl
+        {
+            get;
+            set;
+        }
         //public DbSet<Categorys> AffiliateCategory
         //{
         //    get;

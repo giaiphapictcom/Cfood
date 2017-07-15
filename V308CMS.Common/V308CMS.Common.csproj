@@ -137,6 +137,7 @@
     <Compile Include="RamdomUltis.cs" />
     <Compile Include="StringClearFormat.cs" />
     <Compile Include="StringHelper.cs" />
+    <Compile Include="UI\OptionsModel.cs" />
     <Compile Include="Ultility.cs" />
     <Compile Include="Url.cs" />
     <Compile Include="ValidateInput.cs" />
