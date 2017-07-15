@@ -18,6 +18,8 @@ namespace V308CMS.Data.Enum
         HomeRight = 14,
         [Description("Trang chủ - Dưới")]
         HomeBottom = 15,
+        [Description("Trang chủ - Slider")]
+        HomeSlider = 16,
 
 
         [Description("Trang chuyên mục")]

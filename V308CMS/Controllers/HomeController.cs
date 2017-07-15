@@ -191,7 +191,7 @@ namespace V308CMS.Controllers
             return View("Detail", product);           
         }
 
-        public ActionResult Search(string q, int page=1, int pageSize=25)
+        public ActionResult Search(string q, int page=1, int pageSize=20)
         {
             int totalRecord;
             int totalPage = 0;

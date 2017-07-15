@@ -720,7 +720,7 @@ namespace V308CMS.Data
             }
         }
 
-        public List<Product> Search(string keyword,out int totalRecord, int page = 1, int pageSize = 30)
+        public List<Product> Search(string keyword,out int totalRecord, int page = 1, int pageSize = 20)
         {
            
             using (var entities = new V308CMSEntities())
