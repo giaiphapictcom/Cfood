@@ -116,7 +116,7 @@ form hr {
 }
 .form-group-inline .btn {
     height: 33px;
-    line-height: 33px;
+    /*line-height: 33px; */
 }
 .btn.activated,
 .form-control.activated {

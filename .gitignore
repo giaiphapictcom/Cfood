@@ -2020,3 +2020,15 @@ V308CMS.Sale/bin/System.Web.Http.WebHost.xml
 =======
 V308CMS.Respository/bin/V308CMS.Respository.dll.config
 >>>>>>> 527fed4d0fbb418d29ef5fd10747593d42f8edf7
+V308CMS.Dependencies/obj/Debug/V308CMS.Dependencies.csproj.FileListAbsolute.txt
+V308CMS.Dependencies/bin/Debug/WebMatrix.WebData.xml
+V308CMS.Dependencies/bin/Debug/WebMatrix.Data.xml
+V308CMS.Dependencies/bin/Debug/V308CMS.Dependencies.dll.config
+V308CMS.Dependencies/bin/Debug/System.Web.WebPages.xml
+V308CMS.Dependencies/bin/Debug/System.Web.WebPages.Razor.xml
+V308CMS.Dependencies/bin/Debug/System.Web.WebPages.Deployment.xml
+V308CMS.Dependencies/bin/Debug/System.Web.Razor.xml
+V308CMS.Dependencies/bin/Debug/System.Web.Helpers.xml
+V308CMS.Dependencies/bin/Debug/Microsoft.Web.Infrastructure.xml
+V308CMS.Dependencies/bin/Debug/EntityFramework.xml
+V308CMS.Dependencies/bin/Debug/EntityFramework.SqlServer.xml
