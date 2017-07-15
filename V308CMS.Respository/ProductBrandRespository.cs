@@ -22,6 +22,18 @@ namespace V308CMS.Respository
         {
            
         }
+
+        public async  Task<List<Brand>> GetListByCategoryIdAsync(int categoryId)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return await entities.Brand.Where(brand => brand.category_default == categoryId).ToListAsync();
+            }
+
+        }
+
+
+
         public List<Brand> GetRandom(int categoryId = 0, int limit = 1)
         {
             using (var entities = new V308CMSEntities())

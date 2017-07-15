@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Web.Mvc;
 using V308CMS.Common;
 using V308CMS.Data;
 using V308CMS.Data.Enum;
 using V308CMS.Data.Models;
-using V308CMS.Helpers;
 using V308CMS.Helpers.Url;
 using V308CMS.Models;
 
@@ -106,7 +104,7 @@ namespace V308CMS.Controllers
         public ActionResult Checkout()
         {
             
-                if (IsEmptyCart())
+            if (IsEmptyCart())
             {
                 return RedirectToAction("EmptyCart");
             }                    

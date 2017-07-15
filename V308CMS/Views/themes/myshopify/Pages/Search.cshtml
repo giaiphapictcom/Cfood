@@ -1,26 +1,102 @@
-﻿@model V308CMS.Data.SearchPage
+﻿@using V308CMS.Helpers
+@using V308CMS.Helpers.Url
+@using V308CMS.Models
+@model V308CMS.Models.SearchViewModels
 @{
     Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
 }
 @section header {
-    <title>Tìm Kiếm - @ViewBag.SiteName</title>
+    <title>Tìm Kiếm theo từ khóa @Model.Keyword - @ViewBag.SiteName</title>
 }
 
- @if (@Model.Code == 1)
- {
- }
- else
- {
-     <div class="box-items box-shadow mt-0">
-         <div class="container">
-             <h4>Tìm Kiếm Sản Phẩm <span class="key">"@Model.Name"</span></h4>
-             <div class="row">
-                 @foreach (V308CMS.Data.Product prod in Model.ProductList)
-                 {
-                     @Html.Action("ProductBlockType1_4", "Block", prod)
-                 }
-             </div>
-         </div>
-     </div>
-     
- }
+<div class="search-page">
+    <header class="page-header">
+        <h2>Kết quả tìm kiếm theo từ khóa @Model.Keyword</h2>
+        <div class="wrapper-search-bar">
+            <form action="@Url.HomeSearchUrl()" method="get" class="input-group search-bar" style="position: relative;">
+                <input type="hidden" name="type" value="product">
+                <input type="text" name="q" value="@Model.Keyword" placeholder="Nhập từ khóa tìm kiếm" class="input-group-field" aria-label="Search Site" autocomplete="off" vk_1745a="subscribed">
+                <span class="input-group-btn">
+                    <input type="submit" class="btn" value="Tìm kiếm">
+                </span>
+                <ul class="search-results" style="position: absolute; left: 0px; top: 34px; display: none;"></ul>
+            </form>
+        </div>
+    </header>
+    @if (Model.ListProduct != null && Model.ListProduct.Count > 0)
+    {
+        <div class="product-list">
+        @foreach (var product in Model.ListProduct)
+        {
+            <div id="product-@product.ID" class="col-md-3 col-sm-3 col-xs-12 product-item grid-item wow fadeInUp" data-wow-delay="100ms">
+                <div class="product-image">
+                    <a href="@Url.ProductDetailUrl(product)" class="product-list-thumb product-grid-image">
+                        <img src="@product.Image.ToUrl(225,267)" alt="@product.Name">
+                    </a>
+                </div>
+                <div class="product-details">
+                    <a class="product-title" href="@Url.ProductDetailUrl(product)" title="@product.Name">
+                        @product.Name
+                    </a>
+                    <span class="spr-badge" id="spr_badge_8747801801" data-rating="0.0">
+                        <span class="spr-starrating spr-badge-starrating">
+                        <i class="spr-icon spr-icon-star-empty" style=""></i>
+                        <i class="spr-icon spr-icon-star-empty" style=""></i>
+                        <i class="spr-icon spr-icon-star-empty" style=""></i>
+                        <i class="spr-icon spr-icon-star-empty" style=""></i>
+                        <i class="spr-icon spr-icon-star-empty" style=""></i>
+                    </span>
+                        <span class="spr-badge-caption">No reviews</span>
+                    </span>
+                    <div class="price-box">
+                        @if (product.SaleOff == 0)
+                    {
+                            <p class="regular-product">
+                                <span><span class="money">@product.ToProductPrice()</span></span>
+                            </p>
+                        }
+                        else
+                        {
+                            <p class="sale">
+                                <span class="special-price"><span class="money">@product.ToProductPrice()</span></span>
+                                <span class="old-price"><span class="money">@product.ToProductSaleOffPrice()</span></span>
+                            </p>
+                        }
+                    </div>
+
+                    <div class="action">
+                        @if (product.Quantity > 0)
+                        {
+                            <a href="javascript:void(0);" class="btn add-to-cart-btn" add-cart="@product.ID" title="Thêm vào giỏ hàng">
+                                Thêm vào giỏ hàng
+                            </a>
+
+                        }
+                        else
+                        {
+                            <span style="color: #f00; font-weight: bold">Sản phẩm tạm hết hàng</span>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+        </div>
+    }
+
+    <div class="text-center">
+
+        <div class="toolbar toolbar-bottom">
+
+           @Html.Partial("PaginationComponent", new PaginationModels
+           {
+              TotalPages = Model.TotalPage,
+              BaseUrl =  Url.HomeSearchUrl(Model.Keyword),
+              CurrentPage = Model.Page,
+              PageParamFormat = @"page=\d+",
+              RecordPerPages = 5
+           })
+        </div>
+
+    </div>
+
+</div>

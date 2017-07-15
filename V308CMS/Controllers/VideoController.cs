@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using V308CMS.Data;
-//using V308CMS.Filters;
+using V308CMS.Filters;
+using V308CMS.Helpers;
 
 namespace V308CMS.Controllers
 {
@@ -16,9 +13,9 @@ namespace V308CMS.Controllers
         public VideoController()
         {
             ViewEngines.Engines.Clear();
-            ViewEngines.Engines.Add(new V308CMS.Helpers.MpStartViewEngine(false));
-            NewsGroups videoGroup = NewsService.SearchNewsGroup("video",Data.Helpers.Site.home);
-            NewsType = videoGroup.ID;
+            ViewEngines.Engines.Add(new MpStartViewEngine(false));
+            NewsGroups videoGroup = NewsService.SearchNewsGroup("video");
+           
         }
         
 
@@ -39,11 +36,6 @@ namespace V308CMS.Controllers
             return View("Video.Index", newsIndexViewModel);
         }
 
-        //public ActionResult Detail(int id )
-        //{
-        //    return Content("ok");
-        //}
-       // [UpdateView]
         public ActionResult Detail(int id = 0)
         {
 

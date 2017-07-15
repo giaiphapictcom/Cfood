@@ -1,0 +1,37 @@
+﻿@using V308CMS.Helpers.Url
+@model string
+@{
+    Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
+}
+
+@section header {
+    <title>@ViewBag.SiteName - Đăng nhập sử dụng @Model</title>
+}
+@section Breadcrumb{
+    <div class="clearfix breadcrumb-wrap">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="breadcrumb">
+                        <h2></h2>
+                        <a href="/" title="Back to the frontpage">Home</a>
+                        <span class="icon"><i class="fa fa-circle"></i></span>
+                        <strong>
+                            Đăng nhập
+                        </strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<div class="create-an-account">
+    <header class="page-header">
+        <h1>Đăng nhập sử dụng @Model </h1>
+    </header>
+    <span class="field-validation-error">
+        Đăng nhập không thành công, vui lòng kiểm tra lại thiết lập tài khoản của bạn. Nhấn vào  <a style="cursor: pointer" href="@(Model=="facebook"?Url.SocialLoginFacebookUrl():(Model=="google"?Url.SocialLoginGoogleUrl():"/"))" title="Đăng nhập">đây</a> để đăng nhập lại.
+    </span>
+
+</div>
+

@@ -16,7 +16,6 @@ namespace V308CMS.Data.Models
             UpdatedAt = DateTime.Now;
             State = (byte) StateEnum.Active;
         }
-
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
@@ -26,6 +25,6 @@ namespace V308CMS.Data.Models
         public byte DiscountType { get; set; }  
         public double Value { get; set; }      
         public byte State { get; set; }
-        
+        public  DateTime StartDate { get; set; }        
     }
 }

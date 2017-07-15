@@ -9,8 +9,7 @@ namespace V308CMS.Data.Mapping
         {
             // Primary Key
             HasKey(t => t.Id);
-
-            // Properties
+         
             Property(t => t.Name)
                 .IsRequired()
                 .HasMaxLength(50);

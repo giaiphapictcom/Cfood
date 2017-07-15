@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Web.DynamicData;
 using System.Web.Mvc;
+using System.Web.WebPages;
 using V308CMS.Common;
 using V308CMS.Helpers;
-using V308CMS.Helpers.Url;
 using V308CMS.Models;
 
 namespace V308CMS.Controllers
@@ -16,7 +18,6 @@ namespace V308CMS.Controllers
         {
             var result = AccountService.CheckEmail(email);
             return Json(result);
-
         }
       
         [AllowAnonymous]
@@ -29,6 +30,26 @@ namespace V308CMS.Controllers
             }
             ReturnUrl = returnUrl;
             return View("Member.Login", new LoginModels() );
+        }
+        [HttpPost]
+        [ActionName("AjaxLogin")]
+        public JsonResult OnAjaxLogin(string email="", string password="")
+        {          
+            var checkLoginResult = AccountService.CheckAccount(email, password);
+            if (checkLoginResult == "invalid")
+            {              
+                return Json(new { code = 0, message = "Tên tài khoản hoặc Mật khẩu không chính xác."});
+            }
+            InternalLoginSuccess(checkLoginResult, email);         
+            return Json(new { code = 1, message = "Đăng nhập thành công. Đang chuyển về trang chủ..." });
+        }
+
+        private void InternalLoginSuccess(string checkLoginResult, string email, bool remember = false)
+        {
+            var userDetail = checkLoginResult.Split(new[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
+            var userId = int.Parse(userDetail[0]);
+            var userAvatar = userDetail.Length > 1 ? userDetail[1] : "";
+            AuthenticationHelper.SignIn(userId, email, email, userAvatar,remember);
         }
 
         [ValidateAntiForgeryToken]
@@ -45,19 +66,7 @@ namespace V308CMS.Controllers
                     login.Password = "";
                     return View("Member.Login", login);
                 }
-                if (result == "not_active")
-                {
-                    var activeAccountUrl = $"{ConfigHelper.WebDomain}account/active";
-                    ViewBag.Error =
-                        $"Tài khoản của bạn chưa được kích hoạt, click vào <a href='{activeAccountUrl}' title='Kích hoạt tài khoản' style='color: #007FF0'> đây</a> để kích hoạt tài khoản của bạn.";
-
-                    login.Password = "";
-                    return View("Member.Login", login);
-                }
-                var userDetail = result.Split(new[]{"|"}, StringSplitOptions.RemoveEmptyEntries);
-                var userId = int.Parse(userDetail[0]);
-                var userAvatar = userDetail.Length>1? userDetail[1]:"";
-                AuthenticationHelper.SignIn(userId, login.Email, login.Email, userAvatar);
+                InternalLoginSuccess(result, login.Email);
                 return RedirectToUrl(ReturnUrl);
             }
             return View("Member.Login", login);
@@ -79,36 +88,66 @@ namespace V308CMS.Controllers
             return forForgotPassword ? EncryptionMD5.ToMd5($"{email}|{DateTime.Now.Ticks}|forgot-die") : EncryptionMD5.ToMd5(
                 $"{email}|{DateTime.Now.Ticks}");
         }
+        [HttpPost]
+        [ActionName("RegisterAjax")]
+        public JsonResult OnRegisterAjax(string email="", string password="", string confirmPassword="", string captcha="")
+        {
+            var validationResult = new Dictionary<string,string>();           
+            if (!email.IsEmailAddress())
+            {               
+                return Json(new{ code = 0, message = "Địa chỉ email không hợp lê." });             
 
+            }
+            if (!password.IsPasswordValid())
+            {
+                return Json(new { code = 0,message = "Mật khẩu ít nhât 6 ký tự." });               
+            }
+            if (password != confirmPassword)
+            {
+                return Json(new { code = 0,  message = "Mật khẩu xác nhận không đúng." });              
+            }
+            if (captcha != Session["RegisterCaptcha"].ToString())
+            {
+                return Json(new { code = 0, message = "Mã xác thực không đúng." });               
+            }           
+            var result = InternalRegister(email, password);
+            if (result == "exist")
+            {
+                return Json(new { code = 0,message = "Email đã được sử dụng để đăng ký tài khoản." });
+            }
+            return Json(new { code = 1, message = "Đăng ký tài khoản thành công." });
+
+        }
+        [NonAction]
+        private string InternalRegister(string email, string password)
+        {
+            var salt = StringHelper.GenerateString(6);
+            var token = getToken(email);
+            var tokenExpireDate = DateTime.Now.AddDays(1);
+
+            return AccountService.Insert(email, password, salt, token, tokenExpireDate);
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ActionName("Register")]
         public ActionResult OnRegister(RegisterModels register)
         {
             if (ModelState.IsValid)
-            {
-                var salt = StringHelper.GenerateString(6);
-                var token = getToken(register.Email);
-                var tokenExpireDate = DateTime.Now.AddDays(1);
-
-                var result = AccountService.Insert(register.Email, register.Password, salt, token, tokenExpireDate);
+            {               
+                if (register.Captcha != Session["RegisterCaptcha"].ToString())
+                {
+                    ModelState.AddModelError("Captcha","Mã xác thực không đúng.");
+                    register.ResetPasswordValue();
+                    return View("Member.Register", register);
+                }              
+                var result = InternalRegister(register.Email, register.Password);
                 if (result == "exist")
                 {
                     register.ResetPasswordValue();
                     ViewBag.Error = "Địa chỉ Email này đã được sử dụng để đăng ký, vui lòng sử dụng tên tài khoản khác.";
                     return View("Member.Register", register);
                 }
-                else
-                {
-                    var activeAccountUrl = $"{ConfigHelper.WebDomain}account/active";
-                    var body =
-                        string.Format(
-                            "Cảm ơn bạn đã đăng ký tài khoản trên hệ thống của {0}. Mã kích hoạt tài khoản của bạn là {1}. Click vào <a style='color: #007FF0' href='{2}' title='Kích hoạt tài khoản'> đây</a> để kích hoạt tài khoản của bạn.",
-                            ViewBag.SiteName, token, activeAccountUrl);
-                    InternalSendEmail(register.Email, "Đăng ký tài khoản", body);
-                    return RedirectToAction("Active");
-                }
-
+                return RedirectToAction("Login", "Member");
             }
             register.ResetPasswordValue();
             return View("Member.Register", register);
@@ -118,32 +157,7 @@ namespace V308CMS.Controllers
         public ActionResult Active()
         {
             return View("Member.Active");
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [ActionName("Active")]
-        public ActionResult OnActive(ActiveModels active)
-        {
-            if (ModelState.IsValid)
-            {
-                var activeResult = AccountService.Active(active.Token);
-                if (activeResult == "invalid")
-                {
-                    ModelState.AddModelError("Token", "Mã kích hoạt tài khoản không đúng.");
-                    return View("Member.Active", active);
-                }
-                if (activeResult == "expire")
-                {
-                    var getTokenUrl = $"{ConfigHelper.WebDomain}account/gettoken";
-                    ModelState.AddModelError("Token",
-                        $"Mã kích hoạt tài khoản đã hết hạn. Click vào <a style='color: #007FF0' href='{getTokenUrl}' title='Kích hoạt tài khoản'> đây</a> để lấy mã kích hoạt. ");
-                    return View("Member.Active", active);
-                }
-                return RedirectToAction("Login");
-            }
-            return View("Member.Active", active);
-        }
-
+        }       
         public ActionResult GetToken()
         {
             return View("Member.GetToken", new GetTokenModels());
@@ -180,29 +194,48 @@ namespace V308CMS.Controllers
             return View("Member.GetToken", token);
         }
         [HttpPost]
+        [ActionName("ForgotPasswordAjax")]
+        public JsonResult OnForgotPasswordAjax(string email="")
+        {
+            var forgotPasswordToken = getToken(email);
+            var newPassword = AccountService.RequestForgotPassword(email, forgotPasswordToken, DateTime.Now.AddDays(1));
+            if (newPassword == "invalid")
+            {
+                return Json(new {code = 0, message = "Địa chỉ email không đúng."});
+            }
+            InternalForgotPasswordSuccess(email, newPassword);
+            return Json(new {code =1, message = "Vui lòng kiểm tra hòm thư của bạn để biết mật khẩu mới của bạn."});
+         
+        }
+
+        private void InternalForgotPasswordSuccess(string email,string newPassword)
+        {
+            var emailSender = new EmailSender(
+                ConfigHelper.GMailUserName,
+                ConfigHelper.GMailPassword,
+                ConfigHelper.GmailSmtpServer,
+                ConfigHelper.GMailPort
+               );
+            var changePasswordUrl = $"{ConfigHelper.WebDomain}account/changepassword";
+            var body =
+                $"Mật khẩu mới của bạn là : {newPassword}. Click vào <a href='{changePasswordUrl}' style='color: #007FF0' title='Đổi mật khẩu'> đây</a> đề thay đổi mật khẩu của bạn.";
+                 emailSender.SendMail(ConfigHelper.GMailUserName, email,
+                "Cấp mật khẩu mới", body);
+
+        }
+        [HttpPost]
         [ValidateAntiForgeryToken]
         [ActionName("ForgotPassword")]
         public ActionResult OnForgotPassword(AccountForgotPasswordModels forgot)
         {
             var forgotPasswordToken = getToken(forgot.Email);
-            var result = AccountService.RequestForgotPassword(forgot.Email, forgotPasswordToken, DateTime.Now.AddDays(1));
-            if (result == "invalid")
+            var newPassword = AccountService.RequestForgotPassword(forgot.Email, forgotPasswordToken, DateTime.Now.AddDays(1));
+            if (newPassword == "invalid")
             {
                 ModelState.AddModelError("Email", "Địa chỉ Email không đúng.");
                 return View("Member.ForgotPassword", forgot);
-
             }
-            var emailSender = new EmailSender(
-                  ConfigHelper.GMailUserName,
-                  ConfigHelper.GMailPassword,
-                  ConfigHelper.GmailSmtpServer,
-                  ConfigHelper.GMailPort
-                 );
-            var changePasswordUrl = $"{ConfigHelper.WebDomain}account/changepassword";
-            var body =
-                $"Mật khẩu mới của bạn là : {result}. Click vào <a href='{changePasswordUrl}' style='color: #007FF0' title='Đổi mật khẩu'> đây</a> đề thay đổi mật khẩu của bạn.";
-            emailSender.SendMail(ConfigHelper.GMailUserName, forgot.Email,
-                "Cấp mật khẩu mới", body);
+            InternalForgotPasswordSuccess(forgot.Email, newPassword);         
             return RedirectToAction("ChangePassword", new { token = forgotPasswordToken });
         }
         public ActionResult ChangePassword(string token)

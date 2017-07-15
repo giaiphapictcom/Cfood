@@ -1,377 +1,279 @@
-﻿@model  V308CMS.Data.ProductCategoryPageContainer
-@using V308CMS.Data;
-@using V308CMS.Common;
+﻿@using V308CMS.Common
+@using V308CMS.Data.Enum
+@using V308CMS.Helpers.Url
+@using V308CMS.Models
+@model V308CMS.Models.ProductCategoryViewModels
 @{
     Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
-    int pageTotal = 0;
-    if (Model.ProductTotal > ProductHelper.ProductShowLimit)
-    {
-        pageTotal = (int)Math.Ceiling((float)Model.ProductTotal / (float)ProductHelper.ProductShowLimit);
-    }
 }
 @section header {
-    <title>Danh mục - @Model.ProductType.Name</title>
-    <meta name="keywords" content="@Model.ProductType.Name">
-    <meta property="og:url" content="@Ultility.ImgUrl("")">
+    <title>@Model.Category.Name - @ViewBag.SiteName</title>
+    <meta name="keywords" content="@Model.Category.Name">
+    <meta property="og:url" content="@Request.Url">
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="@Model.ProductType.Name">
-    <meta property="og:image" content="@Ultility.ImgUrl(@Model.ProductType.Image)">
-    <meta property="og:description" content="@Model.ProductType.Description">
+    <meta property="og:title" content="@Model.Category.Name">
+    <meta property="og:image" content="@Ultility.ImgUrl(@Model.Category.Image)">
+    <meta property="og:description" content="@Model.Category.Description">
 }
 
 <div class="row col-sidebar-right">
-    <div class="col-fillter-product">
-        <div class="col-md-3 col-sm-12 col-xs-12 block-megamenu col-left">
-            @if (Model.BestSeller != null && Model.BestSeller.Count > 0)
-            {
-                <div class="bestseller-sidebar bestseller-homepage">
-                    <div class="module-title">
-                        <h5>Bán chạy</h5>
-                    </div>
-                    <div class="item-poduct">
-                        @foreach (Product prod in Model.BestSeller)
-                        {
-                            @Html.Action("ProductBlockLeft", "MyShopify", prod)
-                        }
-                    </div>
+
+<div class="col-fillter-product col-md-3 col-sm-3 col-xs-12">
+    <div class="col-md-3 col-sm-3 col-xs-12 col-left" id="filter-sidebar">
+        @if (Model.ListSubCategory != null && Model.ListSubCategory.Count > 0)
+        {
+            <div class="widget sidebar-links">
+                <div class="block-title">
+                    <span>
+                        Danh mục
+                    </span>
                 </div>
-            }
-            @Html.Action("LeftProductAdv", "MyShopify")
-            
-        </div>
-    </div>
-    <div class="col-md-9 col-sm-12 col-xs-12 col-main display-toolbar no-sidebar collection-page no-padding-lr">
-        @*@Html.Action("CategoryAdv", "MyShopify")*@
-        @Html.Action("CategoryAdv", "MyShopify")
-        
-        <div class="toolbar ">
-
-            <div class="toolbar-mode row">
-                <div class="col-md-8 col-sm-8 col-xs-12">
-                    <div class="filter-collection-left"><a class="btn">Xem danh mục</a></div>
-                    <div class="collection-view">
-                        <label>Xem</label>
-                        <a class="change-view grid active" id="grid" rel="tooltip" title="Xem lưới" onclick="display(\'grid\');"><i class="fa fa-th" aria-hidden="true"></i></a>
-                        <a class="change-view list" id="list" rel="tooltip" title="Xem danh sách" onclick="display(\'list\');"><i class="fa fa-list-ul" aria-hidden="true"></i></a>
-                    </div>
-
-                    <div class="browse-tags">
-                        <label>Sắp xếp theo</label>
-                        <select class="sort-by">
-                            <option value="manual">Xem nhiều nhất</option>
-                            <option value="price-ascending">Giá: thấp đến cao</option>
-                            <option value="price-descending">Giá: cao đến thấp</option>
-                            @*<option value="title-ascending">Alphabetically: A-Z</option>
-                            <option value="title-descending">Alphabetically: Z-A</option>
-                            <option value="created-ascending">Date: old to new</option>
-                            <option value="created-descending">Date: new to old</option>
-                            *@
-                            <option value="best-selling">Bán chạy</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-4 total-page ">
-                    @if (pageTotal > 0)
-                    { 
-                        <div class="page-total">
-                            <span>Hiển thị</span> từ <span>@(ProductHelper.ProductShowLimit * (Model.Page - 1) + 1) đến @( (pageTotal == Model.Page) ? Model.ProductTotal : ProductHelper.ProductShowLimit * Model.Page) trong tổng số @Model.ProductTotal sản phẩm</span>
-                        </div>
-                    }
-
+                <div class="widget-content">
+                    @{Html.RenderPartial("ListSubCategory", Model.ListSubCategory);}
                 </div>
             </div>
+         }
+        <div class="block-title" style="display: none;">
+            <span>Filter Selection</span>
         </div>
-
-        <div class="products-grids product-grid-item">
-            @if (Model.Products != null && Model.Products.Count > 0)
+        <div class="sidebar-block">
+            @if (string.IsNullOrWhiteSpace(Model.Filter) || (!string.IsNullOrWhiteSpace(Model.Filter) && !Model.Filter.Contains(string.Format("|{0}_", (int)FilterEnum.ByBrand))))
             {
-                <div class="row">
-                    @foreach (Product prod in Model.Products)
-                    {
-                        //continue;
-                        
-                        <div class="col-md-4 col-sm-4 col-xs-6">
-                            <div class="grid-item product-item" id="product-@prod.ID">
-                                <div class="item-poduct">
-                                    <div class="product-image ">
-                                        <div class="product-label">
-                                            <lable class="label">Sale</lable>
-                                        </div>
-
-
-                                        <a href="@url.productURL(prod.Name, prod.ID)" class="grid-image">
-                                            <img class="feature-images" src="@ImageHelper.Crop(@prod.Image, 250)" alt="@prod.Name">
-
-                                            @*<span class="product-hover" data-idproduct="7824322313">
-                                                <img class="img-responsive" alt="Contemporary Leopard Mini Dress" src="//cdn.shopify.com/s/files/1/1498/2346/products/17_41986a1f-0218-4fd1-8f6a-c7919bc99263_large.jpg?v=1484812673">
-                                            </span>*@
-
-                                        </a>
-
-
-                                        <div class="quickview-button">
-                                            <a href="javascript:void(0)" id="contemporary-leopard-mini-dress" data-toggle="tooltip" data-placement="top" title="@prod.Name" class="sca-qv-button btn">Xem nhanh</a>
-                                        </div>
-
-
-                                    </div>
-                                    <div class="product-content">
-                                        <h3><a class="product-title" href="@url.productURL(prod.Name, prod.ID)">@prod.Name</a></h3>
-                                        <div class="price-box">
-                                            <p class="sale">
-                                                <span class="old-price">
-                                                    @if (prod.SaleOff > 0)
-                                                    { 
-                                                        <span class="money">@String.Format("{0: 0,0}", prod.Price - (prod.Price / 100) * prod.SaleOff) ) @ViewBag.MoneyShort</span>
-                                                    }
-                                                </span>
-                                                <span class="special-price">
-                                                    @if (prod.Price > 0)
-                                                    {
-                                                        <span class="money">@String.Format("{0: 0,0}", (prod.Price)) @ViewBag.MoneyShort</span>
-                                                    }
-                                                </span>
-                                            </p>
-
-                                        </div>
-
-                                        <div class="reviews-container">
-                                            <span class="shopify-product-reviews-badge" data-id="7824322313"></span>
-                                        </div>
-
-                                        <p class="short-description">@prod.Summary</p>
-                                        <div class="add-to-link">
-                                            <div class="add-to-cart">
-
-                                                <form action="/cart/add" method="post" class="variants" id="product-actions-@prod.ID" enctype="multipart/form-data" style="padding: 0px;">
-                                                    <input type="hidden" name="id" value="29530312713" />
-                                                    <span>
-                                                        <input class="btn add-to-cart-btn" data-toggle="tooltip" data-placement="top" title="Thêm vào giỏ hàng" type="submit" value="Thêm vào giỏ hàng" />
-                                                    </span>
-                                                </form>
-                                            </div>
-                                            <a class="wishlist btn" href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="Yêu thích"><span><i class="fa fa-heart" aria-hidden="true"></i></span></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    }
+                <div class="sidebar-custom sidebar-tag size">
+                    @{Html.RenderAction("LoadListProductBrandFilterAsync", "Async", new { categoryId = Model.CategoryId, currentRouteData = HttpContext.Current.Request.RequestContext.RouteData.Values });}
                 </div>
-            }
+             }
+            @if (string.IsNullOrWhiteSpace(Model.Filter) || (!string.IsNullOrWhiteSpace(Model.Filter) && !Model.Filter.Contains(string.Format("|{0}_", (int)FilterEnum.ByManufacturer))))
+            {
+                <div class="sidebar-custom size">
+                    @{ Html.RenderAction("LoadListManufacturerFilterAsync", "Async");}
+                </div>
+             }
+            <div class="sidebar-custom sliebar-price">
+                <div class="title">
+                    <h3>
+                        <span>
+                            GIÁ
+                        </span>
+                    </h3>
+                </div>
+                <div class="content">
+                    <ul>
+                        <li>
+                            <a  href="@Url.HomeCategoryUrl(string.Format("|{0}_0|{1}_100000|", (int) FilterEnum.ByFromPrice, (int) FilterEnum.ByToPrice),Model.CategoryId)" title="Dưới 100k">
+                                <label class="@(Model.Filter.IndexOf(String.Format("{0}_0+{1}_100000",(int) FilterEnum.ByFromPrice,(int) FilterEnum.ByToPrice), StringComparison.Ordinal)>0? "filter_item_active" : "filter_item")">
+                                    Dưới 100k
+                                </label>
 
-        </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a  href="@Url.HomeCategoryUrl(string.Format("|{0}_100000-300000|", (int) FilterEnum.ByBetweenPrice),Model.CategoryId)" title="100k - 300k">
+                                <label class="@(Model.Filter.IndexOf(string.Format("{0}_100-300",(int) FilterEnum.ByBetweenPrice), StringComparison.Ordinal)>0? "filter_item_active" : "filter_item")">
+                                    100k - 300k
+                                </label>
 
-        @if (pageTotal > 0)
-        {
-
-            Boolean showSpacePrev = false;
-            Boolean showSpaceNext = false;
-            
-            <div class="padding">
-                <div class="toolbar toolbar-bottom">
-                    <ul class="pagination-page">
-                        @if (Model.Page > 1 & pageTotal > 0)
-                        { 
-                            <li><a href="@Request.Url.Fragment?p=@(Model.Page - 1)" title="trang trước"><i class="fa fa-caret-left" aria-hidden="true"></i></a></li>
-                        }
-                        @for (int i = 1; i <= pageTotal; i++)
-                        {
-
-
-                            if (i == Model.Page)
-                            {
-                            @:<li class="active" ><span>@i</span></li>
-                            }
-                            else
-                            {
-                                if (i <= Model.Page - 2 & i != 1)
-                                {
-                                    if (showSpacePrev != true)
-                                    { 
-                            @:<li><a href="javascript:void(0);">...</a></li>
-                                        showSpacePrev = true;
-                                    }
-                                }
-                                else if (i >= Model.Page + 2 & i != pageTotal)
-                                {
-                                    if (showSpaceNext != true)
-                                    { 
-                            @:<li><a href="javascript:void(0);">...</a></li>
-                                        showSpaceNext = true;
-                                    }
-                                }
-                                else
-                                {
-                            @:<li><a href="@Request.Url.Fragment?p=@i">@i</a></li>
-                                }
-
-                            }
-
-
-                        }
-                        @if (Model.Page < pageTotal)
-                        { 
-                            <li><a href="@Request.Url.Fragment?p=@(Model.Page + 1)" title="trang tiếp theo"><i class="fa fa-caret-right" aria-hidden="true"></i></a></li>
-                        }
-
+                            </a>
+                        </li>
+                        <li>
+                            <a  href="@Url.HomeCategoryUrl(string.Format("|{0}_500000-1000000|", (int) FilterEnum.ByBetweenPrice),Model.CategoryId)" title="500k - 1.000k">
+                                <label class="@(Model.Filter.IndexOf(string.Format("{0}_500000-1000000",(int) FilterEnum.ByBetweenPrice), StringComparison.Ordinal)>0? "filter_item_active" : "filter_item")">500k - 1.000k</label>
+                            </a>
+                        </li>
+                        <li>
+                            <a  href="@Url.HomeCategoryUrl(string.Format("|{0}_1000000|{1}_1000000|", (int) FilterEnum.ByToPrice, (int) FilterEnum.ByToPrice),Model.CategoryId)" title="Trên 1.000k">
+                                <label class="@(Model.Filter.IndexOf(string.Format("{0}_1000000|{1}_1000000", (int) FilterEnum.ByToPrice, (int) FilterEnum.ByToPrice), StringComparison.Ordinal)>0? "filter_item_active" : "filter_item")">Trên 1.000k</label>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
-        }
+        </div>
+        <div class="async bestseller-sidebar bestseller-homepage" data-url="@Url.LoadListProductBestSellerAsyncUrl(Model.CategoryId)"></div>
+
+        <div class="block-bottom-sidebar">
+            <img src="//cdn.shopify.com/s/files/1/1498/2346/t/12/assets/block_image_left.jpg?9436750478273192716" alt="">
+            <div class="content-block-left">
+                <span>Only BigSale $99.00</span>
+                <p>Design 2016</p>
+            </div>
+        </div>
     </div>
-    <div class="overlay-filter"></div>
 </div>
-
-<script>
-
-    jQuery('.sort-by')
-    .val('price-ascending')
-         .bind('change', function () {
-             Shopify.queryParams.sort_by = jQuery(this).val();
-             location.search = jQuery.param(Shopify.queryParams).replace(/\+/g, '%20');
-         });
-
-    function replaceUrlParam(url, paramName, paramValue) {
-        var pattern = new RegExp('(' + paramName + '=).*?(&|$)'),
-            newUrl = url.replace(pattern, '$1' + paramValue + '$2');
-        if (newUrl == url) {
-            newUrl = newUrl + (newUrl.indexOf('?') > 0 ? '&' : '?') + paramName + '=' + paramValue;
-        }
-        return newUrl;
+<div class="col-md-9 col-sm-12 col-xs-12 col-main">
+    @if (@Model.Category.ImageBanner.ToUrl(870, 225).IndexOf("noimage.jpg", StringComparison.Ordinal) == 0)
+    {
+        <header class="page-header">
+            <div class="images">
+                <img src="@Model.Category.ImageBanner.ToUrl(870, 225)" alt="@Model.Category.Name">
+            </div>
+        </header>
     }
+    <div class="toolbar ">
 
-    jQuery(function () {
-        jQuery('.filter-collection-left > a').on('click', function () {
-            jQuery('.wrapper').addClass('show-fillter');
+        <div class="toolbar-mode row">
+            <div class="col-md-8 col-sm-8 col-xs-12">
+                <div class="filter-collection-left">
+                    <a class="btn">Lọc</a>
+                </div>
+                <div class="collection-view">
+                    <label>Hiển thị</label>
+                    <a class="change-view grid active" id="grid" rel="tooltip" title="Grid view" onclick="display('grid');"><i class="fa fa-th" aria-hidden="true"></i></a>
+                    <a class="change-view list" id="list" rel="tooltip" title="List view" onclick="display('list');"><i class="fa fa-list-ul" aria-hidden="true"></i></a>
+
+                </div>
+                <div class="browse-tags">
+                    <label>Sắp xếp</label>
+                    @Html.DropDownListFor(filter => Model.Sort, Model.ListSort, new {@class = "sort-by"})
+                </div>
+            </div>
+        
+        </div>
+    </div>
+    <script>
+
+        jQuery('.sort-by')
+            .val('title-ascending')
+            .bind('change', function() {
+                Shopify.queryParams.sort = jQuery(this).val();
+                location.search = jQuery.param(Shopify.queryParams).replace(/\+/g, '%20');
+            });
+
+        function replaceUrlParam(url, paramName, paramValue) {
+            var pattern = new RegExp('(' + paramName + '=).*?(&|$)'),
+                newUrl = url.replace(pattern, '$1' + paramValue + '$2');
+            if (newUrl == url) {
+                newUrl = newUrl + (newUrl.indexOf('?') > 0 ? '&' : '?') + paramName + '=' + paramValue;
+            }
+            return newUrl;
         }
-                                                );
-        jQuery(document).mouseup(function (e) {
 
-            var container = jQuery("#filter-sidebar");
+        jQuery(function() {
+            jQuery('.filter-collection-left > a').on('click', function() {
+                    jQuery('.wrapper').addClass('show-fillter');
+                }
+            );
+            jQuery(document).mouseup(function(e) {
 
-            if (!container.is(e.target) // if the target of the click isn't the container...
-                && container.has(e.target).length === 0) // ... nor a descendant of the container
-            {
-                jQuery('.wrapper').removeClass('show-fillter');
-            }
+                var container = jQuery("#filter-sidebar");
+
+                if (!container.is(e.target) // if the target of the click isn't the container...
+                    && container.has(e.target).length === 0) // ... nor a descendant of the container
+                {
+                    jQuery('.wrapper').removeClass('show-fillter');
+                }
+            });
+
         });
 
-    });
+        jQuery(function() {
+            jQuery('.filter-collection-left > a').on('click', function() {
+                    jQuery('.wrapper-container').addClass('show-fillter');
+                }
+            );
+            jQuery(document).mouseup(function(e) {
 
-    jQuery(function () {
-        jQuery('.filter-collection-left > a').on('click', function () {
-            jQuery('.wrapper-container').addClass('show-fillter');
+                var container = jQuery("#filter-sidebar");
+
+                if (!container.is(e.target) // if the target of the click isn't the container...
+                    && container.has(e.target).length === 0) // ... nor a descendant of the container
+                {
+                    jQuery('.wrapper-container').removeClass('show-fillter');
+                }
+            });
+            jQuery('body.template-collection .collection-view a').on('click', function() {
+                jQuery('.collection-view a.active').removeClass('active');
+                jQuery(this).addClass('active');
+
+            });
+
+            jQuery('body.template-collection .collection-view a.list').on('click', function() {
+                jQuery('body.template-collection').find('.products-grid').addClass('product-list-item');
+                if (jQuery('body.template-collection .products-grid').hasClass('product-grid-item')) {
+                    jQuery('body.template-collection').find('.products-grid').removeClass('product-grid-item');
+
+                } else {
+                    jQuery('body.template-collection').find('.products-grid').addClass('');
+                }
+
+            });
+            jQuery('body.template-collection .collection-view a.grid').on('click', function() {
+                jQuery('body.template-collection').find('.products-grid').addClass('product-grid-item');
+                if (jQuery('body.template-collection .products-grid').hasClass('product-list-item')) {
+                    jQuery('body.template-collection').find('.products-grid').removeClass('product-list-item');
+
+                } else {
+                    jQuery('body.template-collection').find('.products-grid').addClass('');
+                }
+            });
+            jQuery('body.template-collection .collection-view a.list').on('click', function() {
+                jQuery('body.template-collection').find('.products-grids').addClass('product-list-item');
+                if (jQuery('body.template-collection .products-grids').hasClass('product-grid-item')) {
+                    jQuery('body.template-collection').find('.products-grids').removeClass('product-grid-item');
+
+                } else {
+                    jQuery('body.template-collection').find('.products-grids').addClass('');
+                }
+
+            });
+            jQuery('body.template-collection .collection-view a.grid').on('click', function() {
+                jQuery('body.template-collection').find('.products-grids').addClass('product-grid-item');
+                if (jQuery('body.template-collection .products-grids').hasClass('product-list-item')) {
+                    jQuery('body.template-collection').find('.products-grids').removeClass('product-list-item');
+
+                } else {
+                    jQuery('body.template-collection').find('.products-grids').addClass('');
+                }
+            });
+
+
+        });
+    </script>
+
+    @if (Model.ListProduct != null && Model.ListProduct.Count > 0)
+    {
+        <div class="products-grid product-grid-item">
+            @foreach (var product in Model.ListProduct)
+            {
+                {
+                    Html.RenderPartial("ProductComponent", product);
+                }
+            }
+        </div>         
+        <div class="padding">
+            <div class="toolbar toolbar-bottom">
+                <ul class="pagination-page">
+                    @Html.Partial("PaginationComponent", new PaginationModels
+                    {
+                        TotalPages = Model.TotalPage,
+                        BaseUrl = Url.HomeCategoryUrl(Model.Filter,Model.CategoryId,Model.Sort),                                              
+                        CurrentPage = Model.Page,
+                        PageParamFormat = @"page=\d+",
+                        RecordPerPages = 5
+                     })
+                </ul>
+            </div>
+
+        </div>
+    }
+</div>
+<div class="overlay-filter"></div>
+</div>
+<script type="text/javascript">
+    $(".async").each(function(index, item) {
+        var url = $(item).data("url");
+        if (url && url.length > 0) {
+            $(item).html("<span>Loading...</span>");
+            $(item).load(url, function(response, status, xhr) {
+                if (status === "error") {
+                    $(item).html("<span class='error'>Không thể tải dữ liệu</span>");
+                }
+            });
         }
-                                                );
-        jQuery(document).mouseup(function (e) {
-
-            var container = jQuery("#filter-sidebar");
-
-            if (!container.is(e.target) // if the target of the click isn't the container...
-                && container.has(e.target).length === 0) // ... nor a descendant of the container
-            {
-                jQuery('.wrapper-container').removeClass('show-fillter');
-            }
-        });
-        jQuery('body.template-collection .collection-view a').on('click', function () {
-            jQuery('.collection-view a.active').removeClass('active');
-            jQuery(this).addClass('active');
-
-        });
-
-        jQuery('body.template-collection .collection-view a.list').on('click', function () {
-            jQuery('body.template-collection').find('.products-grid').addClass('product-list-item');
-            if (jQuery('body.template-collection .products-grid').hasClass('product-grid-item')) {
-                jQuery('body.template-collection').find('.products-grid').removeClass('product-grid-item');
-
-            } else {
-                jQuery('body.template-collection').find('.products-grid').addClass('');
-            }
-
-        });
-        jQuery('body.template-collection .collection-view a.grid').on('click', function () {
-            jQuery('body.template-collection').find('.products-grid').addClass('product-grid-item');
-            if (jQuery('body.template-collection .products-grid').hasClass('product-list-item')) {
-                jQuery('body.template-collection').find('.products-grid').removeClass('product-list-item');
-
-            } else {
-                jQuery('body.template-collection').find('.products-grid').addClass('');
-            }
-        });
-        jQuery('body.template-collection .collection-view a.list').on('click', function () {
-            jQuery('body.template-collection').find('.products-grids').addClass('product-list-item');
-            if (jQuery('body.template-collection .products-grids').hasClass('product-grid-item')) {
-                jQuery('body.template-collection').find('.products-grids').removeClass('product-grid-item');
-
-            } else {
-                jQuery('body.template-collection').find('.products-grids').addClass('');
-            }
-
-        });
-        jQuery('body.template-collection .collection-view a.grid').on('click', function () {
-            jQuery('body.template-collection').find('.products-grids').addClass('product-grid-item');
-            if (jQuery('body.template-collection .products-grids').hasClass('product-list-item')) {
-                jQuery('body.template-collection').find('.products-grids').removeClass('product-list-item');
-
-            } else {
-                jQuery('body.template-collection').find('.products-grids').addClass('');
-            }
-        });
-
 
     });
 </script>
-
-<script>
-    // ---- Custom ----  
-
-    $('.template-collection .col-main').css('padding-top', '0px');
-
-    $('.browse-tags').parent().removeClass('col-md-5');
-    $('.browse-tags').parent().removeClass('col-sm-7');
-
-    $('.browse-tags').parent().addClass('col-sm-12');
-    $('body').parent().addClass('widthout-sidebar');
-
-    jQuery(function () {
-        jQuery('.filter-collection-left > a').on('click', function () {
-            jQuery('.container.typo-main').addClass('show-fillter');
-        }
-                                                );
-        jQuery(document).mouseup(function (e) {
-
-            var container = jQuery("#filter-sidebar");
-
-            if (!container.is(e.target) // if the target of the click isn't the container...
-                && container.has(e.target).length === 0) // ... nor a descendant of the container
-            {
-                jQuery('.container.typo-main').removeClass('show-fillter');
-            }
-        });
-
-    });
-
-</script>
-
-<style>
-    /* ---- Custom ---- */
-
-    /* ---- replace  page-header image to background cover ---- */
-
-
-    .collection-page .page-header {
-        background: url(//cdn.shopify.com/s/files/1/1498/2346/t/12/assets/image_category.jpg?12126481974382985035);
-        background-size: cover;
-    }
-
-
-    .toolbar {
-        margin-bottom: 20px !important;
-    }
-
-    .sort-by {
-        margin-right: 3px;
-    }
-</style>
+@section Script
+{
+    <script src="//cdn.shopify.com/s/files/1/1498/2346/t/12/assets/selectize.min.js?9436750478273192716" type="text/javascript"></script>
+}

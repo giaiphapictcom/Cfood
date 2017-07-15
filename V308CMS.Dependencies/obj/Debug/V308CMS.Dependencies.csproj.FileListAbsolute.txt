@@ -5,11 +5,6 @@ E:\Work\Tam\Tam21062017\TamGit\V308CMS.Dependencies\bin\Debug\EntityFramework.dl
 E:\Work\Tam\Tam21062017\TamGit\V308CMS.Dependencies\bin\Debug\EntityFramework.SqlServer.dll
 E:\Work\Tam\Tam21062017\TamGit\V308CMS.Dependencies\bin\Debug\MySql.Data.dll
 E:\Work\Tam\Tam21062017\TamGit\V308CMS.Dependencies\bin\Debug\MySql.Data.Entity.EF6.dll
-E:\Work\Tam\Tam21062017\TamGit\V308CMS.Dependencies\bin\Debug\EntityFramework.xml
-E:\Work\Tam\Tam21062017\TamGit\V308CMS.Dependencies\bin\Debug\EntityFramework.SqlServer.xml
-E:\Work\Tam\Tam21062017\TamGit\V308CMS.Dependencies\obj\Debug\V308CMS.Dependencies.csprojResolveAssemblyReference.cache
-E:\Work\Tam\Tam21062017\TamGit\V308CMS.Dependencies\obj\Debug\V308CMS.Dependencies.dll
-E:\Work\Tam\Tam21062017\TamGit\V308CMS.Dependencies\obj\Debug\V308CMS.Dependencies.pdb
 E:\Work\Tam\Tam21062017\TamGit\V308CMS.Dependencies\bin\Debug\MySql.Web.dll
 E:\Work\Tam\Tam21062017\TamGit\V308CMS.Dependencies\bin\Debug\WebMatrix.WebData.dll
 E:\Work\Tam\Tam21062017\TamGit\V308CMS.Dependencies\bin\Debug\System.Web.WebPages.dll
@@ -19,6 +14,8 @@ E:\Work\Tam\Tam21062017\TamGit\V308CMS.Dependencies\bin\Debug\System.Web.Helpers
 E:\Work\Tam\Tam21062017\TamGit\V308CMS.Dependencies\bin\Debug\Microsoft.Web.Infrastructure.dll
 E:\Work\Tam\Tam21062017\TamGit\V308CMS.Dependencies\bin\Debug\System.Web.Razor.dll
 E:\Work\Tam\Tam21062017\TamGit\V308CMS.Dependencies\bin\Debug\System.Web.WebPages.Deployment.dll
+E:\Work\Tam\Tam21062017\TamGit\V308CMS.Dependencies\bin\Debug\EntityFramework.xml
+E:\Work\Tam\Tam21062017\TamGit\V308CMS.Dependencies\bin\Debug\EntityFramework.SqlServer.xml
 E:\Work\Tam\Tam21062017\TamGit\V308CMS.Dependencies\bin\Debug\WebMatrix.WebData.xml
 E:\Work\Tam\Tam21062017\TamGit\V308CMS.Dependencies\bin\Debug\System.Web.WebPages.xml
 E:\Work\Tam\Tam21062017\TamGit\V308CMS.Dependencies\bin\Debug\WebMatrix.Data.xml
@@ -27,3 +24,5 @@ E:\Work\Tam\Tam21062017\TamGit\V308CMS.Dependencies\bin\Debug\System.Web.Helpers
 E:\Work\Tam\Tam21062017\TamGit\V308CMS.Dependencies\bin\Debug\Microsoft.Web.Infrastructure.xml
 E:\Work\Tam\Tam21062017\TamGit\V308CMS.Dependencies\bin\Debug\System.Web.Razor.xml
 E:\Work\Tam\Tam21062017\TamGit\V308CMS.Dependencies\bin\Debug\System.Web.WebPages.Deployment.xml
+E:\Work\Tam\Tam21062017\TamGit\V308CMS.Dependencies\obj\Debug\V308CMS.Dependencies.dll
+E:\Work\Tam\Tam21062017\TamGit\V308CMS.Dependencies\obj\Debug\V308CMS.Dependencies.pdb

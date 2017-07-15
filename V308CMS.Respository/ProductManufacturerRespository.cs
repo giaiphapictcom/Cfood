@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using V308CMS.Data;
 
 namespace V308CMS.Respository
@@ -18,6 +20,16 @@ namespace V308CMS.Respository
         {
             
         }
+
+        public async Task<List<ProductManufacturer>> GetAllAsync()
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return await (from manufacturer in entities.ProductManufacturer
+                       orderby  manufacturer.Date descending 
+                        select manufacturer).ToListAsync();
+            }
+        } 
         public ProductManufacturer Find(int id)
         {
             using (var entities = new V308CMSEntities())

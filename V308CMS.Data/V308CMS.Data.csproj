@@ -45,23 +45,15 @@
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp">
       <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServerCompact, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.SqlServerCompact.6.0.0\lib\net40\EntityFramework.SqlServerCompact.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.1.0.0\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
@@ -171,6 +163,8 @@
     <Compile Include="Enum\AnchorEnum.cs" />
     <Compile Include="Enum\DiscountTypeEnum.cs" />
     <Compile Include="Enum\EmailType.cs" />
+    <Compile Include="Enum\FilterEnum.cs" />
+    <Compile Include="Enum\SortEnum.cs" />
     <Compile Include="Enum\OrderSearchTypeEnum.cs" />
     <Compile Include="Enum\OrderStatusEnum.cs" />
     <Compile Include="Enum\PositionEnum.cs" />
@@ -207,6 +201,8 @@
     <Compile Include="Mapping\SizeMap.cs" />
     <Compile Include="Mapping\StoreMap.cs" />
     <Compile Include="Mapping\UnitMap.cs" />
+    <Compile Include="Mapping\VoucherCodeMap.cs" />
+    <Compile Include="Mapping\VoucherLogMap.cs" />
     <Compile Include="Mapping\VoucherMap.cs" />
     <Compile Include="MarketRepository.cs" />
     <Compile Include="Metadata\BannerMetadata.cs" />
@@ -229,10 +225,13 @@
     <Compile Include="Metadata\StoreMetadata.cs" />
     <Compile Include="Metadata\SupportManMetadata.cs" />
     <Compile Include="Metadata\UnitMetadata.cs" />
+    <Compile Include="Metadata\VoucherCodeMetadata.cs" />
+    <Compile Include="Metadata\VoucherLogMetadata.cs" />
     <Compile Include="Metadata\VoucherMetadata.cs" />
     <Compile Include="Metadata\WebsiteRequestMetadata.cs" />
     <Compile Include="Models\Banner.cs" />
     <Compile Include="Models\CategoryItem.cs" />
+    <Compile Include="Models\CategoryMarkChild.cs" />
     <Compile Include="Models\Color.cs" />
     <Compile Include="Models\Country.cs" />
     <Compile Include="Models\OrderTransaction.cs" />
@@ -298,6 +297,10 @@
     <ProjectReference Include="..\V308CMS.Common\V308CMS.Common.csproj">
       <Project>{c4aef9a6-cf03-429d-84f7-cdc2f058f556}</Project>
       <Name>V308CMS.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\V308CMS.Dependencies\V308CMS.Dependencies.csproj">
+      <Project>{6330e246-9e72-4bf7-835e-971936615b7f}</Project>
+      <Name>V308CMS.Dependencies</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

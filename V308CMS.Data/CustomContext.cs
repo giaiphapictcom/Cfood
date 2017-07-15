@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Configuration;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using V308CMS.Data.Mapping;
 using V308CMS.Data.Models;
 
@@ -20,15 +18,10 @@ namespace V308CMS.Data
         }
         public V308CMSEntities(string connectionString)
             : base(connectionString)
-        {
-            //cai nay giup chi ra rang ta dung provider MySql.Data.MySqlClient
-            Database.DefaultConnectionFactory = new SqlCeConnectionFactory("MySql.Data.MySqlClient");
+        {            
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-
-            modelBuilder.Ignore<IncludeMetadataConvention>();
-
             modelBuilder.Configurations.Add(new SiteConfigMap());
             modelBuilder.Configurations.Add(new EmailConfigMap());
             modelBuilder.Configurations.Add(new MenuConfigMap());
@@ -47,6 +40,8 @@ namespace V308CMS.Data
             modelBuilder.Configurations.Add(new ShippingAddressMap());            
             modelBuilder.Configurations.Add(new OrderTransactionMap());
             modelBuilder.Configurations.Add(new ProductWishlistMap());
+            modelBuilder.Configurations.Add(new VoucherMap());
+            modelBuilder.Configurations.Add(new VoucherCodeMap());
 
             modelBuilder.Entity<OrderTransaction>()
             .HasRequired(p => p.Order)
@@ -95,6 +90,22 @@ namespace V308CMS.Data
             .WithMany(p => p.Permissions)
             .HasForeignKey(p => p.RoleId);
 
+        }
+        public DbSet<Voucher> Voucher
+        {
+            get;
+            set;
+        }
+        public DbSet<VoucherCode> VoucherCode
+        {
+            get;
+            set;
+        }
+
+        public DbSet<VoucherLog> VoucherLog
+        {
+            get;
+            set;
         }
         public DbSet<OrderTransaction> OrderTransaction
         {

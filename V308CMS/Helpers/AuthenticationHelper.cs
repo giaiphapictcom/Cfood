@@ -2,7 +2,6 @@
 using System.Web;
 using System.Web.Security;
 using Newtonsoft.Json;
-using V308CMS.Models;
 
 namespace V308CMS.Helpers
 {
@@ -43,7 +42,7 @@ namespace V308CMS.Helpers
                 Expires = DateTime.Now.AddYears(-1)
             };
 
-            HttpContext.Current.Response.Cookies.Add(sessionCookie);
+            HttpContext.Current.Response.Cookies.Add(sessionCookie);           
         }
 
         public static bool IsAuthenticated => HttpContext.Current.User.Identity.IsAuthenticated;

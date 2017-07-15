@@ -1,6 +1,3 @@
-E:\Work\Tam\Tam21062017\TamGit\UpdateAddress\bin\Debug\UpdateAddress.exe.config
-E:\Work\Tam\Tam21062017\TamGit\UpdateAddress\bin\Debug\UpdateAddress.exe
-E:\Work\Tam\Tam21062017\TamGit\UpdateAddress\bin\Debug\UpdateAddress.pdb
 E:\Work\Tam\Tam21062017\TamGit\UpdateAddress\bin\Debug\V308CMS.Data.dll
 E:\Work\Tam\Tam21062017\TamGit\UpdateAddress\bin\Debug\V308CMS.Respository.dll
 E:\Work\Tam\Tam21062017\TamGit\UpdateAddress\bin\Debug\EntityFramework.dll
@@ -21,7 +18,10 @@ E:\Work\Tam\Tam21062017\TamGit\UpdateAddress\bin\Debug\System.Web.WebPages.Razor
 E:\Work\Tam\Tam21062017\TamGit\UpdateAddress\bin\Debug\Microsoft.Web.Infrastructure.xml
 E:\Work\Tam\Tam21062017\TamGit\UpdateAddress\bin\Debug\System.Web.WebPages.Deployment.xml
 E:\Work\Tam\Tam21062017\TamGit\UpdateAddress\obj\Debug\UpdateAddress.csprojResolveAssemblyReference.cache
-E:\Work\Tam\Tam21062017\TamGit\UpdateAddress\obj\Debug\UpdateAddress.exe
-E:\Work\Tam\Tam21062017\TamGit\UpdateAddress\obj\Debug\UpdateAddress.pdb
 E:\Work\Tam\Tam21062017\TamGit\UpdateAddress\bin\Debug\Newtonsoft.Json.dll
 E:\Work\Tam\Tam21062017\TamGit\UpdateAddress\bin\Debug\Newtonsoft.Json.xml
+E:\Work\Tam\Tam21062017\TamGit\UpdateAddress\bin\Debug\V30UpdateAddress.exe.config
+E:\Work\Tam\Tam21062017\TamGit\UpdateAddress\bin\Debug\V30UpdateAddress.exe
+E:\Work\Tam\Tam21062017\TamGit\UpdateAddress\bin\Debug\V30UpdateAddress.pdb
+E:\Work\Tam\Tam21062017\TamGit\UpdateAddress\obj\Debug\V30UpdateAddress.exe
+E:\Work\Tam\Tam21062017\TamGit\UpdateAddress\obj\Debug\V30UpdateAddress.pdb

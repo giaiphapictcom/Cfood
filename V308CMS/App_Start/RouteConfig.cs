@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace V308CMS
@@ -10,7 +6,12 @@ namespace V308CMS
     public class RouteConfig
     {
         public static void RegisterRoutes(RouteCollection routes)
-        {
+        {          
+            routes.MapRoute("MemberWishlistIndexRoute", "san-pham-yeu-thich", new { Controller = "MemberWishList", action = "Index" });
+            
+            routes.MapRoute("CartCheckoutRoute", "thanh-toan", new { Controller = "Cart", action = "Checkout" });
+            routes.MapRoute("CartViewCartRoute", "gio-hang", new { Controller = "Cart", action = "ViewCart" });
+            routes.MapRoute("CartEmptyRoute", "gio-hang-trong", new { Controller = "Cart", action = "EmptyCart" });
             routes.MapRoute("ContactIndexUrl", "lien-he", new { Controller = "Contact", action = "Index" });
 
 
@@ -44,7 +45,7 @@ namespace V308CMS
 
 
 
-            routes.MapRoute("CategoryRoute", "{title}-t{pGroupId}.html", new { Controller = "Home", action = "Category" }, new { pGroupId = @"\d+" });
+            routes.MapRoute("CategoryRoute", "{title}-t{categoryId}.html", new { Controller = "Home", action = "Category" }, new { categoryId = @"\d+" });
             routes.MapRoute("DetailRoute", "{title}-d{pId}.html", new { Controller = "Home", action = "Detail" }, new { pId = @"\d+" });
 
             routes.MapRoute("SearchRoute", "tim-kiem.html", new { Controller = "Home", action = "Search" });

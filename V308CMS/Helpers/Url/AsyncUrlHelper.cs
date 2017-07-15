@@ -12,5 +12,21 @@ namespace V308CMS.Helpers.Url
         {
             return helper.Action(action, controller, new { categoryId, limit });
         }
+
+        public static string LoadListProductBestSellerAsyncUrl(this UrlHelper helper, int categoryId, int limit = 5,  string controller = "Async", string action = "LoadProductsBestSellerAsync")
+        {
+            return helper.Action(action, controller, new { categoryId, limit });
+        }
+
+
+        public static string LoadListProductBrandFilterAsyncUrl(this UrlHelper helper, int categoryId, string controller = "Async", string action = "LoadListProductBrandFilterAsync")
+        {
+            return helper.Action(action, controller, new { categoryId });
+        }
+
+        public static string LoadListLoadListManufacturerFilterAsyncUrl(this UrlHelper helper, string controller = "Async", string action = "LoadListManufacturerFilterAsync")
+        {
+            return helper.Action(action, controller);
+        }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using V308CMS.Data;
+using V308CMS.Data.Helpers;
 using V308CMS.Data.Models;
 
 namespace V308CMS.Respository
@@ -78,7 +80,7 @@ namespace V308CMS.Respository
                         entities.SupportManTbl.Add(data);
                         entities.SaveChanges();
                     }
-                    catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+                    catch (DbEntityValidationException dbEx)
                     {
                         Console.Write(dbEx);
                     }
@@ -127,7 +129,7 @@ namespace V308CMS.Respository
                 try
                 {
                     IQueryable<SupportMan> items = entities.SupportManTbl;
-                    if (site == Data.Helpers.Site.home)
+                    if (site == Site.home)
                     {
                         items = items.Where(b => b.Site == site || b.Site == "" || b.Site == null || b.Site == "1");
                     }
@@ -146,7 +148,7 @@ namespace V308CMS.Respository
                         }
                     }
                 }
-                catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+                catch (DbEntityValidationException dbEx)
                 {
                     Console.Write(dbEx);
                 }

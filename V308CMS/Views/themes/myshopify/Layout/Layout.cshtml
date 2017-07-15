@@ -1,4 +1,5 @@
-﻿@using StackExchange.Profiling
+﻿@using ServiceStack.Text
+@using StackExchange.Profiling
 @using V308CMS.Helpers
 <!doctype html>
 <!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
@@ -15,9 +16,8 @@
     <link rel="icon" href="@ViewBag.ThemesPath/images/favicon.png" type="image/png"/>
     <meta content="website" property="og:type"/>
     <meta content="@ViewBag.SiteName" property="og:site_name" />
-     
     @RenderSection("header", false)
-    @Html.Action("Resources", "Block")
+    @{Html.RenderAction("Resources", "Block");}
     <script>(function (d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0];
         if (d.getElementById(id)) return;
@@ -28,43 +28,42 @@
 </head>
 
 @{
-    var BodyNews = new List<string>();
-    BodyNews.Add("News");
-    BodyNews.Add("Video");
-    }
+    var bodyNews = new List<string> {"News", "Video"};
+}
 <body
-    @if(BodyNews.Contains(  Request.RequestContext.RouteData.Values["Controller"].ToString() )){
+    @if (bodyNews.Contains(  Request.RequestContext.RouteData.Values["Controller"].ToString() )){
          @:id="news" class="template-blog" 
+    }
+     else if (Request.RequestContext.RouteData.Values["Controller"].ToString().ToLower() == "memberwishlist")
+    {
+          @:id="wish-list" class="customer-logged-in template-page" 
+
     }
     else if (@Request.RequestContext.RouteData.Values["Action"].ToString() == "Index")
     { 
         @:id="bigsale-01" class="template-index" 
     }
- 
+   
     else
     {
         @:id="facial-cleansing-pad" class="template-product"
     }
 >
-    <div class="wrapper ">
-        <div id="shopify-section-header" class="shopify-section">
-            @Html.Action("Header", "Block")
-        </div>
-        @RenderSection("Breadcrumb",false)        
-        <main class="container main-content">
-            @RenderBody()
-        </main>
-
-        @Html.Action("Footer", "Block")
-
-        @Html.Action("QuickView", "MyShopify")
-        @Html.Action("OffCanvas", "MyShopify")
-        @*@Html.Action("WapperPopup", "MyShopify")*@
-        @if (ConfigHelper.ShowPageProfile)
-        {
-            @MiniProfiler.RenderIncludes()
-        }
-       
+<div class="wrapper ">
+    <div id="shopify-section-header" class="shopify-section">
+        @{ Html.RenderAction("Header", "Block");}
     </div>
+    @RenderSection("Breadcrumb", false)
+    <main class="container main-content">
+        @RenderBody()
+    </main>
+
+    @{Html.RenderAction("Footer", "Block");}
+    @{ Html.RenderAction("QuickView", "MyShopify");}
+    @{ Html.RenderAction("OffCanvas", "MyShopify");}
+    @{ Html.RenderAction("WapperPopup", "MyShopify");}
+    @if (ConfigHelper.ShowPageProfile) { @MiniProfiler.RenderIncludes() }
+</div>
+    @RenderSection("Script",false)
 </body>
 </html>

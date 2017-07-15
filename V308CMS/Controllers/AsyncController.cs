@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
+﻿using System.Threading.Tasks;
 using System.Web.Mvc;
+using System.Web.Routing;
 using V308CMS.Data;
 
 namespace V308CMS.Controllers
@@ -17,13 +14,13 @@ namespace V308CMS.Controllers
             return PartialView("_ListBrandAsync",  ProductBrandService.GetRandom(categoryId, limit));
         }
 
-        public async Task<PartialViewResult>  LoadListProductByCategoryAsync(int categoryId, int limit = 6)
+        public async Task<PartialViewResult> LoadListProductByCategoryAsync(int categoryId, int limit = 6)
         {
             return PartialView("_ListProductByCategoryAsync", await BoxContentService.GetListProductByCategory(categoryId, limit));
 
         }
         [ChildActionOnly]
-        public async Task<ActionResult> LoadBoxItemAsync(ProductType category, int subCategoryLimit = 3, int productLimit = 6)
+        public async Task<PartialViewResult> LoadBoxItemAsync(ProductType category, int subCategoryLimit = 3, int productLimit = 6)
         {
 
             var listSubcategory = await ProductTypeService.GetListSubByParentIdAsync(category.ID, subCategoryLimit);
@@ -43,14 +40,33 @@ namespace V308CMS.Controllers
                 boxContent.ListContentItem.Add(boxContentItem);
 
             }
-            return View("_BoxItem", boxContent);
+            return PartialView("_BoxItem", boxContent);
 
         }
 
-        public async Task<ActionResult> LoadProductRelatived(int productId, int categoryId, int limit =12)
+        public async Task<PartialViewResult> LoadProductRelatived(int productId, int categoryId, int limit =12)
         {
-            return View("_ListRelatived", await ProductsService.GetListRelativedAsync(productId, categoryId,limit,true));
+            return PartialView("_ListProductRelativedAsync", await ProductsService.GetListRelativedAsync(productId, categoryId,limit,true));
         }
 
+
+        public async Task<PartialViewResult> LoadProductsBestSellerAsync(int categoryId, int limit =5 )
+        {
+
+            return PartialView("_ListProductBestSellerAsync", await ProductsService.GetProductsBestSellerAsync(categoryId));
+        }
+
+        public async Task<PartialViewResult> LoadListProductBrandFilterAsync(int categoryId, RouteValueDictionary currentRouteData)
+        {
+            ViewBag.CurrentRouteData = currentRouteData;
+            return PartialView("_ListProductBrandFilterAsync", await ProductBrandService.GetListByCategoryIdAsync(categoryId));
+
+        }
+
+        public async Task<PartialViewResult> LoadListManufacturerFilterAsync(RouteValueDictionary currentRouteData)
+        {
+            ViewBag.CurrentRouteData = currentRouteData;
+            return PartialView("_ListProductManufacturerFilterAsync", await ProductManufacturerService.GetAllAsync());
+        }
     }
 }

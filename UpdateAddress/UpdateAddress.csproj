@@ -8,7 +8,7 @@
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>UpdateAddress</RootNamespace>
-    <AssemblyName>UpdateAddress</AssemblyName>
+    <AssemblyName>V30UpdateAddress</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -49,13 +49,16 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RequestHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\V308CMS.Common\V308CMS.Common.csproj">
+      <Project>{C4AEF9A6-CF03-429D-84F7-CDC2F058F556}</Project>
+      <Name>V308CMS.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\V308CMS.Data\V308CMS.Data.csproj">
       <Project>{4F5528A8-75F6-4B33-B254-2EAA5F916F12}</Project>
       <Name>V308CMS.Data</Name>

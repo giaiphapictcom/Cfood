@@ -1,0 +1,17 @@
+﻿@using V308CMS.Helpers.Url
+@model List<V308CMS.Data.ProductType>
+@if (Model != null && Model.Count > 0)
+{
+
+    <ul>
+        @foreach (var category in Model)
+        {
+            <li>
+                <a style="cursor: pointer" href="@Url.ProductCategoryUrl(category)" title="@category.Name">
+                    @category.Name
+                </a>
+            </li>
+        }
+    </ul>
+
+}
