@@ -1,0 +1,88 @@
+﻿@using V308CMS.Common.UI
+@using V308CMS.Data
+@model OptionsModel
+
+@helper MutilDropDownlist(
+    string name = "",
+    List<OptionItem> data = null,
+    string selected = "",
+    string placeHolder = "",
+    string cssClass = "form-control")
+{
+
+    <select class='@cssClass select-2' name='@name' id='@name' placeholder='@placeHolder'>
+        @if (selected == null || selected == "" ){
+            <option value="" selected>-Lựa chọn-</option>
+        }
+        else{
+            <option value='0'>-Lựa chọn-</option>
+        }
+        @InternalMutilDropDownlist(data, selected)
+    </select>
+
+}
+@helper InternalMutilDropDownlist(
+            List<OptionItem> data = null,
+            string selected = "",
+            string strLimit = ""
+    )
+{
+if (data != null && data.Count > 0)
+{
+    foreach (var item in data)
+    {
+        if (item.value == selected)
+        {
+            <option value='@item.value' selected>@item.Name</option>
+        }
+        else
+        {
+            <option value='@item.value'>@item.Name</option>
+        }
+
+    }
+}
+}
+
+@if (Model.Data == null) {
+    var Data = new List<OptionItem>();
+    switch (Model.Name) {
+        case "ck_order":
+            Data.Add( new OptionItem() { value = "desc", Name = "Top CK Cao" } );
+            Data.Add(new OptionItem() { value = "asc", Name = "Top CK Thấp" });
+            break;
+        case "saletop_order":
+            Data.Add(new OptionItem() { value = "desc", Name = "Top Sale" });
+            break;
+        case "plimit":
+            Data.Add(new OptionItem() { value = "10", Name = "Hiển thị : 10" });
+            Data.Add(new OptionItem() { value = "20", Name = "Hiển thị : 20" });
+            Data.Add(new OptionItem() { value = "50", Name = "Hiển thị : 50" });
+            break;
+        case "category":
+            using (var entities = new V308CMSEntities())
+            {
+                var level_0 = from c in entities.ProductType where c.Parent < 1 orderby c.Name select c;
+                if (level_0 != null && level_0.Count() > 0)
+                {
+                    foreach (var cate_0 in level_0.ToList())
+                    {
+                        Data.Add(new OptionItem() { value = cate_0.ID.ToString(), Name = cate_0.Name });
+                        var level_1 = from c in entities.ProductType where c.Parent == cate_0.ID orderby c.Name select c;
+                        if (level_1 != null && level_1.Count() > 0)
+                        {
+                            foreach (var cate_1 in level_1.ToList())
+                            {
+                                Data.Add(new OptionItem() { value = cate_1.ID.ToString(), Name = " --" + cate_1.Name });
+                            }
+                        }
+                    }
+                }
+            }
+            break;
+    }
+    Model.Data = Data;
+}
+
+@MutilDropDownlist(Model.Name, Model.Data, Model.Selected,Model.PlaceHolder,Model.CssClass)
+

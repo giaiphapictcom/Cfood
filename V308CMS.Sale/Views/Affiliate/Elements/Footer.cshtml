@@ -36,10 +36,8 @@
                     <div class="col-md-3 col-sm-3 col-xs-12 footer-contact">
                         <h3 class="module-title">Liên hệ với @ViewBag.SiteName</h3>
                         <ul class="content">
-                            <li>
-                                <li>@ViewBag.CompanyHeaderAddress</li>
-                                <li>@Html.Raw(ViewBag.FooterCompanyContact)</li>
-                            </li>
+                            <li>@ViewBag.CompanyHeaderAddress</li>
+                            <li>@Html.Raw(ViewBag.FooterCompanyContact)</li>
                         </ul>
                     </div>
                     @{
@@ -66,8 +64,7 @@
                                 {
                                     foreach (V308CMS.Data.News news in group.NewsList)
                                     {
-                                        <li><a href="javascript:void(0)" title="">@Html.Raw(V308CMS.Common.url.article(news.Title, news.ID))</a></li>
-                                    
+                                        <li>@Html.Raw(V308CMS.Common.url.article(news.Title, news.ID))</li>
                                     }
                                 }
                             </ul>

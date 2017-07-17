@@ -1,5 +1,6 @@
 ﻿@using V308CMS.Data
 @using V308CMS.Common
+@using V308CMS.Common.UI
 @model V308CMS.Data.AffiliateProductPage
 @{
     Layout = "~/Views/Affiliate/Layout/Backend.cshtml";
@@ -10,57 +11,47 @@
 
 }
 <h4>@PageTitle</h4>
-<div class="row">
-    <div class="col-md-9 form-group-inline">
-        <a href="/san-pham?show=all" class="btn btn-green border-radius-0 activated">Tất cả sản phẩm</a>
-        <div class="form-group border-radius-0 bg-secondary">
+<form action="" method="get" name="fillter-form">
+    <div class="row">
+        <div class="col-md-9 form-group-inline">
+            <a href="/san-pham?show=all" class="btn btn-green border-radius-0">Tất cả</a>
+            <div class="form-group border-radius-0 bg-secondary">
+                @Html.Partial("UI/_MutilDropDownlist", new OptionsModel { Name = "category", Selected = Model.category.ToString(), CssClass = "form-control activated maxw150" })
+            </div>
+            <div class="form-group border-radius-0 bg-secondary">
+                @Html.Partial("UI/_MutilDropDownlist", new OptionsModel { Name = "saletop_order", Selected = Model.saletop_order, CssClass = "form-control maxw150" })
+            </div>
+            <div class="form-group border-radius-0 bg-secondary">
+                @Html.Partial("UI/_MutilDropDownlist", new OptionsModel { Name = "ck_order", Selected = Model.ck_order, CssClass = "form-control maxw150" })
 
-            <select class="form-control activated" >
-                <option>Danh Mục Sản Phẩm</option>
-            </select>
+            </div>
         </div>
-        <div class="form-group border-radius-0 bg-secondary">
+        <div class="col-md-3">
+            <div class="input-group border-radius-0">
+                <input type="text" class="form-control" placeholder="Tìm kiếm" aria-describedby="tablesearch" name="search" value="@Model.search">
+                <span class="input-group-addon btn-green submit"><i class="fa fa-search"></i></span>
+            </div>
 
-            <select class="form-control" >
-                <option>Top Sale</option>
-            </select>
-        </div>
-        <div class="form-group border-radius-0 bg-secondary">
-
-            <select class="form-control" >
-                <option>Top CK Cao</option>
-            </select>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="input-group border-radius-0">
-            <input type="text" class="form-control" placeholder="Tìm kiếm" aria-describedby="tablesearch">
-            <span class="input-group-addon btn-green" ><i class="fa fa-search"></i></span>
-        </div>
-
-    </div>
-</div>
-<hr />
-<div class="row">
-    <div class="col-md-3">
-        <div class="form-group border-radius-0 bg-secondary">
-
-            <select class="form-control" id="exampleSelect1">
-                <option>Hiển thị : 10</option>
-                <option>Hiển thị : 30</option>
-                <option>Hiển thị : 50</option>
-                <option>Hiển thị : 100</option>
-            </select>
         </div>
     </div>
-    <div class="col-md-7 text-right">
-        @Html.Action("BlockPagination", "Theme",new {ProductTotal=Model.ProductTotal})
 
+    <hr />
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group border-radius-0 bg-secondary">
+                @Html.Partial("UI/_MutilDropDownlist", new OptionsModel { Name = "plimit", Selected = Model.plimit.ToString()})
+            </div>
+        </div>
+        <div class="col-md-7 text-right">
+            @Html.Action("BlockPagination", "Theme", new { ProductTotal = Model.ProductTotal })
+
+        </div>
+        <div class="col-md-2 textright" style="margin-bottom: 15px;">
+            <button type="button" class="btn btn-secondary border-radius-0">Xuất excel</button>
+        </div>
     </div>
-    <div class="col-md-2 textright" style="margin-bottom: 15px;">
-        <button type="button" class="btn btn-secondary border-radius-0">Xuất excel</button>
-    </div>
-</div>
+</form>
+
 <table class="table table-bordered table-responsive">
     <thead>
         <tr>
@@ -71,8 +62,7 @@
             <th>Giá Bán</th>
             <th>Mức CK</th>
             <th>Mã Giảm Giá</th>
-            <th>Start</th>
-            <th>End</th>
+            <th>Tạo Voucher</th>
             <th>Tạo Link</th>
         </tr>
     </thead>
@@ -87,12 +77,18 @@
                     <th scope="row">@pro.ID</th>
                     <td>@pro.Name</td>
                     <td></td>
-                    <td><img src="@ImageHelper.Crop(pro.Image, 200,200)" class="w50"/></td>
+                    <td><img src="@ImageHelper.ToUrl(pro.Image, 200,200)" class="w50"/></td>
                     <td>@String.Format("{0: 0,0}", pro.Price)</td>
                     <td>@string.Format("{0}%",pro.SaleOff)</td>
                     <td></td>
-                    <td></td>
-                    <td></td>
+                    
+                    <td>
+                        @if (pro.Code.Length > 0)
+                        {
+                            <a href="/tao-ma-giam-gia?pcode=@WebUtility.UrlEncode(pro.Code)" class="btn btn-yellow">Tạo</a>
+                        }
+                        
+                    </td>
                     <td><a href="/link/tao-moi?l=@WebUtility.UrlEncode(product_href)" class="btn btn-green">Tạo</a></td>
                 </tr>
             }

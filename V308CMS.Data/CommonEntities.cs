@@ -2081,10 +2081,22 @@ namespace V308CMS.Data
      */
     public class AffiliateProductPage
     {
+        
         public List<Product> Products { get; set; }
         public int ProductTotal { get; set; }
         public int Page { get; set; }
 
+        public string ck_order { get; set; }
+        public string saletop_order { get; set; }
+        public string search { get; set; }
+        public int category { get; set; }
+        public int plimit { get; set; }
+        public AffiliateProductPage()
+        {
+            plimit = 10;
+            category = 0;
+            search = "";
+        }
     }
 
     public class AffiliateLinkFormPage

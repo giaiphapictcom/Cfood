@@ -23,8 +23,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateAddress", "UpdateAddr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V308CMS.Dependencies", "V308CMS.Dependencies\V308CMS.Dependencies.csproj", "{6330E246-9E72-4BF7-835E-971936615B7F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V308CMS.Social", "V308CMS.Socail\V308CMS.Social.csproj", "{920E78FF-184D-4484-AFAB-B805325D0E48}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,10 +69,6 @@ Global
 		{6330E246-9E72-4BF7-835E-971936615B7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6330E246-9E72-4BF7-835E-971936615B7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6330E246-9E72-4BF7-835E-971936615B7F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{920E78FF-184D-4484-AFAB-B805325D0E48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{920E78FF-184D-4484-AFAB-B805325D0E48}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{920E78FF-184D-4484-AFAB-B805325D0E48}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{920E78FF-184D-4484-AFAB-B805325D0E48}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

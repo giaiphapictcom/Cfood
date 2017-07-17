@@ -167,6 +167,7 @@
     <Compile Include="Models\CaptchaModel.cs" />
     <Compile Include="Models\AccountModel.cs" />
     <Compile Include="Models\CouponModel.cs" />
+    <Compile Include="Models\WebsiteRequestModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1470,6 +1471,8 @@
     <Content Include="Views\Affiliate\Video.cshtml" />
     <Content Include="Views\Partner\Banners.cshtml" />
     <Content Include="Views\Affiliate\Elements\SupportRight.cshtml" />
+    <Content Include="Views\Partner\WebsiteRequest.cshtml" />
+    <Content Include="Views\Shared\UI\_MutilDropDownlist.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

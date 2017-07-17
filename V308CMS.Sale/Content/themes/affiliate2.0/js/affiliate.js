@@ -7,6 +7,8 @@ $(document).ready(function () {
 
     menu.hover();
     supporthuman.action();
+
+    FillterForm.action();
 });
 
 
@@ -81,3 +83,15 @@ var supporthuman = {
         
     }
 }
+
+var FillterForm = {
+    action: function () {
+        $("form[name=fillter-form] select").change(function () {
+            $(this).parents("form[name=fillter-form]").submit();
+        });
+        $("form[name=fillter-form] .submit").click(function () {
+            $(this).parents("form[name=fillter-form]").submit();
+        });
+        
+    }
+};

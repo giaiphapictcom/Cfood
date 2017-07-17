@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Web;
 using System.Web.Mvc;
+using System.Linq;
+using System.Collections.Generic;
+using System.Data.Entity;
 using V308CMS.Common;
 using V308CMS.Data;
 using System.Web.Security;
 using V308CMS.Sale.Models;
 using V308CMS.Sale.Helpers;
 using V308CMS.Data.Helpers;
+using V308CMS.Data.Models;
 
 namespace V308CMS.Sale.Controllers
 {
@@ -170,8 +174,6 @@ namespace V308CMS.Sale.Controllers
                 account.cmt_front = account.cmt_front.Replace("\\Content\\Images\\", "");
             }
             
-
-
             account.cmt_back = account.FileBack != null ?
                   account.FileBack.Upload() :
                   account.cmt_back;
@@ -326,18 +328,67 @@ namespace V308CMS.Sale.Controllers
         public ActionResult Products()
         {
             try {
-                int nPage = Convert.ToInt32(Request.QueryString["p"]);
-                if (nPage < 1)
-                {
-                    nPage = 1;
-                }
-
-                CreateRepos();
+             
                 AffiliateProductPage Model = new AffiliateProductPage();
-                Model.Products = ProductRepos.GetItems(nPage);
-                Model.ProductTotal = ProductRepos.GetItemsTotal();
+
+                
+                
 
                 Model.Page = nPage;
+                Model.ck_order = Request.QueryString["ck_order"];
+                Model.saletop_order = Request.QueryString["saletop_order"];
+
+                var cate_get = Request.QueryString["category"];
+                if (cate_get != null && cate_get.Length > 0) {
+                    Model.category = int.Parse(cate_get);
+                }
+                var PageSize_get = Request.QueryString["plimit"];
+                if (PageSize_get != null && PageSize_get.Length > 0)
+                {
+                    Model.plimit = int.Parse(PageSize_get);
+                    
+                }
+                ProductRepos.PageSize = Model.plimit;
+                ProductHelper.ProductShowLimit = ProductRepos.PageSize;
+
+                Model.search = Request.QueryString["search"];
+
+                using (var entities = new V308CMSEntities())
+                {
+                    var products = entities.Product.Select(p => p);
+                    products = products.OrderByDescending(p => p.ID);
+
+                    if (Model.category > 0) {
+                        products = products.Where(p=>p.Type== Model.category);
+                    }
+
+                    if (Model.ck_order == "desc")
+                    {
+                        products = products.OrderByDescending(p => p.SaleOff);
+                    } else if (Model.ck_order == "asc")
+                    {
+                        products = products.OrderBy(p => p.SaleOff);
+                    }
+
+                    if (Model.saletop_order == "desc")
+                    {
+                       
+                    }
+                    else if (Model.ck_order == "asc")
+                    {
+                       
+                    }
+
+                    if (Model.search !=null && Model.search.Length > 0)
+                    {
+                        products = products.Where(p => p.Name.ToLower().Contains(Model.search.ToLower()));
+                    }
+
+                    Model.ProductTotal = products.Count();
+                    Model.Products = products.Skip((Model.Page - 1) * PageSize).Take(Model.plimit).ToList();
+                }
+
+
                 return View(Model);
             }
             catch (Exception ex)
@@ -440,7 +491,12 @@ namespace V308CMS.Sale.Controllers
         [AffiliateAuthorize]
         public ActionResult CouponForm()
         {
-            return View(new CouponModel());
+            var Model = new CouponModel();
+            if (Request != null) {
+                Model.ProductCode = Request.QueryString["pcode"];
+            }
+                
+            return View(Model);
         }
 
         [HttpPost]
@@ -496,7 +552,7 @@ namespace V308CMS.Sale.Controllers
         //}
         #endregion
     
-    #region Orders
+        #region Orders
         [HttpGet]
         [AffiliateAuthorize]
         public ActionResult Orders()
@@ -562,6 +618,38 @@ namespace V308CMS.Sale.Controllers
                 DisposeRepos();
             }
         }
-    #endregion
+        #endregion
+
+        #region Website Request
+        [HttpGet]
+        [AffiliateAuthorize]
+        public ActionResult WebsiteRequest()
+        {
+            return View(new WebsiteRequestModel());
+        }
+        
+        [HttpPost, ActionName("WebsiteRequest")]
+        [AffiliateAuthorize]
+        public ActionResult WebsiteRequestPost(WebsiteRequestModel data)
+        {
+            try
+            {
+                var newItem = data.CloneTo<WebsiteRequest>();
+                newItem.created_by = int.Parse(Session["UserId"].ToString());
+                WebsiteRequestRepo.Insert(newItem);
+                SetFlashMessage("Gửi yêu cầu Website thành công.");
+                return Redirect("/dashboard");
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+                return Content("Xảy ra lỗi hệ thống ! Vui lòng thử lại.");
+            }
+            finally
+            {
+                DisposeRepos();
+            }
+        }
+        #endregion
     }
 }
