@@ -3,8 +3,10 @@
 @model V308CMS.Data.IndexPageContainer
 @{
     Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
-    var profiler = MiniProfiler.Current;  
+    var profiler = MiniProfiler.Current;
 }
+@section BodyId{@Html.Raw("bigsale-01")}
+@section BodyClass{@Html.Raw("template-index")}
 @section header {
     <title>@ViewBag.SiteName</title>
 }

@@ -17,13 +17,6 @@
     <meta content="@ViewBag.SiteName" property="og:site_name" />
     @RenderSection("header", false)
     @{Html.RenderAction("Resources", "Block");}
-    <script>(function (d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.8&appId=@ConfigHelper.FacebookAppId";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));</script>
 </head>
 <body class="@if (IsSectionDefined("BodyClass")){@RenderSection("BodyClass", false)}else{@Html.Raw("template-product")}" 
       id="@if (IsSectionDefined("BodyId")){@RenderSection("BodyId", false)}else{@Html.Raw("custom-id")}">
@@ -43,5 +36,13 @@
     @if (ConfigHelper.ShowPageProfile) { @MiniProfiler.RenderIncludes() }
 </div>
     @RenderSection("Script",false)
+    <script>
+(function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.8&appId=@ConfigHelper.FacebookAppId";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
 </body>
 </html>
