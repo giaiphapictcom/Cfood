@@ -8,15 +8,13 @@ namespace V308CMS.Controllers
 {
     public class ErrorController : Controller
     {
-        //
-        // GET: /Error/
-
-        public ActionResult Index(string code)
+     
+        public ActionResult NotFound()
         {
-
-            
             return View();
         }
+
+        
         
 
     }

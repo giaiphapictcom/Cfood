@@ -1,4 +1,5 @@
-﻿@using V308CMS.Common
+﻿@using System.Text.RegularExpressions
+@using V308CMS.Common
 @using V308CMS.Data.Enum
 @using V308CMS.Helpers
 @using V308CMS.Helpers.Url
@@ -7,17 +8,25 @@
 {
     var currentUrl = HttpUtility.UrlDecode(Request.Url.ToString()) ;
     var brandLabel = string.Format("|{0}_", (int)FilterEnum.ByBrand);
-    var brandFilterValue = "";
-    if (currentUrl.IndexOf(brandLabel, StringComparison.Ordinal) > 0)
+    var brandFilterValueParam = "";
+    if (currentUrl.Contains(brandLabel))
     {
-        brandFilterValue = currentUrl.Substring(currentUrl.IndexOf("|", 0, StringComparison.Ordinal), currentUrl.LastIndexOf("|", StringComparison.Ordinal)- currentUrl.IndexOf("|", 0, StringComparison.Ordinal)).Replace(brandLabel, "");
-        if (!brandFilterValue.StartsWith(","))
+        brandFilterValueParam= Request.QueryString["filter"];
+        var brandFilterParamRegex = Regex.Match(brandFilterValueParam, String.Format(@"{0}_\d+(\,?\d+\,?)+", (int) FilterEnum.ByBrand));
+        if (brandFilterParamRegex.Success)
         {
-            brandFilterValue = "," + brandFilterValue;
+            brandFilterValueParam = brandFilterParamRegex.Value;
+
+
         }
-        if (!brandFilterValue.EndsWith(","))
+
+        if (!brandFilterValueParam.StartsWith(","))
         {
-            brandFilterValue = brandFilterValue + ",";
+            brandFilterValueParam = "," + brandFilterValueParam;
+        }
+        if (!brandFilterValueParam.EndsWith(","))
+        {
+            brandFilterValueParam = brandFilterValueParam + ",";
         }
     }
 
@@ -33,14 +42,13 @@
         <ul>
             @foreach (var brand in Model)
             {
-                var currBrandSelected = !string.IsNullOrWhiteSpace(brandFilterValue) && ((brandFilterValue == brand.id.ToString()) || (brandFilterValue.Contains("," + brand.id + ",")));              
-
+                var currBrandSelected = !string.IsNullOrWhiteSpace(brandFilterValueParam) && ((brandFilterValueParam == brand.id.ToString()) ||(brandFilterValueParam.Contains(brand.id + ",")) || (brandFilterValueParam.Contains("," + brand.id + ",")));
                 <li>
-                    <a title="@brand.name" href="@(currBrandSelected ? "javascript:void(0)" : Url.CategoryFilterUrl(currentRouteData, (int) FilterEnum.ByBrand, string.Format("|{0}_{1}|", (int) FilterEnum.ByBrand, brand.id)).ToString())">
+                    <a title="@brand.name" href="@(currBrandSelected ? "javascript:void(0)" : Url.CategoryFilterUrl(currentRouteData, (int) FilterEnum.ByBrand,brand.id.ToString(), string.Format("|{0}_{1}|", (int) FilterEnum.ByBrand, brand.id)))">
                         <label class="@(currBrandSelected ? "filter_item_active" : "filter_item")">
                             @if (currBrandSelected)
                             {
-                                <i style="float: right;margin-left: 10px;color: red;cursor: pointer;" class="remove-brand" title="Bỏ chọn thương hiệu @brand.name">x</i>
+                                <i style="float: right;margin-left: 10px;color: red;cursor: pointer;" class="remove-brand" title="Bỏ chọn thương hiệu @brand.name" data-url="@Url.CategoryFilterUrl(currentRouteData, (int) FilterEnum.ByBrand,brand.id.ToString(), string.Format("|{0}_{1}|", (int) FilterEnum.ByBrand, brand.id),(byte)UrlHelperExtensions.FilterAction.RemoveFilter)">x</i>
                             }
                             @brand.name
                         </label>

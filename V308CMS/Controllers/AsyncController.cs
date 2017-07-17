@@ -3,7 +3,6 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using V308CMS.Data;
 using V308CMS.Data.Enum;
-using V308CMS.Data.Models;
 
 namespace V308CMS.Controllers
 {
@@ -75,11 +74,17 @@ namespace V308CMS.Controllers
         {
             return PartialView("HomeSlides", await BannerService.GetListByPositionAsync(position));
         }
+        public async Task<PartialViewResult> LoadBannerHomeTopAsync(int limit = 5, byte position = (byte)PositionEnum.HomeTop)
+        {
+            return PartialView("_LeftBannerHomeTopAsyn", await BannerService.GetListByPositionAsync(position, limit));
+        }
 
-        public async Task<PartialViewResult> LoadLeftBanner(byte position)
+        public async Task<PartialViewResult> LoadLeftBannerAsync(byte position)
         {
             return PartialView("_LeftBannerAsyn", await BannerService.GetFistByPosition(position));
         }
+
+      
         
     }
 }
