@@ -2061,6 +2061,7 @@
     <Content Include="Views\themes\myshopify\Async\_ListProductBrandFilterAsync.cshtml" />
     <Content Include="Views\themes\myshopify\Async\_ListProductManufacturerFilterAsync.cshtml" />
     <Content Include="Views\themes\myshopify\Async\_LeftBannerAsyn.cshtml" />
+    <Content Include="Views\themes\myshopify\Async\_LeftBannerHomeTopAsyn.cshtml" />
     <None Include="Views\themes\myshopify\Blocks\ListSubCategory.cshtml" />
     <Content Include="Views\themes\myshopify\Components\ProductPriceComponent.cshtml" />
     <Content Include="Views\themes\myshopify\Components\CategoryHomeComponent.cshtml" />
@@ -2083,6 +2084,7 @@
     <Content Include="Views\themes\mamoo\Pages\Member.Register.cshtml" />
     <Content Include="Views\themes\mamoo\Blocks\MenuCanvas.cshtml" />
     <Content Include="Views\themes\myshopify\Components\YoutubeVideoComponent.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\BigSale.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
