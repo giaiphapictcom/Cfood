@@ -1,5 +1,6 @@
 ﻿@using V308CMS.Common.UI
 @using V308CMS.Data
+@using System.ComponentModel
 @model OptionsModel
 
 @helper MutilDropDownlist(
@@ -58,6 +59,18 @@ if (data != null && data.Count > 0)
             Data.Add(new OptionItem() { value = "10", Name = "Hiển thị : 10" });
             Data.Add(new OptionItem() { value = "20", Name = "Hiển thị : 20" });
             Data.Add(new OptionItem() { value = "50", Name = "Hiển thị : 50" });
+            break;
+        case "orderstatus":
+            foreach (var item in Enum.GetValues(typeof(V308CMS.Data.Enum.OrderStatusEnum)))
+            {
+                var fi = item.GetType().GetField(item.ToString());
+                var attributes = (DescriptionAttribute[])fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
+                var description = (attributes.Length > 0) ? attributes[0].Description : item.ToString();
+                //Data.Add((int)item, description);
+                Data.Add(new OptionItem() { value = item.ToString(), Name = description });
+            }
+
+
             break;
         case "category":
             using (var entities = new V308CMSEntities())

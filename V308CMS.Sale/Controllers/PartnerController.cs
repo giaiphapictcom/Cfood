@@ -13,6 +13,15 @@ using V308CMS.Data.Helpers;
 using V308CMS.Data.Models;
 
 
+using System.Collections.Generic;
+
+using System.Net;
+
+
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
+
 namespace V308CMS.Sale.Controllers
 {
     public class PartnerController : BaseController
@@ -23,10 +32,6 @@ namespace V308CMS.Sale.Controllers
 
 
         public PartnerController() {
-
-
-
-            //CreateRepos();
         }
 
         private void GetValue() {
@@ -72,26 +77,44 @@ namespace V308CMS.Sale.Controllers
         public ActionResult LoginPost()
         {
             try {
-                ETLogin mETLogin;
-                CreateRepos();
-                string email = Request["email"];
-                string password = Request["password"];
-                mETLogin = AccountRepos.CheckDangNhap(email, password, Site.affiliate);
-                //var result = AccountService.CheckAccount(email, password);
-                if (mETLogin.code == 1 && (mETLogin.role == 1 || mETLogin.role == 3))
-                {
-                    mETLogin.message = "";
-                    SetFlashMessage("Đăng nhập thành công.");
-                    Session["UserId"] = mETLogin.Account.ID;
-                    Session["UserName"] = mETLogin.Account.UserName;
-                    Session["Role"] = mETLogin.Account.Role;
-                    Session["Account"] = mETLogin.Account;
-                    FormsAuthentication.SetAuthCookie(email, true);
+                var response = Request["g-recaptcha-response"];
+                var client = new WebClient();
+                var result = client.DownloadString(string.Format("https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}", Sale.Helpers.ConfigHelper.RecaptchaSecretKey, response));
+                var obj = JObject.Parse(result);
+                bool status = (bool)obj.SelectToken("success");
+                //ViewBag.Message = status ? "Google reCaptcha validation success" : "Google reCaptcha validation failed";
 
-                    return Redirect("/dashboard");
+                ETLogin mETLogin;
+
+                if (status == true)
+                {
+                    
+                    //CreateRepos();
+                    string email = Request["email"];
+                    string password = Request["password"];
+                    mETLogin = AccountRepos.CheckDangNhap(email, password, Site.affiliate);
+                    //var result = AccountService.CheckAccount(email, password);
+                    if (mETLogin.code == 1 && (mETLogin.role == 1 || mETLogin.role == 3))
+                    {
+                        mETLogin.message = "";
+                        SetFlashMessage("Đăng nhập thành công.");
+                        Session["UserId"] = mETLogin.Account.ID;
+                        Session["UserName"] = mETLogin.Account.UserName;
+                        Session["Role"] = mETLogin.Account.Role;
+                        Session["Account"] = mETLogin.Account;
+                        FormsAuthentication.SetAuthCookie(email, true);
+
+                        return Redirect("/dashboard");
+                    }
+                    SetFlashError(mETLogin.message);
+                    return View(mETLogin);
                 }
-                SetFlashError(mETLogin.message);
-                return View(mETLogin);
+                else {
+                    SetFlashMessage("Vui lòng xác nhận bạn không phải là người máy.");
+                    return View("Login");
+                }
+                
+                
             }
             catch (Exception ex)
             {
@@ -131,7 +154,17 @@ namespace V308CMS.Sale.Controllers
         public ActionResult RegisterPost()
         {
             try {
-                CreateRepos();
+                var response = Request["g-recaptcha-response"];
+                var client = new WebClient();
+                var result = client.DownloadString(string.Format("https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}", Sale.Helpers.ConfigHelper.RecaptchaSecretKey, response));
+                var obj = JObject.Parse(result);
+                bool status = (bool)obj.SelectToken("success");
+                if (status!=true) {
+                    SetFlashMessage("Vui lòng xác nhận bạn không phải là người máy.");
+                    return View("Register");
+                }
+
+                //CreateRepos();
                 string email = Request["email"];
                 string fullname = Request["fullname"];
                 string mobile = Request["mobile"];

@@ -190,7 +190,7 @@ namespace V308CMS.Data
                         Salt = salt,
                         Token = token,
                         TokenExpireDate = DateTime.Now.AddDays(1),
-                        Status = false,
+                        Status = true,
                         Role = 3,
                         Site = Site.affiliate
                     };

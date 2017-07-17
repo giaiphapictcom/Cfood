@@ -5,48 +5,12 @@ using System.Web;
 using System.Web.Mvc;
 using V308CMS.Common;
 using V308CMS.Data;
-using System.IO;
+using V308CMS.Data.Helpers;
 
 namespace V308CMS.Sale.Controllers
 {
     public class AffiliateController : BaseController
     {
-        //#region Repository
-        //static V308CMSEntities mEntities;
-        //ProductRepository ProductRepos;
-        //ImagesRepository ImageRepos;
-        //V308CMS.Respository.BannerRespository BannerRepos;
-       
-        //AccountRepository AccountRepos;
-        //NewsRepository NewsRepos;
-        //TestimonialRepository CommentRepo;
-        //CategoryRepository CategoryRepo;
-        //private void CreateRepos()
-        //{
-        //    mEntities = new V308CMSEntities();
-        //    ImageRepos = new ImagesRepository();
-        //    BannerRepos = new V308CMS.Respository.BannerRespository();
-
-        //    ProductRepos = new ProductRepository();
-        //    AccountRepos = new AccountRepository();
-        //    NewsRepos = new NewsRepository();
-        //    CommentRepo = new TestimonialRepository(mEntities);
-        //    CategoryRepo = new CategoryRepository(mEntities);
-        //}
-        //private void DisposeRepos()
-        //{
-        //    mEntities.Dispose();
-        //    //ImageRepos.Dispose();
-            
-
-        //    //ProductRepos.Dispose();
-        //    //AccountRepos.Dispose();
-        //    //NewsRepos.Dispose();
-        //    CommentRepo.Dispose();
-        //    CategoryRepo.Dispose();
-        //}
-        //#endregion
-
 
         public ActionResult Home()
         {
@@ -84,7 +48,7 @@ namespace V308CMS.Sale.Controllers
             {
                 CreateRepos();
                 NewsIndexPageContainer Model = new NewsIndexPageContainer();
-                Model.NewsGroups = NewsRepos.SearchNewsGroupByAlias(CategoryAlias, V308CMS.Data.Helpers.Site.affiliate);
+                Model.NewsGroups = NewsRepos.SearchNewsGroupByAlias(CategoryAlias, Site.affiliate);
                 if (Model.NewsGroups != null) {
                     Model.ListNews = NewsRepos.LayDanhSachTinTheoGroupId(ProductHelper.ProductShowLimit, Model.NewsGroups.ID);
                     Model.PageTitle = Model.NewsGroups.Name;
@@ -189,6 +153,8 @@ namespace V308CMS.Sale.Controllers
                     GroupItem.Name = "Top Xuất Sắc"; break;
                 case "he-thong":
                     GroupItem.Name = "Hệ Thống"; break;
+                case "affiliate-news":
+                    GroupItem.Name = "Tin tức Affiliate"; break;
             }
             if (GroupItem.Name.Length > 0 && GroupItem.Alias.Length > 0) {
                 using (var mEntities = new V308CMSEntities()) {
@@ -209,12 +175,17 @@ namespace V308CMS.Sale.Controllers
         {
             try
             {
-                CreateRepos();
+                //CreateRepos();
                 NewsDetailPageContainer Model = new NewsDetailPageContainer();
                 Model.NewsItem = NewsRepos.SearchNews(NewsAlias);
                 if (Model.NewsItem ==null || Model.NewsItem.ID < 1)
                 {
-                    NewsGroups AffiliateGroup = NewsRepos.SearchNewsGroupByAlias("affiliate-news");
+                    NewsGroups AffiliateGroup = NewsRepos.SearchNewsGroupByAlias("affiliate-news", Site.affiliate);
+                    if (AffiliateGroup == null)
+                    {
+                        InsertNewsGroupDefault("affiliate-news");
+                        AffiliateGroup = NewsRepos.SearchNewsGroupByAlias("affiliate-news", Site.affiliate);
+                    }
                     string NewsTitle = "";
                     switch (NewsAlias)
                     {
