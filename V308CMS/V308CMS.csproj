@@ -2086,6 +2086,7 @@
     <Content Include="Views\themes\mamoo\Blocks\MenuCanvas.cshtml" />
     <Content Include="Views\themes\myshopify\Components\YoutubeVideoComponent.cshtml" />
     <Content Include="Views\themes\myshopify\Pages\BigSale.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\NotFound.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
