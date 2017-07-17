@@ -6,6 +6,8 @@
 @{
     Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
 }
+@section BodyId{@Html.Raw("category")}
+@section BodyClass{@Html.Raw("template-collection")}
 @section header {
     <title>@Model.Category.Name - @ViewBag.SiteName</title>
     <meta name="keywords" content="@Model.Category.Name">

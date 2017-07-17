@@ -1,10 +1,13 @@
-﻿@using V308CMS.Helpers
+﻿@using V308CMS.Common
+@using V308CMS.Helpers
 @using V308CMS.Helpers.Url
 @using V308CMS.Models
 @model V308CMS.Models.SearchViewModels
 @{
     Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
 }
+@section BodyId{@Html.Raw("search")}
+@section BodyClass{@Html.Raw("template-search")}
 @section header {
     <title>Tìm Kiếm theo từ khóa @Model.Keyword - @ViewBag.SiteName</title>
 }

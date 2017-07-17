@@ -6,7 +6,8 @@ namespace V308CMS
     public class RouteConfig
     {
         public static void RegisterRoutes(RouteCollection routes)
-        {          
+        {
+            routes.MapRoute("NotFoundRoute", "404-not-found", new { Controller = "Error", action = "NotFound" });
             routes.MapRoute("MemberWishlistIndexRoute", "san-pham-yeu-thich", new { Controller = "MemberWishList", action = "Index" });
             
             routes.MapRoute("CartCheckoutRoute", "thanh-toan", new { Controller = "Cart", action = "Checkout" });

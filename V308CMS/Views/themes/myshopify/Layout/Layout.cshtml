@@ -1,5 +1,4 @@
-﻿@using ServiceStack.Text
-@using StackExchange.Profiling
+﻿@using StackExchange.Profiling
 @using V308CMS.Helpers
 <!doctype html>
 <!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
@@ -26,29 +25,8 @@
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));</script>
 </head>
-
-@{
-    var bodyNews = new List<string> {"News", "Video"};
-}
-<body
-    @if (bodyNews.Contains(  Request.RequestContext.RouteData.Values["Controller"].ToString() )){
-         @:id="news" class="template-blog" 
-    }
-     else if (Request.RequestContext.RouteData.Values["Controller"].ToString().ToLower() == "memberwishlist")
-    {
-          @:id="wish-list" class="customer-logged-in template-page" 
-
-    }
-    else if (@Request.RequestContext.RouteData.Values["Action"].ToString() == "Index")
-    { 
-        @:id="bigsale-01" class="template-index" 
-    }
-   
-    else
-    {
-        @:id="facial-cleansing-pad" class="template-product"
-    }
->
+<body class="@if (IsSectionDefined("BodyClass")){@RenderSection("BodyClass", false)}else{@Html.Raw("template-product")}" 
+      id="@if (IsSectionDefined("BodyId")){@RenderSection("BodyId", false)}else{@Html.Raw("custom-id")}">
 <div class="wrapper ">
     <div id="shopify-section-header" class="shopify-section">
         @{ Html.RenderAction("Header", "Block");}
