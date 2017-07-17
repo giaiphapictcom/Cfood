@@ -6,7 +6,8 @@ namespace V308CMS
     public class RouteConfig
     {
         public static void RegisterRoutes(RouteCollection routes)
-        {          
+        {
+            routes.MapRoute("NotFoundRoute", "404-not-found", new { Controller = "Error", action = "NotFound" });
             routes.MapRoute("MemberWishlistIndexRoute", "san-pham-yeu-thich", new { Controller = "MemberWishList", action = "Index" });
             
             routes.MapRoute("CartCheckoutRoute", "thanh-toan", new { Controller = "Cart", action = "Checkout" });
@@ -19,7 +20,7 @@ namespace V308CMS
             routes.MapRoute("NewsIndexHtmlRoute", "tin-tuc.html", new { Controller = "News", action = "Index", page = 1, type = 58 });
 
             routes.MapRoute("NewsIndexPagingRoute", "tin-tuc/trang-{page}.html", new { Controller = "News", action = "Index",type = 58 });
-            routes.MapRoute("NewsDetailRoute", "tin-tuc/{slug}.{id}.html", new { Controller = "News", action = "Detail" }, new { id = @"\d+", type = 58 });
+            routes.MapRoute("NewsDetailRoute", "tin-tuc/{slug}.{id}.html", new { Controller = "News", action = "Detail" }, new { id = @"\d+" });
             routes.MapRoute("ArticleItemRoute", "{title}-n{id}.html", new { Controller = "News", action = "Detail" }, new { id = @"\d+" });
             routes.MapRoute("ArticlesRoute", "{title}-c{type}", new { Controller = "News", action = "Index" }, new { type = @"\d+" });
 

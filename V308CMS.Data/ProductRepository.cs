@@ -41,10 +41,17 @@ namespace V308CMS.Data
                         switch (typeFilter)
                         {
                             case (int)FilterEnum.ByBrand:
-                                int brandIdFilter;
-                                int.TryParse(valueFilter, out brandIdFilter);                             
+                                if (!valueFilter.StartsWith(","))
+                                {
+                                    valueFilter = "," + valueFilter;
+                                }
+                                if (!valueFilter.EndsWith(","))
+                                {
+                                    valueFilter =  valueFilter + ",";
+                                }
+
                                 listProduct = (from product in listProduct
-                                               where product.BrandId == brandIdFilter
+                                               where valueFilter.Contains("," + product.BrandId +",")
                                                orderby product.Number, product.Date descending
                                                select product
                                );
@@ -1806,13 +1813,13 @@ namespace V308CMS.Data
                                  where p.IsHome == true
                                  select p);
                     var categorys = items.ToList();
-                    if (categorys.Count() > 0)
+                    if (categorys.Any())
                     {
                         foreach (var cate in categorys)
                         {
-                            var CategoryIDs = entities.ProductType.Where(c => c.Parent == cate.ID).Select(c => c.ID).ToList();
+                            var categoryIDs = entities.ProductType.Where(c => c.Parent == cate.ID).Select(c => c.ID).ToList();
 
-                            CategoryIDs.Add(cate.ID);
+                            categoryIDs.Add(cate.ID);
 
                             cate.ListProduct = (from p in entities.Product
                                                 .Include("ProductImages")
@@ -1822,7 +1829,7 @@ namespace V308CMS.Data
                                                  .Include("ProductSize")
                                                  .Include("ProductAttribute")
                                                  .Include("ProductSaleOff")
-                                                where CategoryIDs.Any(c => c == p.Type) select p)
+                                                where categoryIDs.Any(c => c == p.Type) select p)
                                                 .AsEnumerable().Take(product_limit).ToList();
                         }
                     }

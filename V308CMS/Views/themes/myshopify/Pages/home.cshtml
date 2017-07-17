@@ -3,8 +3,10 @@
 @model V308CMS.Data.IndexPageContainer
 @{
     Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
-    var profiler = MiniProfiler.Current;  
+    var profiler = MiniProfiler.Current;
 }
+@section BodyId{@Html.Raw("bigsale-01")}
+@section BodyClass{@Html.Raw("template-index")}
 @section header {
     <title>@ViewBag.SiteName</title>
 }
@@ -13,7 +15,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-9 col-sm-12 col-xs-12 col-md-offset-3 banner-slide">
-                    @{ Html.RenderAction("HomeSlides", "Block");}
+                    @{ Html.RenderAction("LoadHomeSliderAsync", "Async");}
                 </div>
             </div>
         </div>
@@ -28,7 +30,7 @@
         });
     </script>
 </div>
-@{ Html.RenderAction("ProductMost", "MyShopify");}
+@{ Html.RenderAction("LoadBannerHomeTopAsync", "Async");}
 @{ Html.RenderAction("ProductHot", "MyShopify");}
 
 @using (profiler.Step("Load ProductTypeList"))

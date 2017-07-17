@@ -1,23 +1,45 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Web;
+using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using System.Web.Routing;
+using V308CMS.Data.Enum;
 
 namespace V308CMS.Helpers
 {
     public static class UrlHelperExtensions
     {
-        //Builds URL by finding the best matching route that corresponds to the current URL,
-        //with given parameters added or replaced.
-        public static MvcHtmlString CategoryFilterUrl(this UrlHelper helper,RouteValueDictionary currentRouteData,string filterBrandValue, string filterParamName="filter")
+        public enum  FilterAction
+        {
+            AppendFilter = 1,
+            RemoveFilter = 2
+        }
+
+        private static string RebuildFilterToken(string currFilterValue, string filterValueToken, byte filterType)
         {
             
-            //get the route data for the current URL e.g. /Research/InvestmentModelling/RiskComparison
-            //this is needed because unlike UrlHelper.Action, UrlHelper.RouteUrl sets includeImplicitMvcValues to false
-            //which causes it to ignore current ViewContext.RouteData.Values
+            var filterTypeValue = Regex.Match(currFilterValue, $@"\|?{filterType}_\d+(\,?\d+\,?)+\|?");
+            if (!filterTypeValue.Success)
+            {
+                return "";
+            }
+            var result = "";
+            var listFilterToken = filterTypeValue.Value.Split(new[] { "|" }, StringSplitOptions.RemoveEmptyEntries).ToList();
+         
+            var listTokenCategory = listFilterToken.Where(item => item.Contains(filterType + "_")).ToList();
+
+         
+            for (int i = 0; i < listTokenCategory.Count; i++)
+            {
+
+                result = result + listTokenCategory[i].Replace(filterType + "_", ",");
+            }
+            result = (result == "|" ? "" : result) + "|" + filterType + "_" + result + "|";
+            return result;
+        }
+        public static string CategoryFilterUrl(this UrlHelper helper,RouteValueDictionary currentRouteData, byte filterType, string filterValue,
+            string filterValueToken, byte filterAction = (byte)FilterAction.AppendFilter, string filterParamName="filter")
+        {
             var rd = new RouteValueDictionary(currentRouteData);
 
             //get the current query string e.g. ?BucketID=17371&amp;compareTo=123
@@ -31,20 +53,41 @@ namespace V308CMS.Helpers
                     rd[param] = qs[param];
                 }               
             }
+         
             if (rd.ContainsKey(filterParamName))
             {
+                var currFilterValue = rd[filterParamName].ToString();
+                var newFilterValueResult = "";
+                if (filterAction == (byte) FilterAction.AppendFilter)
+                {
+                    if (currFilterValue.Contains(filterType + "_"))
+                    {
+                        newFilterValueResult = RebuildFilterToken(currFilterValue, filterValueToken, filterType);                        
+                    }
+                    else
+                    {
+                        newFilterValueResult = currFilterValue + filterValueToken;
+                    }
+                   
+                }
+                else
+                {
+                    newFilterValueResult = currFilterValue.Contains(",") ? currFilterValue.Replace("," + filterValue, "").Replace(filterValue + ",", "") : currFilterValue.Replace(filterType + "_" + filterValue, "");
 
-                var newFilterBrandValue = rd[filterParamName] + filterBrandValue;
+                    if (newFilterValueResult == "||")
+                    {
+                        newFilterValueResult = "";
+                    }
+                }
                 rd.Remove(filterParamName);
-                rd[filterParamName] = newFilterBrandValue;
-              
+                rd[filterParamName] = newFilterValueResult;
             }
             else
             {
-                rd[filterParamName] = filterBrandValue;
+                rd[filterParamName] = filterValueToken;
             }
-            var url = helper.RouteUrl(rd);
-            return new MvcHtmlString(url);
+            return  helper.RouteUrl(rd);
+         
         }
 }
 }

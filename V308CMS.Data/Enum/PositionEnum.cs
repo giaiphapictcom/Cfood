@@ -140,8 +140,5 @@ namespace V308CMS.Data.Enum
         SearchRight = 104,
         [Description("Trang tìm kiếm - Dưới")]
         SearchBottom = 105
-
-
-
     }
 }

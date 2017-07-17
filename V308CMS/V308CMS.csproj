@@ -231,6 +231,7 @@
     <Compile Include="Helpers\Url\ComponentUrlHelper.cs" />
     <Compile Include="Helpers\Url\FacebookPluginUrlHelper.cs" />
     <Compile Include="Helpers\Url\HomeUrlHelper.cs" />
+    <Compile Include="Helpers\Url\MemberWishlistUrlHelper.cs" />
     <Compile Include="Helpers\Url\PopupUrlHelper.cs" />
     <Compile Include="Helpers\Url\ProductUrlHelper.cs" />
     <Compile Include="Helpers\Url\AccountUrlHelper.cs" />
@@ -248,6 +249,7 @@
     <Compile Include="Models\CaptchaModel.cs" />
     <Compile Include="Models\CartItem.cs" />
     <Compile Include="Models\ContactModels.cs" />
+    <Compile Include="Models\MemberWishListViewModels.cs" />
     <Compile Include="Models\PaginationModels.cs" />
     <Compile Include="Models\ProductModels.cs" />
     <Compile Include="Models\ProductsCartModels.cs" />
@@ -1378,6 +1380,7 @@
     <Content Include="Content\Images\noimage.jpg" />
     <Content Include="Content\Images\phoneicon.png" />
     <Content Include="Content\Images\trust.png" />
+    <Content Include="Content\Images\Upload\block_image_left.jpg" />
     <Content Include="Content\Images\z_1600x.png" />
     <Content Include="Content\js\acymailing_module.js" />
     <Content Include="Content\js\bootstrap-tooltip.js" />
@@ -2061,6 +2064,9 @@
     <Content Include="Views\themes\myshopify\Async\_ListProductBestSellerAsync.cshtml" />
     <Content Include="Views\themes\myshopify\Async\_ListProductBrandFilterAsync.cshtml" />
     <Content Include="Views\themes\myshopify\Async\_ListProductManufacturerFilterAsync.cshtml" />
+    <Content Include="Views\themes\myshopify\Async\_LeftBannerAsyn.cshtml" />
+    <Content Include="Views\themes\myshopify\Async\_LeftBannerHomeTopAsyn.cshtml" />
+    <Content Include="Views\themes\myshopify\Async\_BigSaleTopBannerAsync.cshtml" />
     <None Include="Views\themes\myshopify\Blocks\ListSubCategory.cshtml" />
     <Content Include="Views\themes\myshopify\Components\ProductPriceComponent.cshtml" />
     <Content Include="Views\themes\myshopify\Components\CategoryHomeComponent.cshtml" />
@@ -2083,6 +2089,8 @@
     <Content Include="Views\themes\mamoo\Pages\Member.Register.cshtml" />
     <Content Include="Views\themes\mamoo\Blocks\MenuCanvas.cshtml" />
     <Content Include="Views\themes\myshopify\Components\YoutubeVideoComponent.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\BigSale.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\NotFound.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

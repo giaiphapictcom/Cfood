@@ -1,0 +1,12 @@
+﻿@using V308CMS.Helpers.Url
+@model V308CMS.Data.Models.Banner
+@if (Model != null)
+{
+    <div class="block-bottom-sidebar">
+        <img src="@Model.ImageUrl.ToUrl(263,362)" alt="@Model.Name">
+        <div class="content-block-left">
+            <span>@Model.Name</span>
+            <p>@Model.Description</p>
+        </div>
+    </div>
+}

@@ -6,6 +6,8 @@
 @{
     Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
 }
+@section BodyId{@Html.Raw("wish-list")}
+@section BodyClass{@Html.Raw("customer-logged-in template-page")}
 @section header {
     <title>@ViewBag.SiteName - Danh sách sản phẩm yêu thích</title>
 }

@@ -1,11 +1,12 @@
 ﻿@using V308CMS.Common
-@using V308CMS.Helpers
 @using V308CMS.Helpers.Url
 @model V308CMS.Data.NewsDetailPageContainer
 @{
     Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
 
 }
+@section BodyId{@Html.Raw("news")}
+@section BodyClass{@Html.Raw("template-blog")}
 @section header {
     <title>Tin tức - @Model.NewsItem.Title</title>
     <meta name="keywords" content="@Model.NewsItem.Keyword">

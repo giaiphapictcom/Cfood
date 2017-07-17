@@ -203,7 +203,7 @@ namespace V308CMS.Controllers
             {
 
                 totalPage = totalRecord/pageSize;
-                if (totalRecord%pageSize > 0)
+                if (totalRecord % pageSize > 0)
                     totalPage += 1;
             }
 
@@ -217,6 +217,11 @@ namespace V308CMS.Controllers
             };
             return View("Search", searchModel);
         }
+        
+
+        
+
+
         public ActionResult YoutubeDetail(int pId = 0)
         {
             NewsPage mCommonModel = new NewsPage();

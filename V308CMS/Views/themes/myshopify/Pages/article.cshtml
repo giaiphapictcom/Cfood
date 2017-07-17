@@ -4,6 +4,8 @@
 @{
     Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
 }
+@section BodyId{@Html.Raw("article")}
+@section BodyClass{@Html.Raw("template-article")}
 <div class="row">
     <!-- Begin sidebar -->
     <div class="col-xs-12 col-sm-5 col-md-3 sidebar">
@@ -21,7 +23,6 @@
                     <img src="@Model.pNews.Image" alt="@Model.pNews.Title" />
                 </div>
             }
-            
         </header>
 
         <div class="rte">

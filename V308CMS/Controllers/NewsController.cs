@@ -46,7 +46,7 @@ namespace V308CMS.Controllers
             return View("News.Index", newsIndexViewModel);            
         }
         [NewsUpdateView] 
-        public ActionResult Detail(int id)
+        public ActionResult Detail(int id, string slug)
 
         {
             var newsItem = NewsService.GetById(id);

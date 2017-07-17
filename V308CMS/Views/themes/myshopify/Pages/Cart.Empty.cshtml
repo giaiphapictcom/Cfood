@@ -2,6 +2,8 @@
 @{
     Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
 }
+@section BodyId{@Html.Raw("your-shopping-cart")}
+@section BodyClass{@Html.Raw("template-cart")}
 @section header {
     <title>Giỏ hàng trống - @ViewBag.SiteName</title>
 }
