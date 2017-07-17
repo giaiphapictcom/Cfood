@@ -83,8 +83,13 @@ namespace V308CMS.Controllers
         {
             return PartialView("_LeftBannerAsyn", await BannerService.GetFistByPosition(position));
         }
+        public async Task<PartialViewResult> LoadBigSaleTopBannerAsync(byte position)
+        {
+            return PartialView("_BigSaleTopBanner", await BannerService.GetFistByPosition(position));
+        }
 
-      
-        
+
+
+
     }
 }
