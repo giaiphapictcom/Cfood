@@ -15,6 +15,12 @@ namespace V308CMS.Sale.Helpers
         public static string SiteAffiliate = "affiliate";
         public static string FacebookAppId = Configs.GetAppConfig("FacebookAppId");
 
+        public static string FacebookAppSecret = Configs.GetItemConfig("FacebookAppSecret");
+        public static string FacebookLoginCallback = Configs.GetItemConfig("FacebookLoginCallback");
+        public static string GoogleAppId = Configs.GetItemConfig("GoogleAppId");
+        public static string GoogleAppSecret = Configs.GetItemConfig("GoogleAppSecret");
+        public static string GoogleLoginCallback = Configs.GetItemConfig("GoogleLoginCallback");
+
 
 
     }

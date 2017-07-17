@@ -76,9 +76,9 @@
       <HintPath>..\packages\MySql.Web.6.9.9\lib\net45\MySql.Web.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.4.5.6\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Text">
       <HintPath>..\V308CMS\bin\ServiceStack.Text.dll</HintPath>
@@ -153,6 +153,7 @@
     <Compile Include="Controllers\ArticleController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\PartnerController.cs" />
+    <Compile Include="Controllers\SocialLoginController.cs" />
     <Compile Include="Controllers\ThemeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -162,6 +163,7 @@
     <Compile Include="Helpers\FlashMessageHelper.cs" />
     <Compile Include="Helpers\HtmlAffiliate.cs" />
     <Compile Include="Helpers\ImageUrlHelper.cs" />
+    <Compile Include="Helpers\OrderStatusHelper.cs" />
     <Compile Include="Models\Authenicate.cs" />
     <Compile Include="Models\BannerModel.cs" />
     <Compile Include="Models\CaptchaModel.cs" />
@@ -1473,6 +1475,9 @@
     <Content Include="Views\Affiliate\Elements\SupportRight.cshtml" />
     <Content Include="Views\Partner\WebsiteRequest.cshtml" />
     <Content Include="Views\Shared\UI\_MutilDropDownlist.cshtml" />
+    <Content Include="Views\Partner\OrderSearch.cshtml" />
+    <Content Include="Views\Partner\Revenue.cshtml" />
+    <Content Include="Views\Partner\ReportOverview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1499,6 +1504,10 @@
     <ProjectReference Include="..\V308CMS.Respository\V308CMS.Respository.csproj">
       <Project>{4540f1d2-c7ac-4bc4-9e2d-f2271279aeac}</Project>
       <Name>V308CMS.Respository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\V308CMS.Socail\V308CMS.Social.csproj">
+      <Project>{920e78ff-184d-4484-afab-b805325d0e48}</Project>
+      <Name>V308CMS.Social</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

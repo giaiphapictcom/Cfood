@@ -191,10 +191,13 @@ namespace V308CMS.Controllers
             return View("Detail", product);           
         }
 
-        public ActionResult Search(string q, int page=1, int pageSize=20)
+        public ActionResult Search(string q, int page = 1, int pageSize = 20)
         {
             int totalRecord;
             int totalPage = 0;
+            if (q == null || q.Length < 1) {
+                q = Request.QueryString["pKey"];
+            }
             var listProduct = ProductsService.Search(q, out totalRecord, page, pageSize);
             if (totalRecord > 0)
             {

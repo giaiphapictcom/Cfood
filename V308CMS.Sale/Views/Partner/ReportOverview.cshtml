@@ -1,0 +1,49 @@
+﻿@using V308CMS.Data
+@using V308CMS.Common
+@using V308CMS.Common.UI
+@model V308CMS.Data.OrdersReportByDaysPage
+@{
+    Layout = "~/Views/Affiliate/Layout/Backend.cshtml";
+    string PageTitle = "Báo cáo Hiệu Quả";
+}
+@section header {
+    <title>@PageTitle</title>
+
+}
+<h4>@PageTitle</h4>
+<div class="row">
+    <div class="col-md-12">
+        <a href="javascript:void(0);" class="btn border-radius-0"> <i class="fa fa-line-chart "></i> Báo Báo cáo Hiệu Quả</a>
+        <a href="partner/revenue" class="btn border-radius-0"> <i class="fa fa-line-chart "></i> Báo Báo doanh thu</a>
+        <a href="/tai-khoan" class="btn border-radius-0"> <i class="fa fa-line-chart"></i> Thông tin thanh toán</a>
+    </div>
+    <hr />
+</div>
+
+<table class="table table-bordered table-responsive">
+    <thead>
+        <tr>
+            <th class="text-center" >Tháng</th>
+            <th>Hoa Hồng thành công</th>
+            <th>Hoa Hồng chờ duyệt</th>
+            <th>Hoa Hồng bị Hủy</th>
+            <th>Đã trả</th>
+            <th>Còn Lại</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (DateTime d in Model.days)
+    {
+        <tr>
+            <th class="text-center">@String.Format("{0:MM/yyyy}", d)</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    }
+    </tbody>
+</table>
+
+

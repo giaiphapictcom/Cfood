@@ -722,18 +722,31 @@ namespace V308CMS.Data
 
         public List<Product> Search(string keyword,out int totalRecord, int page = 1, int pageSize = 20)
         {
-           
-            using (var entities = new V308CMSEntities())
-            {
-                var keywordSearch = keyword.Trim().ToLower();
-                var listProduct = (from product in entities.Product
-                    where product.Name.ToLower().Trim().Contains(keywordSearch)
-                    orderby product.ID descending
-                    select product);
-                totalRecord = listProduct.Count();
-                return listProduct.Include("ProductImages")
-                    .OrderByDescending(product=>product.ID).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            List<Product> items = new List<Product>();
+            if (keyword != null) {
+                using (var entities = new V308CMSEntities())
+                {
+                    var keywordSearch = keyword.Trim().ToLower();
+                    var listProduct = (from product in entities.Product.
+                                       Include("ProductImages").
+                                        Include("ProductType").
+                                        Include("ProductManufacturer").
+                                        Include("ProductColor").
+                                        Include("ProductSize").
+                                        Include("ProductAttribute").
+                                        Include("ProductSaleOff")
+                                       where product.Name.ToLower().Trim().Contains(keywordSearch)
+                                       orderby product.ID descending
+                                       select product);
+
+                    totalRecord = listProduct.Count();
+                    items = listProduct.Include("ProductImages").OrderByDescending(product => product.ID).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+                }
             }
+            totalRecord = 0;
+            return items;
+
+
         }
         public List<Product> TimSanPhamTheoGia(int pcurrent, int psize, int pValue1, int pValue2, int pGroupId)
         {
@@ -1455,7 +1468,7 @@ namespace V308CMS.Data
 
                     ReportDays.Add(ReportDay);
                 }
-                ModelPage.report = ReportDays;
+                ModelPage.Orders = ReportDays;
                 ModelPage.days = dates;
                 return ModelPage;
             }

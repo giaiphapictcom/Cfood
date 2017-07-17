@@ -1672,6 +1672,12 @@
     <Folder Include="Content\Plugins\ckfinder\plugins\watermark\bin\Debug\" />
     <Folder Include="Content\Plugins\ckfinder\plugins\watermark\bin\Release\" />
     <Folder Include="Content\vendor\moment\css\" />
+    <Folder Include="Views\Account\" />
+    <Folder Include="Views\FileType\" />
+    <Folder Include="Views\File\" />
+    <Folder Include="Views\ImageType\" />
+    <Folder Include="Views\Image\" />
+    <Folder Include="Views\Market\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\assets\font\fontawesome-webfont.woff" />
@@ -1721,7 +1727,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -1742,9 +1747,6 @@
     <Content Include="Views\ProductType\Create.cshtml" />
     <Content Include="Views\ProductType\Edit.cshtml" />
     <Content Include="Views\ProductType\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Home\ChucNang.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\vendor\bootstrap-social\bootstrap-social.less" />
@@ -1957,7 +1959,6 @@
     <Content Include="Views\Role\_RolePermissionEdit.cshtml" />
     <Content Include="Views\Error\AccessDenied.cshtml" />
     <Content Include="Views\Banner\Create.cshtml" />
-    <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Banner\Index.cshtml" />
     <Content Include="Views\Banner\Edit.cshtml" />
     <Content Include="Views\Banner\_BannerForm.cshtml" />
@@ -1968,23 +1969,6 @@
     <Content Include="Views\Async\_LastestUser.cshtml" />
     <Content Include="Views\Async\_LastestContact.cshtml" />
     <Content Include="Views\Order\Index.cshtml" />
-    <Content Include="Views\Account\Detail.cshtml" />
-    <Content Include="Views\Account\Index.cshtml" />
-    <Content Include="Views\FileType\Create.cshtml" />
-    <Content Include="Views\FileType\Edit.cshtml" />
-    <Content Include="Views\FileType\Index.cshtml" />
-    <Content Include="Views\File\Create.cshtml" />
-    <Content Include="Views\File\Edit.cshtml" />
-    <Content Include="Views\File\Index.cshtml" />
-    <Content Include="Views\ImageType\Create.cshtml" />
-    <Content Include="Views\ImageType\Edit.cshtml" />
-    <Content Include="Views\ImageType\Index.cshtml" />
-    <Content Include="Views\Image\Create.cshtml" />
-    <Content Include="Views\Image\Edit.cshtml" />
-    <Content Include="Views\Image\Index.cshtml" />
-    <Content Include="Views\Market\Create.cshtml" />
-    <Content Include="Views\Market\Edit.cshtml" />
-    <Content Include="Views\Market\Index.cshtml" />
     <Content Include="Views\Testimonial\_Form.cshtml" />
     <Content Include="Views\Testimonial\Create.cshtml" />
     <Content Include="Views\Testimonial\Edit.cshtml" />
@@ -1995,6 +1979,10 @@
     <Content Include="Views\AffiliateCategory\Index.cshtml" />
     <Content Include="Views\Voucher\_VoucherForm.cshtml" />
     <Content Include="Views\AffiliateAccount\Index.cshtml" />
+    <Content Include="Views\Profile\ChangePassword.cshtml" />
+    <Content Include="Views\Profile\UpdateProfile.cshtml" />
+    <Content Include="Views\Order\Edit.cshtml" />
+    <Content Include="Views\Order\_OrderForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

@@ -53,7 +53,7 @@ namespace V308CMS.Sale.Controllers
             try{
                 CreateRepos();
                 AffiliateHomePage Model = new AffiliateHomePage();
-                Model.VideoCategory = NewsRepos.SearchNewsGroup("affiliate-video");
+                Model.VideoCategory = NewsRepos.SearchNewsGroup("affiliate-video",Data.Helpers.Site.affiliate);
                 if (Model.VideoCategory != null)
                 {
                     Model.Videos = NewsRepos.LayDanhSachTinTheoGroupIdWithPage(5, Model.VideoCategory.ID);
@@ -115,7 +115,7 @@ namespace V308CMS.Sale.Controllers
             {
                 CreateRepos();
                 NewsIndexPageContainer Model = new NewsIndexPageContainer();
-                Model.NewsGroups = NewsRepos.SearchNewsGroup("affiliate-video");
+                Model.NewsGroups = NewsRepos.SearchNewsGroup("affiliate-video", Data.Helpers.Site.affiliate);
                 if (Model.NewsGroups != null)
                 {
                     Model.ListNews = NewsRepos.LayDanhSachTinTheoGroupId(ProductHelper.ProductShowLimit, Model.NewsGroups.ID);

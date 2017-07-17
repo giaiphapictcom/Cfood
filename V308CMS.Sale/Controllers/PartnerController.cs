@@ -12,13 +12,26 @@ using V308CMS.Sale.Helpers;
 using V308CMS.Data.Helpers;
 using V308CMS.Data.Models;
 
+
 namespace V308CMS.Sale.Controllers
 {
     public class PartnerController : BaseController
     {
         int nPage = 1;
+        int uid = 0;
+        int plimit = 10;
+
+
         public PartnerController() {
-            if (Request != null) {
+
+
+
+            //CreateRepos();
+        }
+
+        private void GetValue() {
+            if (Request != null)
+            {
                 var UriPage = Request.QueryString["p"];
                 if (UriPage == null || UriPage == "")
                 {
@@ -29,9 +42,19 @@ namespace V308CMS.Sale.Controllers
                 {
                     nPage = SetPage;
                 }
+
+                var PageSize_get = Request.QueryString["plimit"];
+                if (PageSize_get != null && PageSize_get.Length > 0)
+                {
+                    PageSize = int.Parse(PageSize_get);
+
+                }
+
             }
-            
-            //CreateRepos();
+            if (Session != null && Session["UserId"] != null)
+            {
+                uid = int.Parse(Session["UserId"].ToString());
+            }
         }
 
         [AffiliateAuthorize]
@@ -73,13 +96,13 @@ namespace V308CMS.Sale.Controllers
             catch (Exception ex)
             {
                 Console.Write(ex);
-                return Content("Xảy ra lỗi hệ thống ! Vui lòng thử lại."+ ex.ToString());
+                return Content("Xảy ra lỗi hệ thống ! Vui lòng thử lại." + ex.ToString());
             }
             finally
             {
                 DisposeRepos();
             }
-            
+
         }
 
         public ActionResult Logout()
@@ -145,7 +168,7 @@ namespace V308CMS.Sale.Controllers
             catch (Exception ex)
             {
                 Console.Write(ex);
-                return Content("Xảy ra lỗi hệ thống ! Vui lòng thử lại."+ex.ToString());
+                return Content("Xảy ra lỗi hệ thống ! Vui lòng thử lại." + ex.ToString());
             }
 
         }
@@ -160,7 +183,7 @@ namespace V308CMS.Sale.Controllers
                 var userLogined = AccountRepos.Find(uid);
                 account = userLogined.CloneTo<AccountModel>();
             }
-           
+
             return View(account);
         }
 
@@ -173,20 +196,20 @@ namespace V308CMS.Sale.Controllers
             if (account.cmt_front != null) {
                 account.cmt_front = account.cmt_front.Replace("\\Content\\Images\\", "");
             }
-            
+
             account.cmt_back = account.FileBack != null ?
                   account.FileBack.Upload() :
                   account.cmt_back;
-            if (account.cmt_back != null ) {
+            if (account.cmt_back != null) {
                 account.cmt_back = account.cmt_back.Replace("\\Content\\Images\\", "");
             }
-            
 
-            var accountNew = account.CloneTo<Account>(new[] { "FileFront","FileBack" });
+
+            var accountNew = account.CloneTo<Account>(new[] { "FileFront", "FileBack" });
 
             CreateRepos();
             var result = AccountRepos.UpdateObject(accountNew);
-             if (result == Result.Ok)
+            if (result == Result.Ok)
             {
                 SetFlashMessage(string.Format("Cập nhật dữ liệu thành công"));
                 return View("AccountInfomation", AccountRepos.Find(account.id).CloneTo<AccountModel>());
@@ -257,7 +280,7 @@ namespace V308CMS.Sale.Controllers
                 DisposeRepos();
             }
         }
-        
+
         [HttpGet]
         [AffiliateAuthorize]
         public ActionResult LinkReport()
@@ -288,7 +311,7 @@ namespace V308CMS.Sale.Controllers
                 DisposeRepos();
             }
         }
-        
+
 
         [HttpGet]
         [AffiliateAuthorize]
@@ -328,11 +351,8 @@ namespace V308CMS.Sale.Controllers
         public ActionResult Products()
         {
             try {
-             
+                GetValue();
                 AffiliateProductPage Model = new AffiliateProductPage();
-
-                
-                
 
                 Model.Page = nPage;
                 Model.ck_order = Request.QueryString["ck_order"];
@@ -342,12 +362,8 @@ namespace V308CMS.Sale.Controllers
                 if (cate_get != null && cate_get.Length > 0) {
                     Model.category = int.Parse(cate_get);
                 }
-                var PageSize_get = Request.QueryString["plimit"];
-                if (PageSize_get != null && PageSize_get.Length > 0)
-                {
-                    Model.plimit = int.Parse(PageSize_get);
-                    
-                }
+
+                Model.plimit = plimit;
                 ProductRepos.PageSize = Model.plimit;
                 ProductHelper.ProductShowLimit = ProductRepos.PageSize;
 
@@ -359,7 +375,7 @@ namespace V308CMS.Sale.Controllers
                     products = products.OrderByDescending(p => p.ID);
 
                     if (Model.category > 0) {
-                        products = products.Where(p=>p.Type== Model.category);
+                        products = products.Where(p => p.Type == Model.category);
                     }
 
                     if (Model.ck_order == "desc")
@@ -372,14 +388,14 @@ namespace V308CMS.Sale.Controllers
 
                     if (Model.saletop_order == "desc")
                     {
-                       
+
                     }
                     else if (Model.ck_order == "asc")
                     {
-                       
+
                     }
 
-                    if (Model.search !=null && Model.search.Length > 0)
+                    if (Model.search != null && Model.search.Length > 0)
                     {
                         products = products.Where(p => p.Name.ToLower().Contains(Model.search.ToLower()));
                     }
@@ -400,7 +416,7 @@ namespace V308CMS.Sale.Controllers
             {
                 DisposeRepos();
             }
-            
+
         }
         #endregion
 
@@ -495,7 +511,7 @@ namespace V308CMS.Sale.Controllers
             if (Request != null) {
                 Model.ProductCode = Request.QueryString["pcode"];
             }
-                
+
             return View(Model);
         }
 
@@ -551,22 +567,39 @@ namespace V308CMS.Sale.Controllers
         //    }
         //}
         #endregion
-    
+
         #region Orders
+
+        [HttpGet]
+        [AffiliateAuthorize]
+        public ActionResult OrderSearch() {
+            return View();
+        }
         [HttpGet]
         [AffiliateAuthorize]
         public ActionResult Orders()
         {
             try
             {
-                int nPage = Convert.ToInt32(Request.QueryString["p"]);
-                if (nPage < 1)
+                GetValue();
+                //OrdersPage Model = ProductRepos.GetOrdersAffiliatePage(nPage, uid);
+                OrdersPage Model = new OrdersPage();
+                string order_no_search = Request.QueryString["no"];
+                using (var entities = new V308CMSEntities())
                 {
-                    nPage = 1;
-                }
-                CreateRepos();
+                    //var orders = from p in entities.ProductOrder
+                    //            orderby p.ID descending
+                    //            select p;
+                    var orders = entities.ProductOrder.Select(o => o);
+                    if (order_no_search != null && order_no_search.Length > 0) {
+                        orders = orders.Where(o => o.ID.ToString() == order_no_search);
+                    }
+                    Model.Total = orders.Count();
+                    Model.Page = nPage;
+                    Model.Items = orders.OrderBy(o => o.ID).Skip((nPage - 1) * PageSize).Take(PageSize).ToList();
 
-                OrdersPage Model = ProductRepos.GetOrdersAffiliatePage(nPage, int.Parse(Session["UserId"].ToString()));
+                }
+                Model.plimit = PageSize;
                 return View(Model);
             }
             catch (Exception ex)
@@ -576,7 +609,7 @@ namespace V308CMS.Sale.Controllers
             }
             finally
             {
-                DisposeRepos();
+                //DisposeRepos();
             }
         }
 
@@ -586,26 +619,47 @@ namespace V308CMS.Sale.Controllers
         {
             try
             {
-                int nPage = Convert.ToInt32(Request.QueryString["p"]);
-                if (nPage < 1)
-                {
-                    nPage = 1;
-                }
-                CreateRepos();
-
+                //OrdersReportByDaysPage Model = ProductRepos.GetOrderReport7DayPage(nPage, int.Parse(Session["UserId"].ToString()));
+                OrdersReportByDaysPage Model = new OrdersReportByDaysPage();
                 DateTime today = DateTime.Today;
-                //int currentDayOfWeek = (int)today.DayOfWeek;
-                //DateTime sunday = today.AddDays(-currentDayOfWeek);
-                //DateTime monday = sunday.AddDays(1);
-                //// If we started on Sunday, we should actually have gone *back*
-                //// 6 days instead of forward 1...
-                //if (currentDayOfWeek == 0)
-                //{
-                //    monday = monday.AddDays(-7);
-                //}
+                using (var entities = new V308CMSEntities())
+                {
+                    
+                    List<OrdersReportByDay> ReportDays = new List<OrdersReportByDay>();
+                    List<RevenueReportByDay> RevenueDays = new List<RevenueReportByDay>();
 
+                    DateTime begin = today.AddDays(-6);
+                    Model.days = Enumerable.Range(0, 7).Select(days => begin.AddDays(days)).ToList();
+                    foreach (DateTime d in Model.days)
+                    {
+                        OrdersReportByDay ReportDay = new OrdersReportByDay();
+                        RevenueReportByDay RevenueDay = new RevenueReportByDay();
 
-                OrdersReportByDaysPage Model = ProductRepos.GetOrderReport7DayPage(nPage, int.Parse(Session["UserId"].ToString()));
+                        var Orders = from p in entities.ProductOrder
+                                         //join m in entities.ProductOrderMap on p.AccountID equals m.uid into map
+                                         //    from m in map.DefaultIfEmpty()
+
+                                         //where m.partner_id.Equals(PartnerID)
+                                         //where p.Date <= d
+                                     where (p.Date.Year == d.Year && p.Date.Month == d.Month && p.Date.Day == d.Day)
+                                     select p;
+
+                        ReportDay.date = d;
+                        ReportDay.Total = Orders.Count();
+                        ReportDays.Add(ReportDay);
+
+                        var Revenues = from p in entities.ProductOrderRevenueTbl
+                                       where (p.Created.Year == d.Year && p.Created.Month == d.Month && p.Created.Day == d.Day)
+                                       select p;
+
+                        RevenueDay.date = d;
+                        RevenueDay.Total = Revenues.Count();
+                        RevenueDays.Add(RevenueDay);
+                    }
+                    Model.Orders = ReportDays;
+                    Model.Revenues = RevenueDays;
+                }
+
                 return View(Model);
             }
             catch (Exception ex)
@@ -618,6 +672,56 @@ namespace V308CMS.Sale.Controllers
                 DisposeRepos();
             }
         }
+
+        public ActionResult ReportOverview() {
+            try
+            {
+                OrdersReportByDaysPage Model = new OrdersReportByDaysPage();
+                DateTime today = DateTime.Today;
+                using (var entities = new V308CMSEntities())
+                {
+
+                    List<OrdersReportByDay> ReportDays = new List<OrdersReportByDay>();
+                    List<RevenueReportByDay> RevenueDays = new List<RevenueReportByDay>();
+
+                    DateTime begin = today.AddMonths(-6);
+                    Model.days = Enumerable.Range(0, 7).Select(days => begin.AddMonths(days)).ToList();
+                    Model.days = Model.days.OrderByDescending(d => d).ToList();
+                    foreach (DateTime d in Model.days)
+                    {
+                        RevenueReportByDay RevenueDay = new RevenueReportByDay();
+
+                        var Revenues = from p in entities.ProductOrderRevenueTbl
+                                       where (p.Created.Year == d.Year && p.Created.Month == d.Month )
+                                       select p;
+
+                        RevenueDay.date = d;
+                        RevenueDay.Total = Revenues.Count();
+                        RevenueDays.Add(RevenueDay);
+                    }
+                    //Model.Orders = ReportDays;
+                    Model.Revenues = RevenueDays;
+                }
+
+                return View(Model);
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+                return Content("Xảy ra lỗi hệ thống ! Vui lòng thử lại.");
+            }
+            finally
+            {
+                DisposeRepos();
+            }
+        }
+
+        [HttpGet]
+        [AffiliateAuthorize]
+        public ActionResult Revenue() {
+            return View();
+        }
+
         #endregion
 
         #region Website Request

@@ -86,6 +86,12 @@ namespace V308CMS.Controllers
         private void LoadSiteConfig()
         {
             var siteConfigs = SiteConfig.ConfigTable;
+            if (siteConfigs == null) {
+                siteConfigs = SiteConfigRepo.LoadSiteConfig();
+            }
+            if (siteConfigs == null) {
+                return;
+            }
             if (siteConfigs.Any())
             {
                 ViewBag.domain = Theme.domain;
@@ -135,6 +141,7 @@ namespace V308CMS.Controllers
             ProductManufacturerService = new ProductManufacturerRespository();
             GoogleplusService = new GoogleplusService(ConfigHelper.GoogleAppId, ConfigHelper.GoogleAppSecret);
             FacebookService = new FacebookService(ConfigHelper.FacebookAppId,ConfigHelper.FacebookAppSecret);
+            SiteConfigRepo = new Data.SiteConfigRespository();
             LoadSiteConfig();
 
         }
@@ -172,6 +179,8 @@ namespace V308CMS.Controllers
         public CartRepository CartService { get; }
 
         public CartItemRepository CartItemService { get; }
+
+        public Data.SiteConfigRespository SiteConfigRepo { get; set; }
 
         private void SetTempSession(string name, string value ="")
         {

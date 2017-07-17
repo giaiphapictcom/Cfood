@@ -440,6 +440,12 @@ namespace V308CMS.Data
             get;
             set;
         }
+
+        public DbSet<ProductOrderRevenue> ProductOrderRevenueTbl
+        {
+            get;
+            set;
+        }
         //public DbSet<Categorys> AffiliateCategory
         //{
         //    get;

@@ -1,0 +1,20 @@
+﻿@{
+
+    Layout = "~/Views/Affiliate/Layout/Default.cshtml";
+    string PageTitle = "Đăng nhập";
+}
+
+@section header {
+    <title>@PageTitle</title>
+}
+
+<div class="create-an-account">
+    <header class="page-header">
+        <h1>Đăng nhập sử dụng </h1>
+    </header>
+    <span class="field-validation-error">
+        Đăng nhập không thành công, vui lòng kiểm tra lại thiết lập tài khoản của bạn. Nhấn vào  <a style="cursor: pointer" href="@(Model=="facebook"?"/sociallogin/loginfacebook":(Model=="google"?"/sociallogin/logingoogle":"/"))" title="Đăng nhập">đây</a> để đăng nhập lại.
+    </span>
+
+</div>
+

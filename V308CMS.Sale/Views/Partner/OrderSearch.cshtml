@@ -1,0 +1,22 @@
+﻿@using V308CMS.Common;
+
+@{
+    Layout = "~/Views/Affiliate/Layout/Backend.cshtml";
+    string PageTitle = "Kiểm tra mã đơn hàng";
+
+
+}
+@section header {
+    <title>@PageTitle</title>
+
+}
+<h4>@PageTitle</h4>
+<form style="width: 60%; margin: 0 auto;" action="/order" method="get">
+    <div class="row">
+        <div class="col-md-12">
+            @BootstrapHelper.InputText("no", "Nhập mã đơn hàng")
+        </div>
+    </div>
+    
+    <button type="submit" class="btn btn-success"><i class="fa fa-search"></i>Tìm kiếm</button>
+</form>

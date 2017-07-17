@@ -209,6 +209,7 @@
     <Compile Include="Metadata\ColorMetadata.cs" />
     <Compile Include="Metadata\CountryMetadata.cs" />
     <Compile Include="Metadata\OrderTransactionMetadata.cs" />
+    <Compile Include="Metadata\ProductOrderRevenueMetadata.cs" />
     <Compile Include="Metadata\ProductWishlistMetadata.cs" />
     <Compile Include="Metadata\ShippingAddressMetadata.cs" />
     <Compile Include="Metadata\EmailConfigMetadata.cs" />
@@ -235,6 +236,7 @@
     <Compile Include="Models\Color.cs" />
     <Compile Include="Models\Country.cs" />
     <Compile Include="Models\OrderTransaction.cs" />
+    <Compile Include="Models\ProductOrderRevenue.cs" />
     <Compile Include="Models\ProductWishlist.cs" />
     <Compile Include="Models\ShippingAddress.cs" />
     <Compile Include="Models\EmailConfig.cs" />

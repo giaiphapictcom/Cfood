@@ -1,9 +1,9 @@
 ﻿using System.Web.Mvc;
 using V308CMS.Common;
-using V308CMS.Helpers;
+using V308CMS.Sale.Helpers;
 using V308CMS.Social;
 
-namespace V308CMS.Controllers
+namespace V308CMS.Sale.Controllers
 {
     public class SocialLoginController : BaseController
     {       
@@ -22,14 +22,15 @@ namespace V308CMS.Controllers
         private void SignIn(SocialUser user)
         {
             var userIdResult = AddUser(user.UserId, user.Email, user.FullName, user.Avatar);
-            AuthenticationHelper.SignIn(userIdResult, user.UserId, user.FullName, user.Avatar);
+            SetFlashMessage("Đăng nhập thành công.");
+            Session["UserId"] = userIdResult;
+            Session["UserName"] = user.FullName;
+            Session["Role"] = 0;
+            Session["Account"] = user.FullName;
+            System.Web.Security.FormsAuthentication.SetAuthCookie(user.Email, true);
+            //AuthenticationHelper.SignIn(userIdResult, user.UserId, user.FullName, user.Avatar);
         }
-        /// <summary>
-        /// Action duoc goi lai khi dang nhap facebook
-        /// Thay doi trong App facebook MpStart
-        /// </summary>
-        /// <param name="code"></param>
-        /// <returns></returns>
+
         public ActionResult FacebookCallback(string code)
         {
             var accessToken = FacebookService.GetAccessToken(code, ConfigHelper.FacebookLoginCallback);
@@ -50,7 +51,7 @@ namespace V308CMS.Controllers
         private int AddUser(string userId, string email, string fullName, string avatar)
         {
             
-            var userIdResult = AccountService.Insert(userId, email, StringHelper.GenerateString(6), StringHelper.GenerateString(4), fullName, avatar, Data.Helpers.Site.home);
+            var userIdResult = AccountService.Insert(userId, email, StringHelper.GenerateString(6), StringHelper.GenerateString(4), fullName, avatar, Data.Helpers.Site.affiliate);
             return int.Parse(userIdResult);
         }
 

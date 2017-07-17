@@ -1068,7 +1068,7 @@ namespace V308CMS.Data
 
         #region[Declare variables]
         private int _ID;
-        private DateTime? _Date;
+        private DateTime _Date;
         private string _Detail;
         private string _FullName;
         private string _Email;
@@ -1087,7 +1087,7 @@ namespace V308CMS.Data
         #region[Public Properties]
         [Key]
         public int ID { get { return _ID; } set { _ID = value; } }
-        public DateTime? Date { get { if (_Date == null) return new DateTime(); else return _Date; } set { if (_Date != value) { _Date = value; } } }
+        public DateTime Date { get { if (_Date == null) return new DateTime(); else return _Date; } set { if (_Date != value) { _Date = value; } } }
         public string Detail { get { if (String.IsNullOrEmpty(_Detail)) return ""; else return _Detail; } set { _Detail = value; } }
         public string FullName { get { if (String.IsNullOrEmpty(_FullName)) return ""; else return _FullName; } set { _FullName = value; } }
         public string Email { get { if (String.IsNullOrEmpty(_Email)) return ""; else return _Email; } set { _Email = value; } }
