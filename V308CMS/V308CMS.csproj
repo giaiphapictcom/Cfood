@@ -2062,6 +2062,7 @@
     <Content Include="Views\themes\myshopify\Async\_ListProductManufacturerFilterAsync.cshtml" />
     <Content Include="Views\themes\myshopify\Async\_LeftBannerAsyn.cshtml" />
     <Content Include="Views\themes\myshopify\Async\_LeftBannerHomeTopAsyn.cshtml" />
+    <Content Include="Views\themes\myshopify\Async\_BigSaleTopBannerAsync.cshtml" />
     <None Include="Views\themes\myshopify\Blocks\ListSubCategory.cshtml" />
     <Content Include="Views\themes\myshopify\Components\ProductPriceComponent.cshtml" />
     <Content Include="Views\themes\myshopify\Components\CategoryHomeComponent.cshtml" />
