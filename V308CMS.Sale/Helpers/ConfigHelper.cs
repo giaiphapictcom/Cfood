@@ -6,7 +6,7 @@ namespace V308CMS.Sale.Helpers
 {
     public static class ConfigHelper
     {
-        private static SiteRepository ConfigRepo = new SiteRepository();
+        
 
         public static string ImageDomain = Configs.GetItemConfig("ImageDomain");
         public static string UploadFolder = Configs.GetItemConfig("UploadFolder");
@@ -23,8 +23,8 @@ namespace V308CMS.Sale.Helpers
         public static string GoogleAppId = Configs.GetItemConfig("GoogleAppId");
         public static string GoogleAppSecret = Configs.GetItemConfig("GoogleAppSecret");
         public static string GoogleLoginCallback = Configs.GetItemConfig("GoogleLoginCallback");
-        public static string RecaptchaSecretKey = ConfigRepo.SiteConfig("RecaptchaSecretKey");
-        public static string RecaptchaSitekey = ConfigRepo.SiteConfig("RecaptchaSitekey");
+        public static string RecaptchaSecretKey = "";
+        public static string RecaptchaSitekey = "";
         
 
 

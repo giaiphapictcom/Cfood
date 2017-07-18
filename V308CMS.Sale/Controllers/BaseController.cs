@@ -97,11 +97,16 @@ namespace V308CMS.Sale.Controllers
         protected BaseController()
         {
             _AccountService = new AccountRepository();
+            ConfigRepo = new SiteRepository();
+
+            ConfigHelper.RecaptchaSecretKey = ConfigRepo.SiteConfig("RecaptchaSecretKey");
+            ConfigHelper.RecaptchaSitekey = ConfigRepo.SiteConfig("RecaptchaSitekey");
             GoogleplusService = new GoogleplusService(ConfigHelper.GoogleAppId, ConfigHelper.GoogleAppSecret);
             FacebookService = new FacebookService(ConfigHelper.FacebookAppId, ConfigHelper.FacebookAppSecret);
             CreateRepos();
         }
         public FacebookService FacebookService { get; }
+        public SiteRepository ConfigRepo { get; }
         public GoogleplusService GoogleplusService { get; }
         protected void SetFlashMessage(string message)
         {

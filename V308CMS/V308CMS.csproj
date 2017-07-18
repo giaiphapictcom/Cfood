@@ -2067,6 +2067,12 @@
     <Content Include="Views\themes\myshopify\Async\_LeftBannerAsyn.cshtml" />
     <Content Include="Views\themes\myshopify\Async\_LeftBannerHomeTopAsyn.cshtml" />
     <Content Include="Views\themes\myshopify\Async\_BigSaleTopBannerAsync.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\category - Copy.cshtml" />
+    <Content Include="Views\themes\mamoo\Components\CategoryHomeComponent.cshtml" />
+    <Content Include="Views\themes\mamoo\Components\PaginationComponent.cshtml" />
+    <Content Include="Views\themes\mamoo\Components\ProductComponent.cshtml" />
+    <Content Include="Views\themes\mamoo\Components\ProductPriceComponent.cshtml" />
+    <Content Include="Views\themes\mamoo\Components\YoutubeVideoComponent.cshtml" />
     <None Include="Views\themes\myshopify\Blocks\ListSubCategory.cshtml" />
     <Content Include="Views\themes\myshopify\Components\ProductPriceComponent.cshtml" />
     <Content Include="Views\themes\myshopify\Components\CategoryHomeComponent.cshtml" />
