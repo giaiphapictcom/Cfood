@@ -260,6 +260,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="bin\CKFinder.dll" />
+    <Content Include="bin\ServiceStack.Text.dll" />
     <Content Include="Content\Admin\assets\font\fontawesome-webfont.svg" />
     <Content Include="Content\Admin\assets\font\fontawesome-webfont.woff" />
     <Content Include="Content\Admin\assets\font\fontawesome-webfont_2d2816fe.eot" />
@@ -1645,8 +1647,6 @@
     <Content Include="Content\themes\myshopify\images\logoh70.png" />
     <Content Include="Content\themes\myshopify\images\refresh.png" />
     <Content Include="Content\themes\myshopify\images\select2.png" />
-    <Content Include="Content\themes\myshopify\images\social\facebook.png" />
-    <Content Include="Content\themes\myshopify\images\social\google.png" />
     <Content Include="Content\themes\myshopify\js\ajax.jquery.min.js" />
     <Content Include="Content\themes\myshopify\js\all.jquery.min.js" />
     <Content Include="Content\themes\myshopify\js\canvas.js" />
@@ -2087,12 +2087,9 @@
     <Content Include="Views\themes\myshopify\Components\YoutubeVideoComponent.cshtml" />
     <Content Include="Views\themes\myshopify\Pages\BigSale.cshtml" />
     <Content Include="Views\themes\myshopify\Pages\NotFound.cshtml" />
-    <Content Include="Views\themes\myshopify\Product\LoginAndBuy.cshtml" />
-    <Content Include="Views\themes\myshopify\Popup\LoginAndBuy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="bin\" />
     <Folder Include="Content\Images\Upload\files\" />
     <Folder Include="Content\Images\Upload\flash\" />
     <Folder Include="Content\Images\Upload\images\" />
