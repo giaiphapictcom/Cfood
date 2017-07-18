@@ -252,7 +252,7 @@
                                                 <p class="logged-in-customer-information__paragraph">
                                                     <span class="page-main__emphasis">@AuthenticationHelper.AuthenticateName</span>
                                                     <br>
-                                                    <a href="@Url.AccountLogoutUrl()" title="Thoát tài khoản">Thoát tài khoản</a>
+                                                    <a href="@Url.AccountLogoutUrl(Request.Url.ToString())" title="Thoát tài khoản">Thoát tài khoản</a>
                                                 </p>
                                             </div>
                                         </div>
@@ -376,27 +376,25 @@
                                                         </div>
 
                                                     }
-                                                    <div class="field field--required">
-                                                        @Html.LabelFor(model => model.FullName, new { @class = "field__label" })
+                                                    <div class="field field--required">                                                    
                                                         <div class="field__input-wrapper">
                                                             @Html.TextBoxFor(model => model.FullName, new
                                                            {
                                                                size = "30",
                                                                @class = "field__input",
-                                                               placeholder = "Nhập họ tên"
+                                                               placeholder = "Họ tên người nhận"
 
                                                            })
                                                         </div>
                                                         @Html.ValidationMessageFor(ship => ship.FullName)
                                                     </div>
-                                                    <div class="field field--required" data-address-field="Phone">
-                                                        @Html.LabelFor(model => model.Phone, new { @class = "field__label" })
+                                                    <div class="field field--required" data-address-field="Phone">                                                    
                                                         <div class="field__input-wrapper">
                                                             @Html.TextBoxFor(model => model.Phone, new
                                                            {
                                                                size = "30",
                                                                @class = "field__input",
-                                                               placeholder = "Nhập số điện thoại"
+                                                               placeholder = "Số điện thoại di động"
 
                                                            })
                                                         </div>

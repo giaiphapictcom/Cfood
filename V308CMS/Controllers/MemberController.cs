@@ -72,10 +72,10 @@ namespace V308CMS.Controllers
             return View("Member.Login", login);
         }
         [Authorize]
-        public ActionResult LogOut()
+        public ActionResult LogOut(string returnUrl)
         {
             AuthenticationHelper.SignOut();
-            return Redirect("/");
+            return RedirectToUrl(returnUrl);
 
         }
         public ActionResult Register()

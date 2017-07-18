@@ -31,12 +31,8 @@
 }
 
 <div id="cart">
-    <!-- Begin empty cart -->
-
     <div class="row">
         <div class="col-lg-12">
-            <!--h1> 'cart.general.title' | t </h1-->
-
             @if (Model.Items.Any())
             {
                 <form action="@Url.CheckoutCartUrl()" method="post" id="cartform">

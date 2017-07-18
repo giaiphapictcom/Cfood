@@ -55,7 +55,7 @@
 }
 .btn-google {
     color: #fff !important;
-    background-color: #dd4b39 !important;
+    /*background-color: #dd4b39 !important;*/
     border-color: rgba(0,0,0,.2);
 }
 .user-name-login-google {

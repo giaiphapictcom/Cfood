@@ -4939,7 +4939,6 @@ label.active {
 }
 
 .login input, .login a,.register input,.register a {
-    width: 260px;
     height: 30px;
     border-radius: 0;
     margin-bottom: 15px;
@@ -4952,11 +4951,11 @@ label.active {
 
 .login .btn-sign-in {
     border: none;
-    background:#00aeef;
     color: #fff;
-    width: 85px;
+    width: 246px;
     height: 26px;
     font-weight: bold;
+
 }
 
 .login .btn-register {
@@ -4984,4 +4983,16 @@ label.active {
     color: #00aeef !important;
     font-weight: bold !important;
     
+}btn-sign-in .popup_item {
+    margin-left: 18px;
+}
+.social_button {
+    padding: 3px;
+    cursor: pointer;
+}
+.forget-pass {
+    border-style: none !important;    
+    display: block;
+    margin-left: 132px;
+    color: red;   
 }

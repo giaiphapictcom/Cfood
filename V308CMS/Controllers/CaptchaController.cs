@@ -90,7 +90,7 @@ namespace V308CMS.Controllers
                                                             Color.White, Color.White,
                                                             orientationAngle);
                 g.FillRectangle(gradientBrush, 0, 0, 100, height);              
-                g.DrawString(captchaText, new Font(familyName, 20, FontStyle.Bold), new SolidBrush(Color.RoyalBlue), 0, 2);
+                g.DrawString(captchaText, new Font(familyName, 20, FontStyle.Bold), new SolidBrush(Color.Red), 0, 2);
                 var ms = new MemoryStream();
                 bmpOut.Save(ms, ImageFormat.Png);
                 var bmpBytes = ms.GetBuffer();

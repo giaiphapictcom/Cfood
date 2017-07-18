@@ -348,38 +348,24 @@ namespace V308CMS.Data
         {
             using (var entities = new V308CMSEntities())
             {
-               
 
-                try {
-                    var checkAccount = (from p in entities.Account
-                                        where p.Email.Equals(email) || p.UserName.Equals(email)
-                                        select p).FirstOrDefault();
-                    if (checkAccount == null)
-                    {
-                        return "invalid";
-                    }
-
-                    if (checkAccount.Status == false)
-                    {
-                        return "not_active";
-                    }
-                    if (checkAccount.Salt.Length > 0 && checkAccount.Password != HashPassword(password, checkAccount.Salt))
-                    {
-                        return "invalid";
-                    }
-                    else if (checkAccount.Password != EncryptionMD5.ToMd5(password.Trim()))
-                    {
-                        return "invalid";
-                    }
-
-                    return $"{checkAccount.ID}|{checkAccount.Avatar}";
-                }
-                catch (Exception ex)
+                var checkAccount = (from p in entities.Account
+                                    where p.Email.Equals(email) || p.UserName.Equals(email)
+                                    select p).FirstOrDefault();
+                if (checkAccount == null)
                 {
-                    Console.WriteLine(ex);
-                    return (ex.InnerException.ToString());
+                    return "invalid";
                 }
 
+                if (checkAccount.Status == false)
+                {
+                    return "not_active";
+                }            
+                if (checkAccount.Password != HashPassword(password, checkAccount.Salt))
+                {
+                    return "invalid";
+                }
+                return $"{checkAccount.ID}|{checkAccount.Avatar}";
             }
 
 
