@@ -163,8 +163,10 @@ namespace V308CMS.Admin.Controllers
                     Transport2 = product.Transport2,
                     Status = false
                 };
-                var result =ProductService.Insert(newProduct);               
-
+                var result =ProductService.Insert(newProduct);
+                if (newProduct.Npp > 0) {
+                    var RevenueAdd = RevenueGainRepo.Add(newProduct.ID, float.Parse(product.Npp), currentUser.UserId);
+                }
                 //Tao cac anh Slide va properties
                 if (product.ProductImages != null && product.ProductImages.Length>0)
                 {
@@ -358,6 +360,12 @@ namespace V308CMS.Admin.Controllers
                 productUpdate.Transport1 = product.Transport1;
                 productUpdate.Transport2 = product.Transport2;
                 var result = ProductService.Update(productUpdate);
+
+                if (productUpdate.Npp > 0)
+                {
+                    var RevenueAdd = RevenueGainRepo.Add(productUpdate.ID, float.Parse(product.Npp), currentUser.UserId);
+                }
+
                 //Tao cac anh san pham
                 if (product.ProductImages != null && product.ProductImages.Length > 0)
                 {
@@ -488,9 +496,11 @@ namespace V308CMS.Admin.Controllers
         [CheckPermission(8, "Cập nhật Npp")]       
         public ActionResult UpdateNpp(int id, string npp)
         {
-            double nppValue;
-            double.TryParse(npp, out nppValue);
-            var result = ProductService.UpdateNpp(id, nppValue);
+            float nppValue;
+            float.TryParse(npp, out nppValue);
+            
+            //var result = ProductService.UpdateNpp(id, nppValue);
+            var result = RevenueGainRepo.Add(id, nppValue, currentUser.UserId);
             if (result == Result.NotExists)
             {
                 return Json(new { message = "Không tìm thấy sản phẩm để cập nhật chiết khấu." });

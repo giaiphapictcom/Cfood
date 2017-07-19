@@ -21,4 +21,16 @@ namespace V308CMS.Data.Enum
         [Description("Trả lại hàng")]
         Refund = 7
     }
+
+    public enum AccountStatusEnum
+    {
+        [Description("Chờ duyệt")]
+        Processing = 0,
+
+        [Description("Đang sử dụng")]
+        Complete = 1,
+        
+        [Description("Khóa tài khoản")]
+        Disable = -1
+    }
 }

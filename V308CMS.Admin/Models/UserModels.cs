@@ -15,7 +15,9 @@ namespace V308CMS.Admin.Models
 
         }
         public int Id { get; set; }
+        [Display(Name = "Loại tài khoản")]
         public string Site { get; set; }
+        public string AffiliateCode { get; set; }
 
         [Required(ErrorMessage = "Địa chỉ Email không được để trống.")]
         [Display(Name = "Email*")]

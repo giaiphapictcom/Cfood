@@ -18,7 +18,7 @@ namespace V308CMS.Admin.Controllers
         //
         // GET: /User/        
         [CheckPermission(0, "Danh sách")]
-        public ActionResult Index(int status =0,string site= Data.Helpers.Site.home)
+        public ActionResult Index(int status = -1,string site= Data.Helpers.Site.home)
         {
             ViewBag.ListStateFilter = DataHelper.ListEnumType<StateFilterEnum>();
             return View("Index", UserService.GetList(status, site));
@@ -39,8 +39,6 @@ namespace V308CMS.Admin.Controllers
         {
             return View("Create", new UserModels());
         }
-
-
 
         [HttpPost]
         [CheckPermission(1, "Thêm mới")]
@@ -129,11 +127,12 @@ namespace V308CMS.Admin.Controllers
         [ValidateAntiForgeryToken]       
         public ActionResult OnEdit(UserModels user)
         {
-            //if (ModelState.IsValid)
-            //{
+            //if (ModelState.IsValid) {
                 var userUpdate = new Account
                 {
+                    ID = user.Id,
                     Email = user.Email,
+                    affiliate_code = user.AffiliateCode,
                     UserName = user.Username,
                     Phone = user.Phone,
                     FullName = user.FullName,
@@ -143,7 +142,7 @@ namespace V308CMS.Admin.Controllers
                     Address = user.Address,
                     Gender = user.Gender,
                     Date = user.CreateDate,
-                    Site = user.Site
+                    Site = user.Site,
 
                 };
                 DateTime birthDayValue;
@@ -161,12 +160,11 @@ namespace V308CMS.Admin.Controllers
                 SetFlashMessage("Cập nhật tài khoản thành công.");
                 if (user.SaveList)
                 {
-                    return RedirectToAction("Index");
+                    string ItemsView = user.Site == Data.Helpers.Site.affiliate ? "affiliate" : "Index";
+                    return RedirectToAction(ItemsView);
                 }               
                 return View("Edit", user);
             //}
-
-
             //return View("Edit", user);
         }
 
@@ -269,7 +267,9 @@ namespace V308CMS.Admin.Controllers
         [CheckPermission(0, "Danh sách")]
         public ActionResult affiliate(int status = -1)
         {
-            return Index(status, Data.Helpers.Site.affiliate);
+            //return Index(status, Data.Helpers.Site.affiliate);
+           
+            return View("affiliate_accounts", UserService.GetList(status, Data.Helpers.Site.affiliate));
         }
         [CheckPermission(1, "Thêm mới")]
         public ActionResult affiliateCreate()

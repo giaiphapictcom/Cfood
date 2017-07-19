@@ -446,6 +446,12 @@ namespace V308CMS.Data
             get;
             set;
         }
+
+        public DbSet<RevenueGain> RevenueGainTbl
+        {
+            get;
+            set;
+        }
         //public DbSet<Categorys> AffiliateCategory
         //{
         //    get;

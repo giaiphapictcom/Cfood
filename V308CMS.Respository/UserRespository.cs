@@ -79,9 +79,12 @@ namespace V308CMS.Respository
                     userUpdate.Avatar = account.Avatar;
                     userUpdate.Gender = account.Gender;
                     userUpdate.Date = account.Date;
-                    return "ok";
+                    userUpdate.Site = account.Site;
+                    userUpdate.affiliate_code = account.affiliate_code;
+                    entities.SaveChanges();
+                    return Data.Helpers.Result.Ok;
                 }
-                return "not_exists";
+                return Data.Helpers.Result.NotExists;
             }
            
         }
@@ -126,7 +129,7 @@ namespace V308CMS.Respository
                     items = items.Where(a => a.Site.Equals(site.Trim()));
                 }
                 else {
-                    items = items.Where(a => a.Site == "home" || a.Site =="" );
+                    items = items.Where(a => a.Site == "home" || a.Site =="" || a.Site == null );
                 }
 
 

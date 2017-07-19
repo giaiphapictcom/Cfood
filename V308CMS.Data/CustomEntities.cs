@@ -68,6 +68,7 @@ namespace V308CMS.Data
         private string _bank_address;
         private string _cmt_front;
         private string _cmt_back;
+        private string _affiliate_code;
 
         #endregion
         #region[Public Properties]
@@ -98,6 +99,7 @@ namespace V308CMS.Data
         public string bank_address { get { if (String.IsNullOrEmpty(_bank_address)) return ""; else return _bank_address; } set { _bank_address = value; } }
         public string cmt_front { get { if (String.IsNullOrEmpty(_cmt_front)) return ""; else return _cmt_front; } set { _cmt_front = value; } }
         public string cmt_back { get { if (String.IsNullOrEmpty(_cmt_back)) return ""; else return _cmt_back; } set { _cmt_back = value; } }
+        public string affiliate_code { get { if (String.IsNullOrEmpty(_affiliate_code)) return ""; else return _affiliate_code; } set { _affiliate_code = value; } }
 
         #endregion
 
@@ -901,7 +903,7 @@ namespace V308CMS.Data
         public virtual ICollection<ProductAttribute> ProductAttribute { get; set; }
 
         [ForeignKey("Type")]
-        [Required]
+        //[Required]
         public virtual ProductType ProductType { get; set; }
 
         [ForeignKey("Manufacturer")]

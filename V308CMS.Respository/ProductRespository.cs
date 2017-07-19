@@ -210,6 +210,7 @@ namespace V308CMS.Respository
                           && product.Type == data.Type
                     select product
                     ).FirstOrDefault();
+
                 if (checkProduct == null)
                 {
                     entities.Product.Add(data);

@@ -211,6 +211,7 @@
     <Compile Include="Metadata\OrderTransactionMetadata.cs" />
     <Compile Include="Metadata\ProductOrderRevenueMetadata.cs" />
     <Compile Include="Metadata\ProductWishlistMetadata.cs" />
+    <Compile Include="Metadata\RevenueGainMetadata.cs" />
     <Compile Include="Metadata\ShippingAddressMetadata.cs" />
     <Compile Include="Metadata\EmailConfigMetadata.cs" />
     <Compile Include="Metadata\EmailLogMetadata.cs" />
@@ -238,6 +239,7 @@
     <Compile Include="Models\OrderTransaction.cs" />
     <Compile Include="Models\ProductOrderRevenue.cs" />
     <Compile Include="Models\ProductWishlist.cs" />
+    <Compile Include="Models\RevenueGain.cs" />
     <Compile Include="Models\ShippingAddress.cs" />
     <Compile Include="Models\EmailConfig.cs" />
     <Compile Include="Models\EmailLog.cs" />
@@ -265,6 +267,7 @@
     <Compile Include="ProductTypeRepository.cs" />
     <Compile Include="ProductWishlistRepositry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RevenueGainRepository.cs" />
     <Compile Include="SiteConfigRespository.cs" />
     <Compile Include="SiteRepository.cs" />
     <Compile Include="SupportRepository.cs" />

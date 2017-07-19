@@ -13,6 +13,7 @@ namespace V308CMS.Admin.Controllers
         //protected virtual new CustomPrincipal User;
         protected virtual new CustomPrincipal User => HttpContext.User as CustomPrincipal;
 
+        public CustomPrincipal currentUser;
         protected BaseController()
         {
             NewsService = new NewsRepository();
@@ -54,6 +55,12 @@ namespace V308CMS.Admin.Controllers
             TestimonialService = new TestimonialRepository();
             AffiliateCategoryRepo = new AffiliateCategoryRespository();
             VoucherRepo = new CouponRepository();
+            RevenueGainRepo = new RevenueGainRepository();
+            
+            if (System.Web.HttpContext.Current != null) {
+                currentUser = System.Web.HttpContext.Current.User as CustomPrincipal;
+            }
+            
 
         }
         public ProductOrderRespository OrderService { get; set; }
@@ -105,13 +112,14 @@ namespace V308CMS.Admin.Controllers
         public FileRepository FileService { get; set; }
         public TestimonialRepository TestimonialService { get; set; }
 
-
         public NewsRepository NewsService { get; set; }
 
         public AffiliateCategoryRespository AffiliateCategoryRepo { get; set; }
         public CouponRepository VoucherRepo { get; set; }
+        public AccountRepository AccountService { get; set; }
 
-        protected AccountRepository AccountService { get; set; }
+        protected RevenueGainRepository RevenueGainRepo { get; set; }
+        
 
         protected object GetState(string name,object value,object defaultValue)
         {

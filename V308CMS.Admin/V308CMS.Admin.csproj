@@ -240,6 +240,7 @@
     <Compile Include="Helpers\FileUploadHelper.cs" />
     <Compile Include="Helpers\FlashMessageHelper.cs" />
     <Compile Include="Helpers\Result.cs" />
+    <Compile Include="Helpers\UI\AffiliateStatus.cs" />
     <Compile Include="Helpers\UI\DisplayColorHelper.cs" />
     <Compile Include="Helpers\UI\NewsCategoryUIHelper.cs" />
     <Compile Include="Helpers\UI\OrderStateHelper.cs" />
@@ -1983,6 +1984,8 @@
     <Content Include="Views\Profile\UpdateProfile.cshtml" />
     <Content Include="Views\Order\Edit.cshtml" />
     <Content Include="Views\Order\_OrderForm.cshtml" />
+    <Content Include="Views\User\affiliate_accounts.cshtml" />
+    <Content Include="Views\Shared\UI\_UseForSiteList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
