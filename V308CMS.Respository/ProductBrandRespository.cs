@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using V308CMS.Data;
+using V308CMS.Data.Helpers;
 
 namespace V308CMS.Respository
 {
@@ -15,8 +16,6 @@ namespace V308CMS.Respository
 
     public class ProductBrandRespository : IBaseRespository<Brand>, IProductBrandRespository
     {
-
-      
 
         public ProductBrandRespository()
         {

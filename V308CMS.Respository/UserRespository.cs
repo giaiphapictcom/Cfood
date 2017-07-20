@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using V308CMS.Common;
 using V308CMS.Data;
+using V308CMS.Data.Helpers;
 
 namespace V308CMS.Respository
 {
@@ -109,6 +110,16 @@ namespace V308CMS.Respository
         }
 
         public List<Account> GetAll()
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return (from user in entities.Account
+                        orderby user.Date.Value descending
+                        select user).ToList();
+            }
+
+        }
+        public List<Account> GetAll(string site = Site.home)
         {
             using (var entities = new V308CMSEntities())
             {

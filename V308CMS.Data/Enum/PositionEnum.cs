@@ -6,6 +6,9 @@ namespace V308CMS.Data.Enum
   
     public enum PositionEnum
     {
+        [Description("Slide Show")]
+        Slide = 2,
+
         [Description("Trang chủ")]
         Home = 10,
         [Description("Trang chủ - Top")]

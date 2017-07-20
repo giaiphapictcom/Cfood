@@ -14,7 +14,7 @@ namespace V308CMS.Data.Metadata
         public string Name { get; set; }
         [MaxLength(250)]
         public string Description { get; set; }
-        public byte Position { get; set; }
+        public int Position { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
         [MaxLength(2500)]

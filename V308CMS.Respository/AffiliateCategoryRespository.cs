@@ -74,6 +74,17 @@ namespace V308CMS.Respository
             }
         }
 
+        public List<Categorys> GetAll(string site = Site.home)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return (from c in entities.Categorys
+                        where c.status == true
+                        orderby c.id descending
+                        select c).ToList();
+            }
+        }
+
         public string Update(Categorys data)
         {
             using (var entities = new V308CMSEntities())

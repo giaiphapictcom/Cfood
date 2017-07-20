@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using V308CMS.Data;
+using V308CMS.Data.Helpers;
 using V308CMS.Data.Models;
 
 namespace V308CMS.Respository
@@ -135,6 +136,19 @@ namespace V308CMS.Respository
            
         }
 
+        public List<Banner> GetAll(string site = Site.home)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return (from banner in entities.Banner
+                        where banner.Site == site
+                        orderby banner.UpdatedAt descending
+                        select banner
+                    ).ToList();
+            }
+
+        }
+
         public string ChangeStatus(int id)
         {
             using (var entities = new V308CMSEntities())
@@ -156,15 +170,15 @@ namespace V308CMS.Respository
 
        
 
-        public List<Banner> GetList(int position = 0,string site= Data.Helpers.Site.home, bool withImg = false,int limit = 1)
+        public List<Banner> GetList(int position = 0,string site= Site.home, bool withImg = false,int limit = 1)
         {
             var banners = new List<Banner>();
             using (var entities = new V308CMSEntities())
             {
 
                 try {
-                    IQueryable<Banner> items = entities.Banner;
-                    if (site == Data.Helpers.Site.home)
+                    var items = entities.Banner.Select(b=>b);
+                    if (site == Site.home)
                     {
                         items = items.Where(b => b.Site == site || b.Site == "" || b.Site == null || b.Site =="1");
                     }
@@ -174,21 +188,23 @@ namespace V308CMS.Respository
 
                     if (position >= 0)
                     {
-                        items = items.Where(b => b.Position.Equals(position));
+                        items = items.Where(b => b.Position ==position);
                     }
                     if (withImg)
                     {
                         items = items.Where(b => b.ImageUrl.Length > 0);
                     }
 
-                    if (items.Any() )
-                    {
-                        banners = items.OrderBy(b => b.Order).ToList();
-                        if (limit > 0)
+                    //if (items.Any() )
+                    //{
+
+
+                    if (limit > 0)
                         {
-                            banners = items.Take(limit).ToList();
+                        items = items.Take(limit);
                         }
-                    }
+                    banners = items.OrderBy(b => b.Order).ToList();
+                    //}
                 }
                 catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
                 {

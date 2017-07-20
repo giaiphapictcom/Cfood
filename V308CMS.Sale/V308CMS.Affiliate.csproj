@@ -1478,6 +1478,7 @@
     <Content Include="Views\Partner\OrderSearch.cshtml" />
     <Content Include="Views\Partner\Revenue.cshtml" />
     <Content Include="Views\Partner\ReportOverview.cshtml" />
+    <Content Include="Views\Affiliate\Blocks\BannerBlockRight.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

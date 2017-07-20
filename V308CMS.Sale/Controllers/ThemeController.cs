@@ -6,7 +6,8 @@ using System.Web.Mvc;
 using V308CMS.Common;
 using V308CMS.Data;
 using V308CMS.Data.Models;
-using V308CMS.Respository;
+using V308CMS.Data.Helpers;
+using V308CMS.Data.Enum;
 
 namespace V308CMS.Sale.Controllers
 {
@@ -17,43 +18,6 @@ namespace V308CMS.Sale.Controllers
         public ThemeController() {
             MainController = "Affiliate";
         }
-
-        //#region Repository
-        //static V308CMSEntities mEntities;
-        //ProductRepository ProductRepos;
-        //ImagesRepository imagesRepos;
-        //NewsRepository NewsRepos;
-        //NewsGroupRepository NewsGroupRepos;
-        //AccountRepository accountRepos;
-        //MenuConfigRespository MenuRepos;
-
-        //BannerRespository BannerRepos;
-
-        //private void CreateRepos()
-        //{
-        //    mEntities = new V308CMSEntities();
-        //    ProductRepos = new ProductRepository();
-        //    imagesRepos = new ImagesRepository();
-        //    NewsRepos = new NewsRepository();
-        //    NewsGroupRepos = new NewsGroupRepository();
-        //    accountRepos = new AccountRepository();
-        //    MenuRepos = new MenuConfigRespository();
-        //    BannerRepos = new BannerRespository();
-
-        //}
-        //private void DisposeRepos()
-        //{
-
-        //    //ProductRepos.Dispose();
-        //    //imagesRepos.Dispose();
-        //    //NewsRepos.Dispose();
-        //    ////NewsGroupRepos.Dispose();
-        //    //accountRepos.Dispose();
-        //    //MenuRepos.Dispose();
-        //    //mEntities.Dispose();
-
-        //}
-        //#endregion
 
         public ActionResult CategoryMenu()
         {
@@ -221,8 +185,16 @@ namespace V308CMS.Sale.Controllers
 
         public ActionResult HomeSlides()
         {
+            var position = (int)PositionEnum.Slide;
+            var items = BannerRepo.GetList(position, Site.affiliate, true,-1);
             string view = "~/Views/" + MainController + "/Blocks/HomeSlides.cshtml";
-            return View(view);
+            return View(view, items);
+        }
+
+        public ActionResult NewsBannerBlockRight() {
+            var items = BannerRepo.GetList((int)PositionEnum.NewsRight, Site.affiliate, true, 2);
+            string view = "~/Views/" + MainController + "/Blocks/BannerBlockRight.cshtml";
+            return View(view, items);
         }
 
 

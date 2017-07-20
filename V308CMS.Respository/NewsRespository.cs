@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using V308CMS.Data;
+using V308CMS.Data.Helpers;
 
 namespace V308CMS.Respository
 {
@@ -46,6 +47,17 @@ namespace V308CMS.Respository
                         where news.Status == true
                     orderby news.ID descending
                     select news).ToList();
+            }
+        }
+
+        public List<News> GetAll(string site = Site.home)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return (from news in entities.News
+                        where news.Status == true
+                        orderby news.ID descending
+                        select news).ToList();
             }
         }
 

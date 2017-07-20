@@ -25,7 +25,8 @@ namespace V308CMS.Sale.Helpers
         public static string GoogleLoginCallback = Configs.GetItemConfig("GoogleLoginCallback");
         public static string RecaptchaSecretKey = "";
         public static string RecaptchaSitekey = "";
-        
+        public static string SiteLogo = "";
+
 
 
 

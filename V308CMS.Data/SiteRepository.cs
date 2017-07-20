@@ -21,6 +21,9 @@ namespace V308CMS.Data
                 {
                     siteconfig = siteconfig.Where(m => m.Site == site || m.Site == "" || m.Site == "1" || m.Site == string.Empty);
                 }
+                else {
+                    siteconfig = siteconfig.Where(m => m.Site == site);
+                }
 
                 var config = siteconfig.FirstOrDefault();
 

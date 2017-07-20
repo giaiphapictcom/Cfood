@@ -101,6 +101,7 @@ namespace V308CMS.Sale.Controllers
 
             ConfigHelper.RecaptchaSecretKey = ConfigRepo.SiteConfig("RecaptchaSecretKey");
             ConfigHelper.RecaptchaSitekey = ConfigRepo.SiteConfig("RecaptchaSitekey");
+            ConfigHelper.SiteLogo = ConfigRepo.SiteConfig("site-logo",Data.Helpers.Site.affiliate);
             GoogleplusService = new GoogleplusService(ConfigHelper.GoogleAppId, ConfigHelper.GoogleAppSecret);
             FacebookService = new FacebookService(ConfigHelper.FacebookAppId, ConfigHelper.FacebookAppSecret);
             CreateRepos();

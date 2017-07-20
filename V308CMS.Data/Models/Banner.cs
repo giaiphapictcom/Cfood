@@ -22,7 +22,7 @@ namespace V308CMS.Data.Models
         
         public string Name { get; set; }
         public string Description { get; set; }
-        public byte Position { get; set; }
+        public int Position { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
         public DateTime? StartDate { get; set; }

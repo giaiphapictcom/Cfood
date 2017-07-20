@@ -19,7 +19,7 @@
                     <h1 >@PageTitle</h1>
                 </div>
                 <hr class="redline" />
-                <div class="col-md-12 col-sm-12 col-xs-12 article-home-full">
+                <div class="col-md-8 col-xs-12 article-home-full">
                     @if (Model.ListNews != null && Model.ListNews.Count() > 0)
                     {
 
@@ -35,6 +35,9 @@
                             <hr />
                         }
                     }
+                </div>
+                <div class="col-md-4 col-xs-12">
+                    @Html.Action("NewsBannerBlockRight", "Theme")
                 </div>
             </div>
         </div>

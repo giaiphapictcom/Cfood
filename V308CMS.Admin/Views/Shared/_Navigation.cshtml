@@ -688,6 +688,14 @@
                                 </li>
 
                             }
+
+                            @if (IsHasPermission(listRolePermission, "SiteConfig", 0))
+                            {
+                                <li>
+                                    <a href="@Url.SiteConfigAffiliate()">Cấu hình hệ thống</a>
+                                </li>
+                            }
+
                             @if (IsHasPermission(listRolePermission, "AffiliateNews", 0))
                                     {
                                         <li>
