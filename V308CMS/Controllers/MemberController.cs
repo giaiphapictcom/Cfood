@@ -12,7 +12,10 @@ namespace V308CMS.Controllers
     
     public class MemberController : BaseController
     {
-
+        public MemberController(){
+            VisisterRepo.UpdateView();
+        }
+        
         [HttpPost]
         public JsonResult CheckEmail(string email)
         {

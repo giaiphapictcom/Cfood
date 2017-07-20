@@ -10,7 +10,9 @@ namespace V308CMS.Controllers
 
     public class ProductController : BaseController 
     {
-        
+        public ProductController() {
+            VisisterRepo.UpdateView();
+        }
         public ActionResult Index(int id)
         {
             var product = ProductsService.GetById(id);
@@ -52,11 +54,6 @@ namespace V308CMS.Controllers
         }
         
         public ActionResult BigSale(){
-            
-
-
-
-
             try {
                 
                 ProductItemsPage Model = new ProductItemsPage();

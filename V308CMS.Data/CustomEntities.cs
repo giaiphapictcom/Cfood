@@ -1797,9 +1797,9 @@ namespace V308CMS.Data
         private string _host;
         private string _platform;
         private string _browser;
-        
-
-
+        private string _browser_type;
+        private string _browser_version;
+        private int _affiliate_id;
         private DateTime? _created;
         
         #endregion
@@ -1808,18 +1808,20 @@ namespace V308CMS.Data
         [Key]
         public int id { get { return _ID; } set { _ID = value; } }
         public DateTime? timestamp { get { if (_created == null) return new DateTime(); else return _created; } set { if (_created != value) { _created = value; } } }
-
         public string ip_address { get { if (String.IsNullOrEmpty(_ip)) return ""; else return _ip; } set { _ip = value; } }
         public string host { get { if (String.IsNullOrEmpty(_host)) return ""; else return _host; } set { _host = value; } }
         public string useragent { get { if (String.IsNullOrEmpty(_useragent)) return ""; else return _useragent; } set { _useragent = value; } }
         public string platform { get { if (String.IsNullOrEmpty(_platform)) return ""; else return _platform; } set { _platform = value; } }
         public string browser { get { if (String.IsNullOrEmpty(_browser)) return ""; else return _browser; } set { _browser = value; } }
+        public string browser_type { get { if (String.IsNullOrEmpty(_browser_type)) return ""; else return _browser_type; } set { _browser_type = value; } }
+        public string browser_version { get { if (String.IsNullOrEmpty(_browser_version)) return ""; else return _browser_version; } set { _browser_version = value; } }
         public int? uid { get { if (_uid == null || _uid < 0) return 0; else return _uid; } set { if (_uid != value) { if (_uid < 0) _uid = 0; else _uid = value; } } }
         public string user_type { get { if (String.IsNullOrEmpty(_user_type)) return ""; else return _user_type; } set { _user_type = value; } }
+        public int affiliate_id { get { return _affiliate_id; } set { _affiliate_id = value; } }
 
-    #endregion
+        #endregion
 
-}
+    }
 
 
     //[Table("categorys")]

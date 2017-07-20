@@ -253,6 +253,7 @@
     <Compile Include="Models\Size.cs" />
     <Compile Include="Models\Store.cs" />
     <Compile Include="Models\SupportMan.cs" />
+    <Compile Include="Models\VisisterTime.cs" />
     <Compile Include="Models\Voucher.cs" />
     <Compile Include="Models\VoucherCode.cs" />
     <Compile Include="Models\VoucherLog.cs" />

@@ -144,6 +144,7 @@ namespace V308CMS.Controllers
             SiteConfigRepo = new Data.SiteConfigRespository();
             LoadSiteConfig();
 
+            VisisterRepo = new VisisterRepository();
         }
         public FacebookService FacebookService { get; }
         public GoogleplusService GoogleplusService { get; }
@@ -156,7 +157,7 @@ namespace V308CMS.Controllers
         public Data.SiteConfigRespository SiteConfigService { get; }
         public Data.ProductTypeRepository ProductTypeService { get; }
         public BannerRespository BannerService { get; }
-
+        public VisisterRepository VisisterRepo { get; set; }
         public MenuConfigRespository MenuConfigService { get; }
 
         protected IContactRepository ContactService { get; }

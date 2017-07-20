@@ -428,7 +428,12 @@ namespace V308CMS.Data
             get;
             set;
         }
-
+        public DbSet<VisisterTime> VisisterTimeTbl
+        {
+            get;
+            set;
+        }
+        
         public DbSet<SupportMan> SupportManTbl
         {
             get;

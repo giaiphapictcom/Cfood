@@ -17,6 +17,7 @@ namespace V308CMS.Controllers
     {      
         public HomeController()
         {
+            VisisterRepo.UpdateView();
         }
 
         public async Task<ActionResult> Index()

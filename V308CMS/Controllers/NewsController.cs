@@ -13,7 +13,7 @@ namespace V308CMS.Controllers
     {
         public NewsController()
         {
-           
+            VisisterRepo.UpdateView();
         }
         private const int PageSize = 10;
         private const int NewsType = 58;
