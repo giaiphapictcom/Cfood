@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using V308CMS.Data;
 using V308CMS.Data.Enum;
+using V308CMS.Data.Helpers;
 
 namespace V308CMS.Respository
 {
     public interface IProductOrderRespository
     {
-        List<ProductOrder> GetListOrder(byte searchType,string keyword,byte status,
+        List<ProductOrder> GetListOrder(byte searchType,string keyword,int status,
             DateTime startDate, DateTime endDate, out int totalRecord, int page =1, int pageSize=25);
 
         ProductOrder FindToEdit(int id);
@@ -20,7 +21,7 @@ namespace V308CMS.Respository
     public  class ProductOrderRespository: IProductOrderRespository
     {
         public List<ProductOrder> GetListOrder(
-            byte searchType, string keyword, byte status,
+            byte searchType, string keyword, int status,
             DateTime startDate, DateTime endDate,out int totalRecord, int page = 1, int pageSize = 25)
         {
             using (var entities = new V308CMSEntities())
@@ -99,9 +100,16 @@ namespace V308CMS.Respository
                 }
                 totalRecord = listOrder.Count();
 
-                return listOrder.OrderByDescending(o=>o.Date).Skip((page - 1) * pageSize)
+                if (pageSize > 0)
+                {
+                    return listOrder.OrderByDescending(o => o.Date).Skip((page - 1) * pageSize)
                     .Take(pageSize)
                     .ToList();
+                }
+                else {
+                    return listOrder.OrderByDescending(o => o.Date).ToList();
+                }
+                
 
                 //return (from order in listOrder
                 //    orderby order.Date descending
@@ -175,6 +183,27 @@ namespace V308CMS.Respository
                 if (orderUpdateDetail != null)
                 {
                     orderUpdateDetail.Status = status;
+
+                    if (status == (int)OrderStatusEnum.Complete) {
+                        var OrderDetailRepo = new ProductOrderDetailRespository();
+                        var RevenueGainRepo = new RevenueGainRepository();
+
+                        var ItemDetails = OrderDetailRepo.GetListOrderDetailByOrderId(orderUpdateDetail.ID);
+                        double money = 0;
+                        if (ItemDetails.Count > 0)
+                        {
+                            foreach (var d in ItemDetails)
+                            {
+                                var revenue = RevenueGainRepo.ItemLatest((int)d.item_id);
+                                if (revenue != null) {
+                                    money += (double)(revenue.value * d.item_price / 100);
+                                }
+                                
+                            }
+                        }
+                        orderUpdateDetail.revenue = money;
+                    }
+
                     entities.SaveChanges();
                     return "ok";
                 }
@@ -214,6 +243,39 @@ namespace V308CMS.Respository
                     return "ok";
                 }
                 return "not_exists";
+            }
+        }
+
+        public int OrderCountByManagers(List<int> members) {
+            int value = 1;
+            using (var entities = new V308CMSEntities())
+            {
+                var orders = entities.ProductOrder.Select(o => o);
+                orders = orders.Where(o => members.Contains((int)o.AccountID));
+                value = orders.Count();
+            }
+                
+            return value;
+        }
+
+        public string UpdateRevenuePay(int id, double money)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                var order = entities.ProductOrder.Where(o => o.ID == id).FirstOrDefault();
+
+                if (order != null)
+                {
+                    if (order.revenue < money) {
+                        return Result.NotExists;
+                    }
+
+                    order.revenue_payed = (double)money;
+                    entities.SaveChanges();
+                    return Result.Ok;
+                }
+                return Result.NotExists;
+
             }
         }
     }

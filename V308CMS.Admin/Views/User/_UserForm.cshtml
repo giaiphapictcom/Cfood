@@ -32,6 +32,11 @@
                 @Html.LabelFor(user => Model.AffiliateCode)
                 @Html.TextBoxFor(user => Model.AffiliateCode, new { @class = "form-control", placeholder = "Nhập mã Affiliate" })
             </div>
+
+            <div class="form-group">
+                @Html.LabelFor(user => Model.FacebookPage)
+                @Html.TextBoxFor(user => Model.FacebookPage, new { @class = "form-control", placeholder = "Facebook Url" })
+            </div>
         }
         @if (Model.AvatarUrl != null && Model.AvatarUrl.Length > 0)
         {

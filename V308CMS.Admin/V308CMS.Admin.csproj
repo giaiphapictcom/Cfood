@@ -190,6 +190,7 @@
     <Compile Include="Controllers\AdminAccountController.cs" />
     <Compile Include="Controllers\AffiliateAccountController.cs" />
     <Compile Include="Controllers\AffiliateCategoryController.cs" />
+    <Compile Include="Controllers\AffiliateController.cs" />
     <Compile Include="Controllers\AsyncController.cs" />
     <Compile Include="Controllers\BannerController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -247,6 +248,7 @@
     <Compile Include="Helpers\UI\StateLabelHelper.cs" />
     <Compile Include="Helpers\Url\AccountUrlHelper.cs" />
     <Compile Include="Helpers\Url\AdminAccountUrlHelper.cs" />
+    <Compile Include="Helpers\Url\AffiliateUrlHelper.cs" />
     <Compile Include="Helpers\Url\AsyncUrlHelper.cs" />
     <Compile Include="Helpers\Url\BannerUrlHelper.cs" />
     <Compile Include="Helpers\Url\ContactUrlHelper.cs" />
@@ -1986,6 +1988,11 @@
     <Content Include="Views\Order\_OrderForm.cshtml" />
     <Content Include="Views\User\affiliate_accounts.cshtml" />
     <Content Include="Views\Shared\UI\_UseForSiteList.cshtml" />
+    <Content Include="Views\Affiliate\Index.cshtml" />
+    <Content Include="Views\Affiliate\Links.cshtml" />
+    <Content Include="Views\Affiliate\Vouchers.cshtml" />
+    <Content Include="Views\Affiliate\WebsiteRequest.cshtml" />
+    <Content Include="Views\Affiliate\Orders.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

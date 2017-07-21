@@ -19,8 +19,8 @@ namespace V308CMS.Data.Models
         }
         public int id { get; set; }
         public int product_id { get; set; }
-        public float value { get; set; }
-        public byte status { get; set; }
+        public double value { get; set; }
+        public int status { get; set; }
         public int created_by { get; set; }
         public DateTime created { get; set; }
 

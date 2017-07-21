@@ -1,12 +1,9 @@
 ﻿@using V308CMS.Admin.Helpers
 @using V308CMS.Admin.Helpers.Url
 @using V308CMS.Admin.Models.UI
-@using V308CMS.Admin.Helpers
-@using V308CMS.Admin.Helpers.Url
-@using V308CMS.Admin.Models
+@using V308CMS.Admin.Helpers.UI
 @using V308CMS.Admin.Models.UI
-@using V308CMS.Common
-@using V308CMS.Data
+
 @model List<V308CMS.Data.Account>
 @{
     ViewBag.Title = "Danh sách khác hàng";
@@ -26,7 +23,7 @@
                     <th>Họ tên</th>
                     <th>Email</th>
                     <th>SĐT</th>
-                    <th>Địa chỉ</th>
+                    <th>Quản Lý</th>
                     <th>Giới tính</th>
                     <th>Trạng thái</th>
                     <th style="text-align: center">Hành động</th>
@@ -57,7 +54,7 @@
                             @user.Phone
                         </td>
                         <td>
-                            @user.Address.ToTitle()
+                            @user.AffiliateManager()
                         </td>
                         <td>
                             @(user.Gender == false ? "Nam" : "Nữ")

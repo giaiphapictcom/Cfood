@@ -48,17 +48,24 @@ namespace V308CMS.Respository
         {
             using (var entities = new V308CMSEntities())
             {
-                var item =  (from p in entities.Product.
-                    Include("ProductImages").
-                    Include("ProductColor").
-                    Include("ProductSize").
-                    Include("ProductAttribute").
-                    Include("ProductSaleOff")
-                        where p.ID == id
-                        select p
+                var item = (from p in entities.Product.
+                   Include("ProductImages").
+                   Include("ProductColor").
+                   Include("ProductSize").
+                   Include("ProductAttribute").
+                   Include("ProductSaleOff")
+                            where p.ID == id
+                            select p
                 ).FirstOrDefault();
 
-                item.ProductManufacturer = entities.ProductManufacturer.Where(m=>m.ID==item.Manufacturer).FirstOrDefault();
+                if (item.Manufacturer != null)
+                {
+                    item.ProductManufacturer = entities.ProductManufacturer.Where(m => m.ID == item.Manufacturer).FirstOrDefault();
+                }
+                else {
+                    item.ProductManufacturer = new ProductManufacturer();
+                }
+                
                 item.ProductType = entities.ProductType.Where(c => c.ID == item.Type).FirstOrDefault();
                 return item;
             }

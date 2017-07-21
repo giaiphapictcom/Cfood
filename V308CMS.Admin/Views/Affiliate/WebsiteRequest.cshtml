@@ -1,0 +1,49 @@
+﻿@using V308CMS.Data
+@using V308CMS.Admin.Helpers.Url
+@using V308CMS.Admin.Helpers
+@using V308CMS.Common
+@model List<V308CMS.Data.Models.WebsiteRequest>
+@{
+    ViewBag.Title = "Thống kê Links đã tạo";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+
+@if (Model.Any())
+{
+    <div class="panel panel-default">
+        <div class="panel-body">
+          
+            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Domain</th>
+                    <th>Người tạo</th>
+                    <th>Ngày Tạo</th>
+                </tr>
+                </thead>
+                <tbody>
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    var site = Model[i];
+                    <tr>
+                        <td class="text-center">
+                            @(i + 1)
+                        </td>
+                        <td>@site.domain</td>
+                        <td>@AffiliateHelper.AccountInfo(site.created_by)</td>
+                        <td>@String.Format("{0:d}", site.created)</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+     </div>
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#dataTables-example').DataTable({
+            responsive: true
+        });
+    });
+</script>

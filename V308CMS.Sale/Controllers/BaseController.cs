@@ -16,6 +16,7 @@ namespace V308CMS.Sale.Controllers
         public ProductRepository ProductRepos;
 
         public AccountRepository AccountRepos;
+        public UserRespository UserRepo;
         public NewsRepository NewsRepos;
         public TestimonialRepository CommentRepo;
         public CategoryRepository CategoryRepo;
@@ -42,6 +43,7 @@ namespace V308CMS.Sale.Controllers
             ProductHelper.ProductShowLimit = ProductRepos.PageSize;
 
             AccountRepos = new AccountRepository();
+            UserRepo = new UserRespository();
             NewsRepos = new NewsRepository();
             NewsGroupRepos = new NewsGroupRepository();
             CommentRepo = new TestimonialRepository(mEntities);

@@ -135,14 +135,16 @@ namespace V308CMS.Data
         /*
          * 20170708 add by QuanNH
          */
-        public List<Counpon> GetList(int page = 1, int pageSize = 10, int status = -1)
+        public List<Counpon> GetList(int page = 1, int pageSize = 10, int status = -1,int uid=0)
         {
             List<Counpon> vouchers = new List<Counpon>();
             using (var entities = new V308CMSEntities())
             {
 
                 var items = entities.CounponTbl.Select(c => c);
-
+                if (uid > 0) {
+                    items = items.Where(c=>c.created_by == uid);
+                }
                 if (status > 0)
                 {
                     items = items.Where(c => c.status == 1);
@@ -152,7 +154,15 @@ namespace V308CMS.Data
                     items = items.Where(c => c.status == 0);
                 }
 
-                vouchers = items.OrderBy(c => c.ID).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+                items = items.OrderBy(c => c.ID);
+
+                if (pageSize > 0)
+                {
+                    vouchers = items.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+                }
+                else {
+                    vouchers = items.ToList();
+                }
             }
             return vouchers;
 

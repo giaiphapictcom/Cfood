@@ -82,6 +82,8 @@ namespace V308CMS.Respository
                     userUpdate.Date = account.Date;
                     userUpdate.Site = account.Site;
                     userUpdate.affiliate_code = account.affiliate_code;
+                    userUpdate.facebook_page = account.facebook_page;
+                    userUpdate.affiliate_id = account.affiliate_id;
                     entities.SaveChanges();
                     return Data.Helpers.Result.Ok;
                 }
@@ -251,6 +253,16 @@ namespace V308CMS.Respository
                         orderby user.Date.Value descending
                         select user).Take(count).ToList();
             }
+        }
+
+        public List<int> GetMemberIdOfAffiliate(int affiliate_id=0) {
+            var items = new List<int>();
+            using (var entities = new V308CMSEntities())
+            {
+                var users = entities.Account.Where(a=>a.affiliate_id==affiliate_id).Select(a=> a.ID);
+                items = users.ToList();
+            }
+            return items;
         }
     }
 }

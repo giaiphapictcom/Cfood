@@ -145,6 +145,7 @@ namespace V308CMS.Controllers
             LoadSiteConfig();
 
             VisisterRepo = new VisisterRepository();
+            LinkRepo = new LinkRepository();
         }
         public FacebookService FacebookService { get; }
         public GoogleplusService GoogleplusService { get; }
@@ -159,17 +160,11 @@ namespace V308CMS.Controllers
         public BannerRespository BannerService { get; }
         public VisisterRepository VisisterRepo { get; set; }
         public MenuConfigRespository MenuConfigService { get; }
-
         protected IContactRepository ContactService { get; }
-
         protected ImagesRepository ImagesService { get; }
-
         protected MarketRepository MarketService { get; }
-
         protected NewsRepository NewsService { get; }
-
         protected IProductWishlistRepositry ProductWishlistService { get; }
-
         protected ProductRepository ProductsService { get; }
 
         protected AccountRepository AccountService { get; }
@@ -182,6 +177,7 @@ namespace V308CMS.Controllers
         public CartItemRepository CartItemService { get; }
 
         public Data.SiteConfigRespository SiteConfigRepo { get; set; }
+        public LinkRepository LinkRepo { get; set; }
 
         private void SetTempSession(string name, string value ="")
         {

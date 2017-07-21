@@ -51,12 +51,16 @@ namespace V308CMS.Admin.Controllers
             FileService = new FileRepository();
            
             OrderService = new ProductOrderRespository();
+            LinkRepo = new LinkRepository();
+            LinkRepo.PageSize = ListViewLimit;
 
             TestimonialService = new TestimonialRepository();
             AffiliateCategoryRepo = new AffiliateCategoryRespository();
             VoucherRepo = new CouponRepository();
             RevenueGainRepo = new RevenueGainRepository();
-            
+            WebsiteRequestRepo = new WebsiteRequestRepository();
+
+
             if (System.Web.HttpContext.Current != null) {
                 currentUser = System.Web.HttpContext.Current.User as CustomPrincipal;
             }
@@ -72,37 +76,24 @@ namespace V308CMS.Admin.Controllers
         public ProductColorRespository ProductColorService { get;set; }
         public ProductSizeRespository ProductSizeService { get;set; }       
         public ProductDistributorRespository ProductDistributorService { get; set;}
-
         public ProductManufacturerRespository ProductManufacturerService { get;set; }
-
         public ProductBrandRespository ProductBrandService { get; set;}
         public ProductImageRespository ProductImageService { get; set;}
-
         public ProductAttributeRespository ProductAttributeService { get; set;}
-
         public PermissionRespository PermissionService { get; set;}
         public RoleRespository RoleService { get; set;}
-
         public UserRespository UserService { get; set;}
-
         public SizeRespository SizeService { get; set;}
-
         public CountryRespository CountryService { get; set;}
-
         public ColorRespository ColorService { get; set;}
-
         public UnitRespository UnitService { get; set;}
-
         public StoreRespository ProductStoreService { get; set;}
         public MenuConfigRespository MenuConfigService { get; set;}
-
         public EmailConfigRepository EmailConfigService { get; set;}
-
         public Respository.SiteConfigRespository SiteConfigService { get; set;}
-
         public Respository.ProductTypeRepository ProductTypeService { get; set;}
-
         public NewsGroupRepository NewsGroupService { get; set;}
+        public LinkRepository LinkRepo { get; set; }
 
         protected ContactRepository ContactService { get; set;}
         public SupportRepository SupportService { get; set; }
@@ -117,6 +108,7 @@ namespace V308CMS.Admin.Controllers
         public AffiliateCategoryRespository AffiliateCategoryRepo { get; set; }
         public CouponRepository VoucherRepo { get; set; }
         public AccountRepository AccountService { get; set; }
+        public WebsiteRequestRepository WebsiteRequestRepo { get; set; }
 
         protected RevenueGainRepository RevenueGainRepo { get; set; }
         

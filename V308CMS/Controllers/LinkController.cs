@@ -23,6 +23,7 @@ namespace V308CMS.Controllers
                             link.created_by = 0;
                         }
                         VisisterRepo.UpdateView(0,int.Parse(link.created_by.ToString()));
+                        LinkRepo.UpdateClick(link.ID);
                         Response.Redirect(link.url);
                     }
                     

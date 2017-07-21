@@ -457,6 +457,12 @@ namespace V308CMS.Data
             get;
             set;
         }
+
+        public DbSet<AffilateLinkClick> AffilateLinkClickTbl
+        {
+            get;
+            set;
+        }
         //public DbSet<Categorys> AffiliateCategory
         //{
         //    get;

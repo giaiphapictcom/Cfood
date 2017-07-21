@@ -11,14 +11,8 @@ using V308CMS.Sale.Models;
 using V308CMS.Sale.Helpers;
 using V308CMS.Data.Helpers;
 using V308CMS.Data.Models;
-
-
-using System.Collections.Generic;
-
+using V308CMS.Data.Enum;
 using System.Net;
-
-
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 
@@ -718,21 +712,44 @@ namespace V308CMS.Sale.Controllers
                     List<RevenueReportByDay> RevenueDays = new List<RevenueReportByDay>();
 
                     DateTime begin = today.AddMonths(-6);
-                    Model.days = Enumerable.Range(0, 7).Select(days => begin.AddMonths(days)).ToList();
-                    Model.days = Model.days.OrderByDescending(d => d).ToList();
-                    foreach (DateTime d in Model.days)
+                    var DaysCheck = Enumerable.Range(0, 7).Select(days => begin.AddMonths(days)).ToList();
+                    DaysCheck = DaysCheck.OrderByDescending(d => d).ToList();
+                    //Model.days = DaysSelect;
+                    var ReportDaysList = new List<DateTime>();
+                    int uid = int.Parse(Session["UserId"].ToString());
+
+                    var members = UserRepo.GetMemberIdOfAffiliate(uid);
+
+                    foreach (DateTime d in DaysCheck)
                     {
                         RevenueReportByDay RevenueDay = new RevenueReportByDay();
 
-                        var Revenues = from p in entities.ProductOrderRevenueTbl
-                                       where (p.Created.Year == d.Year && p.Created.Month == d.Month )
-                                       select p;
 
-                        RevenueDay.date = d;
-                        RevenueDay.Total = Revenues.Count();
+                        var orders = entities.ProductOrder.Where(o => o.Date.Year == d.Year && o.Date.Month == d.Month)
+                                    .Where(o => members.Contains((int)o.AccountID)).ToList();
+
+                        if (orders != null && orders.Count() > 0)
+                        {
+                            RevenueDay.date = d;
+                            RevenueDay.Total = orders.Count();
+                            RevenueDay.success = (float)orders.Where(o => o.Status == (int)OrderStatusEnum.Complete).Sum(o => o.revenue);
+                            RevenueDay.waiting = (float)orders.Where(o => o.Status == (int)OrderStatusEnum.Pending || o.Status == (int)OrderStatusEnum.Processing || o.Status == (int)OrderStatusEnum.Delivering).Sum(o => o.revenue);
+                            RevenueDay.cancel = (float)orders.Where(o => o.Status == (int)OrderStatusEnum.CancelledOrder || o.Status == (int)OrderStatusEnum.CanceelledPayment || o.Status == (int)OrderStatusEnum.Refund).Sum(o => o.revenue);
+
+                            RevenueDay.sended = (float)orders.Where(o => o.Status == 4).Sum(o => o.revenue_payed);
+                            RevenueDay.left = RevenueDay.success - RevenueDay.sended;
+                            
+                        }
+                        var LinksOfAffiliate = entities.AffiliateLink.Where(v => v.created_by == uid).Select(v => v.ID).ToList();
+                        var clicks = entities.AffilateLinkClickTbl.Where(o => o.created.Year == d.Year && o.created.Month == d.Month)
+                                .Where(o => LinksOfAffiliate.Contains((int)o.link_id)).ToList();
+
+                        RevenueDay.LinkClick = clicks.Sum(c => c.count);
                         RevenueDays.Add(RevenueDay);
+                        ReportDaysList.Add(d);
+
                     }
-                    //Model.Orders = ReportDays;
+                    Model.days = ReportDaysList;
                     Model.Revenues = RevenueDays;
                 }
 
@@ -752,7 +769,57 @@ namespace V308CMS.Sale.Controllers
         [HttpGet]
         [AffiliateAuthorize]
         public ActionResult Revenue() {
-            return View();
+            OrdersReportByDaysPage Model = new OrdersReportByDaysPage();
+            DateTime today = DateTime.Today;
+            using (var entities = new V308CMSEntities())
+            {
+
+                List<OrdersReportByDay> ReportDays = new List<OrdersReportByDay>();
+                List<RevenueReportByDay> RevenueDays = new List<RevenueReportByDay>();
+                int uid = int.Parse(Session["UserId"].ToString());
+
+                DateTime begin = today.AddMonths(-6);
+                var DaysCheck = Enumerable.Range(0, 7).Select(days => begin.AddMonths(days)).ToList();
+                DaysCheck = DaysCheck.OrderByDescending(d => d).ToList();
+                //Model.days = DaysSelect;
+                var ReportDaysList = new List<DateTime>();
+
+                var members = UserRepo.GetMemberIdOfAffiliate(uid);
+
+                foreach (DateTime d in DaysCheck)
+                {
+                    RevenueReportByDay RevenueDay = new RevenueReportByDay();
+
+                    var orders = entities.ProductOrder.Where(o => o.Date.Year == d.Year && o.Date.Month == d.Month)
+                                .Where(o => members.Contains((int)o.AccountID)).ToList();
+
+                    if (orders != null && orders.Count() > 0)
+                    {
+                        RevenueDay.date = d;
+                        RevenueDay.Total = orders.Count();
+                        RevenueDay.success = (float)orders.Where(o => o.Status == (int)OrderStatusEnum.Complete).Sum(o => o.revenue);
+                        RevenueDay.waiting = (float)orders.Where(o => o.Status == (int)OrderStatusEnum.Pending || o.Status == (int)OrderStatusEnum.Processing || o.Status == (int)OrderStatusEnum.Delivering).Sum(o => o.revenue);
+                        RevenueDay.cancel = (float)orders.Where(o => o.Status == (int)OrderStatusEnum.CancelledOrder || o.Status == (int)OrderStatusEnum.CanceelledPayment || o.Status == (int)OrderStatusEnum.Refund).Sum(o => o.revenue);
+                        RevenueDay.sended = (float)orders.Where(o => o.Status == 4).Sum(o => o.revenue_payed);
+                        RevenueDay.left = RevenueDay.success - RevenueDay.sended;
+                        RevenueDays.Add(RevenueDay);
+                        ReportDaysList.Add(d);
+
+                    }
+
+                    //var clicks = entities.VisisterTimeTbl.Where(o => o.created.Year == d.Year && o.created.Month == d.Month)
+                    //            .Where(o => VisiterOfAffiliate.Contains((int)o.visister_id)).ToList();
+
+                    //RevenueDay.LinkClick = clicks.Sum(c => c.count);
+                    //RevenueDays.Add(RevenueDay);
+                    //ReportDaysList.Add(d);
+
+                }
+                Model.days = ReportDaysList;
+                Model.Revenues = RevenueDays;
+            }
+
+            return View(Model);
         }
 
         #endregion

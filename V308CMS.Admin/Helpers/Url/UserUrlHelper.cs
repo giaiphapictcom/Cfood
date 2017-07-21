@@ -5,7 +5,6 @@ namespace V308CMS.Admin.Helpers.Url
 {
     public static class UserUrlHelper
     {
-
         public static string UserIndexUrl(string controller = "user",
              string action = "index")
         {

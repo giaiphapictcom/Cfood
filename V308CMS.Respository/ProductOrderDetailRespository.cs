@@ -16,6 +16,7 @@ namespace V308CMS.Respository
             using (var entities = new V308CMSEntities())
             {
                 return (from orderItem in entities.ProductOrderItem
+                        where orderItem.order_id == orderId
                     orderby orderItem.ID descending
                     select orderItem
                     ).ToList();

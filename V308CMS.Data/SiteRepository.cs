@@ -10,8 +10,6 @@ namespace V308CMS.Data
         {
         }
 
-
-
         public string SiteConfig(string name,string site = Data.Helpers.Site.home)
         {
             using (var entities = new V308CMSEntities())

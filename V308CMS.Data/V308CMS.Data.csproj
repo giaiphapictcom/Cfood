@@ -231,6 +231,7 @@
     <Compile Include="Metadata\VoucherLogMetadata.cs" />
     <Compile Include="Metadata\VoucherMetadata.cs" />
     <Compile Include="Metadata\WebsiteRequestMetadata.cs" />
+    <Compile Include="Models\AffilateLinkClick.cs" />
     <Compile Include="Models\Banner.cs" />
     <Compile Include="Models\CategoryItem.cs" />
     <Compile Include="Models\CategoryMarkChild.cs" />

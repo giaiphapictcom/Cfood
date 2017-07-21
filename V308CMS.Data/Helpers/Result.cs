@@ -9,6 +9,7 @@ namespace V308CMS.Data.Helpers
     {
         public const string Exists = "exists";
         public const string Ok = "ok";
+        public const string NotOk = "not_ok";
         public const string NotExists = "not_exists";
     }
 

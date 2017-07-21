@@ -2159,6 +2159,7 @@ namespace V308CMS.Data
     public class RevenueReportByDay
     {
         public DateTime date { get; set; }
+        public int LinkClick { get; set; }
         public int Total { get; set; }
         public float Money { get; set; }
 

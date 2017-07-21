@@ -57,7 +57,9 @@ namespace V308CMS.Admin.Controllers
                     Salt = StringHelper.GenerateString(6),
                     Avatar = user.Avatar != null
                         ? user.Avatar.Upload()
-                        : user.AvatarUrl
+                        : user.AvatarUrl,
+
+                    facebook_page = user.FacebookPage
                 };
                 newAccount.Password = EncryptionMD5.ToMd5( string.Format("{0}|{1 }",user.Password,newAccount.Salt) );
                 newAccount.Address = user.Address;
@@ -115,7 +117,10 @@ namespace V308CMS.Admin.Controllers
                 //Status = user.Status ?? false,
 
                 AvatarUrl = user.Avatar,
-                Site = user.Site
+                Site = user.Site,
+                FacebookPage = user.facebook_page,
+                AffiliateID = user.affiliate_id
+
             };
 
             return View("Edit", userEdit);
@@ -143,13 +148,15 @@ namespace V308CMS.Admin.Controllers
                     Gender = user.Gender,
                     Date = user.CreateDate,
                     Site = user.Site,
+                    facebook_page = user.FacebookPage,
+                    affiliate_id = user.AffiliateID,
+                    Status = user.Status
 
                 };
                 DateTime birthDayValue;
                 DateTime.TryParse(user.BirthDay, out birthDayValue);
-
                 userUpdate.BirthDay = birthDayValue;
-                userUpdate.Status = user.Status;
+
 
                 var result = UserService.Update(userUpdate);
                 if (result == Result.NotExists)

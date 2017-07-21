@@ -1,7 +1,7 @@
 ﻿@using V308CMS.Data
 @using V308CMS.Common
 @using V308CMS.Common.UI
-@model V308CMS.Data.AffiliateProductPage
+@model V308CMS.Data.OrdersReportByDaysPage
 @{
     Layout = "~/Views/Affiliate/Layout/Backend.cshtml";
     string PageTitle = "Báo cáo doanh thu";
@@ -14,23 +14,44 @@
 <div class="row">
     <div class="col-md-12">
         <a href="javascript:void(0);" class="btn border-radius-0" > <i class="fa fa-line-chart "></i> Báo cáo doanh thu</a>
+        <a href="/partner/reportoverview" class="btn border-radius-0"> <i class="fa fa-line-chart "></i> Báo Báo hiệu quả</a>
         <a href="/tai-khoan" class="btn border-radius-0" > <i class="fa fa-line-chart"></i> Thông tin thanh toán</a>
     </div>
     <hr />
 </div>
 
-    <table class="table table-bordered table-responsive">
-        <thead>
-            <tr>
-                <th>Tháng</th>
-                <th>Hoa Hồng thành công</th>
-                <th>Hoa Hồng chờ duyệt</th>
-                <th>Hoa Hồng bị Hủy</th>
-                <th>Đã trả</th>
-                <th>Còn Lại</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+
+<table class="table table-bordered table-responsive">
+    <thead>
+        <tr>
+            <th class="text-center">Tháng</th>
+            <th>Hoa Hồng thành công</th>
+            <th>Hoa Hồng chờ duyệt</th>
+            <th>Hoa Hồng bị Hủy</th>
+            <th>Đã trả</th>
+            <th>Còn Lại</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            var index = 0;
+            foreach (DateTime d in Model.days)
+            {
+                var line = Model.Revenues[index];
+                <tr>
+                    <th class="text-center">@String.Format("{0:MM/yyyy}", d)</th>
+                    <th class="text-right">@line.success.ToString("N0")</th>
+                    <th class="text-right">@line.waiting.ToString("N0")</th>
+                    <th class="text-right">@line.cancel.ToString("N0")</th>
+                    <th class="text-right">@line.sended.ToString("N0")</th>
+                    <th class="text-right">@line.left.ToString("N0")</th>
+                </tr>
+
+                index++;
+            }
+        }
+
+    </tbody>
+</table>
 
 
