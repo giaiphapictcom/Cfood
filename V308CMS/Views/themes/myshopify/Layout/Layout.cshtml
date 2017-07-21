@@ -1,5 +1,6 @@
 ﻿@using StackExchange.Profiling
 @using V308CMS.Helpers
+@using V308CMS.Helpers.Url
 <!doctype html>
 <!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
 <!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
@@ -43,6 +44,25 @@
         js = d.createElement(s); js.id = id;
         js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.8&appId=@ConfigHelper.FacebookAppId";
         fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));</script>
-</body>
+    }(document, 'script', 'facebook-jssdk'));</script>    
+<script type="text/javascript">
+    function showPopup(url) {
+        jQuery.get(url, function (response) {
+            jQuery('#modalPopUp').html(response);
+            jQuery('#modalPopUp').modal({ show: true });
+        });
+        return false;
+    }
+    function loginAndBuy() {
+        jQuery.get("@Url.LoginAndBuyUrl()", function (response) {
+            jQuery('#modalPopUp').html(response);
+            jQuery('#modalPopUp').modal({ show: true });
+        });
+
+    }
+    function buyNow() {
+        window.location = '@Url.CheckoutCartUrl()';
+    }
+    </script>
+         </body>
 </html>

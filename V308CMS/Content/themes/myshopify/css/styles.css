@@ -4952,7 +4952,7 @@ label.active {
 .login .btn-sign-in {
     border: none;
     color: #fff;
-    width: 246px;
+    width: 85px;
     height: 26px;
     font-weight: bold;
 
@@ -4983,7 +4983,8 @@ label.active {
     color: #00aeef !important;
     font-weight: bold !important;
     
-}btn-sign-in .popup_item {
+}
+btn-sign-in .popup_item {
     margin-left: 18px;
 }
 .social_button {

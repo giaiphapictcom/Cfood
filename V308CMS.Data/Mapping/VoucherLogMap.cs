@@ -25,7 +25,5 @@ namespace V308CMS.Data.Mapping
             Property(t => t.CreatedAt).HasColumnName("created_at");
 
         }
-
-
     }
 }

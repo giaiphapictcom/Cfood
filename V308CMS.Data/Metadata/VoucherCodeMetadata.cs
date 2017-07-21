@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace V308CMS.Data.Metadata
 {
@@ -13,8 +9,7 @@ namespace V308CMS.Data.Metadata
         public string Code { get; set; }
         [Required]
         public int VoucherId { get; set; }
-        [Required]
-        public int UserId { get; set; }        
+                
 
     }
 }

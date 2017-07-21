@@ -71,6 +71,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminRespository.cs" />
+    <Compile Include="AffilateCodeRespository.cs" />
+    <Compile Include="AffilateUserRespository.cs" />
     <Compile Include="AffiliateCategoryRespository.cs" />
     <Compile Include="BannerRespository.cs" />
     <Compile Include="BoxContentRespository.cs" />

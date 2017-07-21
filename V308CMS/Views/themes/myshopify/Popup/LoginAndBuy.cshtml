@@ -19,7 +19,6 @@
                     </a>
                 </div>
             </div>
-
             <div class="inner-popup-wrap login" style="margin-bottom: 20px; color: #111; width: 100%;">
                 <form action="@Url.AccounRegisterAjaxUrl()" id="login_buy_form" method="post">
                     <div class="body">
@@ -69,32 +68,33 @@
         });
 
         $("#btnCheckoutPopup").click(function (e) {
-            e.preventDefault();
-            if ($("#email").val() === "") {
-                showMessage("Vui lòng nhập email.");
-                $('#email').focus();
-                return false;
-            }
-            if (!validateEmail($("#email").val())) {
-                showMessage("Địa chỉ email không hợp lệ.");
-                $('#email').focus();
-                return false;
-            }
-            if ($("#password").val() === "") {
-                showMessage("Vui lòng nhập mật khẩu.");
-                $('#password').focus();
-                return false;
-            }
-
-            $.post("@Url.AccountAjaxLoginUrl()", { email: $("#email").val(), password: $('#password').val() }, function (response) {
-                if (response.code === 0) {
-                    showMessage(response.message);
+            if ($("input[name='checkout']").val() === "1") {
+                e.preventDefault();
+                if ($("#email").val() === "") {
+                    showMessage("Vui lòng nhập email.");
+                    $('#email').focus();
                     return false;
                 }
-                window.location = '@Url.CheckoutCartUrl()';
-                return true;
-            });
-
+                if (!validateEmail($("#email").val())) {
+                    showMessage("Địa chỉ email không hợp lệ.");
+                    $('#email').focus();
+                    return false;
+                }
+                if ($("#password").val() === "") {
+                    showMessage("Vui lòng nhập mật khẩu.");
+                    $('#password').focus();
+                    return false;
+                }
+                $.post("@Url.AccountAjaxLoginUrl()", { email: $("#email").val(), password: $('#password').val() }, function (response) {
+                    if (response.code === 0) {
+                        showMessage(response.message);
+                        return false;
+                    }
+                    window.location = '@Url.CheckoutCartUrl()';
+                    return true;
+                });
+            }
+            window.location = '@Url.CheckoutCartUrl()';
         });
 
     });

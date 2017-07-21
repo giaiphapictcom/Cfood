@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using V308CMS.Helpers.Discount;
 
 namespace V308CMS.Models
 {
@@ -113,18 +115,24 @@ namespace V308CMS.Models
             get
             {
                 var subTotalAfterService = SubTotal;
-                if (Voucher > 0){
-                    subTotalAfterService = (subTotalAfterService - ((subTotalAfterService / 100) * Voucher));
+                if (AffilateAmount > 0){
+                    subTotalAfterService = (subTotalAfterService - ((subTotalAfterService / 100) * AffilateAmount));
                 }
+                if (Discount?.DiscountRule != null && (Discount.Amount>0))
+                {
+                    subTotalAfterService = Discount.DiscountRule.ApplyDiscount(subTotalAfterService,Discount.Amount);
+                }
+               
                 if (ShipPrice > 0){
                     subTotalAfterService += ShipPrice;
                 }
-                return subTotalAfterService;
+                return  Math.Round(subTotalAfterService) ;
             }
         }
-        public int Voucher { get; set; }
-        public int ShipPrice { get; set; }
 
+        public int ShipPrice { get; set; }
+        public int AffilateAmount { get; set; }
+        public Discount Discount { get; set; }
         public void Clear()
         {
             if (Items.Any())
@@ -132,7 +140,5 @@ namespace V308CMS.Models
                 Items.Clear();
             }
         }
-    
-
     }
 }

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Web.DynamicData;
 using System.Web.Mvc;
-using System.Web.WebPages;
 using V308CMS.Common;
 using V308CMS.Helpers;
 using V308CMS.Models;
@@ -40,6 +38,7 @@ namespace V308CMS.Controllers
             {              
                 return Json(new { code = 0, message = "Tên tài khoản hoặc Mật khẩu không chính xác."});
             }
+           
             InternalLoginSuccess(checkLoginResult, email);         
             return Json(new { code = 1, message = "Đăng nhập thành công. Đang chuyển về trang chủ..." });
         }
@@ -49,7 +48,16 @@ namespace V308CMS.Controllers
             var userDetail = checkLoginResult.Split(new[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
             var userId = int.Parse(userDetail[0]);
             var userAvatar = userDetail.Length > 1 ? userDetail[1] : "";
-            AuthenticationHelper.SignIn(userId, email, email, userAvatar,remember);
+            var userAffilate = AffilateUserService.GetByUserId(userId);
+            string affilateId = "";
+            int affilateAmount = 0;
+            if (userAffilate != null)
+            {
+                affilateId = userAffilate.AffilateId;
+                affilateAmount = userAffilate.Amount;
+            }
+            
+            AuthenticationHelper.SignIn(userId, email, email, userAvatar, affilateId, affilateAmount, remember);
         }
 
         [ValidateAntiForgeryToken]

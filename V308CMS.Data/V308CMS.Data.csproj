@@ -182,6 +182,8 @@
     <Compile Include="IBaseRespository.cs" />
     <Compile Include="ImagesRepository.cs" />
     <Compile Include="LinkRepository.cs" />
+    <Compile Include="Mapping\AffilateCodeMap.cs" />
+    <Compile Include="Mapping\AffilateUserMap.cs" />
     <Compile Include="Mapping\BannerMap.cs" />
     <Compile Include="Mapping\ColorMap.cs" />
     <Compile Include="Mapping\CountryMap.cs" />
@@ -205,6 +207,8 @@
     <Compile Include="Mapping\VoucherLogMap.cs" />
     <Compile Include="Mapping\VoucherMap.cs" />
     <Compile Include="MarketRepository.cs" />
+    <Compile Include="Metadata\AffilateCodeMetadata.cs" />
+    <Compile Include="Metadata\AffilateUserMetadata.cs" />
     <Compile Include="Metadata\BannerMetadata.cs" />
     <Compile Include="Metadata\ColorMetadata.cs" />
     <Compile Include="Metadata\CountryMetadata.cs" />
@@ -229,6 +233,8 @@
     <Compile Include="Metadata\VoucherLogMetadata.cs" />
     <Compile Include="Metadata\VoucherMetadata.cs" />
     <Compile Include="Metadata\WebsiteRequestMetadata.cs" />
+    <Compile Include="Models\AffilateCode.cs" />
+    <Compile Include="Models\AffilateUser.cs" />
     <Compile Include="Models\Banner.cs" />
     <Compile Include="Models\CategoryItem.cs" />
     <Compile Include="Models\CategoryMarkChild.cs" />

@@ -54,7 +54,10 @@ namespace V308CMS
                     {
                         UserId = userData.UserId,
                         UserName = userData.UserName,
-                        Avatar = userData.Avatar
+                        Avatar = userData.Avatar,
+                        AffilateId = userData.AffilateId,
+                        AffilateAmount = userData.AffilateAmount
+
                     };
                     HttpContext.Current.User = principal;
                 }

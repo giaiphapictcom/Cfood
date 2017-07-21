@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateAddress", "UpdateAddr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V308CMS.Dependencies", "V308CMS.Dependencies\V308CMS.Dependencies.csproj", "{6330E246-9E72-4BF7-835E-971936615B7F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImportAffilate", "ImportAffilate\ImportAffilate.csproj", "{9DE58BC3-B4D1-4C1C-BB09-AEF9E57DC57F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{6330E246-9E72-4BF7-835E-971936615B7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6330E246-9E72-4BF7-835E-971936615B7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6330E246-9E72-4BF7-835E-971936615B7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DE58BC3-B4D1-4C1C-BB09-AEF9E57DC57F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DE58BC3-B4D1-4C1C-BB09-AEF9E57DC57F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DE58BC3-B4D1-4C1C-BB09-AEF9E57DC57F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DE58BC3-B4D1-4C1C-BB09-AEF9E57DC57F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

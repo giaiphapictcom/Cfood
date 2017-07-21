@@ -21,10 +21,11 @@ namespace V308CMS.Data.Models
         public string Description { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
-        public  DateTime? ExpireDate { get; set; }
+        public DateTime? ExpireDate { get; set; }
         public byte DiscountType { get; set; }  
-        public double Value { get; set; }      
+        public double Amount { get; set; }      
         public byte State { get; set; }
-        public  DateTime StartDate { get; set; }        
+        public  DateTime? StartDate { get; set; }  
+        public byte Piority { get; set; }
     }
 }

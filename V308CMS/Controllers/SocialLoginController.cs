@@ -22,7 +22,16 @@ namespace V308CMS.Controllers
         private void SignIn(SocialUser user)
         {
             var userIdResult = AddUser(user.UserId, user.Email, user.FullName, user.Avatar);
-            AuthenticationHelper.SignIn(userIdResult, user.UserId, user.FullName, user.Avatar);
+            var affilateUser = AffilateUserService.GetByUserId(userIdResult);
+            string affilateId = "";
+            int affilateAmount = 0;
+            if (affilateUser != null)
+            {
+                affilateId = affilateUser.AffilateId;
+                affilateAmount = affilateUser.Amount;
+            }
+
+            AuthenticationHelper.SignIn(userIdResult, user.UserId, user.FullName, user.Avatar, affilateId, affilateAmount);
         }
         /// <summary>
         /// Action duoc goi lai khi dang nhap facebook

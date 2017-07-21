@@ -9,13 +9,15 @@ namespace V308CMS.Helpers
     public class AuthenticationHelper
     {      
         private const int UserTimeExpires = 10;
-        public static void SignIn(int userId,string userName,string displayName, string avatar, bool remember = false)
+        public static void SignIn(int userId,string userName,string displayName, string avatar, string affilateId, int affilateAmount, bool remember = false)
         {
 
             var userDataString = JsonConvert.SerializeObject(new MyUser
             {
                 UserId = userId,
-                UserName = userName
+                UserName = userName,
+                AffilateId = affilateId,
+                AffilateAmount =  affilateAmount
             });
 
             var authCookie = FormsAuthentication.GetAuthCookie(displayName, remember);

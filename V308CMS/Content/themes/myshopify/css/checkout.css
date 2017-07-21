@@ -2653,7 +2653,7 @@ th {
     color: #969696
 }
 .payment-due__price {
-    font-size: 1.71429em;
+    font-size: 1.4286em;
     font-weight: 500;
     letter-spacing: -0.04em;
     color: #4b4b4b;
@@ -2836,6 +2836,7 @@ th {
 .breadcrumb__chevron-icon {
     vertical-align: middle
 }
+
 .breadcrumb--center {
     text-align: center
 }
@@ -5127,4 +5128,169 @@ th {
 }
 .show-edit-shipping {
     display: none;
+}
+ h2 {
+    color: #e5101d !important;
+    border-bottom: 1px dashed #ccc;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+ .header-content .checkout-step-bar{float: right; margin-right: 80px;}
+.header-content .checkout-step-bar .step-bar{
+  position: relative;
+  height: 60px;
+  padding-top: 8px;
+  width: 600px;
+  right: -85px;
+}
+.checkout-step-bar .step-bar .step{
+  position: relative;
+  float: left;
+  width: 120px;
+  height: 18px;
+}
+.checkout-step-bar .step-bar .step:after{
+  content: '';
+  height: 3px;
+  width: 120px;
+  background-color: #999;
+  position: absolute;
+  top: 50%;
+  left: -102px;
+  margin-top: -1px;
+}
+.checkout-step-bar .step-bar .step1:after{display: none; height: 0; width: 0;}
+.checkout-step-bar .step-bar .step:before{
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  background-color: #999;
+  border-radius: 100%;
+  width: 18px;
+  height: 18px;
+  margin-top: -9px;
+  color: #fff;
+  font-size: 11px;
+  text-align: center;
+  line-height: 18px;
+  font-family: arial;
+  z-index: 1;
+}
+.checkout-step-bar .step-bar .step2:before{content: '1';}
+.checkout-step-bar .step-bar .step3:before{content: '2';}
+.checkout-step-bar .step-bar .step4:before{content: '3';}
+.checkout-step-bar .step-bar .step5:before{content: '4';}
+
+.checkout-step-bar .step-bar .step2:after{display: none;}
+.checkout-step-bar .step-bar .step.active:after{background-color: #e5101d;}
+.checkout-step-bar .step-bar .step.active:before{background-color: #e5101d;}
+.checkout-step-bar .step-bar .step5:before{right: 0;}
+.checkout-step-bar .step-bar .step span{
+  position: relative;
+  top: 25px;
+  font-size: 11px;
+  color: #313131;
+  line-height: 18px;
+}
+/*.checkout-step-bar .step-bar .step.active span{color: #e5101d;}*/
+.checkout-step-bar .step-bar .step1 span{left: -18px;}
+.checkout-step-bar .step-bar .step2 span{left: -37px;}
+.checkout-step-bar .step-bar .step3 span{left: -38px;}
+.checkout-step-bar .step-bar .step4 span{left: -35px;}
+.checkout-step-bar .step-bar .step5 span{left: -12px;}
+
+.rw-checkout-voucher {
+    margin-top: 10px;
+    border-top: 1px solid #dadada;
+}
+.caption-rw-checkout label {
+    color: #333;
+    font-weight: bold;
+    display: block;
+    line-height: 20px;
+    position: relative;
+    line-height: 24px;
+    position: relative;
+    padding: 10px 0;
+}
+.caption-rw-checkout .ic-collape{
+  position: absolute;
+  right: 0;
+  top: 12px;
+  width: 15px;
+  height: 15px;
+}
+.checkout-voucher01 .input-voucher01{padding: 10px 0;}
+.checkout-voucher01 .input-voucher01 input{
+  background: #fff;
+  border: 1px solid #cecece;
+  height: 32px;
+  width: 98%;
+  border-radius: 3px;
+  padding: 0 4px;
+  text-transform: uppercase;
+}
+.checkout-voucher01 #btnSubmitVoucher{
+  background: #3498db;
+  color: #fff;
+  border-radius: 3px;
+  border: 1px solid #3498db;
+  padding: 5px 12px;
+  margin-right: 10px;
+  display: inline-block;
+}
+#btnSubmitAffilate{
+  background: #3498db !important;
+  color: #fff;
+  border-radius: 3px;
+  border: 1px solid #3498db;
+  padding: 5px 12px;
+  margin-right: 10px;
+  display: inline-block;
+}
+.caption-rw-checkout label:before{
+    content:"";
+    background: url("//checkout.scdn.vn/images/ecom/sprite-checkout.png") -134px -118px no-repeat;
+    display: inline-block;
+    width: 17px;
+    height: 17px;
+    margin: 0 0 -3px;
+    font-weight: bold;
+}
+.caption-rw-checkout .ic-collape{
+  position: absolute;
+  right: 0;
+  top: 12px;
+  width: 15px;
+  height: 15px;
+}
+.caption-rw-checkout .ic-collape:before{
+  content: "\f196";
+  color: #666;
+  font-size: 17px;
+}
+.caption-rw-checkout .ic-collape.show:before{content: "\f147";}
+.ttl-voucher.caption-rw-checkout label:before{background-position:  -156px -119px;margin-bottom: -5px;}
+.caption-rw-checkout .ic-collape:before{content: "\f196";color: #666;font-size: 17px}
+.red_item,.red_iteem_b {
+    color: red;
+}
+.red_item_b {
+    font-weight: bold;
+}
+.show {
+    display: block !important;
+}
+
+.showerror {
+    color:red !important;
+}
+.showsuccess {
+    color: green !important;
+    
+}
+.showerror_loyalty span {
+     color:red !important;
 }

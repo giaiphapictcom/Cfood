@@ -14,6 +14,12 @@ namespace V308CMS.Helpers
         {
             return $"{product.Price: 0,0} {ConfigHelper.MoneyShort}";
         }
+
+        public static string ToPriceString(this double price)
+        {
+            return $"{price.ToString("N1")} {ConfigHelper.MoneyShort}";
+          
+        }
     }
 
 }

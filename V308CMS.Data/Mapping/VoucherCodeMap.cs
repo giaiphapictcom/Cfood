@@ -13,15 +13,11 @@ namespace V308CMS.Data.Mapping
               .IsRequired()
               .HasMaxLength(6);
             Property(t => t.VoucherId)
-                .IsRequired();
-            Property(t => t.UserId)
-                .IsRequired();
-
+                .IsRequired();      
             ToTable("voucher_code");
             Property(t => t.Id).HasColumnName("id");
             Property(t => t.Code).HasColumnName("code");
-            Property(t => t.VoucherId).HasColumnName("voucher_id");
-            Property(t => t.UserId).HasColumnName("user_id");
+            Property(t => t.VoucherId).HasColumnName("voucher_id");            
             Property(t => t.State).HasColumnName("state");
             Property(t => t.CreatedAt).HasColumnName("created_at");
         }

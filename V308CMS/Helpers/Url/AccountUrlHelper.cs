@@ -51,7 +51,7 @@ namespace V308CMS.Helpers.Url
         }
         public static string AccountLogoutUrl(this UrlHelper helper, string returnUrl="", string controller = "member", string action = "logout")
         {
-            return helper.Action(action, controller, returnUrl);
+            return helper.Action(action, controller, new { returnUrl });
 
         }
         public static string AccountCheckEmail(this UrlHelper helper, string controller = "member", string action = "checkemail")

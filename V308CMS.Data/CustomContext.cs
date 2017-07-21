@@ -6,6 +6,7 @@ using V308CMS.Data.Models;
 namespace V308CMS.Data
 {
     #region Contexts
+    [DbConfigurationType(typeof(MySql.Data.Entity.MySqlEFConfiguration))]
     public partial class V308CMSEntities : DbContext
     {
         #region Constructors
@@ -42,6 +43,9 @@ namespace V308CMS.Data
             modelBuilder.Configurations.Add(new ProductWishlistMap());
             modelBuilder.Configurations.Add(new VoucherMap());
             modelBuilder.Configurations.Add(new VoucherCodeMap());
+            modelBuilder.Configurations.Add(new VoucherLogMap());
+            modelBuilder.Configurations.Add(new AffilateUserMap());
+            modelBuilder.Configurations.Add(new AffilateCodeMap());
 
             modelBuilder.Entity<OrderTransaction>()
             .HasRequired(p => p.Order)
@@ -90,6 +94,16 @@ namespace V308CMS.Data
             .WithMany(p => p.Permissions)
             .HasForeignKey(p => p.RoleId);
 
+        }
+        public DbSet<AffilateCode> AffilateCode
+        {
+            get;
+            set;
+        }
+        public DbSet<AffilateUser> AffilateUser
+        {
+            get;
+            set;
         }
         public DbSet<Voucher> Voucher
         {

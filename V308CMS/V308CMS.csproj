@@ -217,6 +217,10 @@
     <Compile Include="Helpers\AuthenticationHelper.cs" />
     <Compile Include="Helpers\ConfigHelper.cs" />
     <Compile Include="Helpers\CustomPrincipal.cs" />
+    <Compile Include="Helpers\Discount\Discount.cs" />
+    <Compile Include="Helpers\Discount\DiscountSubTotalRule.cs" />
+    <Compile Include="Helpers\Discount\DiscountItemRule.cs" />
+    <Compile Include="Helpers\Discount\IDiscountRule.cs" />
     <Compile Include="Helpers\FilterParser.cs" />
     <Compile Include="Helpers\MemberWishListUrlHelper.cs" />
     <Compile Include="Helpers\MpStartViewEngine.cs" />
@@ -1640,13 +1644,18 @@
     <Content Include="Content\themes\myshopify\images\background-newsletter_2048x.jpg" />
     <Content Include="Content\themes\myshopify\images\btn-cart01.png" />
     <Content Include="Content\themes\myshopify\images\btn-remove01.png" />
+    <Content Include="Content\themes\myshopify\images\collape.png" />
+    <Content Include="Content\themes\myshopify\images\expand.png" />
     <Content Include="Content\themes\myshopify\images\favicon.png" />
     <Content Include="Content\themes\myshopify\images\loading-top.gif" />
     <Content Include="Content\themes\myshopify\images\Logo MP.png" />
     <Content Include="Content\themes\myshopify\images\logo.png" />
     <Content Include="Content\themes\myshopify\images\logoh70.png" />
+    <Content Include="Content\themes\myshopify\images\opc-ajax-loader.gif" />
     <Content Include="Content\themes\myshopify\images\refresh.png" />
     <Content Include="Content\themes\myshopify\images\select2.png" />
+    <Content Include="Content\themes\myshopify\images\social\facebook.png" />
+    <Content Include="Content\themes\myshopify\images\social\google.png" />
     <Content Include="Content\themes\myshopify\js\ajax.jquery.min.js" />
     <Content Include="Content\themes\myshopify\js\all.jquery.min.js" />
     <Content Include="Content\themes\myshopify\js\canvas.js" />
@@ -2087,6 +2096,7 @@
     <Content Include="Views\themes\myshopify\Components\YoutubeVideoComponent.cshtml" />
     <Content Include="Views\themes\myshopify\Pages\BigSale.cshtml" />
     <Content Include="Views\themes\myshopify\Pages\NotFound.cshtml" />
+    <Content Include="Views\themes\myshopify\Popup\LoginAndBuy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

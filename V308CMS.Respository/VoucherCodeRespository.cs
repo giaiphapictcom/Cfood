@@ -8,6 +8,7 @@ namespace V308CMS.Respository
     public interface IVoucherCodeRespository
     {
         VoucherCode Find(int id);
+        VoucherCode Find(string code);
         VoucherCode FindWithVoucher(int id);
         VoucherCode FindFirst(string code);
         VoucherCode FindFirstWithVoucher(string code);
@@ -24,6 +25,15 @@ namespace V308CMS.Respository
                 return entities.VoucherCode.FirstOrDefault(voucherCode => voucherCode.Id == id);
             }
          }
+
+        public VoucherCode Find(string code)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return entities.VoucherCode.Include("Voucher").FirstOrDefault(voucherCode => voucherCode.Code == code);
+            }
+        }
+
 
         public VoucherCode FindWithVoucher(int id)
         {

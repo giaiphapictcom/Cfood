@@ -5,7 +5,6 @@ using V308CMS.Common;
 using V308CMS.Data;
 using V308CMS.Data.Enum;
 using V308CMS.Data.Models;
-using V308CMS.Helpers;
 using V308CMS.Helpers.Url;
 using V308CMS.Models;
 
@@ -122,6 +121,7 @@ namespace V308CMS.Controllers
             ViewBag.Cart = MyCart;            
             return View("Cart.Checkout", new ShippingModels());
         }
+
 
         [HttpPost]
         public  ActionResult UpdateCart(int id=0, int quantity=0)

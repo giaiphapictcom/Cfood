@@ -105,6 +105,7 @@ namespace V308CMS.Controllers
                 ViewBag.ProductViewText = SiteConfigService.ReadSiteConfig(siteConfigs, "product-text-view");
                 ViewBag.HomeAliasText = SiteConfigService.ReadSiteConfig(siteConfigs, "home-text-alias");
                 ViewBag.SubscribeNews = SiteConfigService.ReadSiteConfig(siteConfigs, "subscribe-news");
+                
             }
 
         }
@@ -133,11 +134,21 @@ namespace V308CMS.Controllers
             BannerService = new BannerRespository();
             ProductBrandService = new ProductBrandRespository();
             ProductManufacturerService = new ProductManufacturerRespository();
+            AffilateUserService = new AffilateUserRespository();
+            VoucherService = new VoucherRespository();
+            VoucherCodeService = new VoucherCodeRespository();
+            VoucherLogService = new VoucherLogRespository();
+
             GoogleplusService = new GoogleplusService(ConfigHelper.GoogleAppId, ConfigHelper.GoogleAppSecret);
             FacebookService = new FacebookService(ConfigHelper.FacebookAppId,ConfigHelper.FacebookAppSecret);
+           
             LoadSiteConfig();
 
-        }
+        }        
+        public VoucherLogRespository VoucherLogService { get; }
+        public VoucherRespository VoucherService { get; }
+        public VoucherCodeRespository VoucherCodeService { get; }
+        public AffilateUserRespository AffilateUserService { get; }
         public FacebookService FacebookService { get; }
         public GoogleplusService GoogleplusService { get; }
         public ProductManufacturerRespository ProductManufacturerService;

@@ -15,5 +15,17 @@ namespace V308CMS.Helpers.Url
         {
             return helper.Action(action, controller);
         }
+
+        public static string PaymentUseVoucherUrl(this UrlHelper helper, string controller = "payment",
+        string action = "usevoucher")
+        {
+            return helper.Action(action, controller);
+        }
+
+        public static string PaymentUseAffilateUrl(this UrlHelper helper, string controller = "payment",
+        string action = "useaffilate")
+        {
+            return helper.Action(action, controller);
+        }
     }
 }

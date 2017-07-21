@@ -15,7 +15,7 @@ namespace V308CMS.Data.Mapping
                 .HasMaxLength(50);
 
             Property(t => t.Description)              
-               .HasMaxLength(255);
+               .HasMaxLength(500);
 
             ToTable("voucher");
             Property(t => t.Id).HasColumnName("id");
@@ -25,8 +25,10 @@ namespace V308CMS.Data.Mapping
             Property(t => t.UpdatedAt).HasColumnName("updated_at");
             Property(t => t.ExpireDate).HasColumnName("expire_date");
             Property(t => t.DiscountType).HasColumnName("discount_type");
-            Property(t => t.Value).HasColumnName("value");
+            Property(t => t.Amount).HasColumnName("amount");
             Property(t => t.State).HasColumnName("state");
+            Property(t => t.Piority).HasColumnName("piority");
+            Property(t => t.StartDate).HasColumnName("start_date");
 
         }
     }

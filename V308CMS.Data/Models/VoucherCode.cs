@@ -17,16 +17,14 @@ namespace V308CMS.Data.Models
         }
         public int Id { get; set; }
         public string Code { get; set; }
-        public int VoucherId { get; set; }
-        public int UserId { get; set; }
+        public int VoucherId { get; set; }      
         public byte State { get; set; }
         public DateTime CreatedAt { get; set; }
 
         [ForeignKey("VoucherId")]
         public virtual Voucher Voucher { get; set; }
 
-        [ForeignKey("UserId")]
-        public virtual Account User { get; set; }
+     
 
     }
 }

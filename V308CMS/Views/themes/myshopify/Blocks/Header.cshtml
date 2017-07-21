@@ -25,12 +25,12 @@
                             <ul class="customer-links">
                                 <li>
                                     <i class="icon_check_alt" aria-hidden="true"></i>
-                                    <a href="@Url.CheckoutCartUrl()" title="Thanh toán"><span>Thanh toán</span></a>
+                                    <a onclick="@(AuthenticationHelper.IsAuthenticated==false?"loginAndBuy();" :"buyNow();")" title="Thanh toán"><span>Thanh toán</span></a>
                                 </li>
                                 @if (AuthenticationHelper.IsAuthenticated)
                                 {
                                     <li>
-                                        <a href="@Url.AccountLogoutUrl()" id="customer_logout_link">Thoát tài khoản</a>
+                                        <a href="@Url.AccountLogoutUrl(Request.Url.ToString())" id="customer_logout_link">Thoát tài khoản</a>
                                         <a href="#">Tài khoản của tôi</a>
                                     </li>
                                 }
@@ -288,17 +288,3 @@
 </div>
 </div>
 </header>
-<script type="text/javascript">
-   
-    function loginAndBuy() {
-        jQuery.get("@Url.LoginAndBuyUrl()", function (response) {
-            jQuery('#modalPopUp').html(response);
-            jQuery('#modalPopUp').modal({ show: true });
-        });
-
-    }
-    function buyNow() {
-        window.location = '@Url.CheckoutCartUrl()';
-    }
-
-</script>

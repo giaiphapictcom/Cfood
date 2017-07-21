@@ -23,17 +23,28 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height, minimum-scale=1.0, user-scalable=0">
     <meta name="referrer" content="origin">
-    <title>@ViewBag.SiteName - Thông tin giao hàng</title>
+    <title>Đặt hàng | @ViewBag.SiteName</title>
     <!--[if lt IE 9]>
     <link rel="stylesheet" media="all" href="//cdn.shopify.com/app/services/14982346/assets/158713545/checkout_stylesheet/v2-ltr-edge-2fb6ca2c2ac44cb97965799c4a298fed-7400122826340964516/oldie" />
     <![endif]-->
     <!--[if gte IE 9]><!-->
-    <link rel="stylesheet" media="all" href="/Content/themes/myshopify/css/checkout.css?v=1.1" />
+    <link rel="stylesheet" media="all" href="/Content/themes/myshopify/css/checkout.css?v=3.5" />
     <link href="@ViewBag.ThemesPath/css/social.css" rel="stylesheet" type="text/css" />
     <!--<![endif]-->
     <meta data-browser="chrome" data-browser-major="58">
-    <meta data-body-font-family="Helvetica Neue" data-body-font-type="system">       
+    <meta data-body-font-family="Helvetica Neue" data-body-font-type="system">
     <script src="/Content/js/jquery.min.js" type="text/javascript"></script>
+    <style>
+        #btnSubmitAffilate {
+          background: #3498db !important;
+          color: #fff;
+          border-radius: 3px;
+          border: 1px solid #3498db;
+          padding: 5px 12px;
+          margin-right: 10px;
+          display: inline-block;
+        }
+    </style>
 </head>
 <body>
     <div class="banner" data-header>
@@ -82,11 +93,13 @@
                     <a href="/" class="logo logo--left">
                         <h1 class="logo__text">@ViewBag.SiteName</h1>
                     </a>
+                   
 
                 </div>
+                
                 <div class="sidebar__content">
-                    <div class="order-summary order-summary--is-collapsed" data-order-summary>
-                        <h2 class="visually-hidden">Thông tin đơn hàng</h2>
+                    <div class="order-summary order-summary--is-collapsed">
+                        <h2 class="tl">Thông tin đơn hàng</h2>
 
                         <div class="order-summary__sections">
                             <div class="order-summary__section order-summary__section--product-list">
@@ -131,7 +144,7 @@
                                                         @cart.Quantity
                                                 </td>
                                                 <td class="product__price">
-                                                    <span class="order-summary__emphasis">@cart.UnitPrice.ToString("N0") đ</span>
+                                                    <span class="order-summary__emphasis">@cart.UnitPrice.ToPriceString()</span>
                                                 </td>
                                             </tr>
                                             }
@@ -151,20 +164,114 @@
                                 <table class="total-line-table">
                                     <caption class="visually-hidden">Cost summary</caption>
                                     <thead>
-                                        <tr>
-                                            <th scope="col"><span class="visually-hidden">Description</span></th>
-                                            <th scope="col"><span class="visually-hidden">Price</span></th>
-                                        </tr>
+                                    <tr>
+                                        <th scope="col"><span class="visually-hidden">Description</span></th>
+                                        <th scope="col"><span class="visually-hidden">Price</span></th>
+                                    </tr>
                                     </thead>
-                                    <tbody class="total-line-table__tbody">
-                                        <tr class="total-line total-line--subtotal">
-                                            <td class="total-line__name">Tổng tiền</td>
-                                            <td class="total-line__price">
-                                                <span class="order-summary__emphasis" data-checkout-subtotal-price-target="@currentCart.SubTotal">
-                                                    @currentCart.SubTotal.ToString("N0") đ
+                                    <tfoot class="total-line-table__footer">
+                                    <tr class="total-line">
+                                        <td class="total-line__name payment-due-label">
+                                            <span class="payment-due-label__total">Tổng đơn hàng</span>
+                                        </td>
+                                        <td class="total-line__price payment-due">
+                                            <span class="payment-due__price" data-checkout-payment-due-target="@currentCart.SubTotal">
+                                                    @currentCart.SubTotal.ToPriceString()
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                                @if (AuthenticationHelper.IsAuthenticated)
+                                {
+                                    if (string.IsNullOrWhiteSpace(User.AffilateId))
+                                    {
+                                        <div class="rw-checkout-voucher" style="">
+                                            <div class="caption-rw-checkout ttl-voucher">
+                                                <label>
+                                                    <span>Sử dụng Affilate</span>
+                                                    <a class="header_acton" href="#check-affilate">
+                                                        <img id="affilate_expand" src="/Content/themes/myshopify/images/expand.png" class="ic-collape" />
+                                                        <img id="affilate_collape" src="/Content/themes/myshopify/images/collape.png" class="ic-collape" style="display: none" />
+                                                    </a>
+                                                </label>
+                                            </div>
+                                            <!-- voucher -->
+                                            <div id="check-affilate" class="checkout-voucher01" style="display: none">
+                                                <form method="post" action="@Url.PaymentUseAffilateUrl()" class="checkout-affilate-form" name="checkout-affilate-form" id="checkout-affilate-form">
+                                                    <div class="input-voucher01">đă
+                                                        <input autocomplete="off" placeholder="Nhập mã affilate" type="text" name="affilate_id" id="affilate_id" maxlength="20" value="">
+                                                    </div>
+                                                    <p id="affilate_error" class="showerror" style="display: none">Mã affilate không hợp lệ.</p>
+                                                    <input id="btnSubmitAffilate" type="submit" value="Sử dụng">
+                                                    <span class="please-wait" id="affilate-please-wait" style="display: none;">
+                                                        <img src="/Content/themes/myshopify/images/opc-ajax-loader.gif" alt="" title="" class="v-middle ">
+                                                    </span>
+                                                </form>                                               
+
+                                            </div>
+                                        </div>
+                                    }
+
+                                }
+                                else
+                                {
+                                    <div class="rw-checkout-voucher" style="">
+                                        <div class="caption-rw-checkout ttl-voucher">
+                                            <label>
+                                                <span>Sử dụng Affilate</span>
+                                                <a class="header_acton" href="#check-affilate">
+                                                    <img id="affilate_expand" src="/Content/themes/myshopify/images/expand.png" class="ic-collape" />
+                                                    <img id="affilate_collape" src="/Content/themes/myshopify/images/collape.png" class="ic-collape" style="display: none" />
+                                                </a>
+                                            </label>
+                                        </div>
+                                        <!-- voucher -->
+                                        <div id="check-affilate" class="checkout-voucher01" style="display: none">
+                                            <p class="showerror_loyalty" style="display: block;">
+                                                Bạn cần <span style="cursor: pointer" onclick="return showPopup('@Url.PopupLoginUrl()');">đăng nhập</span> để sử dụng chức năng này
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                }
+                           
+                                <div class="rw-checkout-voucher">
+                                    <div class="caption-rw-checkout ttl-voucher">
+                                        <label>
+                                            <span>Sử dụng Voucher</span> 
+                                            <a class="header_acton" href="#check-voucher">
+                                                <img id="voucher_expand" src="/Content/themes/myshopify/images/expand.png" class="ic-collape"/>
+                                                <img id="voucher_collape" src="/Content/themes/myshopify/images/collape.png" class="ic-collape" style="display: none" />      
+                                            </a>
+                                                                                 
+                                        </label>
+                                    </div>
+
+                                    <div id="check-voucher" class="checkout-voucher01" style="display: none">
+                                        @if (AuthenticationHelper.IsAuthenticated)
+                                        {
+                                            <form method="post" action="@Url.PaymentUseVoucherUrl()" class="checkout-voucher-form" id="checkout-voucher-form" name="checkout-voucher-form">
+                                                <div class="input-voucher01">
+                                                    <input autocomplete="off" placeholder="Nhập mã giảm giá" type="text" name="voucher_code" id="voucher_code" maxlength="20" value="">
+                                                </div>
+                                                <p id="voucher_error" class="showerror" style="display: none;">Mã giảm giá không hợp lệ.</p>
+                                                <input id="btnSubmitVoucher" type="submit" value="Sử dụng">
+                                                <span class="please-wait" id="voucher-please-wait" style="display: none;">
+                                                    <img src="/Content/themes/myshopify/images/opc-ajax-loader.gif" alt="" title="" class="v-middle ">
                                                 </span>
-                                            </td>
-                                        </tr>
+                                            </form>
+                                        }
+                                        else
+                                        {
+                                            <p class="showerror_loyalty" style="display: block;">Bạn cần <span style="cursor: pointer" onclick="return showPopup('@Url.PopupLoginUrl()');">đăng nhập</span> để sử dụng chức năng này</p>
+                                        }
+                                       
+                                    </div>
+                                </div>
+                                <hr/>
+                                <table class="total-line-table">
+                                    <tbody>
                                         <tr class="total-line total-line--shipping">
                                             <td class="total-line__name">Phí vận chuyển</td>
                                             <td class="total-line__price">
@@ -173,31 +280,25 @@
                                                 </span>
                                             </td>
                                         </tr>
-
-                                        <tr class="total-line total-line--taxes hidden" data-checkout-taxes>
-                                            <td class="total-line__name">Thuế</td>
-                                            <td class="total-line__price">
-                                                <span class="order-summary__emphasis" data-checkout-total-taxes-target="0">$0.00</span>
-                                            </td>
-                                        </tr>
-
                                     </tbody>
                                     <tfoot class="total-line-table__footer">
                                         <tr class="total-line">
                                             <td class="total-line__name payment-due-label">
-                                                <span class="payment-due-label__total">Thành tiền</span>
+                                                <span class="red_item_b payment-due-label__total">Tổng thành tiền</span>
+                                            </td>
+                                            <td style="border-top: 1px dashed #ddd;">
+                                                
                                             </td>
                                             <td class="total-line__price payment-due">
-                                                <span class="payment-due__currency">VNĐ</span>
-                                                <span class="payment-due__price" data-checkout-payment-due-target="@currentCart.SubTotal">
-                                                    @currentCart.SubTotal.ToString("N0") đ
+                                                <span class="red_item payment-due__price" data-checkout-payment-due-target="@currentCart.SubTotal">
+                                                    @currentCart.SubTotal.ToPriceString()
                                                 </span>
                                             </td>
                                         </tr>
                                     </tfoot>
                                 </table>
-                            </div>
-
+                               
+                            </div>                           
                         </div>
                     </div>
 
@@ -217,10 +318,20 @@
                                 <path d="M2 1l1-1 4 4 1 1-1 1-4 4-1-1 4-4" />
                             </svg>
                         </li>
-
-
                         <li class="breadcrumb__item breadcrumb__item--blank">
                             <span class="breadcrumb__text">Nhập thông tin mua hàng</span>
+                            <svg class="icon-svg icon-svg--size-10 breadcrumb__chevron-icon rtl-flip" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
+                                <path d="M2 1l1-1 4 4 1 1-1 1-4 4-1-1 4-4"/>
+                            </svg>
+                        </li>
+                        <li class="breadcrumb__item breadcrumb__item--blank">
+                            <span class="breadcrumb__text">Hình thức thanh toán</span>
+                            <svg class="icon-svg icon-svg--size-10 breadcrumb__chevron-icon rtl-flip" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
+                                <path d="M2 1l1-1 4 4 1 1-1 1-4 4-1-1 4-4"/>
+                            </svg>
+                        </li>
+                        <li class="breadcrumb__item breadcrumb__item--blank">
+                            <span class="breadcrumb__text">Đặt hàng</span>                            
                         </li>
                     </ul>
 
@@ -239,7 +350,7 @@
                                     <div class="section section--contact-information">
                                         <div class="section__header">
                                             <div class="layout-flex layout-flex--tight-vertical layout-flex--loose-horizontal layout-flex--wrap">
-                                                <h2 class="section__title layout-flex__item layout-flex__item--stretch">Thông tin khách hàng</h2>
+                                                <h2 class="section__title layout-flex__item layout-flex__item--stretch">Thông tin người nhận</h2>
                                             </div>
                                         </div>
                                         <div class="section__content" data-section="customer-information">
@@ -348,7 +459,7 @@
 
 
                                     }
-                                    <form action="@Url.SendOrderCartUrl()" method="post" id="form_order" name="form_order" class="@(currentOrder != null?"show-edit-shipping":"")" style="padding-top: 3em;">
+                                    <form action="@Url.SendOrderCartUrl()" method="post" id="form_order" name="form_order" class="@(currentOrder != null?"show-edit-shipping":"")" style="padding-top: 1em;">
                                         <div class="section section--shipping-address">
                                             <div class="section__header">
                                                 <h2 class="section__title">Địa chỉ giao hàng</h2>
@@ -360,8 +471,7 @@
                                                     {
                                                         int i = 0;
                                                         <div class="field field--required">
-                                                            <div class="field__input-wrapper field__input-wrapper--select">
-                                                                <label class="field__label field__label--visible" for="shipping">Địa chỉ giao hàng</label>
+                                                            <div class="field__input-wrapper field__input-wrapper--select">                                                              
                                                                 <select class="field__input field__input--select" name="shipping" id="shipping">
                                                                     <option value="0">Địa chỉ mới…</option>
                                                                     @foreach (var shipping in listShippingAddress)
@@ -376,15 +486,16 @@
                                                         </div>
 
                                                     }
-                                                    <div class="field field--required">                                                    
+                                                    <div class="field field--required field--half">                                                       
                                                         <div class="field__input-wrapper">
                                                             @Html.TextBoxFor(model => model.FullName, new
-                                                           {
-                                                               size = "30",
-                                                               @class = "field__input",
-                                                               placeholder = "Họ tên người nhận"
+                                                            {
+                                                                size = "30",
+                                                                @class = "field__input",
+                                                                placeholder = "Họ tên người nhận",
+                                                                id ="checkout_name"
 
-                                                           })
+                                                            })
                                                         </div>
                                                         @Html.ValidationMessageFor(ship => ship.FullName)
                                                     </div>
@@ -401,8 +512,7 @@
                                                         @Html.ValidationMessageFor(ship => ship.Phone)
                                                     </div>
                                                     <div class="field field--required">
-                                                        <div class="field__input-wrapper field__input-wrapper--select">
-                                                            @Html.LabelFor(model => model.Region, new { @class = "field__label" })
+                                                        <div class="field__input-wrapper field__input-wrapper--select">                                                         
                                                             @Html.DropDownListFor(ship => ship.Region, new SelectList(listRegion, "Id", "Name"), "Chọn Tỉnh/Thành phố", new
                                                            {
                                                                @class = "field__input field__input--select"
@@ -411,22 +521,18 @@
                                                         </div>
                                                     </div>
                                                     <div class="field field--required">
-
-                                                        <div class="field__input-wrapper field__input-wrapper--select">
-                                                            @Html.LabelFor(model => model.City, new { @class = "field__label" })
+                                                        <div class="field__input-wrapper field__input-wrapper--select">                                                          
                                                             <select placeholder="Chọn Quận/Huyện" class="field__input field__input--select" name="City" data-val-length="Quận/Huyện không được vượt quá 250 ký tự." data-val-length-max="250" data-val-required="Vui lòng chọn Quận/Huyện."></select>
                                                             @Html.ValidationMessageFor(ship => ship.City)
                                                         </div>
                                                     </div>
-                                                    <div class="field field--required">
-                                                        @Html.LabelFor(model => model.Ward, new { @class = "field__label" })
+                                                    <div class="field field--required">                                                      
                                                         <div class="field__input-wrapper field__input-wrapper--select">
                                                             <select placeholder="Chọn  Phường/Xã" class="field__input field__input--select" name="Ward" data-val-length="Phường/Xã không được vượt quá 250 ký tự." data-val-length-max="250" data-val-required="Vui lòng chọn Phường/Xã."></select>
                                                         </div>
                                                         @Html.ValidationMessageFor(ship => ship.Ward)
                                                     </div>
-                                                    <div class="field field--required">
-                                                        @Html.LabelFor(model => model.Address, new { @class = "field__label" })
+                                                    <div class="field field--required">                                                        
                                                         <div class="field__input-wrapper">
                                                             @Html.TextBoxFor(model => model.Address, new
                                                            {
@@ -477,7 +583,7 @@
                     <div class="modals">
                     </div>
                     <div role="contentinfo" aria-label="Footer">
-                        <address class="copyright-text">©@DateTime.Now.Year.ToString() Copyright. Đã đăng ký bản quyền</address>
+                        <address class="copyright-text">©@DateTime.Now.Year.ToString() Copyright @ViewBag.SiteName. Đã đăng ký bản quyền</address>
                     </div>
 
                     <div id="dialog-close-title" class="hidden">Đóng</div>
@@ -488,6 +594,74 @@
     </div>
     <script type="text/javascript">
         $(function () {
+            $(".header_acton").click(function() {
+                var contentId = $(this).attr('href');
+                var subId = contentId.replace("#check-", "");
+                $(contentId).toggleClass('show');
+               
+                $("#" + subId + "_expand").toggleClass('show');
+                $("#" + subId + "_collape").toggleClass('show');
+
+            });
+            $("#btnSubmitVoucher").click(function(e) {
+                e.preventDefault();
+                var voucherCode = $("#voucher_code").val();
+                if (voucherCode === "") {
+                    $("#voucher_error").text("Vui lòng nhập mã Affilate.");
+                    $("#voucher_code").focus();
+                    $("#voucher_error").removeClass("showsuccess");
+                    $("#voucher_error").addClass("showerror");
+                    $("#voucher_error").show();
+                }
+                $.post($("#checkout-voucher-form").attr('action'), { code: voucherCode }, function (response) {
+                    if (response.code === 0) {
+                        $("#voucher_error").text(response.message);
+                        $("#voucher_error").removeClass("showsuccess");
+                        $("#voucher_error").addClass("showerror");
+                        $("#voucher_error").show();
+                        $("#voucher_code").focus();
+
+                        return false;
+                    }
+                    $("#voucher_error").text(response.message);
+                    $("#voucher_error").removeClass("showerror");
+                    $("#voucher_error").addClass("showsuccess");
+                    $("#voucher_error").show();
+                    return true;
+                    
+                });
+
+
+            });
+
+            $("#btnSubmitAffilate").click(function (e) {
+                e.preventDefault();
+                var affilateId = $("#affilate_id").val();
+                if (affilateId === "") {
+                    $("#affilate_error").text("Vui lòng nhập mã Affilate.");
+                    $("#affilate_id").focus();
+                    $("#affilate_error").removeClass("showsuccess");
+                    $("#affilate_error").addClass("showerror");
+                    $("#affilate_error").show();
+                    return false;
+                }              
+                $.post($("#checkout-affilate-form").attr('action'), { affilateId }, function (response) {                    
+                    if (response.code === 0) {
+                        $("#affilate_error").text(response.message);
+                        $("#affilate_error").removeClass("showsuccess");
+                        $("#affilate_error").addClass("showerror");
+                        $("#affilate_error").show();
+                        $("#affilate_id").focus();
+                       
+                        return false;
+                    }
+                    $("#affilate_error").text(response.message);
+                    $("#affilate_error").removeClass("showerror");
+                    $("#affilate_error").addClass("showsuccess");
+                    $("#affilate_error").show();
+                    return true;
+                });
+            });
             $("#btn-edit-shipping").click(function(e) {
                 e.preventDefault();
                 $("form[name='form_order']").toggleClass("show-edit-shipping");               
