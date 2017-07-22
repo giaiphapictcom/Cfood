@@ -196,9 +196,6 @@ namespace V308CMS.Controllers
         {
             int totalRecord;
             int totalPage = 0;
-            if (q == null || q.Length < 1) {
-                q = Request.QueryString["pKey"];
-            }
             var listProduct = ProductsService.Search(q, out totalRecord, page, pageSize);
             if (totalRecord > 0)
             {

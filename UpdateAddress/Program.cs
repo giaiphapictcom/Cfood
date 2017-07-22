@@ -12,8 +12,6 @@ namespace UpdateAddress
         public int id { get; set; }
         public string name { get; set; }
     }
-
-   
     class Program
     {
         static void Main(string[] args)
