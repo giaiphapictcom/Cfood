@@ -10,7 +10,7 @@
                     </button>
                     <div class="col-xs-8 col-xs-offset-1 text-center hidden-md hidden-lg">
                         <a href="/">
-                            <img src="@ViewBag.ThemesPath/images/logo.png" alt="@ViewBag.SiteName" style="height: 50px;" />
+                            <img src="@ImageHelper.ToUrl(V308CMS.Sale.Helpers.ConfigHelper.SiteLogo)" alt="@ViewBag.SiteName" style="height: 50px;" />
                         </a>
                     </div>
                     <div class="col-xs-1 hidden-md hidden-lg" style="padding-top:15px;">
@@ -120,15 +120,17 @@
                         <div class="logo-container">
                             <div class="logo-sticky">
                                 <a href="/">
-                                    <img src="@ViewBag.ThemesPath/images/logo.png" alt="@ViewBag.SiteName" style="height: 50px;" /></a>
+                                    <img src="@ImageHelper.ToUrl(V308CMS.Sale.Helpers.ConfigHelper.SiteLogo)" alt="@ViewBag.SiteName" style="height: 50px;" /></a>
                             </div>
                             <div class="logo">
 
-                                <h1 style="text-align: center;"><a href="/">
-                                    <img src="@ViewBag.ThemesPath/images/logo.png"
-                                    srcset="@ViewBag.ThemesPath/images/logo.png 1x, @ViewBag.ThemesPath/images/logo800.png 2x"
+                                <h1 style="text-align: center;">
+                                    <a href="/">
+                                    <img src="@ImageHelper.ToUrl(V308CMS.Sale.Helpers.ConfigHelper.SiteLogo)"
+                                    srcset="@ImageHelper.ToUrl(V308CMS.Sale.Helpers.ConfigHelper.SiteLogo) 1x, @ViewBag.ThemesPath/images/logo800.png 2x"
                                     alt="@ViewBag.SiteName"
-                                    itemprop="logo"></a></h1>
+                                    itemprop="logo"></a>
+                                </h1>
 
                                 <h1 style="display: none"><a href="/">@ViewBag.SiteName</a></h1>
 

@@ -1,7 +1,5 @@
-﻿@using System.Text.RegularExpressions
-@using V308CMS.Sale.Helpers
+﻿@using V308CMS.Sale.Helpers
 @model V308CMS.Data.ETLogin
-
 @{
     Layout = "~/Views/Affiliate/Layout/Default.cshtml";
     string PageTitle = "Đăng nhập hệ thống";
@@ -9,6 +7,7 @@
 @section header {
     <title>@PageTitle</title>
     <link href="@ViewBag.ThemesPath/css/login.css" rel="stylesheet" type="text/css" />
+    <script src="https://www.google.com/recaptcha/api.js?hl=vi" async defer></script>
 }
 <div class="shopify-section loginform">
     <div class="container-block m-0">
@@ -37,44 +36,50 @@
                     </div>
                 }
 
-                            <div class="col-md-7 col-sm-12 col-xs-12 SocialAreaRight">
+                <div class="col-md-7 col-sm-12 col-xs-12 SocialAreaRight">
 
-                                <form class="form-horizontal" action="/dang-nhap" method="post">
-                                    <div class="form-group">
-                                        <label for="inputEmail" class="control-label col-md-4">Tên Đăng nhập</label>
-                                        <div class="col-md-8">
-                                            <input type="text" class="form-control" id="inputEmail" placeholder="Tên Đăng nhập/Email" name="email">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inputPassword" class="control-label col-md-4">Mật Khẩu</label>
-                                        <div class="col-md-8">
-                                            <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-md-offset-3 col-md-9">
-                                            <a href="#">Quên mật khẩu</a>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-md-offset-3 col-md-9">
-                                            <button type="submit" class="btn btn-orange border-radius-0">Đăng nhập</button>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-md-offset-3 col-md-9">
-                                            Bạn chưa là thành viên ? <a href="/dang-ky">Đăng ký ngay !</a>
-                                        </div>
-                                    </div>
-                                </form>
+                    <form class="form-horizontal" action="/dang-nhap" method="post">
+                        <div class="form-group">
+                            <label for="inputEmail" class="control-label col-md-4">Tên Đăng nhập</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="inputEmail" placeholder="Tên Đăng nhập/Email" name="email">
                             </div>
-                            <div class="col-md-5 col-sm-12 col-xs-12" style="padding-top: 57px;">
-                                <a href="#" class="btn btn-facebook"><span class="fa fa-facebook"></span> Facebook</a>
-                                <a href="#" class="btn btn-google-plus"><span class="fa fa-google-plus"></span> Google</a>
-                            </div>
-
                         </div>
+                        <div class="form-group">
+                            <label for="inputPassword" class="control-label col-md-4">Mật Khẩu</label>
+                            <div class="col-md-8">
+                                <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-4 col-md-8">
+                                <div class="g-recaptcha" data-sitekey="@V308CMS.Sale.Helpers.ConfigHelper.RecaptchaSitekey"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-3 col-md-9">
+                                <a href="#">Quên mật khẩu</a>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button type="submit" class="btn btn-orange border-radius-0">Đăng nhập</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-3 col-md-9">
+                                Bạn chưa là thành viên ? <a href="/dang-ky">Đăng ký ngay !</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-5 col-sm-12 col-xs-12" style="padding-top: 57px;">
+                    <a href="/sociallogin/loginfacebook" class="btn btn-facebook"><span class="fa fa-facebook"></span> Facebook</a>
+                    <a href="/sociallogin/logingoogle" class="btn btn-google-plus"><span class="fa fa-google-plus"></span> Google</a>
+                </div>
+
+            </div>
         </div>
     </div>
 </div>

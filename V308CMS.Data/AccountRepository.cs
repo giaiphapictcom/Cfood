@@ -93,7 +93,7 @@ namespace V308CMS.Data
             }
         }
 
-        public string Insert(string userName, string email, string password, string salt, string fullName, string avatar)
+        public string Insert(string userName, string email, string password, string salt, string fullName, string avatar, string site = Helpers.Site.home)
         {
             using (var entities = new V308CMSEntities())
             {
@@ -103,11 +103,13 @@ namespace V308CMS.Data
 
                 if (accounts != null)
                 {
-                    if (accounts.FullName != fullName || accounts.UserName != userName || accounts.Avatar != avatar)
+                    //if (accounts.FullName != fullName || accounts.UserName != userName || accounts.Avatar != avatar)
+                    if (accounts.UserName != userName)
                     {
                         accounts.FullName = fullName;
                         accounts.UserName = userName;
                         accounts.Avatar = avatar;
+                        accounts.Site = site;
                         entities.SaveChanges();
                     }
                    
@@ -188,7 +190,7 @@ namespace V308CMS.Data
                         Salt = salt,
                         Token = token,
                         TokenExpireDate = DateTime.Now.AddDays(1),
-                        Status = false,
+                        Status = true,
                         Role = 3,
                         Site = Site.affiliate
                     };

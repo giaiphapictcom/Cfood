@@ -39,5 +39,13 @@ namespace V308CMS.Common
         {
             return dateTime.ToString("dd/MM/yyyy");
         }
+
+        public static long toUnixTime(this DateTime dateTime)
+        {
+            //DateTime sTime = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            //return (long)(dateTime - sTime).TotalSeconds;
+
+            return (long)Math.Truncate((dateTime.ToUniversalTime().Subtract(new DateTime(1970, 1, 1))).TotalSeconds);
+        }
     }
 }

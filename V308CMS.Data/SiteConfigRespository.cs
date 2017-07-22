@@ -104,11 +104,18 @@ namespace V308CMS.Data
         }
         public List<SiteConfig> LoadSiteConfig()
         {
+            var items = new List<SiteConfig>();
             using (var entities = new V308CMSEntities())
             {
-                return entities.SiteConfig.ToList();
-
+                try {
+                    items = entities.SiteConfig.OrderBy(c => c.Id).ToList();
+                }
+                catch (Exception ex)
+                {
+                    Console.Write(ex);
+                }
             }
+            return items;
 
         }
 

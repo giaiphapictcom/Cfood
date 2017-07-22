@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using V308CMS.Data;
 using V308CMS.Data.Models;
+using V308CMS.Data.Helpers;
 
 namespace V308CMS.Respository
 {
@@ -119,9 +120,9 @@ namespace V308CMS.Respository
             }
 
         }
-        public List<WebsiteRequest> GetList(bool status = true, int limit = 1)
+        public List<WebsiteRequest> GetList(bool status = true, int limit = -1)
         {
-            var banners = new List<WebsiteRequest>();
+            var sites = new List<WebsiteRequest>();
             using (var entities = new V308CMSEntities())
             {
                 try
@@ -130,10 +131,12 @@ namespace V308CMS.Respository
 
                     if (items.Count() > 0)
                     {
-                        banners = items.ToList();
                         if (limit > 0)
                         {
-                            banners = items.Take(limit).ToList();
+                            sites = items.Take(limit).ToList();
+                        }
+                        else {
+                            sites = items.ToList();
                         }
                     }
                 }
@@ -143,7 +146,7 @@ namespace V308CMS.Respository
                 }
 
             }
-            return banners;
+            return sites;
         }
     }
 }

@@ -21,14 +21,15 @@
                 <div class="form-group">
                     <label>Lượng giảm giá</label>
                     @Html.TextBoxFor(model => Model.discount, new { type = "number", @class = "form-control" })
+                    <small id="emailHelp" class="form-text text-muted">Mức giảm giá luôn thấp hơn hoặc bằng mức Chiết khấu bạn nhận được.</small>
 
                 </div>
                 @*@BootstrapHelper.InputText("discount", "Lượng giảm giá", null, Model.discount.ToString() )*@
             </div>
-            <div class="col-md-12">
+            <div class="col-md-6">
                 @BootstrapHelper.InputText("ProductCode", "Mã sản phẩm",null,Model.ProductCode)
             </div>
-            <div class="col-md-12">
+            <div class="col-md-6">
                 @BootstrapHelper.InputText("code", "Voucher Code", null, Model.Code)
             </div>
             <div class="col-md-12">

@@ -677,7 +677,7 @@
 
                             
                                 <li>
-                                    <a href="@Url.UserIndexUrl(null,"affiliateaccount","index")" title="Danh sách Tài khoản">Thống kê</a>
+                                    <a href="@Url.UserIndexUrl(null,"affiliate","index")" title="Danh sách Tài khoản">Thống kê</a>
                                 </li>
                             
                             
@@ -688,6 +688,14 @@
                                 </li>
 
                             }
+
+                            @if (IsHasPermission(listRolePermission, "SiteConfig", 0))
+                            {
+                                <li>
+                                    <a href="@Url.SiteConfigAffiliate()">Cấu hình hệ thống</a>
+                                </li>
+                            }
+
                             @if (IsHasPermission(listRolePermission, "AffiliateNews", 0))
                                     {
                                         <li>

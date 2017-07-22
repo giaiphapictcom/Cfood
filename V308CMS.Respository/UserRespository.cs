@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using V308CMS.Common;
 using V308CMS.Data;
+using V308CMS.Data.Helpers;
 
 namespace V308CMS.Respository
 {
@@ -79,9 +80,14 @@ namespace V308CMS.Respository
                     userUpdate.Avatar = account.Avatar;
                     userUpdate.Gender = account.Gender;
                     userUpdate.Date = account.Date;
-                    return "ok";
+                    userUpdate.Site = account.Site;
+                    userUpdate.affiliate_code = account.affiliate_code;
+                    userUpdate.facebook_page = account.facebook_page;
+                    userUpdate.affiliate_id = account.affiliate_id;
+                    entities.SaveChanges();
+                    return Data.Helpers.Result.Ok;
                 }
-                return "not_exists";
+                return Data.Helpers.Result.NotExists;
             }
            
         }
@@ -113,6 +119,16 @@ namespace V308CMS.Respository
                         orderby user.Date.Value descending
                         select user).ToList();
             }
+
+        }
+        public List<Account> GetAll(string site = Site.home)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return (from user in entities.Account
+                        orderby user.Date.Value descending
+                        select user).ToList();
+            }
            
         }
 
@@ -126,7 +142,7 @@ namespace V308CMS.Respository
                     items = items.Where(a => a.Site.Equals(site.Trim()));
                 }
                 else {
-                    items = items.Where(a => a.Site == "home" || a.Site =="" );
+                    items = items.Where(a => a.Site == "home" || a.Site =="" || a.Site == null );
                 }
 
 
@@ -237,6 +253,16 @@ namespace V308CMS.Respository
                         orderby user.Date.Value descending
                         select user).Take(count).ToList();
             }
+        }
+
+        public List<int> GetMemberIdOfAffiliate(int affiliate_id=0) {
+            var items = new List<int>();
+            using (var entities = new V308CMSEntities())
+            {
+                var users = entities.Account.Where(a=>a.affiliate_id==affiliate_id).Select(a=> a.ID);
+                items = users.ToList();
+            }
+            return items;
         }
     }
 }

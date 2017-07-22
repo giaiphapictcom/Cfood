@@ -11,9 +11,11 @@
     <title>@PageTitle</title>
     <meta property="og:url" content="@Request.Url" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="@PageTitle" />
+    <meta property="og:title" content="@Html.Raw(PageTitle)" />
     <meta property="og:description" content="@Model.NewsItem.Summary" />
-    <meta property="og:image" content="https://i.ytimg.com/vi/@Model.NewsItem.Summary/mqdefault.jpg" />
+    <meta property="og:image" content="https://i.ytimg.com/vi/@Model.NewsItem.Summary/hqdefault.jpg" />
+    <meta property="og:image:width" content="436" />
+    <meta property="og:image:height" content="327" />
 }
 
 <div class="shopify-section loginform">

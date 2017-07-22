@@ -31,8 +31,11 @@
         <ul>
             
             <li class="@HtmlAffiliate.MenuActive("order")" ><a href="/order">Báo cáo đơn hàng</a></li>
-            <li ><a href="javascript:void(0)">Kiểm tra mã đơn hàng <span class="notification-red"></span></a></li>
-            <li class="@HtmlAffiliate.MenuActive("order/report")" ><a href="/order/report">Báo cáo Hiệu quả</a></li>
+            @HtmlAffiliate.li_anchor("Kiểm tra mã đơn hàng", "order/search")
+
+            @*<li class="@HtmlAffiliate.MenuActive("order/report")" ><a href="/order/report">Báo cáo Hiệu quả</a></li>*@
+            @HtmlAffiliate.li_anchor("Báo cáo Hiệu quả", "/partner/reportoverview")
+            
             
             <li class="@HtmlAffiliate.MenuActive("link/report")" ><a href="/link/report">Báo cáo click</a></li>
 @*            <li><a href="javascript:void(0)">Top giảm giá</a></li>*@

@@ -1,13 +1,14 @@
 ﻿using System.Web.Mvc;
 using V308CMS.Data;
 using V308CMS.Respository;
+using V308CMS.Common;
+using V308CMS.Social;
 using V308CMS.Sale.Helpers;
-using V308CMS.Data.Helpers;
 
 
 namespace V308CMS.Sale.Controllers
 {
-    public class BaseController : Controller
+    public abstract class BaseController : Controller
     {
 
         #region Repository
@@ -15,6 +16,7 @@ namespace V308CMS.Sale.Controllers
         public ProductRepository ProductRepos;
 
         public AccountRepository AccountRepos;
+        public UserRespository UserRepo;
         public NewsRepository NewsRepos;
         public TestimonialRepository CommentRepo;
         public CategoryRepository CategoryRepo;
@@ -41,6 +43,7 @@ namespace V308CMS.Sale.Controllers
             ProductHelper.ProductShowLimit = ProductRepos.PageSize;
 
             AccountRepos = new AccountRepository();
+            UserRepo = new UserRespository();
             NewsRepos = new NewsRepository();
             NewsGroupRepos = new NewsGroupRepository();
             CommentRepo = new TestimonialRepository(mEntities);
@@ -96,9 +99,18 @@ namespace V308CMS.Sale.Controllers
         protected BaseController()
         {
             _AccountService = new AccountRepository();
+            ConfigRepo = new SiteRepository();
+
+            ConfigHelper.RecaptchaSecretKey = ConfigRepo.SiteConfig("RecaptchaSecretKey");
+            ConfigHelper.RecaptchaSitekey = ConfigRepo.SiteConfig("RecaptchaSitekey");
+            ConfigHelper.SiteLogo = ConfigRepo.SiteConfig("site-logo",Data.Helpers.Site.affiliate);
+            GoogleplusService = new GoogleplusService(ConfigHelper.GoogleAppId, ConfigHelper.GoogleAppSecret);
+            FacebookService = new FacebookService(ConfigHelper.FacebookAppId, ConfigHelper.FacebookAppSecret);
             CreateRepos();
         }
-
+        public FacebookService FacebookService { get; }
+        public SiteRepository ConfigRepo { get; }
+        public GoogleplusService GoogleplusService { get; }
         protected void SetFlashMessage(string message)
         {
             TempData["Message"] = message;
@@ -107,6 +119,34 @@ namespace V308CMS.Sale.Controllers
         protected void SetFlashError(string message)
         {
             TempData["Error"] = message;
+        }
+
+        private string GetTempSession(string name, string defaultValue = "")
+        {
+            return Session[name]?.ToString() ?? defaultValue;
+        }
+        private void ResetTempSession(string name, string defaultValue = "")
+        {
+            Session[name] = defaultValue;
+        }
+        private void SetTempSession(string name, string value = "")
+        {
+            Session[name] = value;
+        }
+        protected string ReturnUrl
+        {
+            get { return GetTempSession("ReturnUrl"); }
+            set { if (!string.IsNullOrEmpty(value)) { SetTempSession("ReturnUrl", value); } }
+        }
+
+        protected ActionResult RedirectToUrl(string url, string defaultUrl = "/")
+        {
+            if (url.IsLocalUrl())
+            {
+                return Redirect(url);
+            }
+            return Redirect(defaultUrl);
+
         }
     }
 }

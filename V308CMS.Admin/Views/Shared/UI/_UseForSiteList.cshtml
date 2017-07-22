@@ -1,0 +1,50 @@
+﻿@using V308CMS.Data.Helpers
+@using V308CMS.Admin.Models.UI
+@model MutilDropDownlistModels
+
+@helper MutilDropDownlist(
+    string name = "",
+    List<MutilCategoryItem> data = null,
+    string selected = "",
+    string placeHolder = "",
+    string cssClass = "form-control")
+{
+
+<select class='@cssClass select-2' name='@name' id='@name' placeholder='@placeHolder'>
+    @InternalMutilDropDownlist(data, selected)
+</select>
+
+}
+@helper InternalMutilDropDownlist( List<MutilCategoryItem> data = null, string selected = "",
+            int parentId = 0,
+            string strLimit = ""
+    )
+{
+if (data != null && data.Count > 0)
+{
+    foreach (var item in data)
+    {
+        if ( item.Value == selected)
+        {
+            <option value='@item.Value' selected>@item.Name</option>
+        }
+        else
+        {
+            <option value='@item.Value'>@item.Name</option>
+        }
+    }
+}
+}
+
+@if (Model.Data == null)
+{
+    var Data = new List<MutilCategoryItem>();
+    Data.Add(new MutilCategoryItem() { Value = Site.home, Name = "Khách Hàng" });
+    Data.Add(new MutilCategoryItem() { Value = Site.affiliate, Name = "Tài khoản Affiliate" });
+    Model.Data = Data;
+}
+ @if (Model.Selected == null) {
+     Model.Selected = Site.home;
+ }
+@MutilDropDownlist(Model.Name, Model.Data, Model.Selected, Model.PlaceHolder, Model.CssClass)
+

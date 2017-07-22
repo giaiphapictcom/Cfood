@@ -1,0 +1,14 @@
+﻿@using V308CMS.Data.Models
+@model List<Banner>
+
+@if (Model != null)
+{
+    <div class="row">
+        @foreach (Banner img in Model)
+        {
+            <a class="col-12" data-title="@img.Name" href="@img.Link">
+                <img src="@V308CMS.Common.ImageHelper.ToUrl(img.ImageUrl)" alt="@img.Name" />
+            </a>
+        }
+    </div>
+}

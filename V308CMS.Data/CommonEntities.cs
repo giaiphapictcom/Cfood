@@ -2131,15 +2131,21 @@ namespace V308CMS.Data
 
     public class OrdersPage
     {
+        
         public List<ProductOrder> Items { get; set; }
         public int Total { get; set; }
         public int Page { get; set; }
-
+        public int plimit { get; set; }
+        public OrdersPage()
+        {
+            plimit = 10;
+        }
     }
 
     public class OrdersReportByDaysPage
     {
-        public List<OrdersReportByDay> report { get; set; }
+        public List<OrdersReportByDay> Orders { get; set; }
+        public List<RevenueReportByDay> Revenues { get; set; }
         public List<DateTime> days { get; set; }
 
     }
@@ -2148,6 +2154,20 @@ namespace V308CMS.Data
         public DateTime date { get; set; }
         public int Total { get; set; }
         public float Price { get; set; }
+    }
+
+    public class RevenueReportByDay
+    {
+        public DateTime date { get; set; }
+        public int LinkClick { get; set; }
+        public int Total { get; set; }
+        public float Money { get; set; }
+
+        public float success { get; set; }
+        public float waiting { get; set; }
+        public float cancel { get; set; }
+        public float sended { get; set; }
+        public float left { get; set; }
     }
 
     public class SupportMansPage

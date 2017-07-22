@@ -1,5 +1,6 @@
 ﻿@using V308CMS.Admin.Helpers.Url
 @using V308CMS.Admin.Models.UI
+@using V308CMS.Data.Helpers;
 @model  V308CMS.Admin.Models.UserModels
 @Html.HiddenFor(user => Model.Id)
 @Html.HiddenFor(user => Model.Site)
@@ -9,12 +10,41 @@
     <div class="col-lg-6">
         <div class="form-group">
             @Html.LabelFor(user => Model.Username)
-            @Html.TextBoxFor(user => Model.Username, new {@class = "form-control", placeholder = "Nhập tên tài khoản"})
+            @Html.TextBoxFor(user => Model.Username, new { @class = "form-control", placeholder = "Nhập tên tài khoản" })
             @Html.ValidationMessageFor(user => user.Username)
         </div>
-        <div class="form-group">
-            <label for="@Model.Avatar">@(Model.Id > 0 ? "Ảnh đại diện hiện tại" : "Ảnh đại diện")</label>
-        </div>
+        @if (Model.Id < 1)
+        {
+            <div class="form-group">
+                <div class="form-group">
+                    @Html.LabelFor(user => Model.Site)
+                    @Html.Partial("UI/_UseForSiteList", new MutilDropDownlistModels
+               {
+                   Name = "Site",
+                   Selected = Model.Site
+               })
+                </div>
+            </div>
+        }
+        @if (Model.Site == Site.affiliate || Model.Id < 1)
+        {
+            <div class="form-group">
+                @Html.LabelFor(user => Model.AffiliateCode)
+                @Html.TextBoxFor(user => Model.AffiliateCode, new { @class = "form-control", placeholder = "Nhập mã Affiliate" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(user => Model.FacebookPage)
+                @Html.TextBoxFor(user => Model.FacebookPage, new { @class = "form-control", placeholder = "Facebook Url" })
+            </div>
+        }
+        @if (Model.AvatarUrl != null && Model.AvatarUrl.Length > 0)
+        {
+            <div class="form-group">
+                <label for="@Model.Avatar">@(Model.Id > 0 ? "Ảnh đại diện hiện tại" : "Ảnh đại diện")</label>
+            </div>
+        }
+                
         @if (!string.IsNullOrWhiteSpace(Model.AvatarUrl))
         {
             @Html.HiddenFor(avatarUrl => Model.AvatarUrl)
@@ -31,33 +61,33 @@
            Name = "Avatar"
        })
 
-        <div class="form-group">
-            @Html.LabelFor(user => Model.Email)
-            @Html.TextBoxFor(user => Model.Email, new {@class = "form-control", placeholder = "Nhập địa chỉ email"})
-            @Html.ValidationMessageFor(user => user.Email)
-        </div>
-            @if (Model.Id == 0)
-            {
                 <div class="form-group">
-                    @Html.LabelFor(user => Model.Password)
-                    @Html.PasswordFor(user => Model.Password, new {@class = "form-control", placeholder = "Nhập mật khẩu"})
-                    @Html.ValidationMessageFor(user => user.Password)
+                    @Html.LabelFor(user => Model.Email)
+                    @Html.TextBoxFor(user => Model.Email, new { @class = "form-control", placeholder = "Nhập địa chỉ email" })
+                    @Html.ValidationMessageFor(user => user.Email)
                 </div>
-                <div class="form-group">
-                    @Html.LabelFor(user => Model.ConfirmPassword)
-                    @Html.PasswordFor(user => Model.ConfirmPassword, new {@class = "form-control", placeholder = "Nhập mật khẩu xác nhận"})
-                    @Html.ValidationMessageFor(user => user.ConfirmPassword)
-                </div>
-            }
-            else
-            {
-                <div class="form-group">
-                    <a class="btn btn-danger" href="@Url.UserChangePasswordUrl(new {id =Model.Id})" title="Đổi mật khẩu tài khoản @Model.Username">
-                        Đổi mật khẩu
-                        <i class="fa fa-key"></i>
-                    </a>
-                </div>
-             }
+                @if (Model.Id == 0)
+                {
+                    <div class="form-group">
+                        @Html.LabelFor(user => Model.Password)
+                        @Html.PasswordFor(user => Model.Password, new { @class = "form-control", placeholder = "Nhập mật khẩu" })
+                        @Html.ValidationMessageFor(user => user.Password)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(user => Model.ConfirmPassword)
+                        @Html.PasswordFor(user => Model.ConfirmPassword, new { @class = "form-control", placeholder = "Nhập mật khẩu xác nhận" })
+                        @Html.ValidationMessageFor(user => user.ConfirmPassword)
+                    </div>
+                }
+                else
+                {
+                    <div class="form-group">
+                        <a class="btn btn-danger" href="@Url.UserChangePasswordUrl(new {id =Model.Id})" title="Đổi mật khẩu tài khoản @Model.Username">
+                            Đổi mật khẩu
+                            <i class="fa fa-key"></i>
+                        </a>
+                    </div>
+                }
 
                 <div class="form-group">
                     @Html.LabelFor(user => Model.FullName)

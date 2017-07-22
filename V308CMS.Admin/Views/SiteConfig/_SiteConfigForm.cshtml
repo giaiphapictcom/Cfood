@@ -4,11 +4,12 @@
     var listSite = (List<SelectListItem>)ViewData["ListSite"];
 }
 @Html.HiddenFor(config => Model.Id)
+@Html.HiddenFor(config => Model.Site)
 @Html.AntiForgeryToken()
 <div class="row">
     @Html.ValidationSummary(true)
     <div class="col-lg-6">
-        <div class="form-group">
+        @*<div class="form-group">
             @Html.LabelFor(news => news.Site)
             @Html.DropDownListFor(news => news.Site, listSite, "Chọn Website", new
        {
@@ -16,7 +17,7 @@
            placeholder = "Chọn Website"
        })
             @Html.ValidationMessageFor(news => news.Site)
-        </div>
+        </div>*@
 
         <div class="form-group">
             @Html.LabelFor(config => Model.Name)

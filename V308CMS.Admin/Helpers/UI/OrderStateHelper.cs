@@ -2,6 +2,8 @@
 using System.ComponentModel;
 using System.Web.Mvc;
 using V308CMS.Common;
+using V308CMS.Respository;
+using V308CMS.Data;
 using V308CMS.Data.Enum;
 
 namespace V308CMS.Admin.Helpers.UI
@@ -79,6 +81,25 @@ namespace V308CMS.Admin.Helpers.UI
             }
             return new MvcHtmlString(string.Format("<span class='grid-report-item {0}'>{1}</span>", colorClass, statusText));
             
+        }
+
+        public static MvcHtmlString RevenueValue(this ProductOrder order) {
+            double money = 0;
+            if (order.Status == (byte)OrderStatusEnum.Complete) {
+                money = (double)order.revenue;
+                
+            }
+            return new MvcHtmlString(money.ToString("N0"));
+        }
+
+        public static MvcHtmlString RevenuePending(this ProductOrder order)
+        {
+            double money = 0;
+            if (order.Status == (byte)OrderStatusEnum.Complete)
+            {
+                money = (double)order.revenue_payed; ;
+            }
+            return new MvcHtmlString(string.Format("<span class='grid-report-item {0}'>{1}</span>", "", money.ToString("N0")));
         }
 
     }

@@ -442,7 +442,12 @@ namespace V308CMS.Data
             get;
             set;
         }
-
+        public DbSet<VisisterTime> VisisterTimeTbl
+        {
+            get;
+            set;
+        }
+        
         public DbSet<SupportMan> SupportManTbl
         {
             get;
@@ -450,6 +455,24 @@ namespace V308CMS.Data
         }
 
         public DbSet<WebsiteRequest> WebsiteRequestTbl
+        {
+            get;
+            set;
+        }
+
+        public DbSet<ProductOrderRevenue> ProductOrderRevenueTbl
+        {
+            get;
+            set;
+        }
+
+        public DbSet<RevenueGain> RevenueGainTbl
+        {
+            get;
+            set;
+        }
+
+        public DbSet<AffilateLinkClick> AffilateLinkClickTbl
         {
             get;
             set;

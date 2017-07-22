@@ -98,11 +98,15 @@
     </Reference>
     <Reference Include="MySql.Data, Version=6.9.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\GAMES\GP1\DECHEMOBILEMVC4\DECHEMOBILEMVC4\bin\MySql.Data.dll</HintPath>
+      <HintPath>..\packages\MySql.Data.6.9.9\lib\net45\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data.Entity, Version=6.9.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\GAMES\GP1\DECHEMOBILEMVC4\DECHEMOBILEMVC4\bin\MySql.Data.Entity.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data.Entity.EF6, Version=6.9.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MySql.ConnectorNET.Entity.6.8.3.2\lib\net45\MySql.Data.Entity.EF6.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Web, Version=6.9.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -191,6 +195,7 @@
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LinkController.cs" />
     <Compile Include="Controllers\MemberAddressController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\MemberWishListController.cs" />
@@ -2072,6 +2077,12 @@
     <Content Include="Views\themes\myshopify\Async\_LeftBannerAsyn.cshtml" />
     <Content Include="Views\themes\myshopify\Async\_LeftBannerHomeTopAsyn.cshtml" />
     <Content Include="Views\themes\myshopify\Async\_BigSaleTopBannerAsync.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\category - Copy.cshtml" />
+    <Content Include="Views\themes\mamoo\Components\CategoryHomeComponent.cshtml" />
+    <Content Include="Views\themes\mamoo\Components\PaginationComponent.cshtml" />
+    <Content Include="Views\themes\mamoo\Components\ProductComponent.cshtml" />
+    <Content Include="Views\themes\mamoo\Components\ProductPriceComponent.cshtml" />
+    <Content Include="Views\themes\mamoo\Components\YoutubeVideoComponent.cshtml" />
     <None Include="Views\themes\myshopify\Blocks\ListSubCategory.cshtml" />
     <Content Include="Views\themes\myshopify\Components\ProductPriceComponent.cshtml" />
     <Content Include="Views\themes\myshopify\Components\CategoryHomeComponent.cshtml" />
@@ -2131,7 +2142,7 @@
       <Name>V308CMS.Respository</Name>
     </ProjectReference>
     <ProjectReference Include="..\V308CMS.Socail\V308CMS.Social.csproj">
-      <Project>{920E78FF-184D-4484-AFAB-B805325D0E48}</Project>
+      <Project>{920e78ff-184d-4484-afab-b805325d0e48}</Project>
       <Name>V308CMS.Social</Name>
     </ProjectReference>
   </ItemGroup>

@@ -6,6 +6,7 @@
 @section header {
     <title>@PageTitle</title>
     <link href="@ViewBag.ThemesPath/css/login.css" rel="stylesheet" type="text/css" />
+    <script src="https://www.google.com/recaptcha/api.js?hl=vi" async defer></script>
 }
 <div class="shopify-section loginform">
     <div class="container-block m-0">
@@ -52,6 +53,11 @@
                             <label for="inputPassword" class="control-label col-xs-4">Số điện thoại</label>
                             <div class="col-xs-8">
                                 <input type="text" name="mobile" class="form-control" placeholder="Số điện thoại của bạn">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-4 col-md-8">
+                                <div class="g-recaptcha" data-sitekey="@V308CMS.Sale.Helpers.ConfigHelper.RecaptchaSitekey"></div>
                             </div>
                         </div>
                         <div class="form-group">

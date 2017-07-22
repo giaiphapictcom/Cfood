@@ -11,9 +11,6 @@ namespace V308CMS
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            //VisisterRepository visister = new VisisterRepository(mEntities);
-            //visister.update();
-
             dynamic viewBag = filterContext.Controller.ViewBag;
 
             viewBag.domain = Theme.domain;

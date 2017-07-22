@@ -2957,7 +2957,7 @@ namespace V308CMS.Data
                         mStr.Append("<tr class=\"rgAltRow\">");
                         mStr.Append("<td>" + it.ID + "</td>");
                         mStr.Append("<td>" + it.FullName + "</td>");
-                        mStr.Append("<td>" + ConverterUlti.GetNgayDangByDateTime(it.Date.Value) + "</td>");
+                        mStr.Append("<td>" + ConverterUlti.GetNgayDangByDateTime(it.Date) + "</td>");
                         mStr.Append("<td>" + it.Phone + "</td>");
                         mStr.Append("<td>" + it.Price + "</td>");
                         mStr.Append("<td>" + it.Detail + "</td>");
@@ -2977,7 +2977,7 @@ namespace V308CMS.Data
                         mStr.Append("<tr class=\"rgRow\">");
                         mStr.Append("<td>" + it.ID + "</td>");
                         mStr.Append("<td>" + it.FullName + "</td>");
-                        mStr.Append("<td>" + ConverterUlti.GetNgayDangByDateTime(it.Date.Value) + "</td>");
+                        mStr.Append("<td>" + ConverterUlti.GetNgayDangByDateTime(it.Date) + "</td>");
                         mStr.Append("<td>" + it.Phone + "</td>");
                         mStr.Append("<td>" + String.Format("{0:0,0}", it.Price) + "</td>");
                         mStr.Append("<td>" + it.Detail + "</td>");
@@ -3025,7 +3025,7 @@ namespace V308CMS.Data
                         mStr.Append("<tr class=\"rgAltRow\">");
                         mStr.Append("<td>" + it.ID + "</td>");
                         mStr.Append("<td>" + it.FullName + "</td>");
-                        mStr.Append("<td>" + ConverterUlti.GetNgayDangByDateTime(it.Date.Value) + "</td>");
+                        mStr.Append("<td>" + ConverterUlti.GetNgayDangByDateTime(it.Date) + "</td>");
                         mStr.Append("<td>" + it.Phone + "</td>");
                         mStr.Append("<td>" + String.Format("{0:0,0}",it.Price) + "</td>");
                         mStr.Append("<td>" + it.Detail + "</td>");
@@ -3037,7 +3037,7 @@ namespace V308CMS.Data
                         mStr.Append("<tr class=\"rgRow\">");
                         mStr.Append("<td>" + it.ID + "</td>");
                         mStr.Append("<td>" + it.FullName + "</td>");
-                        mStr.Append("<td>" + ConverterUlti.GetNgayDangByDateTime(it.Date.Value) + "</td>");
+                        mStr.Append("<td>" + ConverterUlti.GetNgayDangByDateTime(it.Date) + "</td>");
                         mStr.Append("<td>" + it.Phone + "</td>");
                         mStr.Append("<td>" + String.Format("{0:0,0}", it.Price) + "</td>");
                         mStr.Append("<td>" + it.Detail + "</td>");
@@ -3889,7 +3889,7 @@ namespace V308CMS.Data
                         mStr.Append("<tr class=\"rgAltRow\">");
                         mStr.Append("<td>" + it.ID + "</td>");
                         mStr.Append("<td>" + it.FullName + "</td>");
-                        mStr.Append("<td>" + ConverterUlti.GetNgayDangByDateTime(it.Date.Value) + "</td>");
+                        mStr.Append("<td>" + ConverterUlti.GetNgayDangByDateTime(it.Date) + "</td>");
                         mStr.Append("<td>" + it.Phone + "</td>");
                         mStr.Append("<td>" + String.Format("{0:0,0}", it.Price) + "</td>");
                         mStr.Append("<td>" + it.Detail + "</td>");
@@ -3901,7 +3901,7 @@ namespace V308CMS.Data
                         mStr.Append("<tr class=\"rgRow\">");
                         mStr.Append("<td>" + it.ID + "</td>");
                         mStr.Append("<td>" + it.FullName + "</td>");
-                        mStr.Append("<td>" + ConverterUlti.GetNgayDangByDateTime(it.Date.Value) + "</td>");
+                        mStr.Append("<td>" + ConverterUlti.GetNgayDangByDateTime(it.Date) + "</td>");
                         mStr.Append("<td>" + it.Phone + "</td>");
                         mStr.Append("<td>" + String.Format("{0:0,0}", it.Price) + "</td>");
                         mStr.Append("<td>" + it.Detail + "</td>");

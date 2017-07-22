@@ -15,6 +15,6 @@ namespace V308CMS.Admin.Models
         [Required(ErrorMessage = "Id trống.")]
         public int Id { get; set; }
 
-        public byte Site { get; set; }
+        public string Site { get; set; }
     }
 }

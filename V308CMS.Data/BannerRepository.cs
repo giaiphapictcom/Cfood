@@ -32,6 +32,9 @@ namespace V308CMS.Data
 
         public BannerRepository(V308CMSEntities mEntities)
         {
+            if (mEntities == null) {
+                mEntities = new V308CMSEntities();
+            }
             this.entities = mEntities;
         }
 

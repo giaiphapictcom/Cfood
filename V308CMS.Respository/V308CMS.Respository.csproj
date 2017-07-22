@@ -79,6 +79,7 @@
     <Compile Include="ColorRespository.cs" />
     <Compile Include="CountryRespository.cs" />
     <Compile Include="OrderTransactionRespository.cs" />
+    <Compile Include="ProductOrderRevenueRespository.cs" />
     <Compile Include="ShippingAddressRespository.cs" />
     <Compile Include="EmailConfigRepository.cs" />
     <Compile Include="EmailLogRespository.cs" />

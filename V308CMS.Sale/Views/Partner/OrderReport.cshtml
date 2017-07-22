@@ -3,15 +3,10 @@
 @{
     Layout = "~/Views/Affiliate/Layout/Backend.cshtml";
     string PageTitle = "Báo cáo hiệu quả";
-
-  
 }
 @section header {
     <title>@PageTitle</title>
     <script type="text/javascript" src="/Content/js/highcharts.js"></script>
-
-
-
 }
 <h4>@PageTitle</h4>
 
@@ -58,7 +53,16 @@ Highcharts.chart('container', {
     },
     tooltip: {
         shared: true,
-        valueSuffix: ' đơn hàng'
+        //valueSuffix: ' đơn hàng',
+        formatter: function () {
+            var s = [];
+
+            $.each(this.points, function (i, point) {
+                s.push('<span style="color:#D31B22;font-weight:bold;">' + point.series.name + ' : ' + point.y + '<span>');
+            });
+
+            return s.join(' và ');
+        },
     },
     credits: {
         enabled: false
@@ -68,16 +72,29 @@ Highcharts.chart('container', {
             fillOpacity: 0.5
         }
     },
-    series: [{
-        name: 'Khách hàng của @Session["UserName"]',
-        data: [@foreach( var rep in Model.report ){
+    series: [
+        {
+        name: 'Đơn đặt hàng',
+        data: [@foreach( var rep in Model.Orders ){
                 string qty = rep.Total.ToString();
-                if (!rep.Equals(Model.report.Last()))
+                if (!rep.Equals(Model.Orders.Last()))
                 {
                     qty += ",";
                 }
                 @Html.Raw(qty)
             }]
-    }]
+        },
+        {
+            name: 'Hoa Hồng',
+            data: [@foreach( var rep in Model.Revenues ){
+                string qty = rep.Total.ToString();
+                if (!rep.Equals(Model.Revenues.Last()))
+                {
+                    qty += ",";
+                }
+                @Html.Raw(qty)
+            }]
+        },
+    ]
 });
-		</script>
+</script>

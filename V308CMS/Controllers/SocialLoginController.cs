@@ -58,7 +58,8 @@ namespace V308CMS.Controllers
         [NonAction]
         private int AddUser(string userId, string email, string fullName, string avatar)
         {
-            var userIdResult = AccountService.Insert(userId, email, StringHelper.GenerateString(6), StringHelper.GenerateString(4), fullName, avatar);
+            
+            var userIdResult = AccountService.Insert(userId, email, StringHelper.GenerateString(6), StringHelper.GenerateString(4), fullName, avatar, Data.Helpers.Site.home);
             return int.Parse(userIdResult);
         }
 

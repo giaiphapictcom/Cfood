@@ -40,6 +40,7 @@ namespace V308CMS.Data
 
         #region[Declare variables]
         private int _ID;
+        private int _affiliate_id;
         private string _UserName;
         private string _Password;
         private string _FullName;
@@ -68,11 +69,14 @@ namespace V308CMS.Data
         private string _bank_address;
         private string _cmt_front;
         private string _cmt_back;
+        private string _affiliate_code;
+        private string _facebook_page;
 
         #endregion
         #region[Public Properties]
         [Key]
         public int ID { get { return _ID; } set { _ID = value; } }
+        public int affiliate_id { get { return _affiliate_id; } set { _affiliate_id = value; } }
         public string UserName { get { if (String.IsNullOrEmpty(_UserName)) return ""; else return _UserName; } set { _UserName = value; } }
         public string Password { get { if (String.IsNullOrEmpty(_Password)) return ""; else return _Password; } set { _Password = value; } }
         public string FullName { get { if (String.IsNullOrEmpty(_FullName)) return ""; else return _FullName; } set { _FullName = value; } }
@@ -98,6 +102,8 @@ namespace V308CMS.Data
         public string bank_address { get { if (String.IsNullOrEmpty(_bank_address)) return ""; else return _bank_address; } set { _bank_address = value; } }
         public string cmt_front { get { if (String.IsNullOrEmpty(_cmt_front)) return ""; else return _cmt_front; } set { _cmt_front = value; } }
         public string cmt_back { get { if (String.IsNullOrEmpty(_cmt_back)) return ""; else return _cmt_back; } set { _cmt_back = value; } }
+        public string affiliate_code { get { if (String.IsNullOrEmpty(_affiliate_code)) return ""; else return _affiliate_code; } set { _affiliate_code = value; } }
+        public string facebook_page { get { if (String.IsNullOrEmpty(_facebook_page)) return ""; else return _facebook_page; } set { _facebook_page = value; } }
 
         #endregion
 
@@ -901,7 +907,7 @@ namespace V308CMS.Data
         public virtual ICollection<ProductAttribute> ProductAttribute { get; set; }
 
         [ForeignKey("Type")]
-        [Required]
+        //[Required]
         public virtual ProductType ProductType { get; set; }
 
         [ForeignKey("Manufacturer")]
@@ -1068,7 +1074,7 @@ namespace V308CMS.Data
 
         #region[Declare variables]
         private int _ID;
-        private DateTime? _Date;
+        private DateTime _Date;
         private string _Detail;
         private string _FullName;
         private string _Email;
@@ -1081,13 +1087,15 @@ namespace V308CMS.Data
         private int? _Count;
         private double? _Price;
         private string _ProductDetail;
+        private double? _Revenue;
+        private double? _RevenuePayed;
 
 
         #endregion
         #region[Public Properties]
         [Key]
         public int ID { get { return _ID; } set { _ID = value; } }
-        public DateTime? Date { get { if (_Date == null) return new DateTime(); else return _Date; } set { if (_Date != value) { _Date = value; } } }
+        public DateTime Date { get { if (_Date == null) return new DateTime(); else return _Date; } set { if (_Date != value) { _Date = value; } } }
         public string Detail { get { if (String.IsNullOrEmpty(_Detail)) return ""; else return _Detail; } set { _Detail = value; } }
         public string FullName { get { if (String.IsNullOrEmpty(_FullName)) return ""; else return _FullName; } set { _FullName = value; } }
         public string Email { get { if (String.IsNullOrEmpty(_Email)) return ""; else return _Email; } set { _Email = value; } }
@@ -1095,12 +1103,15 @@ namespace V308CMS.Data
         public string Address { get { if (String.IsNullOrEmpty(_Address)) return ""; else return _Address; } set { _Address = value; } }
         public int? AccountID { get { if (_AccountID == null || _AccountID < 0) return 0; else return _AccountID; } set { if (_AccountID != value) { if (_AccountID < 0) _AccountID = 0; else _AccountID = value; } } }
         public int? AdminId { get { if (_AdminId == null || _AdminId < 0) return 0; else return _AdminId; } set { if (_AdminId != value) { if (_AdminId < 0) _AdminId = 0; else _AdminId = value; } } }
-        
         public int? Status { get { if (_Status == null) return 0; else return _Status; } set { if (_Status != value) { _Status = value; } } }
         public int? ProductID { get { if (_ProductID == null || _ProductID < 0) return 0; else return _ProductID; } set { if (_ProductID != value) { if (_ProductID < 0) _ProductID = 0; else _ProductID = value; } } }
         public int? Count { get { if (_Count == null || _Count < 0) return 0; else return _Count; } set { if (_Count != value) { if (_Count < 0) _Count = 0; else _Count = value; } } }
         public double? Price { get { if (_Price == null || _Price < 0) return 0; else return _Price; } set { if (_Price != value) { if (_Price < 0) _Price = 0; else _Price = value; } } }
-        public string ProductDetail { get { if (String.IsNullOrEmpty(_ProductDetail)) return ""; else return _ProductDetail; } set { _ProductDetail = value; } }         
+        public string ProductDetail { get { if (String.IsNullOrEmpty(_ProductDetail)) return ""; else return _ProductDetail; } set { _ProductDetail = value; } }
+
+        public double? revenue { get { if (_Revenue == null || _Revenue < 0) return 0; else return _Revenue; } set { if (_Revenue != value) { if (_Revenue < 0) _Revenue = 0; else _Revenue = value; } } }
+        public double? revenue_payed { get { if (_RevenuePayed == null || _RevenuePayed < 0) return 0; else return _RevenuePayed; } set { if (_RevenuePayed != value) { if (_RevenuePayed < 0) _RevenuePayed = 0; else _RevenuePayed = value; } } }
+
         public virtual ICollection<productorder_detail> OrderDetail { get; set; }
         public virtual ICollection<OrderTransaction> ListTransaction { get; set; }
         public int ShippingId { get; set; }
@@ -1795,9 +1806,9 @@ namespace V308CMS.Data
         private string _host;
         private string _platform;
         private string _browser;
-        
-
-
+        private string _browser_type;
+        private string _browser_version;
+        private int _affiliate_id;
         private DateTime? _created;
         
         #endregion
@@ -1806,18 +1817,20 @@ namespace V308CMS.Data
         [Key]
         public int id { get { return _ID; } set { _ID = value; } }
         public DateTime? timestamp { get { if (_created == null) return new DateTime(); else return _created; } set { if (_created != value) { _created = value; } } }
-
         public string ip_address { get { if (String.IsNullOrEmpty(_ip)) return ""; else return _ip; } set { _ip = value; } }
         public string host { get { if (String.IsNullOrEmpty(_host)) return ""; else return _host; } set { _host = value; } }
         public string useragent { get { if (String.IsNullOrEmpty(_useragent)) return ""; else return _useragent; } set { _useragent = value; } }
         public string platform { get { if (String.IsNullOrEmpty(_platform)) return ""; else return _platform; } set { _platform = value; } }
         public string browser { get { if (String.IsNullOrEmpty(_browser)) return ""; else return _browser; } set { _browser = value; } }
+        public string browser_type { get { if (String.IsNullOrEmpty(_browser_type)) return ""; else return _browser_type; } set { _browser_type = value; } }
+        public string browser_version { get { if (String.IsNullOrEmpty(_browser_version)) return ""; else return _browser_version; } set { _browser_version = value; } }
         public int? uid { get { if (_uid == null || _uid < 0) return 0; else return _uid; } set { if (_uid != value) { if (_uid < 0) _uid = 0; else _uid = value; } } }
         public string user_type { get { if (String.IsNullOrEmpty(_user_type)) return ""; else return _user_type; } set { _user_type = value; } }
+        public int affiliate_id { get { return _affiliate_id; } set { _affiliate_id = value; } }
 
-    #endregion
+        #endregion
 
-}
+    }
 
 
     //[Table("categorys")]
