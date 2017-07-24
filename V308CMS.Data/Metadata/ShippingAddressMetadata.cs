@@ -9,6 +9,9 @@ namespace V308CMS.Data.Metadata
         public int UserId { get; set; }
         [MaxLength(50)]
         public string FullName { get; set; }
+
+        [MaxLength(255)]
+        public string Email { get; set; }
         [MaxLength(15)]
         public string Phone { get; set; }
         [MaxLength(250)]

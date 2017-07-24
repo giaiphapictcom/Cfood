@@ -47,7 +47,7 @@ namespace V308CMS.Data
                     var visister = CurrentUser();
                     visister.uid = uid;
                     int visister_id = visister.id;
-                    var item = entiry.VisisterTbl.Where(v => v.ip_address == visister.ip_address && v.useragent == visister.useragent).FirstOrDefault();
+                    var item = entiry.VisisterTbl.FirstOrDefault(v => v.ip_address == visister.ip_address && v.useragent == visister.useragent);
                     if (item == null)
                     {
                         visister.affiliate_id = affiliate_id;

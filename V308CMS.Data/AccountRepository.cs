@@ -161,7 +161,16 @@ namespace V308CMS.Data
 
 
         }
-
+        public Account FindEmail(string email)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return (from user in entities.Account
+                        where user.Email == email
+                        select user
+              ).FirstOrDefault();
+            }
+        }
         public string InsertAffiliate(string email, string password, string fullname, string mobile = "")
         {
 

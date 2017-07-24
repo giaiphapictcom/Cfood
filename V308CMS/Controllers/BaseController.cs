@@ -86,12 +86,6 @@ namespace V308CMS.Controllers
         private void LoadSiteConfig()
         {
             var siteConfigs = SiteConfig.ConfigTable;
-            if (siteConfigs == null) {
-                siteConfigs = SiteConfigRepo.LoadSiteConfig();
-            }
-            if (siteConfigs == null) {
-                return;
-            }
             if (siteConfigs.Any())
             {
                 ViewBag.domain = Theme.domain;

@@ -11,7 +11,7 @@ namespace V308CMS.Controllers
     public class MemberController : BaseController
     {
         public MemberController(){
-            VisisterRepo.UpdateView();
+            //VisisterRepo.UpdateView();
         }
         
         [HttpPost]
@@ -102,12 +102,10 @@ namespace V308CMS.Controllers
         [HttpPost]
         [ActionName("RegisterAjax")]
         public JsonResult OnRegisterAjax(string email="", string password="", string confirmPassword="", string captcha="")
-        {
-            var validationResult = new Dictionary<string,string>();           
+        {                 
             if (!email.IsEmailAddress())
             {               
                 return Json(new{ code = 0, message = "Địa chỉ email không hợp lê." });             
-
             }
             if (!password.IsPasswordValid())
             {

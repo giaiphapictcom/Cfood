@@ -9,6 +9,9 @@ namespace V308CMS.Respository
     {
         List<ShippingAddress> GetListAddressByUserId(int userId);
         ShippingAddress Find(int id);
+
+        ShippingAddress FistByEmail(string email);
+        ShippingAddress FistByIpAddress(string ipAddress);
         string Update(ShippingAddress customerAddress);
         int Insert(ShippingAddress customerAddress);
     }
@@ -25,11 +28,28 @@ namespace V308CMS.Respository
             }
         }
 
+
         public ShippingAddress Find(int id)
         {
             using (var entities = new V308CMSEntities())
             {
                 return entities.ShippingAddress.FirstOrDefault(address => address.Id == id);
+            }
+        }
+
+        public ShippingAddress FistByEmail(string email)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return entities.ShippingAddress.FirstOrDefault(address => address.Email == email);
+            }
+        }
+
+        public ShippingAddress FistByIpAddress(string ipAddress)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return entities.ShippingAddress.FirstOrDefault(address => address.IpAddress == ipAddress);
             }
         }
 

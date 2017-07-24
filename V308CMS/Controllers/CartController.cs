@@ -194,9 +194,10 @@ namespace V308CMS.Controllers
                     Date = DateTime.Now,
                     Phone = shipping.Phone,
                     Count = MyCart.Items.Count,
-                    Price = MyCart.SubTotal,
+                    Price = MyCart.SubTotalAfterService,
                     Status = (int)OrderStatusEnum.Pending,
-                    ShippingId = shippingId
+                    ShippingId = shippingId,
+                  
                 };
                 var orderId = CartService.InsertOrUpdate(newOrder);
                 foreach (var product in MyCart.Items)

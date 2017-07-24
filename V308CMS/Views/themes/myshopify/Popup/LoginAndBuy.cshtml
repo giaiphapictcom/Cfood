@@ -60,15 +60,24 @@
         return re.test(email);
     }
     $(function() {
-        $("input[name='checkout']").click(function (e) {          
+        $("input[name='checkout']").click(function (e) {
+           
             if ($(this).val() === "1") {
+                $('#email').removeAttr('readonly');
+                $('#password').attr('readonly');
                 $('#email').focus();
+
+            } else {
+                $('#email').attr('readonly', 'readonly');
+                $('#password').attr('readonly', 'readonly');
             }
            
         });
 
         $("#btnCheckoutPopup").click(function (e) {
-            if ($("input[name='checkout']").val() === "1") {
+            e.preventDefault();
+            console.log($("input[name='checkout']:checked").val());
+            if ($("input[name='checkout']:checked").val() === "1") {
                 e.preventDefault();
                 if ($("#email").val() === "") {
                     showMessage("Vui lòng nhập email.");
@@ -85,7 +94,7 @@
                     $('#password').focus();
                     return false;
                 }
-                $.post("@Url.AccountAjaxLoginUrl()", { email: $("#email").val(), password: $('#password').val() }, function (response) {
+                $.post("@Url.AccountAjaxLoginUrl()", { email: $("#email").val(), password: $('#password').val() }, function(response) {
                     if (response.code === 0) {
                         showMessage(response.message);
                         return false;
@@ -93,8 +102,11 @@
                     window.location = '@Url.CheckoutCartUrl()';
                     return true;
                 });
+            } else {
+                window.location = '@Url.PaymentBuyNowUrl()';
+                return true;
             }
-            window.location = '@Url.CheckoutCartUrl()';
+            
         });
 
     });

@@ -27,5 +27,10 @@ namespace V308CMS.Helpers.Url
         {
             return helper.Action(action, controller);
         }
+        public static string PaymentBuyNowUrl(this UrlHelper helper, string controller = "payment",
+        string action = "buynow")
+        {
+            return helper.Action(action, controller);
+        }
     }
 }

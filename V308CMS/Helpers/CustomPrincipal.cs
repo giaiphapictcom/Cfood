@@ -23,5 +23,9 @@ namespace V308CMS.Helpers
         public string Avatar { get; set; }
         public string AffilateId { get; set; }
         public int AffilateAmount { get; set; }
+        public string VocherCode { get; set; }
+        public int VoucherAmount { get; set; }
+        public int DiscountType { get; set; }
+
     }
 }

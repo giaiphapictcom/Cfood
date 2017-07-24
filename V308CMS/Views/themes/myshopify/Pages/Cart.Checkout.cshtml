@@ -13,7 +13,7 @@
     var currentCart = (ShoppingCart)ViewBag.Cart;
     var listShippingAddress = (List<ShippingAddress>)ViewBag.ListShippingAddress;
     var currentOrder =(ProductOrder) ViewBag.Order;
-    var mode = (string)ViewBag.Mode;
+   
 
 }
 <!DOCTYPE html>
@@ -29,7 +29,7 @@
     <![endif]-->
     <!--[if gte IE 9]><!-->
     <link rel="stylesheet" media="all" href="/Content/themes/myshopify/css/checkout.css?v=3.5" />
-    <link href="@ViewBag.ThemesPath/css/social.css" rel="stylesheet" type="text/css" />
+    <link href="@ViewBag.ThemesPath/css/social.css" rel="stylesheet" type="text/css"/>
     <!--<![endif]-->
     <meta data-browser="chrome" data-browser-major="58">
     <meta data-body-font-family="Helvetica Neue" data-body-font-type="system">
@@ -66,19 +66,19 @@
                     </svg>
                 </div>
                 <div class="order-summary-toggle__text order-summary-toggle__text--show">
-                    <span>Show order summary</span>
+                    <span>Xem chi tiết đơn hàng</span>
                     <svg width="11" height="6" xmlns="http://www.w3.org/2000/svg" class="order-summary-toggle__dropdown" fill="#000">
                         <path d="M.504 1.813l4.358 3.845.496.438.496-.438 4.642-4.096L9.504.438 4.862 4.534h.992L1.496.69.504 1.812z" />
                     </svg>
                 </div>
                 <div class="order-summary-toggle__text order-summary-toggle__text--hide">
-                    <span>Hide order summary</span>
+                    <span>Ẩn chi tiết đơn hàng</span>
                     <svg width="11" height="7" xmlns="http://www.w3.org/2000/svg" class="order-summary-toggle__dropdown" fill="#000">
                         <path d="M6.138.876L5.642.438l-.496.438L.504 4.972l.992 1.124L6.138 2l-.496.436 3.862 3.408.992-1.122L6.138.876z" />
                     </svg>
                 </div>
                 <div class="order-summary-toggle__total-recap total-recap" data-order-summary-section="toggle-total-recap">
-                    <span class="total-recap__final-price" data-checkout-payment-due-target="12900">$129.00</span>
+                    <span class="total-recap__final-price" data-checkout-payment-due-target="@currentCart.SubTotal.ToPriceString()">  @currentCart.SubTotal.ToPriceString()</span>
                 </div>
             </div>
         </div>
@@ -243,8 +243,7 @@
                                             <a class="header_acton" href="#check-voucher">
                                                 <img id="voucher_expand" src="/Content/themes/myshopify/images/expand.png" class="ic-collape"/>
                                                 <img id="voucher_collape" src="/Content/themes/myshopify/images/collape.png" class="ic-collape" style="display: none" />      
-                                            </a>
-                                                                                 
+                                            </a>                                                                                 
                                         </label>
                                     </div>
 
@@ -592,161 +591,169 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript">
-        $(function () {
-            $(".header_acton").click(function() {
-                var contentId = $(this).attr('href');
-                var subId = contentId.replace("#check-", "");
-                $(contentId).toggleClass('show');
+<script type="text/javascript">
+    function showPopup(url) {
+        $.get(url, function (response) {
+            $('#modalPopUp').html(response);
+            $('#modalPopUp').modal({ show: true });
+        });
+        return false;
+    }
+    $(function () {
+           
+        $(".header_acton").click(function() {
+            var contentId = $(this).attr('href');
+            var subId = contentId.replace("#check-", "");
+            $(contentId).toggleClass('show');
                
-                $("#" + subId + "_expand").toggleClass('show');
-                $("#" + subId + "_collape").toggleClass('show');
+            $("#" + subId + "_expand").toggleClass('show');
+            $("#" + subId + "_collape").toggleClass('show');
 
-            });
-            $("#btnSubmitVoucher").click(function(e) {
-                e.preventDefault();
-                var voucherCode = $("#voucher_code").val();
-                if (voucherCode === "") {
-                    $("#voucher_error").text("Vui lòng nhập mã Affilate.");
-                    $("#voucher_code").focus();
+        });
+        $("#btnSubmitVoucher").click(function(e) {
+            e.preventDefault();
+            var voucherCode = $("#voucher_code").val();
+            if (voucherCode === "") {
+                $("#voucher_error").text("Vui lòng nhập mã Affilate.");
+                $("#voucher_code").focus();
+                $("#voucher_error").removeClass("showsuccess");
+                $("#voucher_error").addClass("showerror");
+                $("#voucher_error").show();
+            }
+            $.post($("#checkout-voucher-form").attr('action'), { code: voucherCode }, function (response) {
+                if (response.code === 0) {
+                    $("#voucher_error").text(response.message);
                     $("#voucher_error").removeClass("showsuccess");
                     $("#voucher_error").addClass("showerror");
                     $("#voucher_error").show();
+                    $("#voucher_code").focus();
+
+                    return false;
                 }
-                $.post($("#checkout-voucher-form").attr('action'), { code: voucherCode }, function (response) {
-                    if (response.code === 0) {
-                        $("#voucher_error").text(response.message);
-                        $("#voucher_error").removeClass("showsuccess");
-                        $("#voucher_error").addClass("showerror");
-                        $("#voucher_error").show();
-                        $("#voucher_code").focus();
-
-                        return false;
-                    }
-                    $("#voucher_error").text(response.message);
-                    $("#voucher_error").removeClass("showerror");
-                    $("#voucher_error").addClass("showsuccess");
-                    $("#voucher_error").show();
-                    return true;
+                $("#voucher_error").text(response.message);
+                $("#voucher_error").removeClass("showerror");
+                $("#voucher_error").addClass("showsuccess");
+                $("#voucher_error").show();
+                return true;
                     
-                });
-
-
             });
 
-            $("#btnSubmitAffilate").click(function (e) {
-                e.preventDefault();
-                var affilateId = $("#affilate_id").val();
-                if (affilateId === "") {
-                    $("#affilate_error").text("Vui lòng nhập mã Affilate.");
-                    $("#affilate_id").focus();
+
+        });
+
+        $("#btnSubmitAffilate").click(function (e) {
+            e.preventDefault();
+            var affilateId = $("#affilate_id").val();
+            if (affilateId === "") {
+                $("#affilate_error").text("Vui lòng nhập mã Affilate.");
+                $("#affilate_id").focus();
+                $("#affilate_error").removeClass("showsuccess");
+                $("#affilate_error").addClass("showerror");
+                $("#affilate_error").show();
+                return false;
+            }              
+            $.post($("#checkout-affilate-form").attr('action'), { affilateId }, function (response) {                    
+                if (response.code === 0) {
+                    $("#affilate_error").text(response.message);
                     $("#affilate_error").removeClass("showsuccess");
                     $("#affilate_error").addClass("showerror");
                     $("#affilate_error").show();
-                    return false;
-                }              
-                $.post($("#checkout-affilate-form").attr('action'), { affilateId }, function (response) {                    
-                    if (response.code === 0) {
-                        $("#affilate_error").text(response.message);
-                        $("#affilate_error").removeClass("showsuccess");
-                        $("#affilate_error").addClass("showerror");
-                        $("#affilate_error").show();
-                        $("#affilate_id").focus();
+                    $("#affilate_id").focus();
                        
-                        return false;
-                    }
-                    $("#affilate_error").text(response.message);
-                    $("#affilate_error").removeClass("showerror");
-                    $("#affilate_error").addClass("showsuccess");
-                    $("#affilate_error").show();
-                    return true;
-                });
+                    return false;
+                }
+                $("#affilate_error").text(response.message);
+                $("#affilate_error").removeClass("showerror");
+                $("#affilate_error").addClass("showsuccess");
+                $("#affilate_error").show();
+                return true;
             });
-            $("#btn-edit-shipping").click(function(e) {
-                e.preventDefault();
-                $("form[name='form_order']").toggleClass("show-edit-shipping");               
-                $(this).text($("form[name='form_order']").attr('class') === "" ? 'Hủy' : 'Sửa');
+        });
+        $("#btn-edit-shipping").click(function(e) {
+            e.preventDefault();
+            $("form[name='form_order']").toggleClass("show-edit-shipping");               
+            $(this).text($("form[name='form_order']").attr('class') === "" ? 'Hủy' : 'Sửa');
+        });
+        $("select[name='Region']").change(function () {
+            $.post("@Url.MemberAddressAjaxAddressUrl()", { value: $(this).val() }, function (response) {
+                if (response.length > 0) {
+                    $("select[name='City']").empty();
+                    $("select[name='City']").append('<option value="">Chọn Quận/Huyện</option>');
+                    $.each(response, function (index, element) {
+                        $("select[name='City']").append("<option value='" + element.Id + "'>" + element.Name + "</option>");
+                    });
+                }
             });
-            $("select[name='Region']").change(function () {
-                $.post("@Url.MemberAddressAjaxAddressUrl()", { value: $(this).val() }, function (response) {
+        });
+
+        $("select[name='City']").change(function () {
+            $.post("@Url.MemberAddressAjaxAddressUrl()", { value: $(this).val() }, function (response) {
+                if (response.length > 0) {
+                    $("select[name='Ward']").empty();
+                    $("select[name='Ward']").append('<option value="">Chọn Phường/Xã </option>');
+                    $.each(response, function (index, element) {
+                        $("select[name='Ward']").append("<option value='" + element.Id + "'>" + element.Name + "</option>");
+                    });
+                }
+            });
+        });
+
+        $("select[name='shipping']").change(function () {
+            var shippingSelected = $(this).val();
+            if (shippingSelected === "0") {
+                $("#FullName").val("");
+                $("#Phone").val("");
+                $("#Address").val("");
+                $("select[name='Region']").val("");
+                $("select[name='City']").empty();
+                $("select[name='Ward']").empty();
+            }
+            var shipping = JSON.parse($(this).val());               
+            if (shipping !== null) {                                   
+                $("#FullName").val(shipping.FullName);
+                $("#Phone").val(shipping.Phone);
+                $("#Address").val(shipping.Address);
+                $("select[name='Region'] option:contains(" + shipping.Region + ")").attr("selected", true);                   
+                 
+                $.post("@Url.MemberAddressAjaxAddressUrl()", { value: $("select[name='Region']").val() }, function (response) {
+                    var citySelected = 0;
                     if (response.length > 0) {
                         $("select[name='City']").empty();
                         $("select[name='City']").append('<option value="">Chọn Quận/Huyện</option>');
                         $.each(response, function (index, element) {
-                            $("select[name='City']").append("<option value='" + element.Id + "'>" + element.Name + "</option>");
-                        });
-                    }
-                });
-            });
-
-            $("select[name='City']").change(function () {
-                $.post("@Url.MemberAddressAjaxAddressUrl()", { value: $(this).val() }, function (response) {
-                    if (response.length > 0) {
-                        $("select[name='Ward']").empty();
-                        $("select[name='Ward']").append('<option value="">Chọn Phường/Xã </option>');
-                        $.each(response, function (index, element) {
-                            $("select[name='Ward']").append("<option value='" + element.Id + "'>" + element.Name + "</option>");
-                        });
-                    }
-                });
-            });
-
-            $("select[name='shipping']").change(function () {
-                var shippingSelected = $(this).val();
-                if (shippingSelected === "0") {
-                    $("#FullName").val("");
-                    $("#Phone").val("");
-                    $("#Address").val("");
-                    $("select[name='Region']").val("");
-                    $("select[name='City']").empty();
-                    $("select[name='Ward']").empty();
-                }
-                var shipping = JSON.parse($(this).val());               
-                if (shipping !== null) {                                   
-                    $("#FullName").val(shipping.FullName);
-                    $("#Phone").val(shipping.Phone);
-                    $("#Address").val(shipping.Address);
-                    $("select[name='Region'] option:contains(" + shipping.Region + ")").attr("selected", true);                   
-                 
-                    $.post("@Url.MemberAddressAjaxAddressUrl()", { value: $("select[name='Region']").val() }, function (response) {
-                        var citySelected = 0;
-                        if (response.length > 0) {
-                            $("select[name='City']").empty();
-                            $("select[name='City']").append('<option value="">Chọn Quận/Huyện</option>');
-                            $.each(response, function (index, element) {
-                                if (element.Name === shipping.City) {
-                                    citySelected = element.Id;
-                                    $("select[name='City']").append("<option selected value='" + element.Id + "'>" + element.Name + "</option>");
-                                } else {
-                                    $("select[name='City']").append("<option value='" + element.Id + "'>" + element.Name + "</option>");
-                                }
+                            if (element.Name === shipping.City) {
+                                citySelected = element.Id;
+                                $("select[name='City']").append("<option selected value='" + element.Id + "'>" + element.Name + "</option>");
+                            } else {
+                                $("select[name='City']").append("<option value='" + element.Id + "'>" + element.Name + "</option>");
+                            }
                              
-                            });                          
-                            $.post("@Url.MemberAddressAjaxAddressUrl()", { value: citySelected }, function (response) {
-                                if (response.length > 0) {
-                                    $("select[name='Ward']").empty();
-                                    $("select[name='Ward']").append('<option value="">Chọn Phường/Xã </option>');
-                                    $.each(response, function (index, element) {
-                                        if (element.Name === shipping.Ward) {                                           
-                                            $("select[name='Ward']").append("<option selected value='" + element.Id + "'>" + element.Name + "</option>");
-                                        } else {
-                                            $("select[name='Ward']").append("<option value='" + element.Id + "'>" + element.Name + "</option>");
-                                        }
+                        });                          
+                        $.post("@Url.MemberAddressAjaxAddressUrl()", { value: citySelected }, function (response) {
+                            if (response.length > 0) {
+                                $("select[name='Ward']").empty();
+                                $("select[name='Ward']").append('<option value="">Chọn Phường/Xã </option>');
+                                $.each(response, function (index, element) {
+                                    if (element.Name === shipping.Ward) {                                           
+                                        $("select[name='Ward']").append("<option selected value='" + element.Id + "'>" + element.Name + "</option>");
+                                    } else {
+                                        $("select[name='Ward']").append("<option value='" + element.Id + "'>" + element.Name + "</option>");
+                                    }
 
-                                    });
-                                }
-                            });
+                                });
+                            }
+                        });
 
-                        }
-                    });
+                    }
+                });
                     
-                }
+            }
              
 
-            });
         });
+    });
 
-    </script>
+</script>
 
 </body>
 </html>

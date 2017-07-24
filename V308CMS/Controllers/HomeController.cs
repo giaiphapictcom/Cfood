@@ -17,7 +17,7 @@ namespace V308CMS.Controllers
     {      
         public HomeController()
         {
-            VisisterRepo.UpdateView();
+            //VisisterRepo.UpdateView();
         }
 
         public async Task<ActionResult> Index()
@@ -215,11 +215,6 @@ namespace V308CMS.Controllers
             };
             return View("Search", searchModel);
         }
-        
-
-        
-
-
         public ActionResult YoutubeDetail(int pId = 0)
         {
             NewsPage mCommonModel = new NewsPage();

@@ -10,7 +10,7 @@ namespace V308CMS.Models
             Default = true;
             UpdatedAt = DateTime.Now;
         }
-        
+       
         public int UserId { get; set; }
         [Required(ErrorMessage = "Vui lòng nhập Họ tên.")]
         [StringLength(250, ErrorMessage = "Họ tên không được vượt quá 250 ký tự.")]

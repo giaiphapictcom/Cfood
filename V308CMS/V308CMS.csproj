@@ -261,6 +261,7 @@
     <Compile Include="Models\ProductCategoryViewModels.cs" />
     <Compile Include="Models\SearchViewModels.cs" />
     <Compile Include="Models\ShippingModels.cs" />
+    <Compile Include="Models\ShippingModelsAnonymous.cs" />
     <Compile Include="Models\ShoppingCart.cs" />
     <Compile Include="Models\ShoppingCartModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -2108,6 +2109,7 @@
     <Content Include="Views\themes\myshopify\Pages\BigSale.cshtml" />
     <Content Include="Views\themes\myshopify\Pages\NotFound.cshtml" />
     <Content Include="Views\themes\myshopify\Popup\LoginAndBuy.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\BuyNow.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

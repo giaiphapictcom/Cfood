@@ -44,6 +44,18 @@ namespace V308CMS.Respository
             }
         }
 
+        public List<Region> GetListInByName(string regionName, string cityName, string wardName)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return
+                    entities.Region.AsEnumerable()
+                    .Where(region => region.Name == regionName || region.Name == cityName || region.Name == wardName)
+                    .OrderBy(region => region.Id)
+                        .ToList();
+            }
+        }
+
         public List<Region> GetListIn(int regionId, int cityId, int wardId)
         {
             using (var entities = new V308CMSEntities())

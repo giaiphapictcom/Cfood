@@ -22,7 +22,7 @@ namespace V308CMS.Helpers.Url
         }
 
         public static string LoginAndBuyUrl(this UrlHelper helper, string controller = "popup",
-      string action = "loginandbuy")
+        string action = "loginandbuy")
         {
             return helper.Action(action, controller);
         }

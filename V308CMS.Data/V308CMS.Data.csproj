@@ -257,9 +257,11 @@
     <Compile Include="Models\ProductUnit.cs" />
     <Compile Include="Models\Region.cs" />
     <Compile Include="Models\Role.cs" />
+    <Compile Include="Models\SiteConfig.cs" />
     <Compile Include="Models\Size.cs" />
     <Compile Include="Models\Store.cs" />
     <Compile Include="Models\SupportMan.cs" />
+    <Compile Include="Models\Visister.cs" />
     <Compile Include="Models\VisisterTime.cs" />
     <Compile Include="Models\Voucher.cs" />
     <Compile Include="Models\VoucherCode.cs" />
