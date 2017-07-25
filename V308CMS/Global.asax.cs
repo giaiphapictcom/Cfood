@@ -7,6 +7,7 @@ using System.Web.Security;
 using Newtonsoft.Json;
 using StackExchange.Profiling;
 using V308CMS.Helpers;
+using V308CMS.Models;
 
 namespace V308CMS
 {   
@@ -55,10 +56,9 @@ namespace V308CMS
                         UserId = userData.UserId,
                         UserName = userData.UserName,
                         Avatar = userData.Avatar,
-                        AffilateId = userData.AffilateId,
-                        AffilateAmount = userData.AffilateAmount
+                        Affilate = userData.Affilate
 
-                    };
+                    };                   
                     HttpContext.Current.User = principal;
                 }
             }

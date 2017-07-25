@@ -27,16 +27,15 @@ namespace V308CMS.Controllers
                 if (totalRecord % pageSize > 0)
                     totalPage += 1;
             }
-            //var model = new MemberWishListViewModels
-            //{
-            //    Page = page,
-            //    PageSize = pageSize,
-            //    TotalRecord = totalRecord,
-            //    TotalPage = totalPage,
-            //    ListProduct = listProductWishlist
-            //};
-            //return View("Wishlist.Index", model);
-            return View("Wishlist.Index");
+            var model = new MemberWishListViewModels
+            {
+                Page = page,
+                PageSize = pageSize,
+                TotalRecord = totalRecord,
+                TotalPage = totalPage,
+                ListProduct = listProductWishlist
+            };
+            return View("Wishlist.Index", model);            
         }
 
         [HttpPost]

@@ -203,14 +203,14 @@
 
                                             <p class="total">
                                                 <span class="label" style="color: #000">Tổng tiền:</span>
-                                                <span class="price"><span class="money">@Model.total_price đ</span></span>
+                                                <span class="price"><span class="money">@Model.total_price.ToPriceString()</span></span>
                                             </p>
                                         </div>
                                         <div class="actions">
                                             <div class="view-cart">
                                                 <a href="@Url.ViewCartUrl()" title="Xem giỏ hàng">Xem</a>
                                             </div>
-                                            <button id="btn-checkout" class="btn" onclick="@(AuthenticationHelper.IsAuthenticated==false?"loginAndBuy();" :"buyNow();")">Thanh Toán</button>
+                                            <button id="btn-checkout" class="btn" onclick="@(AuthenticationHelper.IsAuthenticated==false?"loginAndBuy();return false;" :"buyNow();return false;")">Thanh Toán</button>
                                         </div>
 
                                     </div>

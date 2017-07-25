@@ -58,9 +58,16 @@ namespace V308CMS.Controllers
             {
                 affilateId = userAffilate.AffilateId;
                 affilateAmount = userAffilate.Amount;
-            }
-            
-            AuthenticationHelper.SignIn(userId, email, email, userAvatar, affilateId, affilateAmount, remember);
+               
+            }           
+            var userData = new MyUser
+            {
+                UserId = userId,
+                UserName = email,
+                Avatar = userAvatar,
+                Affilate = new KeyValuePair<string, int>(affilateId, affilateAmount)
+            };
+            AuthenticationHelper.SignIn(email, userData, remember);
         }
 
         [ValidateAntiForgeryToken]

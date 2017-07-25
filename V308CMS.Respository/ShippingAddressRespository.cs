@@ -13,7 +13,7 @@ namespace V308CMS.Respository
         ShippingAddress FistByEmail(string email);
         ShippingAddress FistByIpAddress(string ipAddress);
         string Update(ShippingAddress customerAddress);
-        int Insert(ShippingAddress customerAddress);
+        int InsertOrUpdate(ShippingAddress customerAddress);
     }
     public class ShippingAddressRespository: IShippingAddressRespository
     {
@@ -23,7 +23,7 @@ namespace V308CMS.Respository
             {
                 return entities.ShippingAddress
                     .Where(address => address.UserId == userId)
-                    .OrderByDescending(address => address.UpdatedAt)
+                    .OrderByDescending(address => address.Id)
                     .ToList();                 
             }
         }
@@ -78,27 +78,34 @@ namespace V308CMS.Respository
            
         }
 
-        public int Insert(ShippingAddress shippingAddress)
+        public int InsertOrUpdate(ShippingAddress shippingAddress)
         {
             using (var entities = new V308CMSEntities())
             {
-                var checkShipping = entities.ShippingAddress.FirstOrDefault(shipping => 
-                                                                                  shipping.UserId == shippingAddress.UserId
-                                                                               && shipping.FullName == shippingAddress.FullName
-                                                                               && shipping.Phone == shippingAddress.Phone
-                                                                               && shipping.Region == shippingAddress.Region
-                                                                               && shipping.City == shippingAddress.City
-                                                                               && shipping.Ward == shippingAddress.Ward
-                                                                               && shipping.Address == shippingAddress.Address);
+                var checkShipping = entities.ShippingAddress.FirstOrDefault(shipping =>
+                    shipping.UserId == shippingAddress.UserId
+                    && shipping.FullName == shippingAddress.FullName
+                    && shipping.Phone == shippingAddress.Phone
+                    && shipping.Region == shippingAddress.Region
+                    && shipping.City == shippingAddress.City
+                    && shipping.Ward == shippingAddress.Ward
+                    && shipping.Address == shippingAddress.Address);
                 if (checkShipping == null)
                 {
                     entities.ShippingAddress.Add(shippingAddress);
                     entities.SaveChanges();
                     return shippingAddress.Id;
                 }
-                return checkShipping.Id;
+                checkShipping.UserId = shippingAddress.UserId;
+                checkShipping.FullName = shippingAddress.FullName;
+                checkShipping.Phone = shippingAddress.Phone;
+                checkShipping.Region = shippingAddress.Region;
+                checkShipping.City = shippingAddress.City;
+                checkShipping.Ward = shippingAddress.Ward;
+                checkShipping.Address = shippingAddress.Address;
+                entities.SaveChanges();
+                return shippingAddress.Id;
             }
-            
         }
     }
 }

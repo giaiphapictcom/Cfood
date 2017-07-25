@@ -5,7 +5,8 @@
 @using V308CMS.Models
 @{
     Layout = null;
-    var currentCart = (ShoppingCart)ViewBag.Cart;
+    var currentCart = (ShoppingCart)ViewBag.Cart;    
+
 }
 <!DOCTYPE html>
 <html lang="en" dir="ltr" class="no-js multi-step windows chrome desktop page--no-banner page--logo-main page--show  card-fields">
@@ -38,16 +39,7 @@
         })();
     </script>
 
-
-
-
-
-
-
     <meta name="shopify-checkout-authorization-token" content="812103987af342d1cb956f6ab2e8ea28" />
-
-
-
 
     <script type="text/javascript">
         if (window.opener) {
@@ -184,7 +176,7 @@
                                                         @cart.Quantity
                                                     </td>
                                                     <td class="product__price">
-                                                        <span class="order-summary__emphasis">@cart.UnitPrice.ToString("N0") đ</span>
+                                                        <span class="order-summary__emphasis">@cart.UnitPrice.ToPriceString()</span>
                                                     </td>
                                                 </tr>
                                             }
@@ -214,7 +206,7 @@
                                             <td class="total-line__name">Tổng tiền</td>
                                             <td class="total-line__price">
                                                 <span class="order-summary__emphasis" data-checkout-subtotal-price-target="@currentCart.SubTotal">
-                                                    @currentCart.SubTotal.ToString("N0") đ
+                                                    @currentCart.SubTotal.ToPriceString()
                                                 </span>
                                             </td>
                                         </tr>
@@ -230,7 +222,7 @@
                                         <tr class="total-line total-line--taxes hidden" data-checkout-taxes>
                                             <td class="total-line__name">Thuế</td>
                                             <td class="total-line__price">
-                                                <span class="order-summary__emphasis" data-checkout-total-taxes-target="0">$0.00</span>
+                                                <span class="order-summary__emphasis" data-checkout-total-taxes-target="0">0 đ</span>
                                             </td>
                                         </tr>
 
@@ -242,8 +234,8 @@
                                             </td>
                                             <td class="total-line__price payment-due">
                                                 <span class="payment-due__currency">VNĐ</span>
-                                                <span class="payment-due__price" data-checkout-payment-due-target="@currentCart.SubTotal">
-                                                    @currentCart.SubTotal.ToString("N0") đ
+                                                <span class="payment-due__price" data-checkout-payment-due-target="@currentCart.SubTotalAfterService">
+                                                    @currentCart.SubTotalAfterService.ToString()
                                                 </span>
                                             </td>
                                         </tr>
@@ -303,7 +295,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="review-block__link">
-                                                    <a class="link--small" href="@Url.CheckoutCartUrl()" title="Sửa địa chỉ nhận hàng">
+                                                    <a class="link--small" href="@(AuthenticationHelper.IsAuthenticated?Url.CheckoutCartUrl():Url.PaymentBuyNowUrl())" title="Sửa địa chỉ nhận hàng">
                                                         <i class="fa fa-pencil">Sửa</i>
                                                         <span class="visually-hidden">Sửa</span>
                                                     </a>

@@ -77,7 +77,7 @@
                                     <td class="qty">
                                         <input type="text" size="4" name="updates[]" id="updates_@cart.ProductItem.Id" value="@cart.Quantity" onfocus="this.select();" class="tc item-quantity">
                                     </td>
-                                    <td class="price"><span class="money">@cart.UnitPrice.ToString("N0") đ</span></td>
+                                    <td class="price"><span class="money">@cart.UnitPrice.ToPriceString()</span></td>
                                     <td class="remove">
                                         <a href="/cart/remove?id=@cart.ProductItem.Id&quantity=0" class="cart" title="Xóa sản phẩm khỏi giỏ hàng"><i class="icon_close"></i></a>
                                     </td>
@@ -85,7 +85,7 @@
                             }
                             <tr class="summary">
                                 <td colspan="3">Tổng tiền</td>
-                                <td class="price"><span class="total"><strong><span class="money">@Model.SubTotal.ToString("N0") đ</span></strong></span></td>
+                                <td class="price"><span class="total"><strong><span class="money">@Model.SubTotal.ToPriceString()</span></strong></span></td>
                                 <td>&nbsp;</td>
                             </tr>
                         </tbody>
@@ -93,7 +93,7 @@
                     <div class="row">
                         <div class="col-md-6 col-sm-6 span6 cart-buttons inner-right inner-left" style="float: right">
                             <a class="btn" title="Tiếp tục mua hàng" href="/"> Tiếp tục mua hàng</a>
-                            <input type="submit" id="checkout" class="btn" name="checkout" value="Thanh Toán" onclick="window.location = '@Url.CheckoutCartUrl()'">
+                            <input type="submit" id="checkout" class="btn" name="checkout" value="Thanh Toán" onclick="@(AuthenticationHelper.IsAuthenticated==false?"loginAndBuy(); return false;" :"buyNow();return false;")">
                         </div>
                     </div>
                 </form>

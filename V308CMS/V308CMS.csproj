@@ -1633,11 +1633,14 @@
     <Content Include="Content\themes\myshopify\css\animate.css" />
     <Content Include="Content\themes\myshopify\css\bootstrap.min.css" />
     <Content Include="Content\themes\myshopify\css\checkout.css" />
+    <Content Include="Content\themes\myshopify\css\checkout_stylesheet\oldie.css" />
+    <Content Include="Content\themes\myshopify\css\checkout_stylesheet\v2-ltr-edge.css" />
     <Content Include="Content\themes\myshopify\css\color.css" />
     <Content Include="Content\themes\myshopify\css\component.css" />
     <Content Include="Content\themes\myshopify\css\customstyle.css" />
     <Content Include="Content\themes\myshopify\css\font-icon.css" />
     <Content Include="Content\themes\myshopify\css\owl.theme.css" />
+    <Content Include="Content\themes\myshopify\css\popup.css" />
     <Content Include="Content\themes\myshopify\css\responsive.css" />
     <Content Include="Content\themes\myshopify\css\retina-responsive.css" />
     <Content Include="Content\themes\myshopify\css\social.css" />
@@ -1665,6 +1668,7 @@
     <Content Include="Content\themes\myshopify\js\ajax.jquery.min.js" />
     <Content Include="Content\themes\myshopify\js\all.jquery.min.js" />
     <Content Include="Content\themes\myshopify\js\canvas.js" />
+    <Content Include="Content\themes\myshopify\js\checkout.js" />
     <Content Include="Content\themes\myshopify\js\classie.js" />
     <Content Include="Content\themes\myshopify\js\currencies.js" />
     <Content Include="Content\themes\myshopify\js\elevatezoom\demo.html" />
@@ -2110,6 +2114,8 @@
     <Content Include="Views\themes\myshopify\Pages\NotFound.cshtml" />
     <Content Include="Views\themes\myshopify\Popup\LoginAndBuy.cshtml" />
     <Content Include="Views\themes\myshopify\Pages\BuyNow.cshtml" />
+    <Content Include="Views\themes\myshopify\Components\CartComponent.cshtml" />
+    <Content Include="Views\themes\myshopify\Layout\CartLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2120,6 +2126,7 @@
     <Folder Include="Content\Images\Upload\_thumbs\Images\" />
     <Folder Include="Content\Mobile\Css\" />
     <Folder Include="Content\thumb\" />
+    <Folder Include="Views\themes\myshopify\Templates\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

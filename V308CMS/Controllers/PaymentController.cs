@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Resources;
 using System.Web.Mvc;
 using V308CMS.Common;
 using V308CMS.Data;
@@ -138,7 +136,7 @@ namespace V308CMS.Controllers
                 shipAddress.City = listRegion.Count > 1 ? listRegion[1].Name : "";
                 shipAddress.Ward = listRegion.Count > 2 ? listRegion[2].Name : "";
                 shipAddress.IpAddress = IpHelper.ClientIpAddress;
-                var shippingId = ShippingService.Insert(shipAddress);              
+                var shippingId = ShippingService.InsertOrUpdate(shipAddress);              
                 var newOrder = new ProductOrder
                 {
                     FullName = shipping.FullName,                   

@@ -127,7 +127,7 @@
     </div>
     <div class="ajax-error-cbox cbox">
         <div class="modal-inner">
-            <div class="ajax-error-title">Lỗi</div>
+            <div class="ajax-error-title">Thông báo</div>
             <div class="ajax-error-message"></div>
         </div>
     </div>
@@ -141,7 +141,7 @@
                 <div class="button-link-cart">
                     <div class="view-cart"><a title="Xem giỏ hàng" href="@Url.ViewCartUrl()">Xem giỏ hàng</a>
                     </div>
-                    <button class="btn" onclick="@(AuthenticationHelper.IsAuthenticated==false?"loginAndBuy();" :"buyNow();")" title="Thanh toán">Thanh toán</button>
+                    <button class="btn" onclick="@(AuthenticationHelper.IsAuthenticated==false?"loginAndBuy();return false;" :"buyNow();return false;")" title="Thanh toán">Thanh toán</button>
                 </div>
             </div>
             <p class="success-message show-wishlist">Success! You&#39;ve added to wishlist success.</p>

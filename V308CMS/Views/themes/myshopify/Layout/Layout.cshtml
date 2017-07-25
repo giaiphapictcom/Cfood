@@ -54,6 +54,7 @@
         return false;
     }
     function loginAndBuy() {
+        
         jQuery.get("@Url.LoginAndBuyUrl()", function (response) {
             jQuery('#modalPopUp').html(response);
             jQuery('#modalPopUp').modal({ show: true });

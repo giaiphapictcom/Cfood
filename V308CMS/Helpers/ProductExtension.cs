@@ -9,15 +9,15 @@ namespace V308CMS.Helpers
 
             return $"{product.Price - (product.Price/100)*product.SaleOff: 0,0} {ConfigHelper.MoneyShort}";
         }
-
+       
         public static string ToProductPrice(this Product product )
         {
-            return $"{product.Price: 0,0} {ConfigHelper.MoneyShort}";
+            return ToPriceString(product.Price ?? 0);
         }
 
         public static string ToPriceString(this double price)
         {
-            return $"{price.ToString("N1")} {ConfigHelper.MoneyShort}";
+            return $"{$"{price: 0,0}"} {ConfigHelper.MoneyShort}".Replace(",",".");
           
         }
     }

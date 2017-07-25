@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using V308CMS.DataAnnotations;
 
 namespace V308CMS.Models
 {
@@ -17,7 +18,7 @@ namespace V308CMS.Models
         [Display(Name = "Họ tên")]
         public string FullName { get; set; }
         [Required(ErrorMessage = "Vui lòng nhập Số điện thoại.")]
-        [Phone(ErrorMessage = "Số điện thoại không đúng.")]
+        [Checkphone(ErrorMessage = "Số điện thoại không đúng.")]
         [Display(Name = "Điện thoại di động")]        
         public string Phone { get; set; }
         [Required(ErrorMessage = "Vui lòng chọn Tỉnh/Thành phố.")]      

@@ -21,7 +21,12 @@ namespace V308CMS.Controllers
         {
             var product =  ProductsService.Find(id);
             if (product != null)
-            {               
+            {
+                if (product.Quantity < quantity)
+                {
+                    return Json(new { code = 0,  message = $"Chỉ còn {product.Quantity} sản phẩm {product.Name} trong kho."
+                    });
+                }
                 MyCart.AddItem(new ProductModels
                 {
                     Id = product.ID,
@@ -103,14 +108,40 @@ namespace V308CMS.Controllers
 
         public ActionResult Checkout()
         {
-            
+            var model = new ShippingModels();
             if (IsEmptyCart())
             {
                 return RedirectToAction("EmptyCart");
             }                    
             if (User != null)
-            {              
-                ViewBag.ListShippingAddress = ShippingService.GetListAddressByUserId(User.UserId);
+            {
+                var listShipAddress = ShippingService.GetListAddressByUserId(User.UserId);
+                if (listShipAddress.Count > 0)
+                {
+                    var lastestShippingAddress = listShipAddress[0];
+                    var listRegion = RegionService.GetListInByName(
+                        lastestShippingAddress.Region,
+                        lastestShippingAddress.City,
+                        lastestShippingAddress.Ward);
+                    if (listRegion != null && listRegion.Count > 0)
+                    {
+                        model.Region = listRegion[0].Id;                      
+                        if (listRegion.Count > 1)
+                        {
+                            model.City = listRegion[1].Id;
+                             
+                        }
+                        if (listRegion.Count > 2)
+                        {
+                            model.Ward = listRegion[2].Id;
+                        }
+                    }
+                    model.FullName = lastestShippingAddress.FullName;
+                    model.Phone = lastestShippingAddress.Phone;
+                    model.Address = lastestShippingAddress.Address;
+                }
+                ViewBag.ListShippingAddress = listShipAddress;
+
             }       
             if (!string.IsNullOrEmpty(TransactionId))
             {
@@ -118,8 +149,11 @@ namespace V308CMS.Controllers
                 ViewBag.Order = transactionInfo.Order;
             }           
             ViewBag.ListRegion = RegionService.GetListRegionByParentId();
-            ViewBag.Cart = MyCart;            
-            return View("Cart.Checkout", new ShippingModels());
+            ViewBag.ListCity = RegionService.GetListRegionByParentId(model.Region);
+            ViewBag.ListWard = RegionService.GetListRegionByParentId(model.City);
+            ViewBag.Cart = MyCart;
+            ViewBag.TransactionId = TransactionId;          
+            return View("Cart.Checkout", model);
         }
 
 
@@ -161,11 +195,16 @@ namespace V308CMS.Controllers
             var city = Request.Form["City"];
             var ward = Request.Form["Ward"];
             var address = Request.Form["Address"];
+            var fullName = Request.Form["FullName"];
+            var phone  = Request.Form["Phone"];
+           
             var shipping = new ShippingModels
             {
-                FullName = Request.Form["FullName"],
-                Phone = Request.Form["Phone"]
+                FullName = fullName,
+                Phone = phone
             };
+
+
             int regionValue, cityValue, wardValue;
             int.TryParse(region, out regionValue);
             int.TryParse(city, out cityValue);
@@ -184,7 +223,8 @@ namespace V308CMS.Controllers
                 shipAddress.Region = listRegion.Count > 0 ? listRegion[0].Name : "";
                 shipAddress.City = listRegion.Count > 1 ? listRegion[1].Name : "";
                 shipAddress.Ward = listRegion.Count > 2 ? listRegion[2].Name : "";
-                var shippingId = ShippingService.Insert(shipAddress);
+                shipAddress.IpAddress = IpHelper.ClientIpAddress;
+                var shippingId = ShippingService.InsertOrUpdate(shipAddress);
                             
                 var newOrder = new ProductOrder
                 {
@@ -224,9 +264,12 @@ namespace V308CMS.Controllers
                 ViewBag.ListShippingAddress = ShippingService.GetListAddressByUserId(User.UserId);
             }
             ViewBag.ListRegion = RegionService.GetListRegionByParentId();
+            ViewBag.ListCity = RegionService.GetListRegionByParentId(regionValue);
+            ViewBag.ListWard = RegionService.GetListRegionByParentId(cityValue);
             ViewBag.Cart = MyCart;
             return View("Cart.Checkout", shipping);
 
         }
     }
 }
+
