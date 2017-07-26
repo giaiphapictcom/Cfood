@@ -70,7 +70,7 @@
                     <td class="a-center">
 
                         <p class="regular-product">
-                            <span><span class="money" data-currency-usd="@item.Price.Value.ToString("N0")">@item.Price.Value.ToString("N0") đ</span></span>
+                            <span><span class="money">@item.Price.Value.ToPriceString()</span></span>
                         </p>
 
                     </td>
