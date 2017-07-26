@@ -1976,7 +1976,6 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="Views\themes\myshopify\Pages\Search.cshtml" />
-    <Content Include="Views\themes\myshopify\Pages\ShopCardDetail.cshtml" />
     <Content Include="Views\themes\myshopify\Pages\Video.cshtml" />
     <Content Include="Views\themes\myshopify\Product\ProductHot.cshtml" />
     <Content Include="Views\themes\myshopify\Product\HomeCategory.cshtml" />

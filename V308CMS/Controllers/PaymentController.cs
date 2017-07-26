@@ -216,7 +216,7 @@ namespace V308CMS.Controllers
             //Ket thuc giao dich
             EndTransaction();
             //Xoa gio hang
-            ClearCart();           
+            ClearCart();  
             return View("Payment.Success");
 
         }
