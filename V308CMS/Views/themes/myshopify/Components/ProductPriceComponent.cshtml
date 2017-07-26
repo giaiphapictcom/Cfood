@@ -1,0 +1,18 @@
+﻿@using V308CMS.Helpers
+@model Tuple<double,int>
+
+<div class="price-box">
+    @if (Model.Item2 == 0)
+    {
+        <p class="regular-product">
+            <span><span class="money">@Model.Item1.ToPriceString()</span></span>
+        </p>
+    }
+    else
+    {
+        <p class="sale">
+            <span class="special-price"><span class="money">@Model.Item1.ToSaleOffPriceString(Model.Item2)</span></span>
+            <span class="old-price"><span class="money">@Model.Item1.ToPriceString()</span></span>
+        </p>
+    }
+</div>

@@ -2088,7 +2088,6 @@
     <Content Include="Views\themes\mamoo\Components\ProductPriceComponent.cshtml" />
     <Content Include="Views\themes\mamoo\Components\YoutubeVideoComponent.cshtml" />
     <None Include="Views\themes\myshopify\Blocks\ListSubCategory.cshtml" />
-    <Content Include="Views\themes\myshopify\Components\ProductPriceComponent.cshtml" />
     <Content Include="Views\themes\myshopify\Components\CategoryHomeComponent.cshtml" />
     <Content Include="Views\themes\myshopify\Components\ProductComponent.cshtml" />
     <Content Include="Views\themes\myshopify\Pages\LoginFail.cshtml" />
@@ -2115,7 +2114,8 @@
     <Content Include="Views\themes\myshopify\Pages\BuyNow.cshtml" />
     <Content Include="Views\themes\myshopify\Components\CartComponent.cshtml" />
     <Content Include="Views\themes\myshopify\Layout\CartLayout.cshtml" />
-    <Content Include="Views\themes\myshopify\Components\PriceBoxComponent.cshtml" />
+    <Content Include="Views\themes\myshopify\Components\ProductPriceComponent.cshtml" />
+    <Content Include="Views\themes\myshopify\Components\ProductQuantityComponent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
