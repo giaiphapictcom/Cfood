@@ -17,5 +17,12 @@ namespace V308CMS.Respository
                 return entities.Voucher.FirstOrDefault(voucherCode => voucherCode.Id == id);
             }
         }
+        public Voucher Find(string code)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return entities.Voucher.FirstOrDefault(voucherCode => voucherCode.Code == code);
+            }
+        }
     }
 }

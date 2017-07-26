@@ -20,49 +20,47 @@ namespace V308CMS.Controllers
             {
                 return Json(new { code = 0, message = "Mã giảm giá trống." });
             }
-            var voucherCode = VoucherCodeService.Find(code);
-            if (voucherCode == null)
+            var voucher = VoucherService.Find(code);
+            if (voucher == null)
             {
                 return Json(new { code = 0, message = "Mã giảm giá không đúng." });
             }
-            if (voucherCode.State == (byte)StateEnum.Active)
-            {
-                return Json(new { code = 0, message = "Mã giảm giá này đã được sử dụng." });
-            }
-            if (voucherCode.Voucher.State == (int) StateEnum.Disable)
+            if (voucher.State == (byte)StateEnum.Disable)
             {
                 return Json(new { code = 0, message = "Voucher này không hữu dụng." });
             }
-            if (voucherCode.Voucher.StartDate.HasValue && (DateTime.Now - voucherCode.Voucher.StartDate.Value).TotalDays <= 0)
+         
+            if (voucher.StartDate.HasValue && (DateTime.Now - voucher.StartDate.Value).TotalDays <= 0)
             {
                 return Json(new { code = 0, message = "Voucher này không hữu dụng." });
             }
-            if (voucherCode.Voucher.ExpireDate.HasValue &&(voucherCode.Voucher.ExpireDate.Value - DateTime.Now).TotalDays>0)
+            if (voucher.ExpireDate.HasValue &&(voucher.ExpireDate.Value - DateTime.Now).TotalDays>0)
             {
                 return Json(new { code = 0, message = "Voucher này hiện đã hết hạn sử dụng." });
             }
             Discount discount = null;
-            if (voucherCode.Voucher.DiscountType == (int) DiscountTypeEnum.ByItem)
+            if (voucher.DiscountType == (int) DiscountTypeEnum.ByItem)
             {
 
                 discount = new Discount
                 {
-                    Amount = voucherCode.Voucher.Amount,
+                    Amount = voucher.Amount,
                     DiscountRule = new DiscountItemRule()
                 };
 
             }
-            if (voucherCode.Voucher.DiscountType == (int)DiscountTypeEnum.BySubTotal)
+            if (voucher.DiscountType == (int)DiscountTypeEnum.BySubTotal)
             {
 
                 discount = new Discount
                 {
-                    Amount = voucherCode.Voucher.Amount,
+                    Amount = voucher.Amount,
                     DiscountRule = new DiscountSubTotalRule()
                 };
 
             }
             MyCart.Discount = discount;
+            VoucherLogService.Log(User.UserId,User.UserName,voucher.Id,voucher.Code,DateTime.Now);
             return Json(new { code = 1, message = "Sử dụng mã giảm giá thành công." });
 
 

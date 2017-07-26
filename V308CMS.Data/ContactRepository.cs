@@ -24,9 +24,6 @@ namespace V308CMS.Data
     public class ContactRepository : IContactRepository
     {
 
-
-
-
         public ContactRepository()
         {
 

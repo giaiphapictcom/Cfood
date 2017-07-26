@@ -2116,6 +2116,7 @@
     <Content Include="Views\themes\myshopify\Layout\CartLayout.cshtml" />
     <Content Include="Views\themes\myshopify\Components\ProductPriceComponent.cshtml" />
     <Content Include="Views\themes\myshopify\Components\ProductQuantityComponent.cshtml" />
+    <Content Include="Views\themes\myshopify\Components\ProductRateComponent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -203,7 +203,6 @@
     <Compile Include="Mapping\SizeMap.cs" />
     <Compile Include="Mapping\StoreMap.cs" />
     <Compile Include="Mapping\UnitMap.cs" />
-    <Compile Include="Mapping\VoucherCodeMap.cs" />
     <Compile Include="Mapping\VoucherLogMap.cs" />
     <Compile Include="Mapping\VoucherMap.cs" />
     <Compile Include="MarketRepository.cs" />
@@ -231,7 +230,6 @@
     <Compile Include="Metadata\StoreMetadata.cs" />
     <Compile Include="Metadata\SupportManMetadata.cs" />
     <Compile Include="Metadata\UnitMetadata.cs" />
-    <Compile Include="Metadata\VoucherCodeMetadata.cs" />
     <Compile Include="Metadata\VoucherLogMetadata.cs" />
     <Compile Include="Metadata\VoucherMetadata.cs" />
     <Compile Include="Metadata\WebsiteRequestMetadata.cs" />
@@ -261,10 +259,8 @@
     <Compile Include="Models\Size.cs" />
     <Compile Include="Models\Store.cs" />
     <Compile Include="Models\SupportMan.cs" />
-    <Compile Include="Models\Visister.cs" />
     <Compile Include="Models\VisisterTime.cs" />
     <Compile Include="Models\Voucher.cs" />
-    <Compile Include="Models\VoucherCode.cs" />
     <Compile Include="Models\VoucherLog.cs" />
     <Compile Include="Models\WebsiteRequest.cs" />
     <Compile Include="MySQLProvider.cs" />

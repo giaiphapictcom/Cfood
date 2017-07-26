@@ -1904,7 +1904,7 @@ a.close-popup:hover,.close-popup:focus{color:#fff;background:#000;}
 .animated { -moz-opacity: 1; opacity:1; filter:alpha(opacity=100); /* For IE8 and earlier */-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)"; /* IE8 */}
 
 #back-top {z-index:9999;height: 45px;  position: fixed;  right: 40px;  bottom: 50px;  width: 45px; cursor: pointer; margin:0; }
-#back-top a{display:block;width: 45px;height:45px;line-height:40px;font-size:25px;text-align:center;background:#00aeef;color: #fff;}
+#back-top a{display:block;width: 45px;height:45px;line-height:40px;font-size:25px;text-align:center;background:#ececec;color: #fff;}
 #back-top a:hover{background:#333;color:#fff;}
 /* Swatches Styles */
 .swatch { margin: 0 0 11px; }
@@ -3343,7 +3343,7 @@ td.remove a:hover,td.remove a:focus{color:#ccc;}
 #header-content .header-top .col-md-6{padding: 0;}
 #header-content .header-top .col-md-6.text-right {height: 40px;}
 #header-content .header-top .top{color:#a3a3a3}
-.top-currency span.text-log {text-transform: capitalize;}
+.top-currency span.text-log {text-transform: capitalize;color: #ff0000;font-weight: bold;}
 .header-top-text {letter-spacing: 0.1px;line-height: 40px;}
 .header-top-text a.tel{color:#fff;margin-right:16px;letter-spacing: 0;}
 #header-content .lang-block.desktop-view::after {content: '';}
@@ -3867,7 +3867,7 @@ line-height: 19px;
   padding-right: 0;
 }
 .block-megamenu .parent-title {
-  background-color: #26a6e0;
+  background-color:  #ff0000;
   height: 49px;
   line-height: 49px;
   color: #fff;

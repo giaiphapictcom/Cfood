@@ -15,7 +15,7 @@ namespace V308CMS.Controllers
             ViewEngines.Engines.Clear();
             ViewEngines.Engines.Add(new MpStartViewEngine(false));
             NewsGroups videoGroup = NewsService.SearchNewsGroup("video");
-            VisisterRepo.UpdateView();
+            //VisisterRepo.UpdateView();
         
 
     }

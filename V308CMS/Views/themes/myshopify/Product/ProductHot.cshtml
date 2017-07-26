@@ -31,7 +31,6 @@
                                                 @if (item.Images.Any())
                                                 {
                                                     <span class="product-hover" data-idproduct="@item.Product.ID">
-
                                                         <img class="img-responsive" alt="@item.Product.Name" src="@item.Images.First().Name.ToUrl(250,250)">
                                                     </span>
                                                 }
@@ -43,30 +42,12 @@
                                                     @ViewBag.ProductViewText
                                                 </a>
                                             </div>
-
                                         </div>
                                         <div class="product-content">
-                                            <h3><a class="product-title" href="@url.productURL(item.Product.Name,item.Product.ID)">@item.Product.Name</a></h3>
-                                            <div class="price-box">
-
-                                                <p class="sale">
-                                                    @if (item.Product.Price > 0)
-                                                    {
-                                                        <span class="special-price"><span class="money">@item.Product.ToProductPrice()</span></span>
-                                                    }
-                                                    @if (item.Product.SaleOff > 0)
-                                                    {
-                                                        <span class="old-price"><span class="money">@item.Product.ToProductSaleOffPrice()</span></span>
-                                                    }
-
-                                                </p>
-
-                                            </div>
-
-                                            <span class="shopify-product-reviews-badge" data-id="@item.Product.ID"></span>
-
+                                            <h3><a class="product-title" href="@url.productURL(item.Product.Name, item.Product.ID)">@item.Product.Name</a></h3>
+                                            @{Html.RenderPartial("ProductPriceComponent", new Tuple<double, int>(item.Product.Price ?? 0, item.Product.SaleOff ?? 0));}
+                                            @{Html.RenderPartial("ProductRateComponent", new Tuple<int,int>(0,0));}                                   
                                             <div class="add-to-link">
-
                                                 <div class="add-to-cart">
                                                     <a href="javascript:void(0);" class="btn add-to-cart-btn" add-cart="@item.Product.ID" title="Thêm vào giỏ hàng">Thêm vào giỏ hàng</a>
                                                 </div>

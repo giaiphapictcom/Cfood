@@ -41,8 +41,7 @@ namespace V308CMS.Data
             modelBuilder.Configurations.Add(new ShippingAddressMap());            
             modelBuilder.Configurations.Add(new OrderTransactionMap());
             modelBuilder.Configurations.Add(new ProductWishlistMap());
-            modelBuilder.Configurations.Add(new VoucherMap());
-            modelBuilder.Configurations.Add(new VoucherCodeMap());
+            modelBuilder.Configurations.Add(new VoucherMap());           
             modelBuilder.Configurations.Add(new VoucherLogMap());
             modelBuilder.Configurations.Add(new AffilateUserMap());
             modelBuilder.Configurations.Add(new AffilateCodeMap());
@@ -110,12 +109,7 @@ namespace V308CMS.Data
             get;
             set;
         }
-        public DbSet<VoucherCode> VoucherCode
-        {
-            get;
-            set;
-        }
-
+      
         public DbSet<VoucherLog> VoucherLog
         {
             get;
@@ -437,11 +431,11 @@ namespace V308CMS.Data
             set;
         }
 
-        public DbSet<Visister> VisisterTbl
-        {
-            get;
-            set;
-        }
+        //public DbSet<Visister> VisisterTbl
+        //{
+        //    get;
+        //    set;
+        //}
         public DbSet<VisisterTime> VisisterTimeTbl
         {
             get;

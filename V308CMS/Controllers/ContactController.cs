@@ -12,7 +12,7 @@ namespace V308CMS.Controllers
     public class ContactController : BaseController
     {
         public ContactController() {
-            VisisterRepo.UpdateView();
+            //VisisterRepo.UpdateView();
         }
         
         public ActionResult Index()

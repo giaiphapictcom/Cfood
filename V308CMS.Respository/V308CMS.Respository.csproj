@@ -109,7 +109,6 @@
     <Compile Include="SupportManRepository.cs" />
     <Compile Include="UserRespository.cs" />
     <Compile Include="WebsiteRequestRepository.cs" />
-    <Compile Include="VoucherCodeRespository.cs" />
     <Compile Include="VoucherLogRespository.cs" />
     <Compile Include="VoucherRespository.cs" />
   </ItemGroup>

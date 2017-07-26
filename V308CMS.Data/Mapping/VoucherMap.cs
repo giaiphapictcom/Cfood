@@ -13,6 +13,9 @@ namespace V308CMS.Data.Mapping
             Property(t => t.Name)
                 .IsRequired()
                 .HasMaxLength(50);
+            Property(t => t.Code)
+              .IsRequired()
+              .HasMaxLength(50);
 
             Property(t => t.Description)              
                .HasMaxLength(500);
@@ -29,6 +32,7 @@ namespace V308CMS.Data.Mapping
             Property(t => t.State).HasColumnName("state");
             Property(t => t.Piority).HasColumnName("piority");
             Property(t => t.StartDate).HasColumnName("start_date");
+            Property(t => t.Code).HasColumnName("code");
 
         }
     }

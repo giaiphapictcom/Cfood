@@ -52,7 +52,7 @@ namespace V308CMS.Controllers
             var userId = int.Parse(userDetail[0]);
             var userAvatar = userDetail.Length > 1 ? userDetail[1] : "";
             var userAffilate = AffilateUserService.GetByUserId(userId);
-            string affilateId = "";
+            var affilateId = "";
             int affilateAmount = 0;
             if (userAffilate != null)
             {
