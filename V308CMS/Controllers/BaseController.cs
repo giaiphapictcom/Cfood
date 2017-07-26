@@ -141,7 +141,7 @@ namespace V308CMS.Controllers
             VoucherRepo = new CouponRepository();
             RevenueGainRepo = new RevenueGainRepository();
             WebsiteRequestRepo = new WebsiteRequestRepository();
-
+            VoucherService = new VoucherRespository();
             AffilateUserService = new AffilateUserRespository();
             VoucherLogService = new VoucherLogRespository();           
             GoogleplusService = new GoogleplusService(ConfigHelper.GoogleAppId, ConfigHelper.GoogleAppSecret);

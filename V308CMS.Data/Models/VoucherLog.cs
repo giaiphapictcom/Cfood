@@ -1,8 +1,12 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using V308CMS.Data.Metadata;
 
 namespace V308CMS.Data.Models
 {
+    [Table("voucher_log")]
+    [MetadataType(typeof(VoucherLogMetadata))]
     public class VoucherLog
     {
         public VoucherLog()

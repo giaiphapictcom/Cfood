@@ -19,7 +19,7 @@ namespace V308CMS.Helpers.Discount
             {
                 return subTotal;
             }
-            return subTotal - subTotal * amount / 100;
+            return subTotal * amount / 100;
         }
     }
 }

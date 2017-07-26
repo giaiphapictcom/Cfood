@@ -189,8 +189,8 @@
                                             <label>
                                                 <span>Sử dụng Affilate</span>
                                                 <a class="header_acton" href="#check-affilate">
-                                                    <img id="affilate_expand" src="/Content/themes/myshopify/images/expand.png" class="ic-collape" />
-                                                    <img id="affilate_collape" src="/Content/themes/myshopify/images/collape.png" class="ic-collape" style="display: none" />
+                                                    <img id="affilate_expand" src="/Content/themes/myshopify/images/expand.png" class="ic-collape"/>
+                                                    <img id="affilate_collape" src="/Content/themes/myshopify/images/collape.png" class="ic-collape" style="display: none"/>
                                                 </a>
                                             </label>
                                         </div>
@@ -210,6 +210,48 @@
                                         </div>
                                     </div>
                                 }
+                                else
+                                {
+                                    <div class="rw-checkout-voucher" style="">
+                                        <div class="caption-rw-checkout ttl-voucher">
+                                            <label>
+                                                <span>Sử dụng Affilate</span>
+                                                <a class="header_acton" href="#check-affilate">
+                                                    <img id="affilate_expand" src="/Content/themes/myshopify/images/expand.png" class="ic-collape" />
+                                                    <img id="affilate_collape" src="/Content/themes/myshopify/images/collape.png" class="ic-collape" style="display: none" />
+                                                </a>
+                                            </label>
+                                        </div>
+                                        <!-- voucher -->
+                                        <div id="check-affilate" class="checkout-voucher01">
+                                            <table class="total-line-table">
+                                                <caption class="visually-hidden">Cost summary</caption>
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col"><span class="visually-hidden">Description</span></th>
+                                                        <th scope="col"><span class="visually-hidden">Price</span></th>
+                                                    </tr>
+                                                </thead>
+                                                <tfoot class="total-line-table__footer">
+                                                    <tr class="total-line">
+                                                        <td class="total-line__name payment-due-label">
+                                                            <span class="payment-due-label__total">Mã Affilate <span style="color:#ff0000">@User.Affilate.Key</span> giảm giá @User.Affilate.Value%</span>
+                                                        </td>
+                                                        <td class="total-line__price payment-due">
+                                                            <span class="payment-due__price" data-checkout-payment-due-target="@currentCart.GetSubTotalAfterAffilate(User.Affilate.Value).ToPriceString()">
+                                                                @currentCart.GetSubTotalAfterAffilate(User.Affilate.Value).ToPriceString()
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+
+                                        </div>
+                                    </div>
+
+                                   
+                                }
+
 
                             }
                             else
@@ -234,71 +276,113 @@
 
                             }
                             <div class="modal modal--centered" id="modalPopUp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: 20px; z-index: 99999"></div>
-                            <div class="rw-checkout-voucher">
-                                <div class="caption-rw-checkout ttl-voucher">
-                                    <label>
-                                        <span>Sử dụng Voucher</span>
-                                        <a class="header_acton" href="#check-voucher">
-                                            <img id="voucher_expand" src="/Content/themes/myshopify/images/expand.png" class="ic-collape" />
-                                            <img id="voucher_collape" src="/Content/themes/myshopify/images/collape.png" class="ic-collape" style="display: none" />
-                                        </a>
+                            
 
-                                    </label>
-                                </div>
-
-                                <div id="check-voucher" class="checkout-voucher01" style="display: none">
+                             
                                     @if (AuthenticationHelper.IsAuthenticated)
                                     {
-                                        <form method="post" action="@Url.PaymentUseVoucherUrl()" class="checkout-voucher-form" id="checkout-voucher-form" name="checkout-voucher-form">
-                                            <div class="input-voucher01">
-                                                <input autocomplete="off" placeholder="Nhập mã giảm giá" type="text" name="voucher_code" id="voucher_code" maxlength="20" value="">
+                                        if (currentCart.Discount == null)
+                                        {
+                                            <div class="rw-checkout-voucher">
+                                                <div class="caption-rw-checkout ttl-voucher">
+                                                    <label>
+                                                        <span>Sử dụng Voucher</span>
+                                                        <a class="header_acton" href="#check-voucher">
+                                                            <img id="voucher_expand" src="/Content/themes/myshopify/images/expand.png" class="ic-collape" />
+                                                            <img id="voucher_collape" src="/Content/themes/myshopify/images/collape.png" class="ic-collape" style="display: none" />
+                                                        </a>
+
+                                                    </label>
+                                                </div>
+                                                <div id="check-voucher" class="checkout-voucher01" style="display: none">
+                                                    <form method="post" action="@Url.PaymentUseVoucherUrl()" class="checkout-voucher-form" id="checkout-voucher-form" name="checkout-voucher-form">
+                                                        <div class="input-voucher01">
+                                                            <input autocomplete="off" placeholder="Nhập mã giảm giá" type="text" name="voucher_code" id="voucher_code" maxlength="20" value="">
+                                                        </div>
+                                                        <p id="voucher_error" class="showerror" style="display: none;">Mã giảm giá không hợp lệ.</p>
+                                                        <input id="btnSubmitVoucher" type="submit" value="Sử dụng">
+                                                        <span class="please-wait" id="voucher-please-wait" style="display: none;">
+                                                            <img src="/Content/themes/myshopify/images/opc-ajax-loader.gif" alt="loader" class="v-middle ">
+                                                        </span>
+                                                    </form>
+                                                </div>
                                             </div>
-                                            <p id="voucher_error" class="showerror" style="display: none;">Mã giảm giá không hợp lệ.</p>
-                                            <input id="btnSubmitVoucher" type="submit" value="Sử dụng">
-                                            <span class="please-wait" id="voucher-please-wait" style="display: none;">
-                                                <img src="/Content/themes/myshopify/images/opc-ajax-loader.gif" alt="loader" class="v-middle ">
-                                            </span>
-                                        </form>
+                                        }
+                                        else
+                                        {
+                                            <div class="rw-checkout-voucher">
+                                                <div class="caption-rw-checkout ttl-voucher">
+                                                    <label>
+                                                        <span>Sử dụng Voucher</span>
+                                                        <a class="header_acton" href="#check-voucher">
+                                                            <img id="voucher_expand" src="/Content/themes/myshopify/images/expand.png" class="ic-collape" />
+                                                            <img id="voucher_collape" src="/Content/themes/myshopify/images/collape.png" class="ic-collape" style="display: none" />
+                                                        </a>
+
+                                                    </label>
+                                                </div>
+                                                <div id="check-voucher" class="checkout-voucher01" style="display: none">
+                                                    <table class="total-line-table">
+                                                        <caption class="visually-hidden">Cost summary</caption>
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col"><span class="visually-hidden">Description</span></th>
+                                                                <th scope="col"><span class="visually-hidden">Price</span></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tfoot class="total-line-table__footer">
+                                                            <tr class="total-line">
+                                                                <td class="total-line__name payment-due-label">
+                                                                    <span class="payment-due-label__total">Mã giảm giá <span style="color: #ff0000">@currentCart.Discount.Code</span> giảm giá @currentCart.Discount.Amount%</span>
+                                                                </td>
+                                                                <td class="total-line__price payment-due">
+                                                                    <span class="payment-due__price" data-checkout-payment-due-target="@currentCart.SubTotalAfterVoucher.ToPriceString()">
+                                                                        @currentCart.SubTotalAfterVoucher.ToPriceString()
+                                                                    </span>
+                                                                </td>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        }
+
                                     }
                                     else
                                     {
                                         <p class="showerror_loyalty" style="display: block;">
                                             Bạn cần <span style="cursor: pointer" onclick="showPopup('@Url.PopupLoginUrl()');return false;">đăng nhập</span> để sử dụng chức năng này
                                         </p>
-                                    }
+                                     }
+                                                <hr />
+                                                <table class="total-line-table">
+                                                    <tfoot class="total-line-table__footer">
+                                                        <tr class="total-line">
+                                                            <td class="total-line__name payment-due-label">
+                                                                <span class="payment-due-label__total">Phí vận chuyển</span>
+                                                            </td>
+                                                            <td></td>
+                                                            <td class="total-line__price payment-due">
+                                                                <span class="payment-due__price" data-checkout-payment-due-target="@currentCart.ShipPrice">
+                                                                    0 đ
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="total-line" style="border-top: 1px dashed #ddd;">
+                                                            <td class="total-line__name payment-due-label">
+                                                                <span class="red_item_b payment-due-label__total">Tổng thành tiền</span>
+                                                            </td>
+                                                            <td></td>
+                                                            <td class="total-line__price payment-due">
+                                                                <span class="red_item payment-due__price" data-checkout-payment-due-target="@currentCart.SubTotalAfterService">
+                                                                    @currentCart.SubTotalAfterService.ToPriceString()
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
 
-                                </div>
-                            </div>
-
-                            <hr />
-                            <table class="total-line-table">
-                                <tfoot class="total-line-table__footer">
-                                    <tr class="total-line">
-                                        <td class="total-line__name payment-due-label">
-                                            <span class="payment-due-label__total">Phí vận chuyển</span>
-                                        </td>
-                                        <td></td>
-                                        <td class="total-line__price payment-due">
-                                            <span class="payment-due__price" data-checkout-payment-due-target="@currentCart.ShipPrice">
-                                                0 đ
-                                            </span>
-                                        </td>
-                                    </tr>
-                                    <tr class="total-line" style="border-top: 1px dashed #ddd;">
-                                        <td class="total-line__name payment-due-label">
-                                            <span class="red_item_b payment-due-label__total">Tổng thành tiền</span>
-                                        </td>
-                                        <td></td>
-                                        <td class="total-line__price payment-due">
-                                            <span class="red_item payment-due__price" data-checkout-payment-due-target="@currentCart.SubTotalAfterService">
-                                                @currentCart.SubTotalAfterService.ToPriceString()
-                                            </span>
-                                        </td>
-                                    </tr>
-                                </tfoot>
-                            </table>
-
-                        </div>
+                                            </div>
                     </div>
 
                 </div>
@@ -400,13 +484,13 @@
                     $("#voucher_error").addClass("showerror");
                     $("#voucher_error").show();
                     $("#voucher_code").focus();
-
                     return false;
                 }
                 $("#voucher_error").text(response.message);
                 $("#voucher_error").removeClass("showerror");
                 $("#voucher_error").addClass("showsuccess");
                 $("#voucher_error").show();
+                location.reload();
                 return true;
 
             });
@@ -437,6 +521,7 @@
                 $("#affilate_error").removeClass("showerror");
                 $("#affilate_error").addClass("showsuccess");
                 $("#affilate_error").show();
+                location.reload();
                 return true;
             });
         });

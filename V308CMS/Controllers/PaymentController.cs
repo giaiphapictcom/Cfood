@@ -45,6 +45,7 @@ namespace V308CMS.Controllers
                 discount = new Discount
                 {
                     Amount = voucher.Amount,
+                    Code =  code,
                     DiscountRule = new DiscountItemRule()
                 };
 
@@ -55,6 +56,7 @@ namespace V308CMS.Controllers
                 discount = new Discount
                 {
                     Amount = voucher.Amount,
+                    Code = code,
                     DiscountRule = new DiscountSubTotalRule()
                 };
 

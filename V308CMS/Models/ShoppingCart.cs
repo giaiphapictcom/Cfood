@@ -118,7 +118,7 @@ namespace V308CMS.Models
             var subTotalAfterService = SubTotal;
             if (AffilateAmount > 0)
             {
-                subTotalAfterService = (subTotalAfterService - ((subTotalAfterService / 100) * AffilateAmount));
+                subTotalAfterService = (subTotalAfterService / 100) * AffilateAmount;
             }
             return Math.Round(subTotalAfterService);
         }
@@ -145,7 +145,7 @@ namespace V308CMS.Models
                 }
                 if (Discount?.DiscountRule != null && (Discount.Amount>0))
                 {
-                    subTotalAfterService = Discount.DiscountRule.ApplyDiscount(subTotalAfterService,Discount.Amount);
+                    subTotalAfterService = subTotalAfterService - Discount.DiscountRule.ApplyDiscount(subTotalAfterService,Discount.Amount);
                 }
                
                 if (ShipPrice > 0){
