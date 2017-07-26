@@ -26,13 +26,13 @@
                                                 <div class="product-label"><label class="label">Giảm giá</label></div>
                                             }
                                             <a href="@url.productURL(item.Product.Name,item.Product.ID)" class="grid-image">
-                                                <img class="feature-images" src="@ImageUrlHelper.ToUrl(@item.Product.Image, 250,250)" alt="@item.Product.Name">
+                                                <img class="feature-images" src="@item.Product.Image.ToUrl(250,250)" alt="@item.Product.Name">
 
                                                 @if (item.Images.Any())
                                                 {
                                                     <span class="product-hover" data-idproduct="@item.Product.ID">
 
-                                                        <img class="img-responsive" alt="@item.Product.Name" src="@ImageUrlHelper.ToUrl(@item.Images.First().Name, 250,250)">
+                                                        <img class="img-responsive" alt="@item.Product.Name" src="@item.Images.First().Name.ToUrl(250,250)">
                                                     </span>
                                                 }
 
@@ -52,18 +52,18 @@
                                                 <p class="sale">
                                                     @if (item.Product.Price > 0)
                                                     {
-                                                        <span class="special-price"><span class="money">@String.Format("{0: 0,0}", (item.Product.Price)) @ViewBag.MoneyShort</span></span>
+                                                        <span class="special-price"><span class="money">@item.Product.ToProductPrice()</span></span>
                                                     }
                                                     @if (item.Product.SaleOff > 0)
                                                     {
-                                                        <span class="old-price"><span class="money">@String.Format("{0: 0,0}", item.Product.Price - (item.Product.Price / 100) * item.Product.SaleOff) ) @ViewBag.MoneyShort</span></span>
+                                                        <span class="old-price"><span class="money">@item.Product.ToProductSaleOffPrice()</span></span>
                                                     }
 
                                                 </p>
 
                                             </div>
 
-                                            <span class="shopify-product-reviews-badge" data-id="8747959625"></span>
+                                            <span class="shopify-product-reviews-badge" data-id="@item.Product.ID"></span>
 
                                             <div class="add-to-link">
 

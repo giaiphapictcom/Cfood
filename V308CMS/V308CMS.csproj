@@ -2115,6 +2115,7 @@
     <Content Include="Views\themes\myshopify\Pages\BuyNow.cshtml" />
     <Content Include="Views\themes\myshopify\Components\CartComponent.cshtml" />
     <Content Include="Views\themes\myshopify\Layout\CartLayout.cshtml" />
+    <Content Include="Views\themes\myshopify\Components\PriceBoxComponent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

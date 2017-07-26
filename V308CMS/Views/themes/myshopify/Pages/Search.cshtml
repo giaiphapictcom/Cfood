@@ -41,7 +41,7 @@
                     <a class="product-title" href="@Url.ProductDetailUrl(product)" title="@product.Name">
                         @product.Name
                     </a>
-                    <span class="spr-badge" id="spr_badge_8747801801" data-rating="0.0">
+                    <span class="spr-badge" id="spr_badge_@(product.ID)" data-rating="0.0">
                         <span class="spr-starrating spr-badge-starrating">
                         <i class="spr-icon spr-icon-star-empty" style=""></i>
                         <i class="spr-icon spr-icon-star-empty" style=""></i>
@@ -51,35 +51,8 @@
                     </span>
                         <span class="spr-badge-caption">No reviews</span>
                     </span>
-                    <div class="price-box">
-                        @if (product.SaleOff == 0)
-                    {
-                            <p class="regular-product">
-                                <span><span class="money">@product.ToProductPrice()</span></span>
-                            </p>
-                        }
-                        else
-                        {
-                            <p class="sale">
-                                <span class="special-price"><span class="money">@product.ToProductPrice()</span></span>
-                                <span class="old-price"><span class="money">@product.ToProductSaleOffPrice()</span></span>
-                            </p>
-                        }
-                    </div>
-
-                    <div class="action">
-                        @if (product.Quantity > 0)
-                        {
-                            <a href="javascript:void(0);" class="btn add-to-cart-btn" add-cart="@product.ID" title="Thêm vào giỏ hàng">
-                                Thêm vào giỏ hàng
-                            </a>
-
-                        }
-                        else
-                        {
-                            <span style="color: #f00; font-weight: bold">Sản phẩm tạm hết hàng</span>
-                        }
-                    </div>
+                    @{Html.RenderPartial("ProductPriceComponent", new Tuple<double,int>(product.Price ?? 0,product.SaleOff ?? 0))}
+                    @{Html.RenderPartial("ProductQuantityComponent", new Tuple<int,int>(product.ID, product.Quantity??0))}                    
                 </div>
             </div>
         }
@@ -87,7 +60,6 @@
     }
 
     <div class="text-center">
-
         <div class="toolbar toolbar-bottom">
 
            @Html.Partial("PaginationComponent", new PaginationModels

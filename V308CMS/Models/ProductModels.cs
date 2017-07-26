@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace V308CMS.Models
+﻿namespace V308CMS.Models
 {
     public class ProductModels
     {

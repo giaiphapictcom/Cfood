@@ -86,7 +86,7 @@
                                                                             @if (product.SaleOff > 0)
                                                                             {
                                                                                 <div class="product-label">
-                                                                                    <label class="label">Giám giá</label>
+                                                                                    <label class="label">@product.SaleOff.Value.ToSaleOffLabel()</label>
                                                                                 </div>
                                                                             }
                                                                             <a href="@Url.ProductDetailUrl(product)" class="grid-image" title="@product.Name">

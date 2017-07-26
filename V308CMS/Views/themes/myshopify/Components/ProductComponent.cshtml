@@ -10,7 +10,7 @@
                 @if (Model.SaleOff > 0)
                 {
                     <div class="product-label">
-                        <label class="label">Giám giá</label>
+                        <label class="label">@(Model.SaleOff.HasValue? Model.SaleOff.Value.ToSaleOffLabel():"")</label>
                     </div>
                 }               
                 <a href="@Url.ProductDetailUrl(Model)" class="grid-image">

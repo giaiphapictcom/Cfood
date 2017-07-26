@@ -5,6 +5,7 @@ using V308CMS.Common;
 using V308CMS.Data;
 using V308CMS.Data.Enum;
 using V308CMS.Data.Models;
+using V308CMS.Helpers;
 using V308CMS.Helpers.Url;
 using V308CMS.Models;
 
@@ -89,9 +90,9 @@ namespace V308CMS.Controllers
                     title = product.ProductItem.Name,
                     quantity = product.Quantity,
                     image = product.ProductItem.Avatar,
-                    price = product.ProductItem.Price.ToString("N0")
+                    price = product.ProductItem.Price.ToPriceString()
                 }),
-                total_price = MyCart.SubTotal.ToString("N0")
+                total_price = MyCart.SubTotal.ToPriceString()
 
             }, JsonRequestBehavior.AllowGet);
         }
@@ -188,7 +189,7 @@ namespace V308CMS.Controllers
         }
         [Authorize]
         [HttpPost]
-        public ActionResult SendOrder()
+        public ActionResult SendOrder(ShippingModels shippingModel)
         {
             
             var region = Request.Form["Region"];
