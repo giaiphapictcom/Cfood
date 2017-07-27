@@ -25,7 +25,12 @@ namespace V308CMS.Sale.Controllers
         int plimit = 10;
 
 
-        public PartnerController() {
+        public PartnerController()
+        {
+            if (Session != null && Session["UserId"] != null)
+            {
+                uid = int.Parse(Session["UserId"].ToString());
+            }
         }
 
         private void GetValue() {
@@ -288,11 +293,14 @@ namespace V308CMS.Sale.Controllers
                 {
                     nPage = 1;
                 }
-
+                if (Session != null && Session["UserId"] != null && uid < 1)
+                {
+                    uid = int.Parse(Session["UserId"].ToString());
+                }
                 CreateRepos();
                 AffiliateLinksPage Model = new AffiliateLinksPage();
-                Model.Links = LinkRepo.GetItems(nPage);
-                Model.LinkTotal = LinkRepo.GetItemsTotal();
+                Model.Links = LinkRepo.GetItems(nPage, uid, 10);
+                Model.LinkTotal = LinkRepo.itemTotal;
 
                 Model.Page = nPage;
                 return View(Model);
@@ -322,8 +330,8 @@ namespace V308CMS.Sale.Controllers
 
                 CreateRepos();
                 AffiliateLinksPage Model = new AffiliateLinksPage();
-                Model.Links = LinkRepo.GetItems(nPage);
-                Model.LinkTotal = LinkRepo.GetItemsTotal();
+                Model.Links = LinkRepo.GetItems(nPage,uid, PageSize);
+                Model.LinkTotal = LinkRepo.itemTotal;
 
                 Model.Page = nPage;
                 return View(Model);
@@ -558,7 +566,7 @@ namespace V308CMS.Sale.Controllers
                 ModelState.AddModelError("", "Cần phải chọn hình ảnh.");
                 return View("CouponForm", coupon);
             }
-            CreateRepos();
+            //CreateRepos();
             var result = CouponRepo.InsertObject(newCoupon);
             if (result == Result.Exists) {
                 SetFlashMessage(string.Format("Mã Voucher đã tồn tại, hãy nhập mã mới"));

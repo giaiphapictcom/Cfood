@@ -727,7 +727,8 @@ namespace V308CMS.Data
                     //            select p.ID).ToArray();
 
                     //lay danh sach tin moi dang nhat
-                    return (from p in entities.News
+                    mList = (from p in entities.News
+                            .Include("NewsGroup")
                             where p.TypeID.Value.Equals(pTypeID) && p.Summary.Length > 0
                             orderby p.ID descending
                             select p).Skip((pcurrent - 1) * psize)

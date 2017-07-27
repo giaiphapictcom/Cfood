@@ -12,7 +12,7 @@
     <div class="container">
         <div class="map">
 
-            <iframe height="470" frameborder="0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyC4JVxGy7uILW6C3hQeLlyrcj_AoHV0UEw&q=@ViewBag.CompanyHeaderAddress" marginwidth="0" marginheight="0" scrolling="no" style="pointer-events: none;"></iframe>
+            <iframe height="470" frameborder="0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyC4JVxGy7uILW6C3hQeLlyrcj_AoHV0UEw&q=@ViewBag.CompanyHeaderAddress" marginwidth="0" marginheight="0" scrolling="no" style="pointer-events: none; width: 100%;"></iframe>
 
         </div>
 
@@ -22,7 +22,7 @@
                 <div class="rte"></div>
 
 
-                <div class="col-4">
+                <div class="col-12 col-md-4">
 
                     <h3>
 
@@ -45,7 +45,7 @@
                     </div>
 
                 </div>
-                <div class="col-8">
+                <div class="col-12 col-md-8">
 
                     <form method="post" action="@Url.ContactIndexUrl()" id="contact_form" class="contact-form" accept-charset="UTF-8">
                         <input type="hidden" value="contact" name="form_type"><input type="hidden" name="utf8" value="✓">

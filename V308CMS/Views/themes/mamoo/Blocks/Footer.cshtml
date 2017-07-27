@@ -187,18 +187,24 @@
                         }
                     }
 
-                    <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="col-md-2 col-sm-6 col-xs-12">
                         <div class="newsletter">
                             <h3 class="module-title">Đăng ký nhận tin</h3>
-
-
                             <div class="content">
-                                <form action="" method="post" name="mc-embedded-subscribe-form" target="_blank" class="input-group">
-                                    <input value="" placeholder="youremail@domain.com" name="EMAIL" class="input-group-field" aria-label="Email Address" type="email">
-                                    <span class="input-group-btn">
-                                        <input class="btn" value="Đăng ký" name="subscribe" type="submit">
-                                    </span>
-                                </form>
+                                @if (Model.subscribed)
+                                {
+                                    <span>Bạn đã đăng ký nhận tin của chúng tôi.</span>
+                                }
+                                else
+                                {
+                                    <form action="/member/subscribe" method="post" name="subscribe-form" class="input-group">
+                                        <input value="" placeholder="youremail@domain.com" name="EMAIL" class="input-group-field" aria-label="Email Address" type="email">
+                                        <span class="input-group-btn">
+                                            <input class="btn" value="Đăng ký" name="subscribe" type="submit">
+                                        </span>
+                                    </form>
+                                }
+                                
                             </div>
                         </div>
 

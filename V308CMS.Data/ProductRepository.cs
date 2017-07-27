@@ -170,6 +170,7 @@ namespace V308CMS.Data
                         break;                        
                 }
                 totalRecord = listProduct.Count();
+
                 return (from product in listProduct.
                             Include("ProductImages").
                             Include("ProductType").
@@ -201,9 +202,13 @@ namespace V308CMS.Data
         #region get Product by
         public List<Product> LaySanPhamKhuyenMai(int pcurrent = 1, int psize = 5)
         {
+            var items = new List<Product>();
             using (var entities = new V308CMSEntities())
             {
-                return (from p in entities.Product.
+
+
+                try {
+                    var products = entities.Product.
                         Include("ProductImages").
                         Include("ProductType").
                         Include("ProductManufacturer").
@@ -211,11 +216,28 @@ namespace V308CMS.Data
                         Include("ProductSize").
                         Include("ProductAttribute").
                         Include("ProductSaleOff")
-                        where p.SaleOff > 0 & p.Status == true
-                        orderby p.SaleOff descending
-                        select p).Skip((pcurrent - 1) * psize)
-                         .Take(psize).ToList();
+                        .Where(p => p.Status == true && p.SaleOff > 0)
+                        ;
+                    items = products.OrderByDescending(p => p.SaleOff).Skip((pcurrent - 1) * psize).Take(psize).ToList();
+                }
+                catch (Exception e) {
+                    Console.Write(e);
+                }
+                //return (from p in entities.Product.
+                //        Include("ProductImages").
+                //        Include("ProductType").
+                //        Include("ProductManufacturer").
+                //        Include("ProductColor").
+                //        Include("ProductSize").
+                //        Include("ProductAttribute").
+                //        Include("ProductSaleOff")
+                //        where p.SaleOff > 0 & p.Status == true
+                //        orderby p.SaleOff descending
+                //        select p).Skip((pcurrent - 1) * psize)
+                //         .Take(psize).ToList();
             }
+
+            return items;
         }
         public List<Product> getProductsRecommend(int psize = 5)
         {
@@ -409,20 +431,64 @@ namespace V308CMS.Data
         {
             using (var entities = new V308CMSEntities())
             {
+
+
+                //return await (includeProductImages ? (from p in entities.Product.
+                //                                      Include("ProductImages").
+                //                                      Include("ProductType").
+                //             Include("ProductManufacturer").
+                //             Include("ProductColor").
+                //             Include("ProductSize").
+                //             Include("ProductAttribute").
+                //             Include("ProductSaleOff")
+                //                                      where p.ID == id
+                //                                      select p).FirstOrDefaultAsync() :
+                //              (from p in entities.Product
+                //               .Include("ProductAttribute")
+                //               .Include("ProductColor")
+
+                //               where p.ID == id
+                //               select p).FirstOrDefaultAsync());
+
+                var product =  entities.Product.Include("ProductAttribute").Include("ProductColor")
+                                    .Where(p => p.ID == id).Select(p => p);
+                if (includeProductImages)
+                {
+                    product = product.Include("ProductImages")
+                                .Include("ProductType")
+                                .Include("ProductManufacturer")
+                                //.Include("ProductColor")
+                                .Include("ProductSize")
+                                .Include("ProductSaleOff")
+                        ;
+                }
                 
-                return await ( includeProductImages ?(from p in entities.Product.
-                                                      Include("ProductImages").
-                                                      Include("ProductType").
-                             Include("ProductManufacturer").
-                             Include("ProductColor").
-                             Include("ProductSize").
-                             Include("ProductAttribute").
-                             Include("ProductSaleOff")
-                        where p.ID == id
-                              select p).FirstOrDefaultAsync() :
-                              (from p in entities.Product
-                               where p.ID == id
-                               select p).FirstOrDefaultAsync());
+
+                Product item = await product.FirstOrDefaultAsync();
+                if (!includeProductImages) {
+                    item.ProductImages = entities.ProductImage.Where(i => i.ProductID == item.ID).ToList();
+                }
+                if (item != null) {
+                    var test = item.ProductManufacturer.GetType();
+                    var test_img = item.ProductImages.GetType();
+                    var test_saleof = item.ProductSaleOff.GetType();
+                    var test_size = item.ProductSize.GetType();
+                    if (item.ProductType == null) {
+                        item.ProductType = await entities.ProductType.Where(t => t.ID == item.Type).FirstOrDefaultAsync();
+                    }
+                    //var test_type = item.ProductType.GetType();
+                }
+                
+                return  item;
+
+
+                //return await entities.Product.Include("ProductImages")
+                //            .Include("ProductType")
+                //             .Include("ProductManufacturer").
+                //             Include("ProductColor").
+                //             Include("ProductSize").
+                //             Include("ProductAttribute").
+                //             Include("ProductSaleOff").Where(p => p.ID == id).Select(p => p).FirstOrDefaultAsync();
             }
         }
         public Product Find(int pId)

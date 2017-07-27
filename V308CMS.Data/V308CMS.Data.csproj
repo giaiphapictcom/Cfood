@@ -225,6 +225,7 @@
     <Compile Include="Metadata\SiteConfigMetadata.cs" />
     <Compile Include="Metadata\SizeMetadata.cs" />
     <Compile Include="Metadata\StoreMetadata.cs" />
+    <Compile Include="Metadata\SubscribeMetadata.cs" />
     <Compile Include="Metadata\SupportManMetadata.cs" />
     <Compile Include="Metadata\UnitMetadata.cs" />
     <Compile Include="Metadata\VoucherCodeMetadata.cs" />
@@ -253,6 +254,7 @@
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Size.cs" />
     <Compile Include="Models\Store.cs" />
+    <Compile Include="Models\Subscribe.cs" />
     <Compile Include="Models\SupportMan.cs" />
     <Compile Include="Models\VisisterTime.cs" />
     <Compile Include="Models\Voucher.cs" />
@@ -272,6 +274,7 @@
     <Compile Include="RevenueGainRepository.cs" />
     <Compile Include="SiteConfigRespository.cs" />
     <Compile Include="SiteRepository.cs" />
+    <Compile Include="SubscribeRepository.cs" />
     <Compile Include="SupportRepository.cs" />
     <Compile Include="Test.cs" />
     <Compile Include="TestimonialRepository.cs" />

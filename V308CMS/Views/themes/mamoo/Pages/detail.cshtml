@@ -29,7 +29,7 @@
     <div class="container">
         <div class="row  p-2 pt-4 pb-4">
         
-        <div class="col-4">
+        <div class="col-12 col-md-4">
             <div class="thumb">
                 <img src="@ImageHelper.ToUrl(@Model.Image,240)" id="product-thumb" class="img-fluid mx-auto d-block" alt="@Model.Name" />
             </div>
@@ -39,7 +39,7 @@
 
             
         </div>
-        <div class="col-8">
+        <div class="col-12 col-md-8">
             <h1>@Model.Name</h1>
             <div class="status">Tình Trạng : <span class="text-blue">còn hàng</span></div>
             @if (Model.Code.Length > 0)
@@ -64,17 +64,17 @@
                 <input name="id" type="hidden" value="@Model.ID" />
 
                     <div class="action mb-3 row">
-                        <div class="col">
+                        <div class="col-12 col-md-6">
                             <a href="javascript:void(0);" class="buy" add-cart="@Model.ID"><i class="icon-basket text-grey"></i>Thêm vào giỏ hàng</a>
                         </div>
-                        <div class="col">
-                            <a href="#" class="like"><i class="icon-heart text-grey"></i>Thêm vào danh sách ưa thích</a>
+                        <div class="col-12 col-md-6">
+                            <a href="javascript:void(0);" class="like" add-like="@Model.ID"><i class="icon-heart text-grey"></i>Thêm vào danh sách ưa thích</a>
                         </div>
 
 
                     </div>
                     <div class="quantity row mb-3">
-                        <div class="col-6">
+                        <div class="col-12 col-md-6">
                             <div class="input-group cart">
                                 <span class="input-group-addon bg-grey border-0">Số lượng</span>
                                 <input type="number" class="form-control bg-grey-act border-0" name="quantity" value="1" />
@@ -85,7 +85,7 @@
                     </div>
 
                     <div class="addcart row">
-                        <div class="col-6">
+                        <div class="col-12 col-md-6">
                             <div class="input-group cart btn-submit" style="height: 40px;">
                                 <span class="input-group-addon bg-yellow2 border-0"><i class="icon-basket text-white"></i></span>
                                 <div class="form-control bg-yellow border-0 text-bold text-upper">
@@ -120,7 +120,10 @@
 <div class="box-tabs box-shadow">
     <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#info" role="tab">Thông Tin Sản Phẩm</a>
+            <a class="nav-link active" data-toggle="tab" href="#info" role="tab">
+                <span class="hidden-md-down">Thông Tin Sản Phẩm</span>
+                <span class="hidden-md-up">Thông Tin</span>
+            </a>
         </li>
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#comment" role="tab">Đánh Giá</a>

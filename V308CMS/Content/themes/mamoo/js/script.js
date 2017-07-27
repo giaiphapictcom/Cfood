@@ -1,6 +1,6 @@
 
 $(document).ready(function () {
-    console.log("loaded");
+    
     $(".showsubmenu").click(function () {
         $(".nav-item ul").hide();
         $(this).parents(".nav-item").find("ul").css({"display":"block"});

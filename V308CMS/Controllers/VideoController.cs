@@ -24,14 +24,15 @@ namespace V308CMS.Controllers
         public ActionResult Index(int page = 1)
         {
             var newsIndexViewModel = new NewsIndexPageContainer();
-            var newsGroup = NewsService.LayTheLoaiTinTheoId(NewsType);
+            //var newsGroup = NewsService.LayTheLoaiTinTheoId(NewsType);
+            NewsGroups newsGroup = NewsService.SearchNewsGroup("video");
             string level = string.Empty;
             if (newsGroup != null)
             {
                 newsIndexViewModel.NewsGroups = newsGroup;
                 level = newsGroup.Level;
             }
-            newsIndexViewModel.ListNews = NewsService.GetVideos(page, PageSize, NewsType);
+            newsIndexViewModel.ListNews = NewsService.GetVideos(page, PageSize, newsGroup.ID);
             newsIndexViewModel.Page = page;
 
             //newsIndexViewModel.ListNewsMostView = NewsService.GetListNewsMostView(NewsType, level);

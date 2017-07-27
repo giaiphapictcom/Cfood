@@ -10,21 +10,23 @@
 		<div class="col-8  col-md-3" >
 			<a href="/"><img src="@ViewBag.ThemesPath/images/logo.png" class="logo img-fluid"></a>
 		</div>
-        <div class="col-2 hidden-md-up" style="font-size: 25px; padding-top: 15px;">
+        <div class="col-2 hidden-md-up mobileuser" style="font-size: 25px; padding-top: 15px;">
+
             @if (AuthenticationHelper.IsAuthenticated)
             {
-                <a class="ml-2" href="#"><i class="fa fa-user"></i></a>
+                <a class="login" href="#"><i class="fa fa-user"></i></a>
             }
             else
             {
-                <a class="ml-2" href="/dang-nhap.html"><i class="fa fa-user"></i></a>
+                <a class="login" href="/dang-nhap.html"><i class="fa fa-user"></i></a>
             }
+            <a class="cartmobile" href="/cart/checkout"><i class="icon-basket"></i></a>
         </div>
-            <div class="col-8 col-md-9 mt-1 ">
-                <div class="row shortlink mb-3">
+        <div class="col-8 col-md-9 mt-1 ">
+            <div class="row shortlink mb-3">
                     <div class="col-md-4 col-12 hotline">Hotline: @ViewBag.Hotline</div>
                     <div class="col-7 hidden-sm-down align-self-end text-right">
-                        <span><i class="icon-basket"></i>Giỏ hàng của tôi</span>
+                        <a href="/cart/checkout"><i class="icon-basket"></i>Giỏ hàng của tôi</a>
                         @if (AuthenticationHelper.IsAuthenticated)
                         {
                             <a class="ml-2" href="#"><i class="fa fa-user"></i>  @AuthenticationHelper.AuthenticateName</a>
@@ -59,6 +61,14 @@
                         </a>
                     </div>
                 </div>
-            </div>
         </div>
-</div>	
+        <div class="col-12 hidden-md-up">
+            <form action="/tim-kiem.html" name="frm-srch" class="input-group search">
+                <input type="text" class="form-control border-0 " placeholder="" name="pKey" />
+                <input id="id-search" type="hidden" name="pVendor" value="2">
+                <button class="input-group-addon bg-yellow border-0" type="submit"><i class="icon-search"></i></button>
+            </form>
+
+        </div>
+</div>
+</div>

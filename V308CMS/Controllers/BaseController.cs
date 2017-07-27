@@ -22,14 +22,14 @@ namespace V308CMS.Controllers
         protected void ClearCart()
         {
             MyCart.Clear();
-        }     
+        }
         /// <summary>
         /// Kiem tra gio hang trong
         /// </summary>
         /// <returns></returns>
         protected bool IsEmptyCart()
         {
-            return MyCart.Items.Count ==0;
+            return MyCart.Items.Count == 0;
 
         }
 
@@ -48,8 +48,8 @@ namespace V308CMS.Controllers
 
         protected string ReturnUrl
         {
-            get { return GetTempSession("ReturnUrl");}
-            set { if (!string.IsNullOrEmpty(value)){ SetTempSession("ReturnUrl", value);}}
+            get { return GetTempSession("ReturnUrl"); }
+            set { if (!string.IsNullOrEmpty(value)) { SetTempSession("ReturnUrl", value); } }
         }
         protected ActionResult RedirectToUrl(string url, string defaultUrl = "/")
         {
@@ -135,17 +135,20 @@ namespace V308CMS.Controllers
             BoxContentService = new BoxContentRespository();
             RegionService = new RegionRespository();
             ShippingService = new ShippingAddressRespository();
-            OrderTransactionService = new OrderTransactionRespository();           
+            OrderTransactionService = new OrderTransactionRespository();
             BannerService = new BannerRespository();
             ProductBrandService = new ProductBrandRespository();
             ProductManufacturerService = new ProductManufacturerRespository();
             GoogleplusService = new GoogleplusService(ConfigHelper.GoogleAppId, ConfigHelper.GoogleAppSecret);
-            FacebookService = new FacebookService(ConfigHelper.FacebookAppId,ConfigHelper.FacebookAppSecret);
+            FacebookService = new FacebookService(ConfigHelper.FacebookAppId, ConfigHelper.FacebookAppSecret);
             SiteConfigRepo = new Data.SiteConfigRespository();
+            SubscribeRepo = new SubscribeRepository();
             LoadSiteConfig();
 
             VisisterRepo = new VisisterRepository();
             LinkRepo = new LinkRepository();
+
+            VisisterRepo.UpdateView();
         }
         public FacebookService FacebookService { get; }
         public GoogleplusService GoogleplusService { get; }
@@ -167,6 +170,7 @@ namespace V308CMS.Controllers
         protected IProductWishlistRepositry ProductWishlistService { get; }
         protected ProductRepository ProductsService { get; }
 
+        public SubscribeRepository SubscribeRepo { get; set; }
         protected AccountRepository AccountService { get; }
 
         protected FileRepository FileService { get; }

@@ -21,21 +21,38 @@ namespace V308CMS.Controllers
         {
             var product =  ProductsService.Find(id);
             if (product != null)
-            {               
-                MyCart.AddItem(new ProductModels
-                {
-                    Id = product.ID,
-                    Avatar = product.Image.ToUrl(95, 100),
-                    Name = product.Name,
-                    SaleOff = product.SaleOff ?? 0,
-                    Price = product.Price ?? 0
-                });
-                return Json(new
-                {
-                    code = 1,
-                    totalprice = $"{MyCart.SubTotal: 0,0}",
-                    message = "Sản phẩm đã được thêm vào giỏ hàng thành công."
-                });
+            {
+                if ((int)quantity > 0) {
+                    MyCart.AddItem(new ProductModels
+                    {
+                        Id = product.ID,
+                        Avatar = product.Image.ToUrl(95, 100),
+                        Name = product.Name,
+                        SaleOff = product.SaleOff ?? 0,
+                        Price = product.Price ?? 0
+                    });
+                    return Json(new
+                    {
+                        code = 1,
+                        totalprice = $"{MyCart.SubTotal: 0,0}",
+                        message = "Sản phẩm đã được thêm vào giỏ hàng thành công."
+                    });
+                } else if (Request["like"]=="1") {
+                    MyCart.AddLike(new ProductModels
+                    {
+                        Id = product.ID,
+                        Avatar = product.Image.ToUrl(95, 100),
+                        Name = product.Name,
+                        SaleOff = product.SaleOff ?? 0,
+                        Price = product.Price ?? 0
+                    });
+                    return Json(new
+                    {
+                        code = 1,
+                        message = "Thêm Sản phẩm yêu thích thành công."
+                    });
+                }
+                
 
             }
             return Json(new { code = 0, message = "Không tìm thấy sản phẩm." });

@@ -12,6 +12,7 @@ namespace V308CMS.Models
     public class ShoppingCart
     {
         public List<CartItem> Items { get; private set; }
+        public List<CartItem> Likes { get; private set; }
 
         public static readonly ShoppingCart Instance;
         // The static constructor is called as soon as the class is loaded into memory
@@ -23,7 +24,8 @@ namespace V308CMS.Models
             {
                 Instance = new ShoppingCart
                 {
-                    Items = new List<CartItem>()
+                    Items = new List<CartItem>(),
+                    Likes = new List<CartItem>()
                 };
                 HttpContext.Current.Session["MPSTARTShoppingCart"] = Instance;
             }
@@ -58,6 +60,17 @@ namespace V308CMS.Models
             {
                 newItem.Quantity = 1;
                 Items.Add(newItem);
+            }
+        }
+
+        public void AddLike(ProductModels product)
+        {
+            CartItem newItem = new CartItem(product);
+
+            if (!Likes.Contains(newItem))
+            {
+                newItem.Quantity = 1;
+                Likes.Add(newItem);
             }
         }
         /**

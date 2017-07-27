@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using V308CMS.Data.Models;
 using V308CMS.Common;
+using System.Data.Entity;
+
+
 
 namespace V308CMS.Data
 {
@@ -79,29 +81,33 @@ namespace V308CMS.Data
 
 
         public int PageSize = 20;
+        public int itemTotal = 0;
         public List<AffiliateLink> GetItems(int pcurrent = 1, int Account = 0, int limit = 10)
         {
             List<AffiliateLink> mList = null;
-            try
-            {
-                var links = entities.AffiliateLink.OrderBy(l => l.ID).Select(l => l);
-                links = links.Where(l => l.created_by == Account);
 
-                if (limit > 0)
-                {
-                    mList = links.Skip((pcurrent - 1) * PageSize).Take(PageSize).ToList();
-                }
-                else {
-                    mList = links.ToList();
-                }
-
-                return mList;
-            }
-            catch (Exception ex)
+            //try
+            //{
+            var links = entities.AffiliateLink.OrderBy(l => l.ID).Select(l => l);
+            links = links.Where(l => l.created_by == Account);
+            itemTotal = links.Count();
+            if (limit > 0)
             {
-                Console.Write(ex);
-                throw;
+                    
+                mList = links.Skip((pcurrent - 1) * PageSize).Take(PageSize).ToList();
             }
+            else {
+                mList = links.ToList();
+            }
+
+                
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.Write(ex);
+            //    throw;
+            //}
+            return mList;
         }
 
         public int GetItemsTotal()

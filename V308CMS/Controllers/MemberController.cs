@@ -321,7 +321,23 @@ namespace V308CMS.Controllers
                  subject, body);
         }
 
+        [HttpPost]
+        public JsonResult subscribe()
+        {
+            string email = Request["email"];
+            if (email != null && email.Length > 0)
+            {
 
+                    SubscribeRepo.Insert(email);
+                    return Json(new
+                    {
+                        code = 1,
+                        message = "Bạn đã đăng ký nhận tin thành công."
+                    });
+
+            }
+            return Json(new { code = 0, message = "Lỗi xảy ra." });
+        }
     }
 }
 

@@ -119,7 +119,8 @@ namespace V308CMS.Controllers
             if (menusFooter != null && menusFooter.ID > 0)
             {
                 model.MenusFooter = NewsService.GetNewsGroup(menusFooter.ID, true, 6);
-            }                
+            }
+            model.subscribed = SubscribeRepo.CheckSubscribed();
             return View("Footer", model);
         }
 

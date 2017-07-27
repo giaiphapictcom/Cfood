@@ -9,19 +9,42 @@
 
         <li class="nav-item">
             <a class="nav-link" href="/@V308CMS.Common.Ultility.LocDau(@ca.Name)-t@(@ca.Id).html" title="@ca.Name"><i class="fa fa-@ca.Icon"></i> @ca.Name</a>
-            <i class="fa fa-plus-square showsubmenu"></i>
-            @{ 
-                using (var entities = new V308CMS.Data.V308CMSEntities()) {
+            
+            @{
+                using (var entities = new V308CMS.Data.V308CMSEntities())
+                {
                     var submenus = (from c in entities.ProductType
-                                   where c.Parent == ca.Id
-                                   orderby c.Number ascending
-                                   select c
+                                    where c.Parent == ca.Id
+                                    orderby c.Number ascending
+                                    select c
                            ).ToList();
-                    if (submenus.Count() > 0) {
+                    if (submenus.Count() > 0)
+                    {
+                        <i class="fa fa-plus-square showsubmenu"></i>
                         <ul class="hidden">
                             @foreach (var sub in submenus)
                             {
-                                <li><a class="nav-link" href="/@V308CMS.Common.Ultility.LocDau(@sub.Name)-t@(@sub.ID).html" title="@ca.Name"><i class="fa fa-@sub.Icon"></i> @sub.Name</a></li>
+                                <li>
+                                    <a class="nav-link" href="/@V308CMS.Common.Ultility.LocDau(@sub.Name)-t@(@sub.ID).html" title="@ca.Name"><i class="fa fa-@sub.Icon"></i> @sub.Name</a>
+                                    @{
+                                        var submenus2 = (from c in entities.ProductType
+                                                         where c.Parent == sub.ID
+                                                         orderby c.Number ascending
+                                                         select c
+                                                    ).ToList();
+                                        if (submenus2.Count() > 0)
+                                        {
+                                            <ul class="hidden">
+                                                @foreach (var sub2 in submenus2)
+                                                {
+                                                    <li>
+                                                        <a class="nav-link" href="/@V308CMS.Common.Ultility.LocDau(@sub2.Name)-t@(@sub2.ID).html" title="@sub2.Name"><i class="fa fa-@sub2.Icon"></i> @sub2.Name</a>
+                                                        </li>
+                                                 }
+                                            </ul>
+                                        }
+                                    }
+</li>
                             }
                         </ul>
                     }
@@ -34,7 +57,7 @@
 </ul>
 @if (Model.PromotionHot != null && Model.PromotionHot.Count > 0)
 {
-    <div class="box-items box-shadow">
+    <div class="box-items box-shadow hidden-md-down">
         <h4>Khuyến Mại Sốc
         <a class="next icon-right-open" href="#"></a>
         <a class="pre icon-left-open" href="#"></a>
@@ -46,7 +69,7 @@
     </div>
 }
 
-@if (@Request.RequestContext.RouteData.Values["Action"] == "Index") {
+@if (@Request.RequestContext.RouteData.Values["Action"] == "Index" && !Request.Browser.IsMobileDevice) {
     if (Model.Recommend != null && Model.Recommend.Count > 0)
     {
         <div class="box-items box-shadow hidden-md-down">
@@ -74,7 +97,7 @@
 
 
 @if (Request.Browser.IsMobileDevice != true && ViewBag.FacebookPage != null & ViewBag.FacebookPage is string) {
-    <div class="box-items box-shadow">
+    <div class="box-items box-shadow hidden-md-down">
         <div class="item-type-1">
             @Html.Raw("<iframe src=\"http://www.facebook.com/plugins/likebox.php?profile=1&width=300&height=170&connections=10&stream=true&header=true&id=" + ViewBag.FacebookPage + "\" scrolling='no' frameborder='0' allowtransparency='true' style='border: none; overflow: hidden; width: 100%; height: 150px' ></iframe>")
         </div>

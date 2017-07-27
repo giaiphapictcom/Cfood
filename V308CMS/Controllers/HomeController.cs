@@ -17,7 +17,6 @@ namespace V308CMS.Controllers
     {      
         public HomeController()
         {
-            VisisterRepo.UpdateView();
         }
 
         public async Task<ActionResult> Index()
@@ -114,7 +113,7 @@ namespace V308CMS.Controllers
                 mIndexPageContainer.ProductLastest = ProductsService.getProductsRandom(12);
             }
             ViewBag.ListCategoryRootHome = await ProductTypeService.GetListHomeAsync();
-
+          
             string view = Theme.viewPage("home");
             if (view.Length > 0)
             {
@@ -155,6 +154,7 @@ namespace V308CMS.Controllers
                     listSubCategory.Aggregate(listCategoryFilter,
                         (current, subCategory) => current + "," + subCategory.ID) + ",";
             }
+            pageSize = 9;
             var listProduct = ProductsService.GetListByCategoryId(listCategoryFilter, listFilter, sort, out totalRecord,
                 page,
                 pageSize);
@@ -187,7 +187,10 @@ namespace V308CMS.Controllers
        
         public async Task<ActionResult> Detail(int pId = 0)
         {
-            var product = await ProductsService.FindAsync(pId, true);
+            var product = await ProductsService.FindAsync(pId,true);
+            if (product == null) {
+                product = await ProductsService.FindAsync(pId, false);
+            }
             ViewBag.CategoryPath =  ProductTypeService.GetListCategoryPath(product.Type.Value);
             return View("Detail", product);           
         }

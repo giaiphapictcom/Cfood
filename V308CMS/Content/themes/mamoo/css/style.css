@@ -961,7 +961,7 @@ li.nav-item ul {
 }
 
 
-li.nav-item:hover ul {
+ul.categorys  li:hover > ul {
     visibility:visible;
 }
 ul.nav .showsubmenu {
@@ -1103,3 +1103,28 @@ ul.nav .showsubmenu {
   #off-canvas-button a{float:left;width: 115px;padding-left: 15px;}
 
 }
+
+@media (max-width: 720px) {
+    .nav-link {
+        padding: .5em .2em !important;
+        min-width: 100px !important;
+    }
+}
+
+
+.mobileuser {
+    position:relative;
+}
+.mobileuser > a {
+    position:absolute;
+    font-size: 18px;
+    
+}
+.mobileuser .login {
+        top: 0px;
+        right: 12px;
+    }
+    .mobileuser .cartmobile {
+        top: 35px;
+        right: 7px;
+    }
