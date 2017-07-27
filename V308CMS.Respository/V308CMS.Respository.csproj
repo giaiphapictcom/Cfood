@@ -71,6 +71,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminRespository.cs" />
+    <Compile Include="AffilateCodeRespository.cs" />
+    <Compile Include="AffilateUserRespository.cs" />
     <Compile Include="AffiliateCategoryRespository.cs" />
     <Compile Include="BannerRespository.cs" />
     <Compile Include="BoxContentRespository.cs" />
@@ -107,7 +109,6 @@
     <Compile Include="SupportManRepository.cs" />
     <Compile Include="UserRespository.cs" />
     <Compile Include="WebsiteRequestRepository.cs" />
-    <Compile Include="VoucherCodeRespository.cs" />
     <Compile Include="VoucherLogRespository.cs" />
     <Compile Include="VoucherRespository.cs" />
   </ItemGroup>

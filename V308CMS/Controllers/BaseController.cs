@@ -86,12 +86,6 @@ namespace V308CMS.Controllers
         private void LoadSiteConfig()
         {
             var siteConfigs = SiteConfig.ConfigTable;
-            if (siteConfigs == null) {
-                siteConfigs = SiteConfigRepo.LoadSiteConfig();
-            }
-            if (siteConfigs == null) {
-                return;
-            }
             if (siteConfigs.Any())
             {
                 ViewBag.domain = Theme.domain;
@@ -111,6 +105,7 @@ namespace V308CMS.Controllers
                 ViewBag.ProductViewText = SiteConfigService.ReadSiteConfig(siteConfigs, "product-text-view");
                 ViewBag.HomeAliasText = SiteConfigService.ReadSiteConfig(siteConfigs, "home-text-alias");
                 ViewBag.SubscribeNews = SiteConfigService.ReadSiteConfig(siteConfigs, "subscribe-news");
+                
             }
 
         }
@@ -139,17 +134,41 @@ namespace V308CMS.Controllers
             BannerService = new BannerRespository();
             ProductBrandService = new ProductBrandRespository();
             ProductManufacturerService = new ProductManufacturerRespository();
+            OrderService = new ProductOrderRespository();
+            LinkRepo = new LinkRepository();
+            TestimonialService = new TestimonialRepository();
+            AffiliateCategoryRepo = new AffiliateCategoryRespository();
+            VoucherRepo = new CouponRepository();
+            RevenueGainRepo = new RevenueGainRepository();
+            WebsiteRequestRepo = new WebsiteRequestRepository();
+            VoucherService = new VoucherRespository();
+            AffilateUserService = new AffilateUserRespository();
+            VoucherLogService = new VoucherLogRespository();           
             GoogleplusService = new GoogleplusService(ConfigHelper.GoogleAppId, ConfigHelper.GoogleAppSecret);
-            FacebookService = new FacebookService(ConfigHelper.FacebookAppId, ConfigHelper.FacebookAppSecret);
+
+            //FacebookService = new FacebookService(ConfigHelper.FacebookAppId, ConfigHelper.FacebookAppSecret);
             SiteConfigRepo = new Data.SiteConfigRespository();
             SubscribeRepo = new SubscribeRepository();
-            LoadSiteConfig();
+            //LoadSiteConfig();
 
             VisisterRepo = new VisisterRepository();
             LinkRepo = new LinkRepository();
-
             VisisterRepo.UpdateView();
+
+            FacebookService = new FacebookService(ConfigHelper.FacebookAppId,ConfigHelper.FacebookAppSecret);
+            LoadSiteConfig();
+
         }
+        public VoucherLogRespository VoucherLogService { get; set; }
+  
+         public AffilateUserRespository AffilateUserService { get; set; }
+        public VoucherRespository VoucherService { get; set; }
+        public RevenueGainRepository RevenueGainRepo { get; set; }
+        public CouponRepository VoucherRepo { get; set; }
+        public AffiliateCategoryRespository AffiliateCategoryRepo { get; set; }
+        public TestimonialRepository TestimonialService { get; set; }
+        public  ProductOrderRespository OrderService { get; set; }
+        public WebsiteRequestRepository WebsiteRequestRepo { get; set; }
         public FacebookService FacebookService { get; }
         public GoogleplusService GoogleplusService { get; }
         public ProductManufacturerRespository ProductManufacturerService;

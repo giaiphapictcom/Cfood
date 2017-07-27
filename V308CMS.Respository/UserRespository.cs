@@ -18,6 +18,7 @@ namespace V308CMS.Respository
         
         int Count();
         List<Account> Take(int count = 10);
+       
     }
 
 
@@ -252,6 +253,17 @@ namespace V308CMS.Respository
                 return (from user in entities.Account
                         orderby user.Date.Value descending
                         select user).Take(count).ToList();
+            }
+        }
+
+        public Account FindEmail(string email)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return (from user in entities.Account
+                        where user.Email == email
+                        select user
+              ).FirstOrDefault();
             }
         }
 

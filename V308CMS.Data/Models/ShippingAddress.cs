@@ -11,6 +11,8 @@ namespace V308CMS.Data.Models
     {
         public int Id { get; set; }
         public int UserId { get; set; }
+        public string IpAddress { get; set; }
+        public string Email { get; set; }
         public string FullName { get; set; }
         public string Phone { get; set; }
         public string Region { get; set; }
@@ -19,5 +21,6 @@ namespace V308CMS.Data.Models
         public string Address { get; set; }
         public  bool Default { get; set; }
         public DateTime UpdatedAt { get; set; }
+        
     }
 }

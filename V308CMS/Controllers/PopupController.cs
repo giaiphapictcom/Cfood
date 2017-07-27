@@ -24,5 +24,10 @@ namespace V308CMS.Controllers
         {
             return PartialView("ForgotPassword");
         }
+
+        public PartialViewResult LoginAndBuy()
+        {
+            return PartialView("LoginAndBuy");
+        }
     }
 }

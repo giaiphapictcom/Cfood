@@ -10,7 +10,7 @@
                 @if (Model.SaleOff > 0)
                 {
                     <div class="product-label">
-                        <label class="label">Giám giá</label>
+                        <label class="label">@(Model.SaleOff.HasValue? Model.SaleOff.Value.ToSaleOffLabel():"")</label>
                     </div>
                 }               
                 <a href="@Url.ProductDetailUrl(Model)" class="grid-image">
@@ -21,7 +21,6 @@
 
                     </span>
                 </a>
-
                 <div class="quickview-button">
                     <a href="javascript:void(0)" data-id="@Model.ID" data-toggle="tooltip" data-placement="top" title="@ViewBag.ProductViewText" class="sca-qv-button btn" data-original-title="@ViewBag.ProductViewText">@ViewBag.ProductViewText</a>
                 </div>
@@ -33,24 +32,10 @@
                         @Model.Name
                     </a>
                 </h3>
-                <div class="price-box">
-                    @if (Model.SaleOff == 0)
-                    {
-                        <p class="regular-product">
-                            <span><span class="money">@Model.ToProductPrice()</span></span>
-                        </p>
-                    }
-                    else
-                    {
-                        <p class="sale">
-                            <span class="special-price"><span class="money">@Model.ToProductPrice()</span></span>
-                            <span class="old-price"><span class="money">@Model.ToProductSaleOffPrice()</span></span>
-                        </p>
-                    }
-                </div>
-
+                @{ Html.RenderPartial("ProductPriceComponent", new Tuple<double, int>(Model.Price ?? 0, Model.SaleOff ?? 0));  }               
                 <div class="reviews-container">
                     <span class="spr-badge" id="spr_badge_@(Model.ID)" data-rating="0.0">
+
                         <span class="spr-starrating spr-badge-starrating">
                             <i class="spr-icon spr-icon-star-empty" style=""></i>
                             <i class="spr-icon spr-icon-star-empty" style=""></i>

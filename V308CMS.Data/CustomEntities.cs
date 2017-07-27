@@ -1791,14 +1791,14 @@ namespace V308CMS.Data
         #endregion
 
     }
-    
+
     [Table("visister")]
     public class Visister
     {
 
         #region[Declare variables]
         private int _ID;
-        
+
         private string _ip;
         private string _useragent;
         private int? _uid;
@@ -1810,7 +1810,7 @@ namespace V308CMS.Data
         private string _browser_version;
         private int _affiliate_id;
         private DateTime? _created;
-        
+
         #endregion
 
         #region[Public Properties]

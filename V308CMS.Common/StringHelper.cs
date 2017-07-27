@@ -32,6 +32,18 @@ namespace V308CMS.Common
         }
         private const string NumberChars = "0123456789";
         private const string RandChars = "0123456789qwertyuiopasdfghjklzxcvbnmERTYUIOPASDFGHJKLZXCVBNM";
+        private const string AlphaUpperCase = "ABCDEFGHIKLNOPQXYZTVRUS";
+        public static string GenerateUpperCasePrefix(int length =1)
+        {
+            var random = new Random();
+            var captcha = new StringBuilder();
+
+            for (int i = 0; i < length; i++)
+            {
+                captcha.Append(AlphaUpperCase[random.Next(AlphaUpperCase.Length)]);
+            }
+            return captcha.ToString();
+        }
 
         public static string GenerateNumber(int length)
         {

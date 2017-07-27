@@ -14,7 +14,7 @@
                                     <div class="row">
                                         <div class="block-title col-xs-10 col-sm-10 col-md-5">
                                             <a href="@Url.ProductCategoryUrl(Model.Category)" title="@Model.Category.Name">
-                                                <h2 style="">
+                                                <h2>
                                                     <span>@Model.Category.Name</span>
                                                     <i class="fa fa-@Model.Category.Icon"></i>
                                                 </h2>
@@ -86,15 +86,15 @@
                                                                             @if (product.SaleOff > 0)
                                                                             {
                                                                                 <div class="product-label">
-                                                                                    <label class="label">Giám giá</label>
+                                                                                    <label class="label">@product.SaleOff.Value.ToSaleOffLabel()</label>
                                                                                 </div>
                                                                             }
                                                                             <a href="@Url.ProductDetailUrl(product)" class="grid-image" title="@product.Name">
-                                                                                <img class="feature-images" src="@product.Image.ToUrl(250, 250)" alt="@product.Name">
+                                                                                <img class="feature-images" src="@product.Image.ToUrl(200, 210)" alt="@product.Name">
                                                                                 @if (product.ProductImages != null && product.ProductImages.Any())
                                                                                 {
                                                                                     <span class="product-hover" data-idproduct="@product.ID">
-                                                                                        <img class="img-responsive" alt="@product.Name" src="@(product.ProductImages.First().Name.ToUrl(250, 250))">
+                                                                                        <img class="img-responsive" alt="@product.Name" src="@(product.ProductImages.First().Name.ToUrl(200, 210))">
                                                                                     </span>
                                                                                 }
                                                                             </a>
@@ -128,7 +128,7 @@
                                                                                 <div class="add-to-cart">
                                                                                    @if (product.Quantity > 0)
                                                                                    {
-                                                                                        <a href="javascript:void(0);" class="btn add-to-cart-btn" add-cart="@product.ID" title="Thêm vào giỏ hàng">
+                                                                                        <a  href="javascript:void(0);" class="btn add-to-cart-btn" add-cart="@product.ID" title="Thêm vào giỏ hàng">
                                                                                             Thêm vào giỏ hàng
                                                                                         </a>
 

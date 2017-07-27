@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using V308CMS.Data;
 using V308CMS.Filters;
 
@@ -13,7 +9,7 @@ namespace V308CMS.Controllers
     {
         public NewsController()
         {
-            VisisterRepo.UpdateView();
+            //VisisterRepo.UpdateView();
         }
         private const int PageSize = 10;
         private const int NewsType = 58;

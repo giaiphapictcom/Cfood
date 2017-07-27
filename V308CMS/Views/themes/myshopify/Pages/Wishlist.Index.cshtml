@@ -31,7 +31,7 @@
 }
 <div class="wishlist-page">
 
-    @if (Model.ListProduct.IsHasData())
+    @if (Model.ListProduct != null && Model.ListProduct.IsHasData())
     {
         <div class="page-header">
             <h2>
@@ -70,7 +70,7 @@
                     <td class="a-center">
 
                         <p class="regular-product">
-                            <span><span class="money" data-currency-usd="@item.Price.Value.ToString("N0")">@item.Price.Value.ToString("N0") đ</span></span>
+                            <span><span class="money">@item.Price.Value.ToPriceString()</span></span>
                         </p>
 
                     </td>

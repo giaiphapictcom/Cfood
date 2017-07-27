@@ -10,7 +10,7 @@ namespace V308CMS.Data.Metadata
         public int VoucherId { get; set; }
 
         [Required]
-        [MaxLength(6)]
+        [MaxLength(50)]
         public string VoucherCode { get; set; }
     }
 }

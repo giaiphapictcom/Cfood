@@ -1,8 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using V308CMS.Data.Helpers;
-using System.Collections.Generic;
-using V308CMS.Data;
 
 namespace V308CMS.Data
 {
@@ -219,9 +218,9 @@ namespace V308CMS.Data
                     item.update_date = DateTime.Now;
 
                     entities.SaveChanges();
-                    return Data.Helpers.Result.Ok;
+                    return Result.Ok;
                 }
-                return Data.Helpers.Result.NotExists;
+                return Result.NotExists;
             }
 
 

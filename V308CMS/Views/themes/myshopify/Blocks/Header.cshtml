@@ -25,12 +25,12 @@
                             <ul class="customer-links">
                                 <li>
                                     <i class="icon_check_alt" aria-hidden="true"></i>
-                                    <a href="@Url.CheckoutCartUrl()" title="Thanh toán"><span>Thanh toán</span></a>
+                                    <a onclick="@(AuthenticationHelper.IsAuthenticated==false?"loginAndBuy();" :"buyNow();")" title="Thanh toán"><span>Thanh toán</span></a>
                                 </li>
                                 @if (AuthenticationHelper.IsAuthenticated)
                                 {
                                     <li>
-                                        <a href="@Url.AccountLogoutUrl()" id="customer_logout_link">Thoát tài khoản</a>
+                                        <a href="@Url.AccountLogoutUrl(Request.Url.ToString())" id="customer_logout_link">Thoát tài khoản</a>
                                         <a href="#">Tài khoản của tôi</a>
                                     </li>
                                 }
@@ -42,7 +42,7 @@
                                     </li>
                                     <li>
                                         <i class="icon_profile" aria-hidden="true"></i>
-                                        <a id="customer_register_link" onclick="return showPopup('@Url.PopupRegisterUrl()');">Tạo tài khoản mới</a>
+                                        <a id="customer_register_link" onclick="return showPopup('@Url.PopupRegisterUrl()');">Đăng ký</a>
                                     </li>
                                 }
 
@@ -59,13 +59,7 @@
                         <a href="@Url.MemberWishListIndexUrl()" title="Danh sách sản phẩm yêu thích">Danh sách yêu thích</a>
                     </div>
                 }
-
-                    @*
-                    <span class="currency-title">Currency: </span>
-                    <select id="currencies">
-                        <option data-currency="EUR" value="EUR">EUR</option>
-                        <option data-currency="USD" selected value="USD">USD</option>
-                    </select>*@</div>
+            </div>
         </div>
     </div>
 </div>
@@ -203,14 +197,14 @@
 
                                             <p class="total">
                                                 <span class="label" style="color: #000">Tổng tiền:</span>
-                                                <span class="price"><span class="money">@Model.total_price đ</span></span>
+                                                <span class="price"><span class="money">@Model.total_price.ToPriceString()</span></span>
                                             </p>
                                         </div>
                                         <div class="actions">
                                             <div class="view-cart">
                                                 <a href="@Url.ViewCartUrl()" title="Xem giỏ hàng">Xem</a>
                                             </div>
-                                            <button class="btn" onclick="window.location = '@Url.CheckoutCartUrl()'">Thanh Toán</button>
+                                            <button id="btn-checkout" class="btn" onclick="@(AuthenticationHelper.IsAuthenticated==false?"loginAndBuy();return false;" :"buyNow();return false;")">Thanh Toán</button>
                                         </div>
 
                                     </div>
@@ -288,12 +282,3 @@
 </div>
 </div>
 </header>
-<script type="text/javascript">
-    function showPopup(url) {
-        jQuery.get(url, function (response) {
-            jQuery('#modalPopUp').html(response);
-            jQuery('#modalPopUp').modal({ show: true });
-        });
-        return false;
-    }   
-</script>

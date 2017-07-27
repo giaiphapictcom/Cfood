@@ -22,7 +22,7 @@ namespace V308CMS.Controllers
                         if (link.created_by == null) {
                             link.created_by = 0;
                         }
-                        VisisterRepo.UpdateView(0,int.Parse(link.created_by.ToString()));
+                        //VisisterRepo.UpdateView(0,int.Parse(link.created_by.ToString()));
                         LinkRepo.UpdateClick(link.ID);
                         Response.Redirect(link.url);
                     }

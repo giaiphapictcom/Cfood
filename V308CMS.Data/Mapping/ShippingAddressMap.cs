@@ -9,6 +9,9 @@ namespace V308CMS.Data.Mapping
         {
             HasKey(t => t.Id);
 
+            Property(t => t.Email)
+              .HasMaxLength(255);
+
             Property(t => t.FullName)                
                 .HasMaxLength(50);
 
@@ -27,6 +30,10 @@ namespace V308CMS.Data.Mapping
             Property(t => t.Address)
               .HasMaxLength(500);
 
+            Property(t => t.IpAddress)
+             .HasMaxLength(50);
+
+
             ToTable("shipping_address");
             Property(t => t.Id).HasColumnName("id");
             Property(t => t.UserId).HasColumnName("user_id");
@@ -38,6 +45,8 @@ namespace V308CMS.Data.Mapping
             Property(t => t.Address).HasColumnName("address");
             Property(t => t.Default).HasColumnName("default");
             Property(t => t.UpdatedAt).HasColumnName("updated_at");
+            Property(t => t.Email).HasColumnName("email");
+            Property(t => t.IpAddress).HasColumnName("ip_address");
 
         }
     }

@@ -1,0 +1,14 @@
+﻿@model Tuple<int,int>
+<div class="action">
+    @if (Model.Item2 > 0)
+    {
+        <a href="javascript:void(0);" class="btn add-to-cart-btn" add-cart="@Model.Item1" title="Thêm vào giỏ hàng">
+            Thêm vào giỏ hàng
+        </a>
+
+    }
+    else
+    {
+        <span style="color: #f00; font-weight: bold">Sản phẩm tạm hết hàng</span>
+    }
+</div>

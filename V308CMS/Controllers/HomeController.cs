@@ -17,6 +17,7 @@ namespace V308CMS.Controllers
     {      
         public HomeController()
         {
+
         }
 
         public async Task<ActionResult> Index()
@@ -199,9 +200,6 @@ namespace V308CMS.Controllers
         {
             int totalRecord;
             int totalPage = 0;
-            if (q == null || q.Length < 1) {
-                q = Request.QueryString["pKey"];
-            }
             var listProduct = ProductsService.Search(q, out totalRecord, page, pageSize);
             if (totalRecord > 0)
             {
@@ -221,11 +219,6 @@ namespace V308CMS.Controllers
             };
             return View("Search", searchModel);
         }
-        
-
-        
-
-
         public ActionResult YoutubeDetail(int pId = 0)
         {
             NewsPage mCommonModel = new NewsPage();

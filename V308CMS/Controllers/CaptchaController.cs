@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web.Mvc;
@@ -90,7 +88,7 @@ namespace V308CMS.Controllers
                                                             Color.White, Color.White,
                                                             orientationAngle);
                 g.FillRectangle(gradientBrush, 0, 0, 100, height);              
-                g.DrawString(captchaText, new Font(familyName, 20, FontStyle.Bold), new SolidBrush(Color.RoyalBlue), 0, 2);
+                g.DrawString(captchaText, new Font(familyName, 20, FontStyle.Bold), new SolidBrush(Color.Red), 0, 2);
                 var ms = new MemoryStream();
                 bmpOut.Save(ms, ImageFormat.Png);
                 var bmpBytes = ms.GetBuffer();

@@ -120,6 +120,7 @@
     <Compile Include="EnumHelper.cs" />
     <Compile Include="FilterChat.cs" />
     <Compile Include="ImageHelper.cs" />
+    <Compile Include="IpHelper.cs" />
     <Compile Include="ListExtensions.cs" />
     <Compile Include="ObjectHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -11,7 +11,7 @@ namespace V308CMS.Controllers
     public class ProductController : BaseController 
     {
         public ProductController() {
-            VisisterRepo.UpdateView();
+            //VisisterRepo.UpdateView();
         }
         public ActionResult Index(int id)
         {

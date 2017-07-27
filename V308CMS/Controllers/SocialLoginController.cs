@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
 using V308CMS.Common;
 using V308CMS.Helpers;
 using V308CMS.Social;
@@ -22,7 +23,23 @@ namespace V308CMS.Controllers
         private void SignIn(SocialUser user)
         {
             var userIdResult = AddUser(user.UserId, user.Email, user.FullName, user.Avatar);
-            AuthenticationHelper.SignIn(userIdResult, user.UserId, user.FullName, user.Avatar);
+            var affilateUser = AffilateUserService.GetByUserId(userIdResult);
+            string affilateId = "";
+            int affilateAmount = 0;
+            if (affilateUser != null)
+            {
+                affilateId = affilateUser.AffilateId;
+                affilateAmount = affilateUser.Amount;
+            }
+            var userData = new MyUser
+            {
+                UserId = userIdResult,
+                UserName = user.Email,
+                Avatar = user.Avatar,
+                Affilate = new KeyValuePair<string, int>(affilateId, affilateAmount)
+            };
+
+            AuthenticationHelper.SignIn(user.FullName, userData);
         }
         /// <summary>
         /// Action duoc goi lai khi dang nhap facebook

@@ -222,6 +222,10 @@
     <Compile Include="Helpers\AuthenticationHelper.cs" />
     <Compile Include="Helpers\ConfigHelper.cs" />
     <Compile Include="Helpers\CustomPrincipal.cs" />
+    <Compile Include="Helpers\Discount\Discount.cs" />
+    <Compile Include="Helpers\Discount\DiscountSubTotalRule.cs" />
+    <Compile Include="Helpers\Discount\DiscountItemRule.cs" />
+    <Compile Include="Helpers\Discount\IDiscountRule.cs" />
     <Compile Include="Helpers\FilterParser.cs" />
     <Compile Include="Helpers\MemberWishListUrlHelper.cs" />
     <Compile Include="Helpers\MpStartViewEngine.cs" />
@@ -257,6 +261,7 @@
     <Compile Include="Models\ProductCategoryViewModels.cs" />
     <Compile Include="Models\SearchViewModels.cs" />
     <Compile Include="Models\ShippingModels.cs" />
+    <Compile Include="Models\ShippingModelsAnonymous.cs" />
     <Compile Include="Models\ShoppingCart.cs" />
     <Compile Include="Models\ShoppingCartModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -1628,11 +1633,14 @@
     <Content Include="Content\themes\myshopify\css\animate.css" />
     <Content Include="Content\themes\myshopify\css\bootstrap.min.css" />
     <Content Include="Content\themes\myshopify\css\checkout.css" />
+    <Content Include="Content\themes\myshopify\css\checkout_stylesheet\oldie.css" />
+    <Content Include="Content\themes\myshopify\css\checkout_stylesheet\v2-ltr-edge.css" />
     <Content Include="Content\themes\myshopify\css\color.css" />
     <Content Include="Content\themes\myshopify\css\component.css" />
     <Content Include="Content\themes\myshopify\css\customstyle.css" />
     <Content Include="Content\themes\myshopify\css\font-icon.css" />
     <Content Include="Content\themes\myshopify\css\owl.theme.css" />
+    <Content Include="Content\themes\myshopify\css\popup.css" />
     <Content Include="Content\themes\myshopify\css\responsive.css" />
     <Content Include="Content\themes\myshopify\css\retina-responsive.css" />
     <Content Include="Content\themes\myshopify\css\social.css" />
@@ -1645,16 +1653,22 @@
     <Content Include="Content\themes\myshopify\images\background-newsletter_2048x.jpg" />
     <Content Include="Content\themes\myshopify\images\btn-cart01.png" />
     <Content Include="Content\themes\myshopify\images\btn-remove01.png" />
+    <Content Include="Content\themes\myshopify\images\collape.png" />
+    <Content Include="Content\themes\myshopify\images\expand.png" />
     <Content Include="Content\themes\myshopify\images\favicon.png" />
     <Content Include="Content\themes\myshopify\images\loading-top.gif" />
     <Content Include="Content\themes\myshopify\images\Logo MP.png" />
     <Content Include="Content\themes\myshopify\images\logo.png" />
     <Content Include="Content\themes\myshopify\images\logoh70.png" />
+    <Content Include="Content\themes\myshopify\images\opc-ajax-loader.gif" />
     <Content Include="Content\themes\myshopify\images\refresh.png" />
     <Content Include="Content\themes\myshopify\images\select2.png" />
+    <Content Include="Content\themes\myshopify\images\social\facebook.png" />
+    <Content Include="Content\themes\myshopify\images\social\google.png" />
     <Content Include="Content\themes\myshopify\js\ajax.jquery.min.js" />
     <Content Include="Content\themes\myshopify\js\all.jquery.min.js" />
     <Content Include="Content\themes\myshopify\js\canvas.js" />
+    <Content Include="Content\themes\myshopify\js\checkout.js" />
     <Content Include="Content\themes\myshopify\js\classie.js" />
     <Content Include="Content\themes\myshopify\js\currencies.js" />
     <Content Include="Content\themes\myshopify\js\elevatezoom\demo.html" />
@@ -1962,7 +1976,6 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="Views\themes\myshopify\Pages\Search.cshtml" />
-    <Content Include="Views\themes\myshopify\Pages\ShopCardDetail.cshtml" />
     <Content Include="Views\themes\myshopify\Pages\Video.cshtml" />
     <Content Include="Views\themes\myshopify\Product\ProductHot.cshtml" />
     <Content Include="Views\themes\myshopify\Product\HomeCategory.cshtml" />
@@ -2075,7 +2088,6 @@
     <Content Include="Views\themes\mamoo\Components\ProductPriceComponent.cshtml" />
     <Content Include="Views\themes\mamoo\Components\YoutubeVideoComponent.cshtml" />
     <None Include="Views\themes\myshopify\Blocks\ListSubCategory.cshtml" />
-    <Content Include="Views\themes\myshopify\Components\ProductPriceComponent.cshtml" />
     <Content Include="Views\themes\myshopify\Components\CategoryHomeComponent.cshtml" />
     <Content Include="Views\themes\myshopify\Components\ProductComponent.cshtml" />
     <Content Include="Views\themes\myshopify\Pages\LoginFail.cshtml" />
@@ -2098,6 +2110,13 @@
     <Content Include="Views\themes\myshopify\Components\YoutubeVideoComponent.cshtml" />
     <Content Include="Views\themes\myshopify\Pages\BigSale.cshtml" />
     <Content Include="Views\themes\myshopify\Pages\NotFound.cshtml" />
+    <Content Include="Views\themes\myshopify\Popup\LoginAndBuy.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\BuyNow.cshtml" />
+    <Content Include="Views\themes\myshopify\Components\CartComponent.cshtml" />
+    <Content Include="Views\themes\myshopify\Layout\CartLayout.cshtml" />
+    <Content Include="Views\themes\myshopify\Components\ProductPriceComponent.cshtml" />
+    <Content Include="Views\themes\myshopify\Components\ProductQuantityComponent.cshtml" />
+    <Content Include="Views\themes\myshopify\Components\ProductRateComponent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2108,6 +2127,7 @@
     <Folder Include="Content\Images\Upload\_thumbs\Images\" />
     <Folder Include="Content\Mobile\Css\" />
     <Folder Include="Content\thumb\" />
+    <Folder Include="Views\themes\myshopify\Templates\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
