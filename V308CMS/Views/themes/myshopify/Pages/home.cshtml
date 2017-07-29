@@ -1,6 +1,6 @@
 ﻿@using StackExchange.Profiling
 @using V308CMS.Data
-@model V308CMS.Data.IndexPageContainer
+@model List<ProductType>
 @{
     Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
     var profiler = MiniProfiler.Current;
@@ -35,10 +35,10 @@
 
 @using (profiler.Step("Load ProductTypeList"))
 {
-    var listCategoryRootHome = (List<ProductType>)ViewBag.ListCategoryRootHome;
-    if (listCategoryRootHome != null)
+   
+    if (Model != null && Model.Any())
     {
-        foreach (var category in listCategoryRootHome)
+        foreach (var category in Model)
         {
             Html.RenderAction("LoadBoxItemAsync", "Async", new {category});
         }
