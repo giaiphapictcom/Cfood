@@ -4,7 +4,7 @@ using System.ComponentModel;
 namespace V308CMS.Data.Enum
 {
   
-    public enum PositionEnum
+    public enum BannerPositionEnum
     {
         [Description("Slide Show")]
         Slide = 2,

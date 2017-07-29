@@ -1,7 +1,5 @@
 ﻿@using V308CMS.Common
-@using V308CMS.Data
-@using V308CMS.Helpers
-@model V308CMS.Data.NewsIndexPageContainer
+@model List<V308CMS.Data.Models.Video>
 @{  
     Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
 
@@ -9,8 +7,8 @@
 
 @section header {
     <title>Video</title>
-    <meta name="twitter:title" content="Mpstart, Tin tức">
-    <meta name="twitter:description" content="Tin tức, thương mại điện tử, điện thoại">
+    <meta name="twitter:title" content="Mpstart,video">
+    <meta name="twitter:description" content="Video, thương mại điện tử, điện thoại">
 }
 @section Breadcrumb{
     <div class="clearfix breadcrumb-wrap">
@@ -33,12 +31,25 @@
 <div class="row">
     <div class="col-md-12 col-main">
         <div class="content-blog">                
-            @if (Model.ListNews.IsHasData()){
+            @if (Model.IsHasData()){
                 <ul class="row">
-                    @foreach (var video in Model.ListNews)
+                    @foreach (var video in Model)
                     {
                         <li class="col-xs-4">
-                             @Html.Action("VideoItemBlock", "Block", new News {ID = video.ID,Title = video.Title,Summary = video.Summary})
+                            
+                            <div class="item">
+                                <div class="blog-item">
+                                    <div class="content-blog">
+                                        <a class="image video" href="@url.videoURL(video.Title, video.Id)">
+                                            <img src="https://i.ytimg.com/vi/@video.Code/maxresdefault.jpg" alt="@video.Title">
+                                            <span class="mask-play"><i class="fa fa-play"></i></span>
+                                        </a>
+                                        <div class="blog-meta">
+                                            <h6 class="p10">@url.VideoAnchor(video.Title, video.Id)</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </li>
 
                     }

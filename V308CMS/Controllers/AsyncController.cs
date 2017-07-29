@@ -3,13 +3,12 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using V308CMS.Data;
 using V308CMS.Data.Enum;
+using V308CMS.Data.Models;
 
 namespace V308CMS.Controllers
 {
     public class AsyncController : BaseController
-    {
-        //
-        // GET: /Async/      
+    {       
         public PartialViewResult LoadListBrandAsync(int categoryId, int limit = 6)
         {
             return PartialView("_ListBrandAsync",  ProductBrandService.GetRandom(categoryId, limit));
@@ -70,11 +69,17 @@ namespace V308CMS.Controllers
             return PartialView("_ListProductManufacturerFilterAsync", await ProductManufacturerService.GetAllAsync());
         }
 
-        public async Task<PartialViewResult> LoadHomeSliderAsync(int limit =5, byte position =(byte)PositionEnum.HomeSlider)
+        public PartialViewResult LoadListPriceFilterAsync(RouteValueDictionary currentRouteData)
+        {
+            ViewBag.CurrentRouteData = currentRouteData;
+            return PartialView("_ListProductPriceFilterAsync");
+        }
+
+        public async Task<PartialViewResult> LoadHomeSliderAsync(int limit =5, byte position =(byte)BannerPositionEnum.HomeSlider)
         {
             return PartialView("HomeSlides", await BannerService.GetListByPositionAsync(position));
         }
-        public async Task<PartialViewResult> LoadBannerHomeTopAsync(int limit = 5, byte position = (byte)PositionEnum.HomeTop)
+        public async Task<PartialViewResult> LoadBannerHomeTopAsync(int limit = 5, byte position = (byte)BannerPositionEnum.HomeTop)
         {
             return PartialView("_LeftBannerHomeTopAsyn", await BannerService.GetListByPositionAsync(position, limit));
         }
@@ -85,11 +90,18 @@ namespace V308CMS.Controllers
         }
         public async Task<PartialViewResult> LoadBigSaleTopBannerAsync(byte position)
         {
-            return PartialView("_BigSaleTopBanner", await BannerService.GetFistByPosition(position));
+            return PartialView("_BannerBigSaleAsync", await BannerService.GetFistByPosition(position));
         }
 
+        public async Task<PartialViewResult> LoadListVideoHomeAsync(byte position =(byte)VideoPosition.Home, int limit =3)
+        {
+            return PartialView("_ListVideoHomeAsync", await VideoService.GetListHomeVideo(position, limit));
+        }
 
-
+        public async Task<PartialViewResult> LoadListVideoRelativedAsync(int id, int limit =10)
+        {
+            return PartialView("_ListVideoHomeAsync", await VideoService.GetListRelatived(id, limit));
+        }
 
     }
 }

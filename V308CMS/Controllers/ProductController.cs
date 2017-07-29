@@ -3,7 +3,9 @@ using System.Linq;
 using System.Web.Mvc;
 using V308CMS.Common;
 using V308CMS.Data;
+using V308CMS.Data.Enum;
 using V308CMS.Helpers.Url;
+using V308CMS.Models;
 
 namespace V308CMS.Controllers
 {
@@ -52,24 +54,40 @@ namespace V308CMS.Controllers
             },JsonRequestBehavior.AllowGet);
 
         }
+
         
-        public ActionResult BigSale(){
-            try {
-                
-                ProductItemsPage Model = new ProductItemsPage();
-                Model.BestSeller = ProductsService.getProductsRandom();
+        public ActionResult BigSale(int saleOff =15, int sort = (int)SortEnum.Default,
+            int page = 1,
+            int pageSize = 18)
+        {
+            int totalRecord;
+            int totalPage = 0;
+            var listProduct = ProductsService.GetListProductSaleOff(saleOff, sort, out totalRecord,
+            page,
+            pageSize);
 
-                var products = ProductsService.GetItemsBySaleoff(1, 15, ">");
-                Model.Products = products.Products;
-                Model.total = products.total;
-
-                return View("PageItems", Model);  
-            }
-            catch (Exception ex)
+            if (totalRecord > 0)
             {
-                return Content(ex.InnerException.ToString());
+
+                totalPage = totalRecord / pageSize;
+                if (totalRecord % pageSize > 0)
+                    totalPage += 1;
             }
 
+            var result = new BigSaleViewModels
+            {
+              
+                ListProduct = listProduct,
+                Page = page,
+                PageSize = pageSize,
+                Sort = sort,
+                ListSort = DataHelper.ListEnumType<SortEnum>(sort),
+                TotalPage = totalPage,
+                TotalRecord = totalRecord,
+                SaleOff = saleOff
+            };
+
+            return View("BigSale", result);
         }
 
     }

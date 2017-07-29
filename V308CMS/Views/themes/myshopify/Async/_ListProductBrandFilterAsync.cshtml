@@ -1,35 +1,9 @@
-﻿@using System.Text.RegularExpressions
-@using V308CMS.Common
-@using V308CMS.Data.Enum
+﻿@using V308CMS.Data.Enum
 @using V308CMS.Helpers
-@using V308CMS.Helpers.Url
 @model List<V308CMS.Data.Brand>
 @if (Model != null && Model.Count > 0)
 {
-    var currentUrl = HttpUtility.UrlDecode(Request.Url.ToString()) ;
-    var brandLabel = string.Format("|{0}_", (int)FilterEnum.ByBrand);
-    var brandFilterValueParam = "";
-    if (currentUrl.Contains(brandLabel))
-    {
-        brandFilterValueParam= Request.QueryString["filter"];
-        var brandFilterParamRegex = Regex.Match(brandFilterValueParam, String.Format(@"{0}_\d+(\,?\d+\,?)+", (int) FilterEnum.ByBrand));
-        if (brandFilterParamRegex.Success)
-        {
-            brandFilterValueParam = brandFilterParamRegex.Value;
-
-
-        }
-
-        if (!brandFilterValueParam.StartsWith(","))
-        {
-            brandFilterValueParam = "," + brandFilterValueParam;
-        }
-        if (!brandFilterValueParam.EndsWith(","))
-        {
-            brandFilterValueParam = brandFilterValueParam + ",";
-        }
-    }
-
+    var filterValue = Request.QueryString["filter"];
     var currentRouteData = (RouteValueDictionary)ViewBag.CurrentRouteData;
     <div class="title">
         <h3>
@@ -42,13 +16,14 @@
         <ul>
             @foreach (var brand in Model)
             {
-                var currBrandSelected = !string.IsNullOrWhiteSpace(brandFilterValueParam) && ((brandFilterValueParam == brand.id.ToString()) ||(brandFilterValueParam.Contains(brand.id + ",")) || (brandFilterValueParam.Contains("," + brand.id + ",")));
+                var filterBrandValue = string.Format("|{0}_{1}|", (int) FilterEnum.ByBrand, brand.id);
+                var currBrandSelected = !string.IsNullOrWhiteSpace(filterValue) && filterValue.Contains(filterBrandValue);
                 <li>
-                    <a title="@brand.name" href="@(currBrandSelected ? "javascript:void(0)" : Url.CategoryFilterUrl(currentRouteData, (int) FilterEnum.ByBrand,brand.id.ToString(), string.Format("|{0}_{1}|", (int) FilterEnum.ByBrand, brand.id)))">
+                    <a title="@brand.name" href="@(currBrandSelected ? "javascript:void(0)" : Url.CategoryFilterUrl(currentRouteData,filterBrandValue))">
                         <label class="@(currBrandSelected ? "filter_item_active" : "filter_item")">
                             @if (currBrandSelected)
                             {
-                                <i style="float: right;margin-left: 10px;color: red;cursor: pointer;" class="remove-brand" title="Bỏ chọn thương hiệu @brand.name" data-url="@Url.CategoryFilterUrl(currentRouteData, (int) FilterEnum.ByBrand,brand.id.ToString(), string.Format("|{0}_{1}|", (int) FilterEnum.ByBrand, brand.id),(byte)UrlHelperExtensions.FilterAction.RemoveFilter)">x</i>
+                                <i style="float: right;margin-left: 10px;color: red;cursor: pointer;" class="remove-brand" title="Bỏ chọn thương hiệu @brand.name" data-url="@Url.CategoryFilterUrl(currentRouteData,filterBrandValue,(byte)UrlHelperExtensions.FilterAction.RemoveFilter)">x</i>
                             }
                             @brand.name
                         </label>

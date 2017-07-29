@@ -1,0 +1,10 @@
+﻿@using V308CMS.Helpers.Url
+@model V308CMS.Data.Models.Banner
+@if (Model != null)
+{
+    <header class="page-header">
+        <div class="images">
+            <img src="@Model.ImageUrl.ToUrl(870, 225)" alt="sale off">
+        </div>
+    </header>
+}

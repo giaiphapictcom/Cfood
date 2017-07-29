@@ -13,7 +13,7 @@ namespace V308CMS.Helpers.Url
             return helper.Action(action, controller, new { categoryId, limit });
         }
 
-        public static string LoadListProductBestSellerAsyncUrl(this UrlHelper helper, int categoryId, int limit = 5,  string controller = "Async", string action = "LoadProductsBestSellerAsync")
+        public static string LoadListProductBestSellerAsyncUrl(this UrlHelper helper, int categoryId =0, int limit = 5,  string controller = "Async", string action = "LoadProductsBestSellerAsync")
         {
             return helper.Action(action, controller, new { categoryId, limit });
         }

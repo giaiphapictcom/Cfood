@@ -1,4 +1,10 @@
-﻿@model List<V308CMS.Data.ProductManufacturer>
+﻿@using V308CMS.Data.Enum
+@using V308CMS.Helpers
+@model List<V308CMS.Data.ProductManufacturer>
+@{
+    var filterValue = Request.QueryString["filter"];
+    var currentRouteData = (RouteValueDictionary)ViewBag.CurrentRouteData;
+}
 
 @if (Model != null && Model.Count > 0)
 {
@@ -13,13 +19,26 @@
         <ul>
             @foreach (var manufacturer in Model)
             {
-                 <li>
-                     <input type="checkbox" value="@manufacturer.Name">
-                     <label>
-                        @manufacturer.Name
-                    </label>
-                 </li>
+                var filterManufacturerValue = string.Format("|{0}_{1}|", (int)FilterEnum.ByManufacturer, manufacturer.ID);
+                var currManufacturerSelected = !string.IsNullOrWhiteSpace(filterValue) && filterValue.Contains(filterManufacturerValue);
+                <li>
+                    <a title="@manufacturer.Name" href="@(currManufacturerSelected ? "javascript:void(0)" : Url.CategoryFilterUrl(currentRouteData,filterManufacturerValue))">
+                        <label class="@(currManufacturerSelected ? "filter_item_active" : "filter_item")">
+                            @if (currManufacturerSelected)
+                            {
+                                <i style="float: right;margin-left: 10px;color: red;cursor: pointer;" class="remove-manufacturer" title="Bỏ chọn nhà sản xuất @manufacturer.Name" data-url="@Url.CategoryFilterUrl(currentRouteData,filterManufacturerValue,(byte)UrlHelperExtensions.FilterAction.RemoveFilter)">x</i>
+                            }
+                            @manufacturer.Name
+                        </label>
+                    </a>
+                </li>
             }    
         </ul>
     </div>
 }
+<script>
+    $("i.remove-manufacturer").click(function (e) {
+        e.preventDefault();
+        location.href = $(this).attr('data-url');
+    });
+</script>

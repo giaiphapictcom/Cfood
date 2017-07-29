@@ -43,54 +43,15 @@
                 @{Html.RenderAction("LoadListProductBrandFilterAsync", "Async", new {categoryId = Model.CategoryId, currentRouteData = HttpContext.Current.Request.RequestContext.RouteData.Values});}
             </div>
 
-            @if (string.IsNullOrWhiteSpace(Model.Filter) || (!string.IsNullOrWhiteSpace(Model.Filter) && !Model.Filter.Contains(string.Format("|{0}_", (int)FilterEnum.ByManufacturer))))
-            {
-                <div class="sidebar-custom size">
-                    @{ Html.RenderAction("LoadListManufacturerFilterAsync", "Async", new {categoryId = Model.CategoryId, currentRouteData = HttpContext.Current.Request.RequestContext.RouteData.Values});}
-                </div>
-             }
+            <div class="sidebar-custom size">
+                @{ Html.RenderAction("LoadListManufacturerFilterAsync", "Async", new { categoryId = Model.CategoryId, currentRouteData = HttpContext.Current.Request.RequestContext.RouteData.Values });}
+            </div>
             <div class="sidebar-custom sliebar-price">
-                <div class="title">
-                    <h3>
-                        <span>
-                            GIÁ
-                        </span>
-                    </h3>
-                </div>
-                <div class="content">
-                    <ul>
-                        <li>
-                            <a  href="@Url.HomeCategoryUrl(string.Format("|{0}_0|{1}_100000|", (int) FilterEnum.ByFromPrice, (int) FilterEnum.ByToPrice),Model.CategoryId)" title="Dưới 100k">
-                                <label class="@(Model.Filter.IndexOf(String.Format("{0}_0|{1}_100000",(int) FilterEnum.ByFromPrice,(int) FilterEnum.ByToPrice), StringComparison.Ordinal)>0? "filter_item_active" : "filter_item")">
-                                    Dưới 100k
-                                </label>
-
-                            </a>
-                        </li>
-                        <li>
-                            <a  href="@Url.HomeCategoryUrl(string.Format("|{0}_100000-300000|", (int) FilterEnum.ByBetweenPrice),Model.CategoryId)" title="100k - 300k">
-                                <label class="@(Model.Filter.IndexOf(string.Format("{0}_100000-300000",(int) FilterEnum.ByBetweenPrice), StringComparison.Ordinal)>0? "filter_item_active" : "filter_item")">
-                                    100k - 300k
-                                </label>
-
-                            </a>
-                        </li>
-                        <li>
-                            <a  href="@Url.HomeCategoryUrl(string.Format("|{0}_500000-1000000|", (int) FilterEnum.ByBetweenPrice),Model.CategoryId)" title="500k - 1.000k">
-                                <label class="@(Model.Filter.IndexOf(string.Format("{0}_500000-1000000",(int) FilterEnum.ByBetweenPrice), StringComparison.Ordinal)>0? "filter_item_active" : "filter_item")">500k - 1.000k</label>
-                            </a>
-                        </li>
-                        <li>
-                            <a  href="@Url.HomeCategoryUrl(string.Format("|{0}_1000000|{1}_1000000|", (int) FilterEnum.ByToPrice, (int) FilterEnum.ByToPrice),Model.CategoryId)" title="Trên 1.000k">
-                                <label class="@(Model.Filter.IndexOf(string.Format("{0}_1000000|{1}_1000000", (int) FilterEnum.ByToPrice, (int) FilterEnum.ByToPrice), StringComparison.Ordinal)>0? "filter_item_active" : "filter_item")">Trên 1.000k</label>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                @{Html.RenderAction("LoadListPriceFilterAsync", "Async", new { currentRouteData = HttpContext.Current.Request.RequestContext.RouteData.Values });}
             </div>
         </div>
         <div class="async bestseller-sidebar bestseller-homepage" data-url="@Url.LoadListProductBestSellerAsyncUrl(Model.CategoryId)"></div>
-        @{Html.RenderAction("LoadLeftBannerAsync", "Async", new {position=PositionEnum.CategoryLeft}); }     
+        @{Html.RenderAction("LoadLeftBannerAsync", "Async", new {position=BannerPositionEnum.CategoryLeft}); }     
     </div>
 </div>
 <div class="col-md-9 col-sm-12 col-xs-12 col-main">

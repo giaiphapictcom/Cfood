@@ -62,6 +62,18 @@ namespace V308CMS.Data
 
         }
 
+        public void UpdateTotalView(int id)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                var productType = entities.ProductType.FirstOrDefault(product => product.ID == id);
+                if (productType != null)
+                {
+                    productType.TotalView += 1;
+                }
+                entities.SaveChanges();
+            }
+        }
 
         public List<ProductType> GetListRoot()
         {
