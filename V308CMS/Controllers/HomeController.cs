@@ -8,6 +8,7 @@ using System.Web.Security;
 using V308CMS.Common;
 using V308CMS.Data;
 using V308CMS.Data.Enum;
+using V308CMS.Filters;
 using V308CMS.Helpers;
 using V308CMS.Models;
 
@@ -20,11 +21,9 @@ namespace V308CMS.Controllers
 
         }
 
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
 
         {
-
-
             //IndexPageContainer mIndexPageContainer = new IndexPageContainer();
             //List<IndexPage> mIndexPageList = new List<IndexPage>();
             //var mListParent = ProductsService.LayProductTypeTheoParentId(0);
@@ -114,7 +113,7 @@ namespace V308CMS.Controllers
             {
                 mIndexPageContainer.ProductLastest = ProductsService.getProductsRandom(12);
             }
-            ViewBag.ListCategoryRootHome = await ProductTypeService.GetListHomeAsync();
+            //ViewBag.ListCategoryRootHome = await ProductTypeService.GetListHomeAsync();
           
             string view = Theme.viewPage("home");
             if (view.Length > 0)
@@ -128,7 +127,12 @@ namespace V308CMS.Controllers
             else
                 return View("MobileIndex", mIndexPageContainer);
 
+
+            return View("Home",  ProductTypeService.GetListHomeAsync());
+
         }
+
+        //[CategoryUpdateView("categoryId")]
 
         public ActionResult Category(int categoryId = 0, string filter = "", int sort = (int) SortEnum.Default,
             int page = 1,

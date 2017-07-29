@@ -62,7 +62,7 @@ namespace V308CMS.Data
 
         }
 
-        public void UpdateTotalView(int id)
+        public void IncrementView(int id)
         {
             using (var entities = new V308CMSEntities())
             {
@@ -493,12 +493,21 @@ namespace V308CMS.Data
 
         }
 
-        public async Task<List<ProductType>>  GetListHomeAsync()
+        public List<ProductType>  GetListHomeAsync()
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return  entities.ProductType
+                    .Where(productType => productType.IsHome && productType.Status == true).ToList();
+            }
+        }
+
+        public async Task<List<ProductType>> GetListHot()
         {
             using (var entities = new V308CMSEntities())
             {
                 return await entities.ProductType
-                    .Where(productType => productType.IsHome && productType.Status == true).ToListAsync();
+                    .Where(productType => productType.Parent ==0 && productType.Status == true).ToListAsync();
             }
         }
 
