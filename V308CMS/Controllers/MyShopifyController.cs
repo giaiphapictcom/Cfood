@@ -39,7 +39,7 @@ namespace V308CMS.Controllers
             return View("ProductMost", products);
         }
 
-        public async Task<ActionResult> ProductHot()
+        public async Task<PartialViewResult> ProductHot()
         {
 
             List<Product> products = await ProductsService.GetProductsLastestAsync(10);
@@ -52,7 +52,7 @@ namespace V308CMS.Controllers
                 Product = pro,
                 Images = ProductsService.LayProductImageTheoIDProduct(pro.ID)
             }).ToList();
-            return View("ProductHot", productDetails);
+            return PartialView("ProductHot", productDetails);
 
         }
 

@@ -17,13 +17,13 @@
     <meta content="website" property="og:type"/>
     <meta content="@ViewBag.SiteName" property="og:site_name" />
     @RenderSection("header", false)
-    @{Html.RenderAction("Resources", "Block");}
+    @{Html.RenderPartial("Resources");}
 </head>
 <body class="@if (IsSectionDefined("BodyClass")){@RenderSection("BodyClass", false)}else{@Html.Raw("template-product")}" 
       id="@if (IsSectionDefined("BodyId")){@RenderSection("BodyId", false)}else{@Html.Raw("custom-id")}">
 <div class="wrapper ">
     <div id="shopify-section-header" class="shopify-section">
-        @{ Html.RenderAction("Header", "Block");}
+        @{ Html.RenderAction("Header","Block");}
     </div>
     @RenderSection("Breadcrumb", false)
     <main class="container main-content">
@@ -31,9 +31,9 @@
     </main>
 
     @{Html.RenderAction("Footer", "Block");}
-    @{ Html.RenderAction("QuickView", "MyShopify");}
+    @{ Html.RenderPartial("QuickView");}
     @{ Html.RenderAction("OffCanvas", "MyShopify");}
-    @{ Html.RenderAction("WapperPopup", "MyShopify");}
+    @{ Html.RenderPartial("WapperPopup");}
     @if (ConfigHelper.ShowPageProfile) { @MiniProfiler.RenderIncludes() }
 </div>
     @RenderSection("Script",false)

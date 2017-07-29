@@ -214,6 +214,7 @@
     <Compile Include="DataAnnotations\EmailAttribute.cs" />
     <Compile Include="DataAnnotations\PhoneAttribute.cs" />
     <Compile Include="DataAnnotations\UserNameAttribute.cs" />
+    <Compile Include="Filters\CategoryUpdateViewFilter.cs" />
     <Compile Include="Filters\ProductUpdateViewFilter.cs" />
     <Compile Include="Filters\NewsUpdateViewFilter.cs" />
     <Compile Include="Filters\VideoUpdateViewFilter.cs" />
@@ -1826,7 +1827,6 @@
     <Content Include="Views\Admin\AccountInfo.cshtml" />
     <Content Include="Views\Home\Detail.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\MarketCategory.cshtml" />
     <Content Include="Views\Layout\Error.cshtml" />
     <Content Include="Views\Layout\_Layout.cshtml" />
     <Content Include="Views\Widget\Banner.cshtml" />
@@ -1858,7 +1858,6 @@
     <Content Include="Content\themes\myshopify\js\elevatezoom\elevatezoom.jquery.json" />
     <Content Include="Content\themes\myshopify\js\elevatezoom\README.md" />
     <None Include="Properties\PublishProfiles\MPStart.pubxml" />
-    <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Views\Widget\Search.cshtml" />
     <Content Include="Views\Widget\LienHe.cshtml" />
     <Content Include="Views\Widget\Comment.cshtml" />
@@ -1868,7 +1867,6 @@
     <Content Include="Views\Widget\MarketList.cshtml" />
     <Content Include="Views\Widget\Menu2.cshtml" />
     <Content Include="Views\Home\Category.cshtml" />
-    <Content Include="Views\Home\Market.cshtml" />
     <Content Include="Views\Layout\_AccountLayout.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
@@ -1882,22 +1880,17 @@
     <Content Include="Views\Admin\MarketThemMoi.cshtml" />
     <Content Include="Views\Admin\MarketSua.cshtml" />
     <Content Include="Views\Layout\_ShopCartLayout.cshtml" />
-    <Content Include="Views\Home\ShopCartDetail.cshtml" />
     <Content Include="Views\Layout\_LayoutMarketList.cshtml" />
-    <Content Include="Views\Home\MarketList.cshtml" />
     <Content Include="Views\Widget\SlideSide.cshtml" />
     <Content Include="Views\Home\News.cshtml" />
     <Content Include="Views\Widget\Footer2.cshtml" />
-    <Content Include="Views\Home\YoutubeDetail.cshtml" />
     <Content Include="Views\Layout\_RegisterMarket.cshtml" />
-    <Content Include="Views\Home\MarketRegister.cshtml" />
     <Content Include="Views\Account\_Captcha.cshtml" />
     <Content Include="Views\Account\_InvisibleCaptcha.cshtml" />
     <Content Include="Views\Layout\_MobileLayout.cshtml" />
     <Content Include="Views\Home\MobileIndex.cshtml" />
     <Content Include="Views\Home\MobileDetail.cshtml" />
     <Content Include="Views\Layout\_MobileDetailLayout.cshtml" />
-    <Content Include="Views\Home\MobileCategory.cshtml" />
     <Content Include="Views\Widget\MobileMenu.cshtml" />
     <Content Include="Views\Widget\ChooseUnit.cshtml" />
     <Content Include="Views\themes\mpstart\Ads\HomeProduct.cshtml">
@@ -2094,6 +2087,8 @@
     <Content Include="Views\themes\myshopify\Async\_BannerBigSaleAsync.cshtml" />
     <Content Include="Views\themes\myshopify\Async\_ListVideoHomeAsync.cshtml" />
     <Content Include="Views\themes\myshopify\Async\_ListVideoRelativedAsync.cshtml" />
+    <Content Include="Views\themes\myshopify\Async\_ListProductLastestAsync.cshtml" />
+    <Content Include="Views\themes\myshopify\Async\_ListHotCategoryAsync.cshtml" />
     <None Include="Views\themes\myshopify\Blocks\ListSubCategory.cshtml" />
     <Content Include="Views\themes\myshopify\Components\CategoryHomeComponent.cshtml" />
     <Content Include="Views\themes\myshopify\Components\ProductComponent.cshtml" />

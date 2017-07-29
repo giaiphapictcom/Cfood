@@ -3,11 +3,10 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using V308CMS.Data;
 using V308CMS.Data.Enum;
-using V308CMS.Data.Models;
 
 namespace V308CMS.Controllers
 {
-    public class AsyncController : BaseController
+    public  class AsyncController : BaseController
     {       
         public PartialViewResult LoadListBrandAsync(int categoryId, int limit = 6)
         {
@@ -101,6 +100,16 @@ namespace V308CMS.Controllers
         public async Task<PartialViewResult> LoadListVideoRelativedAsync(int id, int limit =10)
         {
             return PartialView("_ListVideoHomeAsync", await VideoService.GetListRelatived(id, limit));
+        }
+
+        public async Task<PartialViewResult> LoadProductLastestAsync(int limit =10)
+        {
+            return PartialView("_ListProductLastestAsync", await ProductsService.GetProductsLastestAsync(limit));
+        }
+
+        public async Task<PartialViewResult> LoadListHotCategoryAysnc(int limit = 7)
+        {
+            return PartialView("_ListHotCategoryAsync", await ProductTypeService.GetListHot(limit));
         }
 
     }

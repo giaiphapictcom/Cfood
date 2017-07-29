@@ -502,12 +502,15 @@ namespace V308CMS.Data
             }
         }
 
-        public async Task<List<ProductType>> GetListHot()
+        public async Task<List<ProductType>> GetListHot(int limit =7)
         {
             using (var entities = new V308CMSEntities())
             {
                 return await entities.ProductType
-                    .Where(productType => productType.Parent ==0 && productType.Status == true).ToListAsync();
+                    .Where(productType => productType.Status == true)
+                    .OrderByDescending(productType=> productType.TotalView)
+                    .Take(limit)
+                    .ToListAsync();
             }
         }
 
