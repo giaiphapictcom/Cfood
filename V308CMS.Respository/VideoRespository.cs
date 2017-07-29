@@ -14,6 +14,8 @@ namespace V308CMS.Respository
         Video Find(int id);
         Task<List<Video>> GetListRelatived(int id, int limit =10);
         List<Video> GetListVideo(int page = 1, int pageSize = 10);
+        void IncrementView(int id);
+
 
     }
     public class VideoRespository: IVideoRespository
@@ -61,6 +63,20 @@ namespace V308CMS.Respository
                      .Skip((page-1)*pageSize).Take(pageSize).ToList();
             }
            
+        }
+
+        public void IncrementView(int id)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                var videoItem =  entities.Video.FirstOrDefault(video => video.Id == id);
+                if (videoItem != null)
+                {
+                    videoItem.TotalView += 1;
+                    entities.SaveChanges();
+                }
+               
+            }
         }
     }
 
