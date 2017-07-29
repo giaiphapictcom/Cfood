@@ -14,7 +14,7 @@
     <meta property="og:url" content="@Request.Url">
     <meta property="og:type" content="website" />
     <meta property="og:title" content="@Model.Name">
-    <meta property="og:image" content="@Ultility.ImgUrl(@Model.Image)">
+    <meta property="og:image" content="@Model.Image.ToUrl(600,315)">
     <meta property="og:description" content="@Model.Summary">
 }
 @section Breadcrumb{
