@@ -216,6 +216,7 @@
     <Compile Include="DataAnnotations\UserNameAttribute.cs" />
     <Compile Include="Filters\ProductUpdateViewFilter.cs" />
     <Compile Include="Filters\NewsUpdateViewFilter.cs" />
+    <Compile Include="Filters\VideoUpdateViewFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

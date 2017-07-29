@@ -24,6 +24,7 @@ namespace V308CMS.Controllers
 
         {
 
+
             //IndexPageContainer mIndexPageContainer = new IndexPageContainer();
             //List<IndexPage> mIndexPageList = new List<IndexPage>();
             //var mListParent = ProductsService.LayProductTypeTheoParentId(0);
@@ -119,12 +120,14 @@ namespace V308CMS.Controllers
             if (view.Length > 0)
             {
                 return View("Home", mIndexPageContainer);
+                //return View("Home", await ProductTypeService.GetListHomeAsync());
             }
 
             if (!Request.Browser.IsMobileDevice)
                 return View(mIndexPageContainer);
             else
                 return View("MobileIndex", mIndexPageContainer);
+
         }
 
         public ActionResult Category(int categoryId = 0, string filter = "", int sort = (int) SortEnum.Default,
