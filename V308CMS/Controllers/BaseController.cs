@@ -143,15 +143,17 @@ namespace V308CMS.Controllers
             WebsiteRequestRepo = new WebsiteRequestRepository();
             VoucherService = new VoucherRespository();
             AffilateUserService = new AffilateUserRespository();
-            VoucherLogService = new VoucherLogRespository();           
+            VoucherLogService = new VoucherLogRespository();
+            VideoService = new VideoRespository();
             GoogleplusService = new GoogleplusService(ConfigHelper.GoogleAppId, ConfigHelper.GoogleAppSecret);
             FacebookService = new FacebookService(ConfigHelper.FacebookAppId,ConfigHelper.FacebookAppSecret);
             LoadSiteConfig();
 
         }
+        public VideoRespository VideoService { get; set; }
         public VoucherLogRespository VoucherLogService { get; set; }
   
-         public AffilateUserRespository AffilateUserService { get; set; }
+        public AffilateUserRespository AffilateUserService { get; set; }
         public VoucherRespository VoucherService { get; set; }
         public RevenueGainRepository RevenueGainRepo { get; set; }
         public CouponRepository VoucherRepo { get; set; }

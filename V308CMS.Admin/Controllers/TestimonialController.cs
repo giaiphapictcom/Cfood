@@ -52,7 +52,7 @@ namespace V308CMS.Admin.Controllers
                 {
                     ModelState.AddModelError("", string.Format("Banner '{0}' đã tồn tại trên hệ thống.", comment.Fullname));
                     ViewBag.ListSite = DataHelper.ListEnumTypeSepecial<SiteEnum>();
-                    ViewBag.ListPosition = DataHelper.ListEnumType<PositionEnum>();
+                    ViewBag.ListPosition = DataHelper.ListEnumType<BannerPositionEnum>();
                     return View("Create", comment);
                 }
                 SetFlashMessage(string.Format("Thêm banner '{0}' thành công.", comment.Fullname));
@@ -77,7 +77,7 @@ namespace V308CMS.Admin.Controllers
                 return RedirectToAction("Index");
 
             }
-            ViewBag.ListPosition = DataHelper.ListEnumType<PositionEnum>();
+            ViewBag.ListPosition = DataHelper.ListEnumType<BannerPositionEnum>();
             ViewBag.ListSite = DataHelper.ListEnumTypeSepecial<SiteEnum>();
             var CommentEdit = comment.CloneTo<TestimonialModels>(new[] {
                    "Upload"
@@ -111,7 +111,7 @@ namespace V308CMS.Admin.Controllers
                 {
                     ModelState.AddModelError("", "Comment không tồn tại trên hệ thống.");
                     ViewBag.ListSite = DataHelper.ListEnumTypeSepecial<SiteEnum>();
-                    ViewBag.ListPosition = DataHelper.ListEnumType<PositionEnum>();
+                    ViewBag.ListPosition = DataHelper.ListEnumType<BannerPositionEnum>();
                     return View("Edit", comment);
                 }
                 SetFlashMessage(string.Format("Cập nhật Banner '{0}' thành công.", comment.Fullname));

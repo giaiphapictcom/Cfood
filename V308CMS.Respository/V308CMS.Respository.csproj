@@ -108,6 +108,7 @@
     <Compile Include="SizeRespository.cs" />
     <Compile Include="SupportManRepository.cs" />
     <Compile Include="UserRespository.cs" />
+    <Compile Include="VideoRespository.cs" />
     <Compile Include="WebsiteRequestRepository.cs" />
     <Compile Include="VoucherLogRespository.cs" />
     <Compile Include="VoucherRespository.cs" />

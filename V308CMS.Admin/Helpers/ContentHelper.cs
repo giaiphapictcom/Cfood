@@ -25,11 +25,11 @@ namespace V308CMS.Admin.Helpers
         {
             switch (position)
             {
-                case (byte)PositionEnum.HomeTop:
+                case (byte)BannerPositionEnum.HomeTop:
                     return "Đầu";
-                case (byte)PositionEnum.HomeCenter:
+                case (byte)BannerPositionEnum.HomeCenter:
                     return "Giữa";
-                case (byte)PositionEnum.HomeBottom:
+                case (byte)BannerPositionEnum.HomeBottom:
                     return "Dưới";
                 default:
                     return "";

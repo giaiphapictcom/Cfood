@@ -45,6 +45,7 @@ namespace V308CMS.Data
             modelBuilder.Configurations.Add(new VoucherLogMap());
             modelBuilder.Configurations.Add(new AffilateUserMap());
             modelBuilder.Configurations.Add(new AffilateCodeMap());
+            modelBuilder.Configurations.Add(new VideoMap());
 
             modelBuilder.Entity<OrderTransaction>()
             .HasRequired(p => p.Order)
@@ -93,6 +94,11 @@ namespace V308CMS.Data
             .WithMany(p => p.Permissions)
             .HasForeignKey(p => p.RoleId);
 
+        }
+        public DbSet<Video> Video
+        {
+            get;
+            set;
         }
         public DbSet<AffilateCode> AffilateCode
         {

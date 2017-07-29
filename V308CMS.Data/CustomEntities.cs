@@ -34,7 +34,7 @@ namespace V308CMS.Data
     }
 
 
-        [Table("account")]
+    [Table("account")]
     public class Account
     {
 
@@ -1251,6 +1251,7 @@ namespace V308CMS.Data
         public string TypeBanner { get { if (String.IsNullOrEmpty(_TypeBanner)) return ""; else return _TypeBanner; } set { _TypeBanner = value; } }
         public string Icon { get { if (String.IsNullOrEmpty(_Icon)) return ""; else return _Icon; } set { _Icon = value; } }
         public string ColorTheme { get { if (String.IsNullOrEmpty(_ColorTheme)) return ""; else return _ColorTheme; } set { _ColorTheme = value; } }
+        public int TotalView { get; set; }
 
         public bool IsHome
         {

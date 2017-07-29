@@ -249,8 +249,10 @@
     <Compile Include="Helpers\Url\NewsUrlHelper.cs" />
     <Compile Include="Helpers\Url\PaymentUrlHelper.cs" />
     <Compile Include="Helpers\Url\SocialLoginUrlHelper.cs" />
+    <Compile Include="Helpers\Url\VideoUrlHelper.cs" />
     <Compile Include="Helpers\View\BaseViewPage.cs" />
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\BigSaleViewModels.cs" />
     <Compile Include="Models\CaptchaModel.cs" />
     <Compile Include="Models\CartItem.cs" />
     <Compile Include="Models\ContactModels.cs" />
@@ -2087,6 +2089,10 @@
     <Content Include="Views\themes\mamoo\Components\ProductComponent.cshtml" />
     <Content Include="Views\themes\mamoo\Components\ProductPriceComponent.cshtml" />
     <Content Include="Views\themes\mamoo\Components\YoutubeVideoComponent.cshtml" />
+    <Content Include="Views\themes\myshopify\Async\_ListProductPriceFilterAsync.cshtml" />
+    <Content Include="Views\themes\myshopify\Async\_BannerBigSaleAsync.cshtml" />
+    <Content Include="Views\themes\myshopify\Async\_ListVideoHomeAsync.cshtml" />
+    <Content Include="Views\themes\myshopify\Async\_ListVideoRelativedAsync.cshtml" />
     <None Include="Views\themes\myshopify\Blocks\ListSubCategory.cshtml" />
     <Content Include="Views\themes\myshopify\Components\CategoryHomeComponent.cshtml" />
     <Content Include="Views\themes\myshopify\Components\ProductComponent.cshtml" />

@@ -185,14 +185,14 @@ namespace V308CMS.Sale.Controllers
 
         public ActionResult HomeSlides()
         {
-            var position = (int)PositionEnum.Slide;
+            var position = (int)BannerPositionEnum.Slide;
             var items = BannerRepo.GetList(position, Site.affiliate, true,-1);
             string view = "~/Views/" + MainController + "/Blocks/HomeSlides.cshtml";
             return View(view, items);
         }
 
         public ActionResult NewsBannerBlockRight() {
-            var items = BannerRepo.GetList((int)PositionEnum.NewsRight, Site.affiliate, true, 2);
+            var items = BannerRepo.GetList((int)BannerPositionEnum.NewsRight, Site.affiliate, true, 2);
             string view = "~/Views/" + MainController + "/Blocks/BannerBlockRight.cshtml";
             return View(view, items);
         }

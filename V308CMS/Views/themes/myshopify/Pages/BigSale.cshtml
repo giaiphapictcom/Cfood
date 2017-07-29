@@ -1,1 +1,198 @@
-﻿
+﻿@using V308CMS.Common
+@using V308CMS.Data.Enum
+@using V308CMS.Helpers
+@using V308CMS.Helpers.Url
+@using V308CMS.Models
+@model BigSaleViewModels
+@{
+    Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
+}
+@section BodyId{@Html.Raw("category")}
+@section BodyClass{@Html.Raw("template-collection")}
+@section header {
+    <title>Big Sale - @ViewBag.SiteName</title>
+    <meta name="keywords" content="Big sale, hàng giảm giá, hàng khuyến mại, sale off">
+    <meta property="og:url" content="@Request.Url">
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="BigSale">
+}
+
+<div class="row col-sidebar-right">
+
+    <div class="col-fillter-product col-md-3 col-sm-3 col-xs-12">
+        <div class="col-md-3 col-sm-3 col-xs-12 col-left" id="filter-sidebar">          
+            <div class="async bestseller-sidebar bestseller-homepage" data-url="@Url.LoadListProductBestSellerAsyncUrl()"></div>
+            @{Html.RenderAction("LoadLeftBannerAsync", "Async", new { position = BannerPositionEnum.CategoryLeft }); }
+        </div>
+    </div>
+    <div class="col-md-9 col-sm-12 col-xs-12 col-main">
+        @{Html.RenderAction("LoadBigSaleTopBannerAsync", "Async", new { position = BannerPositionEnum.BigSaleTop }); }
+        <div class="toolbar ">
+
+            <div class="toolbar-mode row">
+                <div class="col-md-8 col-sm-8 col-xs-12">
+                    <div class="filter-collection-left">
+                        <a class="btn">Lọc</a>
+                    </div>
+                    <div class="collection-view">
+                        <label>Hiển thị</label>
+                        <a class="change-view grid active" id="grid" rel="tooltip" title="Grid view" onclick="display('grid');"><i class="fa fa-th" aria-hidden="true"></i></a>
+                        <a class="change-view list" id="list" rel="tooltip" title="List view" onclick="display('list');"><i class="fa fa-list-ul" aria-hidden="true"></i></a>
+
+                    </div>
+                    <div class="browse-tags">
+                        <label>Sắp xếp</label>
+                        @Html.DropDownListFor(filter => Model.Sort, Model.ListSort, new { @class = "sort-by" })
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <script>
+
+        jQuery('.sort-by')
+            .val('@Model.Sort')
+            .bind('change', function() {
+                Shopify.queryParams.sort = jQuery(this).val();
+                location.search = jQuery.param(Shopify.queryParams).replace(/\+/g, '%20');
+
+            });
+
+        function replaceUrlParam(url, paramName, paramValue) {
+            var pattern = new RegExp('(' + paramName + '=).*?(&|$)'),
+                newUrl = url.replace(pattern, '$1' + paramValue + '$2');
+            if (newUrl == url) {
+                newUrl = newUrl + (newUrl.indexOf('?') > 0 ? '&' : '?') + paramName + '=' + paramValue;
+            }
+            return newUrl;
+        }
+
+        jQuery(function() {
+            jQuery('.filter-collection-left > a').on('click', function() {
+                    jQuery('.wrapper').addClass('show-fillter');
+                }
+            );
+            jQuery(document).mouseup(function(e) {
+
+                var container = jQuery("#filter-sidebar");
+
+                if (!container.is(e.target) // if the target of the click isn't the container...
+                    && container.has(e.target).length === 0) // ... nor a descendant of the container
+                {
+                    jQuery('.wrapper').removeClass('show-fillter');
+                }
+            });
+
+        });
+
+        jQuery(function() {
+            jQuery('.filter-collection-left > a').on('click', function() {
+                    jQuery('.wrapper-container').addClass('show-fillter');
+                }
+            );
+            jQuery(document).mouseup(function(e) {
+
+                var container = jQuery("#filter-sidebar");
+
+                if (!container.is(e.target) // if the target of the click isn't the container...
+                    && container.has(e.target).length === 0) // ... nor a descendant of the container
+                {
+                    jQuery('.wrapper-container').removeClass('show-fillter');
+                }
+            });
+            jQuery('body.template-collection .collection-view a').on('click', function() {
+                jQuery('.collection-view a.active').removeClass('active');
+                jQuery(this).addClass('active');
+
+            });
+
+            jQuery('body.template-collection .collection-view a.list').on('click', function() {
+                jQuery('body.template-collection').find('.products-grid').addClass('product-list-item');
+                if (jQuery('body.template-collection .products-grid').hasClass('product-grid-item')) {
+                    jQuery('body.template-collection').find('.products-grid').removeClass('product-grid-item');
+
+                } else {
+                    jQuery('body.template-collection').find('.products-grid').addClass('');
+                }
+
+            });
+            jQuery('body.template-collection .collection-view a.grid').on('click', function() {
+                jQuery('body.template-collection').find('.products-grid').addClass('product-grid-item');
+                if (jQuery('body.template-collection .products-grid').hasClass('product-list-item')) {
+                    jQuery('body.template-collection').find('.products-grid').removeClass('product-list-item');
+
+                } else {
+                    jQuery('body.template-collection').find('.products-grid').addClass('');
+                }
+            });
+            jQuery('body.template-collection .collection-view a.list').on('click', function() {
+                jQuery('body.template-collection').find('.products-grids').addClass('product-list-item');
+                if (jQuery('body.template-collection .products-grids').hasClass('product-grid-item')) {
+                    jQuery('body.template-collection').find('.products-grids').removeClass('product-grid-item');
+
+                } else {
+                    jQuery('body.template-collection').find('.products-grids').addClass('');
+                }
+
+            });
+            jQuery('body.template-collection .collection-view a.grid').on('click', function() {
+                jQuery('body.template-collection').find('.products-grids').addClass('product-grid-item');
+                if (jQuery('body.template-collection .products-grids').hasClass('product-list-item')) {
+                    jQuery('body.template-collection').find('.products-grids').removeClass('product-list-item');
+
+                } else {
+                    jQuery('body.template-collection').find('.products-grids').addClass('');
+                }
+            });
+
+
+        });
+        </script>
+
+        @if (Model.ListProduct != null && Model.ListProduct.Count > 0)
+        {
+            <div class="products-grid product-grid-item">
+                @foreach (var product in Model.ListProduct)
+                {
+                    {
+                        Html.RenderPartial("ProductComponent", product);
+                    }
+                }
+            </div>
+            <div class="padding">
+                <div class="toolbar toolbar-bottom">
+                    <ul class="pagination-page">
+                            @Html.Partial("PaginationComponent", new PaginationModels
+                           {
+                               TotalPages = Model.TotalPage,
+                               BaseUrl = Url.ProductSaleOffUrl(Model.SaleOff, Model.Sort),
+                               CurrentPage = Model.Page,
+                               PageParamFormat = @"page=\d+",
+                               RecordPerPages = 5
+                           })
+                    </ul>
+                </div>
+
+            </div>
+        }
+    </div>
+    <div class="overlay-filter"></div>
+</div>
+<script type="text/javascript">
+    $(".async").each(function(index, item) {
+        var url = $(item).data("url");
+        if (url && url.length > 0) {
+            $(item).html("<span>Loading...</span>");
+            $(item).load(url, function(response, status, xhr) {
+                if (status === "error") {
+                    $(item).html("<span class='error'>Không thể tải dữ liệu</span>");
+                }
+            });
+        }
+
+    });
+</script>
+@section Script
+{
+    <script src="//cdn.shopify.com/s/files/1/1498/2346/t/12/assets/selectize.min.js?9436750478273192716" type="text/javascript"></script>
+}

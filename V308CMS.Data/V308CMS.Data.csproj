@@ -167,13 +167,14 @@
     <Compile Include="Enum\SortEnum.cs" />
     <Compile Include="Enum\OrderSearchTypeEnum.cs" />
     <Compile Include="Enum\OrderStatusEnum.cs" />
-    <Compile Include="Enum\PositionEnum.cs" />
+    <Compile Include="Enum\BannerPositionEnum.cs" />
     <Compile Include="Enum\ProductCategoryLevelEnum.cs" />
     <Compile Include="Enum\QuantityFilterEnum.cs" />
     <Compile Include="Enum\SiteEnum.cs" />
     <Compile Include="Enum\StateEnum.cs" />
     <Compile Include="Enum\StateFilterEnum.cs" />
     <Compile Include="Enum\TransactionEnum.cs" />
+    <Compile Include="Enum\VideoPosition.cs" />
     <Compile Include="FileRepository.cs" />
     <Compile Include="Helpers\ConfigHelper.cs" />
     <Compile Include="Helpers\Email.cs" />
@@ -203,6 +204,7 @@
     <Compile Include="Mapping\SizeMap.cs" />
     <Compile Include="Mapping\StoreMap.cs" />
     <Compile Include="Mapping\UnitMap.cs" />
+    <Compile Include="Mapping\VideoMap.cs" />
     <Compile Include="Mapping\VoucherLogMap.cs" />
     <Compile Include="Mapping\VoucherMap.cs" />
     <Compile Include="MarketRepository.cs" />
@@ -230,6 +232,7 @@
     <Compile Include="Metadata\StoreMetadata.cs" />
     <Compile Include="Metadata\SupportManMetadata.cs" />
     <Compile Include="Metadata\UnitMetadata.cs" />
+    <Compile Include="Metadata\VideoMetadata.cs" />
     <Compile Include="Metadata\VoucherLogMetadata.cs" />
     <Compile Include="Metadata\VoucherMetadata.cs" />
     <Compile Include="Metadata\WebsiteRequestMetadata.cs" />
@@ -259,6 +262,7 @@
     <Compile Include="Models\Size.cs" />
     <Compile Include="Models\Store.cs" />
     <Compile Include="Models\SupportMan.cs" />
+    <Compile Include="Models\Video.cs" />
     <Compile Include="Models\VisisterTime.cs" />
     <Compile Include="Models\Voucher.cs" />
     <Compile Include="Models\VoucherLog.cs" />
