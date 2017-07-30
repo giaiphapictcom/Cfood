@@ -21,15 +21,15 @@ namespace V308CMS.Admin.Helpers
 
         }
 
-        public static string ToPositionName(this byte position)
+        public static string ToPositionName(this int position)
         {
             switch (position)
             {
-                case (byte)BannerPositionEnum.HomeTop:
+                case (int)BannerPositionEnum.HomeTop:
                     return "Đầu";
-                case (byte)BannerPositionEnum.HomeCenter:
+                case (int)BannerPositionEnum.HomeCenter:
                     return "Giữa";
-                case (byte)BannerPositionEnum.HomeBottom:
+                case (int)BannerPositionEnum.HomeBottom:
                     return "Dưới";
                 default:
                     return "";
