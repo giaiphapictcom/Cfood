@@ -1,0 +1,16 @@
+﻿@using V308CMS.Helpers.Url
+@model List<V308CMS.Data.ProductType>
+@if (Model != null && Model.Count > 0)
+{
+    <div class="header-tag">
+        <p class="tite-popular">Được tìm nhiều :</p>
+        <ul>
+            @foreach (var category in Model)
+            {
+                <li><a href="@Url.ProductCategoryUrl(category)" title="@category.Name">@category.Name</a></li>
+            }
+                   
+        </ul>
+    </div>
+
+}
