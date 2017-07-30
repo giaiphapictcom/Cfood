@@ -11,11 +11,10 @@
 @section header {
     <title>Sản Phẩm - @Model.Name</title>
     <meta name="keywords" content="@Model.Name">
-    <meta property="og:url" content="@Request.Url">
-    <meta property="og:type" content="website" />
+    <meta property="og:url" content="@Request.Url">   
     <meta property="og:title" content="@Model.Name">
-    <meta property="og:image" content="@Model.Image.ToUrl(600,315)">
-    <meta property="og:description" content="@Model.Summary">
+    <meta property="og:image"  itemprop="thumbnailUrl" content="@Model.Image.ToUrl(500,300)">
+    <meta property="og:description" content="@(string.IsNullOrWhiteSpace(Model.Summary) && Model.Summary.Length>160?Model.Summary.Substring(0,159):Model.Summary)">
 }
 @section Breadcrumb{
 
