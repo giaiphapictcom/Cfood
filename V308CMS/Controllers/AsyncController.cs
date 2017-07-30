@@ -41,8 +41,7 @@ namespace V308CMS.Controllers
             }
             return PartialView("_BoxItem", boxContent);
 
-        }
-        [ChildActionOnly]
+        }       
         public async Task<PartialViewResult> LoadProductRelatived(int productId, int categoryId, int limit =12)
         {
             return PartialView("_ListProductRelativedAsync", await ProductsService.GetListRelativedAsync(productId, categoryId,limit,true));

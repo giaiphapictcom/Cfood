@@ -25,7 +25,7 @@ namespace V308CMS.Controllers
 
         public async Task<ActionResult> OffCanvas()
         {
-            return View("OffCanvas", await MenuConfigService.GetAllAsync());
+            return View("OffCanvas", await MenuConfigService.GetAllAsync(ConfigHelper.SiteConfigName));
         }
 
         public async Task<ActionResult>  ProductMost()
