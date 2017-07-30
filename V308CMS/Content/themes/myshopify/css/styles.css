@@ -4807,3 +4807,6 @@ label.active {
     margin-left: 10px;
     display: inline-block;
 }
+.hide {
+    display: none;
+}
