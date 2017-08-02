@@ -1,0 +1,72 @@
+﻿@using V308CMS.Data
+@using V308CMS.Common
+@using V308CMS.Helpers.Url
+@model  List<V308CMS.Data.Models.Video>
+<div id="shopify-section-1476071762418" class="shopify-section index-section" style="margin-top: 30px;">
+    <div class="home-blog" style="margin: 0px 0px 0px 0px">
+        <div class="container">
+            <div class="main-blog">
+                <div class="block-title styles-1">
+                    <h5>
+                        <a title="video" href="@Url.VideoIndexUrl()">
+                            <span>Video @ViewBag.SiteName</span>    
+                        </a>
+                        
+                    </h5>
+                </div>
+
+                <div class="box-content">
+                    <div class="row">
+                        <div id="latest-blogs">
+                            @foreach (var video in Model)
+                            {
+                                <div class="item">
+                                    <div class="blog-item">
+                                        <div class="content-blog">
+                                            <a class="image video" href="@url.videoURL(video.Title, video.Id)">
+                                                <img src="https://i.ytimg.com/vi/@video.Code/maxresdefault.jpg" alt="@video.Title">
+                                                <span class="mask-play"><i class="fa fa-play"></i></span>
+                                            </a>
+                                            <div class="blog-meta">
+                                                <h6 class="p10">@url.VideoAnchor(video.Title, video.Id)</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#latest-blogs").owlCarousel({
+            itemsCustom: [
+              [0, 1],
+              [450, 1],
+              [600, 2],
+              [700, 2],
+              [1000, 3],
+              [1200, 3],
+              [1400, 3],
+              [1600, 3]
+            ],
+            autoPlay: false,
+            stopOnHover: false,
+
+            lazyLoad: false,
+            lazyFollow: true,
+            lazyEffect: "fade",
+            pagination: false,
+
+            // Navigation
+            navigation: true,
+            navigationText: ['<i class="fa fa-angle-left" aria-hidden="true"></i>', '<i class="fa fa-angle-right" aria-hidden="true"></i>'],
+            rewindNav: true,
+            scrollPerPage: false
+        });
+    })
+</script>

@@ -1,6 +1,13 @@
-﻿@{
-    ViewBag.Title = "Create";
+﻿@using V308CMS.Admin.Helpers.Url
+@model V308CMS.Admin.Models.VoucherModels
+@{
+    ViewBag.Title = "Thêm mới Voucher";
     Layout = "~/Views/Shared/_LayoutV2.cshtml";
 }
-
-<h2>Create</h2>
+<div class="panel panel-primary">
+    <div class="panel-body">
+        <form method="post" role="form" action="@Url.VoucherCreateUrl()" enctype="multipart/form-data">
+            @Html.Partial("_VoucherForm", Model)
+        </form>
+    </div>
+</div>

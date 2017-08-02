@@ -6,6 +6,7 @@
 @section header {
     <title>@PageTitle</title>
     <link href="@ViewBag.ThemesPath/css/login.css" rel="stylesheet" type="text/css" />
+    <script src="https://www.google.com/recaptcha/api.js?hl=vi" async defer></script>
 }
 <div class="shopify-section loginform">
     <div class="container-block m-0">
@@ -13,37 +14,50 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12 article-home-full">
                     <h3><span>@PageTitle</span></h3>
+                    @using V308CMS.Sale.Helpers
+                    @if (!string.IsNullOrWhiteSpace(ViewContext.GetFlashError()))
+                    {
+                        <div class="alert alert-dismissable alert-danger">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                            <strong>Lỗi Xảy Ra!</strong> @ViewContext.GetFlashError()
+                        </div>
+                    }
                 </div>
                 <div class="col-md-9 col-md-offset-1 col-sm-12 col-xs-12 ">
-                    <form class="form-horizontal">
+                    <form class="form-horizontal" action="" method="post">
                         <div class="form-group">
                             <label for="inputEmail" class="control-label col-xs-4">Họ và tên <span class="notification-red"></span></label>
                             <div class="col-xs-8">
-                                <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                                <input type="text" name="fullname" class="form-control" placeholder="Họ và tên" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputEmail" class="control-label col-xs-4">Email <span class="notification-red"></span></label>
                             <div class="col-xs-8">
-                                <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                                <input type="email" name="email" class="form-control" placeholder="Email">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputPassword" class="control-label col-xs-4">Mật khẩu <span class="notification-red"></span></label>
                             <div class="col-xs-8">
-                                <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                                <input type="password" name="password" class="form-control" placeholder="Password">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputPassword" class="control-label col-xs-4">Nhập lại mật khẩu <span class="notification-red"></span></label>
                             <div class="col-xs-8">
-                                <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                                <input type="password" name="repassword" class="form-control" placeholder="Password">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputPassword" class="control-label col-xs-4">Số điện thoại</label>
                             <div class="col-xs-8">
-                                <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                                <input type="text" name="mobile" class="form-control" placeholder="Số điện thoại của bạn">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-4 col-md-8">
+                                <div class="g-recaptcha" data-sitekey="@V308CMS.Sale.Helpers.ConfigHelper.RecaptchaSitekey"></div>
                             </div>
                         </div>
                         <div class="form-group">

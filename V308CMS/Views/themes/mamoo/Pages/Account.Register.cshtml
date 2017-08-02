@@ -1,0 +1,73 @@
+﻿@model V308CMS.Models.RegisterModels
+@using V308CMS.Helpers
+@using V308CMS.Helpers.Url
+@{
+    Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
+}
+@section header {
+    <title>@ViewBag.SiteName - Tạo tài khoản mới</title>
+}
+<div class="box-detail box-shadow">
+    <div class="container">
+        <h1 class="text-primary mt-3"  >Tạo tài khoản</h1>
+        <div class="action-btn">
+
+            <p>
+                Bạn đã có tài khoản ? <a href="@Url.AccountLoginUrl()" style="color: #007FF0">Đăng nhập</a>
+            </p>
+        </div>
+
+        <span class="field-validation-error">@Html.Raw(ViewBag.Error)</span>
+        <form method="post" action="@Url.AccounRegisterUrl()" id="create_customer" accept-charset="UTF-8">
+            <input type="hidden" value="create_customer" name="form_type">
+            <input type="hidden" name="utf8" value="✓">
+            @Html.AntiForgeryToken()
+
+            <div class="form-group">
+                <label for="username"><span>Email</span><em>*</em></label>
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Nhập Email", autocomplete = "on" })
+                @Html.ValidationMessageFor(m => m.Email)
+            </div>
+
+
+            <div class="form-group">
+                <label for="password"><span>Mật khẩu : </span><em>*</em></label>
+                @Html.PasswordFor(m => m.Password, new { placeholder = "Nhập Mật khẩu" , @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Password)
+            </div>
+            <div class="form-group">
+                <label for="confirm_password"><span>Mật khẩu xác nhận : </span><em>*</em></label>
+                @Html.PasswordFor(m => m.ConfirmPassword, new { placeholder = "Nhập Mật khẩu xác  nhận", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.ConfirmPassword)
+            </div>
+
+            <div class="action-btn">
+                <p>
+                    <input type="submit" value="Đăng ký" class="btn">
+                </p>
+            </div>
+        </form>
+    </div>
+</div>
+       
+        <script type="text/javascript">
+            $("input[name='Email'").change(function () {
+                var email = $(this).val();
+                if (email !== '') {
+                    $.post('@Url.AccountCheckEmail()', { "email": email }, function (response) {
+                        if (response === 'exist') {
+                            if ($('#UserName-Exist-error').length > 0) {
+                                $('#UserName-Exist-error').text('Email này đã được sử dụng để đăng ký tài khoản.');
+                                $('#UserName-Exist-error').show();
+                            } else {
+                                $("input[name='Email'").after("<span class='field-validation-error' data-valmsg-for='UserName' data-valmsg-replace='true'><span id='UserName-Exist-error' class=''>Email này đã được sử dụng để đăng ký tài khoản.</span></span>");
+                            }
+                        } else {
+                            $('#UserName-Exist-error').hide();
+                        }
+                    });
+
+                }
+            });
+
+        </script>

@@ -1,6 +1,7 @@
 ﻿@model  List<V308CMS.Data.ProductDetail>
 @using V308CMS.Common
 @using V308CMS.Helpers
+@using V308CMS.Helpers.Url
 @if (Model != null && Model.Count > 0)
 {
     <div class="shopify-section index-section">
@@ -22,16 +23,15 @@
 
                                             @if (item.Product.SaleOff > 0)
                                             {
-                                                <div class="product-label"><label class="label">Giảm giá</label></div>
+                                                <div class="product-label"><label class="label">@(item.Product.SaleOff.HasValue ? item.Product.SaleOff.Value.ToSaleOffLabel() : "")</label></div>
                                             }
                                             <a href="@url.productURL(item.Product.Name,item.Product.ID)" class="grid-image">
-                                                <img class="feature-images" src="@ImageUrlHelper.ToUrl(@item.Product.Image, 250,250)" alt="@item.Product.Name">
+                                                <img class="feature-images" src="@item.Product.Image.ToUrl(250,250)" alt="@item.Product.Name">
 
                                                 @if (item.Images.Any())
                                                 {
                                                     <span class="product-hover" data-idproduct="@item.Product.ID">
-
-                                                        <img class="img-responsive" alt="@item.Product.Name" src="@ImageUrlHelper.ToUrl(@item.Images.First().Name, 250,250)">
+                                                        <img class="img-responsive" alt="@item.Product.Name" src="@item.Images.First().Name.ToUrl(250,250)">
                                                     </span>
                                                 }
 
@@ -42,30 +42,12 @@
                                                     @ViewBag.ProductViewText
                                                 </a>
                                             </div>
-
                                         </div>
                                         <div class="product-content">
-                                            <h3><a class="product-title" href="@url.productURL(item.Product.Name,item.Product.ID)">@item.Product.Name</a></h3>
-                                            <div class="price-box">
-
-                                                <p class="sale">
-                                                    @if (item.Product.Price > 0)
-                                                    {
-                                                        <span class="special-price"><span class="money">@String.Format("{0: 0,0}", (item.Product.Price)) @ViewBag.MoneyShort</span></span>
-                                                    }
-                                                    @if (item.Product.SaleOff > 0)
-                                                    {
-                                                        <span class="old-price"><span class="money">@String.Format("{0: 0,0}", item.Product.Price - (item.Product.Price / 100) * item.Product.SaleOff) ) @ViewBag.MoneyShort</span></span>
-                                                    }
-
-                                                </p>
-
-                                            </div>
-
-                                            <span class="shopify-product-reviews-badge" data-id="8747959625"></span>
-
+                                            <h3><a class="product-title" href="@url.productURL(item.Product.Name, item.Product.ID)">@item.Product.Name</a></h3>
+                                            @{Html.RenderPartial("ProductPriceComponent", new Tuple<double, int>(item.Product.Price ?? 0, item.Product.SaleOff ?? 0));}
+                                            @{Html.RenderPartial("ProductRateComponent", new Tuple<int,int>(0,0));}                                   
                                             <div class="add-to-link">
-
                                                 <div class="add-to-cart">
                                                     <a href="javascript:void(0);" class="btn add-to-cart-btn" add-cart="@item.Product.ID" title="Thêm vào giỏ hàng">Thêm vào giỏ hàng</a>
                                                 </div>

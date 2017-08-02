@@ -1,12 +1,8 @@
-<<<<<<< HEAD
 ﻿<!DOCTYPE html>
-=======
-﻿@using System.Web.Mvc.Html
-@using V308CMS.Admin.Helpers
-<!DOCTYPE html>
->>>>>>> toai-neal
-<html lang="en">
+<html lang="vi">
 <head>
+    <meta charset="utf-8" />
+    <meta name="referrer" content="origin-when-crossorigin" id="meta_referrer" />
     @Html.Partial("_Header")
     <script src="/Content/vendor/jquery/jquery.min.js"></script>
     <script src="/Content/vendor/moment/js/moment.min.js"></script>
@@ -15,32 +11,30 @@
     <script src="/Content/vendor/select2/js/select2.min.js"></script>
     <script src="/Content/vendor/jquery-cookie/jquery.cookie.min.js"></script>
     <script src="/Content/vendor/toastr/toastr.min.js"></script>
-<<<<<<< HEAD
-=======
+
     <script src="/Content/vendor/bootstrap-editable/js/bootstrap-editable.min.js"></script>
     @RenderSection("Header", false)
->>>>>>> toai-neal
 </head>
 <body>
+﻿@using System.Web.Mvc.Html
+@using V308CMS.Admin.Helpers
     <div id="wrapper">
         <!-- Navigation -->
-       @Html.Partial("_Navigation")
+        @Html.Partial("_Navigation")
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">@ViewBag.Title</h1>
+                    <h1 class="page-header">@Html.Raw(ViewBag.Title)</h1>
                 </div>
             </div>
-<<<<<<< HEAD
+
             @RenderSection("Error",false)
-=======
             @Html.Partial("UI/_Alert", ViewContext.GetFlashMessage())
->>>>>>> toai-neal
-           
+
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-12">
-                   @RenderBody()
+                    @RenderBody()
                     <!-- /.panel -->
                 </div>
                 <!-- /.col-lg-12 -->
@@ -59,17 +53,11 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="/Content/assets/js/sb-admin-2.js"></script>
-<<<<<<< HEAD
 
-    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-   
-
-=======
     <script src="/Content/assets/js/image-select-with-preview.js?v=1.7"></script>
     <script src="/Content/Plugins/ckeditor/ckeditor.js" type="text/javascript"></script>
     <script src="/Content/Plugins/ckfinder/ckfinder.js" type="text/javascript"></script>
     <!-- Page-Level Demo Scripts - Tables - Use for reference -->
->>>>>>> toai-neal
 </body>
 
 </html>

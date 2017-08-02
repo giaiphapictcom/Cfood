@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-
+using System.Threading.Tasks;
 using System.Web;
 
 using V308CMS.Data.Enum;
@@ -18,23 +19,24 @@ namespace V308CMS.Data
         List<ProductType> GetListRoot();
         List<ProductType> GetListParent(int rootId = 0);
 
-       List<ProductType> GetList(
-            string keyword = "", int pType = 0,
-            string pLevel = "", int rootId = 0, int parentId = 0,
-            int childId = 0, int page = 1, int pageSize = 10);
+        List<ProductType> GetList(
+             string keyword = "", int pType = 0,
+             string pLevel = "", int rootId = 0, int parentId = 0,
+             int childId = 0, int page = 1, int pageSize = 10);
 
-       List<ProductType> GetList(int rootId = 0, int parentId =0,int childId =0);
-       
+        List<ProductType> GetList(int rootId = 0, int parentId = 0, int childId = 0);
+
         List<ProductType> GetAll(bool state = true);
 
         string Insert(string name, int parentId, string icon, string description, string image, string imageBanner,
             int number, DateTime createdDate, bool status, bool isHome);
 
-        string Update(int id,string name, int parentId, string icon, string description, string image,
+        string Update(int id, string name, int parentId, string icon, string description, string image,
             string imageBanner, int number,
             DateTime createdDate, bool status, bool isHome);
 
         List<ProductType> GetListByType(int level, int categoryId = 0);
+        List<ProductType> GetListIn(int[] listId);
 
     }
 
@@ -55,138 +57,202 @@ namespace V308CMS.Data
     public class ProductTypeRepository : IProductTypeRepository
     {
 
-        private V308CMSEntities _entities;
+        public ProductTypeRepository()
+        {
 
-        #region["Vung cac thao tac Dispose"]
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
         }
-        protected virtual void Dispose(bool disposing)
+
+        public void IncrementView(int id)
         {
-            if (disposing)
+            using (var entities = new V308CMSEntities())
             {
-                if (this._entities != null)
+                var productType = entities.ProductType.FirstOrDefault(product => product.ID == id);
+                if (productType != null)
                 {
-                    _entities.Dispose();
-                    _entities = null;
+                    productType.TotalView += 1;
                 }
+                entities.SaveChanges();
             }
         }
-        #endregion
-
-
-        public ProductTypeRepository(V308CMSEntities mEntities)
-        {
-            this._entities = mEntities;
-        }
-
 
         public List<ProductType> GetListRoot()
         {
-            return (from item in _entities.ProductType
-                where item.Parent == 0
-                    orderby  item.ID descending 
-                select item
-                ).ToList();
+            using (var entities = new V308CMSEntities())
+            {
+                return (from item in entities.ProductType
+                        where item.Parent == 0
+                        orderby item.ID descending
+                        select item
+                 ).ToList();
+
+            }
+
         }
         public List<ProductType> GetListParent(int rootId = 0)
         {
-            
-            return rootId==0? 
-                 new List<ProductType>() : 
-                (from item in _entities.ProductType
+            using (var entities = new V308CMSEntities())
+            {
+                return rootId == 0 ?
+                 new List<ProductType>() :
+                (from item in entities.ProductType
                  where item.Parent == rootId
                  orderby item.ID descending
-                    select item
+                 select item
                 ).ToList();
+            }
+
+
         }
         public List<ProductType> GetList(
             string keyword = "", int pType = 0,
             string pLevel = "", int rootId = 0, int parentId = 0,
             int childId = 0, int page = 1, int pageSize = 10)
         {
-            var listGroup = (from productType in _entities.ProductType.AsEnumerable()
-                             orderby productType.ID descending
-                             select productType);
-            //Loc theo tu khoa
-            if (!string.IsNullOrWhiteSpace(keyword))
+            using (var entities = new V308CMSEntities())
             {
-                var keywordLower = keyword.ToLower();
-                listGroup = (from productType in listGroup
-                             where productType.Name.ToLower().Contains(keywordLower)
-                             orderby productType.ID descending
-                             select productType);
-            }
-            if (pType > 0)
-            {
-                //lay tat ca cac ID cua group theo Level
-                var mIdGroup = (from p in _entities.ProductType
-                                where p.Level.Substring(0, pLevel.Length).Equals(pLevel)
-                                select p.ID).ToArray();
-                //lay danh sach tin moi dang nhat
-                return (from p in _entities.ProductType
-                        where mIdGroup.Contains(p.ID)
-                        orderby p.ID descending
-                        select p).Skip((page - 1) * pageSize)
-                         .Take(pageSize).ToList();
-            }
-            //Loc theo childId
-            if (childId > 0)
-            {
-                return (from productType in listGroup
-                        where productType.ID == childId
-                        orderby productType.ID descending
-                        select productType).ToList();
-            }
-            //Loc theo ParentId
-            if (parentId > 0)
-            {
-                return (from productType in listGroup
-                        where productType.Parent == parentId
-                        orderby productType.ID descending
-                        select productType).Skip((page - 1) * pageSize).Take(pageSize).ToList();
-            }
-            //Loc theo RootId
-            if (rootId > 0)
-            {
-                var listParent = (from productType in listGroup
-                                  where productType.Parent == rootId
-                                  orderby productType.ID descending
-                                  select productType.ID).ToList();
-                if (listParent.Count > 0)
+                var listGroup = (from productType in entities.ProductType.AsEnumerable()
+                                 orderby productType.ID descending
+                                 select productType);
+                //Loc theo tu khoa
+                if (!string.IsNullOrWhiteSpace(keyword))
                 {
-                    var listParentString = string.Join(",", listParent.ToArray());
-                    listGroup = (from productType in listGroup.AsEnumerable()
-                                 where productType.Parent > 0 && ((productType.Parent == rootId) || (listParentString.Contains(productType.Parent + ",")
-                                       || listParentString.Contains("," + productType.Parent)))
+                    var keywordLower = keyword.ToLower();
+                    listGroup = (from productType in listGroup
+                                 where productType.Name.ToLower().Contains(keywordLower)
                                  orderby productType.ID descending
                                  select productType);
                 }
-                else
+                if (pType > 0)
                 {
-                    return new List<ProductType>();
+                    //lay tat ca cac ID cua group theo Level
+                    var mIdGroup = (from p in entities.ProductType
+                                    where p.Level.Substring(0, pLevel.Length).Equals(pLevel)
+                                    select p.ID).ToArray();
+                    //lay danh sach tin moi dang nhat
+                    return (from p in entities.ProductType
+                            where mIdGroup.Contains(p.ID)
+                            orderby p.ID descending
+                            select p).Skip((page - 1) * pageSize)
+                             .Take(pageSize).ToList();
                 }
+                //Loc theo childId
+                if (childId > 0)
+                {
+                    return (from productType in listGroup
+                            where productType.ID == childId
+                            orderby productType.ID descending
+                            select productType).ToList();
+                }
+                //Loc theo ParentId
+                if (parentId > 0)
+                {
+                    return (from productType in listGroup
+                            where productType.Parent == parentId
+                            orderby productType.ID descending
+                            select productType).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+                }
+                //Loc theo RootId
+                if (rootId > 0)
+                {
+                    var listParent = (from productType in listGroup
+                                      where productType.Parent == rootId
+                                      orderby productType.ID descending
+                                      select productType.ID).ToList();
+                    if (listParent.Count > 0)
+                    {
+                        var listParentString = string.Join(",", listParent.ToArray());
+                        listGroup = (from productType in listGroup.AsEnumerable()
+                                     where productType.Parent > 0 && ((productType.Parent == rootId) || (listParentString.Contains(productType.Parent + ",")
+                                           || listParentString.Contains("," + productType.Parent)))
+                                     orderby productType.ID descending
+                                     select productType);
+                    }
+                    else
+                    {
+                        return new List<ProductType>();
+                    }
 
+                }
+                return listGroup.Skip((page - 1) * pageSize).Take(pageSize).ToList();
             }
-            return listGroup.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
         }
 
 
-        public List<ProductType> GetAllWeb()
+        public async Task<List<ProductType>> GetAllWeb()
         {
             using (var entities = new V308CMSEntities())
             {
-                return (from category in entities.ProductType
+                return await (from category in entities.ProductType
+                              where  category.Status == true
                         orderby category.Number ascending
                         select category
-                ).ToList();
+                ).ToListAsync();
             }
-            
+
         }
 
-        public void GetListByParent(int level,ref List<ProductType> result,List<ProductType> allCategory,int categoryId=0)
+        private static void GetCategoryParent(ref List<ProductType> result, List<ProductType> allCategory, int parentId)
+        {
+            var categoryParent = allCategory.FirstOrDefault(category => category.ID == parentId);
+            if (categoryParent!= null &&  categoryParent.Parent> 0)
+            {
+                result.Add(categoryParent);
+                GetCategoryParent(ref result, allCategory, categoryParent.Parent ?? 0);
+            }
+        }
+
+        public List<ProductType> GetListCategoryPath(int categoryId)
+        {
+            using (var entities = new V308CMSEntities())
+
+            {                                    
+                var result = new List<ProductType>();
+                GetCategoryParent(ref result, entities.ProductType
+                       .Where(category => category.Status == true)
+                       .OrderBy(category => category.Number)
+                       .ToList(), categoryId);
+                return result;
+            }
+
+        }
+
+       
+        public List<ProductType> GetAllByCategoryId(int categoryId)
+        {
+            using (var entities = new V308CMSEntities())
+
+            {               
+                var listProductType = entities.ProductType
+                        .Where(category => category.Status == true)
+                        .OrderBy(category => category.Number)
+                        .ToList();
+                var result = new List<ProductType>();
+                GetListByParent(ref result, listProductType, categoryId);
+                return result;
+            }
+        }
+
+        public void GetListByParent(ref  List<ProductType> result, List<ProductType> allCategory,
+            int categoryId = 0)
+        {
+            var listSub = allCategory
+                     .Select(category => category)
+                     .Where(cate => cate.Parent.HasValue && cate.Parent.Value == categoryId)
+                     .ToList();
+
+            foreach (var sub in listSub)
+            {
+                result.Add(sub);
+                if (sub.Parent == categoryId)
+                {
+                    GetListByParent(ref result, allCategory, sub.ID);
+                }
+            }
+
+        }
+
+        public void GetListByParent(int level, ref List<ProductType> result, List<ProductType> allCategory, int categoryId = 0)
         {
             if (result == null)
             {
@@ -208,6 +274,7 @@ namespace V308CMS.Data
                     result.Add(category);
                     if (category.Parent == categoryId)
                     {
+                        level += 1;
                         GetListByParent(level, ref result, allCategory
                             .Where(cate => cate.Parent.HasValue && cate.Parent.Value == categoryId)
                             .Select(cate => category)
@@ -260,7 +327,7 @@ namespace V308CMS.Data
                         select category).ToList();
 
             }
-                
+
         }
 
         public List<ProductType> GetAll(bool state = true)
@@ -275,18 +342,18 @@ namespace V308CMS.Data
                     orderby category.Date.Value descending
                     select category).ToList();
             }
-           
+
         }
 
         public string Insert(
-            string name, 
-            int parentId, 
-            string icon, 
+            string name,
+            int parentId,
+            string icon,
             string description,
-            string image, 
+            string image,
             string imageBanner,
-            int number, 
-            DateTime createdDate, 
+            int number,
+            DateTime createdDate,
             bool status,
             bool isHome
             )
@@ -318,7 +385,7 @@ namespace V308CMS.Data
                 }
                 return "exists";
             }
-           
+
         }
         public string ChangeState(int id)
         {
@@ -345,7 +412,7 @@ namespace V308CMS.Data
                 }
                 return "not_exists";
             }
-            
+
         }
 
 
@@ -382,11 +449,11 @@ namespace V308CMS.Data
                 }
                 return "not_exists";
             }
-            
+
 
         }
 
-        public List<ProductType> GetListByType(int level, int categoryId =0)
+        public List<ProductType> GetListByType(int level, int categoryId = 0)
         {
             using (var entities = new V308CMSEntities())
             {
@@ -411,8 +478,52 @@ namespace V308CMS.Data
                 }
                 return new List<ProductType>();
             }
-           
 
+
+        }
+
+        public List<ProductType> GetListIn(int[] listId)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return entities.ProductType.SqlQuery(
+                                             "SELECT * FROM ProductType " +
+                                             "WHERE ID IN (" + string.Join(",", listId) + ")").ToList();
+            }
+
+        }
+
+        public List<ProductType>  GetListHomeAsync()
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return  entities.ProductType
+                    .Where(productType => productType.IsHome && productType.Status == true).ToList();
+            }
+        }
+
+        public async Task<List<ProductType>> GetListHot(int limit =7)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return await entities.ProductType
+                    .Where(productType => productType.Status == true)
+                    .OrderByDescending(productType=> productType.TotalView)
+                    .Take(limit)
+                    .ToListAsync();
+            }
+        }
+
+        public async  Task<List<ProductType>> GetListSubByParentIdAsync(int parentId, int limit)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+               return  await(from subCategory in entities.ProductType
+                                            where subCategory.Parent == parentId && subCategory.Status == true
+                                            orderby subCategory.Number
+                                            select subCategory
+                       ).Take(limit).ToListAsync();
+            }
         }
 
 
@@ -425,7 +536,7 @@ namespace V308CMS.Data
                         select item
                 ).FirstOrDefault();
             }
-            
+
         }
 
         public string Delete(int id)
@@ -476,9 +587,6 @@ namespace V308CMS.Data
                 }
                 return "not_exists";
             }
-
-            return "not_exists";
-
 
         }
     }

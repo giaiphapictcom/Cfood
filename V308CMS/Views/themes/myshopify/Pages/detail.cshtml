@@ -1,48 +1,98 @@
-﻿@model V308CMS.Data.ProductDetailPage
-@using V308CMS.Common;
-@using V308CMS.Data;
+﻿@using V308CMS.Common
+@using V308CMS.Data
 @using V308CMS.Helpers
+@using V308CMS.Helpers.Url
+@model V308CMS.Data.Product
 @{
     Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
+    var categoryPath =(List<ProductType>) ViewBag.CategoryPath;
 }
 
 @section header {
-    <title>Sản Phẩm - @Model.Product.Name</title>
-    <meta name="keywords" content="@Model.Product.Name">
-    <meta property="og:url" content="@Ultility.ImgUrl("")">
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="@Model.Product.Name">
-    <meta property="og:image" content="@Ultility.ImgUrl(@Model.Product.Image)">
-    <meta property="og:description" content="@Model.Product.Summary">
+    <title>Sản Phẩm - @Model.Name</title>
+    <meta name="keywords" content="@Model.Name">
+    <meta property="og:url" content="@Request.Url">   
+    <meta property="og:title" content="@Model.Name">
+    <meta property="og:image"  itemprop="thumbnailUrl" content="@Model.Image.ToUrl(500,300)">
+    <meta property="og:description" content="@(string.IsNullOrWhiteSpace(Model.Summary) && Model.Summary.Length>160?Model.Summary.Substring(0,159):Model.Summary)">
+}
+@section Breadcrumb{
+
+<div class="clearfix breadcrumb-wrap">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="breadcrumb">
+                    @if (categoryPath != null && categoryPath.Count > 0)
+                    {
+                        var firstCategory = categoryPath.FirstOrDefault();
+                        if (firstCategory != null)
+                        {
+                            <h2>
+                                @firstCategory.Name
+                            </h2>
+                        }
+
+                        for (int total = categoryPath.Count, i = total - 1; i >= 0; i--)
+                        {
+                            var category = categoryPath[i];
+                            if (i == total - 1)
+                            {
+                                <a href="/" title="Trang chủ">Home</a>
+                                <span class="icon"><i class="fa fa-circle"></i></span>
+
+                            }
+                            if (i < total - 1 && i > 0)
+                            {
+                                <a href="@Url.ProductCategoryUrl(category)" title="@category.Name">@category.Name</a>
+                                <span class="icon"><i class="fa fa-circle"></i></span>
+                            }
+                            if (i == 0)
+                            {
+                                <strong>
+                                    @category.Name
+                                </strong>
+                            }
+
+                        }
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+   
 }
 
 <div class="row" id="product">
 
     <div class="col-xs-12 col-main col-md-12 col-sm-12">
         <div itemscope itemtype="http://schema.org/Product" class="product">
-            <meta itemprop="url" content="@url.productURL(Model.Product.Name,Model.Product.ID)">
-            <meta itemprop="image" content="@ImageHelper.Crop(@Model.Product.Image, 500)">
+            <meta itemprop="url" content="@Url.ProductDetailUrl(Model)">
+            <meta itemprop="image" content="@ImageHelper.Crop(@Model.Image, 500)">
             <meta itemprop="shop-currency" content="VND">
 
             <div class="row">
                 <div class="col-xs-12 col-md-5 col-sm-5 product-img-box">
-                    <a href="" class="zoom" id="placeholder">
-                        <img id="product-featured-image" src="@ImageHelper.Crop(@Model.Product.Image, 500)" alt="Facial Cleansing Pad" data-zoom-image="@ImageHelper.Crop(@Model.Product.Image, 1200)" />
+                    <a href="#" class="zoom" id="placeholder">
+                        <img id="product-featured-image" src="@ImageHelper.Crop(@Model.Image, 500)" alt="@Model.Name" data-zoom-image="@ImageHelper.Crop(@Model.Image, 1200)" />
                     </a>
                     <div id="zt_list_product" class="thumbs">
                         <div class="image-item">
-                            <a href="javascript:void(0)" data-image="@ImageHelper.Crop(@Model.Product.Image, 500)" data-zoom-image="@ImageHelper.Crop(@Model.Product.Image, 1200)" >
-                                <img src="@ImageHelper.Crop(@Model.Product.Image, 100)" alt="@Model.Product.Name">
+                            <a href="javascript:void(0)" data-image="@ImageHelper.Crop(@Model.Image, 500)" data-zoom-image="@ImageHelper.Crop(@Model.Image, 1200)" >
+                                <img src="@ImageHelper.Crop(@Model.Image)" alt="@Model.Name">
                             </a>
                         </div>
-                        @if (Model.Images != null & Model.Images.Any())
+                        @if (Model.ProductImages != null & Model.ProductImages.Count>0)
                         {
-                            foreach (ProductImage img in Model.Images) {
-                            <div class="image-item">
-                                <a href="javascript:void(0)" data-image="@ImageHelper.Crop(@img.Name, 500)"  data-zoom-image="@ImageHelper.Crop(@img.Name, 1200)">
-                                    <img src="@ImageHelper.Crop(@img.Name, 100)" alt="@Model.Product.Name">
-                                </a>
-                            </div>
+                            foreach (ProductImage img in Model.ProductImages) {
+                                <div class="image-item">
+                                    <a href="javascript:void(0)" data-image="@ImageHelper.Crop(@img.Name, 500)"  data-zoom-image="@ImageHelper.Crop(@img.Name, 1200)">
+                                        <img src="@ImageHelper.Crop(@img.Name)" alt="@Model.Name">
+                                    </a>
+                                </div>
                             }
                         }
                     </div>
@@ -51,16 +101,16 @@
                 <div class="col-xs-12 col-md-7 col-sm-7 product-shop">
                     <div itemprop="offers" itemtype="http://schema.org/Offer">
                         <header class="product-title ">
-                            <h2 itemprop="name">@Model.Product.Name</h2>
+                            <h2 itemprop="name">@Model.Name</h2>
                         </header>
 
                         <div class="star-price">
                             <div class="price-box">
                                 <p class="regular-product">
-                                    @if (Model.Product.Price > 0)
+                                    @if (Model.Price > 0)
                                     {
                                         <span class="price" itemprop="price">
-                                                <span class="money">@String.Format("{0: 0,0}", (Model.Product.Price)) @ViewBag.MoneyShort</span>
+                                                <span class="money">@String.Format("{0: 0,0}", (Model.Price)) @ViewBag.MoneyShort</span>
                                         </span>
                                     }
                                     
@@ -70,20 +120,20 @@
 
                         <div class="availability">
                             <p class="product-inventory">
-                                <label>Tình trạng</label><span><span>@(Model.Product.Number > 0 ? "Còn hàng" :"Hết hàng")</span></span>
+                                <label>Tình trạng</label><span><span>@(Model.Quantity > 0 ? "Còn hàng" :"Hết hàng")</span></span>
                             </p>
                         </div>
-                        <link itemprop="availability" href="http://schema.org/InStock">
+                        <link itemprop="availability" href="http://schema.org/InStock"/>
 
-                        <span class="shopify-product-reviews-badge" data-id="7825635209"></span>
+                        <span class="shopify-product-reviews-badge" data-id="@Model.ID"></span>
 
-                        <div class="short-description">@Model.Product.Summary</div>
+                        <div class="short-description">@Model.Summary</div>
 
                        
                         <div class="product-bottom">
                             <form action="@Url.AddToCartUrl()" method="post" enctype="multipart/form-data" id="add-to-cart-form">
-                                <input name="id" type="hidden" value="@Model.Product.ID"/>
-                                @if (Model.Product.Number > 0)
+                                <input name="id" type="hidden" value="@Model.ID"/>
+                                @if (Model.Quantity > 0)
                                 {
                                     <label>Số lượng:</label>
                                     <div class="wrap-qty">
@@ -93,14 +143,14 @@
                                     </div>
                                 }
                                 <div class="cart-wraper">
-                                    @if (Model.Product.Number > 0){
-                                        <button type="submit" name="add" class="btn " id="product-add-to-cart" value="@Model.Product.ID">Thêm vào giỏ hàng</button>
+                                    @if (Model.Quantity > 0){
+                                        <button type="submit" name="add" class="btn " id="product-add-to-cart" value="@Model.ID">Thêm vào giỏ hàng</button>
                                         
                                     }
                                     else{
                                         <span style="color: #f00; font-weight: bold">Sản phẩm tạm hết hàng</span>
                                     }
-                                    <a data-id="@Model.Product.ID" class="wishlist btn" href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="Yêu thích"><span><i class="fa fa-heart" aria-hidden="true"></i></span></a>
+                                    <a data-id="@Model.ID" class="wishlist btn" href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="Yêu thích"><span><i class="fa fa-heart" aria-hidden="true"></i></span></a>
 
                                 </div>
                             </form>
@@ -121,13 +171,8 @@
                     </a>
                 </li>
                 <li><a data-toggle="tab" href="#collapse-tab2">Đánh giá</a></li>
-                <li>
-                    @{
-                        string url_current = Request.Url.ToString();
-                        url_current = System.Net.WebUtility.UrlEncode(url_current);
-                        }
-                    <a href="https://www.facebook.com/sharer/sharer.php?u=@url_current&display=popup&ref=plugin&src=like&kid_directed_site=0&app_id=113869198637480" target="_blank" class="fb-share" >
-                       
+                <li>                 
+                    <a href="@Url.FacebookShareUrl(WebUtility.UrlEncode(Request.Url.ToString()))" target="_blank" class="fb-share" title="Chia sẻ trên facebook">                       
                         <span class="hidden-xs"> Chia sẻ Facebook</span>
                         <span class="visible-xs">Share</span>
                     </a>
@@ -136,11 +181,11 @@
 
             <div id="myTabContent" class="tab-content">
                 <div id="collapse-tab1" class="tab-pane fade in active">
-                    @Html.Raw(@Model.Product.Detail.Replace("\n", "<br />"))
+                    @Html.Raw(@Model.Detail.Replace("\n", "<br />"))
                 </div>
                 <div id="collapse-tab2" class="tab-pane fade">
                     @*<div id="shopify-product-reviews" data-id="7825635209"></div>*@
-                    <div class="fb-comments" data-href="@Ultility.LocDau(@Model.Product.Name)-d@(Model.Product.ID).html" data-width="100%" data-numposts="5" data-colorscheme="light"></div>
+                    <div class="fb-comments" data-href="@Ultility.LocDau(@Model.Name)-d@(Model.ID).html" data-width="100%" data-numposts="5" data-colorscheme="light"></div>
                 </div>
             </div>
         </div>
@@ -153,44 +198,36 @@
                 
             })
         </script>
-
-        @*        <script src="//cdn.shopify.com/s/assets/themes_support/option_selection-f3dd7ba25bddfb6b0fe9addc0cae11dc709eeb6a469ec7f66f49e3abc4ce8c81.js" type="text/javascript"></script>*@
-
     </div>
 
 </div>
 
 
 <script>
-    jQuery(document).ready(function () {
+    jQuery(document).ready(function() {
         jQuery("#zt_list_product").owlCarousel({
-
             itemsCustom: [
-              [320, 1],
-              [360, 2],
-              [450, 3],
-              [600, 3],
-              [700, 3],
-              [1000, 4],
-              [1200, 4],
-              [1400, 4],
-              [1600, 4]
+                [320, 1],
+                [360, 2],
+                [450, 3],
+                [600, 3],
+                [700, 3],
+                [1000, 4],
+                [1200, 4],
+                [1400, 4],
+                [1600, 4]
             ],
             navigation: true,
             navigationText: ['<i class="arrow_carrot-left"></i>', '<i class="arrow_carrot-right"></i>']
-        });
+        });     
         jQuery('#product-featured-image').elevateZoom();
 
     });
-    //Shopify.Image.preload(["\/\/cdn.shopify.com\/s\/files\/1\/1498\/2346\/products\/21_d775a09c-a223-4d2f-bc4a-7d8e2c3474e8.jpg?v=1484812816","\/\/cdn.shopify.com\/s\/files\/1\/1498\/2346\/products\/23_f5425920-e855-4fdd-accb-0b480443dd09.jpg?v=1484812817","\/\/cdn.shopify.com\/s\/files\/1\/1498\/2346\/products\/24_d5cd5894-cd4d-412a-933e-f11c715907e8.jpg?v=1484812818","\/\/cdn.shopify.com\/s\/files\/1\/1498\/2346\/products\/25_d3353baa-4cc4-4cba-a95c-1523cc987ab1.jpg?v=1484812819"], 'grande');
-
-
-
-    var selectCallback = function (variant, selector) {
+  
+    var selectCallback = function(variant, selector) {
         if (variant) {
             jQuery('.variant-sku').text(variant.sku);
-        }
-        else {
+        } else {
             jQuery('.variant-sku').empty();
         }
 
@@ -220,8 +257,8 @@
             if (variant.compare_at_price > variant.price) {
                 productPrice.addClass("on-sale");
                 comparePrice
-                .html(Shopify.formatMoney(variant.compare_at_price, "<span class=money>${{amount}}</span>"))
-                                          .show();
+                    .html(Shopify.formatMoney(variant.compare_at_price, "<span class=money>${{amount}}</span>"))
+                    .show();
             } else {
                 comparePrice.hide();
                 productPrice.removeClass("on-sale");
@@ -236,9 +273,6 @@
                 }
             }
             // END SWATCHES
-
-
-
 
 
         } else {
@@ -273,8 +307,8 @@
                     return arr[0];
             }
 
-            Shopify.Image.switchImage(newImage, element, function (newImageSizedSrc, newImage, element) {
-                jQuery('#zt_list_product img').each(function () {
+            Shopify.Image.switchImage(newImage, element, function(newImageSizedSrc, newImage, element) {
+                jQuery('#zt_list_product img').each(function() {
 
                     var grandSize = jQuery(this).attr('src');
                     grandSize = grandSize.replace('_compact', '');
@@ -302,7 +336,7 @@
 
     };
 
-    jQuery(function ($) {
+    jQuery(function($) {
 
 
         // Add label if only one product option and it isn't 'Title'. Could be 'Size'.
@@ -316,18 +350,16 @@
         // Auto-select first available variant on page load. Otherwise the product looks sold out.
 
 
-
         $('.single-option-selector:eq(0)').val("Default Title").trigger('change');
 
 
-
-        var reviewsTimeout = setInterval(function () {
+        var reviewsTimeout = setInterval(function() {
             if (jQuery(".spr-badge-caption").length > 0) {
-                jQuery(".spr-badge-caption").on('click', function () {
+                jQuery(".spr-badge-caption").on('click', function() {
                     jQuery('html,body').animate({
-                        scrollTop: jQuery(".panel:last").offset().top
-                    },
-                                                '400');
+                            scrollTop: jQuery(".panel:last").offset().top
+                        },
+                        '400');
                     jQuery("#collapse-tab4").collapse('show');
                 });
                 clearInterval(reviewsTimeout);
@@ -335,14 +367,13 @@
         }, 1000);
 
 
-
     });
-    jQuery(document).ready(function ($) {
-        $('.up-qty').click(function () {
+    jQuery(document).ready(function($) {
+        $('.up-qty').click(function() {
             quantity = $('#quantity').val();
             $('#quantity').val(parseInt(quantity) + 1);
         });
-        $('.down-qty').click(function () {
+        $('.down-qty').click(function() {
             quantity = $('#quantity').val();
             if (quantity > 1)
                 $('#quantity').val(parseInt(quantity) - 1);
@@ -351,94 +382,5 @@
     });
 
 </script>
-
-@if (Model.RelatedList != null )
-{
-
-    <section class="related-products">
-        <h2><span>Sản phẩm cùng loại</span></h2>
-        <div class="products-grid">
-            @foreach (var prod in Model.RelatedList)
-            {
-                <div class="product-hover product-review no_crop_image grid-item product-item wow fadeIn" data-wow-delay="0ms" id="product-@prod.ID">
-
-                    <div class="item-poduct">
-                        <div class="product-top">
-                            <div class="product-image ">
-
-                                <a href="@url.productURL(prod.Name, prod.ID)" class="grid-image">
-                                    <img class="feature-images" src="@ImageHelper.Crop(prod.Image, 250)" alt="@prod.Name">
-                                    @if (prod.ProductImages.Any()){
-                                        <span class="product-hover" data-idproduct="@prod.ID">
-                                            <img class="img-responsive" alt="@prod.Name" src="@ImageHelper.Crop(prod.ProductImages.First().Name, 250)">
-                                        </span>
-
-                                    }
-
-                                </a>
-
-                                <div class="quickview-button">
-                                    <a href="javascript:void(0)" id="eye-shadow-palette" data-toggle="tooltip" data-placement="top" title="@prod.Name" class="sca-qv-button btn">@ViewBag.ProductViewText</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="product-content">
-                            <h3><a class="product-title" href="@url.productURL(prod.Name, prod.ID)">@prod.Name</a></h3>
-                            <div class="price-box">
-
-                                <p class="regular-product">
-                                    @if (prod.Price > 0){
-                                        <span><span class="money">@String.Format("{0: 0,0}", (prod.Price)) @ViewBag.MoneyShort</span></span>
-                                    }
-
-                                </p>
-
-                            </div>
-                            <span class="shopify-product-reviews-badge" data-id="@prod.ID"></span>
-
-                            <div class="add-to-link">
-                                @if (prod.Number > 0)
-                                {
-                                    <div class="add-to-cart">
-
-                                        <form action="@Url.AddToCartUrl()" method="post" class="variants" id="product-actions-@prod.ID" enctype="multipart/form-data" style="padding: 0px;">
-                                            <input type="hidden" name="id" value="@prod.ID"/>
-                                            <span>
-                                                <input class="btn add-to-cart-btn" data-toggle="tooltip" data-placement="top" title="Thêm vào giỏ hàng" type="submit" value="Thêm vào giỏ hàng" />
-                                            </span>
-                                        </form>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <span style="color: #f00; font-weight: bold">Sản phẩm tạm hết hàng</span>
-                                }
-
-                                <a data-id="@prod.ID" class="wishlist btn" href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="Yêu thích"><span><i class="fa fa-heart" aria-hidden="true"></i></span></a>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            }
-
-        </div>
-    </section>
-    <script>
-        jQuery(document).ready(function () {
-            jQuery(".related-products .products-grid").owlCarousel({
-                autoPlay: 8000,
-                scrollPerPage: true,
-                slideSpeed: 500,
-                stopOnHover: true,
-                navigation: true,
-                navigationText: ['<i class="arrow_carrot-left"></i>', '<i class="arrow_carrot-right"></i>'],
-                items: 5,
-                itemsDesktop: [1200, 3],
-                itemsTablet: [767, 3],
-                itemsTabletSmall: [721, 2]
-            });
-        });
-    </script>
-}
+@{Html.RenderAction("LoadProductRelatived", "Async", new {productId = Model.ID, categoryId = Model.Type});}
+<script src="/Content/Plugins/jquery.fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>

@@ -1,0 +1,99 @@
+﻿@using V308CMS.Helpers
+@using V308CMS.Helpers.Url
+@model List<V308CMS.Data.Product>
+@if (Model != null && Model.Count > 0)
+{   
+    <div class="bestseller-sidebar bestseller-homepage">
+
+    <div class="module-title">
+        <h5>
+            Sản phẩm bán chạy
+
+        </h5>
+    </div>
+        @foreach (var product in Model)
+        {
+            var productDetailUrl = Url.ProductDetailUrl(product);
+            <div class="item-poduct">
+                <div class="grid-3  grid-item product-item product-hover product-review" id="product-@product.ID">
+                    <div class="product-image ">
+                        @if (product.SaleOff > 0)
+                        {   
+                            <div class="product-label">
+                                <label class="label">Sale</label>
+                             </div>
+                        }                     
+                        <a href="@productDetailUrl" class="grid-image" title="@product.Name">
+                            <img class="feature-images" src="@product.Image.ToUrl(92,96)" alt="@product.Name">
+                            <span class="product-hover" data-idproduct="@product.ID">
+                                <img class="img-responsive" src="@product.Image.ToUrl(92,96)" alt="@product.Name">
+                            </span>
+                        </a>
+
+                        <div class="quickview-button">
+                            <a href="javascript:void(0)" data-id="@product.ID" data-toggle="tooltip" data-placement="top" title="" class="sca-qv-button btn" data-original-title="@ViewBag.ProductViewText">@ViewBag.ProductViewText</a>
+                        </div>
+                    </div>
+                    <div class="product-content">
+                        <h3>
+                            <a class="product-title" href="@productDetailUrl" title="@product.Name">
+                                @product.Name
+                            </a>
+                        </h3>
+                        <div class="price-box">
+                           
+                            @if (product.SaleOff == 0)
+                            {
+                                <p class="regular-product">
+                                    <span><span class="money">@product.ToProductPrice()</span></span>
+                                </p>
+                            }
+                            else
+                            {
+                                <p class="sale">
+                                    <span class="special-price"><span class="money">@product.ToProductPrice()</span></span>
+                                    <span class="old-price"><span class="money">@product.ToProductSaleOffPrice()</span></span>
+                                </p>
+                            }
+                        </div>
+                        <span class="spr-badge" id="spr_badge_7824329673" data-rating="0.0">
+                            <span class="spr-starrating spr-badge-starrating">
+                            <i class="spr-icon spr-icon-star-empty" style=""></i>
+                            <i class="spr-icon spr-icon-star-empty" style=""></i>
+                            <i class="spr-icon spr-icon-star-empty" style=""></i>
+                            <i class="spr-icon spr-icon-star-empty" style=""></i>
+                            <i class="spr-icon spr-icon-star-empty" style=""></i>
+                        </span>
+                            <span class="spr-badge-caption">No reviews</span>
+                        </span>
+
+                        <div class="add-to-link">
+
+                            <div class="add-to-cart">
+                                @if (product.Quantity > 0)
+                                {  
+                                    <a href="javascript:void(0);" class="btn add-to-cart-btn" add-cart="@product.ID" title="Thêm vào giỏ hàng">
+                                        Thêm vào giỏ hàng
+                                     </a>
+
+                                }
+                                else
+                                {
+                                    <span style="color: #f00; font-weight: bold">Sản phẩm tạm hết hàng</span>
+                                }
+                              
+                            </div>
+                            <a class="wishlist btn" data-id="@product.ID" data-toggle="tooltip" data-placement="top" title="" data-original-title="Thêm vào danh sách yêu thích">
+                                <span>
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        }
+      
+    </div>
+}

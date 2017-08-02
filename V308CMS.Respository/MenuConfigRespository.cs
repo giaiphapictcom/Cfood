@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using V308CMS.Data;
 using V308CMS.Data.Models;
 
@@ -10,35 +12,15 @@ namespace V308CMS.Respository
     {
         string ChangeState(int id);
     }
-    public class MenuConfigRespository: Data.IBaseRespository<MenuConfig>, IMenuConfigRespository
+    public class MenuConfigRespository : Data.IBaseRespository<MenuConfig>, IMenuConfigRespository
     {
 
-        private V308CMSEntities _entities;
-        #region["Vung cac thao tac Dispose"]
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                if (this._entities != null)
-                {
-                    this._entities.Dispose();
-                    this._entities = null;
-                }
-            }
-        }
-        #endregion
 
-
-        public MenuConfigRespository(V308CMSEntities mEntities)
+        public MenuConfigRespository()
         {
-            this._entities = mEntities;
-        } 
-        
+
+        }
+
         public MenuConfig Find(int id)
         {
             using (var entities = new V308CMSEntities())
@@ -48,7 +30,7 @@ namespace V308CMS.Respository
                         select item
                ).FirstOrDefault();
             }
-            
+
         }
 
         public string Delete(int id)
@@ -62,31 +44,18 @@ namespace V308CMS.Respository
                 if (menuConfig != null)
                 {
                     entities.MenuConfig.Remove(menuConfig);
+                    entities.SaveChanges();
                     return "ok";
                 }
                 return "not_exists";
             }
-           
+
         }
 
         public string Update(MenuConfig config)
         {
             using (var entities = new V308CMSEntities())
             {
-
-              
-                //menuConfig.Name = config.Name;
-                //menuConfig.Description = config.Description;
-                //menuConfig.Code = config.Code;
-                //menuConfig.Link = config.Link;
-                //menuConfig.State = config.State;
-                //menuConfig.CreatedAt = config.CreatedAt;
-                //menuConfig.UpdatedAt = config.UpdatedAt;
-                //menuConfig.Order = config.Order;
-
-                //_entities.SaveChanges();
-                //return "ok";
-
                 var menuConfig = (from item in entities.MenuConfig
                                   where item.Id == config.Id
                                   select item
@@ -102,14 +71,14 @@ namespace V308CMS.Respository
                     menuConfig.CreatedAt = config.CreatedAt;
                     menuConfig.UpdatedAt = config.UpdatedAt;
                     menuConfig.Order = config.Order;
+                    menuConfig.Target = config.Target;
                     entities.SaveChanges();
                     return "ok";
-
 
                 }
                 return "not_exists";
             }
-            
+
         }
 
         public string Insert(MenuConfig config)
@@ -123,16 +92,21 @@ namespace V308CMS.Respository
                 if (menuConfig == null)
                 {
 
-                    entities.MenuConfig.Add(config);
-                    entities.SaveChanges();
+                    try
+                    {
+                        entities.MenuConfig.Add(config);
+                        entities.SaveChanges();
+                    }
+                    catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+                    {
+                        Console.Write(dbEx);
+                    }
                     return "ok";
                 }
                 return "exists";
             }
-            
-        }
 
-       
+        }
 
         public string Insert
             (
@@ -165,57 +139,63 @@ namespace V308CMS.Respository
                 }
                 return "exists";
             }
-            
+
         }
 
-        public List<MenuConfig> GetList(int page = 1, int pageSize = 10)
+        public List<MenuConfig> GetList(int page = 1, int pageSize = 10, string site = Data.Helpers.Site.home, byte status = 0)
         {
             using (var entities = new V308CMSEntities())
             {
-                return (from item in entities.MenuConfig
-                        orderby item.CreatedAt descending
-                        select item
-                ).Skip((page - 1) * pageSize).Take(pageSize).ToList();
-            }
+
+                var menus = entities.MenuConfig.Select(m=>m);
+
+                if (site == Data.Helpers.Site.home)
+                {
+                    menus = menus.Where(m=>m.Site==site || m.Site=="" || m.Site =="1" || m.Site == string.Empty);
+                }
+                else {
+                    menus = menus.Where(m => m.Site == site);
+                }
+
+                if (status > 0)
+                {
+                    menus = menus.Where(m=>m.State==status);
+                }
             
+                
+                return menus.OrderBy(m=>m.Order).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+
+            }
+
         }
         public List<MenuConfig> GetAll(string site = "")
         {
-
-            List<MenuConfig> items = new List<MenuConfig>();
-            try
+            using (var entities = new V308CMSEntities())
             {
-                var menus = from item in _entities.MenuConfig
-                            where item.Site == "" || item.Site.ToLower() == "home"
-                            orderby item.Order
-                            select item;
-                if ((site.Length > 0))
-                {
-                    menus = from item in _entities.MenuConfig
-                            where item.Site.ToLower() == site.ToLower()
-                            orderby item.Order
-                            select item;
-                }
-                if (menus.Count() > 0)
-                {
-                    items = menus.ToList();
-                }
+                var menu = entities.MenuConfig.Select(m=>m);
 
+                if (site == Data.Helpers.Site.home)
+                {
+                    menu = menu.Where(m => m.Site == site || m.Site == "" || m.Site == "1" || m.Site==null);
+                }
+                else {
+                    menu = menu.Where(m => m.Site == site);
+                }
+                return menu.OrderBy(m => m.Order).ToList();
             }
-            catch (Exception ex)
+
+        }
+        public async Task<List<MenuConfig>>  GetAllAsync(string site = "")
+        {
+            using (var entities = new V308CMSEntities())
             {
-                Console.Write(ex);
+                return await (from item in entities.MenuConfig
+                              where  item.Site == site && item.State ==1
+                        orderby item.Order
+                        select item
+               ).ToListAsync();
             }
-            return items;
-
-            //using (var entities = new V308CMSEntities())
-            //{
-            //    return (from item in entities.MenuConfig
-            //            orderby item.Order
-            //            select item
-            //   ).ToList();
-            //}
-           
 
         }
 
@@ -237,7 +217,7 @@ namespace V308CMS.Respository
                 }
                 return "not_exists";
             }
-            
+
         }
     }
 }

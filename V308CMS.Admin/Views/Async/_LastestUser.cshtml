@@ -1,156 +1,50 @@
-﻿<div class="box box-info" id="latest-orders-box">
+﻿@using V308CMS.Admin.Helpers.Url
+@using V308CMS.Common
+@model List<V308CMS.Data.Account>
+<div class="box box-info" id="latest-orders-box">
     <div class="box-header with-border">
         <h3 class="box-title">
             <i class="fa fa-user"></i>
             Khách hàng
-            <a href="/Admin/Order/List" class="btn btn-xs btn-info btn-flat margin-l-10">Xem thêm</a>
+            <a href="@Url.UserIndexUrl()" class="btn btn-xs btn-info btn-flat margin-l-10">Xem thêm</a>
         </h3>
     </div>
-    <div class="box-body" style="display: block;">
-        <div class="k-grid k-widget">
-            <table>
-                <colgroup>
-                    <col style="width: 80px">
-                    <col style="width: 100px">
-                    <col style="width: 100px">
-                    <col style="width: 250px">
-                    <col style="width: 100px">
-                    <col style="width: 150px">
-                    <col style="width: 30px">
-                </colgroup>
-                <thead class="k-grid-header">
-                    <tr>
-                        <th class="k-header">#</th>
-                        <th class="k-header">Tài khoản</th>
-                        <th class="k-header">Email</th>
-                        <th class="k-header">SĐT</th>
-                        <th class="k-header">Ngày đăng ký</th>
-                        <th style="text-align: center" class="k-header">Hành động</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>5</td>
-                        <td>Hoàng Neal </td>
-                        <td>toaihv@gmail.com</td>
-                        <td>Your store name</td>
-                        <td>3/13/2017 6:20:10 PM</td>
-                        <td style="text-align: center">
-                            <a class="btn btn-xs btn-default" href="/Admin/Order/Edit/5">
-                                <i class="fa fa-eye"></i>Chi tiết
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>Hoàng Neal </td>
-                        <td>toaihv@gmail.com</td>
-                        <td>Your store name</td>
-                        <td>3/13/2017 6:20:10 PM</td>
-                        <td style="text-align: center">
-                            <a class="btn btn-xs btn-default" href="/Admin/Order/Edit/5">
-                                <i class="fa fa-eye"></i>Chi tiết
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>Hoàng Neal </td>
-                        <td>toaihv@gmail.com</td>
-                        <td>Your store name</td>
-                        <td>3/13/2017 6:20:10 PM</td>
-                        <td style="text-align: center">
-                            <a class="btn btn-xs btn-default" href="/Admin/Order/Edit/5">
-                                <i class="fa fa-eye"></i>Chi tiết
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>Hoàng Neal </td>
-                        <td>toaihv@gmail.com</td>
-                        <td>Your store name</td>
-                        <td>3/13/2017 6:20:10 PM</td>
-                        <td style="text-align: center">
-                            <a class="btn btn-xs btn-default" href="/Admin/Order/Edit/5">
-                                <i class="fa fa-eye"></i>Chi tiết
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>Hoàng Neal </td>
-                        <td>toaihv@gmail.com</td>
-                        <td>Your store name</td>
-                        <td>3/13/2017 6:20:10 PM</td>
-                        <td style="text-align: center">
-                            <a class="btn btn-xs btn-default" href="/Admin/Order/Edit/5">
-                                <i class="fa fa-eye"></i>Chi tiết
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>Hoàng Neal </td>
-                        <td>toaihv@gmail.com</td>
-                        <td>Your store name</td>
-                        <td>3/13/2017 6:20:10 PM</td>
-                        <td style="text-align: center">
-                            <a class="btn btn-xs btn-default" href="/Admin/Order/Edit/5">
-                                <i class="fa fa-eye"></i>Chi tiết
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>Hoàng Neal </td>
-                        <td>toaihv@gmail.com</td>
-                        <td>Your store name</td>
-                        <td>3/13/2017 6:20:10 PM</td>
-                        <td style="text-align: center">
-                            <a class="btn btn-xs btn-default" href="/Admin/Order/Edit/5">
-                                <i class="fa fa-eye"></i>Chi tiết
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>Hoàng Neal </td>
-                        <td>toaihv@gmail.com</td>
-                        <td>Your store name</td>
-                        <td>3/13/2017 6:20:10 PM</td>
-                        <td style="text-align: center">
-                            <a class="btn btn-xs btn-default" href="/Admin/Order/Edit/5">
-                                <i class="fa fa-eye"></i>Chi tiết
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>Hoàng Neal </td>
-                        <td>toaihv@gmail.com</td>
-                        <td>Your store name</td>
-                        <td>3/13/2017 6:20:10 PM</td>
-                        <td style="text-align: center">
-                            <a class="btn btn-xs btn-default" href="/Admin/Order/Edit/5">
-                                <i class="fa fa-eye"></i>Chi tiết
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>Hoàng Neal </td>
-                        <td>toaihv@gmail.com</td>
-                        <td>Your store name</td>
-                        <td>3/13/2017 6:20:10 PM</td>
-                        <td style="text-align: center">
-                            <a class="btn btn-xs btn-default" href="/Admin/Order/Edit/5">
-                                <i class="fa fa-eye"></i>Chi tiết
-                            </a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+    @if (Model.Any())
+    {
+        <div class="box-body" style="display: block;">
+            <div class="k-grid k-widget">
+                <table>                  
+                    <thead class="k-grid-header">
+                        <tr>
+                            <th class="w50-column k-header">#</th>
+                            <th class="w250-column k-header">Tài khoản</th>
+                            <th class="w200-column k-header">SĐT</th>
+                            <th class="w500-column k-header">Email</th>                           
+                            <th class="w250-column k-header">Ngày đăng ký</th>
+                            <th style="text-align: center" class="w100-column k-header">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @for (int i = 0, total = Model.Count; i < total; i++)
+                    {
+                        var user = Model[i];
+                        <tr>
+                            <td>@(i+1)</td>
+                            <td>@user.UserName</td>
+                            <td>@user.Phone</td>
+                            <td>@user.Email</td>                           
+                            <td>@(user.Date.HasValue? user.Date.Value.ToDdmmyy():"")</td>
+                            <td style="text-align: center">
+                                <a class="btn btn-xs btn-default" href="@Url.UserEditUrl(new {id = user.ID })">
+                                    <i class="fa fa-eye"></i>Chi tiết
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
+    }
+  
 </div>

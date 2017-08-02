@@ -1,7 +1,6 @@
-﻿@model  V308CMS.Data.Product
-@using V308CMS.Data;
-@using V308CMS.Common;
-@using V308CMS.Helpers
+﻿@using V308CMS.Common
+@using V308CMS.Helpers.Url
+@model  V308CMS.Data.Product
 <div class="item-poduct">
     <div class="grid-3  grid-item product-item product-hover product-review">
         <div class="product-image ">
@@ -9,10 +8,10 @@
                 <label class="label">Sale</label>
             </div>
             <a href="@url.productURL(Model.Name, Model.ID)" class="grid-image">
-                <img class="feature-images" src="@ImageUrlHelper.ToUrl(Model.Image, 105,150)" alt="@Model.Name">
+                <img class="feature-images" src="@Model.Image.ToUrl(105,150)" alt="@Model.Name">
 
                 <span class="product-hover" >
-                    <img class="img-responsive" alt="@Model.Name" src="@ImageUrlHelper.ToUrl(Model.Image, 105,150)">
+                    <img class="img-responsive" alt="@Model.Name" src="@Model.Image.ToUrl(105,150)">
                 </span>
             </a>
             <div class="quickview-button">

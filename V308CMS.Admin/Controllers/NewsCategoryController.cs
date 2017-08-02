@@ -26,16 +26,20 @@ namespace V308CMS.Admin.Controllers
                 ).ToList();
         }        
         [CheckPermission(0, "Danh sách")]
-        public ActionResult Index()
-        {            
-            return View("Index",NewsGroupService.GetAll(false));
-        }        
-        [CheckPermission(1, "Thêm mới")]
-        public ActionResult Create()
+        public ActionResult Index(string site="home")
         {
-            AddViewData("ListCategory", BuildListCategory());         
-            return View("Create", new NewsCategoryModels());
+            return View("Index", NewsGroupService.GetAll(false, site));
         }
+
+        [CheckPermission(1, "Thêm mới")]
+        public ActionResult Create(string site = "home")
+        {
+            AddViewData("ListCategory", BuildListCategory());   
+            var Model = new NewsCategoryModels();
+            Model.Site = site;
+            return View("Create", Model);
+        }
+
         [HttpPost]
         [CheckPermission(1, "Thêm mới")]      
         [ActionName("Create")]
@@ -45,7 +49,9 @@ namespace V308CMS.Admin.Controllers
             {
                 var result = NewsGroupService.Insert
                     (
+                        category.Site,
                        category.Name,
+                       category.Alias,
                        category.ParentId,
                        category.Number,
                        category.State,
@@ -60,11 +66,14 @@ namespace V308CMS.Admin.Controllers
                 }
 
                 SetFlashMessage(string.Format("Thêm chuyên mục tin '{0}' thành công.",category.Name) );
-                return RedirectToAction("Index");
+                string actionReturn = category.Site == "affiliate" ? "affiliatecategory" : "Index";
+                return RedirectToAction(actionReturn);
             }
+
             AddViewData("ListCategory", BuildListCategory());
             return View("Create", category);
-        }      
+        }
+
         [CheckPermission(2, "Sửa")]
         public ActionResult Edit(int id)
         {
@@ -78,12 +87,15 @@ namespace V308CMS.Admin.Controllers
             {
                 Id = categoryItem.ID,
                 Name = categoryItem.Name,
+                Alias = categoryItem.Alias,
                 ParentId = categoryItem.Parent ?? 0,
                 Number = categoryItem.Number ?? 0,
-                State = categoryItem.Status.HasValue && categoryItem.Status.Value
+                State = categoryItem.Status.HasValue && categoryItem.Status.Value,
+                Site = categoryItem.Site
             };
             return View("Edit", categoryModel);
         }
+
         [HttpPost]
         [CheckPermission(2, "Sửa")]       
         [ActionName("Edit")]       
@@ -93,7 +105,7 @@ namespace V308CMS.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var result = NewsGroupService.Update(
-                    category.Id,category.Name,
+                    category.Id,category.Name,category.Alias,
                     category.ParentId,category.Number,
                     category.State,category.CreatedDate);
                 if (result == "not_exists")
@@ -103,12 +115,16 @@ namespace V308CMS.Admin.Controllers
                     return View("Edit", category);
                 }
                 SetFlashMessage( string.Format("Sửa chuyên mục '{0}' thành công.",category.Name) );
-                return RedirectToAction("Index");
+
+                string actionReturn = category.Site == "affiliate" ? "affiliatecategory" : "Index";
+                return RedirectToAction(actionReturn);
+
             }
             AddViewData("ListCategory", BuildListCategory());
             return View("Edit", category);
 
-        }      
+        }
+
         [HttpPost]
         [CheckPermission(3, "Thay đổi trạng thái")]
         [ActionName("ChangeState")]
@@ -120,20 +136,36 @@ namespace V308CMS.Admin.Controllers
                 "Chuyên mục không tồn tại trên hệ thống.");
             return RedirectToAction("Index");
 
-        }       
+        }
+
+
         [HttpPost]
         [CheckPermission(4, "Xóa")]
         [ActionName("Delete")]
         public ActionResult OnDelete(int id)
         {
+            var category = NewsGroupService.Find(id);
             var result = NewsGroupService.Delete(id);
             SetFlashMessage(result == "ok" ? 
                 "Xóa chuyên mục thành công." :
                 "Chuyên mục không tồn tại trên hệ thống.");
-            return RedirectToAction("Index");
+            string actionReturn = category.Site == "affiliate" ? "affiliatecategory" : "Index";
+            return RedirectToAction(actionReturn);
         }
 
-       
+
+        #region affiliate
+        [CheckPermission(1, "Thêm mới")]
+        public ActionResult affiliatecategory()
+        {
+            return Index("affiliate");
+        }
+
+        [CheckPermission(1, "Thêm mới")]
+        public ActionResult affiliateCreate() {
+            return Create("affiliate");
+        }
+        #endregion
 
     }
 }

@@ -48,5 +48,6 @@ namespace V308CMS.Admin.Helpers.UI
                 "<span style='background-color:#d9534f;color:#FFFFFF;padding: 5px;border-radius: 5px'>Ẩn</span>";
             return new MvcHtmlString(stateLabel);
         }
+        
     }
 }

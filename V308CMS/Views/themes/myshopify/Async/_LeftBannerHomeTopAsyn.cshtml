@@ -1,0 +1,37 @@
+﻿@using V308CMS.Helpers.Url
+@model List<V308CMS.Data.Models.Banner>
+@if (Model != null && Model.Count > 0)
+{
+    <div id="shopify-section-1475849151165" class="shopify-section index-section">
+        <div class="block-top" style="margin: 30px 0px 0px 0px">
+            <div class="container">
+                <div class="widget-block">
+                    <div class="row">
+                        <div id="carousel-top">
+                            @foreach (var banner in Model)
+                            {  
+                                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                    <div class="item-1">
+                                        <div class="static-collection ">
+
+                                            <div class="images">
+                                                <a href="@(string.IsNullOrWhiteSpace(banner.Link)?"javascript:void(0)" : banner.Link)" title="@banner.Name">
+                                                    <img src="@banner.ImageUrl.ToUrl(360,175)" alt="@banner.Name" />
+                                                </a>
+                                            </div>
+                                            <div class="block-content">
+                                                <h3 class="block-title">@banner.Name</h3>
+                                                <div class="content-slider">@banner.Description</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

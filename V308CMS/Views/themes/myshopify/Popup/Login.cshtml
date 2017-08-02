@@ -1,0 +1,105 @@
+﻿@using V308CMS.Helpers.Url
+
+<div class="modal-dialog popup-container popup_content" style="width: 320px !important; height: auto;">
+    <div class="modal-content">
+        <div class="popup-header-read">
+            <div class="popup-header-title">Đăng nhập</div>
+            <a class="popup-header-close close" data-dismiss="modal" aria-hidden="true">
+                <i class="fa fa-times" style="margin-top: -2px;"></i>
+            </a>
+        </div>
+        <div class="modal-body">
+            <div class="inner-popup-wrap login" style="margin-bottom: 20px; color: #111; width: 100%;">
+                <form Id="ajax_login_form" name="ajax_login_form" method="post" action="@Url.AccountAjaxLoginUrl()">
+                    <div class="body">
+                        <div class="form-group" id="divMessageLogin" style="display: none;">
+                            <div class="col-md-12" style="margin-top: 10px; margin-bottom: 15px; text-align: left; font-size: 15px; color: red;">
+                                <span class="error font-bold" style="font-size: 13px;" id="spanMessageLogin"></span>
+                            </div>
+                        </div>
+                        <div class="body-inner" style="text-align: left;">
+                            <label>Email<em>*</em></label>
+                            <input class="form-control" id="UserName" name="UserName" type="text" placeholder="Nhập email" autocomplete="off"/>
+                            <label>Mật khẩu<em>*</em></label>
+                            <input class="form-control" id="Password" name="Password" style="margin-bottom: 8px;" type="password" placeholder="Nhập mật khẩu" autocomplete="off"/>                         
+                            <br/>                            
+                            <input style="background-color: #00aeef; margin-left: 35px" id="btnLogin" type="submit" class="btn-sign-in" value="Đăng nhập"/>&nbsp;
+                            <input id="btnRegister" type="button" class="btn-register" value="Đăng ký"/> <br/>
+                            <label>&nbsp;</label>
+                            <a id="btnForgetPassword" class="forgotten-password" style="cursor: pointer; display: inline-block;margin-left: 55px">Quên mật khẩu?</a>
+                            <hr/>
+                            <label style="font-weight: bold;">Đăng nhập bằng</label>
+                            <a class="btn-sign-in" href="@Url.SocialLoginFacebookUrl()" title="Đăng nhập sử dụng Facebook">
+                                <img src="/Content/themes/myshopify/images/social/facebook.png"/>
+
+                            </a>&nbsp;
+                            <a class="btn-sign-in" href="@Url.SocialLoginGoogleUrl()" title="Đăng nhập sử dụng Google">
+                                <img src="/Content/themes/myshopify/images/social/google.png"/>
+                            </a>&nbsp;
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        function showMessage(message, isSuccess) {
+            $('#spanMessageLogin').text(message);          
+            if (isSuccess === 1) {
+                if (!$('#spanMessageLogin').hasClass('success-message')) {
+                    $('#spanMessageLogin').addClass('success-message');
+                }
+            } else {
+                if (!$('#spanMessageLogin').hasClass('error')) {
+                    $('#spanMessageLogin').addClass('error');
+                }
+            }
+            $('#divMessageLogin').show();
+        }
+
+        $("#btnRegister").click(function(e) {
+            e.preventDefault();
+            $.get('@Url.PopupRegisterUrl()', function (response) {
+                $('#modalPopUp').html(response);
+                $('#modalPopUp').modal({ show: true });
+            });
+            return false;
+        });
+        $("#btnForgetPassword").click(function(e) {
+            e.preventDefault();
+            $.get('@Url.PopupForgotPasswordUrl()', function (response) {
+                $('#modalPopUp').html(response);
+                $('#modalPopUp').modal({ show: true });
+            });
+            return false;
+        });
+        $("#btnLogin").click(function (e) {
+            e.preventDefault();
+            if ($("#UserName").val() === '') {
+                showMessage('Vui lòng nhập Email.');
+                $('#UserName').focus();
+                return false;
+            }
+            if ($('#Password').val() === '') {
+                showMessage('Vui lòng nhập Mật khẩu.');
+                $('#Password').focus();
+                return false;
+            }            
+            $.post($("form[name='ajax_login_form']").attr('action'), { email: $("#UserName").val(), password: $('#Password').val(), remember: $('#Remember').val() }, function (response) {            
+                if (response.code === 0) {
+                    showMessage(response.message);
+                    return false;
+                }           
+                showMessage(response.message, 1);
+                location.href = '/';
+                return true;
+            });
+            return true;
+
+        });
+    })    
+
+</script>

@@ -1,4 +1,4 @@
-﻿﻿using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using V308CMS.Admin.Attributes;
 using V308CMS.Admin.Helpers;
 using V308CMS.Data;
@@ -9,16 +9,19 @@ namespace V308CMS.Admin.Controllers
     [CheckGroupPermission(false)]
     public abstract class BaseController : Controller
     {
+        public int ListViewLimit = 10;
+        //protected virtual new CustomPrincipal User;
         protected virtual new CustomPrincipal User => HttpContext.User as CustomPrincipal;
 
+        public CustomPrincipal currentUser;
         protected BaseController()
-        {                      
+        {
             NewsService = new NewsRepository();
             NewsGroupService = new NewsGroupRepository();
             AccountService = new AccountRepository();             
             ContactService = new ContactRepository();          
             ProductTypeService = new Respository.ProductTypeRepository();
-            SiteConfigService = new SiteConfigRespository();
+            SiteConfigService = new Respository.SiteConfigRespository();
             EmailConfigService= new EmailConfigRepository();
             MenuConfigService = new MenuConfigRespository();
             ProductBrandService = new ProductBrandRespository();
@@ -40,54 +43,75 @@ namespace V308CMS.Admin.Controllers
             ProductService = new ProductRespository();
             AdminAccountService = new AdminRespository();
             BannerService = new BannerRespository();
+
+            SupportService = new SupportRepository();
+            ProductsService = new ProductRepository();
+            MarketService = new MarketRepository();
+            ImagesService = new ImagesRepository();
+            FileService = new FileRepository();
            
-          
+            OrderService = new ProductOrderRespository();
+            LinkRepo = new LinkRepository();
+            LinkRepo.PageSize = ListViewLimit;
+
+            TestimonialService = new TestimonialRepository();
+            AffiliateCategoryRepo = new AffiliateCategoryRespository();
+            VoucherRepo = new CouponRepository();
+            RevenueGainRepo = new RevenueGainRepository();
+            WebsiteRequestRepo = new WebsiteRequestRepository();
+
+
+            if (System.Web.HttpContext.Current != null) {
+                currentUser = System.Web.HttpContext.Current.User as CustomPrincipal;
+            }
+            
+
         }
+        public ProductOrderRespository OrderService { get; set; }
+
         public BannerRespository BannerService { get; set; }
         public AdminRespository AdminAccountService { get; set; }
         public ProductRespository ProductService { get; set; }
-        public ProductSaleOffRespository ProductSaleOffService { get; }
-        public ProductColorRespository ProductColorService { get; }
-        public ProductSizeRespository ProductSizeService { get; }       
-        public ProductDistributorRespository ProductDistributorService { get; }
+        public ProductSaleOffRespository ProductSaleOffService { get;set; }
+        public ProductColorRespository ProductColorService { get;set; }
+        public ProductSizeRespository ProductSizeService { get;set; }       
+        public ProductDistributorRespository ProductDistributorService { get; set;}
+        public ProductManufacturerRespository ProductManufacturerService { get;set; }
+        public ProductBrandRespository ProductBrandService { get; set;}
+        public ProductImageRespository ProductImageService { get; set;}
+        public ProductAttributeRespository ProductAttributeService { get; set;}
+        public PermissionRespository PermissionService { get; set;}
+        public RoleRespository RoleService { get; set;}
+        public UserRespository UserService { get; set;}
+        public SizeRespository SizeService { get; set;}
+        public CountryRespository CountryService { get; set;}
+        public ColorRespository ColorService { get; set;}
+        public UnitRespository UnitService { get; set;}
+        public StoreRespository ProductStoreService { get; set;}
+        public MenuConfigRespository MenuConfigService { get; set;}
+        public EmailConfigRepository EmailConfigService { get; set;}
+        public Respository.SiteConfigRespository SiteConfigService { get; set;}
+        public Respository.ProductTypeRepository ProductTypeService { get; set;}
+        public NewsGroupRepository NewsGroupService { get; set;}
+        public LinkRepository LinkRepo { get; set; }
 
-        public ProductManufacturerRespository ProductManufacturerService { get; }
+        protected ContactRepository ContactService { get; set;}
+        public SupportRepository SupportService { get; set; }
+        public ProductRepository ProductsService { get;set;}
+        public MarketRepository MarketService { get; set; }
+        public ImagesRepository ImagesService { get; set; }
+        public FileRepository FileService { get; set; }
+        public TestimonialRepository TestimonialService { get; set; }
 
-        public ProductBrandRespository ProductBrandService { get; }
-        public ProductImageRespository ProductImageService { get; }
+        public NewsRepository NewsService { get; set; }
 
-        public ProductAttributeRespository ProductAttributeService { get; }
+        public AffiliateCategoryRespository AffiliateCategoryRepo { get; set; }
+        public CouponRepository VoucherRepo { get; set; }
+        public AccountRepository AccountService { get; set; }
+        public WebsiteRequestRepository WebsiteRequestRepo { get; set; }
 
-        public PermissionRespository PermissionService { get; }
-        public RoleRespository RoleService { get; }
-
-        public UserRespository UserService { get; }
-
-        public SizeRespository SizeService { get; }
-
-        public CountryRespository CountryService { get; }
-
-        public ColorRespository ColorService { get; }
-
-        public UnitRespository UnitService { get; }
-
-        public StoreRespository ProductStoreService { get; }
-        public MenuConfigRespository MenuConfigService { get; }
-
-        public EmailConfigRepository EmailConfigService { get; }
-
-        public SiteConfigRespository SiteConfigService { get; }
-
-        public Respository.ProductTypeRepository ProductTypeService { get; }
-
-        public NewsGroupRepository NewsGroupService { get; }
-
-        protected ContactRepository ContactService { get; }
-
-       
-        public NewsRepository NewsService { get; }     
-
-        protected AccountRepository AccountService { get; }
+        protected RevenueGainRepository RevenueGainRepo { get; set; }
+        
 
         protected object GetState(string name,object value,object defaultValue)
         {

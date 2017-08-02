@@ -17,9 +17,14 @@ namespace V308CMS.Admin.Controllers
         [Authorize]
         public ActionResult Index()
         {
-
-
+            if (!AuthenticationHelper.IsAuthenticate)
+            {
+                return RedirectToAction("Login");
+            }
+            
             return View("IndexV2");
+
+
         }
         // GET: Account
         [AllowAnonymous]
@@ -44,6 +49,7 @@ namespace V308CMS.Admin.Controllers
                 var myUser = new MyUser
                 {
                     UserName = login.Username,
+                    Avatar = result.Avatar,
                     UserId = result.ID,
                     RoleId = result.Role ?? 0
                 };

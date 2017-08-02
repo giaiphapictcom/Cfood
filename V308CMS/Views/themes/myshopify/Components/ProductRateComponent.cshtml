@@ -1,0 +1,33 @@
+﻿@model Tuple<int,int>
+
+<span class="spr-badge" id="spr_badge_@(Model.Item1)" data-rating="@Model.Item2">
+    <span class="spr-starrating spr-badge-starrating">
+         @if (Model.Item2 == 0)
+         {
+             int i = 0;
+             while (i < 5)
+             {
+                 <i class="spr-icon spr-icon-star-empty" style=""></i>
+                 i++;
+             }
+         }
+         else
+         {
+             int i = 0;
+             while (i < 5)
+             {
+                 if (i < Model.Item2)
+                 {
+                     <i class="spr-icon spr-icon-star" style=""></i>
+                 }
+                 else
+                 {
+                    <i class="spr-icon spr-icon-star-empty" style=""></i>
+                 }
+                  i += 1;
+             }            
+
+         }
+    </span>
+    <span class="spr-badge-caption">No reviews</span>
+</span>

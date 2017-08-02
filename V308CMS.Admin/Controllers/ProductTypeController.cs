@@ -142,7 +142,7 @@ namespace V308CMS.Admin.Controllers
                     ViewBag.ListCategory = BuildListCategory();
                     return View("Edit", productType);
                 }
-                SetFlashMessage( string.Format("Cập nhật loại sản phẩm '{productType.Name}' thành công.") );
+                SetFlashMessage( string.Format("Cập nhật loại sản phẩm '{0}' thành công.", productType.Name) );
                 if (productType.SaveList)
                 {
                     return RedirectToAction("Index");

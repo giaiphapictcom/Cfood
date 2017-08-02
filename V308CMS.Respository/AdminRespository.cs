@@ -2,6 +2,7 @@
 using System.Linq;
 using V308CMS.Common;
 using V308CMS.Data;
+using V308CMS.Data.Helpers;
 
 namespace V308CMS.Respository
 {
@@ -9,7 +10,8 @@ namespace V308CMS.Respository
     {
         string ChangeStatus(int id);
         string CheckUserName(string userName);
-
+        string ChangePassword(int id, string currentPassword, string newPassword);
+        string UpdateProfile(int id, string avatar, string email, string fullName);
     }
     public  class AdminRespository:IBaseRespository<Admin>,IAdminRespository
     {
@@ -18,12 +20,12 @@ namespace V308CMS.Respository
             using (var entities = new V308CMSEntities())
             {
                var checkAdmin = (from admin in entities.Admin
-                          where admin.UserName.Equals(userName) || admin.Email.Equals(password)
+                          where admin.UserName.Equals(userName) || admin.Email.Equals(userName)
                           select admin).FirstOrDefault();
                 if (checkAdmin == null)
                 {
                     return null;
-                }                
+                }          
                 if (checkAdmin.Password.Trim().Equals(EncryptionMD5.ToMd5(password.Trim())))
                 {
                     return checkAdmin;
@@ -164,6 +166,49 @@ namespace V308CMS.Respository
                                    select admin
                  ).FirstOrDefault();
                 return adminAccount != null ? "exists" : "ok";
+            }
+        }
+
+        public string ChangePassword(int id, string currentPassword, string newPassword)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                var adminAccount = (from admin in entities.Admin
+                                    where admin.ID == id
+                                    select admin
+                  ).FirstOrDefault();
+                if (adminAccount != null)
+                {
+                    
+                    if (adminAccount.Password == EncryptionMD5.ToMd5(currentPassword))
+                    {
+                        adminAccount.Password = EncryptionMD5.ToMd5(newPassword);
+                        entities.SaveChanges();
+                        return "ok";
+                    }
+                    return "old_not_correct";
+                }
+                return "not_exists";
+            }
+        }
+
+        public string UpdateProfile(int id, string avatar, string email, string fullName)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                var adminAccount = (from admin in entities.Admin
+                                    where admin.ID == id
+                                    select admin
+                  ).FirstOrDefault();
+                if (adminAccount != null)
+                {
+                    adminAccount.Avatar = avatar;
+                    adminAccount.Email = email;
+                    adminAccount.FullName = fullName;
+                    entities.SaveChanges();
+                    return "ok";
+                }
+                return "not_exists";
             }
         }
     }

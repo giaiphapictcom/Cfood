@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using V308CMS.Data.Models;
+
 
 namespace V308CMS.Data
 {
@@ -1980,6 +1980,7 @@ namespace V308CMS.Data
         public NewsGroups VideoCategory { get; set; }
         public List<News> Videos { get; set; }
         public List<News> Articles { get; set; }
+        public List<V308CMS.Data.Models.Banner> Banners { get; set; }
         public List<Testimonial> Testimonial { get; set; }
         public string[] BrandImages { get; set; }
         public List<Categorys> Categorys { get; set; }
@@ -2080,10 +2081,22 @@ namespace V308CMS.Data
      */
     public class AffiliateProductPage
     {
+        
         public List<Product> Products { get; set; }
         public int ProductTotal { get; set; }
         public int Page { get; set; }
 
+        public string ck_order { get; set; }
+        public string saletop_order { get; set; }
+        public string search { get; set; }
+        public int category { get; set; }
+        public int plimit { get; set; }
+        public AffiliateProductPage()
+        {
+            plimit = 10;
+            category = 0;
+            search = "";
+        }
     }
 
     public class AffiliateLinkFormPage
@@ -2100,6 +2113,14 @@ namespace V308CMS.Data
 
     }
 
+    public class AffiliateBannerPage
+    {
+        public List<AffiliateBanner> Banners { get; set; }
+        public int Total { get; set; }
+        public int Page { get; set; }
+
+    }
+
     public class CouponsPage
     {
         public List<Counpon> Coupons { get; set; }
@@ -2110,15 +2131,21 @@ namespace V308CMS.Data
 
     public class OrdersPage
     {
+        
         public List<ProductOrder> Items { get; set; }
         public int Total { get; set; }
         public int Page { get; set; }
-
+        public int plimit { get; set; }
+        public OrdersPage()
+        {
+            plimit = 10;
+        }
     }
 
     public class OrdersReportByDaysPage
     {
-        public List<OrdersReportByDay> report { get; set; }
+        public List<OrdersReportByDay> Orders { get; set; }
+        public List<RevenueReportByDay> Revenues { get; set; }
         public List<DateTime> days { get; set; }
 
     }
@@ -2127,5 +2154,27 @@ namespace V308CMS.Data
         public DateTime date { get; set; }
         public int Total { get; set; }
         public float Price { get; set; }
+    }
+
+    public class RevenueReportByDay
+    {
+        public DateTime date { get; set; }
+        public int LinkClick { get; set; }
+        public int Total { get; set; }
+        public float Money { get; set; }
+
+        public float success { get; set; }
+        public float waiting { get; set; }
+        public float cancel { get; set; }
+        public float sended { get; set; }
+        public float left { get; set; }
+    }
+
+    public class SupportMansPage
+    {
+        public List<SupportMan> Items { get; set; }
+        public int Total { get; set; }
+        public int Page { get; set; }
+
     }
 }

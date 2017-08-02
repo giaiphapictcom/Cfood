@@ -1,46 +1,4 @@
 ﻿@using V308CMS.Admin.Helpers.Url
-<<<<<<< HEAD
-@model V308CMS.Data.AccountPage
-@{
-    ViewBag.Title = "Tài khoản quản trị";
-    ViewBag.LinkBack = "<li><a href=" + Url.AdminAccountIndexUrl()+">Tài khoản quản trị</a> </li>";
-    ViewBag.MenuValue = 6;
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-<div>
-    <div>
-        <div id="close" class="mheader">
-            <a href="@Url.AdminAccountCreateUrl()">
-                <img src="@Url.CreateNewImageUrl()" title="Thêm mới"/>
-            </a>
-        </div>
-        <div style="margin-top:16px;">
-            <select name="pGroup" id="pGroupId" onchange="ThayDoiKieuNhomAdminAccount(@Model.Page);">
-                <option @V308CMS.Common.Ultility.CheckSeclectSelected(0, Model.TypeId) value="0">Tất cả</option>
-                <option @V308CMS.Common.Ultility.CheckSeclectSelected(1, Model.TypeId) value="1">Administrator</option>
-                <option @V308CMS.Common.Ultility.CheckSeclectSelected(2, Model.TypeId) value="2">Member</option>
-                <option @V308CMS.Common.Ultility.CheckSeclectSelected(3, Model.TypeId) value="3">Guest</option>
-            </select>
-        </div>
-        <hr />
-        <div style="width: 100%;">
-            <div class="RadGrid RadGrid_MetroTouch table table-striped table-bordered table-hover dataTable" tabindex="0">
-                @Html.Raw(@Model.Html)
-            </div>
-        </div>
-        <div class="wpmn_page_navi">
-            <a href="/Admin/AdminAccount?pPage=@Model.BackPage&pType=@Model.TypeId">Back</a>
-            <span class="current">@Model.Page</span>
-            <a href="/Admin/AdminAccount?pPage=@Model.NextPage&pType=@Model.TypeId">Next</a>
-        </div>
-        <hr />
-    </div>
-    <div style="display: none;" role="status" aria-hidden="true">
-        <div class="area"></div>
-        <div class="form-loading"></div>
-    </div>
-</div>
-=======
 @using V308CMS.Admin.Models.UI
 @using V308CMS.Common
 @using V308CMS.Data.Enum
@@ -65,8 +23,8 @@
                         <th>Quyền</th>
                         <th>Loại</th>
                         <th>Ngày cập nhật</th>
-                        <th>Trạng thái</th>
-                        <th>Hành động</th>
+                        <th style="text-align: center">Trạng thái</th>
+                        <th style="text-align: center">Hành động</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -105,12 +63,12 @@
                             <td style="text-align: center">
                                 <form id="frm-change-status" action="@Url.AdminAccountChangeStatusUrl()" method="POST">
                                     <input type="hidden" value="@user.ID" name="id" />
-                                    <button style="@(user.Status == true ? " background-color:#5cb85c;color:#FFFFFF;padding: 5px;border-radius: 5px" : "background-color:#d9534f;color:#FFFFFF;padding: 5px;border-radius: 5px" )" onclick="return confirm('Bạn chắc chắn muốn thay đổi trạng thái tài khoản này?')">
+                                    <button class="@(user.Status == true ? "btn-active" : "btn-lock" )" onclick="return confirm('Bạn chắc chắn muốn thay đổi trạng thái tài khoản này?')">
                                         <i class="fa  @(user.Status == true ? " fa-unlock" : "fa-lock" )"></i>
                                     </button>
                                 </form>
                             </td>
-                            <td style="width: 200px">
+                            <td style="width: 200px;text-align: center">
                                 @Html.Partial("UI/_EditButton", new ButtonModels
                            {
                                Id = string.Format("admin_{0}", user.ID),
@@ -137,4 +95,3 @@
 
     </div>
 }
->>>>>>> toai-neal

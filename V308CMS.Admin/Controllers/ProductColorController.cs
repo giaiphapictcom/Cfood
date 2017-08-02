@@ -44,11 +44,11 @@ namespace V308CMS.Admin.Controllers
                     );
                 if (result == Result.Exists)
                 {
-                    ModelState.AddModelError("", $"Màu '{color.Name}' đã tồn tại trên hệ thống.");
+                    ModelState.AddModelError("", string.Format("Màu '{0}' đã tồn tại trên hệ thống.",color.Name));
                     ViewBag.ListState = DataHelper.ListEnumType<StateEnum>();
                     return View("Create", color);
                 }
-                SetFlashMessage($"Thêm Màu '{color.Name}' thành công.");
+                SetFlashMessage( string.Format("Thêm Màu '{0}' thành công.",color.Name));
                 if (color.SaveList)
                 {
                     return RedirectToAction("Index");
@@ -101,7 +101,7 @@ namespace V308CMS.Admin.Controllers
                     ViewBag.ListState = DataHelper.ListEnumType<StateEnum>();
                     return View("Edit", color);
                 }
-                SetFlashMessage($"Cập nhật màu '{color.Name}' thành công.");
+                SetFlashMessage(string.Format("Cập nhật màu '{0}' thành công.", color.Name));
                 if (color.SaveList)
                 {
                     return RedirectToAction("Index");

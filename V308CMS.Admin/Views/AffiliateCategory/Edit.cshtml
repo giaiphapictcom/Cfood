@@ -1,0 +1,14 @@
+﻿@using V308CMS.Admin.Helpers.Url
+
+@model V308CMS.Admin.Models.AffiliateCategoryModels
+@{
+    ViewBag.Title = "Cập nhật danh mục cho Affiliate";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+<div class="panel panel-primary">
+    <div class="panel-body">
+        <form method="post" role="form" action="@Url.CategoryEditUrl()">
+            @Html.Partial("_CategoryForm", Model)
+        </form>
+    </div>
+</div>

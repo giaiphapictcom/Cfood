@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -13,7 +13,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>V308CMS</RootNamespace>
     <AssemblyName>V308CMS</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -22,6 +22,11 @@
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
     <TargetFrameworkProfile />
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -53,22 +58,63 @@
     <Reference Include="DocumentFormat.OpenXml">
       <HintPath>..\packages\DocumentFormat.OpenXml.2.5\lib\DocumentFormat.OpenXml.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\GAMES\GP1\DECHEMOBILEMVC4\DECHEMOBILEMVC4\bin\EntityFramework.dll</HintPath>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.2.0-beta1\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis, Version=1.27.1.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.1.27.1\lib\net45\Google.Apis.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.Auth, Version=1.27.1.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Auth.1.27.1\lib\net45\Google.Apis.Auth.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.Auth.Mvc, Version=1.27.1.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Auth.Mvc.1.27.1\lib\net45\Google.Apis.Auth.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.Auth.PlatformServices, Version=1.27.1.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Auth.1.27.1\lib\net45\Google.Apis.Auth.PlatformServices.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.Core, Version=1.27.1.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Core.1.27.1\lib\net45\Google.Apis.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Facebook, Version=6.0.10.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
+      <HintPath>..\packages\Facebook.7.0.6\lib\net45\Facebook.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MiniProfiler, Version=3.2.0.157, Culture=neutral, PublicKeyToken=b44f9351044011a3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\MiniProfiler.dll</HintPath>
+    </Reference>
     <Reference Include="MySql.Data, Version=6.9.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\GAMES\GP1\DECHEMOBILEMVC4\DECHEMOBILEMVC4\bin\MySql.Data.dll</HintPath>
+      <HintPath>..\packages\MySql.Data.6.9.9\lib\net45\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data.Entity, Version=6.9.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\GAMES\GP1\DECHEMOBILEMVC4\DECHEMOBILEMVC4\bin\MySql.Data.Entity.dll</HintPath>
     </Reference>
+    <Reference Include="MySql.Data.Entity.EF6, Version=6.9.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MySql.ConnectorNET.Entity.6.8.3.2\lib\net45\MySql.Data.Entity.EF6.dll</HintPath>
+    </Reference>
     <Reference Include="MySql.Web, Version=6.9.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\GAMES\GP1\DECHEMOBILEMVC4\DECHEMOBILEMVC4\bin\MySql.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="ServiceStack.Text, Version=3.9.59.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -77,7 +123,6 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -88,7 +133,35 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.4.0.30506.0\lib\net40\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.30506.0\lib\net40\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.30506.0\lib\net40\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.Routing">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml" />
@@ -99,9 +172,6 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.4.5.6\lib\net40\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System.Net.Http">
     </Reference>
     <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -109,46 +179,23 @@
     </Reference>
     <Reference Include="System.Net.Http.WebRequest">
     </Reference>
-    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.Helpers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.4.0.20710.0\lib\net40\System.Web.Http.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.4.0.20710.0\lib\net40\System.Web.Http.WebHost.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.20710.0\lib\net40\System.Web.Mvc.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.20710.0\lib\net40\System.Web.Razor.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\AuthConfig.cs" />
+    <Compile Include="App_Start\SiteConfig.cs" />
     <Compile Include="App_Start\ThemesViewActionFilter.cs" />
+    <Compile Include="Controllers\AsyncController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BlockController.cs" />
     <Compile Include="Controllers\CaptchaController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LinkController.cs" />
     <Compile Include="Controllers\MemberAddressController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\MemberWishListController.cs" />
@@ -156,7 +203,9 @@
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
+    <Compile Include="Controllers\PopupController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\SocialLoginController.cs" />
     <Compile Include="Controllers\VideoController.cs" />
     <Compile Include="Controllers\WidgetController.cs" />
     <Compile Include="DataAnnotations\BirthDayAttribute.cs" />
@@ -165,25 +214,58 @@
     <Compile Include="DataAnnotations\EmailAttribute.cs" />
     <Compile Include="DataAnnotations\PhoneAttribute.cs" />
     <Compile Include="DataAnnotations\UserNameAttribute.cs" />
+    <Compile Include="Filters\CategoryUpdateViewFilter.cs" />
+    <Compile Include="Filters\ProductUpdateViewFilter.cs" />
+    <Compile Include="Filters\NewsUpdateViewFilter.cs" />
+    <Compile Include="Filters\VideoUpdateViewFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\AuthenticationHelper.cs" />
     <Compile Include="Helpers\ConfigHelper.cs" />
+    <Compile Include="Helpers\CustomPrincipal.cs" />
+    <Compile Include="Helpers\Discount\Discount.cs" />
+    <Compile Include="Helpers\Discount\DiscountSubTotalRule.cs" />
+    <Compile Include="Helpers\Discount\DiscountItemRule.cs" />
+    <Compile Include="Helpers\Discount\IDiscountRule.cs" />
+    <Compile Include="Helpers\FilterParser.cs" />
+    <Compile Include="Helpers\MemberWishListUrlHelper.cs" />
     <Compile Include="Helpers\MpStartViewEngine.cs" />
     <Compile Include="Helpers\MyUser.cs" />
+    <Compile Include="Helpers\ProductExtension.cs" />
+    <Compile Include="Helpers\UrlHelperExtensions.cs" />
+    <Compile Include="Helpers\Url\CaptchaUrlHelper.cs" />
+    <Compile Include="Helpers\Url\ComponentUrlHelper.cs" />
+    <Compile Include="Helpers\Url\FacebookPluginUrlHelper.cs" />
+    <Compile Include="Helpers\Url\HomeUrlHelper.cs" />
+    <Compile Include="Helpers\Url\MemberWishlistUrlHelper.cs" />
+    <Compile Include="Helpers\Url\PopupUrlHelper.cs" />
+    <Compile Include="Helpers\Url\ProductUrlHelper.cs" />
     <Compile Include="Helpers\Url\AccountUrlHelper.cs" />
+    <Compile Include="Helpers\Url\AsyncUrlHelper.cs" />
     <Compile Include="Helpers\Url\CartUrlHelper.cs" />
     <Compile Include="Helpers\Url\ContactUrlHelper.cs" />
     <Compile Include="Helpers\Url\ImageUrlHelper.cs" />
+    <Compile Include="Helpers\Url\MemberAddressUrlHelper.cs" />
     <Compile Include="Helpers\Url\MpstartUrlHelper.cs" />
     <Compile Include="Helpers\Url\NewsUrlHelper.cs" />
+    <Compile Include="Helpers\Url\PaymentUrlHelper.cs" />
+    <Compile Include="Helpers\Url\SocialLoginUrlHelper.cs" />
+    <Compile Include="Helpers\Url\VideoUrlHelper.cs" />
+    <Compile Include="Helpers\View\BaseViewPage.cs" />
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\BigSaleViewModels.cs" />
     <Compile Include="Models\CaptchaModel.cs" />
     <Compile Include="Models\CartItem.cs" />
     <Compile Include="Models\ContactModels.cs" />
+    <Compile Include="Models\MemberWishListViewModels.cs" />
+    <Compile Include="Models\PaginationModels.cs" />
     <Compile Include="Models\ProductModels.cs" />
     <Compile Include="Models\ProductsCartModels.cs" />
+    <Compile Include="Models\ProductCategoryViewModels.cs" />
+    <Compile Include="Models\SearchViewModels.cs" />
+    <Compile Include="Models\ShippingModels.cs" />
+    <Compile Include="Models\ShippingModelsAnonymous.cs" />
     <Compile Include="Models\ShoppingCart.cs" />
     <Compile Include="Models\ShoppingCartModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -1276,13 +1358,21 @@
     <Content Include="Content\Css\89c2a60da88957a8747cf3dcf8f70317.css" />
     <Content Include="Content\Css\category.css" />
     <Content Include="Content\Css\de41aebe8b7430e0fba5c37a38817101.css" />
+    <Content Include="Content\Css\extention.css" />
     <Content Include="Content\Css\home.css" />
     <Content Include="Content\Css\landing.css" />
+    <Content Include="Content\Css\login.css" />
+    <Content Include="Content\Css\new_login.css" />
+    <Content Include="Content\Css\profile.css" />
+    <Content Include="Content\Css\register.css" />
     <Content Include="Content\Css\select2.min.css" />
     <Content Include="Content\Css\style.css" />
     <Content Include="Content\Css\vthree.css" />
+    <Content Include="Content\Images\ico12.png" />
+    <Content Include="Content\Images\no-avatar.png" />
     <Content Include="Content\Images\background-newsletter_2048x.jpg" />
     <Content Include="Content\Images\bct.png" />
+    <Content Include="Content\Images\cart-empty.png" />
     <Content Include="Content\Images\cateicon.png" />
     <Content Include="Content\Images\emailicon.png" />
     <Content Include="Content\Images\lk1.png" />
@@ -1292,12 +1382,15 @@
     <Content Include="Content\Images\lk5.png" />
     <Content Include="Content\Images\lk6.png" />
     <Content Include="Content\Images\loading.gif" />
+    <Content Include="Content\Images\logo.png" />
     <Content Include="Content\Images\micon1.png" />
     <Content Include="Content\Images\micon2.png" />
     <Content Include="Content\Images\micon3.png" />
+    <Content Include="Content\Images\mpstart-not-found-pgae.png" />
     <Content Include="Content\Images\noimage.jpg" />
     <Content Include="Content\Images\phoneicon.png" />
     <Content Include="Content\Images\trust.png" />
+    <Content Include="Content\Images\Upload\block_image_left.jpg" />
     <Content Include="Content\Images\z_1600x.png" />
     <Content Include="Content\js\acymailing_module.js" />
     <Content Include="Content\js\bootstrap-tooltip.js" />
@@ -1346,6 +1439,32 @@
     <Content Include="Content\Plugins\font-awesome-4.7\css\font-awesome.css" />
     <Content Include="Content\Plugins\font-awesome-4.7\css\font-awesome.min.css" />
     <Content Include="Content\Plugins\font-awesome-4.7\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\Plugins\jquery.fancybox\fancybox-x.png" />
+    <Content Include="Content\Plugins\jquery.fancybox\fancybox-y.png" />
+    <Content Include="Content\Plugins\jquery.fancybox\fancybox.png" />
+    <Content Include="Content\Plugins\jquery.fancybox\fancybox_loading%402x.gif" />
+    <Content Include="Content\Plugins\jquery.fancybox\fancybox_loading.gif" />
+    <Content Include="Content\Plugins\jquery.fancybox\fancybox_overlay.png" />
+    <Content Include="Content\Plugins\jquery.fancybox\fancybox_sprite%402x.png" />
+    <Content Include="Content\Plugins\jquery.fancybox\fancybox_sprite.png" />
+    <Content Include="Content\Plugins\jquery.fancybox\fancy_close.png" />
+    <Content Include="Content\Plugins\jquery.fancybox\fancy_loading.png" />
+    <Content Include="Content\Plugins\jquery.fancybox\fancy_nav_left.png" />
+    <Content Include="Content\Plugins\jquery.fancybox\fancy_nav_right.png" />
+    <Content Include="Content\Plugins\jquery.fancybox\fancy_shadow_e.png" />
+    <Content Include="Content\Plugins\jquery.fancybox\fancy_shadow_n.png" />
+    <Content Include="Content\Plugins\jquery.fancybox\fancy_shadow_ne.png" />
+    <Content Include="Content\Plugins\jquery.fancybox\fancy_shadow_nw.png" />
+    <Content Include="Content\Plugins\jquery.fancybox\fancy_shadow_s.png" />
+    <Content Include="Content\Plugins\jquery.fancybox\fancy_shadow_se.png" />
+    <Content Include="Content\Plugins\jquery.fancybox\fancy_shadow_sw.png" />
+    <Content Include="Content\Plugins\jquery.fancybox\fancy_shadow_w.png" />
+    <Content Include="Content\Plugins\jquery.fancybox\fancy_title_left.png" />
+    <Content Include="Content\Plugins\jquery.fancybox\fancy_title_main.png" />
+    <Content Include="Content\Plugins\jquery.fancybox\fancy_title_over.png" />
+    <Content Include="Content\Plugins\jquery.fancybox\fancy_title_right.png" />
+    <Content Include="Content\Plugins\jquery.fancybox\jquery.fancybox.css" />
+    <Content Include="Content\Plugins\jquery.fancybox\jquery.fancybox.pack.js" />
     <Content Include="Content\Plugins\jquery\js\jquery-1.1.1.min.js" />
     <Content Include="Content\Plugins\jquery\js\jquery-2.2.0.min.js" />
     <Content Include="Content\Plugins\jquery\js\jquery-3.1.1.min.js" />
@@ -1517,23 +1636,43 @@
     <Content Include="Content\themes\mpstart\tether\js\tether.min.js" />
     <Content Include="Content\themes\myshopify\css\animate.css" />
     <Content Include="Content\themes\myshopify\css\bootstrap.min.css" />
+    <Content Include="Content\themes\myshopify\css\checkout.css" />
+    <Content Include="Content\themes\myshopify\css\checkout_stylesheet\oldie.css" />
+    <Content Include="Content\themes\myshopify\css\checkout_stylesheet\v2-ltr-edge.css" />
     <Content Include="Content\themes\myshopify\css\color.css" />
     <Content Include="Content\themes\myshopify\css\component.css" />
     <Content Include="Content\themes\myshopify\css\customstyle.css" />
     <Content Include="Content\themes\myshopify\css\font-icon.css" />
     <Content Include="Content\themes\myshopify\css\owl.theme.css" />
+    <Content Include="Content\themes\myshopify\css\popup.css" />
     <Content Include="Content\themes\myshopify\css\responsive.css" />
     <Content Include="Content\themes\myshopify\css\retina-responsive.css" />
+    <Content Include="Content\themes\myshopify\css\social.css" />
     <Content Include="Content\themes\myshopify\css\styles-setting.css" />
     <Content Include="Content\themes\myshopify\css\styles.css" />
     <Content Include="Content\themes\myshopify\fonts\ElegantIcons.svg" />
     <Content Include="Content\themes\myshopify\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\themes\myshopify\fonts\ionicons.svg" />
     <Content Include="Content\themes\myshopify\fonts\Simple-Line-Icons.svg" />
+    <Content Include="Content\themes\myshopify\images\background-newsletter_2048x.jpg" />
+    <Content Include="Content\themes\myshopify\images\btn-cart01.png" />
+    <Content Include="Content\themes\myshopify\images\btn-remove01.png" />
+    <Content Include="Content\themes\myshopify\images\collape.png" />
+    <Content Include="Content\themes\myshopify\images\expand.png" />
+    <Content Include="Content\themes\myshopify\images\favicon.png" />
     <Content Include="Content\themes\myshopify\images\loading-top.gif" />
+    <Content Include="Content\themes\myshopify\images\Logo MP.png" />
+    <Content Include="Content\themes\myshopify\images\logo.png" />
+    <Content Include="Content\themes\myshopify\images\logoh70.png" />
+    <Content Include="Content\themes\myshopify\images\opc-ajax-loader.gif" />
+    <Content Include="Content\themes\myshopify\images\refresh.png" />
+    <Content Include="Content\themes\myshopify\images\select2.png" />
+    <Content Include="Content\themes\myshopify\images\social\facebook.png" />
+    <Content Include="Content\themes\myshopify\images\social\google.png" />
     <Content Include="Content\themes\myshopify\js\ajax.jquery.min.js" />
     <Content Include="Content\themes\myshopify\js\all.jquery.min.js" />
     <Content Include="Content\themes\myshopify\js\canvas.js" />
+    <Content Include="Content\themes\myshopify\js\checkout.js" />
     <Content Include="Content\themes\myshopify\js\classie.js" />
     <Content Include="Content\themes\myshopify\js\currencies.js" />
     <Content Include="Content\themes\myshopify\js\elevatezoom\demo.html" />
@@ -1688,7 +1827,6 @@
     <Content Include="Views\Admin\AccountInfo.cshtml" />
     <Content Include="Views\Home\Detail.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\MarketCategory.cshtml" />
     <Content Include="Views\Layout\Error.cshtml" />
     <Content Include="Views\Layout\_Layout.cshtml" />
     <Content Include="Views\Widget\Banner.cshtml" />
@@ -1720,7 +1858,6 @@
     <Content Include="Content\themes\myshopify\js\elevatezoom\elevatezoom.jquery.json" />
     <Content Include="Content\themes\myshopify\js\elevatezoom\README.md" />
     <None Include="Properties\PublishProfiles\MPStart.pubxml" />
-    <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Views\Widget\Search.cshtml" />
     <Content Include="Views\Widget\LienHe.cshtml" />
     <Content Include="Views\Widget\Comment.cshtml" />
@@ -1730,7 +1867,6 @@
     <Content Include="Views\Widget\MarketList.cshtml" />
     <Content Include="Views\Widget\Menu2.cshtml" />
     <Content Include="Views\Home\Category.cshtml" />
-    <Content Include="Views\Home\Market.cshtml" />
     <Content Include="Views\Layout\_AccountLayout.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
@@ -1744,22 +1880,17 @@
     <Content Include="Views\Admin\MarketThemMoi.cshtml" />
     <Content Include="Views\Admin\MarketSua.cshtml" />
     <Content Include="Views\Layout\_ShopCartLayout.cshtml" />
-    <Content Include="Views\Home\ShopCartDetail.cshtml" />
     <Content Include="Views\Layout\_LayoutMarketList.cshtml" />
-    <Content Include="Views\Home\MarketList.cshtml" />
     <Content Include="Views\Widget\SlideSide.cshtml" />
     <Content Include="Views\Home\News.cshtml" />
     <Content Include="Views\Widget\Footer2.cshtml" />
-    <Content Include="Views\Home\YoutubeDetail.cshtml" />
     <Content Include="Views\Layout\_RegisterMarket.cshtml" />
-    <Content Include="Views\Home\MarketRegister.cshtml" />
     <Content Include="Views\Account\_Captcha.cshtml" />
     <Content Include="Views\Account\_InvisibleCaptcha.cshtml" />
     <Content Include="Views\Layout\_MobileLayout.cshtml" />
     <Content Include="Views\Home\MobileIndex.cshtml" />
     <Content Include="Views\Home\MobileDetail.cshtml" />
     <Content Include="Views\Layout\_MobileDetailLayout.cshtml" />
-    <Content Include="Views\Home\MobileCategory.cshtml" />
     <Content Include="Views\Widget\MobileMenu.cshtml" />
     <Content Include="Views\Widget\ChooseUnit.cshtml" />
     <Content Include="Views\themes\mpstart\Ads\HomeProduct.cshtml">
@@ -1835,14 +1966,12 @@
     <Content Include="Views\themes\myshopify\Layout\Resources.cshtml">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="Views\themes\myshopify\Pages\category.cshtml" />
-    <Content Include="Views\themes\myshopify\Pages\detail.cshtml" />
-    <Content Include="Views\themes\myshopify\Pages\error.cshtml" />
-    <Content Include="Views\themes\myshopify\Pages\home.cshtml">
+    <Content Include="Views\themes\myshopify\Pages\Detail.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Error.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Home.cshtml">
       <SubType>Code</SubType>
     </Content>
     <Content Include="Views\themes\myshopify\Pages\Search.cshtml" />
-    <Content Include="Views\themes\myshopify\Pages\ShopCardDetail.cshtml" />
     <Content Include="Views\themes\myshopify\Pages\Video.cshtml" />
     <Content Include="Views\themes\myshopify\Product\ProductHot.cshtml" />
     <Content Include="Views\themes\myshopify\Product\HomeCategory.cshtml" />
@@ -1854,7 +1983,7 @@
     <Content Include="Views\themes\myshopify\Menu\CategoryMenu.cshtml" />
     <Content Include="Views\themes\myshopify\Menu\MainmenuSource.cshtml" />
     <Content Include="Views\themes\myshopify\Menu\Mainmenu.cshtml" />
-    <Content Include="Views\themes\myshopify\Pages\article.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Article.cshtml" />
     <Content Include="Views\themes\myshopify\Widget\HotProductLeft.cshtml" />
     <Content Include="Views\themes\myshopify\Widget\AdvLeft.cshtml" />
     <Content Include="Views\themes\myshopify\Blocks\Filter\Prices.cshtml" />
@@ -1889,18 +2018,11 @@
     <Content Include="Views\themes\myshopify\Pages\News.Index.cshtml" />
     <Content Include="Views\themes\myshopify\Product\ProductBlockLeft.cshtml" />
     <Content Include="Views\themes\myshopify\Banner\CategoryAdv.cshtml" />
-    <Content Include="Views\themes\myshopify\Pages\contact.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Contact.cshtml" />
     <Content Include="Views\themes\myshopify\Pages\News.Detail.cshtml" />
     <Content Include="Views\themes\myshopify\Pages\Member.Active.cshtml">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="Views\themes\myshopify\Pages\Member.Addresses.cshtml" />
-    <Content Include="Views\themes\myshopify\Pages\Member.ChangePassword.cshtml" />
-    <Content Include="Views\themes\myshopify\Pages\MemberForgotPassword.cshtml" />
-    <Content Include="Views\themes\myshopify\Pages\Member.GetToken.cshtml" />
-    <Content Include="Views\themes\myshopify\Pages\Member.InvalidToken.cshtml" />
-    <Content Include="Views\themes\myshopify\Pages\Member.Login.cshtml" />
-    <Content Include="Views\themes\myshopify\Pages\Member.Profile.cshtml" />
     <Content Include="Views\themes\myshopify\Pages\Member.Register.cshtml" />
     <Content Include="Views\themes\myshopify\Pages\Cart.Checkout.cshtml">
       <SubType>Code</SubType>
@@ -1911,20 +2033,92 @@
     <Content Include="Views\themes\myshopify\Pages\Wishlist.Index.cshtml" />
     <Content Include="Views\themes\myshopify\Product_div\Type1_4.cshtml" />
     <Content Include="Views\themes\myshopify\Banner\LeftProductAdv.cshtml" />
-    <Content Include="Views\themes\myshopify\Pages\Member.Active.cshtml" />
     <Content Include="Views\themes\myshopify\Pages\Member.Addresses.cshtml" />
     <Content Include="Views\themes\myshopify\Pages\Member.ChangePassword.cshtml" />
     <Content Include="Views\themes\myshopify\Pages\Member.GetToken.cshtml" />
     <Content Include="Views\themes\myshopify\Pages\Member.InvalidToken.cshtml" />
     <Content Include="Views\themes\myshopify\Pages\Member.Login.cshtml" />
     <Content Include="Views\themes\myshopify\Pages\Member.Profile.cshtml" />
-    <Content Include="Views\themes\myshopify\Pages\Member.Register.cshtml" />
     <Content Include="Views\themes\myshopify\Pages\MemberForgotPassword.cshtml" />
     <Content Include="Views\themes\myshopify\Product\PageItems.cshtml" />
     <Content Include="Views\themes\myshopify\Pages\Video.Index.cshtml" />
     <Content Include="Views\themes\myshopify\Blocks\VideoItemBlock.cshtml" />
     <Content Include="Views\themes\myshopify\Menu\OffCanvas.cshtml" />
     <Content Include="Views\themes\myshopify\Blocks\Filter\ProductList.cshtml" />
+    <Content Include="Views\themes\mamoo\Blocks\VideoItemBlock.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\Account.Active.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\Account.Addresses.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\Account.ChangePassword.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\Account.ForgotPassword.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\Account.GetToken.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\Account.InvalidToken.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\Account.Login.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\Account.Profile.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\Account.Register.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\Cart.View.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\Cart.Checkout.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\Video.Index.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\contact.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\News.Detail.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\news.index.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\PageItems.cshtml" />
+    <Content Include="Views\themes\myshopify\Async\_ListBrandAsync.cshtml" />
+    <Content Include="Views\themes\myshopify\Async\_ListProductByCategoryAsync.cshtml" />
+    <Content Include="Views\themes\myshopify\Blocks\_BoxItem.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Payment.Index.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Cart.Empty.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Payment.Success.cshtml" />
+    <None Include="Properties\PublishProfiles\Mpstart30062017.pubxml" />
+    <Content Include="Views\themes\myshopify\Async\_ListProductRelativedAsync.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\Category.cshtml" />
+    <Content Include="Views\themes\myshopify\Async\_ListProductBestSellerAsync.cshtml" />
+    <Content Include="Views\themes\myshopify\Async\_ListProductBrandFilterAsync.cshtml" />
+    <Content Include="Views\themes\myshopify\Async\_ListProductManufacturerFilterAsync.cshtml" />
+    <Content Include="Views\themes\myshopify\Async\_LeftBannerAsyn.cshtml" />
+    <Content Include="Views\themes\myshopify\Async\_LeftBannerHomeTopAsyn.cshtml" />
+    <Content Include="Views\themes\myshopify\Async\_BigSaleTopBannerAsync.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\category - Copy.cshtml" />
+    <Content Include="Views\themes\mamoo\Components\CategoryHomeComponent.cshtml" />
+    <Content Include="Views\themes\mamoo\Components\PaginationComponent.cshtml" />
+    <Content Include="Views\themes\mamoo\Components\ProductComponent.cshtml" />
+    <Content Include="Views\themes\mamoo\Components\ProductPriceComponent.cshtml" />
+    <Content Include="Views\themes\mamoo\Components\YoutubeVideoComponent.cshtml" />
+    <Content Include="Views\themes\myshopify\Async\_ListProductPriceFilterAsync.cshtml" />
+    <Content Include="Views\themes\myshopify\Async\_BannerBigSaleAsync.cshtml" />
+    <Content Include="Views\themes\myshopify\Async\_ListVideoHomeAsync.cshtml" />
+    <Content Include="Views\themes\myshopify\Async\_ListVideoRelativedAsync.cshtml" />
+    <Content Include="Views\themes\myshopify\Async\_ListProductLastestAsync.cshtml" />
+    <Content Include="Views\themes\myshopify\Async\_ListHotCategoryAsync.cshtml" />
+    <None Include="Views\themes\myshopify\Blocks\ListSubCategory.cshtml" />
+    <Content Include="Views\themes\myshopify\Components\CategoryHomeComponent.cshtml" />
+    <Content Include="Views\themes\myshopify\Components\ProductComponent.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\LoginFail.cshtml" />
+    <Content Include="Views\themes\myshopify\Popup\Login.cshtml" />
+    <Content Include="Views\themes\myshopify\Popup\Register.cshtml" />
+    <Content Include="Views\themes\myshopify\Popup\ForgotPassword.cshtml" />
+    <Content Include="Views\themes\myshopify\Components\PaginationComponent.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\Member.Active.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\Member.Addresses.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\Member.ChangePassword.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\Member.GetToken.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\Member.InvalidToken.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\Member.Login.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\Member.Profile.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\Cart.Empty.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\Payment.Success.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\Payment.Index.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\Member.Register.cshtml" />
+    <Content Include="Views\themes\mamoo\Blocks\MenuCanvas.cshtml" />
+    <Content Include="Views\themes\myshopify\Components\YoutubeVideoComponent.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\BigSale.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\NotFound.cshtml" />
+    <Content Include="Views\themes\myshopify\Popup\LoginAndBuy.cshtml" />
+    <Content Include="Views\themes\myshopify\Pages\BuyNow.cshtml" />
+    <Content Include="Views\themes\myshopify\Components\CartComponent.cshtml" />
+    <Content Include="Views\themes\myshopify\Layout\CartLayout.cshtml" />
+    <Content Include="Views\themes\myshopify\Components\ProductPriceComponent.cshtml" />
+    <Content Include="Views\themes\myshopify\Components\ProductQuantityComponent.cshtml" />
+    <Content Include="Views\themes\myshopify\Components\ProductRateComponent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1935,9 +2129,12 @@
     <Folder Include="Content\Images\Upload\_thumbs\Images\" />
     <Folder Include="Content\Mobile\Css\" />
     <Folder Include="Content\thumb\" />
+    <Folder Include="Views\themes\myshopify\Templates\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\V308CMS.Common\V308CMS.Common.csproj">
@@ -1948,17 +2145,26 @@
       <Project>{4f5528a8-75f6-4b33-b254-2eaa5f916f12}</Project>
       <Name>V308CMS.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\V308CMS.Dependencies\V308CMS.Dependencies.csproj">
+      <Project>{6330e246-9e72-4bf7-835e-971936615b7f}</Project>
+      <Name>V308CMS.Dependencies</Name>
+    </ProjectReference>
     <ProjectReference Include="..\V308CMS.Respository\V308CMS.Respository.csproj">
       <Project>{4540f1d2-c7ac-4bc4-9e2d-f2271279aeac}</Project>
       <Name>V308CMS.Respository</Name>
     </ProjectReference>
+    <ProjectReference Include="..\V308CMS.Socail\V308CMS.Social.csproj">
+      <Project>{920e78ff-184d-4484-afab-b805325d0e48}</Project>
+      <Name>V308CMS.Social</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <!--<WCFMetadata Include="Service References\" />-->
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
-    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
-    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">14.0</VisualStudioVersion>
+    <!--<VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>-->
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
@@ -1970,7 +2176,16 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <SaveServerSettingsInUserFile>True</SaveServerSettingsInUserFile>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>6786</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:6786/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>
@@ -1981,4 +2196,6 @@
   </Target>
   <Target Name="AfterBuild">
   </Target> -->
+  <Target Name="GatherAllFilesToPublish">
+  </Target>
 </Project>

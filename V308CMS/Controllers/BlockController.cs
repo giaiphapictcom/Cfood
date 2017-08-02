@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using V308CMS.Common;
 using V308CMS.Data;
 using V308CMS.Models;
+using V308CMS.Data.Models;
 
 namespace V308CMS.Controllers
 {
@@ -17,12 +19,19 @@ namespace V308CMS.Controllers
         {         
             return View("Resources");
         }
-
+        [ChildActionOnly]
         public ActionResult MainMenu()
-        {
-          
 
-            return View("MainMenu", NewsService.GetNewsGroup());
+        {          
+            return View("MainMenu", MenuConfigService.GetAll(Data.Helpers.Site.home));
+        }
+
+        public ActionResult MenuCanvas()
+        {
+
+            return View("MenuCanvas", MenuConfigService.GetAll(Data.Helpers.Site.home));
+        //{          
+        //    return View("MainMenu", NewsService.GetNewsGroup());
         }
 
         public ActionResult LeftColumn()
@@ -50,18 +59,18 @@ namespace V308CMS.Controllers
             NewsGroups videoGroup = NewsService.SearchNewsGroup("video");
             if (videoGroup != null)
             {
-                model.News = NewsService.LayTinTheoGroupId(videoGroup.ID);
+                model.News = NewsService.LayTinTheoGroupId(videoGroup.ID,2);
             }                     
             return View("LeftColumn", model);
           
         }
+        [ChildActionOnly]
         public ActionResult Header()
-        {
-            var shoppingCart = ShoppingCart.Instance;
-            var result = new ShoppingCartModels
+        {           
+            var result =  new ShoppingCartModels
             {
-                item_count = shoppingCart.Items.Count,
-                items = shoppingCart.Items.Select(product => new ProductsCartModels
+                item_count = MyCart.Items.Count,
+                items = MyCart.Items.Select(product => new ProductsCartModels
                 {
                     Id = product.ProductItem.Id,
                     Url = url.productURL(product.ProductItem.Name, product.ProductItem.Id),
@@ -70,18 +79,19 @@ namespace V308CMS.Controllers
                     Image = product.ProductItem.Avatar,
                     Price = product.ProductItem.Price.ToString("N0")
                 }).ToList(),
-                total_price = shoppingCart.SubTotal
+                total_price = MyCart.SubTotal
 
             };                        
             return View("Header", result);
         }
+        [ChildActionOnly]
         public ActionResult Footer()
         {
             var model = new PageFooterControl();
             var newsCategorys = new List<NewsGroupPage>(); ;
 
             var footerCate = NewsService.SearchNewsGroup("footer");
-            if (footerCate.ID > 0)
+            if (footerCate !=null && footerCate.ID > 0)
             {
                 var categorys = NewsService.GetNewsGroup(footerCate.ID, true, 3);
                 if (categorys.Any())
@@ -93,13 +103,14 @@ namespace V308CMS.Controllers
                 }
             }
             model.NewsCategorys = newsCategorys;
-
             var whoSale = NewsService.LayNhomTinAn(29);
             if (whoSale.ID > 0)
             {
-                var whoSalePage = new NewsGroupPage();
-                whoSalePage.Name = whoSale.Name;
-                whoSalePage.NewsList = NewsService.LayDanhSachTinMoiNhatTheoGroupId(5, whoSale.ID);
+                var whoSalePage = new NewsGroupPage
+                {
+                    Name = whoSale.Name,
+                    NewsList = NewsService.LayDanhSachTinMoiNhatTheoGroupId(5, whoSale.ID)
+                };
 
                 model.CategoryWhoSale = whoSalePage;
             }
@@ -111,14 +122,27 @@ namespace V308CMS.Controllers
             }                
             return View("Footer", model);
         }
-        
+
         #endregion
 
         #region Action for Home Page
-        
+        [ChildActionOnly]
         public ActionResult HomeSlides()
-        {                
-            return View("HomeSlides");
+        {
+
+            Banner model = new Banner();
+            try {
+                var banners = BannerService.GetList(-1, Data.Helpers.Site.home, true, 1);
+                if (banners.Any()) {
+                    model = banners.FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+            }
+
+            return View("HomeSlides", model);
         }
         public ActionResult HomeAdsProduct()
         {
@@ -130,7 +154,12 @@ namespace V308CMS.Controllers
         {
             return View("VideoItemBlock", video);
         }
+        public ActionResult YoutubeBlock(V308CMS.Data.News video)
+        {
+            return View("VideoItemBlock", video);
+        }
         
+
         #endregion
 
 

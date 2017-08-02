@@ -406,7 +406,7 @@
     display: none;
   }
   .menu-action{display:none;}
-  body .navbar-toggle{display:block;margin:0 auto;float:left;font-size:36px;padding: 5px 0;}
+  body .navbar-toggle{display:block;margin:0 auto;float:left;font-size:26px;padding: 5px 0;}
   #header-menu .menu-top{text-align:center;}
   .header-top-right .top-currency .ion-navicon:before {content: "\f43c";} 
   .main-slideshow .slide-des .title::before, body .slideshow .content-slideshow h2::before {border-bottom: 3px solid #ff66cc;bottom: -5px;}

@@ -1,0 +1,71 @@
+﻿@using V308CMS.Helpers
+@using V308CMS.Helpers.Url
+@model V308CMS.Data.ProductOrder
+@{
+    Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/CartLayout.cshtml";
+    ViewBag.Title = "Thông tin thanh toán";   
+}
+<div class="step" data-step="shipping_method">
+    <form data-shipping-method-form="true" class="edit_checkout" action="@Url.PaymentSuccessUrl()" method="post">
+        <div class="step__sections">
+            <div class="section">
+                <div class="content-box">
+                    <div class="content-box__row content-box__row--tight-spacing-vertical content-box__row--secondary">
+                        <div class="review-block">
+                            <div class="review-block__inner">
+                                <div class="review-block__label">
+                                    Địa chỉ nhận hàng
+                                </div>
+                                <div class="review-block__content">
+                                    @Model.Address
+                                </div>
+                            </div>
+                            <div class="review-block__link">
+                                <a class="link--small" href="@(AuthenticationHelper.IsAuthenticated?Url.CheckoutCartUrl():Url.PaymentBuyNowUrl())" title="Sửa địa chỉ nhận hàng">
+                                    <i class="fa fa-pencil">Sửa</i>
+                                    <span class="visually-hidden">Sửa</span>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="section section--shipping-method">
+                <div class="section__header">
+                    <h2 class="section__title">Hình thức thanh toán</h2>
+                </div>
+                <div class="section__content">
+                    <div class="content-box" data-shipping-methods>
+                        <div class="content-box__row">
+                            <div class="radio-wrapper" data-shipping-method="shopify-Standard%20Shipping-10.00">
+                                <div class="radio__input">
+                                    <input checked="checked" class="input-radio" data-checkout-total-shipping="$10.00" data-checkout-total-shipping-cents="1000" data-checkout-shipping-rate="$10.00" data-checkout-original-shipping-rate="$10.00" data-checkout-total-taxes="$83.90" data-checkout-total-taxes-cents="8390" data-checkout-total-price="$932.90" data-checkout-total-price-cents="93290" data-checkout-payment-due="$932.90" data-checkout-payment-due-cents="93290" data-checkout-payment-subform="required" data-checkout-subtotal-price="$839.00" data-checkout-subtotal-price-cents="83900" data-backup="shopify-Standard%20Shipping-10.00" type="radio" value="shopify-Standard%20Shipping-10.00" name="checkout[shipping_rate][id]" id="checkout_shipping_rate_id_shopify-standard20shipping-1000" />
+                                </div>
+                                <label class="radio__label" for="checkout_shipping_rate_id_shopify-standard20shipping-1000">
+                                    <span class="radio__label__primary" data-shipping-method-label-title="Standard Shipping">
+                                        Thanh toán tiền mặt khi nhận hàng
+                                    </span>
+
+                                </label>
+                            </div> <!-- /radio-wrapper-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="step__footer" data-step-footer>
+
+            <button name="button" type="submit" class="step__footer__continue-btn btn" style="padding: 10px; background-color: #ff0000 !important">
+                <span class="btn__content">Đặt mua</span>
+                <i class="btn__spinner icon icon--button-spinner"></i>
+            </button>
+            <a class="step__footer__previous-link" href="@(AuthenticationHelper.IsAuthenticated?Url.CheckoutCartUrl():Url.PaymentBuyNowUrl())">
+                <svg class="icon-svg icon-svg--color-accent icon-svg--size-10 previous-link__icon rtl-flip" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><path d="M8 1L7 0 3 4 2 5l1 1 4 4 1-1-4-4" /></svg>
+                <span class="step__footer__previous-link-content">Thông tin khách hàng</span>
+            </a>
+        </div>
+
+
+    </form>
+</div>

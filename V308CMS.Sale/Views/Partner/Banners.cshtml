@@ -1,0 +1,57 @@
+﻿@model V308CMS.Data.AffiliateBannerPage
+@using V308CMS.Data
+@using V308CMS.Common
+
+@{
+
+    Layout = "~/Views/Affiliate/Layout/Backend.cshtml";
+    string PageTitle = "Danh Sách Banner";
+}
+@section header {
+    <title>@PageTitle</title>
+
+}
+<h4>@PageTitle</h4>
+
+<div class="row">
+
+    <div class="col-md-3">
+        <div class="form-group border-radius-0 bg-secondary">
+
+            <select class="form-control" id="exampleSelect1">
+                <option>Hiển thị : 10</option>
+                <option>Hiển thị : 30</option>
+                <option>Hiển thị : 50</option>
+                <option>Hiển thị : 100</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-md-9 text-right">
+        @Html.Action("BlockPagination", "Theme", new { ProductTotal = Model.Total })
+
+    </div>
+
+</div>
+<hr />
+@if (Model.Banners != null && Model.Banners.Count() > 0)
+{
+
+    foreach (AffiliateBanner b in Model.Banners)
+    {
+        <div class="row itemview">
+            <div class="col-md-4"><img src="@url.Image(b.image,300,170)" class="img-responsive" /></div>
+            <div class="col-md-8">
+                <h5>@b.title</h5>
+                <p>@b.summary</p>
+            </div>
+        </div>
+            <hr />
+    }
+
+}
+
+<div class="row">
+    <div class="col-md-12 text-center">
+        @Html.Action("BlockPagination", "Theme", new { ProductTotal = Model.Total })
+    </div>
+</div>

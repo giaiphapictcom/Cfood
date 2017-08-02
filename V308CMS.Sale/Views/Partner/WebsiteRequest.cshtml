@@ -1,0 +1,35 @@
+﻿@using V308CMS.Common;
+@model V308CMS.Sale.Models.WebsiteRequestModel
+@{
+    Layout = "~/Views/Affiliate/Layout/Backend.cshtml";
+    string PageTitle = "Yêu cầu Website";
+}
+@section header {
+    <title>@PageTitle</title>
+
+}
+<h4>@PageTitle</h4>
+<form style="width: 80%; margin: 0 auto;" action="" method="post">
+    <div class="row">
+        
+        <div class="col-md-12">
+            @BootstrapHelper.InputText("domain", "Tên miền (ví dụ : TenBan."+ ViewBag.linkDomain + ")")
+        </div>
+        <div class="col-md-12">
+            @BootstrapHelper.InputText("email", "Email")
+        </div>
+        <div class="col-md-12">
+            @BootstrapHelper.InputText("mobile", "Số điện thoại")
+        </div>
+        <div class="col-md-12">
+            @BootstrapHelper.InputTextarea("address", "Địa chỉ giao dịch")
+        </div>
+        <div class="col-md-12">
+            @BootstrapHelper.InputTextarea("content", "Nội dung yêu cầu (ngành hàng muốn kinh doanh)")
+        </div>
+
+
+    </div>
+
+    <button type="submit" class="btn btn-success">Gửi yêu cầu Website</button>
+</form>

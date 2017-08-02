@@ -48,11 +48,11 @@ namespace V308CMS.Admin.Controllers
                     );
                 if (result == Result.Exists)
                 {
-                    ModelState.AddModelError("", $"Kho hàng '{store.Name}' đã tồn tại trên hệ thống.");
+                    ModelState.AddModelError("", string.Format("Kho hàng '{0}' đã tồn tại trên hệ thống.",store.Name) );
                     ViewBag.ListState = DataHelper.ListEnumType<StateEnum>();                  
                     return View("Create", store);
                 }
-                SetFlashMessage($"Thêm kho hàng '{store.Name}' thành công.");
+                SetFlashMessage( string.Format("Thêm kho hàng '{0}' thành công.",store.Name) );
                 if (store.SaveList)
                 {
                     return RedirectToAction("Index");
@@ -106,7 +106,7 @@ namespace V308CMS.Admin.Controllers
                     ViewBag.ListState = DataHelper.ListEnumType<StateEnum>();
                     return View("Edit", store);
                 }
-                SetFlashMessage($"Cập nhật kho hàng '{store.Name}' thành công.");
+                SetFlashMessage(string.Format("Cập nhật kho hàng '{0}' thành công.", store.Name));
                 if (store.SaveList)
                 {
                     return RedirectToAction("Index");

@@ -1,51 +1,38 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using V308CMS.Data;
+using V308CMS.Data.Helpers;
 
 namespace V308CMS.Respository
 {
     public interface ISiteConfigRespository
     {
-       
     }
     public class SiteConfigRespository: IBaseRespository<SiteConfig>, ISiteConfigRespository
     {
-        private V308CMSEntities _entities;
-        public SiteConfigRespository(V308CMSEntities entities)
+       
+        public SiteConfigRespository()
         {
-           this._entities = entities;
+           
         }
      
         public SiteConfig Find(int id)
         {
-
-            return (from config in _entities.SiteConfig
-                where config.id == id
-                select config).FirstOrDefault();
-
             using (var entities = new V308CMSEntities())
             {
                 return (from config in entities.SiteConfig
-                        where config.id == id
+                        where config.Id == id
                         select config).FirstOrDefault();
             }
             
-
         }
 
         public string Delete(int id)
         {
-
-            //var configItem = (from config in _entities.SiteConfig
-            //        where config.id == id
-            //        select config).FirstOrDefault();
-            //if (configItem != null)
-
             using (var entities = new V308CMSEntities())
-
             {
                 var configItem = (from config in entities.SiteConfig
-                                  where config.id == id
+                                  where config.Id == id
                                   select config).FirstOrDefault();
                 if (configItem != null)
                 {
@@ -61,34 +48,29 @@ namespace V308CMS.Respository
 
         public string Update(SiteConfig data)
         {
-
-
             using (var entities = new V308CMSEntities())
             {
                 var configItem = (from config in entities.SiteConfig
-                                  where config.id == data.id
+                                  where config.Id == data.Id
                                   select config).FirstOrDefault();
                 if (configItem != null)
                 {
-                    configItem.name = data.name;
-                    configItem.content = data.content;
+                    configItem.Name = data.Name;
+                    configItem.Content = data.Content;
                     entities.SaveChanges();
                     return "ok";
                 }
                 return "not_exists";
-
             }
            
         }
 
         public string Insert(SiteConfig data)
         {
-
             using (var entities = new V308CMSEntities())
-
             {
                 var configItem = (from config in entities.SiteConfig
-                                  where config.name == data.name
+                                  where config.Name == data.Name
                                   select config).FirstOrDefault();
                 if (configItem == null)
                 {
@@ -103,14 +85,32 @@ namespace V308CMS.Respository
 
         public List<SiteConfig> GetAll()
         {
-
             using (var entities = new V308CMSEntities())
             {
-                return (from config in entities.SiteConfig
 
-                        orderby config.id descending
+                return (from config in entities.SiteConfig
+                        orderby config.Id descending
                         select config
                 ).ToList();
+            }
+        }
+        public List<SiteConfig> GetAll(string site=Site.home)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                var items = entities.SiteConfig.Select(c=>c);
+                //return (from config in entities.SiteConfig
+                //        orderby config.Id descending
+                //        select config
+                //).ToList();
+                if (site == Site.home)
+                {
+                    items = items.Where(c => c.Site == site || c.Site == "" || c.Site == "1" || c.Site == null);
+                }
+                else {
+                    items = items.Where(c=>c.Site==site);
+                }
+                return items.OrderByDescending(c => c.Id).ToList();
             }
             
         }

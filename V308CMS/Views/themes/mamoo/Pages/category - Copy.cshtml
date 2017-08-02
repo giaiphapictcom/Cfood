@@ -1,0 +1,98 @@
+﻿@model  V308CMS.Data.ProductCategoryPageContainer
+@using V308CMS.Data;
+@using V308CMS.Common;
+@{
+    Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
+}
+
+@section header {
+    <title>Danh mục - @Model.ProductType.Name</title>
+    <meta name="keywords" content="@Model.ProductType.Name">
+    <meta property="og:url" content="@Ultility.ImgUrl("")">
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="@Model.ProductType.Name">
+    <meta property="og:image" content="@Ultility.ImgUrl(@Model.ProductType.Image)">
+    <meta property="og:description" content="@Model.ProductType.Description">
+}
+
+@{ bool haveProduct = false; }
+@{ int category_count = 0; }
+@{ string first_class = ""; }
+
+@if (Model.List != null && Model.List.Count > 0)
+{
+    foreach (ProductCategoryPage category in Model.List)
+    {
+        if (category.List != null && category.List.Count() > 0)
+        {
+            string categoryPageURL = url.productCategoryURL(category.Name, category.Id);
+            if (category_count < 1)
+            {
+                first_class = "mt-0";
+            }
+            else
+            {
+                first_class = "";
+            }
+    <div class="box-items box-shadow @first_class">
+        <div class="container">
+            <h4>@url.productCategory(category.Name, category.Id)
+                @*<a class="next icon-right-open" href="#"></a>
+		                <a class="pre icon-left-open" href="#"></a>*@
+            </h4>
+            <div class="row">
+                @foreach (Product prod in category.List)
+                {
+                    @Html.Action("ProductBlockType1_4", "Block", prod)
+                    if (haveProduct == false) { haveProduct = true; }
+                }
+            </div>
+
+            @if (category.ProductTotal > ProductHelper.ProductShowLimit )
+            {
+                int pageNumber = (int)Math.Floor(category.ProductTotal / ProductHelper.ProductShowLimit + 0.5);
+                
+                <div class="row pt-2">
+                    <div class="col">
+                    
+                        <ul class="pagination justify-content-end">
+                            <li class="page-item"><a class="page-link" href="@((Model.Page > 1) ? categoryPageURL+"?p="+(Model.Page-1) : "javascript:void" )">Trước</a></li>
+                            @if( pageNumber > 2 ){
+                                <li class="page-item"><a class="page-link" href="@categoryPageURL?p=1">1</a></li>
+                                <li class="page-item"><a class="page-link" href="@categoryPageURL?p=2">2</a></li>
+                            }
+
+                            @if( pageNumber > 4 ){
+                                <li class="page-item"><a class="page-link" href="#">...</a></li>
+                                
+                            }
+                            <li class="page-item"><a class="page-link" href="@( categoryPageURL+"?p="+(pageNumber-1))">@(pageNumber-1)</a></li>
+                            <li class="page-item"><a class="page-link" href="@( categoryPageURL+"?p="+pageNumber)">@pageNumber</a></li>
+                            <li class="page-item"><a class="page-link" href="@((Model.Page < pageNumber) ? categoryPageURL+"?p="+(Model.Page+1) : "javascript:void" )">Sau</a></li>
+                            
+
+                        </ul>
+                    
+                    </div>
+                </div>
+                        
+            }
+        </div>
+    </div>
+            category_count++;
+        }
+
+    }
+}
+
+@if (haveProduct == false)
+{
+    <div class="box-items box-shadow mt-0">
+        <div class="container">
+            <h4>@Model.ProductType.Name</h4>
+            <div class="row text-center">
+                <div class="col m-5">Không Có Sản Phẩm nào.</div>
+            </div>
+        </div>
+    </div>
+}

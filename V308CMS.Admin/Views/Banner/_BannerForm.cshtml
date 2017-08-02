@@ -2,19 +2,50 @@
 @using V308CMS.Admin.Models.UI
 @model V308CMS.Admin.Models.BannerModels
  @{
-        var listPosition = (List<SelectListItem>)ViewBag.ListPosition;
+     var listPosition = (List<SelectListItem>)ViewBag.ListPosition;
+     var listSite = (List<SelectListItem>)ViewData["ListSite"];
 }
 @Html.HiddenFor(menu => Model.Id)
+@Html.HiddenFor(menu => Model.Site)
 @Html.AntiForgeryToken()
 <div class="row">
     @Html.ValidationSummary(true)
     <div class="col-lg-6">
+        @*<div class="form-group">
+            @Html.LabelFor(banner => banner.Site)
+            @Html.DropDownListFor(banner => banner.Site, listSite, "Chọn Website", new
+           {
+               @class = "form-control",
+               placeholder = "Chọn Website"
+           })
+            @Html.ValidationMessageFor(banner => banner.Site)
+        </div>*@
 
         <div class="form-group">
             @Html.LabelFor(banner => banner.Name)
             @Html.TextBoxFor(banner => banner.Name, new {@class = "form-control", placeholder = "Nhập tên"})
             @Html.ValidationMessageFor(banner => banner.Name)
         </div>
+
+        <div class="form-group">
+            @Html.LabelFor(banner => banner.Link)
+            @Html.TextBoxFor(banner => banner.Link, new { @class = "form-control"})
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(banner => banner.Target)
+
+            @Html.DropDownListFor(banner => banner.Target,
+            new List<SelectListItem> {
+                       new SelectListItem { Value = "_self" , Text = "Mặc định" },
+                       new SelectListItem { Value = "_blank" , Text = "Trang mới" }
+                    }, new
+                    {
+                        @class = "form-control"
+                    })
+          
+        </div>
+
         <div class="form-group">
             <label for="@Model.Name">@(!string.IsNullOrWhiteSpace(Model.ImageUrl) ? "Chọn ảnh khác" : "Chọn ảnh")</label>
         </div>

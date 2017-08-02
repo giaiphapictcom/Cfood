@@ -1,0 +1,93 @@
+﻿@using System.Text.RegularExpressions
+@model V308CMS.Models.PaginationModels
+@functions
+{
+    public string GetPageUrl(int page, string baseUrl, string pageParamFormat = @"page=\d+")
+    {
+        string pageUrl = "";
+        if (Regex.IsMatch(baseUrl, pageParamFormat))
+        {
+            pageUrl = Regex.Replace(baseUrl, pageParamFormat, "page=" + page);
+        }
+
+        return pageUrl;
+    }
+
+}
+@helper MakePagination(int totalPages, int currPages,
+    int recordPerPages, int links, string baseUrl,
+    string pageParamFormat = @"page=\d+")
+{
+    if (totalPages > 1)
+    {
+        int ranges = currPages / recordPerPages;
+        if (currPages % recordPerPages > 0)
+        {
+            ranges += 1;
+        }
+
+        int start = recordPerPages * (ranges - 1) + 1;
+        int end = start + recordPerPages;
+
+        if (end > totalPages)
+        {
+            end = totalPages + 1;
+        }
+        if (currPages > 1)
+        {
+            <li class="first page-item">
+                <a href="@GetPageUrl(1, baseUrl)" class="page-link">
+                    <i class="fa fa-caret-left" aria-hidden="true"></i>
+                    <i class="fa fa-caret-left" aria-hidden="true"></i>
+                </a>
+            </li>
+            <li class="previous page-item">
+                <a href="@GetPageUrl(currPages - 1, baseUrl)" class="page-link"><i class="fa fa-caret-left" aria-hidden="true"></i></a>
+            </li>
+        }
+
+    for (int i = start; i < end; i++)
+    {        
+        if (i == currPages)
+        {
+            <li class="active page-item">
+                <span class="page-link" >
+                    @i
+                </span>                
+            </li>
+        }
+        else
+        {
+            <li class="page-item">                   
+                <a href="@GetPageUrl(i, baseUrl)" class="page-link" >@i</a>
+            </li>
+        }
+
+    }
+    if (currPages < totalPages)
+    {
+                <li class="page-item">
+                    <a href="@GetPageUrl(currPages + 1, baseUrl)" class="page-link">
+                        <i class="fa fa-caret-right" aria-hidden="true"></i>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a href="@GetPageUrl(totalPages, baseUrl)" class="page-link">
+                        <i class="fa fa-caret-right" aria-hidden="true"></i>
+                        <i class="fa fa-caret-right" aria-hidden="true"></i>
+                    </a>
+                </li>
+        }
+    }
+}
+
+<ul class="pagination justify-content-end">
+    @MakePagination(
+            Model.TotalPages,
+            Model.CurrentPage,
+            Model.RecordPerPages,
+            Model.Links,
+            Model.BaseUrl,
+            Model.PageParamFormat
+        )
+</ul>

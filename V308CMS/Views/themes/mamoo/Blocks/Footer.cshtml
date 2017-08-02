@@ -84,34 +84,7 @@
                 </div>
             </div>
             <script>
-                $(document).ready(function () {
-                    $("#logo-brand").owlCarousel({
-                        itemsCustom: [
-                          [0, 1],
-                          [450, 2],
-                          [600, 3],
-                          [700, 4],
-                          [1000, 5],
-                          [1200, 6],
-                          [1400, 7],
-                          [1600, 7]
-                        ],
-                        autoPlay: true,
-                        stopOnHover: false,
-
-                        lazyLoad: false,
-                        lazyFollow: true,
-                        lazyEffect: "fade",
-                        pagination: false,
-
-                        // Navigation
-                        navigation: false,
-                        //navigationText : ['<i class="arrow_carrot-left"></i>','<i class="arrow_carrot-right"></i>'],
-                        //rewindNav : true,
-                        //scrollPerPage : false,
-
-                    });
-                })
+                
     </script>
         </div>
     </div>
@@ -124,10 +97,10 @@
     <div class="footer-logo-top" style="background: #141414">
         <div class="container">
             <div class="row">
-                <div class="col-md-2 col-sm-2 col-xs-12 logo-footer">
+                <div class="col-md-2 col-12 logo-footer">
                     <img src="@ViewBag.ThemesPath/images/logo.png" class="logo img-fluid">
                 </div>
-                <div class="col-md-7 col-sm-7 col-xs-12 link-list-footer">
+                <div class="col-md-5 link-list-footer hidden-md-down">
                     @if (Model.MenusFooter != null && Model.MenusFooter.Count() > 0)
                     {
                         <div class="link-list">
@@ -144,7 +117,7 @@
 
 
                 </div>
-                <div class="col-md-3 col-sm-3 col-xs-12 share-social-footer">
+                <div class="col-md-5 col-12 share-social-footer">
 
                     <div class="title-social">FOLLOW US:</div>
                     <div class="footer-icon-share">
@@ -185,12 +158,13 @@
             <div class="footer-top">
                 <div class="row row-eq-height">
 
-                    <div class="col-md-3 col-sm-6 col-xs-12 footer-contact">
+                    <div class="col-md-4 col-sm-6 col-xs-12 footer-contact">
                         <h3 class="module-title">Liên hệ với @ViewBag.SiteName</h3>
                         <ul class="content">
-                            <li></li>
-                            <li>@ViewBag.CompanyHeaderAddress</li>
-                            <li>@Html.Raw(ViewBag.FooterCompanyContact)</li>
+                           <li>
+                                @ViewBag.CompanyHeaderAddress
+                            </li>
+                            @Html.Raw(ViewBag.FooterCompanyContact)
                         </ul>
                     </div>
                     @if (Model.NewsCategorys != null && Model.NewsCategorys.Count() > 0)
@@ -215,12 +189,10 @@
 
                     <div class="col-md-3 col-sm-6 col-xs-12">
                         <div class="newsletter">
-                            <h3 class="module-title"><span>Theo Dõi </span></h3>
+                            <h3 class="module-title">Đăng ký nhận tin</h3>
 
 
                             <div class="content">
-
-                                <p>Đăng ký để nhận tin tức mới nhất từ chúng tôi</p>
                                 <form action="" method="post" name="mc-embedded-subscribe-form" target="_blank" class="input-group">
                                     <input value="" placeholder="youremail@domain.com" name="EMAIL" class="input-group-field" aria-label="Email Address" type="email">
                                     <span class="input-group-btn">
@@ -265,11 +237,4 @@
 </div>
 
 
-<div id="fb-root"></div>
-<script>(function (d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.8&appId=1657297111243555";
-    fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+

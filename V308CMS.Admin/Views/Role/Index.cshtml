@@ -20,8 +20,8 @@
                         <th>#</th>
                         <th>Tên</th>
                         <th>Mô tả</th>
-                        <th>Trạng thái</th>
-                        <th>Hành động</th>
+                        <th style="text-align: center">Trạng thái</th>
+                        <th style="text-align: center">Hành động</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -40,8 +40,8 @@
                             <td>
                                 @role.Description.ToTitle()
                             </td>                            
-                            <td>@role.Status.ToStateLabelHtml()</td>
-                            <td style="width: 200px">
+                            <td style="text-align: center">@role.Status.ToStateLabelHtml()</td>
+                            <td style="width: 200px; text-align: center">
                                 @Html.Partial("UI/_EditButton", new ButtonModels
                                {
                                    Id = string.Format("role_{0}", role.Id),

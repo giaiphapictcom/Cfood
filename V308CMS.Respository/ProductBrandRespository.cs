@@ -1,6 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using V308CMS.Data;
+using V308CMS.Data.Helpers;
 
 namespace V308CMS.Respository
 {
@@ -13,14 +17,37 @@ namespace V308CMS.Respository
     public class ProductBrandRespository : IBaseRespository<Brand>, IProductBrandRespository
     {
 
-      
-
         public ProductBrandRespository()
         {
            
         }
 
+        public async  Task<List<Brand>> GetListByCategoryIdAsync(int categoryId)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return await entities.Brand.Where(brand => brand.category_default == categoryId).ToListAsync();
+            }
 
+        }
+
+
+
+        public List<Brand> GetRandom(int categoryId = 0, int limit = 1)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                var items = from b in entities.Brand
+                            where b.status.Equals(1)
+                            select b;
+                if (categoryId > 0)
+                {
+                    items = items.Where(b => b.category_default == categoryId);
+                }
+                return items.ToList().OrderBy(x => Guid.NewGuid()).Take(limit).ToList();
+            }
+        }
+      
         public Brand Find(int id)
         {
             using (var entities = new V308CMSEntities())

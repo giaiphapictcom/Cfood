@@ -10,7 +10,7 @@ namespace V308CMS.Data
             (
                 string name,
                 string email,
-                string phone, 
+                string phone,
                 string message,
                 DateTime createdDate
             );
@@ -18,13 +18,15 @@ namespace V308CMS.Data
         string Delete(int id);
         List<Contact> GetAll();
         Contact Find(int id);
+        int Count();
+        List<Contact> Take(int count = 10);
     }
-    public class ContactRepository: IContactRepository
+    public class ContactRepository : IContactRepository
     {
-        private V308CMSEntities entities;
-        public ContactRepository(V308CMSEntities mEntities)
+
+        public ContactRepository()
         {
-            this.entities = mEntities;
+
         }
         public List<Contact> GetAll()
         {
@@ -35,7 +37,7 @@ namespace V308CMS.Data
                         select contact
                     ).ToList();
             }
-                
+
         }
         public Contact Find(int id)
         {
@@ -47,7 +49,26 @@ namespace V308CMS.Data
                    ).FirstOrDefault();
 
             }
-            
+
+        }
+
+        public int Count()
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return entities.Contact.Count();
+            }
+        }
+
+        public List<Contact> Take(int count = 10)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return (from contact in entities.Contact
+                        orderby contact.CreatedDate descending
+                        select contact
+                    ).Take(count).ToList();
+            }
         }
 
         public string Insert(string fullName, string email, string phone, string message, DateTime createdDate)
@@ -67,8 +88,8 @@ namespace V308CMS.Data
                 return "ok";
 
             }
-                
-            
+
+
         }
 
         public string Update(int id, string fullName, string email, string phone, string message, DateTime createdDate)
@@ -93,7 +114,7 @@ namespace V308CMS.Data
                 return "not_exists";
             }
 
-           
+
         }
 
         public string Delete(int id)
@@ -112,7 +133,7 @@ namespace V308CMS.Data
                 return "not_exists";
 
             }
-          
+
         }
     }
 }

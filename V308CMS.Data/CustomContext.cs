@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using V308CMS.Data.Mapping;
 using V308CMS.Data.Models;
 
 namespace V308CMS.Data
 {
     #region Contexts
+    [DbConfigurationType(typeof(MySql.Data.Entity.MySqlEFConfiguration))]
     public partial class V308CMSEntities : DbContext
     {
         #region Constructors
@@ -15,18 +15,14 @@ namespace V308CMS.Data
             : base("V308CMSConnectionString")
         {
 
+            Database.SetInitializer<V308CMSEntities>(null);
         }
         public V308CMSEntities(string connectionString)
             : base(connectionString)
-        {
-            //cai nay giup chi ra rang ta dung provider MySql.Data.MySqlClient
-            Database.DefaultConnectionFactory = new SqlCeConnectionFactory("MySql.Data.MySqlClient");
+        {            
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-
-            modelBuilder.Ignore<IncludeMetadataConvention>();
-
             modelBuilder.Configurations.Add(new SiteConfigMap());
             modelBuilder.Configurations.Add(new EmailConfigMap());
             modelBuilder.Configurations.Add(new MenuConfigMap());
@@ -37,9 +33,30 @@ namespace V308CMS.Data
             modelBuilder.Configurations.Add(new CountryMap());
             modelBuilder.Configurations.Add(new SizeMap());
             modelBuilder.Configurations.Add(new ProductColorMap());
-            modelBuilder.Configurations.Add(new ProductSizeMap());          
+            modelBuilder.Configurations.Add(new ProductSizeMap());
             modelBuilder.Configurations.Add(new PermissionMap());
             modelBuilder.Configurations.Add(new BannerMap());
+            modelBuilder.Configurations.Add(new EmailLogMap());
+            modelBuilder.Configurations.Add(new RegionMap());
+            modelBuilder.Configurations.Add(new ShippingAddressMap());            
+            modelBuilder.Configurations.Add(new OrderTransactionMap());
+            modelBuilder.Configurations.Add(new ProductWishlistMap());
+            modelBuilder.Configurations.Add(new VoucherMap());           
+            modelBuilder.Configurations.Add(new VoucherLogMap());
+            modelBuilder.Configurations.Add(new AffilateUserMap());
+            modelBuilder.Configurations.Add(new AffilateCodeMap());
+            modelBuilder.Configurations.Add(new VideoMap());
+
+            modelBuilder.Entity<OrderTransaction>()
+            .HasRequired(p => p.Order)
+            .WithMany(p => p.ListTransaction)
+            .HasForeignKey(p => p.OrderId);
+
+            modelBuilder.Entity<productorder_detail>()
+            .HasRequired(p => p.Order)
+            .WithMany(p => p.OrderDetail)
+            .HasForeignKey(p => p.order_id);
+
             modelBuilder.Entity<News>()
              .HasRequired(p => p.NewsGroup)
              .WithMany(p => p.ListNews)
@@ -72,14 +89,60 @@ namespace V308CMS.Data
            .HasForeignKey(p => p.Role);
 
 
-           modelBuilder.Entity<Permission>()
-          .HasRequired(p => p.RoleInfo)
-          .WithMany(p => p.Permissions)
-          .HasForeignKey(p => p.RoleId);
+            modelBuilder.Entity<Permission>()
+            .HasRequired(p => p.RoleInfo)
+            .WithMany(p => p.Permissions)
+            .HasForeignKey(p => p.RoleId);
 
+        }
+        public DbSet<Video> Video
+        {
+            get;
+            set;
+        }
+        public DbSet<AffilateCode> AffilateCode
+        {
+            get;
+            set;
+        }
+        public DbSet<AffilateUser> AffilateUser
+        {
+            get;
+            set;
+        }
+        public DbSet<Voucher> Voucher
+        {
+            get;
+            set;
+        }
+      
+        public DbSet<VoucherLog> VoucherLog
+        {
+            get;
+            set;
+        }
+        public DbSet<OrderTransaction> OrderTransaction
+        {
+            get;
+            set;
+        }
+        public DbSet<ShippingAddress> ShippingAddress
+        {
+            get;
+            set;
         }
         #endregion
         #region ObjectSet Properties
+        public DbSet<Region> Region
+        {
+            get;
+            set;
+        }
+        public DbSet<EmailLog> EmailLog
+        {
+            get;
+            set;
+        }
         public DbSet<Banner> Banner
         {
             get;
@@ -89,7 +152,7 @@ namespace V308CMS.Data
         {
             get;
             set;
-        }      
+        }
         public DbSet<ProductSize> ProductSize
         {
             get;
@@ -350,7 +413,7 @@ namespace V308CMS.Data
             get;
             set;
         }
-       
+
 
         public DbSet<AffiliateBanner> AffiliateBanner
         {
@@ -374,11 +437,52 @@ namespace V308CMS.Data
             set;
         }
 
-        public DbSet<Visister> VisisterTbl
+        //public DbSet<Visister> VisisterTbl
+        //{
+        //    get;
+        //    set;
+        //}
+        public DbSet<VisisterTime> VisisterTimeTbl
         {
             get;
             set;
         }
+        
+        public DbSet<SupportMan> SupportManTbl
+        {
+            get;
+            set;
+        }
+
+        public DbSet<WebsiteRequest> WebsiteRequestTbl
+        {
+            get;
+            set;
+        }
+
+        public DbSet<ProductOrderRevenue> ProductOrderRevenueTbl
+        {
+            get;
+            set;
+        }
+
+        public DbSet<RevenueGain> RevenueGainTbl
+        {
+            get;
+            set;
+        }
+
+        public DbSet<AffilateLinkClick> AffilateLinkClickTbl
+        {
+            get;
+            set;
+        }
+        //public DbSet<Categorys> AffiliateCategory
+        //{
+        //    get;
+        //    set;
+        //}
+
 
         #endregion
         #region AddTo Methods
@@ -673,7 +777,7 @@ namespace V308CMS.Data
             this.SupportType.Add(SupportType);
         }
         #endregion
-        
+
     }
     #endregion
 }

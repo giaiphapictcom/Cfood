@@ -41,13 +41,13 @@ namespace V308CMS.Admin.Controllers
                     );
                 if (result == Result.Exists)
                 {
-                    ModelState.AddModelError("", $"Thông tin Email '{config.Name}' đã tồn tại trên hệ thống.");
+                    ModelState.AddModelError("", string.Format("Thông tin Email '{0}' đã tồn tại trên hệ thống.",config.Name) );
                     AddViewData(
                        "ListEmailType", DataHelper.ListEnumType<EmailType>(),
                        "ListState", DataHelper.ListEnumType<StateEnum>());
                     return View("Create", config);
                 }
-                SetFlashMessage($"Thêm thông tin Email '{config.Name}' thành công.");
+                SetFlashMessage( string.Format("Thêm thông tin Email '{0}' thành công.",config.Name));
                 if (config.SaveList)
                 {
                     return RedirectToAction("Index");
@@ -102,7 +102,7 @@ namespace V308CMS.Admin.Controllers
                     );
                     return View("Edit", config);
                 }
-                SetFlashMessage($"Sửa cấu hình Email '{config.Name}' thành công.");
+                SetFlashMessage(string.Format("Sửa cấu hình Email '{0}' thành công.", config.Name));
                 if (config.SaveList)
                 {
                     return RedirectToAction("Index");

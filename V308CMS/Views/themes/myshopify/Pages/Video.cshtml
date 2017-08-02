@@ -1,47 +1,32 @@
-﻿@model V308CMS.Data.NewsPage
+﻿@using V308CMS.Helpers
+@model V308CMS.Data.Models.Video
 @{
-    Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
-}
-
+        Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
+ }
 @section header {
-    <title>Tin video - @Model.pNews.Title</title>
-    <meta name="keywords" content="@Model.pNews.Keyword">
-    <meta property="og:url" content="@V308CMS.Common.Ultility.ImgUrl("")">
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="@Model.pNews.Title">
-    <meta property="og:image" content="https://i.ytimg.com/vi/@Model.pNews.Summary/hqdefault.jpg">
-    <meta property="og:description" content="@Model.pNews.Title">
+    <title>Tin video - @Model.Title</title>
+    <meta property="og:url" content="@Request.Url"/> 
+    <meta property="og:type" content="website" />  
+    <meta property="og:image" content="https://i.ytimg.com/vi/@Model.Code/hqdefault.jpg"/>
+    <meta property="og:description" content="@Model.Title">
+    
 }
-
+@section BodyId{@Html.Raw("news")}
+@section BodyClass{@Html.Raw("template-blog")}
 <div class="box-detail box-shadow">
    
     <div class="container">
         <div class="row  p-2 pt-4 pb-4">
         
         <div class="col-12">
-            <iframe width="100%" height="440" src="https://www.youtube.com/embed/@Model.pNews.Summary?autoplay=1" frameborder="0" allowFullScree >  </iframe>
+            <iframe width="100%" height="440" src="https://www.youtube.com/embed/@Model.Code?autoplay=1" frameborder="0" allowFullScree> </iframe>
+            <div class="fb-share-button" data-href="@Request.Url" data-layout="button_count" data-size="large" data-mobile-iframe="true">
+                <a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=@(Request.Url)&amp;src=sdkpreparse">Chia sẻ</a>
+            </div>
         </div>
         </div>
         
     </div>
 </div>
 
-
-
-@if (Model.List != null && Model.List.Count > 0)
-{ 
-    <div class="box-items box-shadow">
-	    <div class="container">
-		    <h4>Video Liên Quan</h4>
-		    <div class="row">
-            @foreach (V308CMS.Data.News video in Model.List)
-            {
-                <div class="col-md-4">
-                    @Html.Action("YoutubeBlock", "Block",video)
-                </div>
-                
-            }
-            </div>
-        </div>
-    </div>
-}
+@{Html.RenderAction("LoadListVideoRelativedAsync","Async",new {Model.Id});}

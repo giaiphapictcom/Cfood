@@ -16,11 +16,11 @@
 </head>
 <body 
     @if (@Request.RequestContext.RouteData.Values["Action"] == "Index")
-    { 
+    {
         @:class="template-index" 
     }
     else
-    { 
+    {
         @:id="facial-cleansing-pad" class="template-product"
     }
 >
@@ -28,12 +28,30 @@
         <div id="shopify-section-header" class="shopify-section">
             @Html.Action("Header", "Theme")
         </div>
-
-        <main class="container main-content">
+        @Html.Action("SupportRight", "Theme")
+        <main class="container main-content" style="padding-top:15px;">
             @RenderBody()
         </main>
 
         @Html.Action("Footer", "Theme")
     </div>
+    @Html.Action("MenuCanvas", "Theme")
+
+    <div id="fb-root"></div>
+    <script>
+    @{ 
+        string fb_js = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.9";
+        if (V308CMS.Sale.Helpers.ConfigHelper.FacebookAppId != null)
+        {
+            fb_js += "&appId="+ V308CMS.Sale.Helpers.ConfigHelper.FacebookAppId;
+        }
+    }
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "@Html.Raw(fb_js)";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
 </body>
 </html>

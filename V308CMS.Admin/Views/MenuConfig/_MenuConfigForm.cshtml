@@ -1,21 +1,24 @@
 ﻿@using V308CMS.Admin.Helpers.Url
+@using V308CMS.Common
 @model  V308CMS.Admin.Models.MenuConfigModels
 @{
     var listState = (List<SelectListItem>)ViewData["ListState"];
+    var listSite = (List<SelectListItem>)ViewData["ListSite"];
 }
 @Html.HiddenFor(menu => Model.Id)
+@Html.HiddenFor(menu => Model.Site)
 @Html.AntiForgeryToken()
 <div class="row">
     @Html.ValidationSummary(true)
     <div class="col-lg-6">
         <div class="form-group">
             @Html.LabelFor(menu => Model.Name)
-            @Html.TextBoxFor(menu => Model.Name, new { @class = "form-control", placeholder = "Tên Menu" })
+            @Html.TextBoxFor(menu => Model.Name, new {@class = "form-control", placeholder = "Tên Menu"})
             @Html.ValidationMessageFor(menu => Model.Name)
         </div>
         <div class="form-group">
             @Html.LabelFor(menu => Model.Description)
-            @Html.TextAreaFor(menu => Model.Description, new { @class = "form-control", placeholder = "Mô tả Menu" })
+            @Html.TextAreaFor(menu => Model.Description, new {@class = "form-control", placeholder = "Mô tả Menu"})
             @Html.ValidationMessageFor(menu => Model.Description)
         </div>
         <div class="form-group">
@@ -29,10 +32,25 @@
             @Html.ValidationMessageFor(menu => Model.Link)
         </div>
         <div class="form-group">
+            @Html.LabelFor(menu => Model.Target)
+            
+            @Html.DropDownListFor(config => Model.Target, 
+            new List<SelectListItem> { 
+                       new SelectListItem { Value = "_self" , Text = "Mặc định" },
+                       new SelectListItem { Value = "_blank" , Text = "Trang mới" }
+                    }, new
+            {
+                @class = "form-control",
+                placeholder = "Target"
+            })
+
+            @Html.ValidationMessageFor(menu => Model.Target)
+        </div>
+        <div class="form-group">
             @Html.LabelFor(menu => Model.Order)
-            @Html.TextBoxFor(menu => Model.Order, new { @class = "form-control", placeholder = "Thứ tự" })
+            @Html.TextBoxFor(menu => Model.Order, new {@class = "form-control", placeholder = "Thứ tự"})
             @Html.ValidationMessageFor(menu => Model.Order)
-        </div>    
+        </div>
         <div class="form-group">
             @Html.LabelFor(config => Model.State)
             @Html.DropDownListFor(config => Model.State, listState, new

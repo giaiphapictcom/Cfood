@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using V308CMS.Data;
+using V308CMS.Data.Helpers;
+using System;
 
 namespace V308CMS.Respository
 {
@@ -78,8 +80,19 @@ namespace V308CMS.Respository
                                  select image).FirstOrDefault();
                 if (imageItem == null)
                 {
-                    entities.ProductImage.Add(data);
-                    entities.SaveChanges();
+                    
+                    try {
+                        if (data.Product == null) {
+                            data.Product = entities.Product.Where(p => p.ID == data.ProductID).FirstOrDefault();
+                        }
+                        entities.ProductImage.Add(data);
+                        entities.SaveChanges();
+                    }
+                    catch (System.Data.Entity.Validation.DbEntityValidationException e)
+                    {
+                        Console.Write(e);
+                    }
+
                     return "ok";
                 }
                 return "exists";

@@ -1,6 +1,5 @@
-﻿@using System.Text.RegularExpressions;
+﻿@using V308CMS.Sale.Helpers
 @model V308CMS.Data.ETLogin
-
 @{
     Layout = "~/Views/Affiliate/Layout/Default.cshtml";
     string PageTitle = "Đăng nhập hệ thống";
@@ -8,6 +7,7 @@
 @section header {
     <title>@PageTitle</title>
     <link href="@ViewBag.ThemesPath/css/login.css" rel="stylesheet" type="text/css" />
+    <script src="https://www.google.com/recaptcha/api.js?hl=vi" async defer></script>
 }
 <div class="shopify-section loginform">
     <div class="container-block m-0">
@@ -16,14 +16,26 @@
                 <div class="col-md-12 col-sm-12 col-xs-12 article-home-full">
                     <h3><span>@PageTitle</span></h3>
                 </div>
-                @if (Model != null && Model.message.Length > 0)
-                { 
+               
+                @if (!string.IsNullOrWhiteSpace(ViewContext.GetFlashError()))
+                {
                     <div class="col-md-12">
-                    <div class="alert alert-danger">
-                      <strong>Thông Báo!</strong> @Model.message.
-                    </div>
+                        <div class="alert alert-dismissable alert-danger">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                            <strong>Lỗi Xảy Ra!</strong> @ViewContext.GetFlashError()
+                        </div>
                     </div>
                 }
+                else if (!string.IsNullOrWhiteSpace(ViewContext.GetFlashMessage()))
+                {
+                    <div class="col-md-12">
+                        <div class="alert alert-dismissable alert-danger">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                            <strong>Thông báo!</strong> @ViewContext.GetFlashMessage()
+                        </div>
+                    </div>
+                }
+
                 <div class="col-md-7 col-sm-12 col-xs-12 SocialAreaRight">
 
                     <form class="form-horizontal" action="/dang-nhap" method="post">
@@ -40,10 +52,16 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-offset-3 col-md-9">
-                                    <a href="#">Quên mật khẩu</a>
+                            <div class="col-md-offset-4 col-md-8">
+                                <div class="g-recaptcha" data-sitekey="@V308CMS.Sale.Helpers.ConfigHelper.RecaptchaSitekey"></div>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-3 col-md-9">
+                                <a href="#">Quên mật khẩu</a>
+                            </div>
+                        </div>
+                        
                         <div class="form-group">
                             <div class="col-md-offset-3 col-md-9">
                                 <button type="submit" class="btn btn-orange border-radius-0">Đăng nhập</button>
@@ -51,14 +69,14 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-offset-3 col-md-9">
-                                    Bạn chưa là thành viên ? <a href="/dang-ky">Đăng ký ngay !</a>
+                                Bạn chưa là thành viên ? <a href="/dang-ky">Đăng ký ngay !</a>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="col-md-5 col-sm-12 col-xs-12" style="padding-top: 57px;">
-                    <a href="#" class="btn btn-facebook"><span class="fa fa-facebook"></span> Facebook</a>
-                    <a href="#" class="btn btn-google-plus"><span class="fa fa-google-plus"></span> Google</a>
+                    <a href="/sociallogin/loginfacebook" class="btn btn-facebook"><span class="fa fa-facebook"></span> Facebook</a>
+                    <a href="/sociallogin/logingoogle" class="btn btn-google-plus"><span class="fa fa-google-plus"></span> Google</a>
                 </div>
 
             </div>

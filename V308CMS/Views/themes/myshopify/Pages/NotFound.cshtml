@@ -1,0 +1,10 @@
+﻿@{
+    Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
+}
+@section BodyId{@Html.Raw("404-not-found")}
+@section BodyClass{@Html.Raw("template-404  page-error")}
+<div class="icon">
+    <i class="ion-sad-outline" data-pack="default" data-tags="cry, bad, no"></i>
+</div>
+<h1>error - not found</h1>
+<p>It seems we can’t find what you’re looking for. Perhaps searching can help or go back to <a href="/">Homepage</a>.</p>

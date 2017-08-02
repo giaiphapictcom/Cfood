@@ -3,30 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using V308CMS.Common;
 using V308CMS.Data;
+using V308CMS.Data.Helpers;
 
-namespace V308CMS.Respository {
+namespace V308CMS.Respository
+{
     public interface IUserRespository
     {
          List<Account> GetList(
-            int state = 0
+            int state = 0,
+            string site=""
             );
 
         string ChangeStatus(int id);
-
+        
+        int Count();
+        List<Account> Take(int count = 10);
+       
     }
 
 
     public class UserRespository: IBaseRespository<Account>, IUserRespository
     {
-
-        //private readonly V308CMSEntities _entities;
-        private V308CMSEntities _entities;
-        public UserRespository(V308CMSEntities entities)
+     
+        public UserRespository()
         {
-            //_entities = entities;
-            this._entities = entities;
-
-
+           
         }
         public Account Find(int id)
         {
@@ -77,12 +78,17 @@ namespace V308CMS.Respository {
                     userUpdate.Phone = account.Phone;
                     userUpdate.Gender = account.Gender;
                     userUpdate.Status = account.Status;
-                    userUpdate.Avata = account.Avata;
+                    userUpdate.Avatar = account.Avatar;
                     userUpdate.Gender = account.Gender;
                     userUpdate.Date = account.Date;
-                    return "ok";
+                    userUpdate.Site = account.Site;
+                    userUpdate.affiliate_code = account.affiliate_code;
+                    userUpdate.facebook_page = account.facebook_page;
+                    userUpdate.affiliate_id = account.affiliate_id;
+                    entities.SaveChanges();
+                    return Data.Helpers.Result.Ok;
                 }
-                return "not_exists";
+                return Data.Helpers.Result.NotExists;
             }
            
         }
@@ -114,42 +120,52 @@ namespace V308CMS.Respository {
                         orderby user.Date.Value descending
                         select user).ToList();
             }
-           
-        }
 
-        public List<Account> GetList(int state = 0)
+        }
+        public List<Account> GetAll(string site = Site.home)
         {
             using (var entities = new V308CMSEntities())
             {
-                IEnumerable<Account> data = (from user in entities.Account
-                                             select user
-                                           ).ToList();
+                return (from user in entities.Account
+                        orderby user.Date.Value descending
+                        select user).ToList();
+            }
+           
+        }
 
-                if (state > 0)
+        public List<Account> GetList(int state = 0,string site="")
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                var items = entities.Account.Select(a=>a);
+                if (site == "affiliate")
                 {
-                    data = state == 1 ?
-                        (from user in data
-                         where user.Status == true
-                         select user
-                     ).ToList() :
-                     (from user in data
-                      where user.Status == false
-                      select user
-                     ).ToList();
+                    items = items.Where(a => a.Site.Equals(site.Trim()));
+                }
+                else {
+                    items = items.Where(a => a.Site == "home" || a.Site =="" || a.Site == null );
                 }
 
-                return (from user in data
-                        orderby user.ID descending
-                        select user
-                    ).ToList();
+
+                if (state >= 0)
+                {
+                    if (state == 1)
+                    {
+                        items = items.Where(a => a.Status == true);
+                    }
+                    else {
+                        items = items.Where(a => a.Status == false);
+                    }
+
+                }
+                return items.OrderByDescending(a=>a.ID).ToList();
 
             }
             
         }
         private string HashPassword(string password, string salt)
         {
-            //return EncryptionMD5.ToMd5($"{password}|{salt}");
-            return EncryptionMD5.ToMd5( string.Format("{password}|{salt}") );
+            return EncryptionMD5.ToMd5(password.ToString() + "|" + salt.ToString());
         }
         public string ChangePassword(int id, string currentPassword, string newPassword)
         {
@@ -187,8 +203,15 @@ namespace V308CMS.Respository {
                 {
                     return "invalid";
                 }
+                if (checkAccount.Salt.Length > 0)
+                {
+                    checkAccount.Password = HashPassword(newPassword, checkAccount.Salt);
+                }
+                else {
+                    checkAccount.Password = EncryptionMD5.ToMd5(newPassword.Trim());
+                }
 
-                checkAccount.Password = HashPassword(newPassword, checkAccount.Salt);
+                
                 entities.SaveChanges();
                 return "ok";
             }
@@ -200,7 +223,7 @@ namespace V308CMS.Respository {
         {
             using (var entities = new V308CMSEntities())
             {
-                var product = (from item in entities.Product
+                var product = (from item in entities.Account
                                where item.ID == id
                                select item
                ).FirstOrDefault();
@@ -215,6 +238,43 @@ namespace V308CMS.Respository {
            
         }
 
+        public int Count()
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return entities.Account.Count();
+            }
+        }
 
+        public List<Account> Take(int count = 10)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return (from user in entities.Account
+                        orderby user.Date.Value descending
+                        select user).Take(count).ToList();
+            }
+        }
+
+        public Account FindEmail(string email)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return (from user in entities.Account
+                        where user.Email == email
+                        select user
+              ).FirstOrDefault();
+            }
+        }
+
+        public List<int> GetMemberIdOfAffiliate(int affiliate_id=0) {
+            var items = new List<int>();
+            using (var entities = new V308CMSEntities())
+            {
+                var users = entities.Account.Where(a=>a.affiliate_id==affiliate_id).Select(a=> a.ID);
+                items = users.ToList();
+            }
+            return items;
+        }
     }
 }

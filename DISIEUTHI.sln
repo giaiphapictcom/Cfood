@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V308CMS", "V308CMS\V308CMS.csproj", "{3A816CC7-C3BC-4D58-AED9-88F1A2D7198B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V308CMS.Data", "V308CMS.Data\V308CMS.Data.csproj", "{4F5528A8-75F6-4B33-B254-2EAA5F916F12}"
@@ -16,6 +18,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V308CMS.Static", "V308CMS.Static\V308CMS.Static.csproj", "{2A2933C8-6F8F-448D-9972-0C6BBD0FDB50}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V308CMS.Respository", "V308CMS.Respository\V308CMS.Respository.csproj", "{4540F1D2-C7AC-4BC4-9E2D-F2271279AEAC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateAddress", "UpdateAddress\UpdateAddress.csproj", "{884B432E-BBD2-49E8-81D4-7768059A2A34}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V308CMS.Dependencies", "V308CMS.Dependencies\V308CMS.Dependencies.csproj", "{6330E246-9E72-4BF7-835E-971936615B7F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +61,14 @@ Global
 		{4540F1D2-C7AC-4BC4-9E2D-F2271279AEAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4540F1D2-C7AC-4BC4-9E2D-F2271279AEAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4540F1D2-C7AC-4BC4-9E2D-F2271279AEAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{884B432E-BBD2-49E8-81D4-7768059A2A34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{884B432E-BBD2-49E8-81D4-7768059A2A34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{884B432E-BBD2-49E8-81D4-7768059A2A34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{884B432E-BBD2-49E8-81D4-7768059A2A34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6330E246-9E72-4BF7-835E-971936615B7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6330E246-9E72-4BF7-835E-971936615B7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6330E246-9E72-4BF7-835E-971936615B7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6330E246-9E72-4BF7-835E-971936615B7F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

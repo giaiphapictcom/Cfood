@@ -8,16 +8,42 @@ namespace V308CMS.Common
 {
     public static class StringHelper
     {
+        public static string ToRemoveWhitespace(this string str)
+        {
+            str = str.Replace(" ", "");
+            while (str.Contains("  "))
+            {
+                str = str.Replace(" ", "");
+            }
+            return str;
+        }
+        public static string ToUnsign(this string str)
+        {
+            return Ultility.LocDau2(str);
+        }
         public static string ToSlug(this string title)
         {
             return Ultility.URITitle(title);
         }
         public static string TruncateAtWord(string word, int limit = 10)
         {
+            word = word.Substring(0, Math.Min(limit, word.Length));
             return word;
         }
         private const string NumberChars = "0123456789";
         private const string RandChars = "0123456789qwertyuiopasdfghjklzxcvbnmERTYUIOPASDFGHJKLZXCVBNM";
+        private const string AlphaUpperCase = "ABCDEFGHIKLNOPQXYZTVRUS";
+        public static string GenerateUpperCasePrefix(int length =1)
+        {
+            var random = new Random();
+            var captcha = new StringBuilder();
+
+            for (int i = 0; i < length; i++)
+            {
+                captcha.Append(AlphaUpperCase[random.Next(AlphaUpperCase.Length)]);
+            }
+            return captcha.ToString();
+        }
 
         public static string GenerateNumber(int length)
         {

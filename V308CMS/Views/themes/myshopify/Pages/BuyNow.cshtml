@@ -1,0 +1,126 @@
+﻿@using V308CMS.Data
+@using V308CMS.Data.Models
+@using V308CMS.Helpers.Url
+@using V308CMS.Models
+@model ShippingModelsAnonymous
+@{
+    Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/CartLayout.cshtml";
+    ViewBag.Title = "Mua ngay";
+    var listRegion = (List<Region>)ViewBag.ListRegion;
+    var listCity = (List<Region>)ViewBag.ListCity;
+    var listAward = (List<Region>)ViewBag.ListWard;
+    var currentOrder = (ProductOrder)ViewBag.Order;
+}
+<div class="step" data-step="contact_information">
+    <input name="utf8" type="hidden" value="&#x2713;" />
+    <input type="hidden" name="_method" value="patch" />
+    <input type="hidden" name="authenticity_token" value="" />
+    <input type="hidden" name="previous_step" id="previous_step" value="contact_information" />
+    <input type="hidden" name="step" value="shipping_method" />
+    <div class="step__sections">
+        <form action="@Url.PaymentBuyNowUrl()" method="post" id="form_buynow" name="form_buynow" class="@(currentOrder != null ? "show-edit-shipping" : "")" style="padding-top: 1em;">
+            <div class="section section--shipping-address">
+                <div class="section__header">
+                    <h2 class="section__title">Địa chỉ giao hàng</h2>
+                </div>
+                <div class="section__content">
+                    <div class="fieldset" data-address-fields>
+                        <div class="field field--required">
+                            <div class="field__input-wrapper">
+                                @Html.TextBoxFor(model => model.Email, new
+                                   {
+                                       size = "30",
+                                       @class = "field__input",
+                                       placeholder = "Vui lòng nhập địa chỉ Email",
+                                       id = "checkout_name"
+
+                                   })
+                            </div>
+                            @Html.ValidationMessageFor(ship => ship.Email)
+                        </div>
+
+                        <div class="field field--required">
+                            <div class="field__input-wrapper">
+                                @Html.TextBoxFor(model => model.FullName, new
+                                   {
+                                       size = "30",
+                                       @class = "field__input",
+                                       placeholder = "Họ tên người nhận",
+                                       id = "checkout_name"
+
+                                   })
+                            </div>
+                            @Html.ValidationMessageFor(ship => ship.FullName)
+                        </div>
+                        <div class="field field--required" data-address-field="Phone">
+                            <div class="field__input-wrapper">
+                                @Html.TextBoxFor(model => model.Phone, new
+                                   {
+                                       size = "30",
+                                       @class = "field__input",
+                                       placeholder = "Số điện thoại di động"
+
+                                   })
+                            </div>
+                            @Html.ValidationMessageFor(ship => ship.Phone)
+                        </div>
+                        <div class="field field--required">
+                            <div class="field__input-wrapper field__input-wrapper--select">
+                                @Html.DropDownListFor(ship => ship.Region, new SelectList(listRegion, "Id", "Name"), "Chọn Tỉnh/Thành phố", new
+                                   {
+                                       @class = "field__input field__input--select"
+                                   })
+                                @Html.ValidationMessageFor(ship => ship.Region)
+                            </div>
+                        </div>
+                        <div class="field field--required">
+                            <div class="field__input-wrapper field__input-wrapper--select">
+                                @Html.DropDownListFor(ship => ship.City, new SelectList(listCity, "Id", "Name"), "Chọn Quận/Huyện", new
+                                   {
+                                       @class = "field__input field__input--select"
+                                   })
+                                @Html.ValidationMessageFor(ship => ship.City)
+                            </div>
+                        </div>
+                        <div class="field field--required">
+                            <div class="field__input-wrapper field__input-wrapper--select">
+                                @Html.DropDownListFor(ship => ship.Ward, new SelectList(listAward, "Id", "Name"), "Chọn Xã/Phường", new
+                                   {
+                                       @class = "field__input field__input--select"
+                                   })
+
+                            </div>
+                            @Html.ValidationMessageFor(ship => ship.Ward)
+                        </div>
+                        <div class="field field--required">
+                            <div class="field__input-wrapper">
+                                @Html.TextBoxFor(model => model.Address, new
+                                   {
+                                       size = "30",
+                                       placeholder = "Nhập địa chỉ",
+                                       @class = "field__input"
+                                   })
+                            </div>
+                            @Html.ValidationMessageFor(ship => ship.Address)
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="step__footer" data-step-footer>
+                <button name="button" type="submit" class="step__footer__continue-btn btn" style="background-color: red">
+                    <span class="btn__content">Đặt hàng</span>
+                    <i class="btn__spinner icon icon--button-spinner"></i>
+                </button>
+                <a class="step__footer__previous-link" href="@Url.ViewCartUrl()">
+                    <svg class="icon-svg icon-svg--color-accent icon-svg--size-10 previous-link__icon rtl-flip" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
+                        <path d="M8 1L7 0 3 4 2 5l1 1 4 4 1-1-4-4" />
+                    </svg>
+                    <span class="step__footer__previous-link-content">Quay lại giỏ hàng</span>
+                </a>
+
+            </div>
+        </form>
+    </div>
+</div>

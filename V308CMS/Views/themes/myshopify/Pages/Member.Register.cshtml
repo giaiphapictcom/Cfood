@@ -1,6 +1,5 @@
-﻿@model V308CMS.Models.RegisterModels
-@using V308CMS.Helpers
-@using V308CMS.Helpers.Url
+﻿@using V308CMS.Helpers.Url
+@model V308CMS.Models.RegisterModels
 @{
     Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
 }
@@ -42,27 +41,40 @@
         @Html.AntiForgeryToken()
         <div id="username">
             <label for="username"><span>Email : </span><em>*</em></label>
-            @Html.TextBoxFor(m => m.Email, new {placeholder = "Nhập Email", autocomplete = "on"})
+            @Html.TextBoxFor(m => m.Email, new {placeholder = "Nhập email", autocomplete = "on"})
             @Html.ValidationMessageFor(m => m.Email)
         </div>
         <div id="password">
             <label for="password"><span>Mật khẩu : </span><em>*</em></label>
-            @Html.PasswordFor(m => m.Password, new {placeholder = "Nhập Mật khẩu"})
+            @Html.PasswordFor(m => m.Password, new {placeholder = "Nhập mật khẩu"})
             @Html.ValidationMessageFor(m => m.Password)
         </div>
         <div id="confirm_password">
             <label for="confirm_password"><span>Mật khẩu xác nhận : </span><em>*</em></label>
-            @Html.PasswordFor(m => m.ConfirmPassword, new {placeholder = "Nhập Mật khẩu xác  nhận"})
+            @Html.PasswordFor(m => m.ConfirmPassword, new {placeholder = "Nhập mật khẩu xác  nhận"})
             @Html.ValidationMessageFor(m => m.ConfirmPassword)
+        </div>
+        <div id="captcha">
+            <label for="captcha"><span>Mã xác thực : </span><em>*</em></label>
+            @Html.TextBoxFor(m=>m.Captcha, new {placeholder ="Nhập mã xác thực"})
+            @Html.ValidationMessageFor(m=>m.Captcha)
+            <img class="img-captcha" src="@Url.RegisterCaptchaUrl()" alt="captcha"/>
+            <span class="refresh" onclick="show_captcha()">
+                <img src="/Content/themes/myshopify/images/refresh.png" alt="Lấy mã xác thực mới" />
+            </span>                     
         </div>
 
         <div class="action-btn">
-            <p><input type="submit" value="Đăng ký" class="btn">
-            </p>
+            <p><input type="submit" value="Đăng ký" class="btn"></p>           
         </div>
     </form>
+
 </div>
 <script type="text/javascript">
+    function show_captcha() {
+        $(".img-captcha").removeAttr("src");
+        $(".img-captcha").attr('src', '/Captcha/RegisterCaptcha?timestamp =' + new Date().getTime());
+    }
     $("input[name='Email'").change(function() {
         var email = $(this).val();        
         if (email !== '') {

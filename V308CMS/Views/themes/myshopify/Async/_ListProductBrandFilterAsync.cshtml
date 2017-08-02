@@ -1,0 +1,42 @@
+﻿@using V308CMS.Data.Enum
+@using V308CMS.Helpers
+@model List<V308CMS.Data.Brand>
+@if (Model != null && Model.Count > 0)
+{
+    var filterValue = Request.QueryString["filter"];
+    var currentRouteData = (RouteValueDictionary)ViewBag.CurrentRouteData;
+    <div class="title">
+        <h3>
+            <span>
+                THƯƠNG HIỆU
+            </span>
+        </h3>
+    </div>
+    <div class="content">
+        <ul>
+            @foreach (var brand in Model)
+            {
+                var filterBrandValue = string.Format("|{0}_{1}|", (int) FilterEnum.ByBrand, brand.id);
+                var currBrandSelected = !string.IsNullOrWhiteSpace(filterValue) && filterValue.Contains(filterBrandValue);
+                <li>
+                    <a title="@brand.name" href="@(currBrandSelected ? "javascript:void(0)" : Url.CategoryFilterUrl(currentRouteData,filterBrandValue))">
+                        <label class="@(currBrandSelected ? "filter_item_active" : "filter_item")">
+                            @if (currBrandSelected)
+                            {
+                                <i style="float: right;margin-left: 10px;color: red;cursor: pointer;" class="remove-brand" title="Bỏ chọn thương hiệu @brand.name" data-url="@Url.CategoryFilterUrl(currentRouteData,filterBrandValue,(byte)UrlHelperExtensions.FilterAction.RemoveFilter)">x</i>
+                            }
+                            @brand.name
+                        </label>
+                    </a>
+                </li>
+            }           
+        </ul>
+    </div>
+}
+<script>
+    $("i.remove-brand").click(function(e) {
+        e.preventDefault();
+        location.href = $(this).attr('data-url');
+    });
+</script>
+

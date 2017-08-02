@@ -1,7 +1,8 @@
 ﻿@using V308CMS.Helpers
+@using V308CMS.Helpers.Url
 @model V308CMS.Data.PageFooterControl
 <div class="shopify-section">
-    <div class="home-block-main" style="background-image: url(/Content/images/background-newsletter_2048x.jpg);">
+    <div class="home-block-main" style="background-color: #ececec;">
         <div class="container">
             <div class="row feature-wrap-content">
                 <div class="col-lg-6 col-xs-12 home-newsletter">
@@ -9,7 +10,7 @@
                         <h3 class="module-title"><span>@ViewBag.SubscribeNews</span></h3>
                         <div class="content">
                             <form action="" method="post" name="mc-embedded-subscribe-form" target="_blank" class="input-group">
-                                <input type="email" value="" placeholder="DiaChiEmailCuaBan@TenMien.com" name="EMAIL" class="input-group-field" aria-label="Địa chỉ email của bạn">
+                                <input type="email" value="" placeholder="Nhập địa chỉ email của bạn" name="EMAIL" class="input-group-field" aria-label="Địa chỉ email của bạn">
                                 <span class="input-group-btn">
                                     <input type="submit" class="btn" value="Đăng ký" name="subscribe">
                                 </span>
@@ -20,11 +21,18 @@
                 <div class="col-lg-6 col-xs-12 home-social">
                     <div class="title-social">FOLLOW US:</div>
                     <div class="footer-icon-share">
-                        <!--Edited by toaihv-->
-                        <a href="@(ViewBag.GPlus  != null?ViewBag.GPlus: "javascript:void(0)")" target="_blank"><img src="~/Content/images/social/google.png" /></a>
-                        <a href="@(ViewBag.FacebookPage != null ?ViewBag.FacebookPage: "javascript:void(0)")" target="_blank"><img src="~/Content/images/social/facebook.png" /></a>
-                        <a href="@(ViewBag.Zalo != null ?ViewBag.Zalo: "javascript:void(0)")" target="_blank"><img src="~/Content/images/social/zalo.png" /></a>
-                        <a href="@(ViewBag.Youtube != null?ViewBag.Youtube: "javascript:void(0)")" target="_blank"><img src="~/Content/images/social/youtube.png" /></a>
+                        <a href="@(ViewBag.GPlus ?? "javascript:void(0)")" target="_blank">
+                            <i class="fa fa-google-plus"></i>
+                        </a>
+                        <a href="@(ViewBag.FacebookPage ?? "javascript:void(0)")" target="_blank">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                        <a href="@(ViewBag.Zalo ?? "javascript:void(0)")" target="_blank">
+                            Zalo
+                        </a>
+                        <a href="@(ViewBag.Youtube ?? "javascript:void(0)")" target="_blank">
+                            <i class="fa fa-youtube"></i>
+                        </a>
                     </div>
 
                 </div>
@@ -45,13 +53,14 @@
                         </ul>
                     </div>
                     @{
-                        int footerGroup = 0; int colLimit = 4;
+                        int footerGroup = 0;
+                        int colLimit = 4;
                         if (ViewBag.FacebookPage != null & ViewBag.FacebookPage is string)
                         {
                             colLimit = 3;
                         }
                     }
-                    
+
                     @if (Model.NewsCategorys != null && Model.NewsCategorys.Count() > 0)
                     {
                         foreach (V308CMS.Data.NewsGroupPage group in Model.NewsCategorys)
@@ -64,28 +73,29 @@
                             <div class="col-md-3 col-sm-3 col-xs-12">
                                 <h3 class="module-title">@group.Name</h3>
                                 <ul class="content">
-                                     @if (group.NewsList != null && group.NewsList.Any())
+                                    @if (group.NewsList != null && group.NewsList.Any())
                                     {
                                         foreach (V308CMS.Data.News news in group.NewsList)
                                         {
                                             <li>
                                                 <a href="@Url.NewsDetailUrl(news)" title="@news.Title">
-                                                   @news.Title
+                                                    @news.Title
                                                 </a>
                                             </li>
-                                    
+
                                         }
                                     }
                                 </ul>
                             </div>
                         }
                     }
-                    @if (ViewBag.FacebookPage != null & ViewBag.FacebookPage is string) {
+                    @if (ViewBag.FacebookPage != null & ViewBag.FacebookPage is string)
+                    {
                         <div class="col-md-3 col-sm-3 col-xs-12">
                             <h3 class="module-title">Fan Page Facebook</h3>
                             <p class="content">
 
-                            @Html.Raw("<iframe src=\"http://www.facebook.com/plugins/likebox.php?profile=1&width=300&height=170&connections=10&stream=true&header=true&id=" + ViewBag.FacebookPage + "\" scrolling='no' frameborder='0' allowtransparency='true' style='border: none; overflow: hidden; width: 100%; height: 130px'></iframe>")
+                                @Html.Raw("<iframe src=\"http://www.facebook.com/plugins/likebox.php?profile=1&width=300&height=170&connections=10&stream=true&header=true&id=" + ViewBag.FacebookPage + "\" scrolling='no' frameborder='0' allowtransparency='true' style='border: none; overflow: hidden; width: 100%; height: 130px'></iframe>")
                             </p>
                         </div>
                     }
@@ -103,7 +113,7 @@
                         </div>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <div class="paypal-footer">
-                                <ul><li><img src="/Content/images/z_1600x.png" alt="Hình thức thanh toán" /></li></ul>
+                                <ul><li><img src="/Content/images/z_1600x.png" alt="Hình thức thanh toán"/></li></ul>
                             </div>
 
                         </div>
@@ -117,7 +127,7 @@
     </div>
     <div class="ajax-error-cbox cbox">
         <div class="modal-inner">
-            <div class="ajax-error-title">Lỗi</div>
+            <div class="ajax-error-title">Thông báo</div>
             <div class="ajax-error-message"></div>
         </div>
     </div>
@@ -131,16 +141,16 @@
                 <div class="button-link-cart">
                     <div class="view-cart"><a title="Xem giỏ hàng" href="@Url.ViewCartUrl()">Xem giỏ hàng</a>
                     </div>
-                    <button class="btn" onclick="window.location = '@Url.CheckoutCartUrl()'" title="Thanh toán">Thanh toán</button>
+                    <button class="btn" onclick="@(AuthenticationHelper.IsAuthenticated==false?"loginAndBuy();return false;" :"buyNow();return false;")" title="Thanh toán">Thanh toán</button>
                 </div>
             </div>
             <p class="success-message show-wishlist">Success! You&#39;ve added to wishlist success.</p>
             <a href="javascript:void(0)" class="close-cbox"><span class="icon_close"></span></a>
         </div>
     </div>
+
     <div class="product-quickview"></div>
-    <!-- Begin quick-view-template -->
-    <div class="clearfix" id="quickview-popup" style="display:none">
+    <div class="clearfix" id="quickview-popup" style="display: none">
         <div class="overlay"></div>
         <div class="product-content clearfix">
             <div class="product-img col-xs-6">
@@ -149,10 +159,10 @@
                     <ul class="product-photo-thumbs  quickview-more-views-owlslider " data-cycle-carousel-vertical=true></ul>
                 </div>
             </div>
-
             <div class="product-shop col-xs-6">
                 <div class="product-item">
-                    <h2 class="product-title"><a>&nbsp;</a></h2>
+                    <h2 class="product-title"><a>&nbsp;</a>
+                    </h2>
                     <span class="shopify-product-reviews-badge" data-id=""></span>
 
                     <div class="prices">
@@ -173,7 +183,7 @@
 
                     <div class="product-details clearfix">
                         <form action="@Url.AddToCartUrl()" method="post" class="variants" name="quickview-form">
-                            <input name="id" value="0" type="hidden"/>                           
+                            <input name="id" value="0" type="hidden"/>
                             <label>Số lượng :</label>
                             <input type="text" name="quantity" value="1" class="quantity">
                             <div class="actions">
@@ -188,5 +198,4 @@
             <a href="javascript:void(0)" class="close-popup"><i class="fa fa-times"></i></a>
         </div>
     </div>
-    <!-- End of quick-view-template -->
 </div>

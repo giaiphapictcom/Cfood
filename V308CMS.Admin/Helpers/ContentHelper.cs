@@ -1,11 +1,4 @@
-
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
 ﻿using V308CMS.Data.Enum;
-
 
 namespace V308CMS.Admin.Helpers
 {
@@ -21,15 +14,15 @@ namespace V308CMS.Admin.Helpers
 
         }
 
-        public static string ToPositionName(this byte position)
+        public static string ToPositionName(this int position)
         {
             switch (position)
             {
-                case (byte)PositionEnum.Top:
+                case (int)BannerPositionEnum.HomeTop:
                     return "Đầu";
-                case (byte)PositionEnum.Center:
+                case (int)BannerPositionEnum.HomeCenter:
                     return "Giữa";
-                case (byte)PositionEnum.Bottom:
+                case (int)BannerPositionEnum.HomeBottom:
                     return "Dưới";
                 default:
                     return "";

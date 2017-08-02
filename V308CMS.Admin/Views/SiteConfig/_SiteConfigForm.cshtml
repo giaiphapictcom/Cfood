@@ -1,21 +1,35 @@
 ﻿@using V308CMS.Admin.Helpers.Url
 @model  V308CMS.Admin.Models.SiteConfigModels
+@{
+    var listSite = (List<SelectListItem>)ViewData["ListSite"];
+}
 @Html.HiddenFor(config => Model.Id)
+@Html.HiddenFor(config => Model.Site)
 @Html.AntiForgeryToken()
 <div class="row">
     @Html.ValidationSummary(true)
     <div class="col-lg-6">
+        @*<div class="form-group">
+            @Html.LabelFor(news => news.Site)
+            @Html.DropDownListFor(news => news.Site, listSite, "Chọn Website", new
+       {
+           @class = "form-control",
+           placeholder = "Chọn Website"
+       })
+            @Html.ValidationMessageFor(news => news.Site)
+        </div>*@
+
         <div class="form-group">
             @Html.LabelFor(config => Model.Name)
-            @Html.TextBoxFor(config => Model.Name, new { @class = "form-control", placeholder = "Tên thuộc tính" })
+            @Html.TextBoxFor(config => Model.Name, new {@class = "form-control", placeholder = "Tên thuộc tính"})
             @Html.ValidationMessageFor(config => Model.Name)
         </div>
         <div class="form-group">
             @Html.LabelFor(config => Model.Content)
-            @Html.TextBoxFor(config => Model.Content, new { @class = "form-control", placeholder = "Giá trị thuộc tính" })
+            @Html.TextBoxFor(config => Model.Content, new {@class = "form-control", placeholder = "Giá trị thuộc tính"})
             @Html.ValidationMessageFor(config => Model.Content)
         </div>
-        @Html.Partial("UI/_FormAction")       
+        @Html.Partial("UI/_FormAction")
         <a href="@Url.SiteConfigIndexUrl()" title="Danh sách cấu hình Website" class="btn btn-link">Danh sách</a>
 
     </div>

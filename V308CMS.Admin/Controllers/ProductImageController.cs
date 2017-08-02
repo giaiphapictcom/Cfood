@@ -52,7 +52,7 @@ namespace V308CMS.Admin.Controllers
                 ModelState.AddModelError("", "Id không tồn tại trên hệ thống.");                
                 return View("Edit", productImage);
             }
-            SetFlashMessage($"Cập nhật ảnh '{productImageUpdate.Title}' thành công.");
+            SetFlashMessage(string.Format("Cập nhật ảnh '{0}' thành công.", productImageUpdate.Title));
             if (productImage.SaveList)
             {
                 return RedirectToAction("Edit", "Product", new

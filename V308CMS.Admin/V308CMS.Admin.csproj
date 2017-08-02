@@ -31,6 +31,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -53,12 +54,32 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\DocumentFormat.OpenXml.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework">
-      <HintPath>..\V308CMS\Bin\EntityFramework.dll</HintPath>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0-beta1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
-
+    <Reference Include="MySql.Data, Version=6.9.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MySql.ConnectorNET.Data.6.8.3.2\lib\net45\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data.Entity, Version=6.9.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
+    <Reference Include="MySql.Data.Entity.EF6, Version=6.8.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.ConnectorNET.Entity.6.8.3.2\lib\net45\MySql.Data.Entity.EF6.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="ServiceStack.Text, Version=3.9.59.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\ServiceStack.Text.dll</HintPath>
@@ -66,7 +87,6 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -166,20 +186,12 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-
-    <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\FileController.cs" />
-    <Compile Include="Controllers\FileTypeController.cs" />
-
-    <Compile Include="Controllers\ImageController.cs" />
-    <Compile Include="Controllers\ImageTypeController.cs" />
-    <Compile Include="Controllers\MarketController.cs" />
-    <Compile Include="Controllers\ProductOrderController.cs" />
-    <Compile Include="Controllers\SupportController.cs" />
-    <Compile Include="Controllers\SupportTypeController.cs" />
-
     <Compile Include="Attributes\SkipCheckPermissionAttribute.cs" />
     <Compile Include="Controllers\AdminAccountController.cs" />
+    <Compile Include="Controllers\AffiliateAccountController.cs" />
+    <Compile Include="Controllers\AffiliateCategoryController.cs" />
+    <Compile Include="Controllers\AffiliateController.cs" />
+    <Compile Include="Controllers\AsyncController.cs" />
     <Compile Include="Controllers\BannerController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
@@ -205,6 +217,7 @@
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\SiteConfigController.cs" />
     <Compile Include="Controllers\SizeController.cs" />
+    <Compile Include="Controllers\TestimonialController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
@@ -215,25 +228,28 @@
     <Compile Include="DataAnnotations\EmailAttribute.cs" />
     <Compile Include="DataAnnotations\PhoneAttribute.cs" />
     <Compile Include="DataAnnotations\UserNameAttribute.cs" />
-
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\AffiliateHelper.cs" />
     <Compile Include="Helpers\AuthenticationHelper.cs" />
     <Compile Include="Helpers\ConfigHelper.cs" />
     <Compile Include="Helpers\ContentHelper.cs" />
-
     <Compile Include="Helpers\ControllerHelper.cs" />
     <Compile Include="Helpers\CustomPrincipal.cs" />
     <Compile Include="Helpers\EnumTypeHelper.cs" />
     <Compile Include="Helpers\FileUploadHelper.cs" />
     <Compile Include="Helpers\FlashMessageHelper.cs" />
     <Compile Include="Helpers\Result.cs" />
+    <Compile Include="Helpers\UI\AffiliateStatus.cs" />
     <Compile Include="Helpers\UI\DisplayColorHelper.cs" />
     <Compile Include="Helpers\UI\NewsCategoryUIHelper.cs" />
+    <Compile Include="Helpers\UI\OrderStateHelper.cs" />
     <Compile Include="Helpers\UI\StateLabelHelper.cs" />
     <Compile Include="Helpers\Url\AccountUrlHelper.cs" />
     <Compile Include="Helpers\Url\AdminAccountUrlHelper.cs" />
+    <Compile Include="Helpers\Url\AffiliateUrlHelper.cs" />
+    <Compile Include="Helpers\Url\AsyncUrlHelper.cs" />
     <Compile Include="Helpers\Url\BannerUrlHelper.cs" />
     <Compile Include="Helpers\Url\ContactUrlHelper.cs" />
     <Compile Include="Helpers\Url\CountryUrlHelper.cs" />
@@ -241,13 +257,12 @@
     <Compile Include="Helpers\Url\FileTypeUrlHelper.cs" />
     <Compile Include="Helpers\Url\FileUrlHelper.cs" />
     <Compile Include="Helpers\Url\GroupPermissionUrlHelper.cs" />
-
     <Compile Include="Helpers\Url\HomeUrlHelper.cs" />
     <Compile Include="Helpers\Url\ImageTypeUrlHelper.cs" />
     <Compile Include="Helpers\Url\ImageUrlHelper.cs" />
     <Compile Include="Helpers\Url\MarketUrlHelper.cs" />
-
     <Compile Include="Helpers\Url\MenuConfigUrlHelper.cs" />
+    <Compile Include="Helpers\Url\AffiliateCategoryUrlHelper.cs" />
     <Compile Include="Helpers\Url\NewsCategoryUrlHelper.cs" />
     <Compile Include="Helpers\Url\NewsUrlHelper.cs" />
     <Compile Include="Helpers\Url\PermissionUrlHelper.cs" />
@@ -257,30 +272,36 @@
     <Compile Include="Helpers\Url\ProductImageUrlHelper.cs" />
     <Compile Include="Helpers\Url\ProductUnitUrlHelper.cs" />
     <Compile Include="Helpers\Url\ProductStoreUrlHelper.cs" />
-
     <Compile Include="Helpers\Url\ProductManufacturerUrlHelper.cs" />
     <Compile Include="Helpers\Url\ProductOrderUrlHelper.cs" />
     <Compile Include="Helpers\Url\ProductTypeUrlHelper.cs" />
     <Compile Include="Helpers\Url\ProductUrlHelper.cs" />
-
     <Compile Include="Helpers\Url\ProductBrandUrlHelper.cs" />
+    <Compile Include="Helpers\Url\ProfileUrlHelper.cs" />
     <Compile Include="Helpers\Url\RoleUrlHelper.cs" />
     <Compile Include="Helpers\Url\SiteConfigUrlHelper.cs" />
     <Compile Include="Helpers\Url\SizeUrlHelper.cs" />
     <Compile Include="Helpers\Url\SupportTypeUrlHelper.cs" />
     <Compile Include="Helpers\Url\SupportUrlHelper.cs" />
+    <Compile Include="Helpers\Url\TestimonialHelper.cs" />
     <Compile Include="Helpers\Url\UrlContentHelper.cs" />
     <Compile Include="Helpers\Url\UserUrlHelper.cs" />
     <Compile Include="Attributes\CheckPermissionAttribute.cs" />
+    <Compile Include="Helpers\Url\VoucherUrlHelper.cs" />
     <Compile Include="Helpers\View\BaseViewPage.cs" />
     <Compile Include="Middlewares\CheckPermissionMiddleware.cs" />
     <Compile Include="Attributes\CheckGroupPermissionAttribute.cs" />
     <Compile Include="Models\AdminChangePassworModels.cs" />
+    <Compile Include="Models\AffiliateCategoryModels.cs" />
     <Compile Include="Models\BannerModels.cs" />
+    <Compile Include="Models\CountBoxType.cs" />
+    <Compile Include="Models\CountItems.cs" />
+    <Compile Include="Models\OrderModels.cs" />
+    <Compile Include="Models\OrderViewModels.cs" />
     <Compile Include="Models\ProfileViewModels.cs" />
+    <Compile Include="Models\TestimonialModels.cs" />
     <Compile Include="Models\UserChangePassworModels.cs" />
     <Compile Include="Models\AdminModels.cs" />
-    <Compile Include="Models\Authenicate.cs" />
     <Compile Include="Models\BaseModels.cs" />
     <Compile Include="Models\ContactModels.cs" />
     <Compile Include="Models\CountryModels.cs" />
@@ -315,8 +336,6 @@
     <Compile Include="Models\UserModels.cs" />
     <Compile Include="Models\UserViewModels.cs" />
     <Compile Include="Models\VoucherModels.cs" />
-
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\assets\css\ace-ie.min.css" />
@@ -330,6 +349,7 @@
     <Content Include="Content\assets\css\chosen.css" />
     <Content Include="Content\assets\css\colorbox.css" />
     <Content Include="Content\assets\css\colorpicker.css" />
+    <Content Include="Content\assets\css\dashboard.css" />
     <Content Include="Content\assets\css\datepicker.css" />
     <Content Include="Content\assets\css\daterangepicker.css" />
     <Content Include="Content\assets\css\font-awesome-ie7.min.css" />
@@ -337,9 +357,8 @@
     <Content Include="Content\assets\css\fullcalendar.css" />
     <Content Include="Content\assets\css\jquery-ui-1.10.3.custom.min.css" />
     <Content Include="Content\assets\css\jquery.gritter.css" />
-
+    <Content Include="Content\assets\css\kendo.default.min.css" />
     <Content Include="Content\assets\css\login.css" />
-
     <Content Include="Content\assets\css\prettify.css" />
     <Content Include="Content\assets\css\sb-admin-2.css" />
     <Content Include="Content\assets\css\select2.css" />
@@ -360,9 +379,7 @@
     <Content Include="Content\assets\js\respond.min.js" />
     <Content Include="Content\assets\js\sb-admin-2.js" />
     <Content Include="Content\assets\js\script.js" />
-
     <Content Include="Content\assets\js\image-select-with-preview.js" />
-
     <Content Include="Content\data\flot-data.js" />
     <Content Include="Content\data\morris-data.js" />
     <Content Include="Content\Images\avatar.png" />
@@ -749,7 +766,6 @@
     <Content Include="Content\Plugins\ckeditor\plugins\youtube\lang\vi.js" />
     <Content Include="Content\Plugins\ckeditor\plugins\youtube\lang\zh.js" />
     <Content Include="Content\Plugins\ckeditor\plugins\youtube\plugin.js" />
-
     <Content Include="Content\Plugins\ckeditor\samples\ajax.html" />
     <Content Include="Content\Plugins\ckeditor\samples\api.html" />
     <Content Include="Content\Plugins\ckeditor\samples\appendto.html" />
@@ -1371,6 +1387,7 @@
     <Content Include="Content\Plugins\ckfinder\skins\v1\skin.js" />
     <Content Include="Content\Plugins\ckfinder\skins\v1\uipanel.css" />
     <Content Include="Content\Plugins\ckfinder\translations.txt" />
+    <Content Include="Content\Scripts\app.js" />
     <Content Include="Content\Scripts\enhance.js" />
     <Content Include="Content\Scripts\excanvas.js" />
     <Content Include="Content\Scripts\functions.js" />
@@ -1459,11 +1476,6 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
-
-    <Content Include="Content\vendor\bootstrap-datetimepicker\css\bootstrap-datetimepicker.min.css" />
-    <Content Include="Content\vendor\bootstrap-datetimepicker\js\bootstrap-datetimepicker.min.js" />
-    <Content Include="Content\vendor\bootstrap-social\bootstrap-social.css" />
-
     <Content Include="Content\vendor\bootstrap-colorpicker\.gitignore" />
     <Content Include="Content\vendor\bootstrap-colorpicker\dist\css\bootstrap-colorpicker.css" />
     <Content Include="Content\vendor\bootstrap-colorpicker\dist\css\bootstrap-colorpicker.min.css" />
@@ -1527,7 +1539,6 @@
     <Content Include="Content\vendor\bootstrap-touchspin\Gruntfile.js" />
     <Content Include="Content\vendor\bootstrap-touchspin\src\jquery.bootstrap-touchspin.css" />
     <Content Include="Content\vendor\bootstrap-touchspin\src\jquery.bootstrap-touchspin.js" />
-
     <Content Include="Content\vendor\bootstrap\css\bootstrap.css" />
     <Content Include="Content\vendor\bootstrap\css\bootstrap.min.css" />
     <Content Include="Content\vendor\bootstrap\js\bootstrap.js" />
@@ -1578,7 +1589,6 @@
     <Content Include="Content\vendor\datatables\js\jquery.datatables.js" />
     <Content Include="Content\vendor\datatables\js\jquery.datatables.min.js" />
     <Content Include="Content\vendor\datatables\js\jquery.js" />
-
     <Content Include="Content\vendor\dropzone\.gitignore" />
     <Content Include="Content\vendor\dropzone\dist\basic.css" />
     <Content Include="Content\vendor\dropzone\dist\dropzone-amd-module.js" />
@@ -1592,7 +1602,6 @@
     <Content Include="Content\vendor\dropzone\test\test.html" />
     <Content Include="Content\vendor\dropzone\test\test.js" />
     <Content Include="Content\vendor\editable-table\mindmup-editabletable.js" />
-
     <Content Include="Content\vendor\flot-tooltip\jquery.flot.tooltip.js" />
     <Content Include="Content\vendor\flot-tooltip\jquery.flot.tooltip.min.js" />
     <Content Include="Content\vendor\flot-tooltip\jquery.flot.tooltip.source.js" />
@@ -1644,7 +1653,9 @@
     <Content Include="Content\vendor\toastr\toastr.min.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -1664,6 +1675,12 @@
     <Folder Include="Content\Plugins\ckfinder\plugins\watermark\bin\Debug\" />
     <Folder Include="Content\Plugins\ckfinder\plugins\watermark\bin\Release\" />
     <Folder Include="Content\vendor\moment\css\" />
+    <Folder Include="Views\Account\" />
+    <Folder Include="Views\FileType\" />
+    <Folder Include="Views\File\" />
+    <Folder Include="Views\ImageType\" />
+    <Folder Include="Views\Image\" />
+    <Folder Include="Views\Market\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\assets\font\fontawesome-webfont.woff" />
@@ -1699,82 +1716,28 @@
       <Project>{4F5528A8-75F6-4B33-B254-2EAA5F916F12}</Project>
       <Name>V308CMS.Data</Name>
     </ProjectReference>
-
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Account\Detail.cshtml" />
-    <Content Include="Views\Account\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\AdminAccount\Create.cshtml" />
-    <Content Include="Views\AdminAccount\Edit.cshtml" />
-    <Content Include="Views\AdminAccount\Index.cshtml" />
-    <Content Include="Views\AdminAccount\Info.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\File\Create.cshtml" />
-    <Content Include="Views\File\Edit.cshtml" />
-    <Content Include="Views\File\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\FileType\Create.cshtml" />
-    <Content Include="Views\FileType\Edit.cshtml" />
-    <Content Include="Views\FileType\Index.cshtml" />
-
+    <ProjectReference Include="..\V308CMS.Dependencies\V308CMS.Dependencies.csproj">
+      <Project>{6330e246-9e72-4bf7-835e-971936615b7f}</Project>
+      <Name>V308CMS.Dependencies</Name>
+    </ProjectReference>
     <ProjectReference Include="..\V308CMS.Respository\V308CMS.Respository.csproj">
       <Project>{8FC8706C-8F72-4B7E-8779-5AA694CAD443}</Project>
       <Name>V308CMS.Respository</Name>
     </ProjectReference>
-
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
-
-    <Content Include="Views\Image\Create.cshtml" />
-    <Content Include="Views\Image\Edit.cshtml" />
-    <Content Include="Views\Image\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ImageType\Create.cshtml" />
-    <Content Include="Views\ImageType\Edit.cshtml" />
-    <Content Include="Views\ImageType\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Market\Create.cshtml" />
-    <Content Include="Views\Market\Edit.cshtml" />
-    <Content Include="Views\Market\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\News\Create.cshtml" />
-    <Content Include="Views\News\Edit.cshtml" />
-    <Content Include="Views\News\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-
     <Content Include="Views\NewsCategory\Create.cshtml" />
     <Content Include="Views\NewsCategory\Edit.cshtml" />
     <Content Include="Views\NewsCategory\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-
-    <Content Include="Views\Product\Create.cshtml" />
-    <Content Include="Views\Product\Edit.cshtml" />
-    <Content Include="Views\Product\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ProductDistributor\Create.cshtml" />
-    <Content Include="Views\ProductDistributor\Edit.cshtml" />
-    <Content Include="Views\ProductDistributor\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-
     <Content Include="Views\ProductManufacturer\Create.cshtml" />
     <Content Include="Views\ProductManufacturer\Edit.cshtml" />
     <Content Include="Views\ProductManufacturer\Index.cshtml" />
@@ -1787,21 +1750,6 @@
     <Content Include="Views\ProductType\Create.cshtml" />
     <Content Include="Views\ProductType\Edit.cshtml" />
     <Content Include="Views\ProductType\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-
-    <Content Include="Views\Support\Create.cshtml" />
-    <Content Include="Views\Support\Edit.cshtml" />
-    <Content Include="Views\Support\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\SupportType\Create.cshtml" />
-    <Content Include="Views\SupportType\Edit.cshtml" />
-    <Content Include="Views\SupportType\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-
-    <Content Include="Views\Home\ChucNang.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\vendor\bootstrap-social\bootstrap-social.less" />
@@ -1853,7 +1801,6 @@
     <Content Include="Content\vendor\font-awesome\scss\_stacked.scss" />
     <Content Include="Content\vendor\font-awesome\scss\_variables.scss" />
     <Content Include="Content\vendor\images\sorting icons.psd" />
-
     <Content Include="Content\vendor\bootstrap-touchspin\.editorconfig" />
     <Content Include="Content\vendor\bootstrap-touchspin\.jshintrc" />
     <Content Include="Content\vendor\bootstrap-touchspin\.travis.yml" />
@@ -1914,8 +1861,18 @@
     <Content Include="Content\vendor\bootstrap-editable\LICENSE-GPL" />
     <Content Include="Content\vendor\bootstrap-editable\LICENSE-MIT" />
     <Content Include="Content\vendor\bootstrap-editable\README.md" />
+    <Content Include="packages.config" />
     <None Include="Properties\PublishProfiles\ToaiHVV308Cms.pubxml" />
-
+    <None Include="Properties\PublishProfiles\V308Cms.pubxml" />
+    <Content Include="Views\Shared\_LayoutV2.cshtml" />
+    <Content Include="Views\Shared\_Header.cshtml" />
+    <Content Include="Views\Shared\_Stylesheet.cshtml" />
+    <Content Include="Views\Shared\_Navigation.cshtml" />
+    <Content Include="Views\Home\IndexV2.cshtml" />
+    <Content Include="Views\Shared\_Js.cshtml" />
+    <Content Include="Views\SiteConfig\Index.cshtml" />
+    <Content Include="Views\SiteConfig\Create.cshtml" />
+    <Content Include="Views\SiteConfig\Edit.cshtml" />
     <Content Include="Views\EmailConfig\Index.cshtml" />
     <Content Include="Views\EmailConfig\Create.cshtml" />
     <Content Include="Views\EmailConfig\Edit.cshtml" />
@@ -1983,7 +1940,6 @@
     <Content Include="Views\Contact\Index.cshtml" />
     <Content Include="Views\Contact\Edit.cshtml" />
     <Content Include="Views\Contact\_ContactForm.cshtml" />
-    <Content Include="Views\Email\Create.cshtml" />
     <Content Include="Views\Email\Index.cshtml" />
     <Content Include="Views\Role\Index.cshtml" />
     <Content Include="Views\Role\Create.cshtml" />
@@ -2006,11 +1962,40 @@
     <Content Include="Views\Role\_RolePermissionEdit.cshtml" />
     <Content Include="Views\Error\AccessDenied.cshtml" />
     <Content Include="Views\Banner\Create.cshtml" />
-    <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Banner\Index.cshtml" />
     <Content Include="Views\Banner\Edit.cshtml" />
     <Content Include="Views\Banner\_BannerForm.cshtml" />
-
+    <Content Include="Views\Email\Send.cshtml" />
+    <Content Include="Views\Email\_EmailForm.cshtml" />
+    <Content Include="Views\Async\_CountBox.cshtml" />
+    <Content Include="Views\Async\_LastestOrder.cshtml" />
+    <Content Include="Views\Async\_LastestUser.cshtml" />
+    <Content Include="Views\Async\_LastestContact.cshtml" />
+    <Content Include="Views\Order\Index.cshtml" />
+    <Content Include="Views\Testimonial\_Form.cshtml" />
+    <Content Include="Views\Testimonial\Create.cshtml" />
+    <Content Include="Views\Testimonial\Edit.cshtml" />
+    <Content Include="Views\Testimonial\Index.cshtml" />
+    <Content Include="Views\AffiliateCategory\_CategoryForm.cshtml" />
+    <Content Include="Views\AffiliateCategory\Create.cshtml" />
+    <Content Include="Views\AffiliateCategory\Edit.cshtml" />
+    <Content Include="Views\AffiliateCategory\Index.cshtml" />
+    <Content Include="Views\Voucher\_VoucherForm.cshtml" />
+    <Content Include="Views\AffiliateAccount\Index.cshtml" />
+    <Content Include="Views\Profile\ChangePassword.cshtml" />
+    <Content Include="Views\Profile\UpdateProfile.cshtml" />
+    <Content Include="Views\Order\Edit.cshtml" />
+    <Content Include="Views\Order\_OrderForm.cshtml" />
+    <Content Include="Views\User\affiliate_accounts.cshtml" />
+    <Content Include="Views\Shared\UI\_UseForSiteList.cshtml" />
+    <Content Include="Views\Affiliate\Index.cshtml" />
+    <Content Include="Views\Affiliate\Links.cshtml" />
+    <Content Include="Views\Affiliate\Vouchers.cshtml" />
+    <Content Include="Views\Affiliate\WebsiteRequest.cshtml" />
+    <Content Include="Views\Affiliate\Orders.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -2026,16 +2011,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
-          <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
-          <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:23362/</IISUrl>
-          <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>
-          </CustomServerUrl>
-          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+          <SaveServerSettingsInUserFile>True</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>

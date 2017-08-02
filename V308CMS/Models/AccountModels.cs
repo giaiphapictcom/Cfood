@@ -45,6 +45,8 @@ namespace V308CMS.Models
         [Compare("Password", ErrorMessage = "Mật khẩu xác nhận không khớp.")]
         [Display(Name = "Mật khẩu xác nhận")]
         public string ConfirmPassword { get; set; }
+        [Required(ErrorMessage = "Vui lòng nhập Mã xác thực.")]
+        public string Captcha { get; set; }
 
         public void ResetPasswordValue()
         {
@@ -63,8 +65,7 @@ namespace V308CMS.Models
     {
         [Required(ErrorMessage = "Vui lòng nhập Email.")]
         [Display(Name = "Email :")]
-        public string Email { get; set; }
-        public int id { get; set; }
+        public string Email { get; set; }       
         [Required(ErrorMessage = "Vui lòng nhập Mật khẩu tài khoản.")]
         [Display(Name = "Mật khẩu :")]
         public string Password { get; set; }

@@ -1,226 +1,130 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace V308CMS.Data
 {
     public class FileRepository
     {
-        private V308CMSEntities entities;
-        #region["Contructor"]
 
         public FileRepository()
         {
-            this.entities = new V308CMSEntities();
+
         }
 
-        public FileRepository(V308CMSEntities mEntities)
-        {
-            this.entities = mEntities;
-        }
-
-        #endregion
-        #region["Vung cac thao tac Dispose"]
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                if (this.entities != null)
-                {
-                    this.entities.Dispose();
-                    this.entities = null;
-                }
-            }
-        }
-        #endregion
         public File LayFileTheoId(int pId)
         {
-            File mFile = null;
-            try
+            using (var entities = new V308CMSEntities())
             {
-                //lay danh sach tin moi dang nhat
-                mFile = (from p in entities.File
-                         where p.ID == pId
-                         select p).FirstOrDefault();
-                return mFile;
-            }
-            catch (Exception ex)
-            {
-                Console.Write(ex);
-                throw;
+                return (from p in entities.File
+                        where p.ID == pId
+                        select p).FirstOrDefault();
             }
         }
         public List<File> LayFileTheoTrang(int pcurrent, int psize)
         {
-            List<File> mList = null;
-            try
+            using (var entities = new V308CMSEntities())
             {
-                //lay danh sach tin moi dang nhat
-                mList = (from p in entities.File
-                         orderby p.ID descending
-                         select p).Skip((pcurrent - 1) * psize)
+                return (from p in entities.File
+                        orderby p.ID descending
+                        select p).Skip((pcurrent - 1) * psize)
                          .Take(psize).ToList();
-                return mList;
-            }
-            catch (Exception ex)
-            {
-                throw;
             }
         }
         public List<File> GetFileByTypeId(int pTypeId, int pTake)
         {
-            List<File> mList = null;
-            try
+            using (var entities = new V308CMSEntities())
             {
-                //lay danh sach tin moi dang nhat
-                mList = (from p in entities.File
-                         where p.TypeID == pTypeId
-                         orderby p.ID descending
-                         select p).Take(pTake).ToList();
-                return mList;
-            }
-            catch (Exception ex)
-            {
-                throw;
+                return (from p in entities.File
+                        where p.TypeID == pTypeId
+                        orderby p.ID descending
+                        select p).Take(pTake).ToList();
             }
         }
-        public List<File> GetFileByTypeIdAndName(int pTypeId,string pName, int pTake)
+        public List<File> GetFileByTypeIdAndName(int pTypeId, string pName, int pTake)
         {
-            List<File> mList = null;
-            try
+            using (var entities = new V308CMSEntities())
             {
-                //lay danh sach tin moi dang nhat
-                mList = (from p in entities.File
-                         where p.TypeID == pTypeId && p.FileName.Equals(pName)
-                         orderby p.ID descending
-                         select p).Take(pTake).ToList();
-                return mList;
-            }
-            catch (Exception ex)
-            {
-                throw;
+                return (from p in entities.File
+                        where p.TypeID == pTypeId && p.FileName.Equals(pName)
+                        orderby p.ID descending
+                        select p).Take(pTake).ToList();
             }
         }
         public List<FileType> LayNhomFileAll()
         {
-            List<FileType> mList = null;
-            try
+            using (var entities = new V308CMSEntities())
             {
-                //lay danh sach tin moi dang nhat
-                mList = (from p in entities.FileType
-                         select p).ToList();
-                return mList;
-            }
-            catch (Exception ex)
-            {
-                throw;
+                return (from p in entities.FileType
+                        select p).ToList();
+
             }
         }
         public List<FileType> LayNhomFileTheoTrang(int pcurrent, int psize)
         {
-            List<FileType> mList = null;
-            try
+            using (var entities = new V308CMSEntities())
             {
-                //lay danh sach tin moi dang nhat
-                mList = (from p in entities.FileType
-                         orderby p.ID descending
-                         select p).Skip((pcurrent - 1) * psize)
-                         .Take(psize).ToList();
-                return mList;
-            }
-            catch (Exception ex)
-            {
-                throw;
+                return (from p in entities.FileType
+                        orderby p.ID descending
+                        select p).Skip((pcurrent - 1) * psize)
+                       .Take(psize).ToList();
             }
         }
         public FileType LayTheLoaiFileTheoId(int pId)
         {
-            FileType mFileType = null;
-            try
+            using (var entities = new V308CMSEntities())
             {
-                //lay danh sach tin moi dang nhat
-                mFileType = (from p in entities.FileType
-                               where p.ID == pId
-                               select p).FirstOrDefault();
-                return mFileType;
-            }
-            catch (Exception ex)
-            {
-                throw;
+                return (from p in entities.FileType
+                        where p.ID == pId
+                        select p).FirstOrDefault();
+
             }
         }
         public List<File> LayFileTheoTrangAndGroupIdAdmin(int pcurrent, int psize, int pTypeID, string pLevel)
         {
-            List<File> mList = null;
-            int[] mIdGroup;
-            try
+            using (var entities = new V308CMSEntities())
             {
-                if (pTypeID > 0)
+                if (pTypeID == 0)
                 {
-                    //lay tat ca cac ID cua group theo Level
-                    mIdGroup = (from p in entities.FileType
+                    return (from p in entities.File
+                            orderby p.ID descending
+                            select p).Skip((pcurrent - 1) * psize)
+                              .Take(psize).ToList();
+                }
+                //lay tat ca cac ID cua group theo Level
+                var mIdGroup = (from p in entities.FileType
                                 where p.Level.Substring(0, pLevel.Length).Equals(pLevel)
                                 select p.ID).ToArray();
-                    //lay danh sach tin moi dang nhat
-                    mList = (from p in entities.File
-                             where mIdGroup.Contains(p.TypeID.Value)
-                             orderby p.ID descending
-                             select p).Skip((pcurrent - 1) * psize)
-                             .Take(psize).ToList();
-                }
-                else if (pTypeID == 0)
-                {
-                    //lay danh sach tin moi dang nhat
-                    mList = (from p in entities.File
-                             orderby p.ID descending
-                             select p).Skip((pcurrent - 1) * psize)
-                             .Take(psize).ToList();
-                }
-                return mList;
-            }
-            catch (Exception ex)
-            {
-                throw;
+                //lay danh sach tin moi dang nhat
+                return (from p in entities.File
+                        where mIdGroup.Contains(p.TypeID.Value)
+                        orderby p.ID descending
+                        select p).Skip((pcurrent - 1) * psize)
+                         .Take(psize).ToList();
+
             }
         }
         public List<FileType> LayFileTypeTrangAndGroupIdAdmin(int pcurrent, int psize, int pTypeID, string pLevel)
         {
-            List<FileType> mList = null;
-            int[] mIdGroup;
-            try
+            using (var entities = new V308CMSEntities())
             {
-                if (pTypeID > 0)
-                {
-                    //lay tat ca cac ID cua group theo Level
-                    mIdGroup = (from p in entities.FileType
-                                where p.Level.Substring(0, pLevel.Length).Equals(pLevel)
-                                select p.ID).ToArray();
-                    //lay danh sach tin moi dang nhat
-                    mList = (from p in entities.FileType
-                             where mIdGroup.Contains(p.ID)
-                             orderby p.ID descending
-                             select p).Skip((pcurrent - 1) * psize)
-                             .Take(psize).ToList();
-                }
-                else if (pTypeID == 0)
+                if (pTypeID == 0)
                 {
                     //lay danh sach tin moi dang nhat
-                    mList = (from p in entities.FileType
-                             orderby p.ID descending
-                             select p).Skip((pcurrent - 1) * psize)
+                    return (from p in entities.FileType
+                            orderby p.ID descending
+                            select p).Skip((pcurrent - 1) * psize)
                              .Take(psize).ToList();
                 }
-                return mList;
-            }
-            catch (Exception ex)
-            {
-                throw;
+                //lay tat ca cac ID cua group theo Level
+                int[] mIdGroup = (from p in entities.FileType
+                                  where p.Level.Substring(0, pLevel.Length).Equals(pLevel)
+                                  select p.ID).ToArray();
+                //lay danh sach tin moi dang nhat
+                return (from p in entities.FileType
+                        where mIdGroup.Contains(p.ID)
+                        orderby p.ID descending
+                        select p).Skip((pcurrent - 1) * psize)
+                         .Take(psize).ToList();
             }
         }
     }

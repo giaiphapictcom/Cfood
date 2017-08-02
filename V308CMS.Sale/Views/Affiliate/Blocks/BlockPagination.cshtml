@@ -1,5 +1,4 @@
 ﻿@using V308CMS.Data;
-@using V308CMS.Common;
 
 <ul class="pagination">
 
@@ -11,10 +10,20 @@
         {
             pageTotal = (int)Math.Ceiling((float)Model.ProductTotal / (float)ProductHelper.ProductShowLimit);
         }
+
+        string query = "";
+        foreach (string key in Request.QueryString.AllKeys)
+        {
+            //Response.Write(String.Format("{0} = {1}<br />", key, Request[key]));
+            if (key != "p") {
+                query += key + "=" + Request[key] + "&";
+            }
+
+        }
     }
     @if (Model.Page > 1 && pageTotal > 0)
     { 
-        <li class="page-item"><a href="@Request.Url.Fragment?p=@(Model.Page - 1)" title="trang trước" class="page-link">&laquo;</a></li>
+        <li class="page-item"><a href="@Request.Url.Fragment?@query&p=@(Model.Page - 1)" title="trang trước" class="page-link">&laquo;</a></li>
     }
     @for (int i = 1; i <= pageTotal; i++)
     {
@@ -44,7 +53,7 @@
             }
             else
             {
-        @:<li><a href="@Request.Url.Fragment?p=@i" class="page-link">@i</a></li>
+        @:<li><a href="@Request.Url.Fragment?@query&p=@i" class="page-link">@i</a></li>
                     }
 
         }
@@ -53,6 +62,6 @@
     }
     @if (Model.Page < pageTotal)
     { 
-        <li><a href="@Request.Url.Fragment?p=@(Model.Page + 1)" title="trang tiếp theo"><span aria-hidden="true">&raquo;</span></a></li>
+        <li><a href="@Request.Url.Fragment?@query&p=@(Model.Page + 1)" title="trang tiếp theo"><span aria-hidden="true">&raquo;</span></a></li>
     }
 </ul>

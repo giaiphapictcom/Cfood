@@ -6,8 +6,10 @@ using System.Web.Mvc;
 
 namespace V308CMS.Common
 {
+    
     public class DataHelper
     {
+        
         public static IEnumerable<SelectListItem> ListHour
         {
 
@@ -86,7 +88,18 @@ namespace V308CMS.Common
 
             }
         }
-        public static List<SelectListItem> ListEnumType<T>()
+
+        public static List<SelectListItem> ListEnumTypeSepecial<T>()
+        {
+            var dictionary = (from object item in Enum.GetValues(typeof (T))
+                              let fi = item.GetType().GetField(item.ToString())
+                              let attributes = (DescriptionAttribute[]) fi.GetCustomAttributes(typeof (DescriptionAttribute), false)
+                              select (attributes.Length > 0) ? 
+                                attributes[0].Description : 
+                                item.ToString()).ToDictionary(description => description.ToUnsign().ToLower());
+            return new SelectList(dictionary, "Key", "Value", 1).ToList();
+        }
+        public static List<SelectListItem> ListEnumType<T>(object selectedValue = null)
         {
             var dictionary = new Dictionary<int, string>();
             foreach (var item in Enum.GetValues(typeof(T)))
@@ -96,7 +109,7 @@ namespace V308CMS.Common
                 var description = (attributes.Length > 0) ? attributes[0].Description : item.ToString();
                 dictionary.Add((int)item, description);
             }
-            return new SelectList(dictionary, "Key", "Value", 1).ToList();
+            return new SelectList(dictionary, "Key", "Value",selectedValue).ToList();
         }
         public static string GetStringEnum<T>(int obj) where T : struct
         {

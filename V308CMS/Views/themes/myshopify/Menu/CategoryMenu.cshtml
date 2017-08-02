@@ -1,6 +1,4 @@
 ﻿@using V308CMS.Common
-@using V308CMS.Helpers
-@using V308CMS.Helpers.Url
 @model List<V308CMS.Data.ProductType>
 @if (Model.Any())
 {
@@ -40,7 +38,7 @@
                 var isHasSubInParent = (listParent.Count > 0 &&
                                     listParent.FirstOrDefault().CountSub > 0);
                 <li class="parent dropdown">
-                    <a class="dropdown-toggle has-category" data-toggle="dropdown" href="@url.productCategoryURL(root.Name, root.ID)" title="@root.Name" target="_self">
+                    <a class="dropdown-toggle has-category"  href="@url.productCategoryURL(root.Name, root.ID)" title="@root.Name" target="_self">
 
                         <span class="menu-icon">
                             <i class="fa fa-@root.Icon"></i>
@@ -50,9 +48,9 @@
                     <i class="fa fa-angle-right"></i>
                     <div class="dropdown-menu @(isHasSubInParent?"dropdown-sub sub-apmegamenu-1":"level1") " @(isHasSubInParent ? "style=width:640px" : "")>
                         <div class="dropdown-menu-inner right_bottom">
-                            <div class="image ">
+                            @*<div class="image ">
                                 <img src="@root.Image.ToUrl()" class="img-responsive">
-                            </div>
+                            </div>*@
                             <div class="row">
                                 <div class="mega-col col-sm-12  @(isHasSubInParent?"menulink":"")">
                                     <div class="row">
@@ -80,7 +78,9 @@
                                                 <div class="col-sm-@totalColumn">
                                                     <div class="mega-col-inner ">
                                                         <div class="menu-title">
-                                                            @parent.Category.Name
+                                                            <a href="@url.productCategoryURL(parent.Category.Name, parent.Category.ID)" title="@parent.Category.Name">
+                                                                    @parent.Category.Name
+                                                            </a>
                                                         </div>
                                                         @if (parent.ListSub.Count > 0)
                                                         {

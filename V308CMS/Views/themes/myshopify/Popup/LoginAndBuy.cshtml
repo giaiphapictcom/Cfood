@@ -1,0 +1,114 @@
+﻿@using V308CMS.Helpers.Url
+<div class="modal-dialog popup-container popup_content" style="width: 320px !important; height: auto;">
+    <div class="modal-content">
+        <div class="popup-header-read">
+            <div class="popup-header-title" style="font-size: 18px !important">Đăng nhập để mua hàng</div>
+            <a class="popup-header-close close" data-dismiss="modal" aria-hidden="true">
+                <i class="fa fa-times" style="margin-top: -2px;"></i>
+            </a>
+        </div>
+        <div class="modal-body">
+            <div class="login-social">               
+                <div class="break-login-social">
+                    <span class="popup_item break" style="margin: 18px">Đăng nhập bằng</span>
+                    <a class="social_button btn-sign-in" href="@Url.SocialLoginFacebookUrl()" title="Đăng nhập sử dụng Facebook">
+                        <img src="/Content/themes/myshopify/images/social/facebook.png" />
+                    </a>
+                    <a class="social_button btn-sign-in" href="@Url.SocialLoginGoogleUrl()" title="Đăng nhập sử dụng Google">
+                        <img src="/Content/themes/myshopify/images/social/google.png" />
+                    </a>
+                </div>
+            </div>
+            <div class="inner-popup-wrap login" style="margin-bottom: 20px; color: #111; width: 100%;">
+                <form action="@Url.AccounRegisterAjaxUrl()" id="login_buy_form" method="post">
+                    <div class="body">
+                        <div class="form-group" id="divMessageLogin" style="display: none;">
+                            <div class="col-md-12" style="margin-top: 10px; margin-bottom: 15px; text-align: left; font-size: 15px; color: red;">
+                                <span class="error font-bold" style="font-size: 13px;" id="spanMessageLogin"></span>
+                            </div>
+                        </div>
+                        <div class="body-inner" style="padding-bottom: 10px;">
+                            <input class="form-control" id="email" name="email" type="text" placeholder="Vui lòng nhập email." />
+                            <input class="form-control" id="password" name="password" type="password" placeholder="Vui lòng nhập mật khẩu." />                            
+                            <a rel="nofollow" href="#" class="forget-pass" target="_blank" title="Quên mật khẩu?">Quên mật khẩu?</a>
+                            <div id="login_error" style="display: block;color: red"></div>
+                            <div style="font-size: 13px;line-height: 35px;height: 25px;display: inline-flex;">
+                                <input style="width: 20px" type="radio" name="checkout" checked="checked" value="1"/>
+                                <span style="margin-bottom: 33px; margin-left: 5px;">Tôi đã có tài khoản tại @ViewBag.SiteName</span>                                 
+                            </div>
+                            <div style="font-size: 13px; line-height: 35px; height: 35px;display: inline-flex">
+                                <input style="width: 20px" type="radio" name="checkout" value="2" />
+                                <span style="margin-left: 5px;">Đặt hàng không cần đăng nhập</span>                                 
+                            </div>
+                            <input style="margin-top: 16px;background-color: red;text-transform:capitalize" id="btnCheckoutPopup" type="submit" class="btn-sign-in" value="TIẾP TỤC" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+   
+    function showMessage(message) {
+        $("#login_error").text(message);
+
+    }
+    function validateEmail(email) {
+        var re = /^(([^<>()\[\]\\.,;:\s@@"]+(\.[^<>()\[\]\\.,;:\s@@"]+)*)|(".+"))@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+    }
+    $(function() {
+        $("input[name='checkout']").click(function (e) {
+           
+            if ($(this).val() === "1") {
+                $('#email').removeAttr('readonly');
+                $('#password').attr('readonly');
+                $('#email').focus();
+
+            } else {
+                $('#email').attr('readonly', 'readonly');
+                $('#password').attr('readonly', 'readonly');
+            }
+           
+        });
+
+        $("#btnCheckoutPopup").click(function (e) {
+            e.preventDefault();
+            console.log($("input[name='checkout']:checked").val());
+            if ($("input[name='checkout']:checked").val() === "1") {
+                e.preventDefault();
+                if ($("#email").val() === "") {
+                    showMessage("Vui lòng nhập email.");
+                    $('#email').focus();
+                    return false;
+                }
+                if (!validateEmail($("#email").val())) {
+                    showMessage("Địa chỉ email không hợp lệ.");
+                    $('#email').focus();
+                    return false;
+                }
+                if ($("#password").val() === "") {
+                    showMessage("Vui lòng nhập mật khẩu.");
+                    $('#password').focus();
+                    return false;
+                }
+                $.post("@Url.AccountAjaxLoginUrl()", { email: $("#email").val(), password: $('#password').val() }, function(response) {
+                    if (response.code === 0) {
+                        showMessage(response.message);
+                        return false;
+                    }
+                    window.location = '@Url.CheckoutCartUrl()';
+                    return true;
+                });
+            } else {
+                window.location = '@Url.PaymentBuyNowUrl()';
+                return true;
+            }
+            
+        });
+
+    });
+
+</script>

@@ -14,15 +14,14 @@ namespace V308CMS.Admin.Helpers
             
             var userDataString = JsonConvert.SerializeObject(data);
 
-<<<<<<< HEAD
-            var authCookie = FormsAuthentication.GetAuthCookie(data.UserName, remember);
-            var ticket = FormsAuthentication.Decrypt(authCookie.Value);
-            var newTicket = new FormsAuthenticationTicket(ticket.Version, ticket.Name, ticket.IssueDate,
-                                                          ticket.Expiration, ticket.IsPersistent, userDataString);
-            authCookie.Value = FormsAuthentication.Encrypt(newTicket);
-            authCookie.Expires = DateTime.Now.AddDays(UserTimeExpires);
-=======
-   
+            //var authCookie = FormsAuthentication.GetAuthCookie(data.UserName, remember);
+            //var ticket = FormsAuthentication.Decrypt(authCookie.Value);
+            //var newTicket = new FormsAuthenticationTicket(ticket.Version, ticket.Name, ticket.IssueDate,
+            //                                              ticket.Expiration, ticket.IsPersistent, userDataString);
+            //authCookie.Value = FormsAuthentication.Encrypt(newTicket);
+            //authCookie.Expires = DateTime.Now.AddDays(UserTimeExpires);
+
+
             FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket(
                      1,
                      data.UserName,
@@ -34,7 +33,7 @@ namespace V308CMS.Admin.Helpers
 
             string encTicket = FormsAuthentication.Encrypt(authTicket);
             HttpCookie authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encTicket);
->>>>>>> toai-neal
+
             HttpContext.Current.Response.Cookies.Add(authCookie);
         }
 

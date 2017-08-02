@@ -2,6 +2,7 @@
 using System.Linq;
 using V308CMS.Data;
 using V308CMS.Data.Models;
+using V308CMS.Data.Helpers;
 
 namespace V308CMS.Respository
 {
@@ -77,7 +78,8 @@ namespace V308CMS.Respository
             using (var entities = new V308CMSEntities())
             {
                 var permissionInsert = (from permission in entities.Permission
-                                        where permission.GroupPermission == data.GroupPermission                                       
+                                        where permission.GroupPermission == data.GroupPermission &&
+                                        permission.RoleId == data.RoleId                                
                                         select permission
                ).FirstOrDefault();
                 if (permissionInsert == null){
@@ -104,14 +106,19 @@ namespace V308CMS.Respository
 
         public List<Permission> GetAllByRoleId(int roleId)
         {
+            List<Permission> roles = new List<Permission>();
             using (var entities = new V308CMSEntities())
             {
-                return (from permission in entities.Permission
+                var role = from permission in entities.Permission
                         where permission.RoleId == roleId
                         orderby permission.Id descending
-                        select permission
-              ).ToList();
+                        select permission;
+                if (role.Count() > 0)
+                {
+                    roles =  role.ToList();
+                }
             }
+            return roles;
 
         }
 
@@ -159,7 +166,6 @@ namespace V308CMS.Respository
                 else
                 {
                   string insertResult = Insert(data);
-                  //return $"create_{insertResult}";
                   return string.Format("create_{0}", insertResult);
                 }               
             }
@@ -174,8 +180,7 @@ namespace V308CMS.Respository
                                       && permission.RoleId == roleId
                                       select permission
                 ).FirstOrDefault();
-                //return permissionItem?.Value ?? 0;
-                return permissionItem.Value;
+                return permissionItem!= null ? permissionItem.Value : 0;
             }
             
         }

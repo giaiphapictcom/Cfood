@@ -1,0 +1,51 @@
+﻿@using V308CMS.Data.Enum
+@using V308CMS.Helpers
+@using V308CMS.Helpers.Url
+@{
+
+    var filterValue = Request.QueryString["filter"];
+    var currentRouteData = (RouteValueDictionary)ViewBag.CurrentRouteData;
+    var listFilter = new List<KeyValuePair<string,string>>()
+    {
+         new KeyValuePair<string, string>(string.Format("|{0}_0-100000|", (int) FilterEnum.ByBetweenPrice),"Dưới 100k") ,
+         new KeyValuePair<string, string>(string.Format("|{0}_100000-300000|", (int) FilterEnum.ByBetweenPrice),"100k - 300k"),
+         new KeyValuePair<string, string>(  string.Format("|{0}_500000-1000000|", (int) FilterEnum.ByBetweenPrice),"500k - 1.000k"),
+         new KeyValuePair<string, string>(string.Format("|{0}_1000000|{1}_1000000|", (int) FilterEnum.ByToPrice, (int) FilterEnum.ByToPrice),"Trên 1.000k")       
+        
+    };
+}
+<div class="title">
+    <h3>
+        <span>
+            GIÁ
+        </span>
+    </h3>
+</div>
+<div class="content">
+    <ul>
+        @foreach (var priceFilter in listFilter)
+        {
+            var currPriceSelected = !string.IsNullOrWhiteSpace(filterValue) && filterValue.Contains(priceFilter.Key);
+            <li>
+                <a href="@Url.CategoryFilterUrl(currentRouteData, priceFilter.Key)" title="@priceFilter.Value">
+
+                    <label class="@(currPriceSelected ? "filter_item_active" : "filter_item")">
+                        @if (currPriceSelected)
+                        {
+                            <i style="float: right; margin-left: 10px; color: red; cursor: pointer;" class="remove-price" title="Bỏ lọc giá @priceFilter.Value " data-url="@Url.CategoryFilterUrl(currentRouteData, priceFilter.Key, (byte) UrlHelperExtensions.FilterAction.RemoveFilter)">x</i>
+                        }
+                        @priceFilter.Value
+                    </label>
+
+                </a>
+            </li>
+        }
+
+    </ul>
+</div>
+<script>
+    $("i.remove-price").click(function (e) {
+        e.preventDefault();
+        location.href = $(this).attr('data-url');
+    });
+</script>

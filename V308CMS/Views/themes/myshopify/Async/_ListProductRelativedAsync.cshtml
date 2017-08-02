@@ -1,0 +1,97 @@
+﻿@using V308CMS.Common
+@using V308CMS.Helpers
+@using V308CMS.Helpers.Url
+@model List<V308CMS.Data.Product>
+    <section class="related-products">
+        <h2><span>Sản phẩm cùng loại</span></h2>
+        <div class="products-grid">
+            @foreach (var product in Model)
+            {
+                var productDetailUrl = Url.ProductDetailUrl(product);
+                <div class="product-hover product-review no_crop_image grid-item product-item wow fadeIn" data-wow-delay="0ms" id="product-@product.ID">
+
+                    <div class="item-poduct">
+                        <div class="product-top">
+                            <div class="product-image ">
+
+                                <a href="@productDetailUrl" class="grid-image" title="@product.Name">
+                                    <img class="feature-images" src="@ImageHelper.Crop(product.Image, 250)" alt="@product.Name">
+                                    @if (product.ProductImages.Any())
+                                    {
+                                        <span class="product-hover" data-idproduct="@product.ID">
+                                            <img class="img-responsive" alt="@product.Name" src="@ImageHelper.Crop(product.ProductImages.First().Name, 250)">
+                                        </span>
+
+                                    }
+
+                                </a>
+
+                                <div class="quickview-button">
+                                    <a data-id="@product.ID" href="javascript:void(0)" id="eye-shadow-palette" data-toggle="tooltip" data-placement="top" title="@product.Name" class="sca-qv-button btn">@ViewBag.ProductViewText</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="product-content">
+                            <h3><a class="product-title" href="@productDetailUrl">@product.Name</a></h3>
+                            <div class="price-box">                                
+                                @if (product.SaleOff == 0)
+                                {
+                                    <p class="regular-product">
+                                        <span><span class="money">@product.ToProductPrice()</span></span>
+                                    </p>
+                                }
+                                else
+                                {
+                                    <p class="sale">
+                                        <span class="special-price"><span class="money">@product.ToProductPrice()</span></span>
+                                        <span class="old-price"><span class="money">@product.ToProductSaleOffPrice()</span></span>
+                                    </p>
+                                }
+                            </div>
+                            <span class="shopify-product-reviews-badge" data-id="@product.ID"></span>
+
+                            <div class="add-to-link">
+                                @if (product.Quantity > 0)
+                                {
+                                    <div class="add-to-cart">
+
+                                        <form action="@Url.AddToCartUrl()" method="post" class="variants" id="product-actions-@product.ID" enctype="multipart/form-data" style="padding: 0px;">
+                                            <input type="hidden" name="id" value="@product.ID" />
+                                            <span>
+                                                <input class="btn add-to-cart-btn" data-toggle="tooltip" data-placement="top" title="Thêm vào giỏ hàng" type="submit" value="Thêm vào giỏ hàng" />
+                                            </span>
+                                        </form>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <span style="color: #f00; font-weight: bold">Sản phẩm tạm hết hàng</span>
+                                }
+
+                                <a data-id="@product.ID" class="wishlist btn" href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="Yêu thích"><span><i class="fa fa-heart" aria-hidden="true"></i></span></a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </section>
+    <script>
+        jQuery(document).ready(function () {
+            jQuery(".related-products .products-grid").owlCarousel({
+                autoPlay: 8000,
+                scrollPerPage: true,
+                slideSpeed: 500,
+                stopOnHover: true,
+                navigation: true,
+                navigationText: ['<i class="arrow_carrot-left"></i>', '<i class="arrow_carrot-right"></i>'],
+                items: 5,
+                itemsDesktop: [1200, 3],
+                itemsTablet: [767, 3],
+                itemsTabletSmall: [721, 2]
+            });
+        });
+    </script>

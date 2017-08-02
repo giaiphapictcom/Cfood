@@ -1,0 +1,138 @@
+﻿@using V308CMS.Helpers.Url
+<div class="modal-dialog popup-container popup_content" style="width: 320px !important; height: auto;">
+    <div class="modal-content">
+        <div class="popup-header-read">
+            <div class="popup-header-title">Đăng ký tài khoản</div>
+            <a class="popup-header-close close" data-dismiss="modal" aria-hidden="true">
+                <i class="fa fa-times" style="margin-top: -2px;"></i>
+            </a>
+        </div>
+        <div class="modal-body">
+            <div class="login-social">
+                <span class="popup_item lbl" style="margin-left: 18px">Bạn đã có tài khoản.</span>
+                <a rel="nofollow" href="javascript:void(0);" onclick="login_click(true, false, false, false, jQuery('#flag_popup').html()); triggerDefaultRadio();" title="Đăng nhập">
+                    <strong style="color: #ff0000">Đăng nhập</strong>
+                </a>
+                <div class="break-login-social">
+                    <span class="popup_item break" style="margin: 18px">Bạn cũng có thể đăng nhập</span>
+                    <a class="social_button btn-sign-in" href="@Url.SocialLoginFacebookUrl()" title="Đăng nhập sử dụng Facebook">
+                        <img src="/Content/themes/myshopify/images/social/facebook.png"/>
+                    </a>
+                    <a class="social_button btn-sign-in" href="@Url.SocialLoginGoogleUrl()" title="Đăng nhập sử dụng Google">
+                        <img src="/Content/themes/myshopify/images/social/google.png"/>
+                    </a>                   
+                </div>
+            </div>
+
+            <div class="inner-popup-wrap login" style="margin-bottom: 20px; color: #111; width: 100%;">
+                <form action="@Url.AccounRegisterAjaxUrl()" id="register_form" method="post">
+                    <div class="body">
+                        <div class="form-group" id="divMessageLogin" style="display: none;">
+                            <div class="col-md-12" style="margin-top: 10px; margin-bottom: 15px; text-align: left; font-size: 15px; color: red;">
+                                <span class="error font-bold" style="font-size: 13px;" id="spanMessageLogin"></span>
+                            </div>
+                        </div>
+                        <div class="body-inner" style="padding-bottom: 10px;">                          
+                            <input class="form-control" id="email" name="email" type="text" placeholder="Nhập email."/>                         
+                            <input class="form-control" id="password" name="password" type="password" placeholder="Nhập mật khẩu(Tối thiểu 6 ký tự)."/>                          
+                            <input class="form-control" id="confirmpassword" name="confirmpassword" type="password" placeholder="Nhập lại mật khẩu."/>                          
+                            <input id="captcha" name="captcha" type="text" placeholder="Nhập mã bên" style="width: 112px;"/>
+                            <img class="img-captcha" src="@Url.RegisterCaptchaUrl()" alt="captcha"/>
+                            <span class="refresh" onclick="showCaptcha()" style="margin-left: 4px">
+                                <img src="/Content/themes/myshopify/images/refresh.png" alt="Lấy mã xác thực mới" style="cursor: pointer"/>
+                            </span>                             
+                            <div style="font-size: 13px;line-height: 35px; height: 25px">
+                                <input style="width: 20px" type="checkbox" name="get_newsletter" checked="checked" />
+                                Đăng ký nhận bản tin @ViewBag.SiteName
+                            </div>                           
+                            <div style="font-size: 13px; line-height: 35px; height: 35px">
+                                <input style="width: 20px" type="checkbox" name="check_agree" checked="checked"/>
+                              <a style="border-style: none; margin-left: -6px" title="Tôi đồng ý với điều khoản sử dụng">Tôi đồng ý với điều khoản sử dụng</a>
+                            </div>                           
+                            <input style="margin-top: 16px;background-color: red;text-transform:capitalize" id="btnRegister" type="submit" class="btn-sign-in" value="Đăng ký"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function showMessage(message, isSuccess) {
+        $('#spanMessageLogin').text(message);
+        if (isSuccess === 1) {
+            if (!$('#spanMessageLogin').hasClass('success-message')) {
+                $('#spanMessageLogin').addClass('success-message');
+            }
+        } else {
+            if (!$('#spanMessageLogin').hasClass('error')) {
+                $('#spanMessageLogin').addClass('error');
+            }
+        }
+        $('#divMessageLogin').show();
+    }
+    $("input[name='check_agree']").change(function () {
+        var isChecked = $("input[name='check_agree']").prop('checked');
+        if (isChecked === false) {
+            alert("Vui lòng đồng ý với các điều khoản.");
+        }
+    });
+    function showCaptcha() {
+        $(".img-captcha").removeAttr("src");
+        $(".img-captcha").attr('src', '/Captcha/RegisterCaptcha?timestamp =' + new Date().getTime());
+    }
+    function validateEmail(email) {
+        var re = /^(([^<>()\[\]\\.,;:\s@@"]+(\.[^<>()\[\]\\.,;:\s@@"]+)*)|(".+"))@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+    }
+    $(function() {
+        
+
+        $("#btnRegister").click(function(e) {
+            e.preventDefault();
+            if ($("#email").val() === "") {
+                showMessage("Vui lòng nhập email.");
+                $('#email').focus();
+                return false;
+            }
+            if (!validateEmail($("#email").val())) {
+                showMessage("Địa chỉ email không hợp lệ.");
+                $('#email').focus();
+                return false;
+            }
+            if ($("#password").val() === "") {
+                showMessage("Vui lòng nhập mật khẩu.");
+                $('#password').focus();
+                return false;
+            }
+            if ($("#password").val().length<6) {
+                showMessage("Mật khẩu tối thiểu 6 ký tự.");
+                $('#password').focus();
+                return false;
+            }
+            if ($("#password").val() !== $("#confirmpassword").val()) {
+                showMessage("Mật khẩu xác nhận không đúng.");
+                $('#password').focus();
+                return false;
+            }
+            $.post("@Url.AccounRegisterAjaxUrl()", { email: $("#email").val(), password: $("#password").val(), confirmpassword: $("#confirmpassword").val(), captcha: $("#captcha").val() }, function(response) {
+                if (response.code === 0) {
+                    showMessage(response.message);
+                    showCaptcha();
+                    return false;
+                }
+                showMessage(response.message, 1);
+                showCaptcha();
+                $.get("@Url.PopupLoginUrl()", function (response) {
+                    jQuery('#modalPopUp').html(response);
+                    jQuery('#modalPopUp').modal({ show: true });
+                });
+                return true;
+            });
+
+        });
+
+    });
+
+</script>

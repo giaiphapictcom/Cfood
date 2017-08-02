@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using V308CMS.Admin.Attributes;
@@ -17,9 +17,9 @@ namespace V308CMS.Admin.Controllers
     public class NewsController : BaseController
     {
         [NonAction]
-        private List<MutilCategoryItem> BuildListCategory()
+        private List<MutilCategoryItem> BuildListCategory(string site=Data.Helpers.Site.home)
         {
-            return NewsGroupService.GetAll().Select
+            return NewsGroupService.GetAll(true,site).Select
                 (
                     cate => new MutilCategoryItem
                     {
@@ -32,25 +32,45 @@ namespace V308CMS.Admin.Controllers
         //
         // GET: /News2/       
         [CheckPermission(0, "Danh sách")]
-        public ActionResult Index(int categoryId =0, int site =0)
+        public ActionResult Index(int categoryId =0, string site = Data.Helpers.Site.home)
         {
-            ViewBag.ListCategory = BuildListCategory();
-            ViewBag.ListSite = DataHelper.ListEnumType<NewsSiteEnum>();
+            if (categoryId > 0) {
+                var category = NewsService.LayDanhNhomTin(categoryId);
+                if (category != null) {
+                    site = category.Site;
+                }
+            }
+            ViewBag.ListCategory = BuildListCategory(site);
+
+            ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
+            if (site.Length < 1) {
+                site = "home";
+            }
+            
+
             var model = new NewsViewModels
             {
                 CategoryId = categoryId,
                 Site = site,
                 Data = NewsService.GetList(categoryId, site)
             };
+
             return View("Index", model);
         }        
         [CheckPermission(1, "Thêm mới")]
-        public ActionResult Create()
+        public ActionResult Create(string site = "")
         {
-            ViewBag.ListCategory = BuildListCategory();
-            ViewBag.ListSite = DataHelper.ListEnumType<NewsSiteEnum>();
-            return View("Create", new NewsModels());
+            if (site.Length < 1) {
+                site = "home";
+            }
+            ViewBag.ListCategory = BuildListCategory(site);
+            ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
+            var Model = new NewsModels();
+
+            return View("Create", Model);
+
         }
+
         [HttpPost]
         [CheckPermission(1, "Thêm mới")]        
         [ValidateAntiForgeryToken]
@@ -58,6 +78,10 @@ namespace V308CMS.Admin.Controllers
         [ValidateInput(false)]
         public ActionResult OnCreate(NewsModels news)
         {
+            var category = NewsService.LayTheLoaiTinTheoId(int.Parse(news.CategoryId.ToString()));
+            string formView = category.Site == "affiliate" ? "affiliateCreate" : "Create";
+            
+
             if (ModelState.IsValid)
             {
                 news.ImageUrl = news.Image != null ?
@@ -66,6 +90,7 @@ namespace V308CMS.Admin.Controllers
                 var newsItem = new News
                 {
                     Title = news.Title,
+                    Alias = news.Alias,
                     TypeID = news.CategoryId,
                     Image = news.ImageUrl,
                     Summary = news.Summary,
@@ -82,23 +107,32 @@ namespace V308CMS.Admin.Controllers
 
                 };
                 var result = NewsService.Insert(newsItem);
+
+                
+
                 if (result == Result.Exists)
                 {
                     ModelState.AddModelError("", string.Format("Tin tức '{0}' đã tồn tại trên hệ thống.",news.Title) );
                     ViewBag.ListCategory = BuildListCategory();
-                    ViewBag.ListSite = DataHelper.ListEnumType<NewsSiteEnum>();
-                    return View("Create", news);
+
+                    ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
+                    return View(formView, news);
+
                 }
                 SetFlashMessage( string.Format("Thêm tin tức '{0}' thành công.",news.Title));
                 if (news.SaveList)
                 {
-                    return RedirectToAction("Index");
+                    string listViewAction = category.Site == "affiliate" ? "AffiliateIndex" : "Index";
+                    return RedirectToAction(listViewAction);
                 }
                 ModelState.Clear();
                 ViewBag.ListCategory = BuildListCategory();
-                ViewBag.ListSite = DataHelper.ListEnumType<NewsSiteEnum>();
-                return View("Create", news.ResetValue());
+
+                ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
+                return RedirectToAction(formView);
+
             }
+
             ViewBag.ListCategory = NewsGroupService.GetAll().Select
                  (
                        cate => new MutilCategoryItem
@@ -108,8 +142,10 @@ namespace V308CMS.Admin.Controllers
                            ParentId = cate.Parent
                        }
                  ).ToList();
-            return View("Create", news);
-        }        
+            return RedirectToAction(formView);
+            //return View("Create", news);
+        }
+
         [CheckPermission(2, "Sửa")]
         public ActionResult Edit(int id)
         {
@@ -137,11 +173,15 @@ namespace V308CMS.Admin.Controllers
                 Site = newsItem.Site
                
             };
-            ViewBag.ListCategory = BuildListCategory();
-            ViewBag.ListSite = DataHelper.ListEnumType<NewsSiteEnum>();
+
+            var CategoryOld = NewsService.LayNhomTinAn((int)newsItem.TypeID);
+
+            ViewBag.ListCategory = BuildListCategory(CategoryOld.Site);
+            ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
             return View("Edit", newsEdit);
 
         }
+
         [HttpPost]
         [CheckPermission(2, "Sửa")]        
         [ActionName("Edit")]
@@ -158,6 +198,7 @@ namespace V308CMS.Admin.Controllers
                 {
                     ID = news.Id,
                     Title = news.Title,
+                    Alias = news.Alias,
                     TypeID = news.CategoryId,
                     Image = news.ImageUrl,
                     Summary = news.Summary,
@@ -172,39 +213,68 @@ namespace V308CMS.Admin.Controllers
                     Date = news.CreatedAt,
                     Site = news.Site
                 };
+                var CategoryOld = NewsService.LayNhomTinAn((int)newsItem.TypeID);
                 var result = NewsService.Update(newsItem);
+
+                ViewBag.ListCategory = BuildListCategory(CategoryOld.Site);
+                ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
                 if (result == Result.NotExists)
                 {
                     ModelState.AddModelError("", "Tin tức không tồn tại trên hệ thống.");
-                    ViewBag.ListCategory = BuildListCategory();
-                    ViewBag.ListSite = DataHelper.ListEnumType<NewsSiteEnum>();
+                    
+                    
                     return View("Edit", news);
                 }
                 SetFlashMessage( string.Format("Sửa tin tức '{0}' thành công.",news.Title) );
                 if (news.SaveList)
                 {
-                    return RedirectToAction("Index");
+                    var category = NewsService.LayTheLoaiTinTheoId(int.Parse(news.CategoryId.ToString()));
+                    string listViewAction = category.Site == "affiliate" ? "AffiliateIndex" : "Index";
+                    return RedirectToAction(listViewAction);
+                   
                 }
-                ViewBag.ListCategory = BuildListCategory();
-                ViewBag.ListSite = DataHelper.ListEnumType<NewsSiteEnum>();
+                //ViewBag.ListCategory = BuildListCategory(CategoryOld.Site);
+                //ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
                 return View("Edit", news);
 
             }
             ViewBag.ListCategory = BuildListCategory();
-            ViewBag.ListSite = DataHelper.ListEnumType<NewsSiteEnum>();
-            return View("Edit");
+            ViewBag.ListSite = DataHelper.ListEnumType<SiteEnum>();
+            return View("Edit", news);
         }        
+        
         [CheckPermission(3, "Xóa")]
         [ActionName("Delete")]
         [HttpPost]
         public ActionResult OnDelete(int id)
         {
+            var news = NewsService.Find(id);
+            var category = NewsService.LayTheLoaiTinTheoId(int.Parse(news.TypeID.ToString()));
+
             var result = NewsService.Delete(id);
             SetFlashMessage(result == Result.Ok ?
                 "Xóa tin tức thành công." : 
                 "Tin tức không tồn tại trên hệ thống.");
-            return RedirectToAction("Index");
+
+            
+            string listViewAction = category.Site == "affiliate" ? "AffiliateIndex" : "Index";
+            return RedirectToAction(listViewAction);
+            
         }
 
+
+        
+        #region affiliate
+        public ActionResult AffiliateIndex(int categoryId = 0)
+        {
+            return Index(categoryId, "affiliate");
+        }
+
+        [CheckPermission(1, "Thêm mới")]
+        public ActionResult affiliateCreate()
+        {
+            return Create("affiliate");
+        }
+        #endregion
     }
 }

@@ -26,8 +26,8 @@
                         <th>Cao</th>
                         <th>Ngày bắt đầu</th>
                         <th>Ngày kết thúc</th>
-                        <th>Trạng thái</th>
-                        <th>Hành động</th>
+                        <th style="text-align: center">Trạng thái</th>
+                        <th style="text-align: center">Hành động</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -54,7 +54,7 @@
                             <td>@banner.Height</td>
                             <td>@banner.StartDate.ToDdmmyyyy()</td>
                             <td>@banner.EndDate.ToDdmmyyyy()</td>
-                            <td>@Html.Partial("UI/_ChangeStateForm", new ChangeStateFormModels
+                            <td style="text-align: center">@Html.Partial("UI/_ChangeStateForm", new ChangeStateFormModels
                                 {
                                     NameOfId = "Id",
                                     ValueOfId = banner.Id,
@@ -62,7 +62,7 @@
                                     State = banner.Status,
                                     Url = Url.BannerChangeStatusUrl()
                                 })</td>
-                            <td style="width: 200px">
+                            <td style="width: 200px; text-align: center">
                                 @Html.Partial("UI/_EditButton", new ButtonModels
                                 {
                                    Id = string.Format("banner_{0}", banner.Id),

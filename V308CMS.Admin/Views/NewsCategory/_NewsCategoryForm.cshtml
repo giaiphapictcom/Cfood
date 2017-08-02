@@ -6,6 +6,7 @@
 }
 @Html.AntiForgeryToken()
 @Html.HiddenFor(category => category.Id)
+ @Html.HiddenFor(category => category.Site)
 <div class="row">
     @Html.ValidationSummary(true)
     <div class="col-lg-6">
@@ -13,6 +14,10 @@
             @Html.LabelFor(category => category.Name)
             @Html.TextBoxFor(category => category.Name, new {@class = "form-control", placeholder = "Nhập tên chuyên mục"})
             @Html.ValidationMessageFor(category => category.Name)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(category => category.Alias)
+            @Html.TextBoxFor(category => category.Alias, new { @class = "form-control", placeholder = "URL alias" })
         </div>
         <div class="form-group">
             @Html.LabelFor(category => category.ParentId)

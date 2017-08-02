@@ -14,15 +14,18 @@ namespace V308CMS.Admin.Controllers
     {
               
         [CheckPermission(0, "Danh sách")]
-        public ActionResult Index()
-        {         
-            return View("Index", MenuConfigService.GetList());
+        public ActionResult Index(string site= Data.Helpers.Site.home)
+        {
+            return View("Index", MenuConfigService.GetList(1,10,site));
         }        
         [CheckPermission(1, "Thêm mới")]
-        public ActionResult Create()
+        public ActionResult Create(string site = Data.Helpers.Site.home)
         {
-            AddViewData("ListState", DataHelper.ListEnumType<StateEnum>());                 
-            return View("Create", new MenuConfigModels());
+            AddViewData("ListState", DataHelper.ListEnumType<StateEnum>()); 
+            var Model = new MenuConfigModels();
+            Model.Site = site;
+            return View("Create",Model );
+
         }
         [HttpPost]
         [CheckPermission(1, "Thêm mới")]
@@ -32,26 +35,36 @@ namespace V308CMS.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = MenuConfigService.Insert(
-                   config.CloneTo<MenuConfig>()
-                    );
+                var menuAdd = new MenuConfig();
+                menuAdd.Id = config.Id;
+                menuAdd.Name = config.Name;
+                menuAdd.Site = config.Site;
+                menuAdd.Description = config.Description;
+                menuAdd.Link = config.Link;
+                menuAdd.Order = config.Order;
+                menuAdd.Target = config.Target;
+
+
+                var result = MenuConfigService.Insert(menuAdd);
+
                 if (result == Result.Exists)
                 {
-                    AddViewData("ListState", DataHelper.ListEnumType<StateEnum>());                   
-                    ModelState.AddModelError("", $"Tên Menu '{config.Name}' đã tồn tại trên hệ thống.");
+                    AddViewData("ListState", DataHelper.ListEnumType<StateEnum>(), "ListSite", DataHelper.ListEnumType<SiteEnum>());              
+                    ModelState.AddModelError("", string.Format("Tên Menu '{0}' đã tồn tại trên hệ thống.",config.Name) );
                     return View("Create", config);
                 }
-                SetFlashMessage($"Thêm Menu '{config.Name}' thành công.");
+                SetFlashMessage( string.Format("Thêm Menu '{0}' thành công.",config.Name) );
                 if (config.SaveList)
                 {
-                    return RedirectToAction("Index");
+                    string actionReturn = config.Site == "affiliate" ? "affiliatemenu" : "Index";
+                    return RedirectToAction(actionReturn);
                 }
-                AddViewData("ListState", DataHelper.ListEnumType<StateEnum>());
+                AddViewData("ListState", DataHelper.ListEnumType<StateEnum>(), "ListSite", DataHelper.ListEnumType<SiteEnum>());
                 ModelState.Clear();
                 return View("Create", config.ResetValue());
 
             }
-            AddViewData("ListState", DataHelper.ListEnumType<StateEnum>());
+            AddViewData("ListState", DataHelper.ListEnumType<StateEnum>(), "ListSite", DataHelper.ListEnumType<SiteEnum>());
             return View("Create", config);
         }       
         [CheckPermission(2, "Sửa")]
@@ -64,7 +77,7 @@ namespace V308CMS.Admin.Controllers
                 return RedirectToAction("Index");
 
             }
-            AddViewData("ListState", DataHelper.ListEnumType<StateEnum>());
+            AddViewData("ListState", DataHelper.ListEnumType<StateEnum>(), "ListSite", DataHelper.ListEnumType<SiteEnum>());
             var data = config.CloneTo<MenuConfigModels>();
             return View("Edit", data);
 
@@ -82,18 +95,20 @@ namespace V308CMS.Admin.Controllers
                 if (result == Result.NotExists)
                 {
                     ModelState.AddModelError("", "Id không tồn tại trên hệ thống.");
-                    AddViewData("ListState", DataHelper.ListEnumType<StateEnum>());
+                    AddViewData("ListState", DataHelper.ListEnumType<StateEnum>(), "ListSite", DataHelper.ListEnumType<SiteEnum>());
                     return View("Edit", config);
                 }
-                SetFlashMessage($"Cập nhật Menu '{config.Name}' thành công.");
+                SetFlashMessage( string.Format("Cập nhật Menu '{0}' thành công.",config.Name) );
                 if (config.SaveList)
                 {
-                    return RedirectToAction("Index");
+                    string actionReturn = config.Site == "affiliate" ? "affiliatemenu" : "Index";
+                    return RedirectToAction(actionReturn);
+                    
                 }
-                AddViewData("ListState", DataHelper.ListEnumType<StateEnum>());
+                AddViewData("ListState", DataHelper.ListEnumType<StateEnum>(), "ListSite", DataHelper.ListEnumType<SiteEnum>());
                 return View("Edit", config);
             }
-            AddViewData("ListState", DataHelper.ListEnumType<StateEnum>());
+            AddViewData("ListState", DataHelper.ListEnumType<StateEnum>(), "ListSite", DataHelper.ListEnumType<SiteEnum>());
             return View("Edit", config);
 
         }
@@ -102,12 +117,28 @@ namespace V308CMS.Admin.Controllers
         [ActionName("Delete")]
         public ActionResult OnDelete(int id)
         {
-            var result = EmailConfigService.Delete(id);
+            var menu = MenuConfigService.Find(id);
+            string result = MenuConfigService.Delete(id);
             SetFlashMessage(result == Result.Ok ?
                 "Xóa Menu thành công." :
                 "Thông tin Menu không tồn tại trên hệ thống.");
-            return RedirectToAction("Index");
+
+            string actionReturn = menu.Site == "affiliate" ? "affiliatemenu" : "Index";
+            return RedirectToAction(actionReturn);
         }
 
+
+        #region Affiliate
+        [CheckPermission(0, "Danh sách")]
+        public ActionResult affiliatemenu()
+        {
+            return Index("affiliate");
+        }
+        [CheckPermission(1, "Thêm mới")]
+        public ActionResult affiliateCreate()
+        {
+            return Create("affiliate");
+        }
+        #endregion
     }
 }

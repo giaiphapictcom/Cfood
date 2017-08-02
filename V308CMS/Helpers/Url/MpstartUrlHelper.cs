@@ -1,24 +1,22 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Web;
-using System.Web.Mvc;
 
-namespace V308CMS.Helpers
+namespace V308CMS.Helpers.Url
 {
     public static class MpstartUrlHelper
     {
-        
-        
-
+       
         public static bool IsLocalUrl(this  string url)
         {
-            if (string.IsNullOrWhiteSpace(url))
+            try
             {
-                return false;
-            }
-            else
-            {
+                if (string.IsNullOrWhiteSpace(url))
+                {
+                    return false;
+                }
                 var uri = new Uri(url);
-                
+
                 if (uri.Host.Equals(HttpContext.Current.Request.Url.Host))
                 {
                     return true;
@@ -29,18 +27,15 @@ namespace V308CMS.Helpers
                     return true;
 
                 }
-                else if (url[0] == '/' && (url.Length == 1 || (url[1] != '/' && url[1] != '\\')))
+                if (url[0] == '/' && (url.Length == 1 || (url[1] != '/' && url[1] != '\\')))
                 {
 
                     return true;
                 }
-                else
-                {
-                    return false;
-                }
-
+                return false;
             }
-
+            catch (Exception ex){Debug.WriteLine("Error : " + ex); return false;}
+         
         }
 
     }

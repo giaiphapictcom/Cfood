@@ -1,460 +1,588 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using System.Web;
 using V308CMS.Common;
+using V308CMS.Data.Helpers;
 
 namespace V308CMS.Data
 {
     public class AccountRepository
     {
-        private V308CMSEntities entities;
-        #region["Contructor"]
+
 
         public AccountRepository()
         {
-            this.entities = new V308CMSEntities();
+
         }
 
-        public AccountRepository(V308CMSEntities mEntities)
-        {
-            this.entities = mEntities;
-        }
-
-        #endregion
-        #region["Vung cac thao tac Dispose"]
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                if (this.entities != null)
-                {
-                    this.entities.Dispose();
-                    this.entities = null;
-                }
-            }
-        }
-        #endregion
 
         public Account LayTinTheoId(int pId)
         {
-            Account mAccount = null;
-            try
+            using (var entities = new V308CMSEntities())
             {
-                //lay danh sach tin moi dang nhat
-                mAccount = (from p in entities.Account
-                         where p.ID == pId
-                         select p).FirstOrDefault();
-                return mAccount;
-            }
-            catch (Exception ex)
-            {
-                Console.Write(ex);
-                throw;
+
+                return (from p in entities.Account
+                        where p.ID == pId
+                        select p).FirstOrDefault();
             }
         }
-        public ETLogin CheckDangNhap(string  pUsername,string pPassword)
+        public ETLogin CheckDangNhap(string  pUsername,string pPassword,string site= Site.home)
+
         {
-            Account user = null;
-            ETLogin mETLogin=new ETLogin();
-            try
+            using (var entities = new V308CMSEntities())
             {
+                ETLogin mEtLogin = new ETLogin();
                 //lay danh sach tin moi dang nhat
-                user = (from p in entities.Account
-                          where p.UserName.Equals(pUsername) || p.Email.Equals(pUsername)
+                var user = (from p in entities.Account
+                          where (p.UserName.ToLower().Equals(pUsername.ToLower()) || p.Email.ToLower().Equals(pUsername.ToLower()) ) && p.Site == site && p.Status == true
+
                             select p).FirstOrDefault();
                 if (user != null)
                 {
-                    if (user.Password.Trim().Equals(EncryptionMD5.ToMd5(pPassword.Trim())))
+                    //if (user.Password.Trim().Equals(EncryptionMD5.ToMd5(pPassword.Trim())))
+                    if (user.Salt.Length > 0 && user.Password != HashPassword(pPassword.Trim(), user.Salt))
                     {
-                        mETLogin.code = 1;
-                        mETLogin.message = "OK.";
-                        mETLogin.Account = user;
-                        mETLogin.role = int.Parse(user.Role.ToString());
+                        mEtLogin.code = 1;
+                        mEtLogin.message = "OK.";
+                        mEtLogin.Account = user;
+                        mEtLogin.role = int.Parse(user.Role.ToString());
                     }
                     else
                     {
-                        mETLogin.code = 2;
-                        mETLogin.message = "Mật khẩu không chính xác.";
+                        mEtLogin.code = 2;
+                        mEtLogin.message = "Mật khẩu không chính xác.";
                     }
                 }
                 else
                 {
-                    mETLogin.code = 0;
-                    mETLogin.message = "Không tìm thấy thông tin truy cập.";
+                    mEtLogin.code = 0;
+                    mEtLogin.message = "Không tìm thấy thông tin truy cập.";
                 }
-                return mETLogin;
-            }
-            catch (Exception ex)
-            {
-                Console.Write(ex);
-                throw;
+                return mEtLogin;
             }
         }
         public ETLogin CheckDangNhapHome(string pUsername, string pPassword)
         {
-            Account mAccount = null;
-            ETLogin mETLogin = new ETLogin();
-            try
+            using (var entities = new V308CMSEntities())
             {
+                ETLogin mEtLogin = new ETLogin();
                 //lay danh sach tin moi dang nhat
-                mAccount = (from p in entities.Account
-                          where p.UserName.Equals(pUsername)
-                          select p).FirstOrDefault();
+                var mAccount = (from p in entities.Account
+                                where p.UserName.Equals(pUsername)
+                                select p).FirstOrDefault();
                 if (mAccount != null)
                 {
                     if (mAccount.Password.Trim().Equals(EncryptionMD5.ToMd5(pPassword.Trim())))
                     {
-                        mETLogin.code = 1;
-                        mETLogin.message = "OK.";
-                        mETLogin.Account = mAccount;
+                        mEtLogin.code = 1;
+                        mEtLogin.message = "OK.";
+                        mEtLogin.Account = mAccount;
                     }
                     else
                     {
-                        mETLogin.code = 2;
-                        mETLogin.message = "Mật khẩu không chính xác.";
+                        mEtLogin.code = 2;
+                        mEtLogin.message = "Mật khẩu không chính xác.";
                     }
                 }
                 else
                 {
-                    mETLogin.code = 0;
-                    mETLogin.message = "Không tìm thấy thông tin truy cập.";
+                    mEtLogin.code = 0;
+                    mEtLogin.message = "Không tìm thấy thông tin truy cập.";
                 }
-                return mETLogin;
-            }
-            catch (Exception ex)
-            {
-                Console.Write(ex);
-                throw;
+                return mEtLogin;
             }
         }
 
+        public string Insert(string userName, string email, string password, string salt, string fullName, string avatar, string site = Helpers.Site.home)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                var accounts = (from p in entities.Account
+                                where p.Email.Equals(email) || p.UserName.Equals(userName)
+                                select p).FirstOrDefault();
+
+                if (accounts != null)
+                {
+                    //if (accounts.FullName != fullName || accounts.UserName != userName || accounts.Avatar != avatar)
+                    if (accounts.UserName != userName)
+                    {
+                        accounts.FullName = fullName;
+                        accounts.UserName = userName;
+                        accounts.Avatar = avatar;
+                        accounts.Site = site;
+                        entities.SaveChanges();
+                    }
+                   
+                    return accounts.ID.ToString();
+                }
+                var mAccount = new Account()
+                {
+                    Email = email,
+                    UserName = userName,
+                    Password = HashPassword(password, salt),
+                    Salt = salt,
+                    FullName = fullName,
+                    Avatar = avatar,
+                    Status = true
+                };
+                entities.Account.Add(mAccount);
+                entities.SaveChanges();
+                return mAccount.ID.ToString();
+            }
+
+        }
         public string Insert(string email, string password, string salt, string token, DateTime tokenExpireDate)
         {
-            var accounts = from p in entities.Account
-                        where p.Email.Equals(email) || p.UserName.Equals(email)
-                                select p;
-            
-            if (accounts != null || accounts.Count() < 1) {
-                return "exist";
-            }
-            else {
-                var checkAccount = accounts.FirstOrDefault();
+            using (var entities = new V308CMSEntities())
+            {
+                var accounts = (from p in entities.Account
+                                where p.Email.Equals(email) || p.UserName.Equals(email)
+                                select p).FirstOrDefault();
+
+                if (accounts != null)
+                {
+                    return "exist";
+                }
                 var mAccount = new Account()
                 {
                     Email = email,
                     UserName = email,
-                    Password = HashPassword(password,salt) ,
+                    Password = HashPassword(password, salt),
                     Salt = salt,
                     Token = token,
                     TokenExpireDate = tokenExpireDate,
-                    Status = false
+                    Status = true,
+                    Date = DateTime.Now
                 };
                 entities.Account.Add(mAccount);
                 entities.SaveChanges();
                 return "ok";
             }
 
-        }
 
-        public string UpdateToken(string email, string token,DateTime tokenExpireDate)
+        }
+        public Account FindEmail(string email)
         {
-            var checkAccount = (from p in entities.Account
+            using (var entities = new V308CMSEntities())
+            {
+                return (from user in entities.Account
+                        where user.Email == email
+                        select user
+              ).FirstOrDefault();
+            }
+        }
+        public string InsertAffiliate(string email, string password, string fullname, string mobile = "")
+        {
+
+            using (var entities = new V308CMSEntities())
+            {
+                var accounts = (from p in entities.Account
                                 where p.Email.Equals(email) || p.UserName.Equals(email)
                                 select p).FirstOrDefault();
-            if (checkAccount == null)
-            {
-                return "invalid";
+
+                if (accounts != null)
+                {
+                    return "exist";
+                }
+                var salt = StringHelper.GenerateString(6);
+                var token = getToken(email);
+
+                
+                try {
+                    var mAccount = new Account()
+                    {
+                        Email = email,
+                        UserName = email,
+                        FullName = fullname,
+                        Phone = mobile,
+                        Password = HashPassword(password, salt),
+                        Salt = salt,
+                        Token = token,
+                        TokenExpireDate = DateTime.Now.AddDays(1),
+                        Status = true,
+                        Role = 3,
+                        Site = Site.affiliate
+                    };
+                    entities.Account.Add(mAccount);
+                    entities.SaveChanges();
+                }
+                catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+                {
+                    Console.Write(dbEx);
+                }
+
+                SiteRepository config = new SiteRepository();
+                var activeAccountUrl = string.Format("{0}account/active", Configs.GetItemConfig("WebDomain") );
+
+                var body =
+                        string.Format(
+                            "Cảm ơn bạn đã đăng ký tài khoản trên hệ thống của {0}. Mã kích hoạt tài khoản của bạn là {1}. Click vào <a style='color: #007FF0' href='{2}' title='Kích hoạt tài khoản'> đây</a> để kích hoạt tài khoản của bạn.",
+                            config.SiteConfig("site-name"), token, activeAccountUrl);
+                Email.SendEmail(email, "Đăng ký tài khoản", body);
+
+                return Result.Ok;
             }
-            if (checkAccount.Status == true)
+
+
+        }
+
+        private string getToken(string email, bool forForgotPassword = false)
+        {
+            return forForgotPassword ? EncryptionMD5.ToMd5(string.Format("{0}|{1}|forgot-die", email, DateTime.Now.Ticks)) : EncryptionMD5.ToMd5(string.Format("{0}|{1}", email, DateTime.Now.Ticks));
+        }
+
+        public string UpdateToken(string email, string token, DateTime tokenExpireDate)
+        {
+            using (var entities = new V308CMSEntities())
             {
-                return "active";
+                var checkAccount = (from p in entities.Account
+                                    where p.Email.Equals(email) || p.UserName.Equals(email)
+                                    select p).FirstOrDefault();
+                if (checkAccount == null)
+                {
+                    return "invalid";
+                }
+                if (checkAccount.Status == true)
+                {
+                    return "active";
+                }
+
+                checkAccount.Token = token;
+                checkAccount.TokenExpireDate = tokenExpireDate;
+                entities.SaveChanges();
+                return "ok";
             }
-           
-            checkAccount.Token = token;
-            checkAccount.TokenExpireDate = tokenExpireDate;
-            entities.SaveChanges();
-            return "ok";
+
         }
 
         public string Active(string token)
         {
-            var checkToken = (from account in entities.Account
-                where account.Token == token
-                select account
-                ).FirstOrDefault();
-            if (checkToken == null){
-                return "invalid";
-            }
-            if (checkToken.TokenExpireDate < DateTime.Now){
-                return "expire";
+            using (var entities = new V308CMSEntities())
+            {
+                var checkToken = (from account in entities.Account
+                                  where account.Token == token
+                                  select account
+              ).FirstOrDefault();
+                if (checkToken == null)
+                {
+                    return "invalid";
+                }
+                if (checkToken.TokenExpireDate < DateTime.Now)
+                {
+                    return "expire";
 
-            }
-            checkToken.Status = true;
+                }
+                checkToken.Status = true;
 
-            entities.SaveChanges();
-            return "ok";
+                entities.SaveChanges();
+                return "ok";
+            }
+
 
         }
 
         public string RequestForgotPassword(string email, string forgotPasswordToken, DateTime forgotPasswordTokenExpireDate)
         {
-
-            var checkAccount = (from account in entities.Account
-                              where account.Email == email
-                              select account
-                ).FirstOrDefault();
-            if (checkAccount == null)
+            using (var entities = new V308CMSEntities())
             {
-                return "invalid";
+                var checkAccount = (from account in entities.Account
+                                    where account.Email == email || account.UserName == email
+                                    select account
+               ).FirstOrDefault();
+                if (checkAccount == null)
+                {
+                    return "invalid";
+                }
+                var newPassword = StringHelper.GenerateString(6);
+                checkAccount.ForgotPasswordToken = forgotPasswordToken;
+                checkAccount.ForgotPasswordTokenExpireDate = forgotPasswordTokenExpireDate;
+                checkAccount.Password = HashPassword(newPassword, checkAccount.Salt);
+                entities.SaveChanges();
+                return newPassword;
             }
-            var newPassword = StringHelper.GenerateString(6);
-            checkAccount.ForgotPasswordToken = forgotPasswordToken;
-            checkAccount.ForgotPasswordTokenExpireDate = forgotPasswordTokenExpireDate;
-            checkAccount.Password = HashPassword(newPassword, checkAccount.Salt);
-            entities.SaveChanges();
-            return newPassword;
+
+
         }
 
         public string CheckForgotPasswordToken(string token)
         {
-            var checkForgotPasswordToken = (from account in entities.Account
-                                where account.ForgotPasswordToken == token
-                                select account
-              ).FirstOrDefault();
-            if (checkForgotPasswordToken == null)
+            using (var entities = new V308CMSEntities())
             {
-                return "invalid";
+                var checkForgotPasswordToken = (from account in entities.Account
+                                                where account.ForgotPasswordToken == token
+                                                select account
+             ).FirstOrDefault();
+                if (checkForgotPasswordToken == null)
+                {
+                    return "invalid";
+                }
+                if (checkForgotPasswordToken.ForgotPasswordTokenExpireDate < DateTime.Now)
+                {
+                    return "expire";
+                }
+                return "ok";
             }
-            if (checkForgotPasswordToken.ForgotPasswordTokenExpireDate < DateTime.Now)
-            {
-                return "expire";
-            }
-            return "ok";
+
         }
 
         public string ChangePassword(string email, string currentPassword, string newPassword)
         {
-            var checkAccount = (from account in entities.Account
-                                where account.Email == email
-                                select account
-                ).FirstOrDefault();
-            if (checkAccount == null)
+            using (var entities = new V308CMSEntities())
             {
-                return "invalid";
-            }
-            var hashCurrentPassword = HashPassword(currentPassword, checkAccount.Salt);
-            if (checkAccount.Password != hashCurrentPassword)
-            {
-                return "current_wrong";
+                var checkAccount = (from account in entities.Account
+                                    where account.Email == email
+                                    select account
+               ).FirstOrDefault();
+                if (checkAccount == null)
+                {
+                    return "invalid";
+                }
+                var hashCurrentPassword = HashPassword(currentPassword, checkAccount.Salt);
+                if (checkAccount.Password != hashCurrentPassword)
+                {
+                    return "current_wrong";
 
+                }
+                checkAccount.Password = HashPassword(newPassword, checkAccount.Salt);
+                entities.SaveChanges();
+                return "ok";
             }
-            checkAccount.Password = HashPassword(newPassword, checkAccount.Salt);           
-            entities.SaveChanges();
-            return "ok";
+
 
         }
 
         private string HashPassword(string password, string salt)
         {
-           return  EncryptionMD5.ToMd5(string.Format("{0}|{1}", password, salt));
+            return EncryptionMD5.ToMd5($"{password}|{salt}");
         }
         public string CheckAccount(string email, string password)
         {
-            var accounts = from p in entities.Account
-                                where p.Email.Equals(email) || p.UserName.Equals(email)
-                                select p;
-
-            if (accounts == null || accounts.Count() < 1)
+            using (var entities = new V308CMSEntities())
             {
-                return "invalid";
-            }
-            var checkAccount = accounts.FirstOrDefault();
 
-            if (checkAccount.Status == false)
-            {
-                return "not_active";
-            }
-            var hashPassword = HashPassword(password, checkAccount.Salt);
-            if (checkAccount.Password != hashPassword)
-            {
-                return "invalid";
+                var checkAccount = (from p in entities.Account
+                                    where p.Email.Equals(email) || p.UserName.Equals(email)
+                                    select p).FirstOrDefault();
+                if (checkAccount == null)
+                {
+                    return "invalid";
+                }
 
+                if (checkAccount.Status == false)
+                {
+                    return "not_active";
+                }            
+                if (checkAccount.Password != HashPassword(password, checkAccount.Salt))
+                {
+                    return "invalid";
+                }
+                return $"{checkAccount.ID}|{checkAccount.Avatar}";
             }
-            return "ok";
+
 
         }
-        public Account GetByUserId(string userId)
+        public Account GetByUserId(int userId)
         {
-            return (from p in entities.Account
-                                where p.Email.Equals(userId) || p.UserName.Equals(userId)
-                                select p).FirstOrDefault();
-          
+            using (var entities = new V308CMSEntities())
+            {
+                return (from user in entities.Account
+                        where user.ID == userId
+                        select user).FirstOrDefault();
+
+            }
+
+
 
         }
+
+        public Account Find(int id)
+        {
+            using (var entities = new V308CMSEntities()) {
+                return (from p in entities.Account
+                        where p.ID == id
+                        select p).FirstOrDefault();
+            }
+                
+
+
+        }
+
+
         public string CheckEmail(string email)
         {
-            var accounts = from p in entities.Account
+            using (var entities = new V308CMSEntities())
+            {
+                var accounts = (from p in entities.Account
                                 where p.Email.Equals(email) || p.UserName.Equals(email)
-                                select p;
-            //var checkAccount = ().FirstOrDefault();
-            return accounts.Count() > 1 ? "exist" : "not_exist";
+                                select p).FirstOrDefault();
+                return accounts != null ? "exist" : "not_exist";
+            }
+
 
         }
         public ETLogin CheckDangKyHome(string pUsername, string pPassword, string pPassWord2, string pEmail, string pFullName, string pMobile)
         {
-            Account mAccount = null;
-            ETLogin mETLogin = new ETLogin();
-            try
+            using (var entities = new V308CMSEntities())
             {
+                ETLogin mEtLogin = new ETLogin();
                 //check xem 2 passs co trung nhau ko ?
                 if (pPassword.Trim().Equals(pPassWord2.Trim()))
                 {
                     //lay danh sach tin moi dang nhat
-                    mAccount = (from p in entities.Account
-                                where p.UserName.Equals(pUsername)
-                                select p).FirstOrDefault();
-                    if (!(mAccount != null))
+                    var mAccount = (from p in entities.Account
+                                    where p.UserName.Equals(pUsername)
+                                    select p).FirstOrDefault();
+                    if (mAccount == null)
                     {
 
                         mAccount = new Account()
                         {
                             Email = pEmail,
                             FullName = pFullName,
-                            Password=EncryptionMD5.ToMd5(pPassword),
-                            Phone=pMobile,
-                            UserName=pUsername,
-                            BirthDay=DateTime.Now
+                            Password = EncryptionMD5.ToMd5(pPassword),
+                            Phone = pMobile,
+                            UserName = pUsername,
+                            BirthDay = DateTime.Now
                         };
                         entities.AddToAccount(mAccount);
                         entities.SaveChanges();
-                        mETLogin.Account = mAccount;
-                        mETLogin.code = 1;
-                        mETLogin.message = "Đăng ký thành công.";
+                        mEtLogin.Account = mAccount;
+                        mEtLogin.code = 1;
+                        mEtLogin.message = "Đăng ký thành công.";
                     }
                     else
                     {
-                        mETLogin.code = 0;
-                        mETLogin.message = "Tài khoản đã tồn tại.";
+                        mEtLogin.code = 0;
+                        mEtLogin.message = "Tài khoản đã tồn tại.";
                     }
                 }
                 else
                 {
-                    mETLogin.code = 0;
-                    mETLogin.message = "Password không trùng khớp.";
+                    mEtLogin.code = 0;
+                    mEtLogin.message = "Password không trùng khớp.";
                 }
-                return mETLogin;
-            }
-            catch (Exception ex)
-            {
-                Console.Write(ex);
-                throw;
+                return mEtLogin;
             }
         }
 
         public Admin LayAdminTheoId(int pId)
         {
-            Admin mAdmin = null;
-            try
+            using (var entities = new V308CMSEntities())
             {
-                //lay danh sach tin moi dang nhat
-                mAdmin = (from p in entities.Admin
-                            where p.ID == pId
-                            select p).FirstOrDefault();
-                return mAdmin;
-            }
-            catch (Exception ex)
-            {
-                Console.Write(ex);
-                throw;
+                return (from p in entities.Admin
+                        where p.ID == pId
+                        select p).FirstOrDefault();
             }
         }
         public Admin LayAdminTheoUserName(string pValue)
         {
-            Admin mAdmin = null;
-            try
+            using (var entities = new V308CMSEntities())
             {
-                //lay danh sach tin moi dang nhat
-                mAdmin = (from p in entities.Admin
-                          where p.UserName.Trim().Equals(pValue)
-                          select p).FirstOrDefault();
-                return mAdmin;
-            }
-            catch (Exception ex)
-            {
-                Console.Write(ex);
-                throw;
+                return (from p in entities.Admin
+                        where p.UserName.Trim().Equals(pValue)
+                        select p).FirstOrDefault();
             }
         }
         public List<Admin> LayAdminTheoTrangAndType(int pcurrent, int psize, int pType)
         {
-            List<Admin> mList = null;
-            try
+            using (var entities = new V308CMSEntities())
             {
                 if (pType == 0)
                 {
-                    //lay danh sach tin moi dang nhat
-                    mList = (from p in entities.Admin
-                             orderby p.ID descending
-                             select p).Skip((pcurrent - 1) * psize)
+
+                    return (from p in entities.Admin
+                            orderby p.ID descending
+                            select p).Skip((pcurrent - 1) * psize)
                              .Take(psize).ToList();
                 }
-                else
-                {
-                    mList = (from p in entities.Admin
-                             where p.Role==pType
-                             orderby p.ID descending
-                             select p).Skip((pcurrent - 1) * psize)
-                           .Take(psize).ToList();
-                }
-                return mList;
-            }
-            catch (Exception ex)
-            {
-                Console.Write(ex);
-                throw;
+                return (from p in entities.Admin
+                        where p.Role == pType
+                        orderby p.ID descending
+                        select p).Skip((pcurrent - 1) * psize)
+                    .Take(psize).ToList();
             }
         }
         public List<Account> LayAccountTheoTrangAndType(int pcurrent, int psize, int pType)
         {
-            List<Account> mList = null;
-            try
+            using (var entities = new V308CMSEntities())
             {
                 if (pType == 0)
                 {
-                    //lay danh sach tin moi dang nhat
-                    mList = (from p in entities.Account
-                             orderby p.ID descending
-                             select p).Skip((pcurrent - 1) * psize)
+                    return (from p in entities.Account
+                            orderby p.ID descending
+                            select p).Skip((pcurrent - 1) * psize)
                              .Take(psize).ToList();
                 }
-                else
-                {
-                    mList = (from p in entities.Account
-                             where p.Role == pType
-                             orderby p.ID descending
-                             select p).Skip((pcurrent - 1) * psize)
-                           .Take(psize).ToList();
-                }
-                return mList;
-            }
-            catch (Exception ex)
-            {
-                Console.Write(ex);
-                throw;
+                return (from p in entities.Account
+                        where p.Role == pType
+                        orderby p.ID descending
+                        select p).Skip((pcurrent - 1) * psize)
+                    .Take(psize).ToList();
             }
         }
         public List<Admin> GetListAdminByType(byte type)
         {
-            return (from p in entities.Admin
-                    where p.Type == type
-                    select p).ToList();
+            using (var entities = new V308CMSEntities())
+            {
+                return (from p in entities.Admin
+                        where p.Type == type
+                        select p).ToList();
+
+            }
+
+        }
+
+        public string UpdateObject(Account data)
+        {
+            try
+            {
+                using (var entities = new V308CMSEntities())
+                {
+                    var check = (from c in entities.Account
+                                 where c.ID == data.ID
+                                 select c
+                    ).FirstOrDefault();
+                    if (check != null)
+                    {
+                        check.FullName = data.FullName;
+                        check.Phone = data.Phone;
+                        check.Address = data.Address;
+
+                        check.bank_name = data.bank_name;
+                        check.bank_number = data.bank_number;
+                        check.bank_account = data.bank_account;
+                        check.bank_address = data.bank_address;
+
+                        if (data.cmt_back != null && data.cmt_back.Length > 0)
+                        {
+                            check.cmt_back = data.cmt_back;
+                        }
+                        else
+                        {
+                            check.cmt_back = check.cmt_back;
+                        }
+
+                        if (data.cmt_front != null && data.cmt_front.Length > 0)
+                        {
+                            check.cmt_front = data.cmt_front;
+                        }
+
+
+                        entities.SaveChanges();
+                        return Result.Ok;
+                    }
+                    return Result.Exists;
+                }
+                    
+
+
+            }
+            catch (Exception ex)
+            {
+                return ex.ToString();
+            }
+
+
         }
     }
 }

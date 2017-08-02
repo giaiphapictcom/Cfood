@@ -16,11 +16,17 @@ namespace V308CMS.Common
             foreach (var entityProperty in entityProperties)
             {
                 var property = entityProperty;
-                var convertProperty = convertProperties.FirstOrDefault(prop => prop.Name == property.Name);
-                var isSkipProperty = skipProperties != null && skipProperties.Contains(property.Name) == false;
+                var convertProperty = convertProperties.FirstOrDefault(prop => prop.Name.ToLower() == property.Name.ToLower());
+                var isSkipProperty = ((skipProperties != null) && skipProperties.Contains(property.Name)) == false;
                 if (convertProperty != null && isSkipProperty)
                 {
-                    convertProperty.SetValue(convert, Convert.ChangeType(entityProperty.GetValue(entity), convertProperty.PropertyType));
+                    var value = entityProperty.GetValue(entity);
+                    var ConvertType = convertProperty.PropertyType;
+                    var TypeCurrent = entityProperty.PropertyType;
+                    if (ConvertType == TypeCurrent) {
+                        convertProperty.SetValue(convert, Convert.ChangeType(value, ConvertType));
+                    }
+                    
                 }
             }
 

@@ -1,0 +1,31 @@
+﻿@{
+    Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/CartLayout.cshtml";
+    ViewBag.Title = "Giao dịch hoàn tất";
+}
+@section NoCart{}
+<div class="step" data-step="payment_method">   
+    <div class="step__sections">
+        <div class="section section--payment-method" data-payment-method>
+            <div class="section__header">
+                <h2 class="section__title">Giao dịch hoàn tất</h2>
+            </div>
+
+            <div class="section__content">
+                <div class="content-box">
+                    <div class="radio-wrapper content-box__row content-box__row--secondary">
+                        <div class="blank-slate">
+                            <img src="/Content/Images/ico12.png" alt="Giao dịch hoàn tất" />
+                            <p>
+                                Giao dịch hoàn tất, cảm ơn bạn đã mua hàng tại @ViewBag.SiteName !
+                            </p>
+                            <p>
+                                <a href="/" class="btn btn-yellow">Tiếp tục mua sắm</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

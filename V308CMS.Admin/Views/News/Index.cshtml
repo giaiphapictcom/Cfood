@@ -1,41 +1,3 @@
-<<<<<<< HEAD
-﻿@using V308CMS.Admin.Helpers.Url
-@model V308CMS.Data.NewsPage
-@{
-    ViewBag.Title = "Tin Tức";
-    ViewBag.LinkBack = "<li><a href=" + Url.NewsIndexUrl()+">Tin Tức</a> </li>";
-    ViewBag.MenuValue = 2;
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-<div>
-    <div>
-        <div id="close" class="mheader">
-            <a href="@Url.NewsCreateUrl()" title="Thêm mới">
-                <img src="@Url.CreateNewImageUrl()" alt="Thêm mới" />
-            </a>
-        </div>
-        <div style="margin-top: 16px;">
-            @Html.Raw(Model.HtmlNhomTin)
-        </div>
-        <hr />
-        <div style="width: 100%;">
-            <div class="RadGrid RadGrid_MetroTouch table table-striped table-bordered table-hover dataTable" tabindex="0">
-                @Html.Raw(Model.Html)
-            </div>
-        </div>
-        <div class="wpmn_page_navi">
-            <a href="@Url.NewsIndexUrl(new {pPage = Model.BackPage,pType = Model.TypeId})">Back</a>
-                <span class="current">@Model.Page</span>
-            <a href="@Url.NewsIndexUrl(new {pPage = Model.NextPage,pType = Model.TypeId })">Next</a>
-        </div>
-        <hr />
-    </div>
-    <div style="display: none;" role="status" aria-hidden="true">
-        <div class="area"></div>
-        <div class="form-loading"></div>
-    </div>
-</div>
-=======
 ﻿@using V308CMS.Admin.Helpers
 @using V308CMS.Admin.Helpers.UI
 @using V308CMS.Admin.Helpers.Url
@@ -43,32 +5,25 @@
 @using V308CMS.Common
 @model V308CMS.Admin.Models.NewsViewModels
 @{
-    ViewBag.Title = "Danh sách Tin tức";
+    
     Layout = "~/Views/Shared/_LayoutV2.cshtml";
-
+    ViewBag.Title = "Danh sách tin tức";
     var listCategory = (List<MutilCategoryItem>)ViewBag.ListCategory;
     var listSite = (List<SelectListItem>)ViewBag.ListSite;
 }
 @Html.Partial("UI/_AddNewButton", Url.NewsCreateUrl())
 <div class="row" style="margin-bottom: 2px">
-
     <form action="@Url.NewsIndexUrl()" method="get">
-        <div class="col-md-3">
+        <div class="col-md-6">
             @Html.Partial("UI/_MutilDropDownlist", new MutilDropDownlistModels
             {
                 Name = "CategoryId",
                 Data = listCategory,
-                PlaceHolder = "Tất cả",
+                PlaceHolder = "Tat ca",
                 ParentId = Model.CategoryId
             })
         </div>
-         <div class="col-md-3">
-           @Html.DropDownListFor(news => Model.Site, listSite, "Tất cả", new
-          {
-              @class = "form-control",
-              placeholder = "Tất cả"
-          })
-        </div>
+        
         <div class="col-md-3" style="margin-left: -25px">
             <div class="input-group">
                 <span class="input-group-btn">
@@ -88,7 +43,7 @@
         <!-- /.panel-heading -->
         <div class="panel-body">
 
-            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -97,8 +52,8 @@
                         <th>Tóm tắt</th>
                         <th>Chuyên mục</th>                                       
                         <th>Ngày cập nhật</th>
-                        <th>Trạng thái</th>
-                        <th>Hành động</th>
+                        <th style="text-align: center">Trạng thái</th>
+                        <th style="text-align: center">Hành động</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -110,25 +65,41 @@
                                 @(i + 1)
                             </td>
                             <td>
-                                <a title="Cập nhật tin tức @news.Title" class="btn btn-link" href="@Url.ProductEditUrl(new {news.ID})">
+                                <a title="Cập nhật tin tức @news.Title" class="btn btn-link" href="@Url.NewsEditUrl(new { news.ID })">
                                     @news.Title.ToTitle(25)
                                 </a>
                             </td>
                             <td>
-                                <img class="image-brand img-circle" src="@news.Image.ToImageUrl()" alt="@news.Title" />
+                                
+                                <img class="image-brand img-circle" src="@ImageHelper.ToUrl(news.Image)" alt="@news.Title" />
                             </td>
                             <td>
                                 @news.Summary.ToTitle(50)
                             </td>
                            
                             <td>
-                                @(news.NewsGroup != null ? news.NewsGroup.Name : "")
+                                @{
+                                    string categoryname = "";
+                                    try
+                                    {
+                                        if (news.NewsGroup != null) {
+                                            categoryname = news.NewsGroup.Name;
+                                        }
+
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        Console.Write(ex);
+                                    }
+
+                                } 
+                                @categoryname
                             </td>                                                    
                             <td>
                                @news.Date.ToDdmmyyyy()
                             </td>
-                            <td>@news.Status.ToStateLabelHtml()</td>
-                            <td style="width: 100px">
+                            <td style="text-align: center">@news.Status.ToStateLabelHtml()</td>
+                            <td style="width: 200px; text-align: center">
                                 @Html.Partial("UI/_EditButton", new ButtonModels
                                {
                                    Id = string.Format("news_{0}", news.ID),
@@ -158,4 +129,3 @@
         });
     });
 </script>
->>>>>>> toai-neal

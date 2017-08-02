@@ -9,8 +9,6 @@ namespace V308CMS.Admin.Helpers
         public IIdentity Identity { get; private set; }
         public bool IsInRole(string role)
         {
-
-
             return false;
 
         }
@@ -33,6 +31,7 @@ namespace V308CMS.Admin.Helpers
         public string[] Roles { get; set; }
 
         public int RoleId { get; set; }
+        public string Avatar { get; set; }
      
 
     }

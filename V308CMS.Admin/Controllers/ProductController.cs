@@ -163,8 +163,10 @@ namespace V308CMS.Admin.Controllers
                     Transport2 = product.Transport2,
                     Status = false
                 };
-                var result =ProductService.Insert(newProduct);               
-
+                var result =ProductService.Insert(newProduct);
+                if (newProduct.Npp > 0) {
+                    var RevenueAdd = RevenueGainRepo.Add(newProduct.ID, float.Parse(product.Npp), currentUser.UserId);
+                }
                 //Tao cac anh Slide va properties
                 if (product.ProductImages != null && product.ProductImages.Length>0)
                 {
@@ -196,9 +198,7 @@ namespace V308CMS.Admin.Controllers
                 {
                     ProductColorService.Insert(newProduct.ID, product.Color);                 
                 }               
-                SetFlashMessage(result== Result.Ok?
-                    $"Thêm sản phẩm '{product.Name}' thành công.":
-                    "Lỗi khi thêm mới sản phẩm");
+                SetFlashMessage(result== Result.Ok? string.Format("Thêm sản phẩm '{0}' thành công.",product.Name): "Lỗi khi thêm mới sản phẩm");
                 if (product.SaveList)
                 {
                     return RedirectToAction("Index");
@@ -237,47 +237,59 @@ namespace V308CMS.Admin.Controllers
                 return RedirectToAction("Index");
 
             }
-            var modelEdit = new ProductModels
-            {
-                Id = product.ID,
-                Name = product.Name,
-                ImageUrl = product.Image,
-                CategoryId = product.Type ?? 0,
-                Code = product.Code,
-                BrandId = product.BrandId,
-                Store = product.Store,
-                Country = product.Country,
-                ManufacturerId = product.Manufacturer,
-                AccountId = product.AccountId,
-                Number = product.Number ?? 0,
-                Unit = product.Unit1,
-                Quantity = product.Quantity,
-                Weight = product.Weight,
-                Npp = product.Npp?.ToString() ?? "",
-                Width = product.Width,
-                Height = product.Height,
-                Depth = product.Depth,
-                Summary = product.Summary,
-                Detail = product.Detail,
-                WarrantyTime = product.WarrantyTime,
-                ExpireDate = product.ExpireDate,
-                Transport1 = product.Transport1 ?? 0,
-                Transport2 = product.Transport2 ?? 0,
-                MetaTitle = product.Title,
-                MetaDescription = product.Description,
-                MetaKeyword = product.Keyword,
-                Price = (int) (product.Price ?? 0),
-                ListProductImages = product.ProductImages?.ToList() ?? new List<ProductImage>(),
-                ListProductAttribute = product.ProductAttribute?.ToList() ?? new List<ProductAttribute>(),
-            };
+            var modelEdit = new ProductModels();
+            try {
+                modelEdit.Id = product.ID;
+                modelEdit.Name = product.Name;
+                modelEdit.ImageUrl = product.Image;
+                modelEdit.CategoryId = product.Type ?? 0;
+                modelEdit.Code = product.Code;
+                modelEdit.BrandId = product.BrandId;
+                modelEdit.Store = product.Store;
+                modelEdit.Country = product.Country;
+                modelEdit.ManufacturerId = product.Manufacturer;
+                modelEdit.AccountId = product.AccountId;
+                modelEdit.Number = product.Number ?? 0;
+                modelEdit.Unit = product.Unit1.ToString();
+                modelEdit.Quantity = 0;
+                if (product.Quantity.ToString().Length > 0) {
+                    modelEdit.Quantity = int.Parse(product.Quantity.ToString());
+                }
+                
+                modelEdit.Weight = product.Weight;
+                modelEdit.Width = product.Width;
+                modelEdit.Npp = product.Npp.ToString();
+                modelEdit.Depth = product.Depth;
+                modelEdit.Summary = product.Summary;
+                modelEdit.Detail = product.Detail;
+                modelEdit.WarrantyTime = product.WarrantyTime;
+                modelEdit.ExpireDate = product.ExpireDate;
+                modelEdit.Transport1 = product.Transport1 ?? 0;
+                modelEdit.Transport2 = product.Transport2 ?? 0;
+                modelEdit.MetaTitle = product.Title;
+                modelEdit.MetaDescription = product.Description;
+                modelEdit.MetaKeyword = product.Keyword;
+                modelEdit.Price = (int)(product.Price ?? 0);
+                modelEdit.ListProductImages = product.ProductImages.ToList();
+                modelEdit.ListProductAttribute = product.ProductAttribute.ToList();
 
-            if (product.ProductSaleOff != null && product.ProductSaleOff.Count>0)
-            {
-                var saleOffItem = product.ProductSaleOff.FirstOrDefault();
-                modelEdit.Percent = saleOffItem.Percent?.ToString() ?? "";
-                modelEdit.StartDate = saleOffItem.StartTime?.ToString() ?? "";
-                modelEdit.EndDate = saleOffItem.EndTime?.ToString() ?? "";
+
+                if (product.ProductSaleOff != null && product.ProductSaleOff.Count > 0)
+                {
+                    var saleOffItem = product.ProductSaleOff.FirstOrDefault();
+                    //modelEdit.Percent = saleOffItem.Percent?.ToString() ?? "";
+                    //modelEdit.StartDate = saleOffItem.StartTime?.ToString() ?? "";
+                    //modelEdit.EndDate = saleOffItem.EndTime?.ToString() ?? "";
+                    modelEdit.Percent = saleOffItem.Percent.ToString();
+                    modelEdit.StartDate = saleOffItem.StartTime.ToString();
+                    modelEdit.EndDate = saleOffItem.EndTime.ToString();
+                }
             }
+            catch (Exception e) {
+                Console.Write(e);
+            }
+
+            
 
             ViewBag.ListCategory = BuildListCategory();
             ViewBag.ListBrand = ProductBrandService.GetAll();
@@ -286,9 +298,14 @@ namespace V308CMS.Admin.Controllers
             ViewBag.ListManufacturer = ProductManufacturerService.GetAll();
             ViewBag.ListUnit = UnitService.GetAll();
             ViewBag.ListColor = BuildListColor(
-                product.ProductColor?.Select(item => item.ColorCode).ToArray());
+                //product.ProductColor?.Select(item => item.ColorCode).ToArray()
+                product.ProductColor.Select(item => item.ColorCode).ToArray()
+            );
             ViewBag.ListSize =
-                BuildListSize(product.ProductSize?.Select(item => item.Size).ToArray());         
+                BuildListSize(
+                //product.ProductSize?.Select(item => item.Size).ToArray()
+                  product.ProductSize.Select(item => item.Size).ToArray()
+            );
             ViewBag.ListHour = DataHelper.ListHour;
 
             return View("Edit", modelEdit);
@@ -306,7 +323,7 @@ namespace V308CMS.Admin.Controllers
 
                 if (string.IsNullOrWhiteSpace(product.Code))
                 {
-                    product.Code = $"MP-{DateTime.Now.Ticks.GetHashCode()}";
+                    product.Code = string.Format("MP-{0}",DateTime.Now.Ticks.GetHashCode());
                 }
                 product.ImageUrl = product.Image != null ?
                                    product.Image.Upload() :
@@ -324,7 +341,11 @@ namespace V308CMS.Admin.Controllers
                 productUpdate.Number = product.Number;
                 productUpdate.Unit1 = product.Unit;
                 productUpdate.Weight = product.Weight;
-                productUpdate.Quantity = product.Quantity;
+                productUpdate.Quantity = 0;
+                if (product.Quantity.ToString().Length > 0)
+                {
+                    productUpdate.Quantity = int.Parse(product.Quantity.ToString());
+                }
                 productUpdate.Npp = Convert.ToDouble(product.Npp);
                 productUpdate.Width = product.Width;
                 productUpdate.Height = product.Height;
@@ -339,6 +360,12 @@ namespace V308CMS.Admin.Controllers
                 productUpdate.Transport1 = product.Transport1;
                 productUpdate.Transport2 = product.Transport2;
                 var result = ProductService.Update(productUpdate);
+
+                if (productUpdate.Npp > 0)
+                {
+                    var RevenueAdd = RevenueGainRepo.Add(productUpdate.ID, float.Parse(product.Npp), currentUser.UserId);
+                }
+
                 //Tao cac anh san pham
                 if (product.ProductImages != null && product.ProductImages.Length > 0)
                 {
@@ -373,8 +400,8 @@ namespace V308CMS.Admin.Controllers
                 }           
               
                 SetFlashMessage(result == Result.Ok?
-                    $"Cập nhật sản phẩm '{product.Name}' thành công.":
-                    "Lỗi khi cập nhật sản phẩm '{product.Name}'"
+                    string.Format("Cập nhật sản phẩm '{0}' thành công.",product.Name):
+                    string.Format("Lỗi khi cập nhật sản phẩm '{0}'",product.Name)
                     );
                 if (product.SaveList)
                 {
@@ -422,7 +449,7 @@ namespace V308CMS.Admin.Controllers
         {
             var result = ProductService.ChangeStatus(id);
             SetFlashMessage(result == Result.Ok
-                ? $"Thay đổi trạng thái sản phẩm thành công."
+                ? "Thay đổi trạng thái sản phẩm thành công."
                 : "Không tìm thấy sản phẩm cần thay đổi trạng thái.");
             return RedirectToAction("Index");
         }
@@ -469,9 +496,11 @@ namespace V308CMS.Admin.Controllers
         [CheckPermission(8, "Cập nhật Npp")]       
         public ActionResult UpdateNpp(int id, string npp)
         {
-            double nppValue;
-            double.TryParse(npp, out nppValue);
-            var result = ProductService.UpdateNpp(id, nppValue);
+            float nppValue;
+            float.TryParse(npp, out nppValue);
+            
+            //var result = ProductService.UpdateNpp(id, nppValue);
+            var result = RevenueGainRepo.Add(id, nppValue, currentUser.UserId);
             if (result == Result.NotExists)
             {
                 return Json(new { message = "Không tìm thấy sản phẩm để cập nhật chiết khấu." });

@@ -32,10 +32,10 @@ namespace V308CMS.Admin.Controllers
                 var result = CountryService.Insert(country.CloneTo<Country>());
                 if (result == Result.Exists)
                 {
-                    ModelState.AddModelError("", $"Quốc gia {country.Name} đã tồn tại trên hệ thống.");
+                    ModelState.AddModelError("", string.Format("Quốc gia {1} đã tồn tại trên hệ thống.",country.Name) );
                     return View("Create", country);
                 }
-                SetFlashMessage($"Thêm Quốc gia '{country.Name}' thành công.");
+                SetFlashMessage( string.Format("Thêm Quốc gia '{0}' thành công.",country.Name) );
                 if (country.SaveList)
                 {
                     return RedirectToAction("Index");
@@ -52,7 +52,7 @@ namespace V308CMS.Admin.Controllers
             var country = CountryService.Find(id);
             if (country == null)
             {
-                SetFlashMessage($"Không tìm thấy Quốc gia cần cập nhật.");
+                SetFlashMessage("Không tìm thấy Quốc gia cần cập nhật.");
                 return RedirectToAction("Index");
 
             }
@@ -75,7 +75,7 @@ namespace V308CMS.Admin.Controllers
                     return View("Edit", country);
                 }
 
-                SetFlashMessage($"Cập nhật Quốc gia '{country.Name}' thành công.");
+                SetFlashMessage( string.Format("Cập nhật Quốc gia '{0}' thành công.",country.Name) );
                 if (country.SaveList)
                 {
                     return RedirectToAction("Index");

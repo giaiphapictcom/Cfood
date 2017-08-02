@@ -1,0 +1,46 @@
+﻿@model V308CMS.Data.NewsDetailPageContainer
+@using V308CMS.Common
+
+@{
+
+    Layout = "~/Views/" + @ViewContext.RouteData.Values["controller"] + "/Layout/Default.cshtml";
+    string PageTitle = Model.NewsItem != null ? Model.NewsItem.Title : Model.PageTitle;
+}
+@section header {
+    <title>@PageTitle</title>
+    <meta property="og:url" content="@Request.Url" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="@PageTitle" />
+    <meta property="og:description" content="@Model.NewsItem.Summary" />
+    <meta property="og:image" content="@ImageHelper.ToUrl(Model.NewsItem.Image,400,200)" />
+    <meta property="og:image:width" content="400" />
+    <meta property="og:image:height" content="200" />
+    
+
+}
+
+<div class="shopify-section article-single">
+    <div class="container-block m-0">
+        <div class="container border-col">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12 article-home-full">
+                    <h3><span>@PageTitle</span></h3>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12" style="padding-bottom: 15px;">
+                    <div class="fb-like" data-href="@Request.Url" data-layout="standard" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
+                </div>
+
+                    @if (Model.NewsItem != null)
+                    {
+                        if (Model.NewsItem.Summary.Length > 0)
+                        {
+                            <div class="col-md-12">@Model.NewsItem.Summary</div>
+                        }
+                        <div class="col-md-12">@Html.Raw(Model.NewsItem.Detail)</div>
+                    }
+
+                </div>
+        </div>
+    </div>
+</div>
+@Html.Action("BlockNews12", "Theme")

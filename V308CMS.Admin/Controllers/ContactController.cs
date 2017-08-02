@@ -50,7 +50,7 @@ namespace V308CMS.Admin.Controllers
                     ModelState.AddModelError("", "Thông tin liên hệ không tồn tại trên hệ thống.");                   
                     return View("Edit", contact);
                 }
-                SetFlashMessage($"Cập nhật Thông tin liên hệ '{contact.FullName}' thành công.");
+                SetFlashMessage(string.Format("Cập nhật Thông tin liên hệ '{0}' thành công.",contact.FullName));
                 if (contact.SaveList)
                 {
                     return RedirectToAction("Index");

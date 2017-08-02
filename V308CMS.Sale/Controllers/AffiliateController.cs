@@ -5,64 +5,27 @@ using System.Web;
 using System.Web.Mvc;
 using V308CMS.Common;
 using V308CMS.Data;
-using System.IO;
+using V308CMS.Data.Helpers;
 
 namespace V308CMS.Sale.Controllers
 {
-    public class AffiliateController : Controller
+    public class AffiliateController : BaseController
     {
-        #region Repository
-        static V308CMSEntities mEntities;
-        ProductRepository ProductRepos;
-        ImagesRepository ImageRepos;
-       
-        AccountRepository AccountRepos;
-        NewsRepository NewsRepos;
-        TestimonialRepository CommentRepo;
-        CategoryRepository CategoryRepo;
-        private void CreateRepos()
-        {
-            mEntities = new V308CMSEntities();
-            ImageRepos = new ImagesRepository(mEntities);
-
-            ProductRepos = new ProductRepository(mEntities);
-            AccountRepos = new AccountRepository(mEntities);
-            NewsRepos = new NewsRepository(mEntities);
-            CommentRepo = new TestimonialRepository(mEntities);
-            CategoryRepo = new CategoryRepository(mEntities);
-        }
-        private void DisposeRepos()
-        {
-            mEntities.Dispose();
-            ImageRepos.Dispose();
-
-            ProductRepos.Dispose();
-            AccountRepos.Dispose();
-            NewsRepos.Dispose();
-            CommentRepo.Dispose();
-            CategoryRepo.Dispose();
-        }
-        #endregion
-
 
         public ActionResult Home()
         {
             try{
                 CreateRepos();
                 AffiliateHomePage Model = new AffiliateHomePage();
-                Model.VideoCategory = NewsRepos.SearchNewsGroup("affiliate-video");
+                Model.VideoCategory = NewsRepos.SearchNewsGroup("affiliate-video",Data.Helpers.Site.affiliate);
                 if (Model.VideoCategory != null)
                 {
                     Model.Videos = NewsRepos.LayDanhSachTinTheoGroupIdWithPage(5, Model.VideoCategory.ID);
                 }
-                NewsGroups NewsHomeCategory = NewsRepos.SearchNewsGroupByAlias("affiliate-news");
-                if (NewsHomeCategory != null)
-                {
-                    Model.Articles = NewsRepos.LayDanhSachTinTheoGroupIdWithPage(5, NewsHomeCategory.ID);
-                }
+
+                Model.Banners = BannerRepo.GetList(-1,"affiliate",true,3);
                 Model.Testimonial = CommentRepo.GetRandom(4);
 
-                Model.BrandImages = Directory.GetFiles(Server.MapPath("/Content/Images/brand/"), "*.jpg", SearchOption.TopDirectoryOnly);
                 Model.Brands = ProductRepos.getRandomBrands(0, 6);
                 Model.Categorys = CategoryRepo.GetItems(20);
                 return View(Model);
@@ -79,14 +42,13 @@ namespace V308CMS.Sale.Controllers
             
         }
         
-        [AffiliateAuthorize]
         public ActionResult NewsList(string CategoryAlias = "", string PageTitle="")
         {
             try
             {
                 CreateRepos();
                 NewsIndexPageContainer Model = new NewsIndexPageContainer();
-                Model.NewsGroups = NewsRepos.SearchNewsGroupByAlias(CategoryAlias);
+                Model.NewsGroups = NewsRepos.SearchNewsGroupByAlias(CategoryAlias, Site.affiliate);
                 if (Model.NewsGroups != null) {
                     Model.ListNews = NewsRepos.LayDanhSachTinTheoGroupId(ProductHelper.ProductShowLimit, Model.NewsGroups.ID);
                     Model.PageTitle = Model.NewsGroups.Name;
@@ -107,17 +69,71 @@ namespace V308CMS.Sale.Controllers
             }
         }
 
-        private void InsertNewsGroupDefault(string NewsGroupAlias="",NewsGroups GroupParent= null) {
-            if (GroupParent == null) {
-                NewsGroups AffiliateGroup = NewsRepos.SearchNewsGroupByAlias("affiliate-news");
-                if (AffiliateGroup.ID < 1)
-                {
-                    return;
-                }
-                GroupParent = AffiliateGroup;
-            }
+        public ActionResult Articles(string alias = "") {
+            return NewsList(alias);
+        }
 
-            var GroupItem = new NewsGroups() { Link = "", Date = DateTime.Now, Number = 0, Status = true, Parent = GroupParent.ID, Level = "1", Alias = NewsGroupAlias };
+        public ActionResult Videos()
+        {
+            try
+            {
+                CreateRepos();
+                NewsIndexPageContainer Model = new NewsIndexPageContainer();
+                Model.NewsGroups = NewsRepos.SearchNewsGroup("affiliate-video", Data.Helpers.Site.affiliate);
+                if (Model.NewsGroups != null)
+                {
+                    Model.ListNews = NewsRepos.LayDanhSachTinTheoGroupId(ProductHelper.ProductShowLimit, Model.NewsGroups.ID);
+                    Model.PageTitle = Model.NewsGroups.Name;
+                }
+                
+                return View("Videos",Model);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return Content(ex.InnerException.ToString());
+            }
+            finally
+            {
+                DisposeRepos();
+            }
+        }
+
+        public ActionResult Video(int id)
+        {
+
+            try
+            {
+                CreateRepos();
+                var newsItem = NewsRepos.GetById(id);
+                if (newsItem == null)
+                {
+                    return HttpNotFound("Tin này không tồn tại trên hệ thống");
+                }
+                var newsDetailViewModel = new NewsDetailPageContainer
+                {
+                    NewsItem = newsItem,
+                    NextNewsItem = NewsRepos.GetNext(id),
+                };
+
+                return View(newsDetailViewModel);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return Content(ex.InnerException.ToString());
+            }
+            finally
+            {
+                DisposeRepos();
+            }
+        }
+
+
+        private void InsertNewsGroupDefault(string NewsGroupAlias="",NewsGroups GroupParent= null) {
+
+            var GroupItem = new NewsGroups() { Link = "", Date = DateTime.Now, Number = 0, Parent=0,Status = true, Level = "1", Alias = NewsGroupAlias, Site= V308CMS.Data.Helpers.Site.affiliate };
+            
 
             switch (GroupItem.Alias)
             {
@@ -137,13 +153,21 @@ namespace V308CMS.Sale.Controllers
                     GroupItem.Name = "Top Xuất Sắc"; break;
                 case "he-thong":
                     GroupItem.Name = "Hệ Thống"; break;
+                case "affiliate-news":
+                    GroupItem.Name = "Tin tức Affiliate"; break;
             }
-            mEntities.AddToNewsGroups(GroupItem);
-            mEntities.SaveChanges();
+            if (GroupItem.Name.Length > 0 && GroupItem.Alias.Length > 0) {
+                using (var mEntities = new V308CMSEntities()) {
+                    mEntities.AddToNewsGroups(GroupItem);
+                    mEntities.SaveChanges();
 
-            News NewsItem = new News() { Date = DateTime.Now, Order = 1, Status = true, Summary = "", Title = GroupItem.Name + " bài viết mẫu", TypeID = GroupItem.ID, Description = "Nội dung của " + GroupItem.Name };
-            mEntities.AddToNews(NewsItem);
-            mEntities.SaveChanges();
+                    News NewsItem = new News() { Date = DateTime.Now, Order = 1, Status = true, Summary = "", Title = GroupItem.Name + " bài viết mẫu", TypeID = GroupItem.ID, Description = "Nội dung của " + GroupItem.Name };
+                    mEntities.AddToNews(NewsItem);
+                    mEntities.SaveChanges();
+                }
+                
+            }
+            
         }
         
         [AffiliateAuthorize]
@@ -151,12 +175,17 @@ namespace V308CMS.Sale.Controllers
         {
             try
             {
-                CreateRepos();
+                //CreateRepos();
                 NewsDetailPageContainer Model = new NewsDetailPageContainer();
                 Model.NewsItem = NewsRepos.SearchNews(NewsAlias);
                 if (Model.NewsItem ==null || Model.NewsItem.ID < 1)
                 {
-                    NewsGroups AffiliateGroup = NewsRepos.SearchNewsGroupByAlias("affiliate-news");
+                    NewsGroups AffiliateGroup = NewsRepos.SearchNewsGroupByAlias("affiliate-news", Site.affiliate);
+                    if (AffiliateGroup == null)
+                    {
+                        InsertNewsGroupDefault("affiliate-news");
+                        AffiliateGroup = NewsRepos.SearchNewsGroupByAlias("affiliate-news", Site.affiliate);
+                    }
                     string NewsTitle = "";
                     switch (NewsAlias)
                     {
@@ -166,8 +195,11 @@ namespace V308CMS.Sale.Controllers
                             NewsTitle = "News default title "; break;
                     }
                     News NewsItem = new News() { Date = DateTime.Now, Alias = NewsAlias, Order = 1, Status = true, Summary = NewsTitle+" mô tả ngắn", Title = NewsTitle + " bài viết mẫu", TypeID = AffiliateGroup.ID, Description = "Nội dung của " + NewsTitle };
-                    mEntities.AddToNews(NewsItem);
-                    mEntities.SaveChanges();
+                    using (var mEntities = new V308CMSEntities()) {
+                        mEntities.AddToNews(NewsItem);
+                        mEntities.SaveChanges();
+                    }
+                    
                 }
                 Model.PageTitle = PageTitle;
                 return View(Model);
@@ -182,7 +214,31 @@ namespace V308CMS.Sale.Controllers
                 DisposeRepos();
             }
         }
-        
+
+        [AffiliateAuthorize]
+        public ActionResult NewsItem(int id=0)
+        {
+            try
+            {
+                CreateRepos();
+                NewsDetailPageContainer Model = new NewsDetailPageContainer();
+     
+                Model.NewsItem = NewsRepos.GetById(id);
+               
+                Model.PageTitle = Model.NewsItem.Title;
+                return View("News", Model);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return Content(ex.InnerException.ToString());
+            }
+            finally
+            {
+                DisposeRepos();
+            }
+        }
+
         [AffiliateAuthorize]
         public ActionResult NewsTable(string CategoryAlias = "", string PageTitle = "")
         {
@@ -199,8 +255,12 @@ namespace V308CMS.Sale.Controllers
                 else
                 {
                     var GroupItem = new NewsGroups() { Link = "", Date = DateTime.Now, Number = 0, Status = true, Parent = 0, Level = "99", Alias = CategoryAlias };
-                    mEntities.AddToNewsGroups(GroupItem);
-                    mEntities.SaveChanges();
+                    using (var mEntities = new V308CMSEntities())
+                    {
+                        mEntities.AddToNewsGroups(GroupItem);
+                        mEntities.SaveChanges();
+                    }
+                    
 
                     Model.PageTitle = PageTitle;
                 }
@@ -217,6 +277,34 @@ namespace V308CMS.Sale.Controllers
             }
         }
 
-        
+        public ActionResult Article(int id)
+        {
+            
+            try {
+                CreateRepos();
+                var newsItem = NewsRepos.GetById(id);
+                if (newsItem == null)
+                {
+                    return HttpNotFound("Tin này không tồn tại trên hệ thống");
+                }
+                var newsDetailViewModel = new NewsDetailPageContainer
+                {
+                    NewsItem = newsItem,
+                    NextNewsItem = NewsRepos.GetNext(id),
+                };
+
+                return View(newsDetailViewModel);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return Content(ex.InnerException.ToString());
+            }
+            finally
+            {
+                DisposeRepos();
+            }
+        }
+
     }
 }

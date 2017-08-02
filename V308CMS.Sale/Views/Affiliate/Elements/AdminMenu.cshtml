@@ -21,9 +21,9 @@
         <ul>
             <li class="@HtmlAffiliate.MenuActive("link/tao-moi")" ><a href="/link/tao-moi">Tạo Link bán hàng</a></li>
             <li class="@HtmlAffiliate.MenuActive("link")"><a href="/link">Link đã tạo</a></li>
-            <li class="@HtmlAffiliate.MenuActive("baner/tao-moi")" ><a href="/baner/tao-moi">Tạo Banner</a></li>
+            <li class="@HtmlAffiliate.MenuActive("banner/tao-moi")" ><a href="/banner/tao-moi">Tạo Banner</a></li>
             <li class="@HtmlAffiliate.MenuActive("tao-ma-giam-gia")" ><a href="/tao-ma-giam-gia">Tạo Voucher</a></li>
-            <li><a href="javascript:void(0)">Tạo Website riêng <span class="notification-red"></span></a></li>
+            <li class="@HtmlAffiliate.MenuActive("website")"><a href="/website">Tạo Website riêng</a></li>
         </ul>
     </li>
     <li class="noborder">
@@ -31,8 +31,11 @@
         <ul>
             
             <li class="@HtmlAffiliate.MenuActive("order")" ><a href="/order">Báo cáo đơn hàng</a></li>
-            <li ><a href="javascript:void(0)">Kiểm tra mã đơn hàng <span class="notification-red"></span></a></li>
-            <li class="@HtmlAffiliate.MenuActive("order/report")" ><a href="/order/report">Báo cáo Hiệu quả</a></li>
+            @HtmlAffiliate.li_anchor("Kiểm tra mã đơn hàng", "order/search")
+
+            @*<li class="@HtmlAffiliate.MenuActive("order/report")" ><a href="/order/report">Báo cáo Hiệu quả</a></li>*@
+            @HtmlAffiliate.li_anchor("Báo cáo Hiệu quả", "/partner/reportoverview")
+            
             
             <li class="@HtmlAffiliate.MenuActive("link/report")" ><a href="/link/report">Báo cáo click</a></li>
 @*            <li><a href="javascript:void(0)">Top giảm giá</a></li>*@

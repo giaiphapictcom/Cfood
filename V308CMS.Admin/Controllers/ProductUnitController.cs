@@ -40,11 +40,11 @@ namespace V308CMS.Admin.Controllers
                     );
                 if (result == Result.Exists)
                 {
-                    ModelState.AddModelError("", $"Đơn vị tính '{unit.Name}' đã tồn tại trên hệ thống.");
+                    ModelState.AddModelError("", string.Format("Đơn vị tính '{0}' đã tồn tại trên hệ thống.",unit.Name));
                     ViewBag.ListState = DataHelper.ListEnumType<StateEnum>();
                     return View("Create", unit);
                 }
-                SetFlashMessage($"Thêm đơn vị tính '{unit.Name}' thành công.");
+                SetFlashMessage( string.Format("Thêm đơn vị tính '{0}' thành công.",unit.Name) );
                 if (unit.SaveList)
                 {
                     return RedirectToAction("Index");
@@ -95,7 +95,7 @@ namespace V308CMS.Admin.Controllers
                     ViewBag.ListState = DataHelper.ListEnumType<StateEnum>();
                     return View("Edit", unit);
                 }
-                SetFlashMessage($"Cập nhật Đơn vị tính '{unit.Name}' thành công.");
+                SetFlashMessage(string.Format("Cập nhật Đơn vị tính '{0}' thành công.", unit.Name));
                 if (unit.SaveList)
                 {
                     return RedirectToAction("Index");

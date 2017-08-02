@@ -1,8 +1,8 @@
 .group-red .block-title h2 {
-    background-color: #ef5350
+    background-color:#ff0000
 }
 .group-red .title-container {
-    border-bottom: 1px solid #ef5350;
+    border-bottom: 1px solid #ff0000;
 }
 
 .group-red .nav-tabs > li {
@@ -11,17 +11,17 @@
 }
 
 .group-red .nav-tabs > li.active {
-    border: 1px solid #ef5350;
+    border: 1px solid #ff0000;
     border-bottom: 0;
 }
 
 .group-red .nav-tabs > li.active a {
-    color: #ef5350;
+    color: #ff0000;
 }
 
 .group-red .block-title h2 > i {
-    border: 2px solid #ef5350;
-    color: #ef5350;
+    border: 2px solid #ff0000;
+    color: #ff0000;
 }
 
 

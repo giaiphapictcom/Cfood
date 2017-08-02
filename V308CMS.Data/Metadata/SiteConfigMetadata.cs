@@ -2,11 +2,7 @@
 
 namespace V308CMS.Data.Metadata
 {
-    [MetadataType(typeof(SiteConfigMetadata))]
-    public partial class SiteConfig
-    {
-
-    }
+ 
 
     public class SiteConfigMetadata
     {
@@ -18,6 +14,8 @@ namespace V308CMS.Data.Metadata
         public string Content { get; set; }
         [Key]
         public int Id { get; set; }
+
+        public byte Site { get; set; }
 
     }
 }

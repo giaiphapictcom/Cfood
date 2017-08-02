@@ -2,284 +2,291 @@
 @using V308CMS.Helpers.Url
 @model V308CMS.Models.ShoppingCartModels
 <header id="header-content" class="">
-    <div class="header-top">
-        <div class="container">
-            <div class="top">
-                <div class="col-md-6 col-sm-6 col-xs-12 text-left hidden-xs">
-                    <div class="header-top-text">
-                        Hotline: <a class="tel">@ViewBag.Hotline</a>
+<div class="header-top">
+    <div class="container">
+        <div class="top">
+            <div class="col-md-6 col-sm-6 col-xs-12 text-left hidden-xs">
+                <div class="header-top-text">
+                    Hotline: <a class="tel">@ViewBag.Hotline</a>
+                </div>
+
+            </div>
+            <div class="col-md-6 col-sm-12 col-xs-12 text-right">
+                <div class="top-currency">
+                    <span class="text-log">
+                            @if (AuthenticationHelper.IsAuthenticated)
+                            {<span>Chào&nbsp;</span>}
+                            <span>@AuthenticationHelper.AuthenticateName</span> 
+                                <i class="fa fa-caret-down" aria-hidden="true"></i>
+                        </span>
+                    <div class="top-bar-dropdown">
+                        <div class="cusstom-link">
+
+                            <ul class="customer-links">
+                                <li>
+                                    <i class="icon_check_alt" aria-hidden="true"></i>
+                                    <a onclick="@(AuthenticationHelper.IsAuthenticated==false?"loginAndBuy();" :"buyNow();")" title="Thanh toán"><span>Thanh toán</span></a>
+                                </li>
+                                @if (AuthenticationHelper.IsAuthenticated)
+                                {
+                                    <li>
+                                        <a href="@Url.AccountLogoutUrl(Request.Url.ToString())" id="customer_logout_link">Thoát tài khoản</a>
+                                        <a href="#">Tài khoản của tôi</a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li>
+                                        <i class="icon_lock-open" aria-hidden="true"></i>
+                                        <a id="customer_login_link" title="Đăng nhập" onclick="return showPopup('@Url.PopupLoginUrl()');">Đăng nhập</a>
+                                    </li>
+                                    <li>
+                                        <i class="icon_profile" aria-hidden="true"></i>
+                                        <a id="customer_register_link" onclick="return showPopup('@Url.PopupRegisterUrl()');">Đăng ký</a>
+                                    </li>
+                                }
+
+                            </ul>
+
+
+                        </div>
                     </div>
 
                 </div>
-                <div class="col-md-6 col-sm-12 col-xs-12 text-right">
-                    <div class="top-currency">
-                        <span class="text-log"><span>@(AuthenticationHelper.IsAuthenticate ? AuthenticationHelper.CurrentUser : "Tài khoản")</span> <i class="fa fa-caret-down" aria-hidden="true"></i></span>
-                        <div class="top-bar-dropdown">
-                            <div class="cusstom-link">
-                                
-                                <ul class="customer-links">
-                                    <li>
-                                        <i class="icon_check_alt" aria-hidden="true"></i>
-                                        <a href="/checkout"><span>Thanh toán</span></a>
-                                    </li>
-                                    @if (AuthenticationHelper.IsAuthenticate)
-                                    {
-                                        <li>
-                                            <a href="@Url.AccountLogoutUrl()" id="customer_logout_link">Thoát tài khoản</a>
-                                            <a href="/account">Tài khoản của tôi</a>
-                                        </li>
-                                    }
-                                    else
-                                    {
-                                        <li>
-                                            <i class="icon_lock-open" aria-hidden="true"></i>
-                                            <a href="@Url.AccountLoginUrl()" id="customer_login_link">Đăng nhập</a>
-                                        </li>
-                                        <li>
-                                            <i class="icon_profile" aria-hidden="true"></i>
-                                            <a href="@Url.AccounRegisterUrl()" id="customer_register_link">Tạo tài khoản mới</a>
-                                        </li>
-                                    }
-                                   
-                                </ul>
+                @if (AuthenticationHelper.IsAuthenticated)
+                {
+                    <div class="wishlist">
+                        <a href="@Url.MemberWishListIndexUrl()" title="Danh sách sản phẩm yêu thích">Danh sách yêu thích</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="header">
+<div class="header-body">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-4 toggle-menu">
+                <button class="navbar-toggle btn-menu-canvas" data-toggle="offcanvas" data-target="#off-canvas-nav">
+                    <i class="icon_menu"></i>
+                </button>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-4 logo-container">
+                <div class="logo-sticky">
+                    <a href="/"><img src="@ViewBag.ThemesPath/images/logo.png" alt="@ViewBag.SiteName"/></a>
+                </div>
+                <div class="logo">
+
+                    <h1 style="text-align: center;"><a href="/">
+                            <img src="@ViewBag.ThemesPath/images/logoh70.png"
+                                 srcset="@ViewBag.ThemesPath/images/logoh70.png 1x, @ViewBag.ThemesPath/images/logo800.png 2x"
+                                 alt="@ViewBag.SiteName"
+                                 itemprop="logo"></a>
+                    </h1>
+
+                    <h1 style="display: none"><a href="/">@ViewBag.SiteName</a>
+                    </h1>
 
 
-                            </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12 menu-none">
+                <div id="search-top">
+                    <div class="icon-search search-header">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                    </div>
+                    <div class="search-form" style="display: none">
+                        <div class="search-close">
+                            <i class="icon_close"></i>
                         </div>
 
+                        <form action="/tim-kiem.html" method="get" class="input-group search-bar">
+
+                            <input type="hidden" name="type" value="product">
+
+                            <input type="text" name="q" value="" placeholder="Nhập từ khóa tìm kiếm" class="input-group-field" aria-label="Search Site" autocomplete="off">
+                            <span class="input-group-btn">
+                                        <input type="submit" class="btn" value="Tìm">
+                                    </span>
+                        </form>
+
                     </div>
-                    @if (AuthenticationHelper.IsAuthenticate)
+                </div>
+                @*@{ Html.RenderAction("LoadListHotCategoryAysnc", "Async");}*@
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-4 search-right">
+
+                <div id="search-top-sm" class="search-none search-header">
+                    <div class="icon-search">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                    </div>
+                    <div class="search-close">
+                        <i class="icon_close"></i>
+                    </div>
+                    <div class="search-form" style="display: none">
+
+                        <form action="/tim-kiem.html" method="get" class="input-group search-bar">
+
+                            <input type="hidden" name="type" value="product">
+
+                            <input type="text" name="q" value="" placeholder="Tìm kiếm" class="input-group-field" aria-label="Search Site" autocomplete="off">
+                            <span class="input-group-btn">
+                                        <input type="submit" class="btn" value="Search">
+                                    </span>
+                        </form>
+
+                    </div>
+                </div>
+
+                <div class="header-top-right">
+                    @if (Model != null)
                     {
-                        <div class="wishlist">
-                            <a href="@V308CMS.Common.url.WishlistIndexUrl()" title="Danh sách sản phẩm yêu thích">Danh sách yêu thích</a>
+                        <div id="header-top-cart">
+                            <div class="header-cart">
+                                <p class="top-cart">
+                                    <a href="@Url.ViewCartUrl()" id="cartToggle">
+                                        <div class="text-cart-left">
+                                            <span id="text-cart">Giỏ hàng</span>
+                                            <span id="cart-count">@(Model.item_count > 0 ? Model.item_count + " sản phẩm" : "") </span>                                                  
+                                        </div>
+                                        <span class="icon top-icon-cart"><i class="fa fa-shopping-basket" aria-hidden="true"></i></span>
+                                    </a>
+                                </p>
+                                <div id="dropdown-cart">
+                                    <div class="cart-empty" @(Model.item_count == 0 ? "style='display : none'" : "")>
+                                        <p>Chưa có sản phẩm nào!</p>
+                                    </div>
+
+                                    <div class="mini_cart_header">
+                                        <ol class="cart-list">
+                                            @if (Model.items.Count > 0)
+                                            {
+                                                foreach (var item in Model.items)
+                                                {
+                                                    <li class="item" id="cart-item-@item.Id">
+                                                        <a href="#" title="@item.Title" class="product-image">
+                                                            <img src="@item.Image" alt="@item.Title">
+                                                        </a>
+                                                        <div class="product-inner">
+                                                            <a href="javascript:void(0)" title="Xóa sản phẩm @item.Title" class="btn-remove">X</a>
+                                                            <p class="product-name">
+                                                                <a href="@item.Url">@item.Title</a>
+                                                            </p>
+                                                            <div class="cart-collateral">@item.Quanity x <span class="price"><span class="money">@item.Price đ</span></span></div>
+                                                        </div>
+                                                    </li>
+                                                }
+                                            }
+
+                                        </ol>
+                                        <div class="summary">
+
+                                            <p class="total">
+                                                <span class="label" style="color: #000">Tổng tiền:</span>
+                                                <span class="price"><span class="money">@Model.total_price.ToPriceString()</span></span>
+                                            </p>
+                                        </div>
+                                        <div class="actions">
+                                            <div class="view-cart">
+                                                <a href="@Url.ViewCartUrl()" title="Xem giỏ hàng">Xem</a>
+                                            </div>
+                                            <button id="btn-checkout" class="btn" onclick="@(AuthenticationHelper.IsAuthenticated==false?"loginAndBuy();return false;" :"buyNow();return false;")">Thanh Toán</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <!-- End Top Header -->
+                            </div>
                         </div>
                     }
 
-                    @*
-                    <span class="currency-title">Currency: </span>
-                    <select id="currencies">
-                        <option data-currency="EUR" value="EUR">EUR</option>
-                        <option data-currency="USD" selected value="USD">USD</option>
-                    </select>*@
-
                 </div>
             </div>
         </div>
     </div>
-    <div class="header">
-        <div class="header-body">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-4 toggle-menu">
-                        <button class="navbar-toggle btn-menu-canvas" data-toggle="offcanvas" data-target="#off-canvas-nav">
-                            <i class="icon_menu"></i>
-                        </button>
-                    </div>
-                    <div class="col-md-3 col-sm-3 col-xs-4 logo-container">
-                        <div class="logo-sticky">
-                            <a href="/"><img src="@ViewBag.ThemesPath/images/logo.png" alt="@ViewBag.SiteName" /></a>
-                        </div>
-                        <div class="logo">
+</div>
+<div class="modal fade" id="modalPopUp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: 20px; z-index: 99999"></div>
+<div class="header-bottom">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-sm-12 col-xs-12 block-megamenu">
+                <div class="block-megamenu-content">
 
-                            <h1 style="text-align:center;"><a href="/">
-                                <img src="@ViewBag.ThemesPath/images/logoh70.png"
-                                    srcset="@ViewBag.ThemesPath/images/logoh70.png 1x, @ViewBag.ThemesPath/images/logo800.png 2x"
-                                    alt="@ViewBag.SiteName"
-                                    itemprop="logo"></a></h1>
-
-                            <h1 style="display: none"><a href="/">@ViewBag.SiteName</a></h1>
-
-
+                    <div id="menu-vertical" class="block">
+                        <div class="parent-title"><i aria-hidden="true" class="icon_menu"></i><span>Danh mục Sản Phẩm</span></div>
+                        <div id="verticalmenu" class="verticalmenu">
+                            <div class="navbar">
+                                @{ Html.RenderAction("CategoryMenu", "MyShopify");}
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-6 col-sm-6 col-xs-12 menu-none">
-                        <div id="search-top">
-                            <div class="icon-search search-header">
-                                <i class="fa fa-search" aria-hidden="true"></i>
-                            </div>
-                            <div class="search-form" style="display: none">
-                                <div class="search-close">
-                                    <i class="icon_close"></i>
-                                </div>
+                    <script type="text/javascript">
+                        $(function() {
+                            if (navigator.userAgent.match(/Android/i)
+                                || navigator.userAgent.match(/webOS/i)
+                                || navigator.userAgent.match(/iPhone/i)
+                                || navigator.userAgent.match(/iPad/i)
+                                || navigator.userAgent.match(/iPod/i)
+                                || navigator.userAgent.match(/BlackBerry/i)
+                                || navigator.userAgent.match(/Windows Phone/i)) {
+                                if (window.innerWidth <= 800 && window.innerHeight <= 600) {
+                                    $("#verticalmenu").addClass('hide');
+                                    $("#verticalmenu").addStyle('width', '158%');
 
-                                <form action="/tim-kiem.html" method="get" class="input-group search-bar">
-
-                                    <input type="hidden" name="type" value="product">
-
-                                    <input type="text" name="q" value="" placeholder="Tìm kiếm" class="input-group-field" aria-label="Search Site" autocomplete="off">
-                                    <span class="input-group-btn">
-                                        <input type="submit" class="btn" value="Tìm">
-                                    </span>
-                                </form>
-
-                            </div>
-                        </div>
-
-                        @*<div class="header-tag">
-                            <p class="tite-popular">Popular Tags:</p>
-                            <ul>
-                                <li><a href="/collections/all/fashion">Fashion</a></li>
-                                <li><a href="/collections/all/computer">Computer</a></li>
-                                <li><a href="/collections/all/mobile">Mobile</a></li>
-                                <li><a href="/collections/all/smart">Smart</a></li>
-                                <li><a href="/collections/all/furniture">Furniture</a></li>
-                                <li><a href="/collections/all/homeware">Homeware</a></li>
-                                <li><a href="/collections/all/sport">Sport</a></li>
-                            </ul>
-                        </div>*@
-
-                    </div>
-                    <div class="col-md-3 col-sm-3 col-xs-4 search-right">
-
-                        <div id="search-top-sm" class="search-none search-header">
-                            <div class="icon-search">
-                                <i class="fa fa-search" aria-hidden="true"></i>
-                            </div>
-                            <div class="search-close">
-                                <i class="icon_close"></i>
-                            </div>
-                            <div class="search-form" style="display: none">
-
-                                <form action="/tim-kiem.html" method="get" class="input-group search-bar">
-
-                                    <input type="hidden" name="type" value="product">
-
-                                    <input type="text" name="q" value="" placeholder="Tìm kiếm" class="input-group-field" aria-label="Search Site" autocomplete="off">
-                                    <span class="input-group-btn">
-                                        <input type="submit" class="btn" value="Search">
-                                    </span>
-                                </form>
-
-                            </div>
-                        </div>
-
-                        <div class="header-top-right">
-                            @if (Model != null)
-                            {
-                                <div id="header-top-cart">
-                                    <div class="header-cart">
-                                        <p class="top-cart">
-                                            <a href="/cart" id="cartToggle">
-                                                <div class="text-cart-left">
-                                                    <span id="text-cart">Giỏ hàng</span>
-                                                    <span id="cart-count">@Model.item_count sản phẩm</span>
-                                                </div>
-                                                <span class="icon top-icon-cart"><i class="fa fa-shopping-basket" aria-hidden="true"></i></span>
-                                            </a>
-                                        </p>
-                                        <div id="dropdown-cart">
-                                            <div  class="cart-empty" @(Model.item_count ==0? "style='display : none'" :"")>
-                                                <p>Chưa có sản phẩm nào!</p>
-                                            </div>
-                                            
-                                            <div class="mini_cart_header">
-                                                <ol class="cart-list">
-                                                    @if (Model.items.Count > 0)
-                                                    {
-                                                        foreach (var item in Model.items)
-                                                        {
-                                                            <li class="item" id="cart-item-@item.Id">
-                                                                <a href="#" title="@item.Title" class="product-image">
-                                                                    <img src="@item.Image" alt="@item.Title">
-                                                                </a>
-                                                                <div class="product-inner">
-                                                                    <a href="javascript:void(0)" title="Xóa sản phẩm @item.Title" class="btn-remove">X</a>
-                                                                    <p class="product-name">
-                                                                        <a href="@item.Url">@item.Title</a>
-                                                                    </p>
-                                                                    <div class="cart-collateral">@item.Quanity x <span class="price"><span class="money">@item.Price đ</span></span></div>
-                                                                </div>
-                                                            </li>
-                                                        }
-                                                    }
-                                                    
-                                                </ol>
-                                                <div class="summary">
-
-                                                    <p class="total">
-                                                        <span class="label" style="color: #000">Tổng tiền:</span>
-                                                        <span class="price"><span class="money">@Model.total_price đ</span></span>
-                                                    </p>
-                                                </div>
-                                                <div class="actions">
-                                                    <div class="view-cart">
-                                                        <a href="@Url.ViewCartUrl()" title="Xem giỏ hàng">Xem</a>
-                                                    </div>
-                                                    <button class="btn" onclick="window.location = '@Url.CheckoutCartUrl()'">Thanh Toán</button>
-                                                </div>
-
-                                            </div>
-                                        </div>
-
-                                        <!-- End Top Header -->
-                                    </div>
-                                </div>
+                                }
+                                
                             }
-                          
-                        </div>
-                    </div>
+                        });
+                        $("i.icon_menu").click(function(e) {
+                            e.preventDefault();
+                            $("#verticalmenu").toggleClass('hide');
+                        });
+                        $("#verticalmenu .fa").click(function() {
+                            console.log('click');
+                            var $parent = $(this).parent();
+                            $parent.toggleClass('open');
+                            return false;
+                        });
+                    </script>
+
                 </div>
             </div>
-        </div>
-        <div class="header-bottom">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-3 col-sm-12 col-xs-12 block-megamenu">
-                        <div class="block-megamenu-content">
+            <div class="col-md-9 col-sm-9 col-xs-12">
+                <div class="top-menu" id="header-menu">
+                    <div class="menu-top">
+                        <div class="menu-action">
+                            <!--Top Menu -->
 
-                            <div id="menu-vertical" class="block">
-                                <div class="parent-title"><i aria-hidden="true" class="icon_menu"></i><span>Danh mục Sản Phẩm</span></div>
-                                <div id="verticalmenu" class="verticalmenu">
-                                    <div class="navbar">
-                                        @Html.Action("CategoryMenu", "MyShopify")
-                                    </div>
-                                </div>
+                            <div class="megamenu">
+                                @{ Html.RenderAction("Mainmenu", "MyShopify");}
                             </div>
-                            <script type="text/javascript">
-                                $("#verticalmenu .fa").click(function () {
-                                    var $parent = $(this).parent();
-                                    $parent.toggleClass('open');
-                                    return false;
+
+                            <script>
+                                jQuery(window).scroll(function() {
+                                    var scroll = jQuery(window).scrollTop();
+                                    if (scroll > 500) {
+                                        jQuery("#header-content .header").addClass("is-ticky");
+                                    } else {
+                                        jQuery("#header-content .header").removeClass("is-ticky");
+                                    }
+                                });
+                                jQuery(".megamenu .menu-dropdown > i").click(function() {
+                                    if (jQuery(this).next().is(":visible")) {
+                                        jQuery(this).addClass("accordion-show");
+                                    } else {
+                                        jQuery(this).removeClass("accordion-show");
+                                    }
+                                    jQuery(this).next().toggle(400);
                                 });
                             </script>
-
-                        </div>
-                    </div>
-                    <div class="col-md-9 col-sm-9 col-xs-12">
-                        <div class="top-menu" id="header-menu">
-                            <div class="menu-top">
-                                <div class="menu-action">
-                                    <!--Top Menu -->
-
-                                    <div class="megamenu">
-                                        @Html.Action("Mainmenu", "MyShopify")
-                                    </div>
-
-                                    <script>
-                                        jQuery(window).scroll(function () {
-                                            var scroll = jQuery(window).scrollTop();
-                                            if (scroll > 500) {
-                                                jQuery("#header-content .header").addClass("is-ticky");
-                                            } else {
-                                                jQuery("#header-content .header").removeClass("is-ticky");
-                                            }
-                                        });
-                                        jQuery(".megamenu .menu-dropdown > i").click(function () {
-                                            if (jQuery(this).next().is(":visible")) {
-                                                jQuery(this).addClass("accordion-show");
-                                            } else {
-                                                jQuery(this).removeClass("accordion-show");
-                                            }
-                                            jQuery(this).next().toggle(400);
-                                        });
-                                    </script>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
+</div>
+</div>
 </header>

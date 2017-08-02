@@ -1,39 +1,5 @@
-<<<<<<< HEAD
-﻿@using V308CMS.Admin.Helpers.Url
-@model V308CMS.Data.ProductPage
-@{
-    ViewBag.Title = "Nhà Sản Xuất";
-    ViewBag.LinkBack = "<li><a href=" + Url.ProductManufacturerCreateUrl()+">Nhà Sản Xuất</a> </li>";
-    ViewBag.MenuValue = 1;
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-<div>
-    <div>
-        <div id="close" class="mheader">
-            <a href="@Url.ProductManufacturerCreateUrl()" title="Thêm mới">
-                <img src="@Url.CreateNewImageUrl()" title="Thêm mới" />
-            </a>
-        </div>
-        <hr />
-        <div style="width: 100%;">
-            <div class="RadGrid RadGrid_MetroTouch table table-striped table-bordered table-hover dataTable" tabindex="0">
-                @Html.Raw(Model.Html)
-            </div>
-        </div>
-        <div class="wpmn_page_navi">
-            <a href="@Url.ProductManufacturerIndexUrl(new {pPage =Model.BackPage})">Back</a>
-                <span class="current">@Model.Page</span>
-            <a href="@Url.ProductManufacturerIndexUrl(new {pPage =Model.NextPage})">Next</a>
-        </div>
-        <hr />
-    </div>
-    <div style="display: none;" role="status" aria-hidden="true">
-        <div class="area"></div>
-        <div class="form-loading"></div>
-    </div>
-</div>
-=======
 ﻿@using V308CMS.Admin.Helpers
+@using V308CMS.Admin.Helpers
 @using V308CMS.Admin.Helpers.UI
 @using V308CMS.Admin.Helpers.Url
 @using V308CMS.Admin.Models.UI
@@ -57,9 +23,9 @@
                         <th>Ảnh</th>
                         <th>Mô tả</th>
                         <th>Ngày tạo</th>
-                        <th>Trạng thái</th>
                         <th>Thứ tự</th>
-                        <th>Hành động</th>
+                        <th style="text-align: center">Trạng thái</th>                       
+                        <th style="text-align: center">Hành động</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -87,8 +53,8 @@
                             <td>
                                 @manufacturer.Number
                             </td>
-                            <td>@manufacturer.Status.ToStateLabelHtml()</td>
-                            <td style="width: 200px">
+                            <td style="text-align: center">@manufacturer.Status.ToStateLabelHtml()</td>
+                            <td style="width: 200px;text-align: center">
                                 @Html.Partial("UI/_EditButton", new ButtonModels
                                {
                                    Id = string.Format("manufacturer_{0}", manufacturer.ID),
@@ -117,5 +83,3 @@
         });
     });
 </script>
-
->>>>>>> toai-neal

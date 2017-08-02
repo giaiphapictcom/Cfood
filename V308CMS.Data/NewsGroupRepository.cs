@@ -44,17 +44,35 @@ namespace V308CMS.Data
            
         }
 
-        public List<NewsGroups> GetAll(bool state=true)
+        public List<NewsGroups> GetAll(bool state=true,string site = Helpers.Site.home, bool LevelOrder=false)
         {
             using (var entities = new V308CMSEntities())
             {
-                return state ? (from category in entities.NewsGroups
-                                orderby category.Date.Value descending
-                                where category.Status == true
-                                select category).ToList() :
-                   (from category in entities.NewsGroups
-                    orderby category.Date.Value descending
-                    select category).ToList();
+                if (site.Length < 1) {
+                    site = Data.Helpers.Site.home;
+                }
+
+                var query = entities.NewsGroups.Select(c=>c);
+                if (site == Data.Helpers.Site.home) {
+                    query = query.Where(c => c.Site == site || c.Site == "" || c.Site == "1" || c.Site==null);
+                }
+                if (state) {
+                    query = query.Where(c => c.Status == true);
+                }
+                if (LevelOrder) {
+                    query = query.OrderByDescending(c=>c.Level);
+                }
+
+                return query.ToList();
+                //return state ? 
+                //    (from category in entities.NewsGroups
+                //                orderby category.Date.Value descending
+                //                where category.Status == true && category.Site == site
+                //                select category).ToList() :
+                //   (from category in entities.NewsGroups
+                //    where category.Site == site
+                //    orderby category.Number.Value ascending
+                //    select category).ToList();
             }
            
         }
@@ -87,12 +105,12 @@ namespace V308CMS.Data
            
         }
 
-        public string Insert(string name, int parentId,int number, bool state, DateTime date)
+        public string Insert(string site, string name, string alias, int parentId,int number, bool state, DateTime date)
         {
             using (var entities = new V308CMSEntities())
             {
                 var checkCategory = (from item in entities.NewsGroups
-                                     where item.Parent == parentId && item.Name == name
+                                     where item.Parent == parentId && item.Name == name && item.Site == site
                                      select item
                  ).FirstOrDefault();
                 if (checkCategory == null)
@@ -100,6 +118,8 @@ namespace V308CMS.Data
                     var newsCategory = new NewsGroups
                     {
                         Name = name,
+                        Alias = alias,
+                        Site = site,
                         Parent = parentId,
                         Number = number,
                         Status = state,
@@ -136,7 +156,7 @@ namespace V308CMS.Data
             }
           
         }
-        public string Update(int id, string name, int parentId, int number, bool state, DateTime createdDate)
+        public string Update(int id, string name, string alias, int parentId, int number, bool state, DateTime createdDate)
         {
             using (var entities = new V308CMSEntities())
             {
@@ -146,10 +166,12 @@ namespace V308CMS.Data
                 if (newsCategory != null)
                 {
                     newsCategory.Name = name;
+                    newsCategory.Alias = alias;
                     newsCategory.Parent = parentId;
                     newsCategory.Number = number;
                     newsCategory.Status = state;
                     newsCategory.Date = createdDate;
+                    
                     entities.SaveChanges();
                     return "ok";
                 }
@@ -304,10 +326,15 @@ namespace V308CMS.Data
 
                     if (categoryItem.ListNews != null && categoryItem.ListNews.Count > 0)
                     {
-                        foreach (var news in categoryItem.ListNews)
-                        {
-                            entities.News.Remove(news);
-                            entities.SaveChanges();
+                        try {
+                            foreach (var news in categoryItem.ListNews)
+                            {
+                                entities.News.Remove(news);
+                                entities.SaveChanges();
+                            }
+                        }
+                        catch (Exception e) {
+                            Console.Write(e);
                         }
                     }
                     entities.NewsGroups.Remove(categoryItem);
@@ -346,7 +373,7 @@ namespace V308CMS.Data
        
 
        
-        public List<NewsGroups> GetList(int page = 1, int pageSize = 10)
+        public List<NewsGroups> GetList(int page = 1, int pageSize = 10,string site="",byte status = 0)
         {
             using (var entities = new V308CMSEntities())
             {

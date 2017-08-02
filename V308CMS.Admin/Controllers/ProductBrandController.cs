@@ -64,12 +64,12 @@ namespace V308CMS.Admin.Controllers
                     );
                 if (result == Result.Exists)
                 {
-                    ModelState.AddModelError("", $"Tên thương hiệu '{brand.Name}' đã tồn tại trên hệ thống.");
+                    ModelState.AddModelError("", string.Format("Tên thương hiệu '{0}' đã tồn tại trên hệ thống.",brand.Name) );
                     ViewBag.ListState = DataHelper.ListEnumType<StateEnum>();
                     ViewBag.ListCategory = GetListMutilCategoryItem();
                     return View("Create", brand);
                 }
-                SetFlashMessage($"Thêm thương hiệu '{brand.Name}' thành công.");
+                SetFlashMessage( string.Format("Thêm thương hiệu '{0}' thành công.",brand.Name) );
                 if (brand.SaveList)
                 {
                     return RedirectToAction("Index");
@@ -130,7 +130,7 @@ namespace V308CMS.Admin.Controllers
                     ViewBag.ListCategory = GetListMutilCategoryItem();
                     return View("Edit", brand);
                 }
-                SetFlashMessage($"Cập nhật thương hiệu '{brand.Name}' thành công.");
+                SetFlashMessage(string.Format("Cập nhật thương hiệu '{0}' thành công.", brand.Name));
                 if (brand.SaveList)
                 {
                     return RedirectToAction("Index");

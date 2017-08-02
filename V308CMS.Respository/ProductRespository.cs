@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using V308CMS.Common;
 using V308CMS.Data;
+using V308CMS.Data.Helpers;
 using V308CMS.Data.Enum;
 
 namespace V308CMS.Respository
@@ -26,6 +29,7 @@ namespace V308CMS.Respository
         string UpdateCode(int productId, string code);
         string HideAll(string listId);
         string DeleteAll(string listId);
+        int Count();
 
     }
     public class ProductRespository: IBaseRespository<Product>, IProductRespository
@@ -44,15 +48,26 @@ namespace V308CMS.Respository
         {
             using (var entities = new V308CMSEntities())
             {
-                return (from item in entities.Product.
-                    Include("ProductImages").
-                    Include("ProductColor").
-                    Include("ProductSize").
-                    Include("ProductAttribute").
-                    Include("ProductSaleOff")
-                        where item.ID == id
-                        select item
+                var item = (from p in entities.Product.
+                   Include("ProductImages").
+                   Include("ProductColor").
+                   Include("ProductSize").
+                   Include("ProductAttribute").
+                   Include("ProductSaleOff")
+                            where p.ID == id
+                            select p
                 ).FirstOrDefault();
+
+                if (item.Manufacturer != null)
+                {
+                    item.ProductManufacturer = entities.ProductManufacturer.Where(m => m.ID == item.Manufacturer).FirstOrDefault();
+                }
+                else {
+                    item.ProductManufacturer = new ProductManufacturer();
+                }
+                
+                item.ProductType = entities.ProductType.Where(c => c.ID == item.Type).FirstOrDefault();
+                return item;
             }
 
         }
@@ -118,8 +133,14 @@ namespace V308CMS.Respository
                             productImageRespository.Delete(productImage.ID);
                         }                       
                     }
-                    entities.Product.Remove(productDelete);
-                    entities.SaveChanges();
+                    try {
+                        entities.Product.Remove(productDelete);
+                        entities.SaveChanges();
+                    }
+                    catch (System.Data.Entity.Validation.DbEntityValidationException e)
+                    {
+                        Console.Write(e);
+                    }
                     return "ok";
                 }
                 return "not_exists";
@@ -139,35 +160,48 @@ namespace V308CMS.Respository
                ).FirstOrDefault();
                 if (productUpdate != null)
                 {
-                    productUpdate.Name = data.Name;
-                    productUpdate.Type = data.Type;
-                    productUpdate.Summary = data.Summary;
-                    productUpdate.Code = data.Code;
-                    productUpdate.Image = data.Image;
-                    productUpdate.BrandId = data.BrandId;
-                    productUpdate.Country = data.Country;
-                    productUpdate.Store = data.Store;
-                    productUpdate.Manufacturer = data.Manufacturer;
-                    productUpdate.AccountId = data.AccountId;
-                    productUpdate.Number = data.Number;
-                    productUpdate.Unit1 = data.Unit1;
-                    productUpdate.Weight = data.Weight;
-                    productUpdate.Quantity = data.Quantity;
-                    productUpdate.Npp = Convert.ToDouble(data.Npp);
-                    productUpdate.Width = data.Width;
-                    productUpdate.Height = data.Height;
-                    productUpdate.Depth = data.Depth;
-                    productUpdate.Detail = data.Detail;
-                    productUpdate.WarrantyTime = data.WarrantyTime;
-                    productUpdate.ExpireDate = data.ExpireDate;
-                    productUpdate.Title = data.Title;
-                    productUpdate.Keyword = data.Keyword;
-                    productUpdate.Description = data.Description;
-                    productUpdate.Price = data.Price;
-                    productUpdate.Transport1 = data.Transport1;
-                    productUpdate.Transport2 = data.Transport2;
+                    
+                    try {
+                        productUpdate.Name = data.Name;
+                        productUpdate.Type = data.Type;
+                        productUpdate.Summary = data.Summary;
+                        productUpdate.Code = data.Code;
+                        productUpdate.Image = data.Image;
+                        productUpdate.BrandId = data.BrandId;
+                        productUpdate.Country = data.Country;
+                        productUpdate.Store = data.Store;
+                        productUpdate.Manufacturer = data.Manufacturer;
+                        productUpdate.AccountId = data.AccountId;
+                        productUpdate.Number = data.Number;
+                        productUpdate.Unit1 = data.Unit1;
+                        productUpdate.Weight = data.Weight;
+                        productUpdate.Quantity = data.Quantity;
+                        productUpdate.Npp = Convert.ToDouble(data.Npp);
+                        productUpdate.Width = data.Width;
+                        productUpdate.Height = data.Height;
+                        productUpdate.Depth = data.Depth;
+                        productUpdate.Detail = data.Detail;
+                        productUpdate.WarrantyTime = data.WarrantyTime;
+                        productUpdate.ExpireDate = data.ExpireDate;
+                        productUpdate.Title = data.Title;
+                        productUpdate.Keyword = data.Keyword;
+                        productUpdate.Description = data.Description;
+                        productUpdate.Price = data.Price;
+                        productUpdate.Transport1 = data.Transport1;
+                        productUpdate.Transport2 = data.Transport2;
 
-                    entities.SaveChanges();
+                        if (productUpdate.ProductType == null)
+                        {
+                            //item.ProductManufacturer = entities.ProductManufacturer.Where(m => m.ID == item.Manufacturer).FirstOrDefault();
+                            productUpdate.ProductType = entities.ProductType.Where(c => c.ID == productUpdate.Type).FirstOrDefault();
+                        }
+
+                        entities.SaveChanges();
+                    }
+                    catch (System.Data.Entity.Validation.DbEntityValidationException e)
+                    {
+                        Console.Write(e);
+                    }
                     return "ok";
                 }
                 return "not_exists";
@@ -184,6 +218,7 @@ namespace V308CMS.Respository
                           && product.Type == data.Type
                     select product
                     ).FirstOrDefault();
+
                 if (checkProduct == null)
                 {
                     entities.Product.Add(data);
@@ -234,8 +269,19 @@ namespace V308CMS.Respository
                ).FirstOrDefault();
                 if (product != null)
                 {
-                    product.Status = !product.Status;
-                    entities.SaveChanges();
+                    if (product.ProductType == null) {
+                        //item.ProductManufacturer = entities.ProductManufacturer.Where(m => m.ID == item.Manufacturer).FirstOrDefault();
+                        product.ProductType = entities.ProductType.Where(c => c.ID == product.Type).FirstOrDefault();
+                    }
+                    try {
+                        product.Status = !product.Status;
+
+                        entities.SaveChanges();
+                    }
+                    catch (System.Data.Entity.Validation.DbEntityValidationException e) {
+                        Console.Write(e);
+                    }
+                    
                     return "ok";
                 }
                 return "not_exists";
@@ -255,6 +301,10 @@ namespace V308CMS.Respository
                ).FirstOrDefault();
                 if (productOrder != null)
                 {
+                    if (productOrder.ProductType == null)
+                    {
+                        productOrder.ProductType = entities.ProductType.Where(c => c.ID == productOrder.Type).FirstOrDefault();
+                    }
                     productOrder.Number = order;
                     entities.SaveChanges();
                     return productOrder.Name;
@@ -274,6 +324,10 @@ namespace V308CMS.Respository
                ).FirstOrDefault();
                 if (productQuantity != null)
                 {
+                    if (productQuantity.ProductType == null)
+                    {
+                        productQuantity.ProductType = entities.ProductType.Where(c => c.ID == productQuantity.Type).FirstOrDefault();
+                    }
                     productQuantity.Quantity = quantity;
                     entities.SaveChanges();
                     return productQuantity.Name;
@@ -294,6 +348,11 @@ namespace V308CMS.Respository
               ).FirstOrDefault();
                 if (productPrice != null)
                 {
+                    if (productPrice.ProductType == null)
+                    {
+                        productPrice.ProductType = entities.ProductType.Where(c => c.ID == productPrice.Type).FirstOrDefault();
+                    }
+
                     productPrice.Price = price;
                     entities.SaveChanges();
                     return productPrice.Name;
@@ -313,6 +372,11 @@ namespace V308CMS.Respository
                ).FirstOrDefault();
                 if (productNpp != null)
                 {
+                    if (productNpp.ProductType == null)
+                    {
+                        productNpp.ProductType = entities.ProductType.Where(c => c.ID == productNpp.Type).FirstOrDefault();
+                    }
+
                     productNpp.Npp = npp;
                     entities.SaveChanges();
                     return productNpp.Name;
@@ -332,9 +396,20 @@ namespace V308CMS.Respository
                ).FirstOrDefault();
                 if (productCode != null)
                 {
-                    productCode.Code = code;
-                    entities.SaveChanges();
-                    return productCode.Name;
+                    try {
+                        if (productCode.ProductType == null)
+                        {
+                            productCode.ProductType = entities.ProductType.Where(c => c.ID == productCode.Type).FirstOrDefault();
+                        }
+                        productCode.Code = code;
+                        entities.SaveChanges();
+                        return productCode.Name;
+                    }
+                    catch (System.Data.Entity.Validation.DbEntityValidationException e)
+                    {
+                        Console.Write(e);
+                    }
+                    
                 }
                 return "not_exists";
             }
@@ -355,6 +430,10 @@ namespace V308CMS.Respository
                     var productHided = "";
                     foreach (var product in listProductHide)
                     {
+                        if (product.ProductType == null)
+                        {
+                            product.ProductType = entities.ProductType.Where(c => c.ID == product.Type).FirstOrDefault();
+                        }
                         product.Status = false;
                         entities.SaveChanges();
                         productHided = productHided + "," + product.ID;
@@ -393,31 +472,40 @@ namespace V308CMS.Respository
             }
         }
 
+       
+        public int Count()
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return entities.Product.Count();
+            }
+        }
+
         public List<ProductItem> GetList(out int totalRecord, int categoryId = 0, int quantity = 0, int state = 0, int brand = 0, int manufact = 0,
             int provider = 0, string keyword = "", int page = 1, int pageSize = 15)
         {
             using (var entities = new V308CMSEntities())
             {
-                IEnumerable<Product> data = (from product in entities.Product.Include("ProductType")
+                IEnumerable<Product> data = (from product in entities.Product
                                              select product
-                                         ).ToList();
+                                            );
 
                 if (!string.IsNullOrWhiteSpace(keyword))
                 {
                     var keywordLower = Ultility.LocDau(keyword.ToLower());
-                    data = (from product in entities.Product.AsEnumerable()
-                            where Ultility.LocDau(product.Code.ToLower()).Contains(keywordLower) ||
-                                   Ultility.LocDau(product.Name.ToLower()).Contains(keywordLower)
+                    data = (from product in data.AsEnumerable()
+                        where Ultility.LocDau(product.Code.ToLower()).Contains(keywordLower) ||
+                              Ultility.LocDau(product.Name.ToLower()).Contains(keywordLower)
 
-                            select product
-                        ).ToList();
+                        select product
+                        );
                 }
                 if (categoryId > 0)
                 {
                     data = (from product in data
-                            where product.Type == categoryId
-                            select product
-                      ).ToList();
+                        where product.Type == categoryId
+                        select product
+                        );
 
                 }
                 if (quantity > 0)
@@ -425,10 +513,10 @@ namespace V308CMS.Respository
                     data = quantity == 1 ? (from product in data
                                             where product.Quantity > 0
                                             select product
-                     ).ToList() : (from product in data
+                     ) : (from product in data
                                    where product.Quantity == 0
                                    select product
-                     ).ToList();
+                     );
                 }
                 if (state > 0)
                 {
@@ -437,19 +525,19 @@ namespace V308CMS.Respository
                         data = (from product in data
                                 where product.Status == true
                                 select product
-                            ).ToList();
+                            );
                     }
                     if (state == (int)StateFilterEnum.Pending)
                     {
                         data = (from product in data
                                 where product.Status == false
-                                select product).ToList();
+                                select product);
                     }
                     if (state == (int)StateFilterEnum.PriceEmpty)
                     {
                         data = (from product in data
                                 where ((product.Price.HasValue == false) || (product.Price.Value == 0))
-                                select product).ToList();
+                                select product);
                     }
 
                 }
@@ -459,24 +547,24 @@ namespace V308CMS.Respository
                     data = (from product in data
                             where product.Manufacturer == manufact
                             select product
-                     ).ToList();
+                     );
                 }
                 if (brand > 0)
                 {
                     data = (from product in data
                             where product.BrandId == brand
                             select product
-                     ).ToList();
+                     );
                 }
                 if (provider > 0)
                 {
                     data = (from product in data
                             where product.AccountId == provider
                             select product
-                     ).ToList();
+                     );
                 }
                 totalRecord = data.Count();
-                return (from product in data
+                return (from product in data.AsQueryable().Include("ProductType")
                         orderby product.Date.Value descending
                         select new ProductItem
                         {

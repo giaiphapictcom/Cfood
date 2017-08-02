@@ -23,6 +23,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -34,17 +35,30 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\EntityFramework.dll</HintPath>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="adodb, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.2.0-beta1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Data.Services.Client, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="MySql.Data.Entity, Version=6.9.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.Entity.Design" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.IdentityModel" />
+    <Reference Include="System.Net" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.Entity.Design" />
     <Reference Include="System.Xml.Linq" />
@@ -52,14 +66,26 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="WebMatrix.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="WebMatrix.WebData, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminRespository.cs" />
+    <Compile Include="AffilateCodeRespository.cs" />
+    <Compile Include="AffilateUserRespository.cs" />
+    <Compile Include="AffiliateCategoryRespository.cs" />
+    <Compile Include="BannerRespository.cs" />
+    <Compile Include="BoxContentRespository.cs" />
     <Compile Include="ColorRespository.cs" />
     <Compile Include="CountryRespository.cs" />
+    <Compile Include="OrderTransactionRespository.cs" />
+    <Compile Include="ProductOrderRevenueRespository.cs" />
+    <Compile Include="ShippingAddressRespository.cs" />
     <Compile Include="EmailConfigRepository.cs" />
- 
+    <Compile Include="EmailLogRespository.cs" />
     <Compile Include="IBaseRespository.cs" />
     <Compile Include="MenuConfigRespository.cs" />
+    <Compile Include="NewsRespository.cs" />
     <Compile Include="PermissionRespository.cs" />
     <Compile Include="ProductAttributeRespository.cs" />
     <Compile Include="ProductBrandRespository.cs" />
@@ -67,15 +93,25 @@
     <Compile Include="ProductDistributorRespository.cs" />
     <Compile Include="ProductImageRespository.cs" />
     <Compile Include="ProductManufacturerRespository.cs" />
+    <Compile Include="ProductOrderDetailRespository.cs" />
+    <Compile Include="ProductOrderRespository.cs" />
+    <Compile Include="ProductRespository.cs" />
     <Compile Include="ProductSaleOffRespository.cs" />
     <Compile Include="ProductSizeRespository.cs" />
     <Compile Include="ProductStoreRespository.cs" />
+    <Compile Include="ProductTypeRepository.cs" />
     <Compile Include="ProductUnitRespository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegionRespository.cs" />
     <Compile Include="RoleRespository.cs" />
     <Compile Include="SiteConfigRespository.cs" />
     <Compile Include="SizeRespository.cs" />
+    <Compile Include="SupportManRepository.cs" />
     <Compile Include="UserRespository.cs" />
+    <Compile Include="VideoRespository.cs" />
+    <Compile Include="WebsiteRequestRepository.cs" />
+    <Compile Include="VoucherLogRespository.cs" />
+    <Compile Include="VoucherRespository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\V308CMS.Common\V308CMS.Common.csproj">
@@ -86,9 +122,26 @@
       <Project>{4f5528a8-75f6-4b33-b254-2eaa5f916f12}</Project>
       <Name>V308CMS.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\V308CMS.Dependencies\V308CMS.Dependencies.csproj">
+      <Project>{6330e246-9e72-4bf7-835e-971936615b7f}</Project>
+      <Name>V308CMS.Dependencies</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\EntityFramework.dll" />
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

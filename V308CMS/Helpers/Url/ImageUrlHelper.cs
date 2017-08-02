@@ -1,17 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using V308CMS.Common;
 
-namespace V308CMS.Helpers
+namespace V308CMS.Helpers.Url
 {
     public static class ImageUrlHelper
     {
+
+        public static string ToOriginalUrl(this string path)
+        {
+            return $"{ConfigHelper.ResourceDomain}{path}";
+        }
         public static string ToUrl(this string path, int width =0, int height =0)
         {
-            string ImageUploadSource = System.Configuration.ConfigurationManager.AppSettings["ResourceDomain"] ?? String.Empty;
-            if (ImageUploadSource.Length < 1) {
+            string imageUploadSource = System.Configuration.ConfigurationManager.AppSettings["ResourceDomain"] ?? String.Empty;
+            if (imageUploadSource.Length < 1) {
                 return path;
             }
             else if (Uri.IsWellFormedUriString(path, UriKind.Absolute))
@@ -41,7 +42,7 @@ namespace V308CMS.Helpers
             if (imgUploadPath.Length < 1) {
                 imgUploadPath = "noimage.jpg";
             }
-            return ImageUploadSource + "/" + resizeDir + "/" + imgUploadPath;
+            return imageUploadSource + "/" + resizeDir + "/" + imgUploadPath;
             //return ImageHelper.Crop(path, width,height);
             
         }

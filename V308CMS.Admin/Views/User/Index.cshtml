@@ -1,6 +1,9 @@
 ﻿@using V308CMS.Admin.Helpers
 @using V308CMS.Admin.Helpers.Url
 @using V308CMS.Admin.Models.UI
+@using V308CMS.Admin.Helpers.UI
+@using V308CMS.Admin.Models.UI
+
 @model List<V308CMS.Data.Account>
 @{
     ViewBag.Title = "Danh sách khác hàng";
@@ -20,10 +23,10 @@
                     <th>Họ tên</th>
                     <th>Email</th>
                     <th>SĐT</th>
-                    <th>Địa chỉ</th>
+                    <th>Quản Lý</th>
                     <th>Giới tính</th>
                     <th>Trạng thái</th>
-                    <th>Hành động</th>
+                    <th style="text-align: center">Hành động</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -51,7 +54,7 @@
                             @user.Phone
                         </td>
                         <td>
-                            @user.Address.ToTitle()
+                            @user.AffiliateManager()
                         </td>
                         <td>
                             @(user.Gender == false ? "Nam" : "Nữ")
@@ -59,12 +62,12 @@
                         <td style="text-align: center">
                             <form id="frm-change-status" action="@Url.UserChangeStatusUrl()" method="POST">
                                 <input type="hidden" value="@user.ID" name="id" />
-                                <button style="@(user.Status == true ? " background-color:#5cb85c;color:#FFFFFF;padding: 5px;border-radius: 5px" : "background-color:#d9534f;color:#FFFFFF;padding: 5px;border-radius: 5px" )" onclick="return confirm('Bạn chắc chắn muốn thay đổi trạng thái sản phẩm này?')">
+                                <button class="@(user.Status == true ? "btn-active" : "btn-lock" )" onclick="return confirm('Bạn chắc chắn muốn thay đổi trạng thái sản phẩm này?')">
                                     <i class="fa  @(user.Status == true ? " fa-unlock" : "fa-lock" )"></i>
                                 </button>
                             </form>
                         </td>
-                        <td style="width: 200px">
+                        <td style="width: 200px; text-align:center">
                             @Html.Partial("UI/_EditButton", new ButtonModels
                             {
                                 Id = string.Format("user_{0}", user.ID),

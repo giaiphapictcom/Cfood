@@ -6,8 +6,7 @@ using V308CMS.Data.Metadata;
 namespace V308CMS.Data.Models
 {
     [MetadataType(typeof(BannerMetadata))]
-    [Table("banner")]
-   
+    [Table("banner")]   
     public class Banner
     {
         public Banner()
@@ -18,20 +17,25 @@ namespace V308CMS.Data.Models
 
         }
         public int Id { get; set; }
+        public string Site { get; set; }
        
+        
         public string Name { get; set; }
         public string Description { get; set; }
-        public byte Position { get; set; }
+        public int Position { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
        
         public string ImageUrl { get; set; }
+        public string Link { get; set; }
+        public string Target { get; set; }
         public bool Status { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
 
+        public int Order { get; set; }
       
     }
 }

@@ -1,0 +1,51 @@
+﻿@using V308CMS.Admin.Helpers.Url
+@using V308CMS.Admin.Models.UI
+@model V308CMS.Admin.Models.TestimonialModels
+
+@Html.HiddenFor(menu => Model.Id)
+@Html.HiddenFor(menu => Model.Site)
+@Html.AntiForgeryToken()
+<div class="row">
+    @Html.ValidationSummary(true)
+    <div class="col-lg-6">
+       
+        <div class="form-group">
+            @Html.LabelFor(comment => comment.Fullname)
+            @Html.TextBoxFor(comment => comment.Fullname, new {@class = "form-control", placeholder = "Nhập tên"})
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(comment => comment.Mobile)
+            @Html.TextBoxFor(comment => comment.Mobile, new { @class = "form-control"})
+        </div>
+
+        
+
+        <div class="form-group">
+            <label for="@Model.Upload">@(!string.IsNullOrWhiteSpace(Model.Avartar) ? "Chọn ảnh khác" : "Chọn ảnh")</label>
+        </div>
+
+        @Html.Partial("UI/_ImageSelectPreview", new ImageSelectPreviewModels
+        {
+            Id = Model.Id,
+            Name = "Upload",
+            ImageUrl = Model.Avartar,
+            ImageUrlHiddenName = "Avartar",
+            AutoGenerateLabel = false
+        })
+        <div class="form-group">
+            @Html.LabelFor(comment => comment.Content)
+            @Html.TextAreaFor(comment => comment.Content, new {@class = "form-control", placeholder = "Nhập nội dung mô tả"})
+        </div>
+        
+        <div class="form-group">
+            <div class="checkbox">
+                @Html.CheckBoxFor(comment => comment.Status, new {@checked = (Model.Status ? "checked" : "")})
+                @Html.LabelFor(comment => comment.Status)
+            </div>
+        </div>
+        @Html.Partial("UI/_FormAction")
+        
+    </div>
+    
+</div>

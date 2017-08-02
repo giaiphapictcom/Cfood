@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web.Mvc;
@@ -67,6 +65,35 @@ namespace V308CMS.Controllers
                 bmpOut.Dispose();
                 ms.Close();
 
+                return new FileContentResult(bmpBytes, "image/png");
+            }
+        }
+        
+        public ActionResult RegisterCaptcha(string timestamp =null)
+        {
+            var captchaText = GenerateRandomText(length);
+            Session["RegisterCaptcha"] = captchaText;
+
+            var rnd = new Random();
+            var fonts = new[] { "Verdana", "Times New Roman" };
+            float orientationAngle = rnd.Next(0, 359);
+
+            var index0 = rnd.Next(0, fonts.Length);
+            var familyName = fonts[index0];
+
+            using (var bmpOut = new Bitmap(100, height))
+            {
+                var g = Graphics.FromImage(bmpOut);
+                var gradientBrush = new LinearGradientBrush(new Rectangle(0, 0, 100, height),
+                                                            Color.White, Color.White,
+                                                            orientationAngle);
+                g.FillRectangle(gradientBrush, 0, 0, 100, height);              
+                g.DrawString(captchaText, new Font(familyName, 20, FontStyle.Bold), new SolidBrush(Color.Red), 0, 2);
+                var ms = new MemoryStream();
+                bmpOut.Save(ms, ImageFormat.Png);
+                var bmpBytes = ms.GetBuffer();
+                bmpOut.Dispose();
+                ms.Close();
                 return new FileContentResult(bmpBytes, "image/png");
             }
         }

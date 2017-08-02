@@ -11,6 +11,7 @@ namespace V308CMS.Admin.Models
 
         public int UserId { get; set; }
         public string UserName { get; set; }
+        public string Avatar { get; set; }
         public int Role { get; set; }
         public Data.Admin Admin { get; set; }
 
