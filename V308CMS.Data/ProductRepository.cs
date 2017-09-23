@@ -20,11 +20,18 @@ namespace V308CMS.Data
         {
             using (var entities = new V308CMSEntities())
             {
-                var listProduct = (from product in entities.Product
-                    where product.Status == true && product.SaleOff>= saleOff
+                var listProduct = from product in entities.Product
+                                    .Include("ProductAttribute")
+                                    .Include("ProductImages")
+                                    .Include("ProductType")
+                                    .Include("ProductManufacturer")
+                                    .Include("ProductColor")
+                                    .Include("ProductSize")
+                                    .Include("ProductSaleOff")
+                where product.Status == true && product.SaleOff>= saleOff
                                    orderby product.Number, product.Date descending
                                     select product
-                    );
+                    ;
 
                 switch (sort)
                 {
@@ -72,6 +79,7 @@ namespace V308CMS.Data
                         break;
                 }
                 totalRecord = listProduct.Count();
+
                 return listProduct.Skip((page - 1) * pageSize).Take(pageSize).ToList();
 
 
@@ -81,165 +89,174 @@ namespace V308CMS.Data
         public List<Product> GetListByCategoryId(string categoryFilter, string[] listFilter, int sort, out int totalRecord, int page = 1,
             int pageSize = 18)
         {
+            List<Product> items = new List<Product>();
+            totalRecord = 0;
             using (var entities = new V308CMSEntities())
             {
-               
-                var listProduct = string.IsNullOrWhiteSpace(categoryFilter)
-                    ? (from product in entities.Product
-                       where product.Status == true
-                       orderby product.Number, product.Date descending
-                       select product
-                        )
-                    : (
-                        from product in entities.Product
-                        where product.Status == true && categoryFilter.Contains("," + product.Type + ",")
-                        orderby product.Number, product.Date descending
-                        select product
-                        );
 
-                if (listFilter != null && listFilter.Length>0)
-                {
-                    for (var i = 0; i < listFilter.Length; i += 2)
+                try {
+                    var listProduct = string.IsNullOrWhiteSpace(categoryFilter)
+                        ? (from product in entities.Product
+                           where product.Status == true
+                           orderby product.Number, product.Date descending
+                           select product
+                            )
+                        : (
+                            from product in entities.Product
+                            where product.Status == true && categoryFilter.Contains("," + product.Type + ",")
+                            orderby product.Number, product.Date descending
+                            select product
+                            );
+
+                    if (listFilter != null && listFilter.Length > 0)
                     {
-                        var typeFilter = int.Parse(listFilter[i]);
-                        var valueFilter = listFilter[i + 1];                     
-                        switch (typeFilter)
+                        for (var i = 0; i < listFilter.Length; i += 2)
                         {
-                            case (int)FilterEnum.ByBrand:
-                                if (!valueFilter.StartsWith(","))
-                                {
-                                    valueFilter = "," + valueFilter;
-                                }
-                                if (!valueFilter.EndsWith(","))
-                                {
-                                    valueFilter =  valueFilter + ",";
-                                }
-                                listProduct = (from product in listProduct
-                                               where valueFilter.Contains("," + product.BrandId + ",")
-                                               orderby product.Number, product.Date descending
-                                               select product
-                               );
-                                break;
-                            case (int)FilterEnum.ByManufacturer:                                
-                                int manufacturerIdFilter;
-                                int.TryParse(valueFilter, out manufacturerIdFilter);
-                                listProduct = (from product in listProduct
-                                               where product.Manufacturer == manufacturerIdFilter
-                                               orderby product.Number, product.Date descending
-                                               select product
-                                );
-                                break;
-                            case (int)FilterEnum.ByFromPrice:
-                                int fromPriceValue;
-                                int.TryParse(valueFilter, out fromPriceValue);
-                                if (fromPriceValue > 0)
-                                {
+                            var typeFilter = int.Parse(listFilter[i]);
+                            var valueFilter = listFilter[i + 1];
+                            switch (typeFilter)
+                            {
+                                case (int)FilterEnum.ByBrand:
+                                    if (!valueFilter.StartsWith(","))
+                                    {
+                                        valueFilter = "," + valueFilter;
+                                    }
+                                    if (!valueFilter.EndsWith(","))
+                                    {
+                                        valueFilter = valueFilter + ",";
+                                    }
                                     listProduct = (from product in listProduct
-                                                   where product.Price < fromPriceValue
+                                                   where valueFilter.Contains("," + product.BrandId + ",")
                                                    orderby product.Number, product.Date descending
                                                    select product
-                                                   );
-                                }
-                                break;
-                            case (int)FilterEnum.ByToPrice:
-                                int toPriceValue;
-                                int.TryParse(valueFilter, out toPriceValue);
-                                if (toPriceValue > 0)
-                                {
+                                   );
+                                    break;
+                                case (int)FilterEnum.ByManufacturer:
+                                    int manufacturerIdFilter;
+                                    int.TryParse(valueFilter, out manufacturerIdFilter);
                                     listProduct = (from product in listProduct
-                                                   where product.Price > toPriceValue
+                                                   where product.Manufacturer == manufacturerIdFilter
                                                    orderby product.Number, product.Date descending
                                                    select product
-                                                   );
+                                    );
+                                    break;
+                                case (int)FilterEnum.ByFromPrice:
+                                    int fromPriceValue;
+                                    int.TryParse(valueFilter, out fromPriceValue);
+                                    if (fromPriceValue > 0)
+                                    {
+                                        listProduct = (from product in listProduct
+                                                       where product.Price < fromPriceValue
+                                                       orderby product.Number, product.Date descending
+                                                       select product
+                                                       );
+                                    }
+                                    break;
+                                case (int)FilterEnum.ByToPrice:
+                                    int toPriceValue;
+                                    int.TryParse(valueFilter, out toPriceValue);
+                                    if (toPriceValue > 0)
+                                    {
+                                        listProduct = (from product in listProduct
+                                                       where product.Price > toPriceValue
+                                                       orderby product.Number, product.Date descending
+                                                       select product
+                                                       );
 
-                                }
-                                break;
-                            case (int)FilterEnum.ByBetweenPrice:
-                                int fromPrice = 0;
-                                int toPrice = 0;
-                                var listPrice =
-                                    valueFilter.Split(new[] {"-"}, StringSplitOptions.RemoveEmptyEntries)
-                                        .ToArray();
-                                if (listPrice.Length > 0)
-                                    int.TryParse(listPrice[0], out fromPrice);
-                                if (listPrice.Length > 1)
-                                    int.TryParse(listPrice[1], out toPrice);
-                                if (fromPrice < toPrice)
-                                {
-                                    listProduct = (from product in listProduct
-                                                   where product.Price >= fromPrice && product.Price <= toPrice
-                                                   orderby product.Number, product.Date descending
-                                                   select product
-                                                  );
-                                    
-                                }
-                                break;
+                                    }
+                                    break;
+                                case (int)FilterEnum.ByBetweenPrice:
+                                    int fromPrice = 0;
+                                    int toPrice = 0;
+                                    var listPrice =
+                                        valueFilter.Split(new[] { "-" }, StringSplitOptions.RemoveEmptyEntries)
+                                            .ToArray();
+                                    if (listPrice.Length > 0)
+                                        int.TryParse(listPrice[0], out fromPrice);
+                                    if (listPrice.Length > 1)
+                                        int.TryParse(listPrice[1], out toPrice);
+                                    if (fromPrice < toPrice)
+                                    {
+                                        listProduct = (from product in listProduct
+                                                       where product.Price >= fromPrice && product.Price <= toPrice
+                                                       orderby product.Number, product.Date descending
+                                                       select product
+                                                      );
 
+                                    }
+                                    break;
+
+                            }
                         }
                     }
-                }          
-                switch (sort)
-                {
-                    case (int)SortEnum.PriceAsc:
-                        listProduct = (from product in listProduct                                    
-                                       orderby product.Price
-                                       select product
-                        );
-                        break;
-                    case (int)SortEnum.PriceDesc:
-                        listProduct = (from product in listProduct
-                                       orderby product.Number,  product.Price descending 
-                                       select product
-                        );
-                        break;
-                    case (int)SortEnum.NameAsc:
-                        listProduct = (from product in listProduct
-                                       orderby product.Number, product.Name
-                                       select product
-                        );
-                        break;
-                    case (int)SortEnum.NameDesc:
-                        listProduct = (from product in listProduct
-                                       orderby product.Number, product.Name descending 
-                                       select product
-                        );
-                        break;
-                    case (int)SortEnum.DateAsc:
-                        listProduct = (from product in listProduct
-                                       orderby product.Number, product.Date
-                                       select product
-                        );
-                        break;
-                    case (int)SortEnum.DateDesc:
-                        listProduct = (from product in listProduct
-                                       orderby product.Number, product.Date descending 
-                                       select product
-                        );
-                        break;
-                    case (int)SortEnum.BestSelling:
-                        listProduct = (from product in listProduct
-                                       orderby product.Number, product.Buy descending
-                                       select product
-                        );
-                        break;                        
-                }
-                totalRecord = listProduct.Count();
+                    switch (sort)
+                    {
+                        case (int)SortEnum.PriceAsc:
+                            listProduct = (from product in listProduct
+                                           orderby product.Price
+                                           select product
+                            );
+                            break;
+                        case (int)SortEnum.PriceDesc:
+                            listProduct = (from product in listProduct
+                                           orderby product.Number, product.Price descending
+                                           select product
+                            );
+                            break;
+                        case (int)SortEnum.NameAsc:
+                            listProduct = (from product in listProduct
+                                           orderby product.Number, product.Name
+                                           select product
+                            );
+                            break;
+                        case (int)SortEnum.NameDesc:
+                            listProduct = (from product in listProduct
+                                           orderby product.Number, product.Name descending
+                                           select product
+                            );
+                            break;
+                        case (int)SortEnum.DateAsc:
+                            listProduct = (from product in listProduct
+                                           orderby product.Number, product.Date
+                                           select product
+                            );
+                            break;
+                        case (int)SortEnum.DateDesc:
+                            listProduct = (from product in listProduct
+                                           orderby product.Number, product.Date descending
+                                           select product
+                            );
+                            break;
+                        case (int)SortEnum.BestSelling:
+                            listProduct = (from product in listProduct
+                                           orderby product.Number, product.Buy descending
+                                           select product
+                            );
+                            break;
+                    }
+                    totalRecord = listProduct.Count();
 
-                return (from product in listProduct.
-                            Include("ProductImages").
-                            Include("ProductType").
-                            Include("ProductManufacturer").
-                            Include("ProductColor").
-                            Include("ProductSize").
-                            Include("ProductAttribute").
-                            Include("ProductSaleOff")
-                             select product
-                   ).Skip((page-1)*pageSize).Take(pageSize).ToList();
+                    var products = listProduct.Skip((page - 1) * pageSize).Take(pageSize);
+                    items = (from product in products.
+                                Include("ProductImages").
+                                Include("ProductType").
+                                Include("ProductManufacturer").
+                                Include("ProductColor").
+                                Include("ProductSize").
+                                Include("ProductAttribute").
+                                Include("ProductSaleOff")
+                            select product
+                       ).ToList();
+                }
+                catch (Exception e) {
+                    Console.Write(e);
+                }
 
                 //return listProduct.Skip((page-1)*pageSize).Take(pageSize).ToList();
 
 
             }
+            return items;
         }
 
         public async Task<List<Product>> GetListByCategoryWithImagesAsync(int categoryId, int limit)
@@ -1982,6 +1999,17 @@ namespace V308CMS.Data
             {
                 Console.Write(ex);
                 throw;
+            }
+        }
+
+        public Product FindByCode(string code)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+                return (from item in entities.Product
+                        where item.Code == code
+                        select item
+                ).FirstOrDefault();
             }
         }
     }

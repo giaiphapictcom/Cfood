@@ -41,6 +41,7 @@ namespace V308CMS.Data
         #region[Declare variables]
         private int _ID;
         private int _affiliate_id;
+        private int _manage;
         private string _UserName;
         private string _Password;
         private string _FullName;
@@ -77,6 +78,7 @@ namespace V308CMS.Data
         [Key]
         public int ID { get { return _ID; } set { _ID = value; } }
         public int affiliate_id { get { return _affiliate_id; } set { _affiliate_id = value; } }
+        public int manage { get { return _manage; } set { _manage = value; } }
         public string UserName { get { if (String.IsNullOrEmpty(_UserName)) return ""; else return _UserName; } set { _UserName = value; } }
         public string Password { get { if (String.IsNullOrEmpty(_Password)) return ""; else return _Password; } set { _Password = value; } }
         public string FullName { get { if (String.IsNullOrEmpty(_FullName)) return ""; else return _FullName; } set { _FullName = value; } }
@@ -230,6 +232,7 @@ namespace V308CMS.Data
         private DateTime? _Date;
         private bool? _Status;
         private byte? _Type;
+        private string _AffiliateCode;
         #endregion
         #region[Public Properties]
         [Key]
@@ -246,6 +249,7 @@ namespace V308CMS.Data
 
 
         public Byte? Type { get { return Byte.Parse(_Type.ToString()); } set { _Type = value; } }
+        public string affiliate_code { get { if (String.IsNullOrEmpty(_AffiliateCode)) return ""; else return _AffiliateCode; } set { _AffiliateCode = value; } }
         public string Avatar { get; set; }
         [ForeignKey("Role")]
         public Role RoleInfo { get; set; }
@@ -1672,6 +1676,7 @@ namespace V308CMS.Data
         private string _URl;
         private int _Status;
         private DateTime? _Created;
+        private int _Creator;
 
         #endregion
         #region[Public Properties]
@@ -1683,6 +1688,7 @@ namespace V308CMS.Data
         public string url { get { if (String.IsNullOrEmpty(_URl)) return ""; else return _URl; } set { _URl = value; } }
         public int status { get { if ( _Status < 0) return 0; else return _Status; } set { if (_Status != value) { if (_Status < 0) _Status = 0; else _Status = value; } } }
         public DateTime? created { get { if (_Created == null) return new DateTime(); else return _Created; } set { if (_Created != value) { _Created = value; } } }
+        public int creator { get { return _Creator; } set { _Creator = value; } }
         #endregion
 
     }

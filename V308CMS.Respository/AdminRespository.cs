@@ -101,6 +101,7 @@ namespace V308CMS.Respository
                     adminUpdate.Status = data.Status;
                     adminUpdate.Type = data.Type;
                     adminUpdate.Avatar = data.Avatar;
+                    adminUpdate.affiliate_code = data.affiliate_code;
                     entities.SaveChanges();
                     return "ok";
                 }

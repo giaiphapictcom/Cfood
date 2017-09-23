@@ -106,7 +106,7 @@
     </Reference>
     <Reference Include="MySql.Data.Entity.EF6, Version=6.9.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MySql.ConnectorNET.Entity.6.8.3.2\lib\net45\MySql.Data.Entity.EF6.dll</HintPath>
+      <HintPath>..\packages\MySql.Data.Entity.6.9.9\lib\net45\MySql.Data.Entity.EF6.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Web, Version=6.9.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -216,7 +216,6 @@
     <Compile Include="DataAnnotations\UserNameAttribute.cs" />
     <Compile Include="Filters\ProductUpdateViewFilter.cs" />
     <Compile Include="Filters\NewsUpdateViewFilter.cs" />
-    <Compile Include="Filters\VideoUpdateViewFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1467,6 +1466,8 @@
     <Content Include="Content\Plugins\jquery\js\jquery-1.1.1.min.js" />
     <Content Include="Content\Plugins\jquery\js\jquery-2.2.0.min.js" />
     <Content Include="Content\Plugins\jquery\js\jquery-3.1.1.min.js" />
+    <Content Include="Content\Plugins\spzoom\jquery.spzoom.css" />
+    <Content Include="Content\Plugins\spzoom\jquery.spzoom.js" />
     <Content Include="Content\Plugins\tether\css\tether-theme-arrows-dark.css" />
     <Content Include="Content\Plugins\tether\css\tether-theme-arrows-dark.min.css" />
     <Content Include="Content\Plugins\tether\css\tether-theme-arrows.css" />
@@ -2094,6 +2095,8 @@
     <Content Include="Views\themes\myshopify\Async\_BannerBigSaleAsync.cshtml" />
     <Content Include="Views\themes\myshopify\Async\_ListVideoHomeAsync.cshtml" />
     <Content Include="Views\themes\myshopify\Async\_ListVideoRelativedAsync.cshtml" />
+    <Content Include="Views\themes\mamoo\Layout\CartLayout.cshtml" />
+    <Content Include="Views\themes\mamoo\Pages\BigSale.cshtml" />
     <None Include="Views\themes\myshopify\Blocks\ListSubCategory.cshtml" />
     <Content Include="Views\themes\myshopify\Components\CategoryHomeComponent.cshtml" />
     <Content Include="Views\themes\myshopify\Components\ProductComponent.cshtml" />
