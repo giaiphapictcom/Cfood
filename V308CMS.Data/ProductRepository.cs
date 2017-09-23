@@ -1038,10 +1038,10 @@ namespace V308CMS.Data
         {
             using (var entities = new V308CMSEntities())
             {
-                return await (from p in entities.Product
-                        where p.Hot == true
-                        orderby p.ID descending
-                        select p).Take(limit).ToListAsync();
+                return await (from product in entities.Product.Include("ProductImages")
+                        where product.Status == true
+                        orderby product.ID descending
+                        select product).Take(limit).ToListAsync();
             }
         }
 

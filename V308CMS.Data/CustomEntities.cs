@@ -246,11 +246,12 @@ namespace V308CMS.Data
         public int? Role { get { return _Role; } set { _Role = value; } }
         public DateTime? Date { get { if (_Date == null) return new DateTime(); else return _Date; } set { if (_Date != value) { _Date = value; } } }
         public bool? Status { get { if (_Status == null) return false; else return _Status; } set { if (_Status != value) { _Status = value; } } }
-
+        
 
         public Byte? Type { get { return Byte.Parse(_Type.ToString()); } set { _Type = value; } }
         public string affiliate_code { get { if (String.IsNullOrEmpty(_AffiliateCode)) return ""; else return _AffiliateCode; } set { _AffiliateCode = value; } }
         public string Avatar { get; set; }
+        public byte Level { get; set; }
         [ForeignKey("Role")]
         public Role RoleInfo { get; set; }
         #endregion

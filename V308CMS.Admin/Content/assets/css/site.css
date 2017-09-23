@@ -145,3 +145,12 @@ table.text-center, table.text-center td, table.text-center th {
 .table-bordered>thead>tr>th, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>tbody>tr>td, .table-bordered>tfoot>tr>td {
     border: 1px solid #f4f4f4;
 }
+
+#affiliate-codes .affcodeitem {
+    cursor:pointer;
+}
+#affiliate-codes .affcodeitem:hover {
+    color:#23527c;
+    font-weight:bold;
+    background-color: #eee;
+}

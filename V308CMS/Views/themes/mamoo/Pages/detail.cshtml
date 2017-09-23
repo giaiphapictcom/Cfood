@@ -1,5 +1,6 @@
 ﻿@model V308CMS.Data.Product
 @using V308CMS.Common;
+@using V308CMS.Helpers;
 @using V308CMS.Helpers.Url
 @{
     Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
@@ -14,13 +15,25 @@
     <meta property="og:site_name" content="" />
     <meta name="keywords" content="@Model.Name">
     <meta property="og:url" content="@Request.Url.ToString()">
-    <meta property="og:type" content="article" />
+    <meta property="og:type" content="website" />
     
     <meta property="og:title" content="@Model.Name">
     <meta property="og:image" content="@Ultility.ImgUrl(@Model.Image)">
     <meta property="og:description" content="@Model.Summary">
-}
+    <meta property="fb:app_id" content="@ConfigHelper.FacebookAppId" />
+    
 
+}
+<script type="text/javascript">
+        $(function() {
+            $("div.zoom").easyZoom({
+                selector: {
+                    preview: "#preview-zoom",
+                    window: "#window-zoom"
+                }
+            });
+        });
+</script>
 <div class="box-detail box-shadow">
     @if (Model.Hot==true) { 
         <span class="close-ribbon">H<br>O<br>T</span>
@@ -30,16 +43,20 @@
         <div class="row  p-2 pt-4 pb-4">
         
         <div class="col-12 col-md-4">
-            <div class="thumb">
-                <img src="@ImageHelper.ToUrl(@Model.Image,240)" id="product-thumb" class="img-fluid mx-auto d-block" alt="@Model.Name" />
+            <div class="thumb zoom" title="@Model.Name" data-image="@ImageHelper.ToUrl(@Model.Image)" >
+                <img src="@ImageHelper.ToUrl(@Model.Image,240)" id="product-thumb" class="img-fluid mx-auto d-block" alt="@Model.Name"  />
+                <div id="preview-zoom"></div>
             </div>
             <div class="thumb2 mt-2">
                 @Html.Action("ProductDetailSlide", "Block", Model)
             </div>
-
-            
         </div>
         <div class="col-12 col-md-8">
+            <div id="container-zoom">
+                <div id="window-zoom" style="display:none;"></div>
+            </div>
+
+
             <h1>@Model.Name</h1>
             <div class="status">Tình Trạng : <span class="text-blue">còn hàng</span></div>
             @if (Model.Code.Length > 0)

@@ -1,0 +1,37 @@
+﻿@using V308CMS.Common
+@using V308CMS.Data.Enum
+@using V308CMS.Helpers
+@using V308CMS.Helpers.Url
+@using V308CMS.Models
+@model BigSaleViewModels
+@{
+    Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
+}
+
+@section header {
+    <title>Big Sale - @ViewBag.SiteName</title>
+    <meta name="keywords" content="Big sale, hàng giảm giá, hàng khuyến mại, sale off">
+    <meta property="og:url" content="@Request.Url">
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="BigSale">
+}
+
+<div class="box-items box-shadow mt-0">
+    <div class="container">
+        <h4>Big Sale</h4>
+        <div class="row">
+            @if (Model.ListProduct != null && Model.ListProduct.Count > 0)
+            {
+                foreach (var product in Model.ListProduct)
+                {
+                    
+                    @Html.Action("ProductBlockType1_4", "Block", product);
+                }
+            }
+            else {
+                <div class="col-12">Không có sản phẩm nào</div>
+            }
+        </div>
+    </div>
+</div>
+

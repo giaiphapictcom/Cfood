@@ -113,20 +113,7 @@
 
                     </div>
                 </div>
-
-                       @*<div class="header-tag">
-                            <p class="tite-popular">Được tìm nhiều :</p>
-                            <ul>
-                                <li><a href="/collections/all/fashion">Fashion</a></li>
-                                <li><a href="/collections/all/computer">Computer</a></li>
-                                <li><a href="/collections/all/mobile">Mobile</a></li>
-                                <li><a href="/collections/all/smart">Smart</a></li>
-                                <li><a href="/collections/all/furniture">Furniture</a></li>
-                                <li><a href="/collections/all/homeware">Homeware</a></li>
-                                <li><a href="/collections/all/sport">Sport</a></li>
-                            </ul>
-                        </div>*@
-
+                @*@{ Html.RenderAction("LoadListHotCategoryAysnc", "Async");}*@
             </div>
             <div class="col-md-3 col-sm-3 col-xs-4 search-right">
 
@@ -236,7 +223,28 @@
                         </div>
                     </div>
                     <script type="text/javascript">
+                        $(function() {
+                            if (navigator.userAgent.match(/Android/i)
+                                || navigator.userAgent.match(/webOS/i)
+                                || navigator.userAgent.match(/iPhone/i)
+                                || navigator.userAgent.match(/iPad/i)
+                                || navigator.userAgent.match(/iPod/i)
+                                || navigator.userAgent.match(/BlackBerry/i)
+                                || navigator.userAgent.match(/Windows Phone/i)) {
+                                if (window.innerWidth <= 800 && window.innerHeight <= 600) {
+                                    $("#verticalmenu").addClass('hide');
+                                    $("#verticalmenu").addStyle('width', '158%');
+
+                                }
+                                
+                            }
+                        });
+                        $("i.icon_menu").click(function(e) {
+                            e.preventDefault();
+                            $("#verticalmenu").toggleClass('hide');
+                        });
                         $("#verticalmenu .fa").click(function() {
+                            console.log('click');
                             var $parent = $(this).parent();
                             $parent.toggleClass('open');
                             return false;

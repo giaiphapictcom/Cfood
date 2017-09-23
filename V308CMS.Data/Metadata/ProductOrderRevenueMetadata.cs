@@ -7,7 +7,7 @@ namespace V308CMS.Data.Metadata
     {
         [Key]
         public int id { get; set; }
-        public int OrderNo { get; set; }
+       //s public int OrderNo { get; set; }
         public int Affiliate { get; set; }
         public float Amount { get; set; }
         public int Status { get; set; }

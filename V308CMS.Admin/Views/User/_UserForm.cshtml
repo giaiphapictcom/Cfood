@@ -1,6 +1,7 @@
 ﻿@using V308CMS.Admin.Helpers.Url
 @using V308CMS.Admin.Models.UI
 @using V308CMS.Data.Helpers;
+@using V308CMS.Data;
 @model  V308CMS.Admin.Models.UserModels
 @Html.HiddenFor(user => Model.Id)
 @Html.HiddenFor(user => Model.Site)
@@ -13,7 +14,7 @@
             @Html.TextBoxFor(user => Model.Username, new { @class = "form-control", placeholder = "Nhập tên tài khoản" })
             @Html.ValidationMessageFor(user => user.Username)
         </div>
-        @if (Model.Id < 1)
+        @*@if (Model.Id < 1)
         {
             <div class="form-group">
                 <div class="form-group">
@@ -25,12 +26,55 @@
                })
                 </div>
             </div>
-        }
-        @if (Model.Site == Site.affiliate || Model.Id < 1)
+        }*@
+
+        @if (Model.Site == Site.affiliate)
         {
             <div class="form-group">
+                @Html.LabelFor(user => Model.Manage)
+                @{
+                    List<MutilCategoryItem> admins = new List<MutilCategoryItem>();
+                    using (var entities = new V308CMSEntities())
+                    {
+                        var adminSelect = entities.Admin.Where(a => a.Status == true).Select(a => a).ToList();
+                        admins = adminSelect.Select(a => new MutilCategoryItem { Name = a.UserName, Id = a.ID, ParentId = 0 }).ToList();
+
+                    }
+                }
+                @Html.Partial("UI/_MutilDropDownlist", new MutilDropDownlistModels
+           {
+               Name = "Manage",
+               Data = admins,
+               ParentId = 0,
+               PlaceHolder = "Chọn quản lý",
+               SelectedId = Model.Manage
+
+           })
+            </div>
+
+            <div class="form-group">
                 @Html.LabelFor(user => Model.AffiliateCode)
-                @Html.TextBoxFor(user => Model.AffiliateCode, new { @class = "form-control", placeholder = "Nhập mã Affiliate" })
+                <div class="input-group">
+                    @{
+                        string mamagerAffiliateCode = "";
+                        if (Model.Manage > 0)
+                        {
+                            using (var entities = new V308CMSEntities())
+                            {
+                                var admin = entities.Admin.Where(a => a.ID == Model.Manage).FirstOrDefault();
+                                if (admin != null) {
+                                    mamagerAffiliateCode = admin.affiliate_code;
+                                }
+
+                            }
+                        }
+                    }
+
+                    <span class="input-group-addon">@mamagerAffiliateCode</span>
+                    @Html.TextBoxFor(user => Model.AffiliateCode, new { @class = "form-control", placeholder = "Nhập mã Affiliate", @readonly=1 })
+                    <a class="input-group-addon" data-toggle="modal" data-target="#affiliate-codes" href="#">Lựa chọn</a>
+                </div>
+                
             </div>
 
             <div class="form-group">
@@ -131,6 +175,9 @@
                 <a href="@Url.UserIndexUrl()" title="Danh sách Khách hàng" class="btn btn-link">Danh sách</a>
             </div>
 </div>
+
+@Html.Partial("_AffiliateCodeSelect")
+
 <script type="text/javascript">
     $(function() {
         $('.date').datetimepicker({ format: 'MM/DD/YYYY' });

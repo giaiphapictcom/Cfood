@@ -1,14 +1,15 @@
-﻿@model V308CMS.Data.Models.Video
+﻿@using V308CMS.Helpers
+@model V308CMS.Data.Models.Video
 @{
         Layout = "~/Views/themes/" + ViewBag.domain + "/Layout/Layout.cshtml";
  }
 @section header {
     <title>Tin video - @Model.Title</title>
-    <meta property="og:url" content="@Request.Url">
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="@Model.Title">
-    <meta property="og:image" content="https://i.ytimg.com/vi/@Model.Code/hqdefault.jpg">
+    <meta property="og:url" content="@Request.Url"/> 
+    <meta property="og:type" content="website" />  
+    <meta property="og:image" content="https://i.ytimg.com/vi/@Model.Code/hqdefault.jpg"/>
     <meta property="og:description" content="@Model.Title">
+    
 }
 @section BodyId{@Html.Raw("news")}
 @section BodyClass{@Html.Raw("template-blog")}

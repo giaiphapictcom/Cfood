@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using V308CMS.Common;
 using V308CMS.Data;
+using V308CMS.Data.Models;
 using V308CMS.Data.Helpers;
 
 namespace V308CMS.Sale.Controllers
@@ -306,5 +307,62 @@ namespace V308CMS.Sale.Controllers
             }
         }
 
+        public ActionResult Code()
+        {
+            int page = 1;
+            var pagerequest = Request.QueryString["page"];
+            if (pagerequest != null) {
+                page = int.Parse(pagerequest);
+            }
+            if (page < 1) {
+                page = 1;
+            }
+            try
+            {
+                var Model = new AffiliateCodesPage();
+                Model.Page = page;
+                Model.Limit = 42;
+
+                int total = 0;
+                AffiliateCodeRepo.limit = Model.Limit;
+                Model.Items = AffiliateCodeRepo.items(out total, Model.Page);
+
+                Model.Total = total;
+                
+                return View("CodesModal", Model);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return Content(ex.InnerException.ToString());
+            }
+            finally
+            {
+                DisposeRepos();
+            }
+        }
+
+        public JsonResult codes()
+        {
+            var CodeItem = new List<AffilateCode>();
+            //int page = 1;
+            //int psize = 4 * 20;
+            using (var mEntities = new V308CMSEntities())
+            {
+                var used = mEntities.Account.Where(a => a.affiliate_code.Length > 0 && a.affiliate_code != string.Empty && a.affiliate_code != "").ToList();
+                var CodeQuery = mEntities.AffilateCode.Where(c => c.Status == 1);
+                //CodeQuery = CodeQuery.Where(c=> !used.Any(u=>u.affiliate_code == c.Code));
+                CodeQuery = CodeQuery.Where(c => !mEntities.Account.Any(a => a.affiliate_code == c.Code));
+                //!db.Fi.Any(f => f.UserID == user.UserID)
+                CodeItem = CodeQuery.OrderBy(c => c.Code).ToList();
+                //CodeItem = CodeItem.Skip((page - 1) * psize).Take(psize).ToList();
+
+            }
+            return Json(new
+            {
+                code = 1,
+                items = CodeItem
+            }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

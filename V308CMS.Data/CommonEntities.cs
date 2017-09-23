@@ -82,7 +82,7 @@ namespace V308CMS.Data
         bool _IsEnd;
         int _TypeId;
         public NewsGroups NewsGroups { get; set; }
-        public List<News> List { get; set; }        
+        public List<News> List { get; set; }
         public int TypeId
         {
             get { return _TypeId; }
@@ -1327,7 +1327,7 @@ namespace V308CMS.Data
         public List<Product> Products { get; set; }
         public List<Product> BestSeller { get; set; }
         public List<Brand> Brands { get; set; }
-        
+
         public ProductType ProductType { get; set; }
         public string Name { get; set; }
         public int Id { get; set; }
@@ -1406,11 +1406,11 @@ namespace V308CMS.Data
         }
     }
 
-    
-    public class CategoryPage{
-         public List<Product> Products { get; set; }
-         public int ProductTotal { get; set; }
-        
+
+    public class CategoryPage {
+        public List<Product> Products { get; set; }
+        public int ProductTotal { get; set; }
+
     }
     public class ProductCategoryPageBox
     {
@@ -1435,7 +1435,7 @@ namespace V308CMS.Data
         public List<Product> ProductLastest { get; set; }
         public List<ProductImage> Images { get; set; }
 
-        
+
     }
     public class ProductSlideShow
     {
@@ -1474,7 +1474,7 @@ namespace V308CMS.Data
         public List<Product> BestBuyList { get; set; }
         public List<Product> BestSoCheList { get; set; }
         public List<ProductType> ProductTypeList { get; set; }
-        
+
         public List<Product> ProductLastest { get; set; }
 
         public string Name { get; set; }
@@ -1924,7 +1924,7 @@ namespace V308CMS.Data
         {
             _Page = 0;
         }
-       
+
         public int Page
         {
             get
@@ -1943,7 +1943,7 @@ namespace V308CMS.Data
                 _Page = value;
             }
         }
-       
+
     }
 
     /*
@@ -1994,7 +1994,7 @@ namespace V308CMS.Data
         public News PreviousNewsItem { get; set; }
         public List<News> ListNewsMostView { get; set; }
         public string PageTitle { get; set; }
-    
+
     }
     public class NewsIndexPageContainer
     {
@@ -2075,14 +2075,14 @@ namespace V308CMS.Data
 
     }
 
-    
+
 
     /*
      * QuanNH add Affiliate
      */
     public class AffiliateProductPage
     {
-        
+
         public List<Product> Products { get; set; }
         public int ProductTotal { get; set; }
         public int Page { get; set; }
@@ -2132,7 +2132,7 @@ namespace V308CMS.Data
 
     public class OrdersPage
     {
-        
+
         public List<ProductOrder> Items { get; set; }
         public int Total { get; set; }
         public int Page { get; set; }
@@ -2176,6 +2176,63 @@ namespace V308CMS.Data
         public List<SupportMan> Items { get; set; }
         public int Total { get; set; }
         public int Page { get; set; }
+
+    }
+
+    public class AffiliateCodesPage
+    {
+        public AffiliateCodesPage() {
+            Limit = 8;
+            Page = 1;
+            Total = 0;
+        }
+        public List<AffilateCode> Items { get; set; }
+        public int Total { get; set; }
+        public int Page { get; set; }
+        public int Limit { get; set; }
+
+    }
+
+    public class AffiliateDashboard{
+        public AffiliateDashboard() {
+            link_count = 0;
+            click_count = 0;
+            voucher_count = 0;
+            voucher_system_count = 0;
+            banner_count = 0;
+            product_bigsale_count = 0;
+            product_count = 0;
+            order_price_sum = 0;
+            revenue_sum = 0;
+            order_finish_sum = 0;
+            revenue_payed_sum = 0;
+            revenue_inmonth_sum = 0;
+            customer_count = 0;
+            customer_new_count = 0;
+            order_waiting_count = 0;
+            order_delivering_count = 0;
+            order_finish_count = 0;
+            order_cancel_count = 0;
+        }
+        public int link_count { get; set; }
+        public int click_count { get; set; }
+        public int voucher_count { get; set; }
+        public int voucher_system_count { get; set; }
+        public int banner_count { get; set; }
+        public int product_bigsale_count { get; set; }
+        public int product_count { get; set; }
+        public double order_price_sum { get; set; }
+        public double revenue_sum { get; set; }
+        public double order_finish_sum { get; set; }
+        public double revenue_payed_sum { get; set; }
+        public double revenue_inmonth_sum { get; set; }
+        public int customer_count { get; set; }
+        public int customer_new_count { get; set; }
+        public int order_waiting_count { get; set; }
+        public int order_delivering_count { get; set; }
+        public int order_finish_count { get; set; }
+        public int order_cancel_count { get; set; }
+
 
     }
 }

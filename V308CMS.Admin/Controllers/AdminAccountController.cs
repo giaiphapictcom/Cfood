@@ -61,6 +61,7 @@ namespace V308CMS.Admin.Controllers
                     Date = model.Date,
                     Status = model.Status,
                     Type = model.Type,
+                    affiliate_code = model.affiliate_code
                 });
                 if (result == Result.Exists)
                 {
@@ -100,7 +101,8 @@ namespace V308CMS.Admin.Controllers
                 Role =  adminEdit.Role ?? 0,
                 Status = adminEdit.Status??false,
                 Type = adminEdit.Type??0,
-                AvatarUrl = adminEdit.Avatar
+                AvatarUrl = adminEdit.Avatar,
+                affiliate_code = adminEdit.affiliate_code
 
             };
             ViewBag.ListRole = RoleService.GetAll();
@@ -130,6 +132,7 @@ namespace V308CMS.Admin.Controllers
                     Date = model.Date,
                     Status = model.Status,
                     Type = model.Type,
+                    affiliate_code = model.affiliate_code
 
                 });
                 if (result == Result.NotExists)

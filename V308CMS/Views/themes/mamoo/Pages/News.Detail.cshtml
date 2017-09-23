@@ -24,6 +24,7 @@
         <div class="row  p-2 pt-4 pb-4">
             @if (Model.NewsItem != null)
             {
+                
                 <div class="col-12 blog-detail col-main">
                     <header class="page-header">
                         <h1>
@@ -31,7 +32,9 @@
                                 @Model.NewsItem.Title
                             </a>
                         </h1>
-
+                        <div class="col-md-12 col-sm-12 col-xs-12" style="padding-bottom: 15px;">
+                            <div class="fb-like" data-href="@Request.Url" data-layout="standard" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
+                        </div>
 
 
                         <div class="block-images">

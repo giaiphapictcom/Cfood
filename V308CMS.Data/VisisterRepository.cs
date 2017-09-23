@@ -50,7 +50,7 @@ namespace V308CMS.Data
                     var item = entiry.VisisterTbl.Where(v => v.ip_address == visister.ip_address && v.useragent == visister.useragent).FirstOrDefault();
                     if (item == null)
                     {
-                        visister.affiliate_id = affiliate_id;
+                        visister.uid = affiliate_id;
                         entiry.VisisterTbl.Add(visister);
                         entiry.SaveChanges();
                     }
@@ -66,6 +66,70 @@ namespace V308CMS.Data
                 Console.Write(ex);
                 //throw;
             }
+        }
+
+        public bool UpdateUid(int uid=0) {
+            if (uid < 1)
+                return false;
+
+            using (var entiry = new V308CMSEntities())
+            {
+                var visister = CurrentUser();
+                
+                int visister_id = visister.id;
+                var item = entiry.VisisterTbl.Where(v => v.ip_address == visister.ip_address && v.useragent == visister.useragent).FirstOrDefault();
+                if (item != null && item.uid  < 1)
+                {
+                    item.uid = uid;
+                    entiry.SaveChanges();
+                    return true;
+                }
+
+            }
+            return false;
+        }
+
+        public bool UpdateAffiliate(int uid = 0)
+        {
+            if (uid < 1)
+                return false;
+
+            using (var entiry = new V308CMSEntities())
+            {
+                var visister = CurrentUser();
+
+                var item = entiry.VisisterTbl.Where(v => v.ip_address == visister.ip_address && v.useragent == visister.useragent).FirstOrDefault();
+                if (item != null)
+                {
+                    if (item.affiliate_id < 1)
+                    {
+                        item.affiliate_id = uid;
+                        entiry.SaveChanges();
+                    }
+                    else {
+                       
+                        var view_time = entiry.VisisterTimeTbl.Where(t => t.visister_id == visister.id)
+                                    .OrderByDescending(t => t.updated)
+                                    .Select(t => t).FirstOrDefault();
+
+                        DateTime now = DateTime.Now;
+                        if (view_time != null)
+                        {
+                            long time_diff = now.toUnixTime() - view_time.updated.toUnixTime();
+                            if (time_diff > 60*60*24*30)
+                            {
+                                item.affiliate_id = uid;
+                                entiry.SaveChanges();
+                                return true;
+                            }
+                        }
+                    }
+                    
+                    return false;
+                }
+
+            }
+            return false;
         }
 
         public void UpdateViewTime(int visister_id) {
@@ -105,8 +169,11 @@ namespace V308CMS.Data
                     visister_id = visister_id,
                     count = 1
                 };
-                entiry.VisisterTimeTbl.Add(view_new);
-                entiry.SaveChanges();
+                if (view_new.visister_id > 0) {
+                    entiry.VisisterTimeTbl.Add(view_new);
+                    entiry.SaveChanges();
+                }
+                
             }
         }
 

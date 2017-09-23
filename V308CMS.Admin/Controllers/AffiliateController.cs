@@ -6,6 +6,7 @@ using V308CMS.Admin.Models;
 using V308CMS.Data;
 using V308CMS.Admin.Attributes;
 using V308CMS.Common;
+using V308CMS.Data.Models;
 using V308CMS.Data.Enum;
 using V308CMS.Admin.Helpers;
 
@@ -92,5 +93,26 @@ namespace V308CMS.Admin.Controllers
             return Json(new { message = "Cập nhật thành công." });
         }
 
+       
+        public JsonResult codes() {
+            var CodeItem = new List<AffilateCode>();
+            //int page = 1;
+            //int psize = 4 * 20;
+            using (var mEntities = new V308CMSEntities()) {
+                var used = mEntities.Account.Where(a => a.affiliate_code.Length > 0 && a.affiliate_code != string.Empty && a.affiliate_code != "").ToList();
+                var CodeQuery = mEntities.AffilateCode.Where(c => c.Status == 1);
+                //CodeQuery = CodeQuery.Where(c=> !used.Any(u=>u.affiliate_code == c.Code));
+                CodeQuery = CodeQuery.Where(c=>!mEntities.Account.Any(a=>a.affiliate_code==c.Code));
+                //!db.Fi.Any(f => f.UserID == user.UserID)
+                CodeItem = CodeQuery.OrderBy(c => c.Code).ToList();
+                //CodeItem = CodeItem.Skip((page - 1) * psize).Take(psize).ToList();
+
+            }
+            return Json(new
+            {
+                code = 1,
+                items = CodeItem
+            },JsonRequestBehavior.AllowGet);
+        }
     }
 }

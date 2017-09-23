@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using V308CMS.Data;
 using V308CMS.Filters;
-
+using V308CMS.Data.Models;
 
 namespace V308CMS.Controllers
 {
@@ -39,7 +39,25 @@ namespace V308CMS.Controllers
         //[VideoUpdateView]
         public ActionResult Detail(int id)
         {
-            return View("Video", VideoService.Find(id));
+            var site = ViewBag.domain;
+            var video = VideoService.Find(id);
+            if (video == null) {
+                var news = NewsService.Find(id);
+                if (news != null && news.Summary.Length > 0) {
+                    video = new Video() {
+                        Id = news.ID,
+                        Title = news.Title,
+                        Code = news.Summary,
+                        Link = news.Summary,
+                        Order = 1,
+                        Position = 1,
+                        Status = 1
+                    };
+                    
+                }
+                
+            }
+            return View("Video", video);
         }
 
     }

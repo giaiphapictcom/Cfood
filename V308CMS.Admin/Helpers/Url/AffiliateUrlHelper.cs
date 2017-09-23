@@ -46,7 +46,8 @@ namespace V308CMS.Admin.Helpers.Url
             try
             {
                 var uid = value.GetType().GetProperty("ID").GetValue(value, null);
-                VoucherTotal = LinkRepository.LinkCount((int)uid);
+                var LinkRepo = new LinkRepository();
+                VoucherTotal = LinkRepo.LinkCount((int)uid);
             }
             catch (Exception ex)
             {

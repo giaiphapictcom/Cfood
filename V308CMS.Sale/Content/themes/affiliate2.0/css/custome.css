@@ -42,6 +42,9 @@
     .video-play iframe {
         min-height: unset;
     }
+    .btn {
+        margin-bottom: 5px !important;
+    }
 }
 
 .bannerpreview div.img {
@@ -71,26 +74,69 @@
     text-indent: 15px;
 }
 
-
-.dashboard .btn {
+.dashboard {
+    padding: 0 15px;
+}
+.dashboard h2 {
+    background-color: green;
+    color: white;
+    text-align: center;
+    font-size: 13px;
+    padding: 15px;
+    border-radius: 10px;
+}
+.dashboard .dasreport {
     display: block;
-    width: 100%;
     height: auto;
     white-space:normal;
     line-height: 17px;
     padding: 5px;
-    font-size: 11px;
-    
+    font-size: 15px;
+    color: #fff;
+
+    background-color: chocolate;
+    border-radius: 10px;
+    text-align:center;
 }
+.green .dasreport {
+    background-color:green;
+}
+    .dashboard .dasreport h4 {
+         color: #fff;
+         font-size: 12px !important;
+         margin: 15px 0;
+    }
+    .dashboard .dasreport .detail {
+        background-color: #808080;
+        margin: 0 -5px -5px;
+        text-align: left;
+        padding: 5px 15px;
+        display:block;
+        color:#fff;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+    .dashboard .dasreport .detail i {
+        float:right;
+    }
+    .dashboard .dasreport .number {
+        font-size: 35px;
+        font-weight: bold;
+        margin: 15px;
+        display: block;
+        line-height: 40px;
+
+    }
+
 .dashboard [class^="col-"] {
     margin-top: 10px;
 }
 
-.main-content .dashboard h4 {
+/*.main-content .dashboard h4 {
     font-size: 17px;
     margin: 15px auto;
     text-align: center;
-}
+}*/
 
 
 .pd-14 {

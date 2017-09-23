@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Web;
-
+using V308CMS.Data;
 namespace V308CMS.Sale.Models
 {
     public class CouponModel
@@ -24,10 +24,12 @@ namespace V308CMS.Sale.Models
         public int Status { get; set; }
         public DateTime start_date { get; set; }
         public DateTime end_date { get; set; }
-         public int CreatedBy { get; set; }
+        public int CreatedBy { get; set; }
         public DateTime Created { get; set; }
 
         public HttpPostedFileBase File { get; set; }
         public string Image { get; set; }
+
+        public Product product { get; set; }
     }
 }

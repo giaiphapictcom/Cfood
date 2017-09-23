@@ -1,5 +1,10 @@
 ﻿@using V308CMS.Helpers
 @using V308CMS.Helpers.Url
+@using V308CMS.Data
+@{ 
+    var VisisterRepo = new VisisterRepository();
+    VisisterRepo.UpdateView();
+}
 <div class="container">
 	<div class="row">
         <div class="col-2 toggle-menu hidden-md-up">
@@ -12,8 +17,10 @@
 		</div>
         <div class="col-2 hidden-md-up mobileuser" style="font-size: 25px; padding-top: 15px;">
 
-            @if (AuthenticationHelper.IsAuthenticated)
+            @if (AuthenticationHelper.IsAuthenticated && ViewBag.Account != null )
             {
+                VisisterRepo.UpdateUid(ViewBag.Account.UserId);
+
                 <a class="login" href="#"><i class="fa fa-user"></i></a>
             }
             else
@@ -56,7 +63,7 @@
                             <span class="input-group-addon bg-yellow2 border-0"><i class="icon-basket text-white"></i></span>
                             <div class="form-control bg-yellow border-0" id="shopping-cart">
                                 <span class="title">Giỏ Hàng</span>
-                                <span class="money"><i class="value">0</i> @ViewBag.MoneyShort</span>
+                                <span class="money"><i class="value">0</i></span>
                             </div>
                         </a>
                     </div>

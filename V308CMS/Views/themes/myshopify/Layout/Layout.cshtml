@@ -7,23 +7,24 @@
 <!--[if IE 8]><html class="no-js lt-ie9" lang="en"> <![endif]-->
 <!--[if IE 9 ]><html class="ie9 no-js"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!-->
-<html class="no-js">
+<html  xmlns="http://www.w3.org/1999/xhtml" class="no-js" xmlns:fb="http://ogp.me/ns/fb#">
 <!--<![endif]-->
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="shortcut icon" href="@ViewBag.ThemesPath/images/favicon.png" type="image/png">
     <link rel="icon" href="@ViewBag.ThemesPath/images/favicon.png" type="image/png"/>
-    <meta content="website" property="og:type"/>
+    <meta property="og:type" content="website" />
+    <meta property="fb:app_id" content="@ConfigHelper.FacebookAppId" />
     <meta content="@ViewBag.SiteName" property="og:site_name" />
     @RenderSection("header", false)
-    @{Html.RenderAction("Resources", "Block");}
+    @{Html.RenderPartial("Resources");}
 </head>
 <body class="@if (IsSectionDefined("BodyClass")){@RenderSection("BodyClass", false)}else{@Html.Raw("template-product")}" 
       id="@if (IsSectionDefined("BodyId")){@RenderSection("BodyId", false)}else{@Html.Raw("custom-id")}">
 <div class="wrapper ">
     <div id="shopify-section-header" class="shopify-section">
-        @{ Html.RenderAction("Header", "Block");}
+        @{ Html.RenderAction("Header","Block");}
     </div>
     @RenderSection("Breadcrumb", false)
     <main class="container main-content">
@@ -31,9 +32,9 @@
     </main>
 
     @{Html.RenderAction("Footer", "Block");}
-    @{ Html.RenderAction("QuickView", "MyShopify");}
+    @{ Html.RenderPartial("QuickView");}
     @{ Html.RenderAction("OffCanvas", "MyShopify");}
-    @{ Html.RenderAction("WapperPopup", "MyShopify");}
+    @{ Html.RenderPartial("WapperPopup");}
     @if (ConfigHelper.ShowPageProfile) { @MiniProfiler.RenderIncludes() }
 </div>
     @RenderSection("Script",false)

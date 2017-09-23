@@ -24,6 +24,7 @@ namespace V308CMS.Controllers
                         }
                         //VisisterRepo.UpdateView(0,int.Parse(link.created_by.ToString()));
                         LinkRepo.UpdateClick(link.ID);
+                        VisisterRepo.UpdateAffiliate((int)link.created_by);
                         Response.Redirect(link.url);
                     }
                     

@@ -7,10 +7,10 @@
     var currentRouteData = (RouteValueDictionary)ViewBag.CurrentRouteData;
     var listFilter = new List<KeyValuePair<string,string>>()
     {
-         new KeyValuePair<string, string>(string.Format("|{0}_0|{1}_100000|", (int) FilterEnum.ByFromPrice, (int) FilterEnum.ByToPrice),"Dưới 100k") ,
+         new KeyValuePair<string, string>(string.Format("|{0}_0-100000|", (int) FilterEnum.ByBetweenPrice),"Dưới 100k") ,
          new KeyValuePair<string, string>(string.Format("|{0}_100000-300000|", (int) FilterEnum.ByBetweenPrice),"100k - 300k"),
          new KeyValuePair<string, string>(  string.Format("|{0}_500000-1000000|", (int) FilterEnum.ByBetweenPrice),"500k - 1.000k"),
-         new KeyValuePair<string, string>(string.Format("|{0}_1000000|{1}_1000000|", (int) FilterEnum.ByToPrice, (int) FilterEnum.ByToPrice),"500k - 1.000k")       
+         new KeyValuePair<string, string>(string.Format("|{0}_1000000|{1}_1000000|", (int) FilterEnum.ByToPrice, (int) FilterEnum.ByToPrice),"Trên 1.000k")       
         
     };
 }

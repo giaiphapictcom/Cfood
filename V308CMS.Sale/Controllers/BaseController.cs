@@ -4,7 +4,7 @@ using V308CMS.Respository;
 using V308CMS.Common;
 using V308CMS.Social;
 using V308CMS.Sale.Helpers;
-
+using System.Web.Security;
 
 namespace V308CMS.Sale.Controllers
 {
@@ -15,6 +15,7 @@ namespace V308CMS.Sale.Controllers
         static V308CMSEntities mEntities;
         public ProductRepository ProductRepos;
 
+        public AdminRespository AdminRepos;
         public AccountRepository AccountRepos;
         public UserRespository UserRepo;
         public NewsRepository NewsRepos;
@@ -29,6 +30,7 @@ namespace V308CMS.Sale.Controllers
         public NewsGroupRepository NewsGroupRepos;
         public SupportManRepository SupportManRepos;
         public WebsiteRequestRepository WebsiteRequestRepo;
+        public AffilateCodeRespository AffiliateCodeRepo;
 
 
         public int PageSize = 10;
@@ -42,6 +44,7 @@ namespace V308CMS.Sale.Controllers
             ProductRepos.PageSize = PageSize;
             ProductHelper.ProductShowLimit = ProductRepos.PageSize;
 
+            AdminRepos = new AdminRespository();
             AccountRepos = new AccountRepository();
             UserRepo = new UserRespository();
             NewsRepos = new NewsRepository();
@@ -56,9 +59,11 @@ namespace V308CMS.Sale.Controllers
             MenuRepos = new MenuConfigRespository();
             SupportManRepos = new SupportManRepository();
             WebsiteRequestRepo = new WebsiteRequestRepository();
+            AffiliateCodeRepo = new AffilateCodeRespository();
 
             CouponRepo.PageSize = PageSize;
-        }
+
+         }
 
         public void DisposeRepos()
         {

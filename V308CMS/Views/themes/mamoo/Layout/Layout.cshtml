@@ -1,4 +1,5 @@
-﻿<!doctype html>
+﻿@using V308CMS.Helpers;
+<!doctype html>
 <!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
 <!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
 <!--[if IE 8]><html class="no-js lt-ie9" lang="en"> <![endif]-->
@@ -30,8 +31,8 @@
         <div class="main-content">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-3 col-md-12 col-12 mb-4">
-                        <div id="leftcol"> @Html.Action("LeftColumn", "Block")</div>
+                    <div class="col-lg-3 col-md-12 col-12 mb-4" style="position:relative;">
+                        <div id="leftcol" style="position:relative;" > @Html.Action("LeftColumn", "Block")</div>
                     </div>
                     <div class="col-lg-9 col-md-12 col-12 ">
                         @RenderBody()
@@ -57,5 +58,23 @@
                 </div>
             </div>
         </div>
+
+        <div id="fb-root"></div>
+        <script>
+    @{
+        string fb_js = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.9";
+        if (ConfigHelper.FacebookAppId != null)
+        {
+            fb_js += "&appId="+ ConfigHelper.FacebookAppId;
+        }
+    }
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "@Html.Raw(fb_js)";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
+
     </body>
 </html>

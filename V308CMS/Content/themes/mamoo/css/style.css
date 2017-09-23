@@ -299,6 +299,7 @@ footer {
   font-size: 30px;
   font-weight: bold;
   margin-bottom: 25px; }
+
 .box-detail .discount {
   font-size: 15px;
   font-weight: bold;
@@ -318,6 +319,12 @@ footer {
   .box-detail a.like:HOVER i {
     color: #ff0000; }
 
+@media (max-width: 720px) {
+    .box-detail h1,
+    .box-detail .sale {
+        font-size: 13px;
+    }
+}
 .close-ribbon {
   position: absolute;
   top: 0;
@@ -548,7 +555,9 @@ footer {
 
 .slick-slide {
   margin: 0px 5px;
-  cursor: pointer; }
+  cursor: pointer; 
+  padding:0;
+}
 
 .slick-slide img {
   width: 100%;

@@ -150,7 +150,7 @@ namespace V308CMS.Controllers
         {
             if (ModelState.IsValid)
             {               
-                if (register.Captcha != Session["RegisterCaptcha"].ToString())
+                if (Session["RegisterCaptcha"] != null && register.Captcha != Session["RegisterCaptcha"].ToString())
                 {
                     ModelState.AddModelError("Captcha","Mã xác thực không đúng.");
                     register.ResetPasswordValue();

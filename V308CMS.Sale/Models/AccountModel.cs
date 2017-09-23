@@ -11,6 +11,9 @@ namespace V308CMS.Sale.Models
         }
 
         public int id { get; set; }
+        public int Manage { get; set; }
+        public string AdminAffiliateCode { get; set; }
+        public string affiliate_code { get; set; }
         public string username { get; set; }
         public string email { get; set; }
         public string fullname { get; set; }

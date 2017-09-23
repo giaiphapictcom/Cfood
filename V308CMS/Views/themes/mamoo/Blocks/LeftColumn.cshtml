@@ -96,7 +96,7 @@
 }
 
 
-@if (Request.Browser.IsMobileDevice != true && ViewBag.FacebookPage != null & ViewBag.FacebookPage is string) {
+@if (Request.Browser.IsMobileDevice != true && ViewBag.FacebookPage != null && ViewBag.FacebookPage is string && ViewBag.FacebookPage.Length > 0) {
     <div class="box-items box-shadow hidden-md-down">
         <div class="item-type-1">
             @Html.Raw("<iframe src=\"http://www.facebook.com/plugins/likebox.php?profile=1&width=300&height=170&connections=10&stream=true&header=true&id=" + ViewBag.FacebookPage + "\" scrolling='no' frameborder='0' allowtransparency='true' style='border: none; overflow: hidden; width: 100%; height: 150px' ></iframe>")

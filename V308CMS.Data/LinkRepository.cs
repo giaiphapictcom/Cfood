@@ -86,27 +86,16 @@ namespace V308CMS.Data
         {
             List<AffiliateLink> mList = null;
 
-            //try
-            //{
             var links = entities.AffiliateLink.OrderBy(l => l.ID).Select(l => l);
             links = links.Where(l => l.created_by == Account);
             itemTotal = links.Count();
             if (limit > 0)
             {
-                    
                 mList = links.Skip((pcurrent - 1) * PageSize).Take(PageSize).ToList();
             }
             else {
                 mList = links.ToList();
             }
-
-                
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.Write(ex);
-            //    throw;
-            //}
             return mList;
         }
 
@@ -126,7 +115,7 @@ namespace V308CMS.Data
             }
         }
 
-        public static int LinkCount(int uid = 0) {
+        public int LinkCount(int uid = 0) {
             int count = 0;
             using (var entities = new V308CMSEntities())
             {
@@ -178,6 +167,28 @@ namespace V308CMS.Data
                 entiry.AffilateLinkClickTbl.Add(click_new);
                 entiry.SaveChanges();
             }
+        }
+
+        public int ClickCount(int uid = 0)
+        {
+            int count = 0;
+            using (var entities = new V308CMSEntities())
+            {
+                var links = entities.AffiliateLink.Where(l => l.created_by == uid).ToList();
+                if (links.Count() > 0) {
+                    foreach (var l in links)
+                    {
+                        var clicks = entities.AffilateLinkClickTbl.Where(c => c.link_id == l.ID).ToList();
+                        if (clicks.Count() > 0)
+                        {
+                            foreach (var c in clicks) {
+                                count += c.count;
+                            }
+                        }
+                    }
+                }
+            }
+            return count;
         }
     }
 }

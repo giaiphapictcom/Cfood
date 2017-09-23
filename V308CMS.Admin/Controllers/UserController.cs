@@ -59,7 +59,9 @@ namespace V308CMS.Admin.Controllers
                         ? user.Avatar.Upload()
                         : user.AvatarUrl,
 
-                    facebook_page = user.FacebookPage
+                    facebook_page = user.FacebookPage,
+                    affiliate_code = user.AffiliateCode,
+                    manage = user.Manage
                 };
                 newAccount.Password = EncryptionMD5.ToMd5( string.Format("{0}|{1 }",user.Password,newAccount.Salt) );
                 newAccount.Address = user.Address;
@@ -119,7 +121,9 @@ namespace V308CMS.Admin.Controllers
                 AvatarUrl = user.Avatar,
                 Site = user.Site,
                 FacebookPage = user.facebook_page,
-                AffiliateID = user.affiliate_id
+                AffiliateID = user.affiliate_id,
+                Manage = user.manage,
+                AffiliateCode = user.affiliate_code
 
             };
 
@@ -137,7 +141,6 @@ namespace V308CMS.Admin.Controllers
                 {
                     ID = user.Id,
                     Email = user.Email,
-                    affiliate_code = user.AffiliateCode,
                     UserName = user.Username,
                     Phone = user.Phone,
                     FullName = user.FullName,
@@ -150,7 +153,9 @@ namespace V308CMS.Admin.Controllers
                     Site = user.Site,
                     facebook_page = user.FacebookPage,
                     affiliate_id = user.AffiliateID,
-                    Status = user.Status
+                    Status = user.Status,
+                    affiliate_code = user.AffiliateCode,
+                    manage = user.Manage
 
                 };
                 DateTime birthDayValue;

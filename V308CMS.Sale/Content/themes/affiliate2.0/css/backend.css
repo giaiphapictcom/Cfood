@@ -169,3 +169,17 @@ img.w50 {
     box-shadow: 0 6px 12px rgba(0,0,0,0.175);
     background-clip: padding-box;
 }
+
+.modal-header h4 {
+    margin:0;
+}
+#affiliate-codes .modal-body .affcodeitem {
+    font-size: 20px;
+    cursor:pointer;
+}
+
+#affiliate-codes .modal-body .affcodeitem:hover {
+    background-color:#fd393d;
+    color:#fff;
+
+}

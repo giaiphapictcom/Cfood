@@ -35,6 +35,10 @@
             @Html.ValidationMessageFor(user => user.UserName)
         </div>
         <div class="form-group">
+            @Html.LabelFor(admin => admin.affiliate_code)
+            @Html.TextBoxFor(admin => admin.affiliate_code, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
             <label for="@Model.AvatarUrl">@(Model.Id > 0 ? "Ảnh đại diện hiện tại" : "Ảnh đại diện")</label>
         </div>
 

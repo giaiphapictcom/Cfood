@@ -19,7 +19,8 @@ namespace V308CMS.Helpers
 
         public CustomPrincipal()
         {
-
+            UserId = 0;
+            UserName = "";
         }
         public IIdentity Identity { get; }
         public int UserId { get; set; }

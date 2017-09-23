@@ -18,6 +18,10 @@ namespace V308CMS.Admin.Models
         public int AffiliateID { get; set; }
         [Display(Name = "Loại tài khoản")]
         public string Site { get; set; }
+
+        [Display(Name = "Manage")]
+        public int Manage { get; set; }
+
         [Display(Name = "Affiliate ID")]
         public string AffiliateCode { get; set; }
         [Display(Name = "Facebook Page ID")]

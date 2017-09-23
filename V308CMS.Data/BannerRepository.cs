@@ -91,7 +91,7 @@ namespace V308CMS.Data
             }
         }
 
-        public AffiliateBannerPage GetItemsPage(int PageCurrent = 0)
+        public AffiliateBannerPage GetItemsPage(int PageCurrent = 0,int uid=0)
         {
             AffiliateBannerPage ModelPage = new AffiliateBannerPage();
             using (var entities = new V308CMSEntities())
@@ -99,6 +99,7 @@ namespace V308CMS.Data
                 try
                 {
                     var items = from p in entities.AffiliateBanner
+                                where p.creator == uid
                                 orderby p.ID descending
                                 select p;
 

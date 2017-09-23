@@ -1,0 +1,37 @@
+﻿<!-- Modal -->
+<div id="affiliate-codes" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Danh sách Mã Affiliate</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script type="text/javascript">
+    $("#affiliate-codes").on("show.bs.modal", function (e) {
+        var contentColumn = $("#affiliate-codes .modal-body .row");
+        $.getJSON("/affiliate/codes", function (data) {
+            $.each(data.items, function (key, val) {
+                $("<div/>", {
+                    "class": "col-md-2 text-center affcodeitem",
+                    "tagetid":val.Id,
+                    html: val.Code
+                }).appendTo(contentColumn);
+            });
+        }).done(function () {
+            $(".affcodeitem").click(function () {
+                $("input[type=text][name=AffiliateCode]").val($(this).html());
+                $('#affiliate-codes').modal('hide');
+            });
+        });
+    });
+</script>

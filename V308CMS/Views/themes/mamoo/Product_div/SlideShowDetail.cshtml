@@ -1,29 +1,38 @@
-﻿@model V308CMS.Data.ProductSlideShow
+﻿@using V308CMS.Common;
+@using V308CMS.Helpers.Url
+@model V308CMS.Data.ProductSlideShow
 @if (Model.Images != null && Model.Images.Count() > 0)
 {
-    Model.Images = Model.Images.Take(3).ToList();
-        <div class="regular slider row" style="margin-left:-1rem;">
+    //Model.Images = Model.Images.Take(3).ToList();
+        <div class="regular slider row" data-slick='{"slidesToShow": 3, "slidesToScroll": 3}' >
               @foreach (V308CMS.Data.ProductImage img in Model.Images)
               {
                 <div class="col-4" >
-                    <img  style="width:70px;" class="img-responsive"  src="@V308CMS.Common.ImageHelper.ToUrl(img.Name,70)" srcbig="@V308CMS.Common.ImageHelper.ToUrl(img.Name,240)"/>
+                    <img class="img-responsive"  src="@ImageHelper.ToUrl(img.Name,70)" srcbig="@ImageHelper.ToUrl(img.Name,240)" data-image="@ImageHelper.ToUrl(@img.Name)"/>
                 </div>
               }
         </div>
 
  <script type="text/javascript">
      $(document).on('ready', function () {
-         alert("slide");
+         
       $(".regular").slick({
           infinite: true,
           autoplay: true,
-          autoplaySpeed: 2000,
-            slidesToShow: 3,
+          autoplaySpeed: 5000,
             slidesToScroll: 1
       });
         
       jQuery(".regular img").click(function () {
           jQuery("#product-thumb").attr("src", jQuery(this).attr("srcbig"));
+          $("#product-thumb").parents(".zoom").attr("data-image", jQuery(this).attr("data-image"));
+
+          $("div.zoom").easyZoom({
+              selector: {
+                  preview: "#preview-zoom",
+                  window: "#window-zoom"
+              }
+          });
       });
       
       

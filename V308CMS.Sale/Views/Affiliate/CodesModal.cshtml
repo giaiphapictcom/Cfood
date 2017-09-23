@@ -1,0 +1,70 @@
+﻿@using V308CMS.Data.Models.UI;
+@model V308CMS.Data.AffiliateCodesPage
+<div id="affiliate-codes" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Danh sách Mã Affiliate</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    @if (Model.Items.Count > 0) {
+                        foreach (var c in Model.Items) {
+                            <div class="col-md-2 text-center affcodeitem" tagetid="@c.Id" >@c.Code</div>
+                        }
+                    }
+                </div>
+                <div class="row" style="margin-top:10px;">
+                    <div class="col-md-12 text-center">
+                        <nav aria-label="navigation example">
+                            @Html.Partial("UI/pagination", new Pagination { Page = Model.Page, Total = Model.Total, PageItemLimit = Model.Limit });
+                        </nav>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script type="text/javascript">
+    var codesView = {
+        action: function () {
+            jQuery(".page-link").click(function () {
+                var page = $(this).attr("p");
+
+                if (page.length > 0) {
+                    codesView.load(page);
+                }
+            });
+            codesView.select();
+        },
+        load: function (page) {
+            $.ajax({
+                url: "/affiliate/code",
+                data: { "page": page },
+                success: function (oData) {
+                    $('#affiliate-codes .modal-body').html($(oData).find(".modal-body").html())
+                    codesView.action();
+                },
+                dataType: 'html'
+            });
+        },
+        select: function () {
+            $(".affcodeitem").click(function () {
+                var input = $("input[type=text][name=AffiliateCode]");
+                if (input.length < 1) {
+                    input = $("input[type=text][name=affiliate_code]");
+                }
+                input.val($(this).html());
+
+                $('#affiliate-codes').modal('hide');
+            });
+        }
+    };
+    codesView.action();
+</script>

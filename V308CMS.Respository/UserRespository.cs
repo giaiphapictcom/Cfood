@@ -85,6 +85,7 @@ namespace V308CMS.Respository
                     userUpdate.affiliate_code = account.affiliate_code;
                     userUpdate.facebook_page = account.facebook_page;
                     userUpdate.affiliate_id = account.affiliate_id;
+                    userUpdate.manage = account.manage;
                     entities.SaveChanges();
                     return Data.Helpers.Result.Ok;
                 }
@@ -143,7 +144,7 @@ namespace V308CMS.Respository
                     items = items.Where(a => a.Site.Equals(site.Trim()));
                 }
                 else {
-                    items = items.Where(a => a.Site == "home" || a.Site =="" || a.Site == null );
+                    items = items.Where(a => a.Site == "home" || a.Site =="" || a.Site == string.Empty );
                 }
 
 

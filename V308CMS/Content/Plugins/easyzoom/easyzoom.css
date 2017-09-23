@@ -1,0 +1,24 @@
+#window-zoom {
+width: 100%;
+height: 260px;
+border: 2px solid #36393D;
+background-color: #FFFFFF;
+position: absolute;
+overflow: hidden;
+}
+#window-zoom img {
+position: relative;
+}
+#container-zoom {
+position: relative;
+left: 0;
+top: 0;
+z-index:99;
+}
+#preview-zoom {
+	position: absolute;
+	border: 1px solid #4C91C0;
+	background-color: rgba(76,145,192,0.5);
+	display: none;
+	z-index: 999;
+}

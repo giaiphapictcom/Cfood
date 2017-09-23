@@ -152,13 +152,20 @@ namespace V308CMS.Controllers
             SiteConfigRepo = new Data.SiteConfigRespository();
             SubscribeRepo = new SubscribeRepository();
             //LoadSiteConfig();
-
-            VisisterRepo = new VisisterRepository();
             LinkRepo = new LinkRepository();
-            VisisterRepo.UpdateView();
+            VisisterRepo = new VisisterRepository();
+
 
             FacebookService = new FacebookService(ConfigHelper.FacebookAppId,ConfigHelper.FacebookAppSecret);
             LoadSiteConfig();
+
+            if (HttpContext != null && HttpContext.User.Identity.IsAuthenticated == true && User != null)
+            {
+                //lay thong tin chi tiet user
+                ViewBag.Account = AccountService.LayTinTheoId(System.Int32.Parse(User.UserId.ToString()));
+                ViewBag.IsAuthenticated = true;
+            }
+
 
         }
         public VideoRespository VideoService { get; set; }

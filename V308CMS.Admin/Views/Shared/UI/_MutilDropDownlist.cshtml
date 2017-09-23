@@ -10,11 +10,12 @@
 {
 
     <select class='@cssClass select-2' name='@name' id='@name' placeholder='@placeHolder'>
+        @{ string selectAll = placeHolder.Length > 0 ? placeHolder : "Tất cả các loại";}
         @if (selected > 0){
-            <option value='0' selected>Tất cả các loại</option>
+            <option value='0' selected>@selectAll</option>
         }
         else{
-            <option value='0'>Tất cả các loại</option>
+            <option value='0'>@selectAll</option>
         }
         @InternalMutilDropDownlist(data, selected)
     </select>
@@ -47,5 +48,5 @@ if (data != null && data.Count > 0)
     }
 }
 }
-@MutilDropDownlist(Model.Name, Model.Data, Model.ParentId,Model.PlaceHolder,Model.CssClass)
+@MutilDropDownlist(Model.Name, Model.Data, Model.SelectedId,Model.PlaceHolder,Model.CssClass)
 

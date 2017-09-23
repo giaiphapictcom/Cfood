@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using V308CMS.Data;
 using V308CMS.Data.Enum;
 using V308CMS.Data.Models;
+using System;
 
 namespace V308CMS.Respository
 {
@@ -44,6 +45,35 @@ namespace V308CMS.Respository
             {
                 return entities.Video.FirstOrDefault(video => video.Id == id);
             }
+        }
+
+        public string Insert(Video data)
+        {
+            using (var entities = new V308CMSEntities())
+            {
+
+                try {
+                    var item = entities.Video.Where(v=> v.Link.ToLower().Equals(data.Link.ToLower())).FirstOrDefault();
+                    if (item == null)
+                    {
+
+                        entities.Video.Add(data);
+                        entities.SaveChanges();
+
+                        return Data.Helpers.Result.Ok;
+                    }
+                    return Data.Helpers.Result.Exists;
+                }
+
+                catch (System.Data.Entity.Validation.DbEntityValidationException ex)
+                {
+                    Console.Write(ex);
+                }
+
+                return Data.Helpers.Result.NotOk;
+            }
+
+
         }
 
         public async Task<List<Video>> GetListRelatived(int id, int limit = 10)

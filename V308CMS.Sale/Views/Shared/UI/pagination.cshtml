@@ -1,0 +1,82 @@
+﻿@using V308CMS.Common.UI
+@using V308CMS.Data.Models.UI
+@model Pagination
+
+@{
+    //Model.Page = 15;
+
+    int limit = Model.PageItemLimit;
+    int TotalPage = (int)Model.Total / limit;
+    if (TotalPage * limit < Model.Total) {
+        TotalPage++;
+    }
+
+    int start = 1;
+    int end = TotalPage;
+
+    if (Model.Page > 3) {
+        start = Model.Page - 2;
+    }
+    if (start < end - 2) {
+        end = Model.Page + 2;
+    }
+    if (end < 5) {
+        end = 5;
+    }
+    if (end > TotalPage) {
+        end = TotalPage;
+    }
+
+}
+
+<ul class="pagination">
+    @if (Model.Page > 1)
+    {
+        <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous" p="@(Model.Page-1)">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Trang trước</span>
+            </a>
+        </li>
+        if (start > 1)
+        {
+            <li class="page-item"><span class="page-link" href="#">...</span></li>
+        }
+    }
+    
+   
+    @for (int i = start; i <= end; i++)
+    {
+        if (i == Model.Page)
+        {
+        <li class="active page-item">
+            <span class="page-link" >@i</span>
+        </li>
+        }
+        else
+        {
+        <li class="page-item">
+            <a href="#" class="page-link" p="@i">@i</a>
+        </li>
+        }
+
+    }
+    
+    
+    @if (Model.Page < TotalPage)
+    {
+        if (end < TotalPage)
+        {
+            <li class="page-item"><span class="page-link" href="#" >...</span></li>
+            <li class="page-item"><a class="page-link" href="#" p="@TotalPage">@TotalPage</a></li>
+        }
+
+        <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next" p="@(Model.Page+1)">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Trang sau</span>
+            </a>
+        </li>
+    }
+    
+</ul>

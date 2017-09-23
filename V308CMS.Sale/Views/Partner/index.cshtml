@@ -1,4 +1,25 @@
-﻿@using V308CMS.Sale.Helpers;
+﻿@helper DashBoardReport(string title, int value = 0, string uri = "")
+{
+uri = uri.Trim();
+if (uri.Length < 1)
+{
+    uri = "javascript:void(0)";
+}
+string number = value.ToString();
+if (number.Length > 3) {
+    number = String.Format("{0: 0,0}", float.Parse(number));
+}
+
+    <div class="col-md-3">
+        <div class="dasreport">
+            <h4>@title</h4>
+            <span class="number">@number</span>
+            <a class="detail" href="@uri"><span>Chi Tiết</span><i class='fa fa-hand-o-right'></i></a>
+        </div>
+    </div>
+}
+
+@model V308CMS.Data.AffiliateDashboard
 @{
     Layout = "~/Views/Affiliate/Layout/Backend.cshtml";
     string PageTitle = "Trang quản trị";
@@ -7,210 +28,37 @@
     <title>@PageTitle</title>
     
 }
-<div class="row dashboard">
-    <div class="col-md-4">
-        <h4>Công cụ kiếm tiền</h4>
-        <div class="row">
-            <div class="col-md-6">
-                <a href="/link/tao-moi" class="btn btn-yellow">Tạo Link <br />bán hàng</a>
-            </div>
 
-            <div class="col-md-6">
-                <a href="/link" class="btn btn-yellow">Link <br />đã tạo</a>
-            </div>
-            <div class="col-md-6">
-                <a href="/baner/tao-mois" class="btn btn-yellow">Tạo <br />Banner</a>
-            </div>
-            <div class="col-md-6">
-                <a href="/tao-ma-giam-gia" class="btn btn-yellow">Tạo <br />Voucher</a>
-            </div>
-            <div class="col-md-12">
-                <a href="javascript:void(0)" class="btn btn-green pd-14">Tạo Web - Page</a>
-            </div>
-        </div>
+<div class="row dashboard " style="padding-left:15px;">
+    <div class="row">
+        <div class="col-md-12"><h2>BÁO CÁO TỔNG HỢP NHÀ PHÂN PHỐI AFFILIATE</h2></div>
+        @DashBoardReport("LINK ĐÃ TẠO", Model.link_count, "/link")
+        @DashBoardReport("TỔNG SỐ CLICK", Model.click_count, "/link/report")
+        @DashBoardReport("VOUCHER  ĐÃ TẠO", Model.voucher_count, "/voucher")
+        @DashBoardReport("BANNER ĐÃ TẠO", Model.banner_count, "/banner")
     </div>
-
-    <div class="col-md-4">
-        <h4>Voucher</h4>
-        <div class="row">
-            <div class="col-md-6">
-                <a href="/ma-giam-gia" class="btn btn-yellow">Danh sách <br />Voucher</a>
-            </div>
-
-            <div class="col-md-6">
-                <a href="javascript:void(0)" class="btn btn-yellow pd-14">Tạo Event</a>
-            </div>
-            <div class="col-md-6">
-                <a href="javascript:void(0)" class="btn btn-yellow">Voucher hết hạn</a>
-            </div>
-            <div class="col-md-6">
-                <a href="/tao-ma-giam-gia" class="btn btn-yellow">Tạo mã <br />Voucher</a>
-            </div>
-            <div class="col-md-6">
-                <a href="javascript:void(0)" class="btn btn-yellow">Top SP <br />Sale lớn</a>
-            </div>
-            <div class="col-md-6">
-                <a href="javascript:void(0)" class="btn btn-yellow">Đăng ký <br />CT KM</a>
-            </div>
-        </div>
+    <div class="row green">
+        @DashBoardReport("TOP SP BIG SALE", Model.product_bigsale_count, "")
+        @DashBoardReport("MÃ GIẢM GIÁ CTY", Model.voucher_system_count, " /ma-giam-gia")
+        @DashBoardReport("DANH SÁCH ĐƠN HÀNG", Model.product_count, " /order")
     </div>
-
-    <div class="col-md-4">
-        <h4>Vinh Danh Affiliate</h4>
-        <div class="row">
-            <div class="col-md-12">
-                <a href="javascript:void(0)" class="btn btn-green pd-14">Vinh danh NPP xuất sắc</a>
-            </div>
-            <div class="col-md-12">
-                <a href="javascript:void(0)" class="btn btn-green pd-14">Top xuất sắc tháng</a>
-            </div>
-            <div class="col-md-12">
-                <a href="/chuong-trinh-thuc-day" class="btn btn-green pd-14">Chương trình thúc đẩy</a>
-            </div>
-        </div>
+    <div class="row">
+        @DashBoardReport("TỔNG DOANH SỐ", (int)Model.order_price_sum, " /partner/revenue")
+        @DashBoardReport("DOANH THU THÀNH CÔNG", (int)Model.order_finish_sum, "/partner/revenue")
+        @DashBoardReport("HOA HỒNG TỔNG", (int)Model.revenue_sum, "/partner/revenue")
+        @DashBoardReport("HOA HỒNG ĐÃ THANH TOÁN", (int)Model.revenue_payed_sum, "/partner/revenue")
     </div>
-</div>
-<div class="row dashboard">
-    <div class="col-md-4">
-        <h4>Báo cáo đơn hàng</h4>
-        <div class="row">
-            <div class="col-md-6">
-                <a href="javascript:void(0)" class="btn btn-yellow pd-14">Từ link</a>
-            </div>
-            <div class="col-md-6">
-                <a href="javascript:void(0)" class="btn btn-yellow pd-14">Từ Voucher</a>
-            </div>
-            <div class="col-md-6">
-                <a href="javascript:void(0)" class="btn btn-yellow">Từ mạng <br />xã hội</a>
-            </div>
-            <div class="col-md-6">
-                <a href="javascript:void(0)" class="btn btn-yellow">Không <br />xác định</a>
-            </div>
-            <div class="col-md-12">
-                <a href="javascript:void(0)" class="btn btn-green pd-14">Tổng hợp đơn hàng</a>
-            </div>
-        </div>
+    <div class="row green">
+        @DashBoardReport("HOA HỒNG  TRONG THÁNG", (int)Model.revenue_inmonth_sum, "/partner/revenue")
+        @DashBoardReport("HOA HỒNG CHƯA THANH TOÁN", (int)(Model.revenue_sum - Model.revenue_payed_sum), "/partner/revenue")
+        @DashBoardReport("TỔNG SỐ KHÁCH CŨ", Model.customer_count - Model.customer_new_count, "")
+        @DashBoardReport("TỔNG SỐ KHÁCH MỚI", Model.customer_new_count, "")
     </div>
-
-
-    <div class="col-md-4">
-        <h4>Báo cáo Click</h4>
-        <div class="row">
-            <div class="col-md-6">
-                <a href="javascript:void(0)" class="btn btn-yellow pd-11">Tổng số Click</a>
-            </div>
-            <div class="col-md-6">
-                <a href="javascript:void(0)" class="btn btn-yellow">Tổng số <br />mua hàng</a>
-            </div>
-            <div class="col-md-6">
-                <a href="javascript:void(0)" class="btn btn-yellow">Tỉ lệ <br />mua hàng</a>
-            </div>
-            <div class="col-md-6">
-                <a href="javascript:void(0)" class="btn btn-yellow pd-14">Nguồn click</a>
-            </div>
-            <div class="col-md-12">
-                <a href="javascript:void(0)" class="btn btn-green pd-14">Biểu đồ tăng trưởng</a>
-            </div>
-        </div>
+    <div class="row">
+        <div class="col-md-12"><h2>THEO DÕI HÀNH TRÌNH ĐƠN</h2></div>
+        @DashBoardReport("CHỜ HÀNG", Model.order_waiting_count, " /order")
+        @DashBoardReport("ĐANG VẬN CHUYỂN", Model.order_delivering_count, " /order")
+        @DashBoardReport("HOÀN THÀNH", Model.order_finish_count, " /order")
+        @DashBoardReport("TỪ CHỐI NHẬN", Model.order_cancel_count, "/order")
     </div>
-
-
-    <div class="col-md-4">
-        <h4>Báo cáo Vận đơn</h4>
-        <div class="row">
-            <div class="col-md-6">
-                <a href="javascript:void(0)" class="btn btn-yellow pd-14">Chờ hàng</a>
-            </div>
-            <div class="col-md-6">
-                <a href="javascript:void(0)" class="btn btn-yellow pd-14">Đã gửi</a>
-            </div>
-            <div class="col-md-6">
-                <a href="javascript:void(0)" class="btn btn-yellow pd-14">Hoàn thành</a>
-            </div>
-            <div class="col-md-6">
-                <a href="javascript:void(0)" class="btn btn-yellow pd-14">Chuyển hoàn</a>
-            </div>
-            <div class="col-md-12">
-                <a href="javascript:void(0)" class="btn btn-green pd-14">Tra cứu mã vận đơn</a>
-            </div>
-        </div>
-    </div>
-
-
-</div>
-<div class="row dashboard">
-    <div class="col-md-4">
-        <h4>Hỗ trợ 24/7</h4>
-        <div class="row">
-            <div class="col-md-6">
-                <a href="/huong-dan" class="btn btn-yellow pd-14">Hướng dẫn</a>
-            </div>
-            <div class="col-md-6">
-                <a href="/quy-dinh" class="btn btn-yellow pd-14">Quy định</a>
-            </div>
-            <div class="col-md-6">
-                <a href="/chinh-sach" class="btn btn-yellow pd-14">Chính sách</a>
-            </div>
-            <div class="col-md-6">
-                <a href="/huong-dan" class="btn btn-yellow pd-14">Hợp đồng</a>
-            </div>
-            <div class="col-md-12">
-                <a href="/ho-tro" class="btn btn-green pd-14">Yêu cầu hỗ trợ</a>
-            </div>
-
-            <div class="col-md-12">
-                <a href="javascript:void(0)" class="btn btn-green pd-14">Kiến nghị lãnh đạo</a>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="col-md-4">
-        <h4>Báo cáo thu nhập</h4>
-        <div class="row">
-            <div class="col-md-6">
-                <a href="javascript:void(0)" class="btn btn-yellow">Tổng mức <br />hoa hồng</a>
-            </div>
-            <div class="col-md-6">
-                <a href="javascript:void(0)" class="btn btn-yellow">Hoa hồng <br />chưa TT</a>
-            </div>
-            <div class="col-md-6">
-                <a href="javascript:void(0)" class="btn btn-yellow">Hoa hồng <br />đã TT</a>
-            </div>
-            <div class="col-md-6">
-                <a href="javascript:void(0)" class="btn btn-yellow">Hoa hồng <br />chưa xác định</a>
-            </div>
-            <div class="col-md-12">
-                <a href="javascript:void(0)" class="btn btn-green pd-14">Tổng HH trong tháng</a>
-            </div>
-
-            <div class="col-md-12">
-                <a href="javascript:void(0)" class="btn btn-green pd-14">Sơ đồ hoa hồng theo ngày</a>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="col-md-4">
-        <h4>Doanh số theo ngày</h4>
-        <div class="row">
-            <div class="col-md-6">
-                <a href="javascript:void(0)" class="btn btn-yellow pd-14">Tổng DS <br />khách cũ</a>
-            </div>
-            <div class="col-md-6">
-                <a href="javascript:void(0)" class="btn btn-yellow pd-14">Tổng DS <br />khách mới</a>
-            </div>
-            <div class="col-md-6">
-                <a href="javascript:void(0)" class="btn btn-yellow pd-14">Top <br />khách VIP</a>
-            </div>
-            <div class="col-md-6">
-                <a href="javascript:void(0)" class="btn btn-yellow pd-14">Sơ đồ tăng <br />giảm DS</a>
-            </div>
-            <div class="col-md-12">
-                <a href="javascript:void(0)" class="btn btn-green pd-14">Doanh số trong ngày<br />Có thể xem đơn hàng theo ngày</a>
-            </div>
-        </div>
-    </div>
-
-
 </div>

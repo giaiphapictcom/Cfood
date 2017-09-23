@@ -324,7 +324,7 @@ namespace V308CMS.Common
         static public string ImgUrl(string val)
         {
             
-            string url = "//" + HttpContext.Current.Request.Url.Host + (HttpContext.Current.Request.Url.IsDefaultPort ? "" : ":" + HttpContext.Current.Request.Url.Port);
+            string url = "http://" + HttpContext.Current.Request.Url.Host + (HttpContext.Current.Request.Url.IsDefaultPort ? "" : ":" + HttpContext.Current.Request.Url.Port);
             return url + '/' + val;
         }
 

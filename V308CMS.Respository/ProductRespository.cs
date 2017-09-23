@@ -44,6 +44,16 @@ namespace V308CMS.Respository
                 ).FirstOrDefault();
             }
         }
+
+        public Product FindByCode(string code) { 
+            using (var entities = new V308CMSEntities())
+            {
+                return (from item in entities.Product
+                        where item.Code == code
+                        select item
+                ).FirstOrDefault();
+            }
+        }
         public Product FindToModify(int id)
         {
             using (var entities = new V308CMSEntities())

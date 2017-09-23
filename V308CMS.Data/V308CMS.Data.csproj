@@ -264,6 +264,7 @@
     <Compile Include="Models\Store.cs" />
     <Compile Include="Models\Subscribe.cs" />
     <Compile Include="Models\SupportMan.cs" />
+    <Compile Include="Models\UI\Pagination.cs" />
     <Compile Include="Models\Video.cs" />
     <Compile Include="Models\VisisterTime.cs" />
     <Compile Include="Models\Voucher.cs" />

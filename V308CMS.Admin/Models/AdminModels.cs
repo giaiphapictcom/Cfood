@@ -9,7 +9,7 @@ namespace V308CMS.Admin.Models
     {
         
     }
-    public class AdminModels:BaseModels
+    public class AdminModels : BaseModels
     {
         public AdminModels()
         {
@@ -23,6 +23,10 @@ namespace V308CMS.Admin.Models
         [Display(Name = "Tài khoản*")]
         [StringLength(50, ErrorMessage = "Tên tài khoản không được vượt quá 50 ký tư.")]
         public string UserName { get; set; }
+
+        [Display(Name = "Mã Affiliate")]
+        public string affiliate_code { get; set; }
+
         [Display(Name ="Mật khẩu*")]
         [StringLength(50, ErrorMessage = "Mật khẩu không được vượt quá 50 ký tự.")]
         public string Password { get; set; }

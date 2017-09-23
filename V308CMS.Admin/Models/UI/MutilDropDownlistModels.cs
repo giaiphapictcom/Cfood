@@ -23,4 +23,5 @@ namespace V308CMS.Admin.Models.UI
             CssClass = "form-control";
         }
     }
+
 }
